@@ -7,19 +7,19 @@ class AnalysisTemplateItem < ActiveRecord::Base
   
   def AnalysisTemplateItem.get_target_column_names(target_table_name)
     case target_table_name
-      when "business"
-        return AnalysisTemplateItem.business_column_names
-      when "biz_offer"
-        return AnalysisTemplateItem.biz_offer_column_names
-      when "human_resource"
-        return AnalysisTemplateItem.human_resource_column_names
-      when "bp_member"
-        return AnalysisTemplateItem.bp_member_column_names
+      when "businesses"
+        return AnalysisTemplateItem.businesses_column_names
+      when "biz_offers"
+        return AnalysisTemplateItem.biz_offers_column_names
+      when "human_resources"
+        return AnalysisTemplateItem.human_resources_column_names
+      when "bp_members"
+        return AnalysisTemplateItem.bp_members_column_names
     end
   end
   
   
-  def AnalysisTemplateItem.business_column_names
+  def AnalysisTemplateItem.businesses_column_names
     [
       "due_date",
       "term_type",
@@ -44,7 +44,7 @@ class AnalysisTemplateItem < ActiveRecord::Base
     ]
   end
   
-  def AnalysisTemplateItem.biz_offer_column_names
+  def AnalysisTemplateItem.biz_offers_column_names
     [
       "due_date",
       "reprint_flg",
@@ -62,7 +62,7 @@ class AnalysisTemplateItem < ActiveRecord::Base
     ]
   end
   
-  def AnalysisTemplateItem.human_resource_column_names
+  def AnalysisTemplateItem.human_resources_column_names
     [
       "human_resource_name",
       "human_resource_short_name",
@@ -86,7 +86,7 @@ class AnalysisTemplateItem < ActiveRecord::Base
     ]
   end
   
-  def AnalysisTemplateItem.bp_member_column_names
+  def AnalysisTemplateItem.bp_members_column_names
     [
       "employment_type",
       "reprint_flg",
