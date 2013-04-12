@@ -5,6 +5,16 @@
     <%= render :partial => 'form' %>
   <!--[eoform:analysis_template]-->
 
+  <% if @mode == 'biz_offer' %>
+    <!--[form:analysis_template_item]-->
+      <%= render :partial => 'analysis_template_item/form_biz_offer' %>
+    <!--[eoform:analysis_template_item]-->
+  <% elsif @mode == 'bp_member' %>
+    <!--[form:analysis_template_item]-->
+      <%= render :partial => 'analysis_template_item/form_bp_member' %>
+    <!--[eoform:analysis_template_item]-->
+  <% end %>
+
   <%= submit_tag '更新' %>
 <% end %>
 

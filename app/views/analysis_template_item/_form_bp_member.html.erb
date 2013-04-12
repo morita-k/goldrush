@@ -12,30 +12,13 @@
     <th colspan=4>人材</th>
   </tr>
   
-  <% @human_resource_column_names.each do |column_name| %>
-    <tr>
-      <td><%= column_name[1] %>(<%= column_name[0] %>)</td>
-      <td><%= text_field 'analysis_template_item_human_resource_'+column_name[0], 'analysis_template_item_name',:value => column_name[1] %></td>
-      <td><%= text_field 'analysis_template_item_human_resource_'+column_name[0], 'pattern' %></td>
-      <td><%= check_box 'analysis_template_item_human_resource_'+column_name[0], 'ignore_flg', :title => "改行無視フラグ" %></td>
-    </tr>
-    <%= hidden_field 'analysis_template_item_human_resource_'+column_name[0], 'target_column_name' %>
-  <% end %>
-
+  <%= render :partial => 'analysis_template_item/form_line', :locals => {:column_names => @human_resource_column_names, :item_value_map => @item_value_map, :table_name => 'human_resources'} %>
   
   <tr>
     <th colspan=7>所属</th>
   </tr>
   
-  <% @bp_member_column_names.each do |column_name| %>
-    <tr>
-      <td><%= column_name[1] %>(<%= column_name[0] %>)</td>
-      <td><%= text_field 'analysis_template_item_bp_member_'+column_name[0], 'analysis_template_item_name', :value => column_name[1] %></td>
-      <td><%= text_field 'analysis_template_item_bp_member_'+column_name[0], 'pattern' %></td>
-      <td><%= check_box 'analysis_template_item_bp_member_'+column_name[0], 'ignore_flg', :title => "改行無視フラグ" %></td>
-    </tr>
-    <%= hidden_field 'analysis_template_item_bp_member_'+column_name[0], 'target_column_name' %>
-  <% end %>
+  <%= render :partial => 'analysis_template_item/form_line', :locals => {:column_names => @bp_member_column_names, :item_value_map => @item_value_map, :table_name => 'bp_members'} %>
 
 </table>
 

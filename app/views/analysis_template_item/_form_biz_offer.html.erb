@@ -12,30 +12,13 @@
     <th colspan=4>案件</th>
   </tr>
   
-  <% @business_column_names.each do |column_name| %>
-    <tr>
-      <td><%= column_name[1] %>(<%= column_name[0] %>)</td>
-      <td><%= text_field 'analysis_template_item_business_'+column_name[0], 'analysis_template_item_name', :value => column_name[1] %></td>
-      <td><%= text_field 'analysis_template_item_business_'+column_name[0], 'pattern' %></td>
-      <td><%= check_box 'analysis_template_item_business_'+column_name[0], 'ignore_flg', :title => "改行無視フラグ" %></td>
-    </tr>
-    <%= hidden_field 'analysis_template_item_business_'+column_name[0], 'target_column_name' %>
-  <% end %>
-
+  <%= render :partial => 'analysis_template_item/form_line', :locals => {:column_names => @business_column_names, :item_value_map => @item_value_map, :table_name => 'businesses'} %>
   
   <tr>
     <th colspan=4>照会</th>
   </tr>
   
-  <% @biz_offer_column_names.each do |column_name| %>
-    <tr>
-      <td><%= column_name[1] %>(<%= column_name[0] %>)</td>
-      <td><%= text_field 'analysis_template_item_biz_offer_'+column_name[0], 'analysis_template_item_name', :value => column_name[1] %></td>
-      <td><%= text_field 'analysis_template_item_biz_offer_'+column_name[0], 'pattern' %></td>
-      <td><%= check_box 'analysis_template_item_biz_offer_'+column_name[0], 'ignore_flg', :title => "改行無視フラグ" %></td>
-    </tr>
-    <%= hidden_field 'analysis_template_item_biz_offer_'+column_name[0], 'target_column_name' %>
-  <% end %>
+  <%= render :partial => 'analysis_template_item/form_line', :locals => {:column_names => @biz_offer_column_names, :item_value_map => @item_value_map, :table_name => 'biz_offers'} %>
 
 </table>
 
