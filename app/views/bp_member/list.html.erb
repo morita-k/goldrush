@@ -63,7 +63,6 @@
     <th><%=getShortName('bp_members', 'employment_type') %></th>
     <th><%=getShortName('bp_members', 'payment_min') %></th>
     <th>添付ファイル</th>
-    <th>Star</th>
   </tr>
 
 
@@ -73,25 +72,24 @@
   <% if bp_member.human_resource.human_resource_name.blank? %>
     <td><%=link_to h(bp_member.human_resource.initial), '#', :onClick => "setBpMember(#{bp_member.id},'#{bp_member.business_partner.business_partner_name}','#{bp_member.human_resource.initial}');return false;" %></td>
   <% else %>
-    <td><%=link_to h(bp_member.human_resource.human_resource_name), '#', :onClick => "setBpMember(#{bp_member.id},'#{bp_member.business_partner.business_partner_name}','#{bp_member.human_resource.human_resource_name}');return false;" %></td>
+    <td><span class="linked_star"><%= star_links(bp_member.human_resource) %><%=link_to h(bp_member.human_resource.human_resource_name), '#', :onClick => "setBpMember(#{bp_member.id},'#{bp_member.business_partner.business_partner_name}','#{bp_member.human_resource.human_resource_name}');return false;" %></td>
   <% end %>
 <% else %>
   <% if bp_member.human_resource.human_resource_name.blank? %>
     <td><%=back_to_link h(bp_member.human_resource.initial), :action => :show, :id => bp_member %></td>
   <% else %>
-    <td><%=back_to_link h(bp_member.human_resource.human_resource_name), :action => :show, :id => bp_member %></td>
+    <td><span class="linked_star"><%= star_links(bp_member.human_resource) %><%=back_to_link h(bp_member.human_resource.human_resource_name), :action => :show, :id => bp_member %></td>
   <% end %>
 <% end %>
     <td><%=h bp_member.human_resource.age %></td>
-    <td><%=h bp_member.human_resource.sex_type %></td>
+    <td><%=h bp_member.human_resource.sex_type_short_name %></td>
     <td><%=h bp_member.human_resource.skill_tag %></td>
-    <td><%=h bp_member.human_resource.human_resource_status_type %></td>
+    <td><%=h bp_member.human_resource.human_resource_status_type_name %></td>
     <td><%=h bp_member.business_partner.business_partner_code_name %></td>
     <td><%=h bp_member.bp_pic.blank? ? "" : bp_member.bp_pic.bp_pic_name %></td>
     <td><%=h bp_member.employment_type_name %></td>
     <td align=right><%=h((bp_member.payment_min.blank? || bp_member.payment_min == 0) ? "" : "#{bp_member.payment_min_view}万円") %></td>
     <td align=center><%=h bp_member.attachment? ? "○" : "" %></td>
-    <td style="width: 7em;text-align:center"><span class="linked_star"><%= star_links(bp_member.human_resource) %></span></td>
   </tr>
 <% end %>
 </table>

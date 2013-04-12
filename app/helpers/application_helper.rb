@@ -395,7 +395,7 @@ EOS
   end
 
   def delete_to(name, object, action = 'destroy')
-    link_to(name, { :action => action, :id => object, :back_to => back_to }, :confirm => 'この情報を削除します。よろしいですか?', :method => :post)
+    link_to(name, { :action => action, :id => object, :back_to => back_to, :authenticity_token => form_authenticity_token }, :confirm => 'この情報を削除します。よろしいですか?', :method => :post)
   end
 
   def square_table(array, options = {}, tag_options = {}, &block)

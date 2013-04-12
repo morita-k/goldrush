@@ -20,7 +20,7 @@ class AnalysisTemplateController < ApplicationController
         order_by << "business_partner_id = #{import_mail.business_partner_id} desc" if !import_mail.business_partner_id.blank?
       end
       order_by << "id desc"
-      @analysis_templates = AnalysisTemplate.find(:all, :order => order_by.join(","))
+      @analysis_templates = AnalysisTemplate.find(:all, :conditions => "deleted = 0", :order => order_by.join(","))
     else
       @analysis_template_pages, @analysis_templates = paginate :analysis_templates, :conditions => "deleted = 0", :per_page => current_user.per_page
     end
@@ -102,7 +102,7 @@ class AnalysisTemplateController < ApplicationController
     set_user_column @analysis_template
     @analysis_template.save!
     
-    redirect_to :action => 'list'
+    redirect_to(back_to || {:action => 'list'})
   end
 
   def popup_list

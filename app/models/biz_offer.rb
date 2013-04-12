@@ -35,6 +35,6 @@ class BizOffer < ActiveRecord::Base
   end
   
   def payment_max_view
-    payment_max / 10000.0
+    payment_max.to_f / 10000.0
   end
 end

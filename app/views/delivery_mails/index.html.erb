@@ -19,13 +19,7 @@
 <% @delivery_mails.each do |delivery_mail| %>
   <tr <%= "bgcolor = #999999" unless delivery_mail.mail_status_type == 'unsend' %> id="tr_<%= delivery_mail.id %>">
     <td>
-      <% if delivery_mail.mail_status_type == 'unsend' %>
-        未送信
-      <% elsif delivery_mail.mail_status_type == 'send' %>
-        送信済
-      <% elsif delivery_mail.mail_status_type == 'canceled' %>
-        キャンセル
-      <% end %>
+      <%= delivery_mail.mail_status_type_name %>
     </td>
     <td><%= back_to_link delivery_mail.subject, {:action => :show, :id => delivery_mail.id } %></td>
     <td><%= delivery_mail.content %></td>

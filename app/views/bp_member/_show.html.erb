@@ -9,7 +9,7 @@
   <th>下流<%= getLongName('bp_pics', 'bp_pic_name') %></th><td><%=h @bp_member.bp_pic.blank? ? "" : @bp_member.bp_pic.bp_pic_name %></td>
 </tr>
 <tr>
-  <th><%= getLongName('bp_members', 'employment_type') %></th><td><%=h @bp_member.employment_type %></td>
+  <th><%= getLongName('bp_members', 'employment_type') %></th><td><%=h @bp_member.employment_type_name %></td>
 </tr>
 <tr>
   <th><%= getLongName('bp_members', 'reprint_flg') %></th>

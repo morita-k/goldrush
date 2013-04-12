@@ -4,16 +4,14 @@
     <th><%=getShortName('bp_pics', 'bp_pic_name_kana') %></th>
     <th><%=getShortName('bp_pics', 'depertment') %></th>
     <th><%=getShortName('bp_pics', 'position') %></th>
-    <th>Star</th>
   </tr>
   
 <% for bp_pic in @bp_pics %>
   <tr>
-    <td><%=back_to_link h(bp_pic.bp_pic_name), :controller => :bp_pic, :action => :show, :id => bp_pic %></td>
+    <td><span class="linked_star"><%= star_links(bp_pic) %></span> <%=back_to_link h(bp_pic.bp_pic_name), :controller => :bp_pic, :action => :show, :id => bp_pic %></td>
     <td><%=h bp_pic.bp_pic_name_kana %></td>
     <td><%=h bp_pic.depertment %></td>
     <td><%=h bp_pic.position %></td>
-    <td style="width: 7em;text-align:center"><span class="linked_star"><%= star_links(bp_pic) %></span></td>
   </tr>
 <% end %>
 </table>

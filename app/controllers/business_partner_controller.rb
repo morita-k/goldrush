@@ -145,9 +145,10 @@ class BusinessPartnerController < ApplicationController
       @business_partner.upper_flg = 1
     end
     
+    @bp_pic = BpPic.new
+    @bp_pic.business_partner = @business_partner
     if params[:import_mail_id]
       @business_partner.import_mail_id = params[:import_mail_id]
-      @bp_pic = BpPic.new
       @bp_pic.import_mail_id = params[:import_mail_id]
     end
   end
