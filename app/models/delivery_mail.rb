@@ -1,4 +1,6 @@
 # -*- encoding: utf-8 -*-
+require 'auto_type_name'
+include AutoTypeName
 class DeliveryMail < ActiveRecord::Base
   has_many :delivery_mail_targets, :conditions => "delivery_mail_targets.deleted = 0"
   attr_accessible :bp_pic_group_id, :content, :id, :mail_bcc, :mail_cc, :mail_from, :mail_from_name, :mail_send_status_type, :mail_status_type, :owner_id, :planned_setting_at, :send_end_at, :subject, :lock_version
@@ -9,61 +11,55 @@ class DeliveryMail < ActiveRecord::Base
     self.mail_send_status_type ||= 'ready'
   end
   
-  def DeliveryMail.send_mails(id, bp_pic_list)
-	  	fetch_key = "mailer: " + Time.now.to_s + " " + rand().to_s
-	  	
-	  	begin
-		  DeliveryMail.
-			  where("id=? and mail_send_status_type=? and mail_status_type=? and planned_setting_at<=?",
-				  	id, "ready", "unsend", Time.now.to_s(:db)).
-			  update_all(:mail_send_status_type => 'running', :updated_user => fetch_key)
-			
-			mails = DeliveryMail.where("id=? and mail_send_status_type=? and updated_user=?", id, "running", fetch_key)	
-	  		if mails.length == 1 && bp_pic_list.length >= 1
-	  			
-		  		# 配列に包まれたオブジェクトを取り出す
-	  			mail = mails.shift
-	  			bp_pic_list.each {|b|
-	  				Mailer.del_mail_send(
-	  					b.email1,
-	  					mail.mail_cc,
-	  					mail.mail_bcc,
-	  					mail.mail_from,
-	  					mail.subject,
-	  					mail.content.gsub(/%%bp_pic_name%%/, b.bp_pic_name)
-					).deliver
-	  			}
-	  			
-			  DeliveryMail.
-				  where("id=? and mail_send_status_type=? and updated_user=?", id, "running", fetch_key).
-				  update_all(:mail_send_status_type => 'finished', :send_end_at => Time.now.to_s(:db))
-			else
-				raise "Target is Zero."
-			end
-				
-		rescue => e
-			p e
-			DeliveryMail.
-				where("id=? and updated_user=?", id, fetch_key).
-				update_all(:mail_send_status_type => 'ready', :updated_user => '')
-	  	end
+  # Broadcast Mails
+  def DeliveryMail.send_mails
+    fetch_key = Time.now.to_s + " " + rand().to_s
+      
+    DeliveryMail.
+      where("mail_status_type=? and mail_send_status_type=? and planned_setting_at<=?",
+             'unsend', 'ready', Time.now).
+      update_all(:mail_send_status_type => 'running', :created_user => fetch_key)
+    
+    begin
+      DeliveryMail.where(:created_user => fetch_key).each {|mail|
+        mail.delivery_mail_targets.each {|target|
+          email = target.bp_pic.email1
+          body = mail.content.
+            gsub("%%bp_pic_name%%", target.bp_pic.bp_pic_name).
+            gsub("%%business_partner_name%%", target.bp_pic.business_partner.business_partner_name)
+          
+          Mailer.send_del_mail(
+            email,
+            mail.mail_cc,
+            mail.mail_bcc,
+            mail.mail_from,
+            mail.subject,
+            body
+          ).deliver
+        }
+      }
+    rescue => e
+      error_str = "Delivery Mail Send Error: " + e
+      SystemLog.error('delivery mail', 'mail send error',  error_str, 'delivery mail')
+    end
+      
+    DeliveryMail.
+      where(:created_user => fetch_key).
+      update_all(:mail_status_type => 'send',:mail_send_status_type => 'finished',:send_end_at => Time.now)
   end
-	
-	# Private Mailer
-	class Mailer < ActionMailer::Base
-		def del_mail_send(destination, cc, bcc, from, subject, body)
-			mail(
-				recipients: destination,
-				cc: cc,
-				bcc: bcc,
-				from: from, 
-				subject: subject,
-				body: ActionController::Base.new.render_to_string(
-					:partial => "delivery_mails/mail_body",
-					:locals => {:content => body}
-				)
-			)
-		end
-	end
-	  
+  
+  # Private Mailer
+  class Mailer < ActionMailer::Base
+    def send_del_mail(destination, cc, bcc, from, subject, body)
+      mail(
+        recipients: destination,
+        cc: cc,
+        bcc: bcc,
+        from: from, 
+        subject: subject,
+        body: body
+      )
+    end
+  end
+  
 end

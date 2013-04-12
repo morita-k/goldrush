@@ -27,8 +27,8 @@ class BpPicController < ApplicationController
 
   def new
     @bp_pic = BpPic.new
-    @business_partner = BusinessPartner.find(params[:business_partner_id])
-    @bp_pic.business_partner_id = @business_partner.id
+    business_partner = BusinessPartner.find(params[:business_partner_id])
+    @bp_pic.business_partner = business_partner
   end
 
   def create
@@ -42,7 +42,6 @@ class BpPicController < ApplicationController
       redirect_to params[:back_to]
     end
   rescue ActiveRecord::RecordInvalid
-    valid_of_business_partner_id
     render :action => 'new'
   end
 
@@ -59,7 +58,6 @@ class BpPicController < ApplicationController
     flash[:notice] = 'BpPic was successfully updated.'
     redirect_to back_to || {:action => 'show', :id => @bp_pic}
   rescue ActiveRecord::RecordInvalid
-    valid_of_business_partner_id
     render :action => 'edit'
   end
   

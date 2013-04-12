@@ -16,9 +16,9 @@
   <tr>
     <td><%=back_to_link h(bp_member.human_resource.human_resource_name.blank? ? bp_member.human_resource.initial : bp_member.human_resource.human_resource_name), :controller => :bp_member, :action => :show, :id => bp_member %></td>
     <td><%=h bp_member.human_resource.age %></td>
-    <td><%=h bp_member.human_resource.sex_type %></td>
+    <td><% if bp_member.human_resource.sex_type != "" %><%=h bp_member.human_resource.sex_type_name %><% end %></td>
     <td><%=h bp_member.human_resource.skill_tag %></td>
-    <td><%=h bp_member.human_resource.human_resource_status_type %></td>
+    <td><%=h bp_member.human_resource.human_resource_status_type_short_name %></td>
     <td><%=h bp_member.business_partner.business_partner_code_name %></td>
     <td><%=h bp_member.bp_pic.blank? ? "" : bp_member.bp_pic.bp_pic_name %></td>
     <td><%=h bp_member.employment_type_name %></td>

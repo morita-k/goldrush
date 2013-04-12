@@ -27,7 +27,7 @@
   <th><%= getLongName('human_resources', 'birthday_date') %></th><td><%=h @human_resource.birthday_date %></td>
 </tr>
 <tr>
-  <th><%= getLongName('human_resources', 'sex_type') %></th><td><%=h @human_resource.sex_type %></td>
+  <th><%= getLongName('human_resources', 'sex_type') %></th><td><%=h @human_resource.sex_type_name %></td>
 </tr>
 <tr>
   <th><%= getLongName('human_resources', 'nationality') %></th><td><%=h @human_resource.nationality %></td>
@@ -48,13 +48,13 @@
   <th><%= getLongName('human_resources', 'qualification') %></th><td><%=simple_format h(@human_resource.qualification) %></td>
 </tr>
 <tr>
-  <th><%= getLongName('human_resources', 'communication_type') %></th><td><%=h @human_resource.communication_type %></td>
+  <th><%= getLongName('human_resources', 'communication_type') %></th><td><%=h @human_resource.communication_type_name %></td>
 </tr>
 <tr>
   <th><%= getLongName('human_resources', 'attendance') %></th><td><%=h @human_resource.attendance %></td>
 </tr>
 <tr>
-  <th><%= getLongName('human_resources', 'human_resource_status_type') %></th><td><%=h @human_resource.human_resource_status_type %></td>
+  <th><%= getLongName('human_resources', 'human_resource_status_type') %></th><td><%=h @human_resource.human_resource_status_type_name %></td>
 </tr>
 <tr>
   <th><%= getLongName('human_resources', 'memo') %></th><td><%=simple_format h(@human_resource.memo) %></td>

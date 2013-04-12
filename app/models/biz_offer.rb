@@ -10,6 +10,7 @@ class BizOffer < ActiveRecord::Base
   belongs_to :bp_pic
   belongs_to :contact_pic, :class_name => 'User'
   belongs_to :sales_pic, :class_name => 'User'
+  belongs_to :import_mail
   
   def contact_employee_name
    if self.contact_pic_id
@@ -34,6 +35,6 @@ class BizOffer < ActiveRecord::Base
   end
   
   def payment_max_view
-    payment_max / 10000.0
+    payment_max.to_f / 10000.0
   end
 end

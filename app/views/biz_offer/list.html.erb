@@ -12,20 +12,18 @@
     <th><%=getShortName('businesses', 'business_status_type') %></th>
     <th><%=getShortName('biz_offers', 'biz_offer_status_type') %></th>
     <th><%=getShortName('biz_offers', 'payment_text') %></th>
-    <th>Star</th>
   </tr>
   
 <% for biz_offer in @biz_offers %>
   <tr>
-    <td><%=back_to_link h(biz_offer.business.business_title), :action => :show, :id => biz_offer %></td>
+    <td><span class="linked_star"><%= star_links(biz_offer.business) %></span> <%=back_to_link h(biz_offer.business.business_title), :action => :show, :id => biz_offer %></td>
     <td><%=h _time(biz_offer.business.issue_datetime) %></td>
     <td><%=h biz_offer.business.skill_tag %></td>
     <td><%=h biz_offer.business.eubp.blank? ? "" : biz_offer.business.eubp.business_partner_code_name %></td>
     <td><%=h biz_offer.business.eubp_pic.blank? ? "" : biz_offer.business.eubp_pic.bp_pic_name %></td>
-    <td><%=h biz_offer.business.business_status_type %></td>
+    <td><%=h biz_offer.business.business_status_type_name %></td>
     <td><%=h biz_offer.biz_offer_status_type_name %></td>
     <td><%=h biz_offer.payment_text %></td>
-    <td style="width: 7em;text-align:center"><span class="linked_star"><%= star_links(biz_offer.business) %></span></td>
   </tr>
 <% end %>
 </table>

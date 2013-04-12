@@ -9,7 +9,7 @@
   <th>EU<%= getLongName('bp_pics', 'bp_pic_name') %></th><td><%=h @business.eubp_pic.blank? ? "" : @business.eubp_pic.bp_pic_name %></td>
 </tr>
 <tr>
-  <th><%= getLongName('businesses', 'business_status_type') %></th><td><%=h @business.business_status_type %></td>
+  <th><%= getLongName('businesses', 'business_status_type') %></th><td><%=h @business.business_status_type_name %></td>
 </tr>
 <tr>
   <th><%= getLongName('businesses', 'issue_datetime') %></th><td><%=h _time_long(@business.issue_datetime) %></td>
@@ -18,7 +18,7 @@
   <th><%= getLongName('businesses', 'due_date') %></th><td><%=h @business.due_date %></td>
 </tr>
 <tr>
-  <th><%= getLongName('businesses', 'term_type') %></th><td><%=h @business.term_type %></td>
+  <th><%= getLongName('businesses', 'term_type') %></th><td><%=h @business.term_type_name %></td>
 </tr>
 <tr>
   <th><%= getLongName('businesses', 'business_title') %></th><td><%=h @business.business_title %></td>
