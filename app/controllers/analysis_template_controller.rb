@@ -104,11 +104,11 @@ class AnalysisTemplateController < ApplicationController
       @analysis_template.save!
 
       if params[:mode] == "biz_offer"
-        create_analysis_template_item("businesses", @analysis_template.id)
-        create_analysis_template_item("biz_offers", @analysis_template.id)
+        update_analysis_template_item("businesses", @analysis_template.id)
+        update_analysis_template_item("biz_offers", @analysis_template.id)
       elsif params[:mode] == "bp_member"
-        create_analysis_template_item("human_resources", @analysis_template.id)
-        create_analysis_template_item("bp_members", @analysis_template.id)
+        update_analysis_template_item("human_resources", @analysis_template.id)
+        update_analysis_template_item("bp_members", @analysis_template.id)
       end
 
     end # transaction
@@ -157,10 +157,14 @@ private
         analysis_template_item = AnalysisTemplateItem.new #(params["analysis_template_item_#{target_table_name}_#{target_column_name}"])
         
         analysis_template_item.analysis_template_id = analysis_template_id
+        analysis_template_item.analysis_template_item_name =
+            params["analysis_template_item_#{target_table_name}_#{target_column_name}_analysis_template_item_name"]
+        analysis_template_item.pattern =
+            params["analysis_template_item_#{target_table_name}_#{target_column_name}_pattern"]
+        analysis_template_item.ignore_flg =
+            params["analysis_template_item_#{target_table_name}_#{target_column_name}_ignore_flg"].blank? ? 0 : 1
         analysis_template_item.target_table_name = target_table_name
-        analysis_template_item.target_column_name = params["analysis_template_item_#{target_table_name}_#{target_column_name}_analysis_template_item_name"]
-        analysis_template_item.pattern = params["analysis_template_item_#{target_table_name}_#{target_column_name}_pattern"]
-        analysis_template_item.ignore_flg = params["analysis_template_item_#{target_table_name}_ignore_flg"]["#{target_column_name}"]
+        analysis_template_item.target_column_name = target_column_name
 
         set_user_column analysis_template_item
         analysis_template_item.save!
@@ -169,11 +173,11 @@ private
   end
 
   def update_analysis_template_item(target_table_name, analysis_template_id)
-    delete_analysis_template_item(analysis_template_id)
+    delete_analysis_template_item(target_table_name, analysis_template_id)
     create_analysis_template_item(target_table_name, analysis_template_id)
   end
 
-  def delete_analysis_template_item(analysis_template_id)
-    AnalysisTemplateItem.delete_all(:conditions => ['analysis_template_id', analysis_template_id])
+  def delete_analysis_template_item(target_table_name, analysis_template_id)
+    AnalysisTemplateItem.delete_all(:target_table_name => target_table_name, :analysis_template_id => analysis_template_id)
   end
 end
