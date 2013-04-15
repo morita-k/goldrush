@@ -1,6 +1,6 @@
 <h1><%=getLongName('table_name','analysis_templates')%>編集</h1>
 
-<%= form_tag :action => 'update', :id => @analysis_template, :mode => @mode do %>
+<%= form_tag :action => 'update', :id => @analysis_template do %>
   <!--[form:analysis_template]-->
     <%= render :partial => 'form' %>
   <!--[eoform:analysis_template]-->
