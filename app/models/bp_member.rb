@@ -8,7 +8,6 @@ class BpMember < ActiveRecord::Base
   belongs_to :business_partner
   belongs_to :bp_pic
 
-
   def attachment?
     AttachmentFile.count(:conditions => ["deleted = 0 and parent_table_name = 'bp_members' and parent_id = ?", self]) > 0
   end
@@ -18,6 +17,6 @@ class BpMember < ActiveRecord::Base
   end
   
   def payment_min_view
-    payment_min / 10000.0
+    payment_min.nil? ? 0 : payment_min / 10000.0
   end
 end
