@@ -24,7 +24,7 @@
   <tr>
     <% if params[:mode] && params[:import_mail_id] %>
       <% if params[:target_id] %>
-        <td align=center><%= back_to_link_popup_mode "選択", :controller => params[:mode], :action => 'edit', :id => params[:target_id], :template_id => analysis_template, :import_mail_id => params[:import_mail_id] %></td>
+        <td align=center><%= back_to_link_popup_mode "選択", :controller => params[:mode], :action => 'edit', :id => params[:target_id], :template_id => analysis_template, :import_mail_id => params[:import_mail_id], :from => params[:from], :end => params[:end] %></td>
       <% else %>
         <td align=center><%= back_to_link_popup_mode "選択", :controller => params[:mode], :action => 'new', :template_id => analysis_template, :import_mail_id => params[:import_mail_id] %></td>
       <% end %>

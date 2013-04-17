@@ -15,18 +15,22 @@ class AnalysisTemplate < ActiveRecord::Base
   #   各項目をインデントによって分類しハッシュを生成、キーに対して正規表現マッチを行う。
   #
   def AnalysisTemplate.analyze(analysis_template_id, import_mail, models)#biz_offer, business
-    
+    AnalysisTemplate.analyze_content(analysis_template_id, import_mail.mail_body, models)
+  end
+
+  def AnalysisTemplate.analyze_content(analysis_template_id, content, models)
+
     items = AnalysisTemplateItem.find(:all, :conditions => ["deleted = 0 and analysis_template_id = ?", analysis_template_id])
-    map = MailParser.new(import_mail.mail_body).classification_by_indent
+    map = MailParser.new(content).classification_by_indent
     
     map.each { |k, v|
       items.each {|item|
         if k =~ Regexp.new(item.pattern)
           models.each do |model|
             next unless model.class.name == item.target_table_name.classify
-  #            puts">>>>>>>>>>>>table_name  : "+model.class.name
-  #            puts">>>>>>>>>>>>column_name : "+at_item.target_column_name
-  #            puts">>>>>>>>>>>>value       : "+$1
+#            puts">>>>>>>>>>>>table_name  : "+model.class.name
+#            puts">>>>>>>>>>>>column_name : "+at_item.target_column_name
+#            puts">>>>>>>>>>>>value       : "+$1
             unless item.before_set_code.blank?
               eval <<-EOS
                 def AnalysisTemplate.before_set(model, item, str)
@@ -54,7 +58,6 @@ class AnalysisTemplate < ActiveRecord::Base
   end
 
 end
-
 
 class AnalysisTemplate::MailParser
 
