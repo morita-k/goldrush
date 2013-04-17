@@ -30,7 +30,7 @@ class AnalysisTemplate < ActiveRecord::Base
             unless item.before_set_code.blank?
               eval <<-EOS
                 def AnalysisTemplate.before_set(model, item, str)
-                  #{at_item.before_set_code}
+                  #{item.before_set_code}
                 end
               EOS
               before_set(model, item, $1)
@@ -41,7 +41,7 @@ class AnalysisTemplate < ActiveRecord::Base
             unless item.after_set_code.blank?
               eval <<-EOS
                 def AnalysisTemplate.after_set(model, item, str)
-                  #{at_item.after_set_code}
+                  #{item.after_set_code}
                 end
               EOS
               after_set(model, item, $1)
@@ -59,13 +59,13 @@ end
 class AnalysisTemplate::MailParser
 
   def initialize(here_document)
-    @mail_body_array = here_document.split(/\n/).reject!{ |line| line == ""}
+    @mail_body_array = here_document.split(/\n/).reject{ |line| line == ""}
   end
   
   def classification_by_indent
     working_conditions = []
     str = ""
-    @mail_body_array.each {|s|
+    @mail_body_array.each { |s|
       s_head = s[0, 1]
       if /\t/ =~ s_head || /\s/ =~ s_head || /　/ =~ s_head
         str = str + s
