@@ -59,7 +59,7 @@ end
 class AnalysisTemplate::MailParser
 
   def initialize(here_document)
-    @mail_body_array = here_document.split(/\n/)
+    @mail_body_array = here_document.split(/\n/).reject!{ |line| line == ""}
   end
   
   def classification_by_indent
