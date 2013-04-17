@@ -1,8 +1,8 @@
 <h1>取り込みメール詳細</h1>
 
-<%= link_to "案件照会作成", "#", :onclick => "disp_wide('#{url_for(:controller => 'analysis_template', :action => 'list', :popup => 1, :mode => 'biz_offer', :import_mail_id => @import_mail)}');return false" %> | 
-<%= link_to "人材所属作成", "#", :onclick => "disp_wide('#{url_for(:controller => 'analysis_template', :action => 'list', :popup => 1, :mode => 'bp_member', :import_mail_id => @import_mail)}');return false" %> | 
-<%= link_to "取引先作成", "#", :onclick => "disp_wide('#{url_for(:controller => 'business_partner', :action => 'new', :popup => 1, :import_mail_id => @import_mail)}');return false" %> | 
+<%= link_to "案件照会作成", url_for(:controller => 'analysis_template', :action => 'list', :popup => 1, :mode => 'biz_offer', :import_mail_id => @import_mail), :class => :analysis_mail_link %> | 
+<%= link_to "人材所属作成", url_for(:controller => 'analysis_template', :action => 'list', :popup => 1, :mode => 'bp_member', :import_mail_id => @import_mail), :class => :analysis_mail_link %> | 
+<%= link_to "取引先作成", url_for(:controller => 'business_partner', :action => 'new', :popup => 1, :import_mail_id => @import_mail), :class => :analysis_mail_link %> | 
 
 <table class="show_table">
 <% if @import_mail.business_partner %>
@@ -42,7 +42,7 @@
 </tr>
 
 <tr>
-  <td colspan=2><pre><%=h(@import_mail.mail_body) %></pre></td>
+  <td colspan=2><pre id="mail_body"><%=h(@import_mail.mail_body) %></pre></td>
 </tr>
 
 </table>
@@ -67,3 +67,44 @@
 
   <p></p>
 <%= link_or_back '戻る', :action => 'list' %>
+
+<script type="text/javascript">
+<!--
+
+// メールの本文がユーザに選択されている場合、その部分を解析テンプレートに渡す
+$(".analysis_mail_link").bind('click', function(event) {
+  var selectedText = null;
+  var selectionStart = null;
+  var selectionEnd = null;
+  var url = $(this).attr('href');
+
+  if (window.getSelection) {
+    var selection = window.getSelection();
+    selectedText = selection.toString();
+    selectionStart = selection.anchorOffset;
+    selectionEnd = selection.focusOffset;
+  } else if (document.selection) {  // for IE
+    range = document.selection.createRange();
+    selectedText = range.toString();
+    selectionStart = range.startOffset;
+    selectionEnd = range.endOffset;
+  }
+
+  // メールの文章が範囲選択されている場合
+  if (selectedText && $("#mail_body").text().indexOf(selectedText) != -1) {
+    if (!confirm("選択した本文で" + $(this).text() + "を行います")) {
+      event.preventDefault();
+      return false;
+    }
+    url += '&from=' + selectionStart + '&end=' + selectionEnd;
+  }
+
+  // 別ウインドウで表示
+  disp_wide(url);
+
+  event.preventDefault();
+  return false;
+});
+
+// -->
+</script>
