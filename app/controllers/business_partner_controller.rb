@@ -12,8 +12,7 @@ class BusinessPartnerController < ApplicationController
   def set_conditions
     session[:business_partner_search] = {
       :sales_code => params[:sales_code],
-      :business_partner_code => params[:business_partner_code],
-      :business_partner_name_kana => params[:business_partner_name_kana],
+      :business_partner_name => params[:business_partner_name],
       :self_flg => params[:self_flg],
       :eu_flg => params[:eu_flg],
       :upper_flg => params[:upper_flg],
@@ -21,41 +20,41 @@ class BusinessPartnerController < ApplicationController
       }
   end
 
-  def make_conditions
+  def _make_conditions
     param = []
     incl = []
     sql = "business_partners.deleted = 0"
     order_by = ""
 
     if !(sales_code = session[:business_partner_search][:sales_code]).blank?
-      sql += " and sales_code = ?"
-      param << sales_code
+      sql += " and (business_partner_code = ? or sales_code = ?)"
+      param << sales_code << sales_code
     end
 
-    if !(business_partner_code = session[:business_partner_search][:business_partner_code]).blank?
-      sql += " and business_partner_code like ?"
-      param << "%#{business_partner_code}%"
+    if !(business_partner_name = session[:business_partner_search][:business_partner_name]).blank?
+      sql += " and (business_partner_name like ? or business_partner_name_kana like ?)"
+      param << "%#{business_partner_name}%" << "%#{business_partner_name}%"
     end
+    return [param.unshift(sql), incl]
+  end
 
-    if !(business_partner_name_kana = session[:business_partner_search][:business_partner_name_kana]).blank?
-      sql += " and business_partner_name_kana like ?"
-      param << "%#{business_partner_name_kana}%"
-    end
-
+  def make_conditions
+    cond, incl = _make_conditions
+    
     if !(self_flg = session[:business_partner_search][:self_flg]).blank?
-      sql += " and self_flg = 1"
+      cond[0] += " and self_flg = 1"
     end
 
     if !(eu_flg = session[:business_partner_search][:eu_flg]).blank?
-      sql += " and eu_flg = 1"
+      cond[0] += " and eu_flg = 1"
     end
 
     if !(upper_flg = session[:business_partner_search][:upper_flg]).blank?
-      sql += " and upper_flg = 1"
+      cond[0] += " and upper_flg = 1"
     end
 
     if !(down_flg = session[:business_partner_search][:down_flg]).blank?
-      sql += " and down_flg = 1"
+      cond[0] += " and down_flg = 1"
     end
 
     #return {:conditions => param.unshift(sql), :include => include, :per_page => current_user.per_page}
@@ -65,58 +64,46 @@ class BusinessPartnerController < ApplicationController
 # 1 = 1 or self_flg = ? or eu_flg = ? or upper_flg = ? or down_flg = ?
 
   def make_popup_conditions(self_flg, eu_flg, upper_flg, down_flg)
-    param = []
-    sql = "deleted = 0 and (1 = 0"
-    order_by = ""
+    cond, incl = _make_conditions
+#    param = []
+#    sql = "deleted = 0 and (1 = 0"
+#    order_by = ""
 
-    if self_flg == 1
-      sql += " or self_flg = 1"
+    cond[0] += " and (1 = 0"
+
+    if self_flg
+      cond[0] += " or self_flg = 1"
     end
 
-    if eu_flg == 1
-      sql += " or eu_flg = 1"
+    if eu_flg
+      cond[0] += " or eu_flg = 1"
     end
 
-    if upper_flg == 1
-      sql += " or upper_flg = 1"
+    if upper_flg
+      cond[0] += " or upper_flg = 1"
     end
 
-    if down_flg == 1
-      sql += " or down_flg = 1"
+    if down_flg
+      cond[0] += " or down_flg = 1"
     end
 
-    sql += ")"
+    cond[0] += ")"
 
-    return param.unshift(sql)
+    return [cond, incl]
   end
 
   def list
     session[:business_partner_search] ||= {}
     incl = []
-    flg = params[:flg]
-    if !flg.blank?
-      if flg == 'eu'
-        cond = make_popup_conditions(0,1,0,0)
-      elsif flg == 'upper'
-        cond = make_popup_conditions(0,0,1,0)
-      elsif flg == 'down'
-        cond = make_popup_conditions(0,0,0,1)
-      elsif flg == 'eu_or_upper'
-        cond = make_popup_conditions(0,1,1,0)
-      elsif flg == 'upper_or_down'
-        cond = make_popup_conditions(0,0,1,1)
-      else
-        # ありえないけど念のため
-        cond, incl = make_conditions
-      end
+    if params[:search_button]
+      set_conditions
+    elsif params[:clear_button]
+      session[:business_partner_search] = {}
+    end
+    if !params[:flg].blank?
+      f = params[:flg].split(",")
+      cond, incl = make_popup_conditions(f.include?("self"),f.include?("eu"),f.include?("down"),f.include?("upper"))
     else
-      if request.post?
-        if params[:search_button]
-          set_conditions
-        elsif params[:clear_button]
-          session[:business_partner_search] = {}
-        end
-      end
       cond, incl = make_conditions
     end
     #@business_partner_pages, @business_partners = paginate(:business_partners, cond)
