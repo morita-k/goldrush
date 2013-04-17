@@ -26,7 +26,7 @@
 <% for import_mail in @import_mails %>
   <tr <%= "bgcolor = #999999" if !import_mail.wanted? %> id="tr_<%= import_mail.id %>">
     <td><%=h import_mail.id %></td>
-    <td><div style="overflow: hidden;height:1.5em;"><%=link_to_if !import_mail.business_partner_id.blank?, import_mail.mail_sender_name, :controller => :business_partner, :action => :show, :id => import_mail.business_partner_id %></div></td>
+    <td style="overflow: hidden"><div style="overflow: hidden;height:1.5em;width:25em"><div style="width:1000px;"><%=link_to_if !import_mail.business_partner_id.blank?, import_mail.mail_sender_name, :controller => :business_partner, :action => :show, :id => import_mail.business_partner_id %></div></div></td>
     <td><div style="overflow: hidden;height:1.5em;"><%= link_to h(import_mail.mail_subject), :action => :show, :id => import_mail, :back_to => request_url %></div></td>
     <td><%=h _time(import_mail.received_at) %></td>
     <td align=center><%=h import_mail.attachment? ? "○" : "" %></td>

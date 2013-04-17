@@ -22,7 +22,7 @@
   <p>
     <label for="business_partner_name">面談取引先</label><br />
     <%= text_field_tag 'business_partner_name', @interview.interview_bp.blank? ? "" : @interview.interview_bp.business_partner_name, :readOnly => true, :style => "background-color: silver;", :size => 30 %>
-    <input type=button value='...' onClick="disp_wide('<%=url_for :controller => 'business_partner', :action => 'list', :popup =>1, :flg => 'eu_or_upper' %>');return false;" />
+    <input type=button value='...' onClick="disp_wide('<%=url_for :controller => 'business_partner', :action => 'list', :popup =>1, :flg => 'eu,upper' %>');return false;" />
     <input type=button value='クリア' onClick="clearInterviewBp();return false;" />
   </p>
   <%= hidden_field 'interview', 'interview_bp_id' %>

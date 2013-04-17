@@ -3,14 +3,12 @@
 <%= form_tag_popup_mode do %>
 <table>
   <tr>
-    <td style="text-align: right">営業コード:</td>
-    <td><%= text_field_tag 'sales_code', session[:business_partner_search] && session[:business_partner_search][:sales_code] %>　</td>
-    <td style="text-align: right">取引先コード:</td>
-    <td><%= text_field_tag 'business_partner_code', session[:business_partner_search] && session[:business_partner_search][:business_partner_code] %></td>
+    <th style="text-align: right">コード(営業|取引|販管):</td>
+    <td><%= text_field_tag 'sales_code', session[:business_partner_search] && session[:business_partner_search][:sales_code], :size => 60 %>　</td>
   </tr>
   <tr>
-    <td style="text-align: right">取引先名（カナ）:</td>
-    <td><%= text_field_tag 'business_partner_name_kana', session[:business_partner_search] && session[:business_partner_search][:business_partner_name_kana] %></td>
+    <th style="text-align: right">取引先名（カナ）:</td>
+    <td><%= text_field_tag 'business_partner_name', session[:business_partner_search] && session[:business_partner_search][:business_partner_name], :size => 60 %></td>
   </tr>
   <% if !popup? %>
     <tr>
@@ -22,6 +20,8 @@
         <%= check_box_tag 'down_flg', 1, session[:business_partner_search][:down_flg].to_i == 1 %> 下流
       </td>
     </tr>
+  <% else %>
+    <%= hidden_field_tag 'flg', params[:flg] %>
   <% end %>
 </table>
 <%= hidden_field_tag :flg, params[:flg] %>
