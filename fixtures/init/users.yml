@@ -1,7 +1,7 @@
 users_1:
   id: 1
   owner_id: 
-  login: "system@aaa.com"
+  login: "system"
   fullname: ""
   shortname: ""
   nickname: "システム"

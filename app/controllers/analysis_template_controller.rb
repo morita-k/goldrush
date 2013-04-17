@@ -55,15 +55,11 @@ class AnalysisTemplateController < ApplicationController
       @analysis_template.analysis_template_type = params[:mode]
       set_user_column @analysis_template
       @analysis_template.save!
-      
-      if params[:mode] == "biz_offer"
-        create_analysis_template_item("businesses", @analysis_template.id)
-        create_analysis_template_item("biz_offers", @analysis_template.id)
-      elsif params[:mode] == "bp_member"
-        create_analysis_template_item("human_resources", @analysis_template.id)
-        create_analysis_template_item("bp_members", @analysis_template.id)
+      items = get_items(params[:mode], params)
+      items.each do |item|
+        item.analysis_template_id = @analysis_template.id
+        item.save!
       end
-      
     end # transaction
     
     flash[:notice] = 'AnalysisTemplate was successfully created.'
@@ -76,7 +72,8 @@ class AnalysisTemplateController < ApplicationController
       @human_resource_column_names = get_column_names("human_resources")
       @bp_member_column_names = get_column_names("bp_members")
     end
-    render :action => 'new'
+    @item_value_map = get_item_value_map(get_items(params[:mode], params))
+    render :action => 'new', :back_to => back_to
   end
 
   def edit
@@ -90,34 +87,40 @@ class AnalysisTemplateController < ApplicationController
       @human_resource_column_names = get_column_names("human_resources")
       @bp_member_column_names = get_column_names("bp_members")
     end
-    @item_value_map = {}
-    @analysis_template.analysis_template_items.each do |item|
-      @item_value_map[item.target_table_name + '.' + item.target_column_name] = item
-    end
+    @item_value_map = get_item_value_map(@analysis_template.analysis_template_items)
   end
 
   def update
     ActiveRecord::Base.transaction do
       @analysis_template = AnalysisTemplate.find(params[:id], :conditions =>["deleted = 0"])
+      @mode = @analysis_template.analysis_template_type
       @analysis_template.attributes = params[:analysis_template]
       set_user_column @analysis_template
       @analysis_template.save!
 
-      if params[:mode] == "biz_offer"
-        update_analysis_template_item("businesses", @analysis_template.id)
-        update_analysis_template_item("biz_offers", @analysis_template.id)
-      elsif params[:mode] == "bp_member"
-        update_analysis_template_item("human_resources", @analysis_template.id)
-        update_analysis_template_item("bp_members", @analysis_template.id)
+      # delete -> insert items
+      delete_analysis_template_item(@analysis_template.id)
+      items = get_items(@mode, params)
+      items.each do |item|
+        item.analysis_template_id = @analysis_template.id
+        item.save!
       end
-
     end # transaction
 
     flash[:notice] = 'AnalysisTemplate was successfully updated.'
 
     redirect_to(params[:back_to] || {:action => :show, :id => @analysis_template})
   rescue ActiveRecord::RecordInvalid
-    render :action => 'edit'
+    if @mode == "biz_offer"
+      @business_column_names = get_column_names("businesses")
+      @biz_offer_column_names = get_column_names("biz_offers")
+    elsif @mode == "bp_member"
+      @human_resource_column_names = get_column_names("human_resources")
+      @bp_member_column_names = get_column_names("bp_members")
+    end
+    @item_value_map = get_item_value_map(get_items(@mode, params))
+
+    render :action => 'edit', :id => @analysis_template.id, :back_to => back_to
   end
 
   def destroy
@@ -146,38 +149,54 @@ private
     end
     return column_names
   end
+
+  def get_item_value_map(analysis_template_items)
+    item_value_map = {}
+    
+    analysis_template_items.each do |item|
+      item_value_map[item.target_table_name + '.' + item.target_column_name] = item
+    end
+    item_value_map
+  end
+
+  def get_items(mode, _params)
+    items = if mode == "biz_offer"
+        create_analysis_template_item("businesses", _params).concat(
+            create_analysis_template_item("biz_offers", _params))
+    elsif mode == "bp_member"
+        create_analysis_template_item("human_resources", _params).concat(
+            create_analysis_template_item("bp_members", _params))
+    end
+  end
   
-  def create_analysis_template_item(target_table_name, analysis_template_id)
+  def create_analysis_template_item(target_table_name, _params)
     target_column_names = AnalysisTemplateItem.get_target_column_names(target_table_name)
     
-    target_column_names.each do |target_column_name|
+    target_column_names.collect do |target_column_name|
 
-      if !params["analysis_template_item_#{target_table_name}_#{target_column_name}_pattern"].blank?
+      if !_params["analysis_template_item_#{target_table_name}_#{target_column_name}_pattern"].blank?
         # パターンが入力されてたら保存対象
-        analysis_template_item = AnalysisTemplateItem.new #(params["analysis_template_item_#{target_table_name}_#{target_column_name}"])
+        analysis_template_item = AnalysisTemplateItem.new #(_params["analysis_template_item_#{target_table_name}_#{target_column_name}"])
         
-        analysis_template_item.analysis_template_id = analysis_template_id
+#        analysis_template_item.analysis_template_id = analysis_template_id
         analysis_template_item.analysis_template_item_name =
-            params["analysis_template_item_#{target_table_name}_#{target_column_name}_analysis_template_item_name"]
+            _params["analysis_template_item_#{target_table_name}_#{target_column_name}_analysis_template_item_name"]
         analysis_template_item.pattern =
-            params["analysis_template_item_#{target_table_name}_#{target_column_name}_pattern"]
+            _params["analysis_template_item_#{target_table_name}_#{target_column_name}_pattern"]
         analysis_template_item.ignore_flg =
-            params["analysis_template_item_#{target_table_name}_#{target_column_name}_ignore_flg"].blank? ? 0 : 1
+            _params["analysis_template_item_#{target_table_name}_#{target_column_name}_ignore_flg"].blank? ? 0 : 1
         analysis_template_item.target_table_name = target_table_name
         analysis_template_item.target_column_name = target_column_name
 
         set_user_column analysis_template_item
-        analysis_template_item.save!
+#        analysis_template_item.save!
+        analysis_template_item
       end
-    end
+
+    end.compact
   end
 
-  def update_analysis_template_item(target_table_name, analysis_template_id)
-    delete_analysis_template_item(target_table_name, analysis_template_id)
-    create_analysis_template_item(target_table_name, analysis_template_id)
-  end
-
-  def delete_analysis_template_item(target_table_name, analysis_template_id)
-    AnalysisTemplateItem.delete_all(:target_table_name => target_table_name, :analysis_template_id => analysis_template_id)
+  def delete_analysis_template_item(analysis_template_id)
+    AnalysisTemplateItem.delete_all(:analysis_template_id => analysis_template_id)
   end
 end
