@@ -58,7 +58,7 @@ class BusinessPartnerController < ApplicationController
     end
 
     #return {:conditions => param.unshift(sql), :include => include, :per_page => current_user.per_page}
-    return [param.unshift(sql), incl]
+    return [cond, incl]
   end
 
 # 1 = 1 or self_flg = ? or eu_flg = ? or upper_flg = ? or down_flg = ?
