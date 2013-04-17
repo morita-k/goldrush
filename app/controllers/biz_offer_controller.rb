@@ -46,7 +46,18 @@ class BizOfferController < ApplicationController
       @biz_offer.import_mail = import_mail
       @biz_offer.business_partner_id = import_mail.business_partner_id
       @biz_offer.bp_pic_id = import_mail.bp_pic_id
-      AnalysisTemplate.analyze(params[:template_id], import_mail, [@biz_offer, @business]) unless params[:template_id].blank?
+
+      if !params[:template_id].blank?
+        if params[:from].blank? || params[:end].blank?
+          AnalysisTemplate.analyze(params[:template_id], import_mail, [@biz_offer, @business])
+        else
+          AnalysisTemplate.analyze_content(
+            params[:template_id],
+            import_mail.mail_body[params[:from], params[:end]],
+            [@biz_offer, @business]
+          )
+        end
+      end
     end
   end
 
