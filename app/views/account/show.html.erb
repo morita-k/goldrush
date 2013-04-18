@@ -46,11 +46,11 @@
 </tr>
 <tr>
   <th><%=getLongName('employees','entry_date')%></th>
-  <td><%=h @user.employee.entry_date.to_date if @user.employee.entry_date != nil %></td>
+  <td><%=h _time(@user.employee.entry_date) %></td>
 </tr>
 <tr>
   <th><%=getLongName('employees','resignation_date')%></th>
-  <td><%=h @user.employee.resignation_date.to_date if @user.employee.resignation_date != nil %></td>
+  <td><%=h _time(@user.employee.resignation_date) %></td>
 </tr>
 <tr>
   <th><%=getLongName('employees','resignation_reason')%></th>
@@ -99,7 +99,7 @@
 <caption style="font-size:14px"><b>個人情報</b></caption>
 <tr>
   <th><%=getLongName('employees','birthday_date')%></th>
-  <td><%=h @user.employee.birthday_date.to_date if @user.employee.birthday_date != nil %></td>
+  <td><%=h _time(@user.employee.birthday_date) %></td>
 </tr>
 <tr>
   <th><%=getLongName('employees','sex_type')%></th>

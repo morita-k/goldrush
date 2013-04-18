@@ -16,15 +16,15 @@
 
   <tr>
     <th><%=_("User|Login")%>(*)</th>
-    <td><%= @f.text_field :login, :size => 30 %></td>
+    <td><%= f.text_field :login, :size => 30 %></td>
   </tr>
   <tr>
     <th><%=_("User|Crypted password")%>(*)</th>
-    <td><%= @f.password_field :password %></td>
+    <td><%= f.password_field :password %></td>
   </tr>
   <tr>
     <th><%=_("Confirm Password")%>(*)</th>
-    <td><%= @f.password_field :password_confirmation %></td>
+    <td><%= f.password_field :password_confirmation %></td>
   </tr>
   <tr>
     <th>アクセス権限(*)</th>
@@ -41,6 +41,10 @@
 <table class="input_table">
 <caption style="font-size:14px"><b>社員情報</b></caption>
 <tr>
+  <th><%=getLongName('employees','employee_code')%>(*)</th>
+  <td><%= text_field 'employee', 'employee_code'  %></td>
+</tr>
+<tr>
   <th><%=getLongName('employees','insurance_code')%>(*)</th>
   <td><%= text_field 'employee', 'insurance_code'  %></td>
 </tr>
@@ -55,6 +59,10 @@
 <tr>
   <th>社員氏名略名</th>
   <td><%= text_field 'employee', 'employee_short_name'  %></td>
+</tr>
+<tr>
+  <th><%=getLongName('employees','employee_type')%></th>
+  <td><%= select 'employee', 'employee_type', $TYPE_CONDITIONS['employee_type'] %></td>
 </tr>
 <tr>
   <th>部署</th>

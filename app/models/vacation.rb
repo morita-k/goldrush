@@ -69,7 +69,7 @@ class Vacation < ActiveRecord::Base
     vacation.save!
     # 初年度の計算
     today = date
-    today = today.last_year if today.month < 4 # 1～3月なら、1マイナス
+    today = today.prev_year if today.month < 4 # 1～3月なら、1マイナス
     conf_year_start_date = SysConfig.get_year_start_date.value1
     process_date = Time.parse(today.year.to_s + '/' + conf_year_start_date).to_date
     # 新年度分、年次有給の付与

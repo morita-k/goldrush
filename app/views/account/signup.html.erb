@@ -1,14 +1,14 @@
 <h1>社員情報の新規登録</h1>
 
-<%=
+<%
   opt = Hash.new
   opt[:action] = 'signup'
   opt[:only_path] = false
-  opt[:protocol] = 'https://' if ENV['HTTPS_ENABLED']
-  form_for :user, :url => opt, :html => { :ENCTYPE => 'multipart/form-data' } do |@f| 
- %>
+  opt[:protocol] = 'https://' if ENV['HTTPS_ENABLED'] %>
+<%= form_for :user, :url => opt, :html => { :ENCTYPE => 'multipart/form-data' } do |f| 
+%>
   
-  <%= render :partial => 'form' %>
+  <%= render :partial => 'form', :locals => {:f => f} %>
   <%= submit_tag "登録", :onclick => "var ok1, ok2, ok3; ok1 = validateDate($('employee_entry_date').val());if (ok1) ok2 = validateDate($('employee_resignation_date'));if (ok1 && ok2) ok3 = validateDate($('employee_birthday_date').val()); return ok1 && ok2 && ok3;" %>
   
 <% end -%> 
