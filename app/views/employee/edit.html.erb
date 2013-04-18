@@ -1,10 +1,17 @@
 <h1><%=getLongName('table_name','employees')%>編集</h1>
 
 
-<%= form_tag({:action => 'edit', :id => @employee, :back_to => params[:back_to]} , {:multipart => true}) do %>
-  <%= render :partial => 'form' %>
-  <%= submit_tag '更新' %>
-<% end %>
+<%
+  opt = Hash.new
+  opt[:action] = 'edit'
+  opt[:only_path] = false
+  opt[:protocol] = 'https://' if ENV['HTTPS_ENABLED'] %>
+<%= form_for :user, :url => opt, :html => { :ENCTYPE => 'multipart/form-data' } do |f| 
+%>
+  
+  <%= render :partial => 'account/form', :locals => {:f => f} %>
+  <%= submit_tag "登録", :onclick => "var ok1, ok2, ok3; ok1 = validateDate($('employee_entry_date').val());if (ok1) ok2 = validateDate($('employee_resignation_date'));if (ok1 && ok2) ok3 = validateDate($('employee_birthday_date').val()); return ok1 && ok2 && ok3;" %>
+  
+<% end -%> 
 
-<%= link_to '表示', :action => 'show', :id => @employee %> |
-<%= link_to '一覧に戻る', :action => 'list' %>
+<%= link_or_back '戻る', :action => 'list' %>

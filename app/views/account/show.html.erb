@@ -21,6 +21,10 @@
 <table class="show_table">
 <caption style="font-size:14px"><b>社員情報</b></caption>
 <tr>
+  <th><%=getLongName('employees','employee_code')%></th>
+  <td><%=h @user.employee.employee_code %></td>
+</tr>
+<tr>
   <th><%=getLongName('employees','insurance_code')%></th>
   <td><%=h @user.employee.insurance_code %></td>
 </tr>
@@ -35,6 +39,10 @@
 <tr>
   <th>社員氏名略名</th>
   <td><%=h @user.employee.employee_short_name %></td>
+</tr>
+<tr>
+  <th><%=getLongName('employees','employee_type')%></th>
+  <td><%=h @user.employee.employee_type_name %></td>
 </tr>
 <tr>
   <th>部署</th>

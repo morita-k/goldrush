@@ -157,8 +157,8 @@ class EmployeeController < ApplicationController
       # アップロードファイルの保存
       store_upload_file
 
-      @employee.employee_code = @employee.insurance_code.to_i + 9800
-      old_employee = Employee.find(@user.employee.id)
+#      @employee.employee_code = @employee.insurance_code.to_i + 9800
+#      old_employee = Employee.find(@user.employee.id)
 
       @employee.save!
 
