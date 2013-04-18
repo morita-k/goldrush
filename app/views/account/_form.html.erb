@@ -1,15 +1,9 @@
-<script type="text/javascript">
-<!--
-  var cal1 = new JKL.Calendar("calDisplay1","","employee[entry_date]");
-  var cal2 = new JKL.Calendar("calDisplay2","","employee[resignation_date]");
-  var flgCal1 = true;
-  var flgCal2 = true;
-//-->
-</script>
-
 <%= error_messages_for :user %>
 <%= error_messages_for :employee %>
 <!--[form:user]-->
+
+<%= hidden_field_tag :back_to, back_to %>
+<%= hidden_field :employee, :lock_version %>
 
 <table class="input_table">
   <caption style="font-size:14px"><b>ログイン情報</b></caption>
