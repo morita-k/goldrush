@@ -118,7 +118,16 @@ class BpMemberController < ApplicationController
       import_mail = ImportMail.find(params[:import_mail_id])
       @bp_member.business_partner_id = import_mail.business_partner_id
       @bp_member.bp_pic_id = import_mail.bp_pic_id
-      AnalysisTemplate.analyze(params[:template_id], import_mail, [@bp_member, @human_resource])
+
+      if params[:from].blank? || params[:end].blank?
+        AnalysisTemplate.analyze(params[:template_id], import_mail, [@bp_member, @human_resource])
+      else
+        AnalysisTemplate.analyze_content(
+          params[:template_id],
+          import_mail.mail_body[params[:from].to_i .. params[:end].to_i],
+          [@bp_member, @human_resource]
+        )
+      end
     end
   end
 
