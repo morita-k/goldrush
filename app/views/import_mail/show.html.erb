@@ -74,10 +74,11 @@
 // メールの本文がユーザに選択されている場合、その部分を解析テンプレートに渡す
 $(".analysis_mail_link").bind('click', function(event) {
   var selectedText = null;
-  var selectionStart = null;
-  var selectionEnd = null;
+  var selectionStart = 0;
+  var selectionEnd = 0;
   var url = $(this).attr('href');
 
+  // 選択されたテキスト、選択開始位置、選択終了位置を取得
   if (window.getSelection) {
     var selection = window.getSelection();
     selectedText = selection.toString();
@@ -88,6 +89,13 @@ $(".analysis_mail_link").bind('click', function(event) {
     selectedText = range.toString();
     selectionStart = range.startOffset;
     selectionEnd = range.endOffset;
+  }
+
+  // 下から上に選択された場合の対策
+  if (selectionStart > selectionEnd) {
+    var tmp = selectionStart;
+    selectionStart = selectionEnd;
+    selectionEnd = tmp;
   }
 
   // メールの文章が範囲選択されている場合
