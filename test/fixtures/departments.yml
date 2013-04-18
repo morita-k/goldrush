@@ -1,0 +1,39 @@
+departments_1:
+  id: 1
+  owner_id: 
+  department_code: "01"
+  department_name: "経営室"
+  department_shortname: "経営"
+  display_order: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted: 0
+departments_2:
+  id: 2
+  owner_id: 
+  department_code: "02"
+  department_name: "営業部"
+  department_shortname: "営業"
+  display_order: 2
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted: 0
+departments_3:
+  id: 3
+  owner_id:  
+  department_code: "03"
+  department_name: "開発部"
+  department_shortname: "開発"
+  display_order: 3
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted: 0

@@ -1,0 +1,374 @@
+users_1:
+  id: 1
+  owner_id: 
+  login: "system@aaa.com"
+  fullname: ""
+  shortname: ""
+  nickname: "システム"
+  access_level_type: "super"
+  per_page: 50
+  email: "system@aaa.com"
+  encrypted_password: "$2a$10$ojHlby3zaA6ux5w8/1QINO9ALaPwYboB1eYxSXq4G6ZAaVmaTvadi"
+  reset_password_token: "NULL"
+  reset_password_sent_at: NULL
+  remember_created_at: NULL
+  sign_in_count: 0
+  current_sign_in_at: 
+  last_sign_in_at: 
+  current_sign_in_ip: ""
+  last_sign_in_ip: ""
+  confirmation_token: ""
+  confirmed_at: 
+  confirmation_sent_at: 
+  unconfirmed_email: ""
+  failed_attempts: 0
+  unlock_token: ""
+  locked_at: 
+  authentication_token: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+users_2:
+  id: 2
+  owner_id: 
+  login: "user1@aaa.com"
+  fullname: ""
+  shortname: ""
+  nickname: "USER1"
+  access_level_type: "normal"
+  per_page: 50
+  email: "user1@aaa.com"
+  encrypted_password: "$2a$10$ojHlby3zaA6ux5w8/1QINO9ALaPwYboB1eYxSXq4G6ZAaVmaTvadi"
+  reset_password_token: "NULL"
+  reset_password_sent_at: NULL
+  remember_created_at: NULL
+  sign_in_count: 0
+  current_sign_in_at: 
+  last_sign_in_at: 
+  current_sign_in_ip: ""
+  last_sign_in_ip: ""
+  confirmation_token: ""
+  confirmed_at: 
+  confirmation_sent_at: 
+  unconfirmed_email: ""
+  failed_attempts: 0
+  unlock_token: ""
+  locked_at: 
+  authentication_token: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+users_3:
+  id: 3
+  owner_id: 
+  login: "user2@aaa.com"
+  fullname: ""
+  shortname: ""
+  nickname: "USER2"
+  access_level_type: "normal"
+  per_page: 50
+  email: "user2@aaa.com"
+  encrypted_password: "$2a$10$ojHlby3zaA6ux5w8/1QINO9ALaPwYboB1eYxSXq4G6ZAaVmaTvadi"
+  reset_password_token: "NULL"
+  reset_password_sent_at: NULL
+  remember_created_at: NULL
+  sign_in_count: 0
+  current_sign_in_at: 
+  last_sign_in_at: 
+  current_sign_in_ip: ""
+  last_sign_in_ip: ""
+  confirmation_token: ""
+  confirmed_at: 
+  confirmation_sent_at: 
+  unconfirmed_email: ""
+  failed_attempts: 0
+  unlock_token: ""
+  locked_at: 
+  authentication_token: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+users_4:
+  id: 4
+  owner_id: 
+  login: "user3@aaa.com"
+  fullname: ""
+  shortname: ""
+  nickname: "USER3"
+  access_level_type: "normal"
+  per_page: 50
+  email: "user3@aaa.com"
+  encrypted_password: "$2a$10$ojHlby3zaA6ux5w8/1QINO9ALaPwYboB1eYxSXq4G6ZAaVmaTvadi"
+  reset_password_token: "NULL"
+  reset_password_sent_at: NULL
+  remember_created_at: NULL
+  sign_in_count: 0
+  current_sign_in_at: 
+  last_sign_in_at: 
+  current_sign_in_ip: ""
+  last_sign_in_ip: ""
+  confirmation_token: ""
+  confirmed_at: 
+  confirmation_sent_at: 
+  unconfirmed_email: ""
+  failed_attempts: 0
+  unlock_token: ""
+  locked_at: 
+  authentication_token: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+users_5:
+  id: 5
+  owner_id: 
+  login: "user4@aaa.com"
+  fullname: ""
+  shortname: ""
+  nickname: "USER4"
+  access_level_type: "normal"
+  per_page: 50
+  email: "user4@aaa.com"
+  encrypted_password: "$2a$10$ojHlby3zaA6ux5w8/1QINO9ALaPwYboB1eYxSXq4G6ZAaVmaTvadi"
+  reset_password_token: "NULL"
+  reset_password_sent_at: NULL
+  remember_created_at: NULL
+  sign_in_count: 0
+  current_sign_in_at: 
+  last_sign_in_at: 
+  current_sign_in_ip: ""
+  last_sign_in_ip: ""
+  confirmation_token: ""
+  confirmed_at: 
+  confirmation_sent_at: 
+  unconfirmed_email: ""
+  failed_attempts: 0
+  unlock_token: ""
+  locked_at: 
+  authentication_token: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+users_6:
+  id: 6
+  owner_id: 
+  login: "user5@aaa.com"
+  fullname: ""
+  shortname: ""
+  nickname: "USER5"
+  access_level_type: "normal"
+  per_page: 50
+  email: "user5@aaa.com"
+  encrypted_password: "$2a$10$ojHlby3zaA6ux5w8/1QINO9ALaPwYboB1eYxSXq4G6ZAaVmaTvadi"
+  reset_password_token: "NULL"
+  reset_password_sent_at: NULL
+  remember_created_at: NULL
+  sign_in_count: 0
+  current_sign_in_at: 
+  last_sign_in_at: 
+  current_sign_in_ip: ""
+  last_sign_in_ip: ""
+  confirmation_token: ""
+  confirmed_at: 
+  confirmation_sent_at: 
+  unconfirmed_email: ""
+  failed_attempts: 0
+  unlock_token: ""
+  locked_at: 
+  authentication_token: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+users_7:
+  id: 7
+  owner_id: 
+  login: "user6@aaa.com"
+  fullname: ""
+  shortname: ""
+  nickname: "USER6"
+  access_level_type: "normal"
+  per_page: 50
+  email: "user6@aaa.com"
+  encrypted_password: "$2a$10$ojHlby3zaA6ux5w8/1QINO9ALaPwYboB1eYxSXq4G6ZAaVmaTvadi"
+  reset_password_token: "NULL"
+  reset_password_sent_at: NULL
+  remember_created_at: NULL
+  sign_in_count: 0
+  current_sign_in_at: 
+  last_sign_in_at: 
+  current_sign_in_ip: ""
+  last_sign_in_ip: ""
+  confirmation_token: ""
+  confirmed_at: 
+  confirmation_sent_at: 
+  unconfirmed_email: ""
+  failed_attempts: 0
+  unlock_token: ""
+  locked_at: 
+  authentication_token: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+users_8:
+  id: 8
+  owner_id: 
+  login: "user7@aaa.com"
+  fullname: ""
+  shortname: ""
+  nickname: "USER7"
+  access_level_type: "normal"
+  per_page: 50
+  email: "user7@aaa.com"
+  encrypted_password: "$2a$10$ojHlby3zaA6ux5w8/1QINO9ALaPwYboB1eYxSXq4G6ZAaVmaTvadi"
+  reset_password_token: "NULL"
+  reset_password_sent_at: NULL
+  remember_created_at: NULL
+  sign_in_count: 0
+  current_sign_in_at: 
+  last_sign_in_at: 
+  current_sign_in_ip: ""
+  last_sign_in_ip: ""
+  confirmation_token: ""
+  confirmed_at: 
+  confirmation_sent_at: 
+  unconfirmed_email: ""
+  failed_attempts: 0
+  unlock_token: ""
+  locked_at: 
+  authentication_token: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+users_9:
+  id: 9
+  owner_id: 
+  login: "user8@aaa.com"
+  fullname: ""
+  shortname: ""
+  nickname: "USER8"
+  access_level_type: "normal"
+  per_page: 50
+  email: "user8@aaa.com"
+  encrypted_password: "$2a$10$ojHlby3zaA6ux5w8/1QINO9ALaPwYboB1eYxSXq4G6ZAaVmaTvadi"
+  reset_password_token: "NULL"
+  reset_password_sent_at: NULL
+  remember_created_at: NULL
+  sign_in_count: 0
+  current_sign_in_at: 
+  last_sign_in_at: 
+  current_sign_in_ip: ""
+  last_sign_in_ip: ""
+  confirmation_token: ""
+  confirmed_at: 
+  confirmation_sent_at: 
+  unconfirmed_email: ""
+  failed_attempts: 0
+  unlock_token: ""
+  locked_at: 
+  authentication_token: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+users_10:
+  id: 10
+  owner_id: 
+  login: "user9@aaa.com"
+  fullname: ""
+  shortname: ""
+  nickname: "USER9"
+  access_level_type: "normal"
+  per_page: 50
+  email: "user9@aaa.com"
+  encrypted_password: "$2a$10$ojHlby3zaA6ux5w8/1QINO9ALaPwYboB1eYxSXq4G6ZAaVmaTvadi"
+  reset_password_token: "NULL"
+  reset_password_sent_at: NULL
+  remember_created_at: NULL
+  sign_in_count: 0
+  current_sign_in_at: 
+  last_sign_in_at: 
+  current_sign_in_ip: ""
+  last_sign_in_ip: ""
+  confirmation_token: ""
+  confirmed_at: 
+  confirmation_sent_at: 
+  unconfirmed_email: ""
+  failed_attempts: 0
+  unlock_token: ""
+  locked_at: 
+  authentication_token: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+users_11:
+  id: 11
+  owner_id: 
+  login: "user10@aaa.com"
+  fullname: ""
+  shortname: ""
+  nickname: "USER10"
+  access_level_type: "normal"
+  per_page: 50
+  email: "user10@aaa.com"
+  encrypted_password: "$2a$10$ojHlby3zaA6ux5w8/1QINO9ALaPwYboB1eYxSXq4G6ZAaVmaTvadi"
+  reset_password_token: "NULL"
+  reset_password_sent_at: NULL
+  remember_created_at: NULL
+  sign_in_count: 0
+  current_sign_in_at: 
+  last_sign_in_at: 
+  current_sign_in_ip: ""
+  last_sign_in_ip: ""
+  confirmation_token: ""
+  confirmed_at: 
+  confirmation_sent_at: 
+  unconfirmed_email: ""
+  failed_attempts: 0
+  unlock_token: ""
+  locked_at: 
+  authentication_token: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0

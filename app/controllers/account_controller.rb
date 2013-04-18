@@ -172,14 +172,14 @@ class AccountController < ApplicationController
       @user.per_page = 50
       @user.created_user = 'signup'
       @user.updated_user = 'signup'
-      @user.make_activation_code if ENV['ENABLE_MAIL_ACTIVATE']
-      @user.activate_url = url_for(:controller => 'account', :action => 'activate', :id => @user.activation_code)
+#      @user.make_activation_code if ENV['ENABLE_MAIL_ACTIVATE']
+#      @user.activate_url = url_for(:controller => 'account', :action => 'activate', :id => @user.activation_code)
 
       parseTimes(params)
       @employee = Employee.new(params[:employee])
       @user.save!
 
-      @employee.employee_code = @employee.insurance_code.to_i + 9800
+#      @employee.employee_code = @employee.insurance_code.to_i + 9800
 
       @employee.user_id = @user.id
       @employee.save!
