@@ -25,8 +25,8 @@
   </tr>
   <tr>
     <th><%= f.label :mail_from_name, getLongName('delivery_mails', 'mail_from_name') %></th>
-    <td><%=h (current_user.fullname + ' <' + current_user.email + '>') %></td>
-    <%= hidden_field_tag 'mail_from_name', current_user.fullname + ' <' + current_user.email + '>' %>
+    <td><%=h (current_user.employee.employee_name + ' <' + current_user.email + '>') %></td>
+    <%= hidden_field_tag 'mail_from_name', (current_user.employee.employee_name + ' <' + current_user.email + '>') %>
   </tr>
   <tr>
     <th><%= f.label :mail_from, getLongName('delivery_mails', 'mail_from') %></th>
