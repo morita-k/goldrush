@@ -63,6 +63,7 @@ class AnalysisTemplate::MailParser
 
   def initialize(here_document)
     @mail_body_array = here_document.split(/\n/).reject{ |line| line == ""}
+    @brackets = {"【" => "】", "[" => '\]'}
   end
   
   def classification_by_indent
@@ -79,13 +80,32 @@ class AnalysisTemplate::MailParser
     }
     working_conditions.push(str) # ループで漏れる末端要素の追加
     working_conditions.reject!{ |t| t == ""}
+    p working_conditions
     
     # Refactoring and Hashing
     hash = Hash.new
     working_conditions.each { |c|
-      conditions_tag = c.split(/　|\s|:|：/)
-      conditions_tag.reject!{ |t| t == "" || t == "　" || t == " " || t == ":" || t == "："}
-      hash.store(conditions_tag.shift, conditions_tag.join("\n").lstrip)
+      tag = ""
+      conditions = ""
+      tag_and_conditions = []
+      
+      if c =~ /(:|：)/
+        tag_and_conditions = c.split($1)
+        tag = tag_and_conditions.shift.rstrip
+        conditions = tag_and_conditions.map{ |c| c.split(/　+|\s+/)}.join("\n").lstrip
+      elsif c =~ /(【|\[)/
+        c.scan(/(.*#{@brackets[$1]})[\s　]*(.*)/) { |s|
+          tag_and_conditions = s
+          tag = tag_and_conditions.shift
+          conditions = tag_and_conditions.join("\n").lstrip
+        }
+      else
+        tag_and_conditions = c.split(/　|\s|:|：/)
+        tag_and_conditions.reject!{ |t| t == "" || t == " " || t == "　"}
+        tag = tag_and_conditions.shift
+        conditions = tag_and_conditions.join("\n").lstrip
+      end
+      hash.store(tag, conditions)
     }
     hash
   end
