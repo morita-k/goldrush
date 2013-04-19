@@ -3242,7 +3242,7 @@ types_163:
   id: 166
   owner_id: 
   type_section: "payment_sight_type"
-  type_key: "next_next_10"
+  type_key: "next_next_5"
   long_name: "翌々月5日"
   short_name: "翌々5"
   other_name: "翌々月5日"
