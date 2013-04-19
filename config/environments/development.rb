@@ -36,19 +36,24 @@ GoldRush::Application.configure do
   # Expands the lines which load the assets
   config.assets.debug = true
 end
-
-ActionMailer::Base.delivery_method = :test
+ActionMailer::Base.delivery_method = :file
 ActionMailer::Base.perform_deliveries = true
 ActionMailer::Base.raise_delivery_errors = true
+
 ActionMailer::Base.smtp_settings = {
-  :enable_starttls_auto => true,  
-  :address            => 'smtp.gmail.com',
-  :port               => 587,
-  :domain             => 'gmail.com',
-  :authentication     => :plain,
-  :user_name          => 'ses_dev2@i.applicative.jp',
-  :password           => 'applicative**ses',
+  :address            => '192.168.22.2',
+  :domain             => 'dev.applicative.jp',
+}
+
+ActionMailer::Base.file_settings = {
+  :location => 'tmp/mails'
+}
+
+require 'pop3_client'
+Pop3Client.settings = {
+  :user_name  => 'ses_dev2@i.applicative.jp',
+  :password   => 'applicative**ses',
   :enable_tls => 1,
-  :pop_port => "995",
+  :pop_port   => "995",
   :pop_server => 'pop.gmail.com',
 }

@@ -1,63 +1,9 @@
 <h1><%= getLongName('table_name','delivery_mails')%> 詳細</h1>
 
-<!-- 配信メール詳細  -->
-<table class="show_table">
-  <tr>
-    <th><%= getLongName('delivery_mails', 'id') %></th>
-    <td><%= @delivery_mail.id %></td>
-  </tr>
-  <tr>
-    <th><%= getLongName('delivery_mails', 'owner_id') %></th>
-    <td><%= @delivery_mail.owner_id %></td>
-  </tr>
-  <tr>
-    <th><%= getLongName('delivery_mails', 'bp_pic_group_id') %></th>
-    <td><%= @delivery_mail.bp_pic_group_id %></td>
-  </tr>
-  <tr>
-    <th><%= getLongName('delivery_mails', 'mail_status_type') %></th>
-    <td><%= @delivery_mail.mail_status_type %></td>
-  </tr>
-  <tr>
-    <th><%= getLongName('delivery_mails', 'subject') %></th>
-    <td><%= @delivery_mail.subject %></td>
-  </tr>
-  <tr>
-    <th><%= getLongName('delivery_mails', 'content') %></th>
-    <td><%= @delivery_mail.content %></td>
-  </tr>
-  <tr>
-    <th><%= getLongName('delivery_mails', 'mail_from_name') %></th>
-    <td><%= @delivery_mail.mail_from_name %></td>
-  </tr>
-  <tr>
-    <th><%= getLongName('delivery_mails', 'mail_from') %></th>
-    <td><%= @delivery_mail.mail_from %></td>
-  </tr>
-  <tr>
-    <th><%= getLongName('delivery_mails', 'mail_cc') %></th>
-    <td><%= @delivery_mail.mail_cc %></td>
-  </tr>
-  <tr>
-    <th><%= getLongName('delivery_mails', 'mail_bcc') %></th>
-    <td><%= @delivery_mail.mail_bcc %></td>
-  </tr>
-  <tr>
-    <th><%= getLongName('delivery_mails', 'planned_setting_at') %></th>
-    <td><%= @delivery_mail.planned_setting_at %></td>
-  </tr>
-  <tr>
-    <th><%= getLongName('delivery_mails', 'mail_send_status_type') %></th>
-    <td><%= @delivery_mail.mail_send_status_type %></td>
-  </tr>
-  <tr>
-    <th><%= getLongName('delivery_mails', 'send_end_at') %></th>
-    <td><%= @delivery_mail.send_end_at %></td>
-  </tr>
-</table>
+<%= render 'show' %>
 
 <!-- 配信メール対象一覧  -->
-<h1><%= getLongName('table_name','delivery_mail_targets')%> 一覧</h1>
+<h2><%= getLongName('table_name','delivery_mail_targets')%> 一覧</h2>
 <table class="show_table">
   <tr>
     <th><%= getLongName('business_partners', 'business_partner_name') %></th>
@@ -84,11 +30,11 @@
         <% if @delivery_mail.mail_status_type == 'unsend' %>
           <td><%=
             back_to_link "削除",
-              url_for(:controller => :delivery_mail_targets,
+              {:controller => :delivery_mail_targets,
                 :action => :destroy,
                 :id => delivery_mail_target.id,
-                :authenticity_token => form_authenticity_token),
-                :method => :delete
+                :authenticity_token => form_authenticity_token},
+                :method => :delete, :confirm => "このレコードを削除します。よろしいですか？"
           %></td>
         <% end %>
       </tr>

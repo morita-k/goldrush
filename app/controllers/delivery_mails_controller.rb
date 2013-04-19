@@ -15,7 +15,7 @@ class DeliveryMailsController < ApplicationController
   # GET /delivery_mails/1.json
   def show
     @delivery_mail = DeliveryMail.find(params[:id])
-
+    @attachment_files = AttachmentFile.attachment_files("delivery_mails", @delivery_mail.id)
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @delivery_mail }
@@ -67,13 +67,16 @@ class DeliveryMailsController < ApplicationController
       begin
         set_user_column(@delivery_mail)
         @delivery_mail.save!
+        # 添付ファイルの保存
+        store_upload_file(@delivery_mail.id)
         
         format.html {
           redirect_to url_for(
             :controller => 'bp_pic_groups',
             :action => 'show',
             :id => @delivery_mail.bp_pic_group_id,
-            :delivery_mail_id => @delivery_mail.id
+            :delivery_mail_id => @delivery_mail.id,
+            :back_to => back_to
           ),
           notice: 'Delivery mail was successfully created.'
         }
@@ -145,6 +148,15 @@ class DeliveryMailsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to delivery_mails_url }
       format.json { head :no_content }
+    end
+  end
+private
+  def store_upload_file(parent_id)
+    [1,2,3,4,5].each do |i|
+      unless (upfile = params['attachment' + i.to_s]).blank?
+        af = AttachmentFile.new
+        af.create_and_store!(upfile, parent_id, upfile.original_filename, "delivery_mails")
+      end
     end
   end
 end

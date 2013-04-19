@@ -1,4 +1,4 @@
-<%= form_for(@delivery_mail) do |f| %>
+<%= form_for(@delivery_mail, :html => {:enctype => 'multipart/form-data'}) do |f| %>
 <%= back_to_field_tag %>
 <%= f.hidden_field :lock_version %>
   <% if @delivery_mail.errors.any? %>
@@ -40,6 +40,26 @@
   <tr>
     <th><%= f.label :mail_bcc, getLongName('delivery_mails', 'mail_bcc') %></th>
     <td><%= f.text_field :mail_bcc %></td>
+  </tr>
+  <tr>
+    <th><label for :attachment1>添付ファイル1</label></th>
+    <td><%= file_field_tag :attachment1 %></td>
+  </tr>
+  <tr>
+    <th><label for :attachment2>添付ファイル2</label></th>
+    <td><%= file_field_tag :attachment2 %></td>
+  </tr>
+  <tr>
+    <th><label for :attachment3>添付ファイル3</label></th>
+    <td><%= file_field_tag :attachment3 %></td>
+  </tr>
+  <tr>
+    <th><label for :attachment4>添付ファイル4</label></th>
+    <td><%= file_field_tag :attachment4 %></td>
+  </tr>
+  <tr>
+    <th><label for :attachment5>添付ファイル5</label></th>
+    <td><%= file_field_tag :attachment5 %></td>
   </tr>
   <tr>
     <% options = @select_options %>

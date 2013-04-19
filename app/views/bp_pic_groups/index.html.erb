@@ -11,7 +11,7 @@
   </tr>
 <% @bp_pic_groups.select{|group| group.deleted == 0}.each do |bp_pic_group| %>
   <tr>
-    <td><%= back_to_link bp_pic_group.bp_pic_group_name, bp_pic_group %></td>
+    <td><%= back_to_link bp_pic_group.counted_group_name, bp_pic_group %></td>
     <td><%= bp_pic_group.memo %></td>
     <td><%= back_to_link 'メール一覧', {:controller => :delivery_mails , :action => :index, :id => bp_pic_group.id }, :method => :get %></td>
     <td><%= back_to_link 'メール作成', {:controller => :delivery_mails , :action => :new, :id => bp_pic_group.id } %>
@@ -23,4 +23,4 @@
 
 <%= paginate(@bp_pic_groups) %>
 
-<%= back_to_link getLongName('table_name','bp_pic_groups') + ' の新規作成', new_bp_pic_group_path %>
+<%= back_to_link getLongName('table_name','bp_pic_groups') + ' の新規作成', :action => :new %>
