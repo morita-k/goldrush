@@ -18,7 +18,7 @@ class BpPicGroupsController < ApplicationController
     @called_by_delivery_mail_create = !@delivery_mail_id.blank?  # メール作成画面からの遷移かどうか
     
     @bp_pic_group = BpPicGroup.find(params[:id])
-        
+    
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @bp_pic_group }

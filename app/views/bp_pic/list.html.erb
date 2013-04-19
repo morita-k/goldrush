@@ -18,9 +18,9 @@
   <tr>
 <% if popup? %>
   <% if params[:mode]=='eu' %>
-    <td><%=link_to h(bp_pic.bp_pic_name), '#', :onClick => "setEuBpPic(#{bp_pic.id},'#{bp_pic.bp_pic_name}');return false;" %></td>
+    <td><%=link_to h(bp_pic.bp_pic_name), '#', :onClick => "setEuBpPicToParentWindow(#{bp_pic.id},'#{bp_pic.bp_pic_name}');return false;" %></td>
   <% else %>
-    <td><%=link_to h(bp_pic.bp_pic_name), '#', :onClick => "setBpPic(#{bp_pic.id},'#{bp_pic.bp_pic_name}');return false;" %></td>
+    <td><%=link_to h(bp_pic.bp_pic_name), '#', :onClick => "setBpPicToParentWindow(#{bp_pic.id},'#{bp_pic.bp_pic_name}');return false;" %></td>
   <% end %>
 <% else %>
     <td><%=h bp_pic.bp_pic_name %></td>
@@ -45,7 +45,7 @@
 <% else %>
 <script type="text/javascript">
 <!--
-function setBpPic(bp_pic_id, bp_pic_name) {
+function setBpPicToParentWindow(bp_pic_id, bp_pic_name) {
   if(window.opener.document.setBpPic){
     var bp_pic = new Object();
     bp_pic.id = bp_pic_id;
@@ -54,7 +54,7 @@ function setBpPic(bp_pic_id, bp_pic_name) {
   }
   window.close();
 }
-function setEuBpPic(bp_pic_id, bp_pic_name) {
+function setEuBpPicToParentWindow(bp_pic_id, bp_pic_name) {
   if(window.opener.document.setEuBpPic){
     var bp_pic = new Object();
     bp_pic.id = bp_pic_id;
