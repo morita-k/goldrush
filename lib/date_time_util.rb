@@ -1,6 +1,22 @@
 # -*- encoding: utf-8 -*-
 module DateTimeUtil
   
+  def hourminstr_to_sec(hourmin)
+    DateTimeUtil.hourminstr_to_sec(hourmin)
+  end
+  
+  def calHourMinuteFormat(sec)
+    DateTimeUtil.calHourMinuteFormat(sec)
+  end
+  
+  def convert10MinutesUnitUp(sec)
+    DateTimeUtil.convert10MinutesUnitUp(sec)
+  end
+
+  def convert10MinutesUnitDown(sec)
+    DateTimeUtil.convert10MinutesUnitDown(sec)
+  end
+
   def DateTimeUtil.calHourMinuteFormat(sec)
     hour = (((sec) / 3600)).truncate
     min = (((sec) % 3600) / 60).truncate

@@ -1,5 +1,6 @@
 types_1:
   id: 1
+  owner_id: 
   type_section: "logic_bind_type"
   type_key: "bind"
   long_name: "束縛"
@@ -15,9 +16,11 @@ types_1:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_2:
   id: 2
+  owner_id: 
   type_section: "logic_bind_type"
   type_key: "unbind"
   long_name: "非束縛"
@@ -33,9 +36,11 @@ types_2:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_3:
   id: 3
+  owner_id: 
   type_section: "access_level_type"
   type_key: "normal"
   long_name: "一般ユーザ"
@@ -51,9 +56,11 @@ types_3:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_4:
   id: 4
+  owner_id: 
   type_section: "access_level_type"
   type_key: "leader"
   long_name: "リーダー"
@@ -69,9 +76,11 @@ types_4:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_5:
   id: 5
+  owner_id: 
   type_section: "access_level_type"
   type_key: "personnel_department"
   long_name: "人事部"
@@ -87,9 +96,11 @@ types_5:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_6:
   id: 6
+  owner_id: 
   type_section: "access_level_type"
   type_key: "accounting"
   long_name: "経理部"
@@ -105,9 +116,11 @@ types_6:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_7:
   id: 7
+  owner_id: 
   type_section: "access_level_type"
   type_key: "super"
   long_name: "管理者権限"
@@ -123,9 +136,11 @@ types_7:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_8:
   id: 8
+  owner_id: 
   type_section: "auth_status_type"
   type_key: "unsend"
   long_name: "未送信"
@@ -141,9 +156,11 @@ types_8:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_9:
   id: 9
+  owner_id: 
   type_section: "auth_status_type"
   type_key: "send"
   long_name: "送信済"
@@ -159,9 +176,11 @@ types_9:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_10:
   id: 10
+  owner_id: 
   type_section: "auth_status_type"
   type_key: "authed"
   long_name: "確認済"
@@ -177,9 +196,11 @@ types_10:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_11:
   id: 11
+  owner_id: 
   type_section: "calendar_parent_type"
   type_key: "user"
   long_name: "ユーザー"
@@ -195,9 +216,11 @@ types_11:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_12:
   id: 12
+  owner_id: 
   type_section: "calendar_parent_type"
   type_key: "group"
   long_name: "グループ"
@@ -213,9 +236,11 @@ types_12:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_13:
   id: 13
+  owner_id: 
   type_section: "calendar_parent_type"
   type_key: "system"
   long_name: "システム"
@@ -231,9 +256,11 @@ types_13:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_14:
   id: 14
+  owner_id: 
   type_section: "calendar_parent_type"
   type_key: "template"
   long_name: "テンプレート"
@@ -249,9 +276,11 @@ types_14:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_15:
   id: 15
+  owner_id: 
   type_section: "calendar_event_type"
   type_key: "holiday"
   long_name: "祝日"
@@ -267,9 +296,11 @@ types_15:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_16:
   id: 16
+  owner_id: 
   type_section: "expense_type"
   type_key: "transportation_expense"
   long_name: "出張"
@@ -285,9 +316,11 @@ types_16:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_17:
   id: 17
+  owner_id: 
   type_section: "expense_type"
   type_key: "meeting_expense"
   long_name: "会議"
@@ -303,9 +336,11 @@ types_17:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_18:
   id: 18
+  owner_id: 
   type_section: "expense_type"
   type_key: "expense_account"
   long_name: "交際費"
@@ -321,9 +356,11 @@ types_18:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_19:
   id: 19
+  owner_id: 
   type_section: "expense_type"
   type_key: "book_expense"
   long_name: "書籍代"
@@ -339,9 +376,11 @@ types_19:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_20:
   id: 20
+  owner_id: 
   type_section: "expense_type"
   type_key: "equipment_expense"
   long_name: "備品代"
@@ -357,9 +396,11 @@ types_20:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_21:
   id: 21
+  owner_id: 
   type_section: "expense_type"
   type_key: "other_expense"
   long_name: "その他"
@@ -375,9 +416,11 @@ types_21:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_22:
   id: 22
+  owner_id: 
   type_section: "expense_type"
   type_key: "traffic_expense"
   long_name: "交通費"
@@ -393,9 +436,11 @@ types_22:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_23:
   id: 23
+  owner_id: 
   type_section: "expense_type"
   type_key: "food_expense"
   long_name: "食事代"
@@ -411,9 +456,11 @@ types_23:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_24:
   id: 24
+  owner_id: 
   type_section: "expense_type"
   type_key: "fee_expense"
   long_name: "謝礼"
@@ -429,9 +476,11 @@ types_24:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_25:
   id: 25
+  owner_id: 
   type_section: "working_type"
   type_key: "all_day_working"
   long_name: "全日出勤"
@@ -447,9 +496,11 @@ types_25:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_26:
   id: 26
+  owner_id: 
   type_section: "working_type"
   type_key: "only_PM_working"
   long_name: "午前休"
@@ -465,9 +516,11 @@ types_26:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_27:
   id: 27
+  owner_id: 
   type_section: "working_type"
   type_key: "only_AM_working"
   long_name: "午後休"
@@ -483,9 +536,11 @@ types_27:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_28:
   id: 28
+  owner_id: 
   type_section: "working_type"
   type_key: "on_holiday_working"
   long_name: "休日出勤"
@@ -501,9 +556,11 @@ types_28:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_29:
   id: 29
+  owner_id: 
   type_section: "working_type"
   type_key: "vacation_dayoff"
   long_name: "有給休暇"
@@ -519,9 +576,11 @@ types_29:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_30:
   id: 30
+  owner_id: 
   type_section: "working_type"
   type_key: "compensatory_dayoff"
   long_name: "代休"
@@ -537,9 +596,11 @@ types_30:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_31:
   id: 31
+  owner_id: 
   type_section: "working_type"
   type_key: "absence_dayoff"
   long_name: "欠勤"
@@ -555,9 +616,11 @@ types_31:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_32:
   id: 32
+  owner_id: 
   type_section: "working_type"
   type_key: "summer_dayoff"
   long_name: "夏期休暇"
@@ -573,9 +636,11 @@ types_32:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_33:
   id: 33
+  owner_id: 
   type_section: "working_type"
   type_key: "occasion_dayoff"
   long_name: "※慶弔休暇"
@@ -591,9 +656,11 @@ types_33:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_34:
   id: 34
+  owner_id: 
   type_section: "working_type"
   type_key: "life_plan_dayoff"
   long_name: "※ライフプラン休暇"
@@ -609,9 +676,11 @@ types_34:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_35:
   id: 35
+  owner_id: 
   type_section: "working_type"
   type_key: "suspension1_dayoff"
   long_name: "※休業"
@@ -627,9 +696,11 @@ types_35:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_36:
   id: 36
+  owner_id: 
   type_section: "working_type"
   type_key: "suspension2_dayoff"
   long_name: "※休職"
@@ -645,9 +716,11 @@ types_36:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_37:
   id: 37
+  owner_id: 
   type_section: "working_option_type"
   type_key: "over_time_app"
   long_name: "残業申請"
@@ -663,9 +736,11 @@ types_37:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_38:
   id: 38
+  owner_id: 
   type_section: "working_option_type"
   type_key: "go_directly_app"
   long_name: "直行申請"
@@ -681,9 +756,11 @@ types_38:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_39:
   id: 39
+  owner_id: 
   type_section: "working_option_type"
   type_key: "back_directly_app"
   long_name: "直帰申請"
@@ -699,9 +776,11 @@ types_39:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_40:
   id: 40
+  owner_id: 
   type_section: "working_option_type"
   type_key: "come_lately_app"
   long_name: "遅刻申請"
@@ -717,9 +796,11 @@ types_40:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_41:
   id: 41
+  owner_id: 
   type_section: "working_option_type"
   type_key: "leave_early_app"
   long_name: "早退申請"
@@ -735,9 +816,11 @@ types_41:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_42:
   id: 42
+  owner_id: 
   type_section: "approval_status_type"
   type_key: "entry"
   long_name: "申請中"
@@ -753,9 +836,11 @@ types_42:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_43:
   id: 43
+  owner_id: 
   type_section: "approval_status_type"
   type_key: "retry"
   long_name: "再提出"
@@ -771,9 +856,11 @@ types_43:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_44:
   id: 44
+  owner_id: 
   type_section: "approval_status_type"
   type_key: "approved"
   long_name: "承認中"
@@ -789,9 +876,11 @@ types_44:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_45:
   id: 45
+  owner_id: 
   type_section: "approval_status_type"
   type_key: "reject"
   long_name: "却下済"
@@ -807,9 +896,11 @@ types_45:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_46:
   id: 46
+  owner_id: 
   type_section: "approval_status_type"
   type_key: "fixed"
   long_name: "承認済"
@@ -825,9 +916,11 @@ types_46:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_47:
   id: 47
+  owner_id: 
   type_section: "approval_status_type"
   type_key: "canceled"
   long_name: "取消済"
@@ -843,9 +936,11 @@ types_47:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_48:
   id: 48
+  owner_id: 
   type_section: "suspension1_dayoff_type"
   type_key: "suspension1_1_dayoff"
   long_name: "公民権行使の時間"
@@ -861,9 +956,11 @@ types_48:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_49:
   id: 49
+  owner_id: 
   type_section: "suspension1_dayoff_type"
   type_key: "suspension1_2_dayoff"
   long_name: "生理日の休暇"
@@ -879,9 +976,11 @@ types_49:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_50:
   id: 50
+  owner_id: 
   type_section: "suspension1_dayoff_type"
   type_key: "suspension1_3_dayoff"
   long_name: "育児休暇"
@@ -897,9 +996,11 @@ types_50:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_51:
   id: 51
+  owner_id: 
   type_section: "suspension1_dayoff_type"
   type_key: "suspension1_4_dayoff"
   long_name: "健康診査等の時間"
@@ -915,9 +1016,11 @@ types_51:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_52:
   id: 52
+  owner_id: 
   type_section: "suspension1_dayoff_type"
   type_key: "suspension1_5_dayoff"
   long_name: "産前産後の休業"
@@ -933,9 +1036,11 @@ types_52:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_53:
   id: 53
+  owner_id: 
   type_section: "suspension1_dayoff_type"
   type_key: "suspension1_6_dayoff"
   long_name: "看護休暇"
@@ -951,9 +1056,11 @@ types_53:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_54:
   id: 54
+  owner_id: 
   type_section: "suspension1_dayoff_type"
   type_key: "suspension1_7_dayoff"
   long_name: "育児休業等"
@@ -969,9 +1076,11 @@ types_54:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_55:
   id: 55
+  owner_id: 
   type_section: "suspension1_dayoff_type"
   type_key: "suspension1_8_dayoff"
   long_name: "介護休業等"
@@ -987,9 +1096,11 @@ types_55:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_56:
   id: 56
+  owner_id: 
   type_section: "suspension1_dayoff_type"
   type_key: "suspension1_9_dayoff"
   long_name: "業務上の休業"
@@ -1005,9 +1116,11 @@ types_56:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_57:
   id: 57
+  owner_id: 
   type_section: "expense_app_type"
   type_key: "business_trip_app"
   long_name: "出張"
@@ -1023,9 +1136,11 @@ types_57:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_58:
   id: 58
+  owner_id: 
   type_section: "expense_app_type"
   type_key: "expense_account_app"
   long_name: "交際費"
@@ -1041,9 +1156,11 @@ types_58:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_59:
   id: 59
+  owner_id: 
   type_section: "expense_app_type"
   type_key: "meeting_expenses_app"
   long_name: "会議"
@@ -1059,9 +1176,11 @@ types_59:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_60:
   id: 60
+  owner_id: 
   type_section: "expense_app_type"
   type_key: "material_expenses_app"
   long_name: "物品購入"
@@ -1077,9 +1196,11 @@ types_60:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_61:
   id: 61
+  owner_id: 
   type_section: "expense_app_type"
   type_key: "fee_expense_app"
   long_name: "謝礼"
@@ -1095,9 +1216,11 @@ types_61:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_62:
   id: 62
+  owner_id: 
   type_section: "expense_app_type"
   type_key: "temporary_app"
   long_name: "仮払"
@@ -1113,9 +1236,11 @@ types_62:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_63:
   id: 63
+  owner_id: 
   type_section: "relative_status_type"
   type_key: "spouse"
   long_name: "配偶者"
@@ -1131,9 +1256,11 @@ types_63:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_64:
   id: 64
+  owner_id: 
   type_section: "relative_status_type"
   type_key: "dependent"
   long_name: "扶養家族"
@@ -1149,9 +1276,11 @@ types_64:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_65:
   id: 65
+  owner_id: 
   type_section: "application_type"
   type_key: "monthly_working_app"
   long_name: "日報月締"
@@ -1167,9 +1296,11 @@ types_65:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_66:
   id: 66
+  owner_id: 
   type_section: "application_type"
   type_key: "weekly_report_app"
   long_name: "週報"
@@ -1185,9 +1316,11 @@ types_66:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_67:
   id: 67
+  owner_id: 
   type_section: "application_type"
   type_key: "payment_per_month_app"
   long_name: "経費月締"
@@ -1203,9 +1336,11 @@ types_67:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_68:
   id: 68
+  owner_id: 
   type_section: "application_type"
   type_key: "payment_per_case_app"
   long_name: "経費都度"
@@ -1221,9 +1356,11 @@ types_68:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_69:
   id: 69
+  owner_id: 
   type_section: "application_type"
   type_key: "business_trip_app"
   long_name: "出張"
@@ -1239,9 +1376,11 @@ types_69:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_70:
   id: 70
+  owner_id: 
   type_section: "application_type"
   type_key: "holiday_app"
   long_name: "休暇"
@@ -1257,9 +1396,11 @@ types_70:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_71:
   id: 71
+  owner_id: 
   type_section: "application_type"
   type_key: "other_app"
   long_name: "他勤怠"
@@ -1275,9 +1416,11 @@ types_71:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_72:
   id: 72
+  owner_id: 
   type_section: "application_type"
   type_key: "expense_app"
   long_name: "経費"
@@ -1293,9 +1436,11 @@ types_72:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_73:
   id: 73
+  owner_id: 
   type_section: "account_type"
   type_key: "general"
   long_name: "普通"
@@ -1311,9 +1456,11 @@ types_73:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_74:
   id: 74
+  owner_id: 
   type_section: "account_type"
   type_key: "current"
   long_name: "当座"
@@ -1329,9 +1476,11 @@ types_74:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_75:
   id: 75
+  owner_id: 
   type_section: "sex_type"
   type_key: "man"
   long_name: "男性"
@@ -1347,9 +1496,11 @@ types_75:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_76:
   id: 76
+  owner_id: 
   type_section: "sex_type"
   type_key: "woman"
   long_name: "女性"
@@ -1365,9 +1516,11 @@ types_76:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_77:
   id: 77
+  owner_id: 
   type_section: "sex_type"
   type_key: "other"
   long_name: "その他"
@@ -1383,9 +1536,11 @@ types_77:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_78:
   id: 78
+  owner_id: 
   type_section: "approver_type"
   type_key: "report_xxx"
   long_name: "週報・出退勤表"
@@ -1401,9 +1556,11 @@ types_78:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_79:
   id: 79
+  owner_id: 
   type_section: "approver_type"
   type_key: "working_xxx"
   long_name: "勤怠申請"
@@ -1419,9 +1576,11 @@ types_79:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_80:
   id: 80
+  owner_id: 
   type_section: "approver_type"
   type_key: "business_trip_xxx"
   long_name: "出張申請"
@@ -1437,9 +1596,11 @@ types_80:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_81:
   id: 81
+  owner_id: 
   type_section: "approver_type"
   type_key: "expense_xxx"
   long_name: "各種精算"
@@ -1455,9 +1616,11 @@ types_81:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_82:
   id: 82
+  owner_id: 
   type_section: "cutoff_status_type"
   type_key: "open"
   long_name: "未精算"
@@ -1473,9 +1636,11 @@ types_82:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_83:
   id: 83
+  owner_id: 
   type_section: "cutoff_status_type"
   type_key: "waiting"
   long_name: "精算待"
@@ -1491,9 +1656,11 @@ types_83:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_84:
   id: 84
+  owner_id: 
   type_section: "cutoff_status_type"
   type_key: "closed"
   long_name: "精算済"
@@ -1509,9 +1676,11 @@ types_84:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_85:
   id: 85
+  owner_id: 
   type_section: "payment_method_type"
   type_key: "direct"
   long_name: "持参"
@@ -1527,9 +1696,11 @@ types_85:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_86:
   id: 86
+  owner_id: 
   type_section: "payment_method_type"
   type_key: "transfer"
   long_name: "振込"
@@ -1545,9 +1716,11 @@ types_86:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_87:
   id: 87
+  owner_id: 
   type_section: "business_partner_type"
   type_key: "normal"
   long_name: "一般"
@@ -1563,9 +1736,11 @@ types_87:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_88:
   id: 88
+  owner_id: 
   type_section: "business_partner_type"
   type_key: "internal"
   long_name: "社内"
@@ -1581,9 +1756,11 @@ types_88:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_89:
   id: 89
+  owner_id: 
   type_section: "project_type"
   type_key: "develop"
   long_name: "開発"
@@ -1599,9 +1776,11 @@ types_89:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_90:
   id: 90
+  owner_id: 
   type_section: "project_type"
   type_key: "ses"
   long_name: "支援"
@@ -1617,9 +1796,11 @@ types_90:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_91:
   id: 91
+  owner_id: 
   type_section: "project_type"
   type_key: "sales"
   long_name: "販売"
@@ -1635,9 +1816,11 @@ types_91:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_92:
   id: 92
+  owner_id: 
   type_section: "project_type"
   type_key: "internal"
   long_name: "社内"
@@ -1653,9 +1836,11 @@ types_92:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_93:
   id: 93
+  owner_id: 
   type_section: "employee_type"
   type_key: "regular"
   long_name: "正社員"
@@ -1671,9 +1856,11 @@ types_93:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_94:
   id: 94
+  owner_id: 
   type_section: "employee_type"
   type_key: "temporary"
   long_name: "派遣社員"
@@ -1689,9 +1876,11 @@ types_94:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_95:
   id: 95
+  owner_id: 
   type_section: "employee_type"
   type_key: "ses"
   long_name: "支援契約"
@@ -1707,9 +1896,11 @@ types_95:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_96:
   id: 96
+  owner_id: 
   type_section: "project_status_type"
   type_key: "active"
   long_name: "活動中"
@@ -1725,9 +1916,11 @@ types_96:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_97:
   id: 97
+  owner_id: 
   type_section: "project_status_type"
   type_key: "inactive"
   long_name: "活動終了"
@@ -1743,9 +1936,11 @@ types_97:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_98:
   id: 98
+  owner_id: 
   type_section: "approach_status_type"
   type_key: "approaching"
   long_name: "提案中"
@@ -1761,9 +1956,11 @@ types_98:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_99:
   id: 99
+  owner_id: 
   type_section: "approach_status_type"
   type_key: "adjust"
   long_name: "提案調整中"
@@ -1779,9 +1976,11 @@ types_99:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_100:
   id: 100
+  owner_id: 
   type_section: "approach_status_type"
   type_key: "result_waiting"
   long_name: "面談結果待ち"
@@ -1797,9 +1996,11 @@ types_100:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_101:
   id: 101
+  owner_id: 
   type_section: "approach_status_type"
   type_key: "success"
   long_name: "成約"
@@ -1815,9 +2016,11 @@ types_101:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_102:
   id: 102
+  owner_id: 
   type_section: "approach_status_type"
   type_key: "approach_failure"
   long_name: "提案失敗"
@@ -1833,9 +2036,11 @@ types_102:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_103:
   id: 103
+  owner_id: 
   type_section: "approach_status_type"
   type_key: "interview_failure"
   long_name: "面談失敗"
@@ -1851,9 +2056,11 @@ types_103:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_104:
   id: 104
+  owner_id: 
   type_section: "approach_status_type"
   type_key: "other_failure"
   long_name: "他社失敗"
@@ -1869,9 +2076,11 @@ types_104:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_105:
   id: 105
+  owner_id: 
   type_section: "approach_status_type"
   type_key: "lost_failure"
   long_name: "消滅失敗"
@@ -1887,9 +2096,11 @@ types_105:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_106:
   id: 106
+  owner_id: 
   type_section: "approach_status_type"
   type_key: "natural_lost"
   long_name: "自然消滅"
@@ -1905,9 +2116,11 @@ types_106:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_107:
   id: 107
+  owner_id: 
   type_section: "approach_status_type"
   type_key: "other_success"
   long_name: "別成約"
@@ -1923,9 +2136,11 @@ types_107:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_108:
   id: 108
+  owner_id: 
   type_section: "business_status_type"
   type_key: "offered"
   long_name: "募集中"
@@ -1941,9 +2156,11 @@ types_108:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_109:
   id: 109
+  owner_id: 
   type_section: "business_status_type"
   type_key: "contracting"
   long_name: "契約中"
@@ -1959,9 +2176,11 @@ types_109:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_110:
   id: 110
+  owner_id: 
   type_section: "business_status_type"
   type_key: "finished"
   long_name: "案件終了"
@@ -1977,9 +2196,11 @@ types_110:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_111:
   id: 111
+  owner_id: 
   type_section: "business_status_type"
   type_key: "other_failure"
   long_name: "他社失敗"
@@ -1995,9 +2216,11 @@ types_111:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_112:
   id: 112
+  owner_id: 
   type_section: "business_status_type"
   type_key: "lost_failure"
   long_name: "消滅失敗"
@@ -2013,9 +2236,11 @@ types_112:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_113:
   id: 113
+  owner_id: 
   type_section: "business_status_type"
   type_key: "natural_lost"
   long_name: "自然消滅"
@@ -2031,9 +2256,11 @@ types_113:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_114:
   id: 117
+  owner_id: 
   type_section: "sales_status_type"
   type_key: "listup"
   long_name: "リストアップ"
@@ -2049,9 +2276,11 @@ types_114:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_115:
   id: 118
+  owner_id: 
   type_section: "sales_status_type"
   type_key: "prospect"
   long_name: "見込客"
@@ -2067,9 +2296,11 @@ types_115:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_116:
   id: 119
+  owner_id: 
   type_section: "sales_status_type"
   type_key: "business"
   long_name: "取引先"
@@ -2085,9 +2316,11 @@ types_116:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_117:
   id: 120
+  owner_id: 
   type_section: "employment_type"
   type_key: "permanent"
   long_name: "正社員"
@@ -2103,9 +2336,11 @@ types_117:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_118:
   id: 121
+  owner_id: 
   type_section: "employment_type"
   type_key: "temporary"
   long_name: "契約社員"
@@ -2121,9 +2356,11 @@ types_118:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_119:
   id: 122
+  owner_id: 
   type_section: "employment_type"
   type_key: "dispatched"
   long_name: "派遣社員"
@@ -2139,14 +2376,16 @@ types_119:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_120:
   id: 123
+  owner_id: 
   type_section: "employment_type"
   type_key: "freelance"
-  long_name: "外注契約"
-  short_name: "外"
-  other_name: "外注契約"
+  long_name: "個人事業主"
+  short_name: "個"
+  other_name: "個人事業主"
   type_description: ""
   type_description_text: ""
   display_order1: 4
@@ -2157,9 +2396,31 @@ types_120:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_121:
   id: 124
+  owner_id: 
+  type_section: "employment_type"
+  type_key: "partner"
+  long_name: "パートナー"
+  short_name: "BP"
+  other_name: "パートナー"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 5
+  display_order2: 5
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_122:
+  id: 125
+  owner_id: 
   type_section: "communication_type"
   type_key: "unknown"
   long_name: "不明"
@@ -2175,9 +2436,11 @@ types_121:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
-types_122:
-  id: 125
+types_123:
+  id: 126
+  owner_id: 
   type_section: "communication_type"
   type_key: "level5"
   long_name: "とても良い"
@@ -2193,9 +2456,11 @@ types_122:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
-types_123:
-  id: 126
+types_124:
+  id: 127
+  owner_id: 
   type_section: "communication_type"
   type_key: "level4"
   long_name: "良い"
@@ -2211,9 +2476,11 @@ types_123:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
-types_124:
-  id: 127
+types_125:
+  id: 128
+  owner_id: 
   type_section: "communication_type"
   type_key: "level3"
   long_name: "普通"
@@ -2229,9 +2496,11 @@ types_124:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
-types_125:
-  id: 128
+types_126:
+  id: 129
+  owner_id: 
   type_section: "communication_type"
   type_key: "level2"
   long_name: "悪い"
@@ -2247,9 +2516,11 @@ types_125:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
-types_126:
-  id: 129
+types_127:
+  id: 130
+  owner_id: 
   type_section: "communication_type"
   type_key: "level1"
   long_name: "とても悪い"
@@ -2265,9 +2536,11 @@ types_126:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
-types_127:
-  id: 130
+types_128:
+  id: 131
+  owner_id: 
   type_section: "term_type"
   type_key: "outsourcing"
   long_name: "業務委託"
@@ -2283,9 +2556,11 @@ types_127:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
-types_128:
-  id: 131
+types_129:
+  id: 132
+  owner_id: 
   type_section: "term_type"
   type_key: "temporary"
   long_name: "派遣"
@@ -2301,9 +2576,11 @@ types_128:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
-types_129:
-  id: 132
+types_130:
+  id: 133
+  owner_id: 
   type_section: "biz_offer_status_type"
   type_key: "open"
   long_name: "未提案"
@@ -2319,9 +2596,11 @@ types_129:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
-types_130:
-  id: 133
+types_131:
+  id: 134
+  owner_id: 
   type_section: "biz_offer_status_type"
   type_key: "approached"
   long_name: "提案中"
@@ -2337,9 +2616,11 @@ types_130:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
-types_131:
-  id: 134
+types_132:
+  id: 135
+  owner_id: 
   type_section: "biz_offer_status_type"
   type_key: "success"
   long_name: "成約"
@@ -2355,9 +2636,11 @@ types_131:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
-types_132:
-  id: 135
+types_133:
+  id: 136
+  owner_id: 
   type_section: "biz_offer_status_type"
   type_key: "other_failure"
   long_name: "他社失敗"
@@ -2373,9 +2656,11 @@ types_132:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
-types_133:
-  id: 136
+types_134:
+  id: 137
+  owner_id: 
   type_section: "biz_offer_status_type"
   type_key: "lost_failure"
   long_name: "消滅失敗"
@@ -2391,9 +2676,11 @@ types_133:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
-types_134:
-  id: 137
+types_135:
+  id: 138
+  owner_id: 
   type_section: "biz_offer_status_type"
   type_key: "natural_lost"
   long_name: "自然消滅"
@@ -2409,9 +2696,11 @@ types_134:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
-types_135:
-  id: 138
+types_136:
+  id: 139
+  owner_id: 
   type_section: "biz_offer_status_type"
   type_key: "other_success"
   long_name: "別成約"
@@ -2427,9 +2716,11 @@ types_135:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
-types_136:
-  id: 139
+types_137:
+  id: 140
+  owner_id: 
   type_section: "interview_status_type"
   type_key: "interview_waiting"
   long_name: "面談待ち"
@@ -2445,9 +2736,11 @@ types_136:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
-types_137:
-  id: 140
+types_138:
+  id: 141
+  owner_id: 
   type_section: "interview_status_type"
   type_key: "result_waiting"
   long_name: "面談結果待ち"
@@ -2463,9 +2756,11 @@ types_137:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
-types_138:
-  id: 141
+types_139:
+  id: 142
+  owner_id: 
   type_section: "interview_status_type"
   type_key: "adjusting"
   long_name: "面談調整中"
@@ -2481,9 +2776,11 @@ types_138:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
-types_139:
-  id: 142
+types_140:
+  id: 143
+  owner_id: 
   type_section: "interview_status_type"
   type_key: "finished"
   long_name: "面談完了"
@@ -2499,9 +2796,11 @@ types_139:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
-types_140:
-  id: 143
+types_141:
+  id: 144
+  owner_id: 
   type_section: "interview_status_type"
   type_key: "interview_failure"
   long_name: "面談失敗"
@@ -2517,9 +2816,11 @@ types_140:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
-types_141:
-  id: 144
+types_142:
+  id: 145
+  owner_id: 
   type_section: "interview_status_type"
   type_key: "other_success"
   long_name: "別成約"
@@ -2535,9 +2836,11 @@ types_141:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
-types_142:
-  id: 145
+types_143:
+  id: 146
+  owner_id: 
   type_section: "interview_status_type"
   type_key: "other_failure"
   long_name: "他社失敗"
@@ -2553,9 +2856,11 @@ types_142:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
-types_143:
-  id: 146
+types_144:
+  id: 147
+  owner_id: 
   type_section: "contract_status_type"
   type_key: "preparing"
   long_name: "契約準備中"
@@ -2571,9 +2876,11 @@ types_143:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
-types_144:
-  id: 147
+types_145:
+  id: 148
+  owner_id: 
   type_section: "contract_status_type"
   type_key: "waiting"
   long_name: "入場待ち"
@@ -2589,9 +2896,11 @@ types_144:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
-types_145:
-  id: 148
+types_146:
+  id: 149
+  owner_id: 
   type_section: "contract_status_type"
   type_key: "running"
   long_name: "稼働中"
@@ -2607,9 +2916,11 @@ types_145:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
-types_146:
-  id: 149
+types_147:
+  id: 150
+  owner_id: 
   type_section: "contract_status_type"
   type_key: "finished"
   long_name: "契約終了"
@@ -2625,9 +2936,11 @@ types_146:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
-types_147:
-  id: 150
+types_148:
+  id: 151
+  owner_id: 
   type_section: "human_resource_status_type"
   type_key: "sales"
   long_name: "営業中"
@@ -2643,9 +2956,11 @@ types_147:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
-types_148:
-  id: 151
+types_149:
+  id: 152
+  owner_id: 
   type_section: "human_resource_status_type"
   type_key: "approached"
   long_name: "提案中"
@@ -2661,9 +2976,11 @@ types_148:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
-types_149:
-  id: 152
+types_150:
+  id: 153
+  owner_id: 
   type_section: "human_resource_status_type"
   type_key: "working"
   long_name: "稼働中"
@@ -2679,9 +2996,11 @@ types_149:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
-types_150:
-  id: 153
+types_151:
+  id: 154
+  owner_id: 
   type_section: "human_resource_status_type"
   type_key: "unknown"
   long_name: "不明"
@@ -2697,9 +3016,11 @@ types_150:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
-types_151:
-  id: 154
+types_152:
+  id: 155
+  owner_id: 
   type_section: "time_adjust_type"
   type_key: "top"
   long_name: "上限"
@@ -2715,9 +3036,11 @@ types_151:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
-types_152:
-  id: 155
+types_153:
+  id: 156
+  owner_id: 
   type_section: "time_adjust_type"
   type_key: "bottom"
   long_name: "下限"
@@ -2733,9 +3056,31 @@ types_152:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
-types_153:
-  id: 156
+types_154:
+  id: 157
+  owner_id: 
+  type_section: "time_adjust_type"
+  type_key: "top_bottom"
+  long_name: "中央"
+  short_name: "中央"
+  other_name: "中央"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 3
+  display_order2: 3
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_155:
+  id: 158
+  owner_id: 
   type_section: "time_adjust_type"
   type_key: "center"
   long_name: "中央"
@@ -2751,9 +3096,11 @@ types_153:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
-types_154:
-  id: 157
+types_156:
+  id: 159
+  owner_id: 
   type_section: "time_adjust_type"
   type_key: "suspense"
   long_name: "未定"
@@ -2769,86 +3116,16 @@ types_154:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
-  deleted: 0
-types_155:
-  id: 158
-  type_section: "payment_sight_type"
-  type_key: "35"
-  long_name: "35日"
-  short_name: "35日"
-  other_name: "35日"
-  type_description: ""
-  type_description_text: ""
-  display_order1: 1
-  display_order2: 1
-  logic_bind_type: "bind"
-  created_at: <%= Time.now.to_s(:db) %>
-  updated_at: <%= Time.now.to_s(:db) %>
-  lock_version: 0
-  created_user: "initial"
-  updated_user: "initial"
-  deleted: 0
-types_156:
-  id: 159
-  type_section: "payment_sight_type"
-  type_key: "45"
-  long_name: "45日"
-  short_name: "45日"
-  other_name: "45日"
-  type_description: ""
-  type_description_text: ""
-  display_order1: 2
-  display_order2: 2
-  logic_bind_type: "bind"
-  created_at: <%= Time.now.to_s(:db) %>
-  updated_at: <%= Time.now.to_s(:db) %>
-  lock_version: 0
-  created_user: "initial"
-  updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_157:
   id: 160
+  owner_id: 
   type_section: "payment_sight_type"
-  type_key: "end_of_the_month"
-  long_name: "当月末"
-  short_name: "当月末"
-  other_name: "当月末"
-  type_description: ""
-  type_description_text: ""
-  display_order1: 3
-  display_order2: 3
-  logic_bind_type: "bind"
-  created_at: <%= Time.now.to_s(:db) %>
-  updated_at: <%= Time.now.to_s(:db) %>
-  lock_version: 0
-  created_user: "initial"
-  updated_user: "initial"
-  deleted: 0
-types_158:
-  id: 161
-  type_section: "payment_sight_type"
-  type_key: "end_of_the_next_month"
-  long_name: "翌月末"
-  short_name: "翌月末"
-  other_name: "翌月末"
-  type_description: ""
-  type_description_text: ""
-  display_order1: 4
-  display_order2: 4
-  logic_bind_type: "bind"
-  created_at: <%= Time.now.to_s(:db) %>
-  updated_at: <%= Time.now.to_s(:db) %>
-  lock_version: 0
-  created_user: "initial"
-  updated_user: "initial"
-  deleted: 0
-types_159:
-  id: 162
-  type_section: "contract_type"
-  type_key: "division_a"
-  long_name: "契約区分A"
-  short_name: "契約区分A"
-  other_name: "契約区分A"
+  type_key: "next_5"
+  long_name: "翌月5日"
+  short_name: "翌5"
+  other_name: "翌月5日"
   type_description: ""
   type_description_text: ""
   display_order1: 1
@@ -2859,14 +3136,16 @@ types_159:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
-types_160:
-  id: 163
-  type_section: "contract_type"
-  type_key: "division_b"
-  long_name: "契約区分B"
-  short_name: "契約区分B"
-  other_name: "契約区分B"
+types_158:
+  id: 161
+  owner_id: 
+  type_section: "payment_sight_type"
+  type_key: "next_10"
+  long_name: "翌月10日"
+  short_name: "翌10"
+  other_name: "翌月10日"
   type_description: ""
   type_description_text: ""
   display_order1: 2
@@ -2877,14 +3156,16 @@ types_160:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
-types_161:
-  id: 164
-  type_section: "contract_type"
-  type_key: "division_c"
-  long_name: "契約区分C"
-  short_name: "契約区分C"
-  other_name: "契約区分C"
+types_159:
+  id: 162
+  owner_id: 
+  type_section: "payment_sight_type"
+  type_key: "next_15"
+  long_name: "翌月15日"
+  short_name: "翌15"
+  other_name: "翌月15日"
   type_description: ""
   type_description_text: ""
   display_order1: 3
@@ -2895,14 +3176,16 @@ types_161:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
-types_162:
-  id: 165
-  type_section: "contract_type"
-  type_key: "division_d"
-  long_name: "契約区分D"
-  short_name: "契約区分D"
-  other_name: "契約区分D"
+types_160:
+  id: 163
+  owner_id: 
+  type_section: "payment_sight_type"
+  type_key: "next_20"
+  long_name: "翌月20日"
+  short_name: "翌20"
+  other_name: "翌月20日"
   type_description: ""
   type_description_text: ""
   display_order1: 4
@@ -2913,9 +3196,271 @@ types_162:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_161:
+  id: 164
+  owner_id: 
+  type_section: "payment_sight_type"
+  type_key: "next_25"
+  long_name: "翌月25日"
+  short_name: "翌25"
+  other_name: "翌月25日"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 5
+  display_order2: 5
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_162:
+  id: 165
+  owner_id: 
+  type_section: "payment_sight_type"
+  type_key: "next_last"
+  long_name: "翌月末日"
+  short_name: "翌末"
+  other_name: "翌月末日"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 6
+  display_order2: 6
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
   deleted: 0
 types_163:
   id: 166
+  owner_id: 
+  type_section: "payment_sight_type"
+  type_key: "next_next_10"
+  long_name: "翌々月5日"
+  short_name: "翌々5"
+  other_name: "翌々月5日"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 7
+  display_order2: 7
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_164:
+  id: 167
+  owner_id: 
+  type_section: "payment_sight_type"
+  type_key: "next_next_10"
+  long_name: "翌々月10日"
+  short_name: "翌々10"
+  other_name: "翌々月10日"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 8
+  display_order2: 8
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_165:
+  id: 168
+  owner_id: 
+  type_section: "payment_sight_type"
+  type_key: "next_next_15"
+  long_name: "翌々月15日"
+  short_name: "翌々15"
+  other_name: "翌々月15日"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 9
+  display_order2: 9
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_166:
+  id: 169
+  owner_id: 
+  type_section: "payment_sight_type"
+  type_key: "next_next_20"
+  long_name: "翌々月20日"
+  short_name: "翌々20"
+  other_name: "翌々月20日"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 10
+  display_order2: 10
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_167:
+  id: 170
+  owner_id: 
+  type_section: "payment_sight_type"
+  type_key: "next_next_25"
+  long_name: "翌々月25日"
+  short_name: "翌々25"
+  other_name: "翌々月25日"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 11
+  display_order2: 11
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_168:
+  id: 171
+  owner_id: 
+  type_section: "payment_sight_type"
+  type_key: "next_next_last"
+  long_name: "翌々月末日"
+  short_name: "翌々末"
+  other_name: "翌々月末日"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 12
+  display_order2: 12
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_169:
+  id: 172
+  owner_id: 
+  type_section: "payment_sight_type"
+  type_key: "other"
+  long_name: "その他"
+  short_name: "その他"
+  other_name: "その他"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 13
+  display_order2: 13
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_170:
+  id: 173
+  owner_id: 
+  type_section: "contract_type"
+  type_key: "temporary"
+  long_name: "派遣契約"
+  short_name: "派遣"
+  other_name: "派遣契約"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 1
+  display_order2: 1
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_171:
+  id: 174
+  owner_id: 
+  type_section: "contract_type"
+  type_key: "delegation"
+  long_name: "準委任契約"
+  short_name: "準委"
+  other_name: "準委任契約"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 2
+  display_order2: 2
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_172:
+  id: 175
+  owner_id: 
+  type_section: "contract_type"
+  type_key: "contract"
+  long_name: "請負契約"
+  short_name: "請負"
+  other_name: "請負契約"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 3
+  display_order2: 3
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_173:
+  id: 176
+  owner_id: 
+  type_section: "contract_type"
+  type_key: "other"
+  long_name: "その他"
+  short_name: "他"
+  other_name: "その他"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 4
+  display_order2: 4
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_174:
+  id: 177
+  owner_id: 
   type_section: "analysis_template_type"
   type_key: "biz_offer"
   long_name: "案件・照会"
@@ -2931,9 +3476,11 @@ types_163:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
-types_164:
-  id: 167
+types_175:
+  id: 178
+  owner_id: 
   type_section: "analysis_template_type"
   type_key: "bp_member"
   long_name: "人材・所属"
@@ -2949,9 +3496,11 @@ types_164:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
-types_165:
-  id: 168
+types_176:
+  id: 179
+  owner_id: 
   type_section: "mail_group_type"
   type_key: "human_resource"
   long_name: "人材"
@@ -2967,9 +3516,11 @@ types_165:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
-types_166:
-  id: 169
+types_177:
+  id: 180
+  owner_id: 
   type_section: "mail_group_type"
   type_key: "business"
   long_name: "案件"
@@ -2985,9 +3536,11 @@ types_166:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
-types_167:
-  id: 170
+types_178:
+  id: 181
+  owner_id: 
   type_section: "mail_group_type"
   type_key: "custom"
   long_name: "カスタム"
@@ -3003,9 +3556,11 @@ types_167:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
-types_168:
-  id: 171
+types_179:
+  id: 182
+  owner_id: 
   type_section: "mail_status_type"
   type_key: "unsend"
   long_name: "未送信"
@@ -3021,9 +3576,11 @@ types_168:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
-types_169:
-  id: 172
+types_180:
+  id: 183
+  owner_id: 
   type_section: "mail_status_type"
   type_key: "send"
   long_name: "送信済"
@@ -3039,9 +3596,11 @@ types_169:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
-types_170:
-  id: 173
+types_181:
+  id: 184
+  owner_id: 
   type_section: "mail_status_type"
   type_key: "canceled"
   long_name: "キャンセル"
@@ -3057,9 +3616,11 @@ types_170:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
-types_171:
-  id: 174
+types_182:
+  id: 185
+  owner_id: 
   type_section: "mail_target_status_type"
   type_key: "ready"
   long_name: "準備中"
@@ -3075,9 +3636,11 @@ types_171:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
-types_172:
-  id: 175
+types_183:
+  id: 186
+  owner_id: 
   type_section: "mail_target_status_type"
   type_key: "running"
   long_name: "処理中"
@@ -3093,9 +3656,11 @@ types_172:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
-types_173:
-  id: 176
+types_184:
+  id: 187
+  owner_id: 
   type_section: "mail_target_status_type"
   type_key: "finished"
   long_name: "完了"
@@ -3111,9 +3676,11 @@ types_173:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
   deleted: 0
-types_174:
-  id: 177
+types_185:
+  id: 188
+  owner_id: 
   type_section: "mail_error_type"
   type_key: "bounce"
   long_name: "拒否"
@@ -3129,4 +3696,25 @@ types_174:
   lock_version: 0
   created_user: "initial"
   updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_186:
+  id: 189
+  owner_id: 
+  type_section: "mail_error_type"
+  type_key: "other"
+  long_name: "その他"
+  short_name: "その他"
+  other_name: "その他"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 2
+  display_order2: 2
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
   deleted: 0
