@@ -3621,7 +3621,7 @@ types_181:
 types_182:
   id: 185
   owner_id: 
-  type_section: "mail_target_status_type"
+  type_section: "mail_send_status_type"
   type_key: "ready"
   long_name: "準備中"
   short_name: "準備"
@@ -3641,7 +3641,7 @@ types_182:
 types_183:
   id: 186
   owner_id: 
-  type_section: "mail_target_status_type"
+  type_section: "mail_send_status_type"
   type_key: "running"
   long_name: "処理中"
   short_name: "処理"
@@ -3661,7 +3661,7 @@ types_183:
 types_184:
   id: 187
   owner_id: 
-  type_section: "mail_target_status_type"
+  type_section: "mail_send_status_type"
   type_key: "finished"
   long_name: "完了"
   short_name: "完了"
