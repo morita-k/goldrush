@@ -1,50 +1,49 @@
 <h1>取り込みメール詳細</h1>
-
-<%= link_to "案件照会作成", url_for(:controller => 'analysis_template', :action => 'list', :popup => 1, :mode => 'biz_offer', :import_mail_id => @import_mail), :class => :analysis_mail_link %> | 
-<%= link_to "人材所属作成", url_for(:controller => 'analysis_template', :action => 'list', :popup => 1, :mode => 'bp_member', :import_mail_id => @import_mail), :class => :analysis_mail_link %> | 
-<%= link_to "取引先作成", url_for(:controller => 'business_partner', :action => 'new', :popup => 1, :import_mail_id => @import_mail), :class => :analysis_mail_link %> | 
+<%= link_to_biz_create "案件照会作成", @import_mail  %> | 
+<%= link_to_hresource_create "人材所属作成", @import_mail  %> | 
+<%= link_to_bp_create "取引先作成", @import_mail %> | 
 
 <table class="show_table">
 <% if @import_mail.business_partner %>
-<tr>
-  <th><%= getLongName('import_mails', 'business_partner_id') %></th><td><%=link_to @import_mail.business_partner.business_partner_name, :controller => :business_partner, :action => :show, :id => @import_mail.business_partner_id %></td>
-</tr>
+	<tr>
+	  <th><%= getLongName('import_mails', 'business_partner_id') %></th><td><%=link_to @import_mail.business_partner.business_partner_name, :controller => :business_partner, :action => :show, :id => @import_mail.business_partner_id %></td>
+	</tr>
 <% end %>
-
+	
 <% if @import_mail.bp_pic %>
-<tr>
-  <th><%= getLongName('import_mails', 'bp_pic_id') %></th><td><%=link_to @import_mail.bp_pic.bp_pic_name, :controller => :bp_pic, :action => :show, :id => @import_mail.bp_pic_id %></td>
-</tr>
+	<tr>
+	  <th><%= getLongName('import_mails', 'bp_pic_id') %></th><td><%=link_to @import_mail.bp_pic.bp_pic_name, :controller => :bp_pic, :action => :show, :id => @import_mail.bp_pic_id %></td>
+	</tr>
 <% end %>
-
-<tr>
-  <th><%= getLongName('import_mails', 'mail_sender_name') %></th><td><%=h @import_mail.mail_sender_name %></td>
-</tr>
-
-<tr>
-  <th><%= getLongName('import_mails', 'mail_to') %></th><td><%=h @import_mail.mail_to %></td>
-</tr>
-
-<tr>
-  <th><%= getLongName('import_mails', 'mail_cc') %></th><td><%=h @import_mail.mail_cc %></td>
-</tr>
-
-<tr>
-  <th><%= getLongName('import_mails', 'mail_bcc') %></th><td><%=h @import_mail.mail_bcc %></td>
-</tr>
-
-<tr>
-  <th><%= getLongName('import_mails', 'received_at') %></th><td><%=h _time_long(@import_mail.received_at) %></td>
-</tr>
-
-<tr>
-  <th><%= getLongName('import_mails', 'mail_subject') %></th><td><%=h @import_mail.mail_subject %></td>
-</tr>
-
-<tr>
-  <td colspan=2><pre id="mail_body"><%=h(@import_mail.mail_body) %></pre></td>
-</tr>
-
+	
+	<tr>
+	  <th><%= getLongName('import_mails', 'mail_sender_name') %></th><td><%=h @import_mail.mail_sender_name %></td>
+	</tr>
+	
+	<tr>
+	  <th><%= getLongName('import_mails', 'mail_to') %></th><td><%=h @import_mail.mail_to %></td>
+	</tr>
+	
+	<tr>
+	  <th><%= getLongName('import_mails', 'mail_cc') %></th><td><%=h @import_mail.mail_cc %></td>
+	</tr>
+	
+	<tr>
+	  <th><%= getLongName('import_mails', 'mail_bcc') %></th><td><%=h @import_mail.mail_bcc %></td>
+	</tr>
+	
+	<tr>
+	  <th><%= getLongName('import_mails', 'received_at') %></th><td><%=h _time_long(@import_mail.received_at) %></td>
+	</tr>
+	
+	<tr>
+	  <th><%= getLongName('import_mails', 'mail_subject') %></th><td><%=h @import_mail.mail_subject %></td>
+	</tr>
+	
+	<tr>
+	  <td colspan=2><pre id="mail_body"><%=h(@import_mail.mail_body) %></pre></td>
+	</tr>
+	
 </table>
 
 <% if !@attachment_files.blank? %>

@@ -7,6 +7,7 @@ class BpMember < ActiveRecord::Base
   belongs_to :human_resource
   belongs_to :business_partner
   belongs_to :bp_pic
+  belongs_to :import_mail
 
   def attachment?
     AttachmentFile.count(:conditions => ["deleted = 0 and parent_table_name = 'bp_members' and parent_id = ?", self]) > 0
