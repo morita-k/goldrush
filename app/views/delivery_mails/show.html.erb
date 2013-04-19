@@ -23,10 +23,6 @@
     <td><%= @delivery_mail.subject %></td>
   </tr>
   <tr>
-    <th><%= getLongName('delivery_mails', 'content') %></th>
-    <td><%= @delivery_mail.content %></td>
-  </tr>
-  <tr>
     <th><%= getLongName('delivery_mails', 'mail_from_name') %></th>
     <td><%= @delivery_mail.mail_from_name %></td>
   </tr>
@@ -53,6 +49,9 @@
   <tr>
     <th><%= getLongName('delivery_mails', 'send_end_at') %></th>
     <td><%= @delivery_mail.send_end_at %></td>
+  </tr>
+  <tr>
+    <td colspan="2"><pre><%= @delivery_mail.content %></pre></td>
   </tr>
 </table>
 
@@ -88,7 +87,8 @@
                 :action => :destroy,
                 :id => delivery_mail_target.id,
                 :authenticity_token => form_authenticity_token),
-                :method => :delete
+                :method => :delete,
+                data: { confirm: '削除します。よろしいですか?' }
           %></td>
         <% end %>
       </tr>
