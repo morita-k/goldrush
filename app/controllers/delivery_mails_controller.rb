@@ -70,11 +70,8 @@ class DeliveryMailsController < ApplicationController
         @delivery_mail.save!
         # 添付ファイルの保存
         store_upload_file(@delivery_mail.id)
-        p "================================"
-        p @delivery_mail.planned_setting_at
-        p "================================"
         
-        if @delivery_mail.planned_setting_at < Time.now.to_s
+        if @delivery_mail.planned_setting_at_time < Time.now.to_s
           DeliveryMail.send_mails
         end
         

@@ -38,7 +38,7 @@ class ApiController < ApplicationController
   def broadcast_mail
     DeliveryMail.send_mails
     
-    # render :text => 'REQUEST OK!'
+    render :text => 'REQUEST OK!'
   end
 
 end
