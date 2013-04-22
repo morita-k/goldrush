@@ -10,13 +10,14 @@ class DeliveryMail < ActiveRecord::Base
   attr_accessible :bp_pic_group_id, :content, :id, :mail_bcc, :mail_cc, :mail_from, :mail_from_name, :mail_send_status_type, :mail_status_type, :owner_id, :planned_setting_at, :send_end_at, :subject, :lock_version, :planned_setting_at_time, :planned_setting_at_date
 
   after_initialize :default_values
+  before_save :_before_save
 
   def default_values
     self.mail_status_type ||= 'unsend'
     self.mail_send_status_type ||= 'ready'
   end
   
-  def before_save
+  def _before_save
     unless planned_setting_at_time.blank? || planned_setting_at_date.blank?
       self.planned_setting_at = planned_setting_at_date.to_s + " " + planned_setting_at_time + ":00:00"
     end

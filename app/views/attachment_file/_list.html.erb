@@ -7,7 +7,7 @@
 <% for attachment_file in @attachment_files %>
   <tr>
     <td><%= link_to "#{attachment_file.file_name}", :controller => 'attachment_file', :action=>'download', :id => attachment_file %></td>
-    <td><%= link_to '削除', { :controller => 'attachment_file', :action => 'destroy', :id => attachment_file }, :confirm => 'このファイルを削除します。よろしいですか?', :method => :post %></td>
+    <td><%= link_to('削除', { :controller => :attachment_file, :action => :destroy, :id => attachment_file, :back_to => request_url, :authenticity_token => form_authenticity_token }, :confirm => 'この情報を削除します。よろしいですか?', :method => :post) %></td>
   </tr>
 <% end %>
 </table>

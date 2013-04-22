@@ -9,9 +9,7 @@ class AttachmentFileController < ApplicationController
   verify :method => :post, :only => [ :destroy, :create, :update ],
          :redirect_to => { :action => :list }
 
-
   def create
-    
     upfile = params[:upfile]
     
     if upfile.blank?
@@ -50,9 +48,6 @@ class AttachmentFileController < ApplicationController
     render :controller => params[:parent_table], :action => 'show', :id => params[:parent_id]
   end
 
-
-
-
   def destroy
     attachment_file = AttachmentFile.find(params[:id], :conditions =>["deleted = 0"])
     bp_member_id = attachment_file.parent_id
@@ -61,9 +56,8 @@ class AttachmentFileController < ApplicationController
     set_user_column attachment_file
     attachment_file.save!
     
-    redirect_to :controller => 'bp_member', :action => 'show', :id => bp_member_id
+    redirect_to back_to
   end
-
 
   def download
     attachment_file = AttachmentFile.find(params[:id], :conditions =>["deleted = 0"])
