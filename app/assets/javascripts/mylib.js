@@ -1,8 +1,8 @@
 function insertAtCursor(objText, value) 
 {
+  objText.focus();
   if (document.selection) 
   {
-    objText.focus();
     sel = document.selection.createRange();
     sel.text = value;
   }
@@ -12,6 +12,8 @@ function insertAtCursor(objText, value)
     var firstPart = objText.value.substring(0, curPos);
     var secondPart = objText.value.substring(curPos, objText.value.length);
     objText.value = firstPart + value + secondPart;
+    curPos += value.length;
+    objText.setSelectionRange(curPos, curPos);
   }
   else 
   {
