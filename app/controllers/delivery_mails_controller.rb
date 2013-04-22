@@ -35,6 +35,8 @@ class DeliveryMailsController < ApplicationController
     @delivery_mail.mail_from = SysConfig.get_value("delivery_mails", "mail_from")
     @delivery_mail.mail_from_name = SysConfig.get_value("delivery_mails", "mail_from_name")
 
+    @delivery_mail.setup_planned_setting_at
+
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @delivery_mail }
@@ -49,6 +51,7 @@ class DeliveryMailsController < ApplicationController
     end
 
     @delivery_mail = DeliveryMail.find(params[:id])
+    @delivery_mail.setup_planned_setting_at
     respond_to do |format|
       format.html # edit.html.erb
       format.json { render json: @delivery_mail }
@@ -71,9 +74,9 @@ class DeliveryMailsController < ApplicationController
         # 添付ファイルの保存
         store_upload_file(@delivery_mail.id)
         
-        if @delivery_mail.planned_setting_at_time < Time.now.to_s
-          DeliveryMail.send_mails
-        end
+#        if @delivery_mail.planned_setting_at_time < Time.now.to_s
+#          DeliveryMail.send_mails
+#        end
         
         format.html {
           redirect_to url_for(
