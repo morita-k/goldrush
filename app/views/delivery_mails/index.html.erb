@@ -20,7 +20,7 @@
     <td>
       <%= delivery_mail.mail_status_type_name %>
     </td>
-    <td><%= back_to_link delivery_mail.subject, {:action => :show, :id => delivery_mail.id } %></td>
+    <td><%= back_to_link (delivery_mail.subject.blank? ? '(件名なし)' : delivery_mail.subject) , {:action => :show, :id => delivery_mail.id } %></td>
     <td><%= delivery_mail.mail_from_name %></td>
     <td><%= delivery_mail.mail_from %></td>
     <td><%= delivery_mail.mail_cc %></td>

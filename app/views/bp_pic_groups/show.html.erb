@@ -23,13 +23,13 @@
         <% end %>
       </tr>
       <% @bp_pic_group.bp_pic_group_details.each do |detail| %>
-        <% if detail.supended? %>
+        <% if detail.suspended? %>
         <tr style="background-color: silver">
         <% else %>
         <tr>
         <% end %>
           <% if @delivery_mail %>
-            <td><%= check_box_tag 'bp_pic_ids[]', detail.bp_pic_id, !detail.supended? %></td>
+            <td><%= check_box_tag 'bp_pic_ids[]', detail.bp_pic_id, !detail.suspended? %></td>
           <% end %>
           <td><%= back_to_link detail.bp_pic.business_partner.business_partner_name, :controller => :business_partner, :action => :show, :id => detail.bp_pic.business_partner_id %></td>
           <td><%= back_to_link detail.bp_pic.bp_pic_name, :controller => :bp_pic, :action => :show, :id => detail.bp_pic_id %></td>
