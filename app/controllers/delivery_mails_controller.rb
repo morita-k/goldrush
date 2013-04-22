@@ -71,9 +71,6 @@ class DeliveryMailsController < ApplicationController
         # 添付ファイルの保存
         store_upload_file(@delivery_mail.id)
         
-        if @delivery_mail.planned_setting_at_time < Time.now.to_s
-          DeliveryMail.send_mails
-        end
         
         format.html {
           redirect_to url_for(
@@ -125,6 +122,11 @@ class DeliveryMailsController < ApplicationController
         set_user_column(@delivery_mail_target)
         @delivery_mail_target.save!
       end
+      
+      if DeliveryMail.find(@delivery_mail_id).planned_setting_at < Time.now.to_s
+        DeliveryMail.send_mails
+      end
+      
       format.html { redirect_to url_for(:action => 'show', :id => @delivery_mail_id), notice: 'Delivery mail targets were successfully created.' }
 #        format.json { render json: @delivery_mail_target, status: :created, location: @delivery_mail_target }
     end
