@@ -285,7 +285,7 @@ class HolidayApplicationController < ApplicationController
       redirect_to :action => 'show', :id => @holiday_application
     end
   rescue ValidationAbort
-    flash[:warning] = $!
+    flash[:warning] = $!.message
     @calendar = true
     if params[:mode] == 'popup_new'
       render :action => 'popup_err', :layout => 'popup'

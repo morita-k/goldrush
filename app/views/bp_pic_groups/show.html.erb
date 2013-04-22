@@ -1,7 +1,13 @@
 <a name="top"></a>
+<% if @delivery_mail %>
+<h1><%= getLongName('table_name','delivery_mails')%> 確認</h1>
+
+<%= render 'delivery_mails/show' %>
+
+<h1><%= @bp_pic_group.bp_pic_group_name %>のメンバーを選択してください。</h1>
+<% else %>
 <h1><%= @bp_pic_group.bp_pic_group_name %></h1>
 <div style="color:gray"><%= @bp_pic_group.memo %></div>
-<% unless @called_by_delivery_mail_create %>
   <div style="text-align:right">
   <%= back_to_link 'グループ名とメモの編集', {:action => :edit, :id => @bp_pic_group.id} %> |
   <%= link_to 'グループを削除', {:action => :destroy, :id => @bp_pic_group.id, :authenticity_token => form_authenticity_token}, method: :delete, data: { confirm: '削除します。よろしいですか?' } %>
@@ -10,7 +16,7 @@
 <%= link_or_back '戻る', bp_pic_groups_path %>
 <hr />
 
-<% unless @called_by_delivery_mail_create %>
+<% unless @delivery_mail %>
 <div>
   <%= form_tag(url_for(:controller => :bp_pic_group_details, :action => :create), :method => :post) do %>
     <table class="show_table">
@@ -35,9 +41,9 @@
 <% end %>
 
 <div>
-  <%= form_tag url_for_bp_pic_list(@called_by_delivery_mail_create), :method => :post do %>
-    <% if @called_by_delivery_mail_create %>
-      <%= hidden_field_tag 'delivery_mail_id', @delivery_mail_id %>
+  <%= form_tag url_for_bp_pic_list(@delivery_mail), :method => :post do %>
+    <% if @delivery_mail %>
+      <%= hidden_field_tag 'delivery_mail_id', @delivery_mail.id %>
       <%= submit_tag "メール作成" %>
       <%= back_to_field_tag %>
     <% else %>
@@ -53,10 +59,10 @@
       <% @bp_pic_group.bp_pic_group_details.each do | detail | %>
         <% if (not detail.bp_pic.nil?) and (not detail.bp_pic.business_partner.nil?) %>
           <tr>
-            <% if @called_by_delivery_mail_create %>
-              <td><%= check_box_tag 'bp_pic_ids[]', detail.bp_pic_id, @called_by_delivery_mail_create %></td>
+            <% if @delivery_mail %>
+              <td><%= check_box_tag 'bp_pic_ids[]', detail.bp_pic_id, @delivery_mail %></td>
             <% else %>
-              <td><%= check_box_tag 'ids[]', detail.id, @called_by_delivery_mail_create %></td>
+              <td><%= check_box_tag 'ids[]', detail.id, @delivery_mail %></td>
             <% end %>
             <td><%= back_to_link detail.bp_pic.business_partner.business_partner_name, :controller => :business_partner, :action => :show, :id => detail.bp_pic.business_partner_id %></td>
             <td><%= back_to_link detail.bp_pic.bp_pic_name, :controller => :bp_pic, :action => :show, :id => detail.bp_pic_id %></td>

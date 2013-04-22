@@ -1,4 +1,4 @@
-<%= form_for(@delivery_mail) do |f| %>
+<%= form_for(@delivery_mail, :html => {:enctype => 'multipart/form-data'}) do |f| %>
 <%= back_to_field_tag %>
 <%= f.hidden_field :lock_version %>
   <% if @delivery_mail.errors.any? %>
@@ -19,19 +19,14 @@
     <td><%= f.text_field :subject, :onFocus => "xtarget = this;" %></td>
   </tr>
   <tr>
-    <th><%= f.label :content, getLongName('delivery_mails', 'content') %></th>
-    <td><a href='javascript:insertAtCursor(xtarget, "%%pb_pic_name%%");'>担当者名</a>　<a href='javascript:insertAtCursor(xtarget, "%%business_partner_name%%");'>取引先会社名</a><br/>
-        <%= f.text_area :content, :style => "width:90%" , :onFocus => "xtarget = this;" %></td>
-  </tr>
-  <tr>
     <th><%= f.label :mail_from_name, getLongName('delivery_mails', 'mail_from_name') %></th>
-    <td><%=h @delivery_mail.mail_from_name %></td>
-    <%= hidden_field_tag 'mail_from_name', @delivery_mail.mail_from_name %>
+    <td><%=h (current_user.employee.employee_name + ' <' + current_user.email + '>') %></td>
+    <%= hidden_field_tag 'mail_from_name', (current_user.employee.employee_name + ' <' + current_user.email + '>') %>
   </tr>
   <tr>
     <th><%= f.label :mail_from, getLongName('delivery_mails', 'mail_from') %></th>
-    <td><%=h @delivery_mail.mail_from %></td>
-    <%= hidden_field_tag 'mail_from', @delivery_mail.mail_from %>
+    <td><%=h current_user.email %></td>
+    <%= hidden_field_tag 'mail_from', current_user.email %>
   </tr>
   <tr>
     <th><%= f.label :mail_cc, getLongName('delivery_mails', 'mail_cc') %></th>
@@ -42,13 +37,37 @@
     <td><%= f.text_field :mail_bcc %></td>
   </tr>
   <tr>
+    <th><label for :attachment1>添付ファイル1</label></th>
+    <td><%= file_field_tag :attachment1 %></td>
+  </tr>
+  <tr>
+    <th><label for :attachment2>添付ファイル2</label></th>
+    <td><%= file_field_tag :attachment2 %></td>
+  </tr>
+  <tr>
+    <th><label for :attachment3>添付ファイル3</label></th>
+    <td><%= file_field_tag :attachment3 %></td>
+  </tr>
+  <tr>
+    <th><label for :attachment4>添付ファイル4</label></th>
+    <td><%= file_field_tag :attachment4 %></td>
+  </tr>
+  <tr>
+    <th><label for :attachment5>添付ファイル5</label></th>
+    <td><%= file_field_tag :attachment5 %></td>
+  </tr>
+  <tr>
     <% options = @select_options %>
     <th><%= f.label :planned_setting_at, getLongName('delivery_mails', 'planned_setting_at') %></th>
     <td><%= edit? ? :planned_setting_at : date_field('delivery_mail', 'planned_setting_at') %><%= select_tag "planned_setting_at_time", options_for_select(@select_options) %></td>
   </tr>
+  <tr>
+    <td colspan="2"><a href='javascript:insertAtCursor(xtarget, "%%pb_pic_name%%");'>担当者名</a>　<a href='javascript:insertAtCursor(xtarget, "%%business_partner_name%%");'>取引先会社名</a><br/>
+        <%= f.text_area :content, :style => "width:90%" , :onFocus => "xtarget = this;" %></td>
+  </tr>
 </table>
   <div class="actions">
     <%= hidden_field_tag 'bp_pic_group_id', @delivery_mail.bp_pic_group_id %>
-    <%= f.submit %>
+    <%= f.submit(:confirm => "以上の内容で送信予約しますか？\n※予約日時が過去の場合、すぐに送信されます。") %>
   </div>
 <% end %>
