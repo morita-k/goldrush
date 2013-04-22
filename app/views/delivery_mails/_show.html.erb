@@ -1,0 +1,49 @@
+<!-- 配信メール詳細  -->
+<table class="show_table">
+  <tr>
+    <th><%= getLongName('delivery_mails', 'mail_status_type') %></th>
+    <td><%= @delivery_mail.mail_status_type_name %></td>
+  </tr>
+  <tr>
+    <th><%= getLongName('delivery_mails', 'subject') %></th>
+    <td><%= @delivery_mail.subject %></td>
+  </tr>
+  <tr>
+    <th><%= getLongName('delivery_mails', 'mail_from_name') %></th>
+    <td><%= @delivery_mail.mail_from_name %></td>
+  </tr>
+  <tr>
+    <th><%= getLongName('delivery_mails', 'mail_from') %></th>
+    <td><%= @delivery_mail.mail_from %></td>
+  </tr>
+  <tr>
+    <th><%= getLongName('delivery_mails', 'mail_cc') %></th>
+    <td><%= @delivery_mail.mail_cc %></td>
+  </tr>
+  <tr>
+    <th><%= getLongName('delivery_mails', 'mail_bcc') %></th>
+    <td><%= @delivery_mail.mail_bcc %></td>
+  </tr>
+  <tr>
+    <th><%= getLongName('delivery_mails', 'planned_setting_at') %></th>
+    <td><%= _time(@delivery_mail.planned_setting_at) %></td>
+  </tr>
+  <tr>
+    <th><%= getLongName('delivery_mails', 'mail_send_status_type') %></th>
+    <td><%= @delivery_mail.mail_send_status_type_name %></td>
+  </tr>
+  <tr>
+    <th><%= getLongName('delivery_mails', 'send_end_at') %></th>
+    <td><%= @delivery_mail.send_end_at %></td>
+  </tr>
+  <tr>
+    <td colspan=2><pre><%= @delivery_mail.content %></pre></td>
+  </tr>
+</table>
+
+<% if !@attachment_files.blank? %>
+  <p></p>
+  <h2>添付ファイル一覧</h2>
+  <%= render :partial => 'attachment_file/list' %>
+<% end %>
+

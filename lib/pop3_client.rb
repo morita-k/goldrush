@@ -7,11 +7,13 @@ end
 
 class Pop3Client
 
+  class_attribute :settings
+
   # ---------------------------------------------------------------------------
   # メールをポップする処理
   # ---------------------------------------------------------------------------
   def Pop3Client.pop_mail(&block)
-    Pop3Client.pop_mail_with_settings(ActionMailer::Base.smtp_settings, &block)
+    Pop3Client.pop_mail_with_settings(Pop3Client.settings, &block)
   end
   
   def Pop3Client.pop_mail_with_settings(settings, &block)
