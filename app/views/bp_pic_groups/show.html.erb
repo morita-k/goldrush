@@ -1,20 +1,21 @@
 <a name="top"></a>
 <% if @delivery_mail %>
-<h1><%= getLongName('table_name','delivery_mails')%> 確認</h1>
+  <h1><%= getLongName('table_name','delivery_mails')%> 確認</h1>
 
-<%= render 'delivery_mails/show' %>
+  <%= render 'delivery_mails/show' %>
 
-<h1><%= @bp_pic_group.bp_pic_group_name %>のメンバーを選択してください。</h1>
+  <h1><%= @bp_pic_group.bp_pic_group_name %>のメンバーを選択してください。</h1>
 <% else %>
-<h1><%= @bp_pic_group.bp_pic_group_name %></h1>
-<div style="color:gray"><%= @bp_pic_group.memo %></div>
+  <h1><%= @bp_pic_group.bp_pic_group_name %></h1>
+  <div style="color:gray"><%= @bp_pic_group.memo %></div>
   <div style="text-align:right">
   <%= back_to_link 'グループ名とメモの編集', {:action => :edit, :id => @bp_pic_group.id} %> |
   <%= link_to 'グループを削除', {:action => :destroy, :id => @bp_pic_group.id, :authenticity_token => form_authenticity_token}, method: :delete, data: { confirm: '削除します。よろしいですか?' } %>
   </div>
+  <%= link_or_back '戻る', bp_pic_groups_path %>
+  <hr />
 <% end %>
-<%= link_or_back '戻る', bp_pic_groups_path %>
-<hr />
+
 
 <% unless @delivery_mail %>
 <div>
