@@ -32,7 +32,7 @@ class DeliveryMail < ActiveRecord::Base
           
           attachment_files = AttachmentFile.attachment_files("delivery_mails", mail.id)
           
-          DeliveryMailMailer.send_del_mail(
+          MyMailer.send_del_mail(
             email,
             mail.mail_cc,
             mail.mail_bcc,
@@ -51,5 +51,22 @@ class DeliveryMail < ActiveRecord::Base
       where(:created_user => fetch_key).
       update_all(:mail_status_type => 'send',:mail_send_status_type => 'finished',:send_end_at => Time.now)
       
+  end
+
+  # Private Mailer
+  class MyMailer < ActionMailer::Base
+    def send_del_mail(destination, cc, bcc, from, subject, body, attachment_files)
+      attachment_files.each do |af|
+        attachments[af.file_name] = File.read(af.file_path)
+      end
+      mail(
+        to: destination,
+        cc: cc,
+        bcc: bcc,
+        from: from, 
+        subject: subject,
+        body: body
+      )
+    end
   end
 end
