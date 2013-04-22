@@ -61,9 +61,11 @@ class DeliveryMailsController < ApplicationController
       begin
         set_user_column(@delivery_mail)
          
-        @delivery_mail.save!
-        # 添付ファイルの保存
-        store_upload_file(@delivery_mail.id)
+        ActiveRecord::Base.transaction do
+          @delivery_mail.save!
+          # 添付ファイルの保存
+          store_upload_file(@delivery_mail.id)
+	end
         
         format.html {
           redirect_to url_for(
@@ -87,15 +89,26 @@ class DeliveryMailsController < ApplicationController
   # PUT /delivery_mails/1.json
   def update
     @delivery_mail = DeliveryMail.find(params[:id])
+    @delivery_mail.mail_status_type = 'editing'
 
     respond_to do |format|
       begin
         set_user_column(@delivery_mail)
-        @delivery_mail.update_attributes!(params[:delivery_mail])
-        # 添付ファイルの保存
-        store_upload_file(@delivery_mail.id)
+        ActiveRecord::Base.transaction do
+          @delivery_mail.update_attributes!(params[:delivery_mail])
+          # 添付ファイルの保存
+          store_upload_file(@delivery_mail.id)
+	end
 	
-        format.html { redirect_to @delivery_mail, notice: 'Delivery mail was successfully updated.' }
+        format.html { 
+          redirect_to url_for(
+            :controller => 'bp_pic_groups',
+            :action => 'show',
+            :id => @delivery_mail.bp_pic_group_id,
+            :delivery_mail_id => @delivery_mail.id,
+            :back_to => back_to
+          ),
+	  notice: 'Delivery mail was successfully updated.' }
         format.json { head :no_content }
       rescue ActiveRecord::RecordInvalid
         format.html { render action: "edit" }
@@ -107,23 +120,27 @@ class DeliveryMailsController < ApplicationController
   # POST /delivery_mails/add_details
   # POST /delivery_mails/add_details.json
   def add_details
-    @bp_pic_ids = params[:bp_pic_ids]
-    @delivery_mail_id = params[:delivery_mail_id]
-    
-    @bp_pic_ids.each do |bp_pic_id|
-      @delivery_mail_target = DeliveryMailTarget.new
-      @delivery_mail_target.delivery_mail_id = @delivery_mail_id.to_i
-      @delivery_mail_target.bp_pic_id = bp_pic_id.to_i
-      set_user_column(@delivery_mail_target)
-      @delivery_mail_target.save!
+    delivery_mail = DeliveryMail.find(params[:delivery_mail_id])
+    ActiveRecord::Base.transaction do
+      delivery_mail.mail_status_type = 'unsend'
+      set_user_column delivery_mail
+      delivery_mail.save!
+      params[:bp_pic_ids].each do |bp_pic_id|
+        next if DeliveryMailTarget.where(:delivery_mail_id => delivery_mail.id, :bp_pic_id => bp_pic_id.to_i, :deleted => 0).first
+        delivery_mail_target = DeliveryMailTarget.new
+        delivery_mail_target.delivery_mail_id = delivery_mail.id
+        delivery_mail_target.bp_pic_id = bp_pic_id.to_i
+        set_user_column(delivery_mail_target)
+        delivery_mail_target.save!
+      end
     end
     
-    if DeliveryMail.find(@delivery_mail_id).planned_setting_at < Time.now.to_s
+    if delivery_mail.planned_setting_at < Time.now.to_s
       DeliveryMail.send_mails
     end
       
     respond_to do |format|
-      format.html { redirect_to url_for(:action => 'show', :id => @delivery_mail_id), notice: 'Delivery mail targets were successfully created.' }
+      format.html { redirect_to url_for(:action => 'show', :id => delivery_mail), notice: 'Delivery mail targets were successfully created.' }
 #        format.json { render json: @delivery_mail_target, status: :created, location: @delivery_mail_target }
     end
   end

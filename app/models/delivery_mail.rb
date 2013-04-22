@@ -12,19 +12,23 @@ class DeliveryMail < ActiveRecord::Base
   after_initialize :default_values
   before_save :_before_save
 
+  def unsend?
+    ['editing','unsend'].include?(mail_status_type)
+  end
+
   def default_values
-    self.mail_status_type ||= 'unsend'
+    self.planned_setting_at ||= Time.now
+    self.mail_status_type ||= 'editing'
     self.mail_send_status_type ||= 'ready'
   end
   
   def _before_save
     unless planned_setting_at_time.blank? || planned_setting_at_date.blank?
-      self.planned_setting_at = planned_setting_at_date.to_s + " " + planned_setting_at_time + ":00:00"
+      self.planned_setting_at = Time.parse(planned_setting_at_date.to_s + " " + planned_setting_at_time + ":00:00")
     end
   end
 
   def setup_planned_setting_at
-    self.planned_setting_at ||= Time.now
     self.planned_setting_at_date = planned_setting_at.strftime("%Y/%m/%d")
     self.planned_setting_at_time = planned_setting_at.hour
   end

@@ -42,7 +42,7 @@
   </tr>
 </table>
 
-<% if @delivery_mail.mail_status_type == 'unsend' %>
+<% if @delivery_mail.unsend? %>
   <%= back_to_link '編集', {:action => :edit, :id => @delivery_mail.id} %> |
 <% end %>
 <%= link_or_back '戻る', {:action => :index, :id => @delivery_mail.bp_pic_group_id} %>
