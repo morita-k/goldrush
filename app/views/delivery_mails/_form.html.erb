@@ -59,7 +59,7 @@
   <tr>
     <% options = @select_options %>
     <th><%= f.label :planned_setting_at, getLongName('delivery_mails', 'planned_setting_at') %></th>
-    <td><%= edit? ? :planned_setting_at : date_field('delivery_mail', 'planned_setting_at') %><%= select_tag "planned_setting_at_time", options_for_select(@select_options) %></td>
+    <td><%= date_field('delivery_mail', 'planned_setting_at_date') %><%= select "delivery_mail", "planned_setting_at_time", (0..23).to_a, {:include_blank => true}, :style => "width:3em" %></td>
   </tr>
   <tr>
     <td colspan="2"><a href='javascript:insertAtCursor(xtarget, "%%pb_pic_name%%");'>担当者名</a>　<a href='javascript:insertAtCursor(xtarget, "%%business_partner_name%%");'>取引先会社名</a><br/>
