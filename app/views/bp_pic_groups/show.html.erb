@@ -1,5 +1,5 @@
 <a name="top"></a>
-<h1><%= @bp_pic_group.bp_pic_group_name %> 詳細</h1>
+<h1><%= @bp_pic_group.bp_pic_group_name %></h1>
 <div style="color:gray"><%= @bp_pic_group.memo %></div>
 <% unless @called_by_delivery_mail_create %>
   <div style="text-align:right">
@@ -7,7 +7,10 @@
   <%= link_to 'グループを削除', {:action => :destroy, :id => @bp_pic_group.id, :authenticity_token => form_authenticity_token}, method: :delete, data: { confirm: '削除します。よろしいですか?' } %>
   </div>
 <% end %>
+<%= link_or_back '戻る', bp_pic_groups_path %>
 <hr />
+
+<% unless @called_by_delivery_mail_create %>
 <div>
   <%= form_tag(url_for(:controller => :bp_pic_group_details, :action => :create), :method => :post) do %>
     <table class="show_table">
@@ -23,46 +26,44 @@
             <%= hidden_field 'bp_pic_group_detail', 'bp_pic_id' %></td>
         </tr>
     </table>
-    <%= hidden_field_tag 'bp_pic_group_detail[owner_id]', @bp_pic_group.owner_id %>
     <%= hidden_field_tag 'bp_pic_group_detail[bp_pic_group_id]', @bp_pic_group.id %>
-    <%= back_to_field_tag %>
-    <%= submit_tag "取引先担当を追加" %>
+    <%= hidden_field_tag 'back_to', request.url  %>
+    <%= submit_tag "取引先担当を追加", :id => "submit_bp_pic_group_detail", :disabled => "disabled" %>
   <% end %>
   <input type="hidden" id="business_partner_id" />
 </div>
+<% end %>
+
 <div>
-  <%= form_tag(url_for(:controller => :delivery_mails, :action => :add_details), :method => :post) do %>
-    <%= back_to_field_tag %>
-    <table class="show_table">
+  <%= form_tag url_for_bp_pic_list(@called_by_delivery_mail_create), :method => :post do %>
+    <% if @called_by_delivery_mail_create %>
+      <%= hidden_field_tag 'delivery_mail_id', @delivery_mail_id %>
+      <%= submit_tag "メール作成" %>
+      <%= back_to_field_tag %>
+    <% else %>
+      <%= submit_tag "選択した担当者を削除", :confirm => "選択した担当者をリストから削除します。\nよろしいですか？" %>
+      <%= hidden_field_tag 'back_to', request.url  %>
+    <% end %>
+    <table class="show_table" style="margin-top:2px;">
       <tr>
-        <% if @called_by_delivery_mail_create %>
-          <th></th>
-        <% end %>
+        <th></th>
         <th><%= getLongName('business_partners', 'business_partner_name') %></th>
         <th><%= getLongName('bp_pics', 'bp_pic_name') %></th>
-        <% unless @called_by_delivery_mail_create %>
-          <th>削除</th>
-        <% end %>
       </tr>
-      <% @bp_pic_group.bp_pic_group_details.each do |detail| %>
+      <% @bp_pic_group.bp_pic_group_details.each do | detail | %>
         <% if (not detail.bp_pic.nil?) and (not detail.bp_pic.business_partner.nil?) %>
           <tr>
             <% if @called_by_delivery_mail_create %>
-              <td><%= check_box_tag 'bp_pic_ids[]', detail.bp_pic_id, true %></td>
+              <td><%= check_box_tag 'bp_pic_ids[]', detail.bp_pic_id, @called_by_delivery_mail_create %></td>
+            <% else %>
+              <td><%= check_box_tag 'ids[]', detail.id, @called_by_delivery_mail_create %></td>
             <% end %>
             <td><%= back_to_link detail.bp_pic.business_partner.business_partner_name, :controller => :business_partner, :action => :show, :id => detail.bp_pic.business_partner_id %></td>
             <td><%= back_to_link detail.bp_pic.bp_pic_name, :controller => :bp_pic, :action => :show, :id => detail.bp_pic_id %></td>
-            <% unless @called_by_delivery_mail_create %>
-              <td><%= back_to_link '削除', {:controller => :bp_pic_group_details, :action => :destroy, :id => detail.id, :authenticity_token => form_authenticity_token}, :method => :delete %></td>
-            <% end %>
           </tr>
         <% end %>
       <% end %>
     </table>
-    <% if @called_by_delivery_mail_create %>
-      <%= hidden_field_tag 'delivery_mail_id', @delivery_mail_id %>
-      <%= submit_tag "メール作成" %>
-    <% end %>
   <% end %>
 <div>
 <div><a href="#top">ページトップ</a></div>
@@ -71,6 +72,7 @@
 <script type="text/javascript">
 <!--
 
+// ID定義
 var form_id_list = {
   business_partner_id: "business_partner_id",
   business_partner_name: "business_partner_name",
@@ -78,8 +80,32 @@ var form_id_list = {
   bp_pic_name: "bp_pic_name"
 }
 
+// UI操作オブジェクト作成
 document.busines_pertner = new BuisinessPartnerForm( form_id_list );
 document.bp_pic = new BpPicForm( form_id_list );
+
+// setBpPic関数に画面固有の実装を追加
+document.old_setBpPic = document.setBpPic;
+document.setBpPic = function(bp_pic){
+  document.old_setBpPic(bp_pic);
+  if(document.bp_pic.getId() != "" ){
+    $("#submit_bp_pic_group_detail").removeAttr("disabled");
+  }
+}
+
+// clearBp関数に画面固有の実装を追加
+old_clearBp = clearBp;
+clearBp = function(){
+  old_clearBp();
+  $("#submit_bp_pic_group_detail").attr("disabled", "disabled");
+}
+
+// clearBpPic関数に画面固有の実装を追加
+old_clearBpPic = clearBpPic;
+clearBpPic = function(){
+  old_clearBpPic();
+  $("#submit_bp_pic_group_detail").attr("disabled", "disabled");
+}
 
 //-->
 </script>

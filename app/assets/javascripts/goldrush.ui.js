@@ -31,8 +31,16 @@ var BpPicForm = (function(){
     $( "#" + this.id_list.bp_pic_id ).val( id );
   }
   
+  klass.prototype.getId = function( id ){
+    return $( "#" + this.id_list.bp_pic_id ).val();
+  }
+  
   klass.prototype.setName = function( name ){
     $( "#" + this.id_list.bp_pic_name ).val( name );
+  }
+  
+  klass.prototype.getName = function(){
+    return $( "#" + this.id_list.bp_pic_name ).val();
   }
   
   return klass;
