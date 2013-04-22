@@ -66,9 +66,14 @@ class DeliveryMailsController < ApplicationController
     respond_to do |format|
       begin
         set_user_column(@delivery_mail)
+         
         @delivery_mail.save!
         # 添付ファイルの保存
         store_upload_file(@delivery_mail.id)
+        
+        if @delivery_mail.planned_setting_at_time < Time.now.to_s
+          DeliveryMail.send_mails
+        end
         
         format.html {
           redirect_to url_for(
