@@ -3,7 +3,11 @@ class AttachmentFile < ActiveRecord::Base
   include AutoTypeName
 
   belongs_to :parent, :class_name => 'BpMember'
-
+  
+  def AttachmentFile.attachment_files(parent_table_name, parent_id)
+    where(:parent_table_name => parent_table_name, :parent_id => parent_id).order(:id)
+  end
+  
   # 拡張子チェックと取得
   def check_and_get_ext(filename)
     ext = File.extname(filename.to_s).downcase
@@ -23,13 +27,21 @@ class AttachmentFile < ActiveRecord::Base
   end
 
   # 保管フォルダ指定
-  def AttachmentFile.file_dir
-    'files'
+  def file_dir
+    @file_dir || 'files'
+  end
+
+  def file_dir=(file_dir)
+    @file_dir = file_dir
+  end
+
+  def parend_table_dir
+     File.join(file_dir, parent_table_name)
   end
 
   # idの下二けたをディレクトリ名とする
   def detail_dir
-    File.join(AttachmentFile.file_dir, sprintf("%.2d", self.id % 100))
+    File.join(parend_table_dir, sprintf("%.2d", self.id % 100))
   end
 
   # 経歴書の保存ファイル名生成
@@ -39,7 +51,11 @@ class AttachmentFile < ActiveRecord::Base
   end
 
 
-  def create_by_import(upfile, parent_id, file_name, parent_table_name = "import_mails")
+  def create_by_import(upfile, parent_id, file_name)
+    create_and_store!(upfile, parent_id, file_name, "import_mails")
+  end
+
+  def create_and_store!(upfile, parent_id, file_name, parent_table_name)
     ActiveRecord::Base::transaction do
       # attachmentFileに項目を入れるメソッド
       # 親テーブル名
@@ -54,11 +70,11 @@ class AttachmentFile < ActiveRecord::Base
       # 拡張子
       ext = self.check_and_get_ext(file_name)
       self.extention = ext
-      self.file_path = 'temp'
+      self.file_path = 'temp' # 後で変える。not nullなので一時的にtempとする
       
       self.created_user = 'import_mail'
       self.updated_user = 'import_mail'
-      self.save!
+      self.save! # idが欲しい
       
       self.file_path = File.join(detail_dir, create_store_parent_table_name)
       self.save!
@@ -69,9 +85,10 @@ class AttachmentFile < ActiveRecord::Base
     end
   end
 
-#private
+private
   def make_store_dir
-    Dir.mkdir AttachmentFile.file_dir unless File.exist? AttachmentFile.file_dir
+    Dir.mkdir file_dir unless File.exist? file_dir
+    Dir.mkdir parend_table_dir unless File.exist? parend_table_dir
     Dir.mkdir detail_dir unless File.exist? detail_dir
   end
   

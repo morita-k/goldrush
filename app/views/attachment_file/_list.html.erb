@@ -6,11 +6,7 @@
   
 <% for attachment_file in @attachment_files %>
   <tr>
-    <% if @bp_member || @import_mail %>
-      <td><%= link_to "#{attachment_file.file_name}", :controller => 'attachment_file', :action=>'download', :id => attachment_file %></td>
-    <% else %>
-      <td><%=h attachment_file.file_name %></td>
-    <% end %>
+    <td><%= link_to "#{attachment_file.file_name}", :controller => 'attachment_file', :action=>'download', :id => attachment_file %></td>
     <td><%= link_to '削除', { :controller => 'attachment_file', :action => 'destroy', :id => attachment_file }, :confirm => 'このファイルを削除します。よろしいですか?', :method => :post %></td>
   </tr>
 <% end %>

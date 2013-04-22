@@ -1,7 +1,9 @@
 # -*- encoding: utf-8 -*-
 require 'auto_type_name'
-include AutoTypeName
+
 class DeliveryMail < ActiveRecord::Base
+  include AutoTypeName
+
   has_many :delivery_mail_targets, :conditions => "delivery_mail_targets.deleted = 0"
   attr_accessible :bp_pic_group_id, :content, :id, :mail_bcc, :mail_cc, :mail_from, :mail_from_name, :mail_send_status_type, :mail_status_type, :owner_id, :planned_setting_at, :send_end_at, :subject, :lock_version
   after_initialize :default_values
@@ -28,31 +30,37 @@ class DeliveryMail < ActiveRecord::Base
             gsub("%%bp_pic_name%%", target.bp_pic.bp_pic_name).
             gsub("%%business_partner_name%%", target.bp_pic.business_partner.business_partner_name)
           
-          Mailer.send_del_mail(
+          attachment_files = AttachmentFile.attachment_files("delivery_mails", mail.id)
+          
+          MyMailer.send_del_mail(
             email,
             mail.mail_cc,
             mail.mail_bcc,
-            mail.mail_from,
+            "#{mail.mail_from_name} <#{mail.mail_from}>",
             mail.subject,
-            body
+            body,
+            attachment_files
           ).deliver
         }
       }
     rescue => e
-      error_str = "Delivery Mail Send Error: " + e
+      error_str = "Delivery Mail Send Error: " + e.message + "\n" + e.backtrace.join("\n")
       SystemLog.error('delivery mail', 'mail send error',  error_str, 'delivery mail')
     end
-      
     DeliveryMail.
       where(:created_user => fetch_key).
       update_all(:mail_status_type => 'send',:mail_send_status_type => 'finished',:send_end_at => Time.now)
+      
   end
-  
+
   # Private Mailer
-  class Mailer < ActionMailer::Base
-    def send_del_mail(destination, cc, bcc, from, subject, body)
+  class MyMailer < ActionMailer::Base
+    def send_del_mail(destination, cc, bcc, from, subject, body, attachment_files)
+      attachment_files.each do |af|
+        attachments[af.file_name] = File.read(af.file_path)
+      end
       mail(
-        recipients: destination,
+        to: destination,
         cc: cc,
         bcc: bcc,
         from: from, 
@@ -61,5 +69,4 @@ class DeliveryMail < ActiveRecord::Base
       )
     end
   end
-  
 end
