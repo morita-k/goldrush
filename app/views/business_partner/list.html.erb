@@ -48,11 +48,11 @@
     <td><%=h business_partner.business_partner_code %></td>
 <% if popup? %>
   <% if params[:flg]=='eu' %>
-    <td><span class="linked_star"><%= star_links(business_partner) %></span> <%= link_to h(business_partner.business_partner_name), '#', :onClick => "setEuBp(#{business_partner.id},'#{business_partner.business_partner_name}');return false;" %></td>
+    <td><span class="linked_star"><%= star_links(business_partner) %></span> <%= link_to h(business_partner.business_partner_name), '#', :onClick => "setEuBpToParentWindow(#{business_partner.id},'#{business_partner.business_partner_name}');return false;" %></td>
   <% elsif params[:flg]=='mail' %>
-    <td><span class="linked_star"><%= star_links(business_partner) %></span> <%= link_to h(business_partner.business_partner_short_name), '#', :onClick => "setBpFull(#{business_partner.id},'#{business_partner.business_partner_code}','#{business_partner.sales_management_code}','#{business_partner.business_partner_name}','#{business_partner.business_partner_short_name}','#{business_partner.business_partner_name_kana}','#{business_partner.business_partner_name_en}','#{business_partner.sales_status_type}','#{business_partner.ceo_name}','#{business_partner.url}','#{business_partner.zip}','#{business_partner.address1}','#{business_partner.address2}','#{business_partner.tel}','#{business_partner.fax}','#{business_partner.email}','#{business_partner.category}','#{business_partner.self_flg}','#{business_partner.eu_flg}','#{business_partner.upper_flg}','#{business_partner.down_flg}','#{business_partner.memo}');return false;" %></td>
+    <td><span class="linked_star"><%= star_links(business_partner) %></span> <%= link_to h(business_partner.business_partner_short_name), '#', :onClick => "setBpToParentWindowFull(#{business_partner.id},'#{business_partner.business_partner_code}','#{business_partner.sales_management_code}','#{business_partner.business_partner_name}','#{business_partner.business_partner_short_name}','#{business_partner.business_partner_name_kana}','#{business_partner.business_partner_name_en}','#{business_partner.sales_status_type}','#{business_partner.ceo_name}','#{business_partner.url}','#{business_partner.zip}','#{business_partner.address1}','#{business_partner.address2}','#{business_partner.tel}','#{business_partner.fax}','#{business_partner.email}','#{business_partner.category}','#{business_partner.self_flg}','#{business_partner.eu_flg}','#{business_partner.upper_flg}','#{business_partner.down_flg}','#{business_partner.memo}');return false;" %></td>
   <% else %>
-    <td><span class="linked_star"><%= star_links(business_partner) %></span> <%= link_to h(business_partner.business_partner_short_name), '#', :onClick => "setBp(#{business_partner.id},'#{business_partner.business_partner_name}');return false;" %></td>
+    <td><span class="linked_star"><%= star_links(business_partner) %></span> <%= link_to h(business_partner.business_partner_short_name), '#', :onClick => "setBpToParentWindow(#{business_partner.id},'#{business_partner.business_partner_name}');return false;" %></td>
   <% end %>
 <% else %>
     <td><span class="linked_star"><%= star_links(business_partner) %></span> <%=back_to_link h(business_partner.business_partner_short_name), :action => :show, :id => business_partner %></td>
@@ -80,7 +80,7 @@
 <% if popup? %>
 <script type="text/javascript">
 <!--
-function setBp(business_partner_id, business_partner_name) {
+function setBpToParentWindow(business_partner_id, business_partner_name) {
   if(window.opener.document.setBp){
     var bp = new Object();
     bp.id = business_partner_id;
@@ -90,7 +90,7 @@ function setBp(business_partner_id, business_partner_name) {
   window.close();
 }
 
-function setEuBp(business_partner_id, business_partner_name) {
+function setEuBpToParentWindow(business_partner_id, business_partner_name) {
   if(window.opener.document.setEuBp){
     var bp = new Object();
     bp.id = business_partner_id;
@@ -100,7 +100,7 @@ function setEuBp(business_partner_id, business_partner_name) {
   window.close();
 }
 
-function setBpFull(business_partner_id, business_partner_code, sales_management_code, business_partner_name, business_partner_short_name, business_partner_name_kana, business_partner_name_en, sales_status_type, ceo_name, url, zip, address1, address2, tel, fax, email, category, self_flg, eu_flg, upper_flg, down_flg, memo) {
+function setBpToParentWindowFull(business_partner_id, business_partner_code, sales_management_code, business_partner_name, business_partner_short_name, business_partner_name_kana, business_partner_name_en, sales_status_type, ceo_name, url, zip, address1, address2, tel, fax, email, category, self_flg, eu_flg, upper_flg, down_flg, memo) {
   if(window.opener.document.setBpFull){
     var bp = new Object();
     
