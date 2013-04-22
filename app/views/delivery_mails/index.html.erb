@@ -6,7 +6,6 @@
   <tr>
     <th>ステータス</th>
     <th><%= getLongName('delivery_mails', 'subject') %></th>
-    <th><%= getLongName('delivery_mails', 'content') %></th>
     <th><%= getLongName('delivery_mails', 'mail_from_name') %></th>
     <th><%= getLongName('delivery_mails', 'mail_from') %></th>
     <th><%= getLongName('delivery_mails', 'mail_cc') %></th>
@@ -22,7 +21,6 @@
       <%= delivery_mail.mail_status_type_name %>
     </td>
     <td><%= back_to_link delivery_mail.subject, {:action => :show, :id => delivery_mail.id } %></td>
-    <td><%= delivery_mail.content %></td>
     <td><%= delivery_mail.mail_from_name %></td>
     <td><%= delivery_mail.mail_from %></td>
     <td><%= delivery_mail.mail_cc %></td>
@@ -31,7 +29,7 @@
     <td><%= delivery_mail.send_end_at %></td>
     <td>
       <% if delivery_mail.mail_status_type == 'unsend' %>
-        <%= back_to_link 'キャンセル', { :action => :cancel, :id => delivery_mail.id, :authenticity_token => form_authenticity_token }, :method => :put %>
+        <%= back_to_link 'キャンセル', { :action => :cancel, :id => delivery_mail.id, :authenticity_token => form_authenticity_token }, :method => :put, data: { :confirm => 'キャンセルします。よろしいですか?' } %>
       <% end %>
     </td>
   </tr>
