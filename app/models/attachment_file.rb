@@ -5,7 +5,7 @@ class AttachmentFile < ActiveRecord::Base
   belongs_to :parent, :class_name => 'BpMember'
   
   def AttachmentFile.attachment_files(parent_table_name, parent_id)
-    where(:parent_table_name => parent_table_name, :parent_id => parent_id).order(:id)
+    where(:parent_table_name => parent_table_name, :parent_id => parent_id, :deleted => 0).order(:id)
   end
   
   # 拡張子チェックと取得
