@@ -122,3 +122,7 @@ table.input_table th {
 span.linked_star a:hover {
   text-decoration: none;
 }
+
+select {
+  width: auto;
+}
