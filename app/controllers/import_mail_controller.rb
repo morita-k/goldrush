@@ -61,7 +61,23 @@ class ImportMailController < ApplicationController
       end
     end
     cond, incl = make_conditions
-    @import_mails = ImportMail.includes(incl).where(cond).page(params[:page]).per(current_user.per_page).order("id desc")
+    
+    @import_mails = ImportMail.includes(incl)
+                              .where(cond)
+                              .page(params[:page])
+                              .per(current_user.per_page)
+                              .order("id desc")
+=begin    
+    @mail_registered_to = {}
+    @import_mails.each do |mail|
+      bpm = BpMember.where(:import_mail_id => mail.id).first
+      bof = BizOffer.where(:import_mail_id => mail.id).first
+      @mail_registered_to[mail.id] = Object.new
+      @mail_registered_to[mail.id].define_method(:bp_member, lambda{bpm})
+    end
+=end    
+    
+    
   end
 
   def set_order
@@ -176,6 +192,5 @@ class ImportMailController < ApplicationController
  #   render :text => "{biz_offer_flg: '#{target_mail.biz_offer_flg.to_s}', bp_member_flg: '#{target_mail.bp_member_flg.to_s}', unwanted: '#{target_mail.unwanted.to_s}'}"
     render :text => target_mail.biz_offer_flg.to_s + ',' + target_mail.bp_member_flg.to_s + ',' + target_mail.unwanted.to_s
   end
-  
   
 end

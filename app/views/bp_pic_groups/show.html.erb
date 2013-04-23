@@ -1,52 +1,118 @@
+<a name="top"></a>
 <% if @delivery_mail %>
-<h1><%= getLongName('table_name','delivery_mails')%> 確認</h1>
+  <h1><%= getLongName('table_name','delivery_mails')%> 確認</h1>
 
-<%= render 'delivery_mails/show' %>
+  <%= render 'delivery_mails/show' %>
 
-<h1><%= @bp_pic_group.bp_pic_group_name %>のメンバーを選択してください。</h1>
+  <h1><%= @bp_pic_group.bp_pic_group_name %>のメンバーを選択してください。</h1>
 <% else %>
-<h1><%= @bp_pic_group.bp_pic_group_name %> 詳細</h1>
+  <h1><%= @bp_pic_group.bp_pic_group_name %></h1>
+  <div style="color:gray"><%= @bp_pic_group.memo %></div>
+  <div style="text-align:right">
+  <%= back_to_link 'グループ名とメモの編集', {:action => :edit, :id => @bp_pic_group.id} %> |
+  <%= link_to 'グループを削除', {:action => :destroy, :id => @bp_pic_group.id, :authenticity_token => form_authenticity_token}, method: :delete, data: { confirm: '削除します。よろしいですか?' } %>
+  </div>
+  <%= link_or_back '戻る', bp_pic_groups_path %>
+  <hr />
 <% end %>
 
 
-  <%= form_tag(url_for(:controller => :delivery_mails, :action => :add_details), :method => :post) do %>
-    <%= back_to_field_tag %>
+<% unless @delivery_mail %>
+<div>
+  <%= form_tag(url_for(:controller => :bp_pic_group_details, :action => :create), :method => :post) do %>
     <table class="show_table">
-      <tr>
-        <% if @delivery_mail %>
-          <th></th>
-        <% end %>
-        <th><%= getLongName('business_partners', 'business_partner_name') %></th>
-        <th><%= getLongName('bp_pics', 'bp_pic_name') %></th>
-        <% unless @delivery_mail %>
-          <th></th>
-        <% end %>
-      </tr>
-      <% @bp_pic_group.bp_pic_group_details.each do |detail| %>
-        <% if detail.suspended? %>
-        <tr style="background-color: silver">
-        <% else %>
         <tr>
-        <% end %>
-          <% if @delivery_mail %>
-            <td><%= check_box_tag 'bp_pic_ids[]', detail.bp_pic_id, !detail.suspended? %></td>
-          <% end %>
-          <td><%= back_to_link detail.bp_pic.business_partner.business_partner_name, :controller => :business_partner, :action => :show, :id => detail.bp_pic.business_partner_id %></td>
-          <td><%= back_to_link detail.bp_pic.bp_pic_name, :controller => :bp_pic, :action => :show, :id => detail.bp_pic_id %></td>
-          <% unless @delivery_mail %>
-            <td><%= back_to_link '削除', {:controller => :bp_pic_group_details, :action => :destroy, :id => detail.id, :authenticity_token => form_authenticity_token}, :method => :delete, :confirm => "このレコードを削除します。よろしいですか？" %></td>
-          <% end %>
+        <th><label for="business_partner_name">取引先</label></th><td><%= text_field_tag 'business_partner_name', "", :readOnly => true, :style => "background-color: silver;", :size => 30 %>
+            <input type=button value='...' onClick="disp_wide('<%=url_for :controller => 'business_partner', :action => 'list', :popup =>1, :flg => 'upper' %>');return false;" />
+            <input type=button value='クリア' onClick="clearBp();return false;" />
         </tr>
-      <% end %>
+        <tr>
+        <th><label for="bp_pic_name">取引先担当</label></th><td><%= text_field_tag 'bp_pic_name', "", :readOnly => true, :style => "background-color: silver;", :size => 30 %>
+            <input type=button value='...' onClick="openBpPicList('<%=url_for :controller => 'bp_pic', :action => 'list', :popup =>1 %>');return false;" />
+            <input type=button value='クリア' onClick="clearBpPic();return false;" />
+            <%= hidden_field 'bp_pic_group_detail', 'bp_pic_id' %></td>
+        </tr>
     </table>
+    <%= hidden_field_tag 'bp_pic_group_detail[bp_pic_group_id]', @bp_pic_group.id %>
+    <%= hidden_field_tag 'back_to', request.url  %>
+    <%= submit_tag "取引先担当を追加", :id => "submit_bp_pic_group_detail", :disabled => "disabled" %>
+  <% end %>
+  <input type="hidden" id="business_partner_id" />
+</div>
+<% end %>
+
+<div>
+  <%= form_tag url_for_bp_pic_list(@delivery_mail), :method => :post do %>
     <% if @delivery_mail %>
       <%= hidden_field_tag 'delivery_mail_id', @delivery_mail.id %>
       <%= submit_tag "メール作成" %>
+      <%= back_to_field_tag %>
+    <% else %>
+      <%= submit_tag "選択した担当者を削除", :confirm => "選択した担当者をリストから削除します。\nよろしいですか？" %>
+      <%= hidden_field_tag 'back_to', request.url  %>
     <% end %>
+    <table class="show_table" style="margin-top:2px;">
+      <tr>
+        <th></th>
+        <th><%= getLongName('business_partners', 'business_partner_name') %></th>
+        <th><%= getLongName('bp_pics', 'bp_pic_name') %></th>
+      </tr>
+      <% @bp_pic_group.bp_pic_group_details.each do | detail | %>
+        <% if (not detail.bp_pic.nil?) and (not detail.bp_pic.business_partner.nil?) %>
+          <tr>
+            <% if @delivery_mail %>
+              <td><%= check_box_tag 'bp_pic_ids[]', detail.bp_pic_id, @delivery_mail %></td>
+            <% else %>
+              <td><%= check_box_tag 'ids[]', detail.id, @delivery_mail %></td>
+            <% end %>
+            <td><%= back_to_link detail.bp_pic.business_partner.business_partner_name, :controller => :business_partner, :action => :show, :id => detail.bp_pic.business_partner_id %></td>
+            <td><%= back_to_link detail.bp_pic.bp_pic_name, :controller => :bp_pic, :action => :show, :id => detail.bp_pic_id %></td>
+          </tr>
+        <% end %>
+      <% end %>
+    </table>
   <% end %>
-<% unless @delivery_mail %>
-  <%= back_to_link "取引先担当の新規追加", :action => :new_details, :id => @bp_pic_group.id %> |
-  <%= back_to_link '編集', {:action => :edit, :id => @bp_pic_group.id} %> |
-  <%= link_to '削除', {:action => :destroy, :id => @bp_pic_group.id, :authenticity_token => form_authenticity_token}, method: :delete, data: { confirm: '削除します。よろしいですか?' } %> |
-<% end %>
+<div>
+<div><a href="#top">ページトップ</a></div>
 <%= link_or_back '戻る', bp_pic_groups_path %>
+
+<script type="text/javascript">
+<!--
+
+// ID定義
+var form_id_list = {
+  business_partner_id: "business_partner_id",
+  business_partner_name: "business_partner_name",
+  bp_pic_id: "bp_pic_group_detail_bp_pic_id",
+  bp_pic_name: "bp_pic_name"
+}
+
+// UI操作オブジェクト作成
+document.busines_pertner = new BuisinessPartnerForm( form_id_list );
+document.bp_pic = new BpPicForm( form_id_list );
+
+// setBpPic関数に画面固有の実装を追加
+document.old_setBpPic = document.setBpPic;
+document.setBpPic = function(bp_pic){
+  document.old_setBpPic(bp_pic);
+  if(document.bp_pic.getId() != "" ){
+    $("#submit_bp_pic_group_detail").removeAttr("disabled");
+  }
+}
+
+// clearBp関数に画面固有の実装を追加
+old_clearBp = clearBp;
+clearBp = function(){
+  old_clearBp();
+  $("#submit_bp_pic_group_detail").attr("disabled", "disabled");
+}
+
+// clearBpPic関数に画面固有の実装を追加
+old_clearBpPic = clearBpPic;
+clearBpPic = function(){
+  old_clearBpPic();
+  $("#submit_bp_pic_group_detail").attr("disabled", "disabled");
+}
+
+//-->
+</script>

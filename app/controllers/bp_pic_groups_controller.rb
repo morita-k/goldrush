@@ -19,7 +19,7 @@ class BpPicGroupsController < ApplicationController
     end
     
     @bp_pic_group = BpPicGroup.find(params[:id])
-        
+    p @bp_pic_group
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @bp_pic_group }

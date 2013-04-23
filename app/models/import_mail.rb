@@ -4,6 +4,8 @@ class ImportMail < ActiveRecord::Base
 
   belongs_to :business_partner
   belongs_to :bp_pic
+  has_many :bp_members
+  has_many :biz_offers
 
   def ImportMail.tryConv(map, header_key, &block)
     str = nil
@@ -18,6 +20,9 @@ class ImportMail < ActiveRecord::Base
     end
   end
   
+  # メールを取り込む
+  #  m   : 取り込むMailオブジェクト
+  #  src : 取り込むメールのソーステキスト
   def ImportMail.import_mail(m, src)
     ActiveRecord::Base::transaction do
       import_mail = ImportMail.new
@@ -117,15 +122,17 @@ class ImportMail < ActiveRecord::Base
       self.business_partner_id = mail_bp_pic.business_partner.id
     end
   end
-
+  
+  # 取り込みメールに紐づく取引先を取得する
   def get_bizp(id)
     return BusinessPartner.find(id)
   end
-
+  
+  # 取り込みメールに紐づく取引先担当を取得する
   def get_bpic(id)
     return BpPic.find(id)
   end
-
+  
   def attachment?
     AttachmentFile.count(:conditions => ["deleted = 0 and parent_table_name = 'import_mails' and parent_id = ?", self]) > 0
 #    !AttachmentFile.find(:first, :conditions => ["deleted = 0 and parent_table_name = 'import_mails' and parent_id = ?", self]).blank?
@@ -149,7 +156,7 @@ private
       return NKF.nkf('-w', body.to_s)
     end
   end
-
+  
 CTYPE_TO_EXT = {
   'image/jpeg' => 'jpeg',
   'image/gif'  => 'gif',

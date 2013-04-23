@@ -20,7 +20,7 @@
 </tr>
 <tr>
 <th><label for="bp_pic_name">上流取引先担当</label></th><td><%= text_field_tag 'bp_pic_name', @biz_offer.bp_pic.blank? ? "" : @biz_offer.bp_pic.bp_pic_name, :readOnly => true, :style => "background-color: silver;", :size => 30 %>
-    <input type=button value='...' onClick="openBpPicList();return false;" />
+    <input type=button value='...' onClick="openBpPicList('<%=url_for :controller => 'bp_pic', :action => 'list', :popup =>1 %>');return false;" />
     <input type=button value='クリア' onClick="clearBpPic();return false;" />
     <%= hidden_field 'biz_offer', 'bp_pic_id' %></td>
 </tr>
@@ -91,56 +91,16 @@
 
 <script type="text/javascript">
 <!--
-function openBpPicList() {
-    if (document.getElementById("biz_offer_business_partner_id").value != "")
-    {
-      disp_wide('<%=url_for :controller => 'bp_pic', :action => 'list', :popup =>1 %>' + '&id=' + document.getElementById("biz_offer_business_partner_id").value)
-    }
+
+var form_id_list = {
+  business_partner_id: "biz_offer_business_partner_id",
+  business_partner_name: "business_partner_name",
+  bp_pic_id: "biz_offer_bp_pic_id",
+  bp_pic_name: "bp_pic_name"
 }
 
-document.setBp = function(bp) {
-    document.getElementById("biz_offer_business_partner_id").value = bp.id;
-    document.getElementById("business_partner_name").value = bp.business_partner_name;
-    document.getElementById("biz_offer_bp_pic_id").value = "";
-    document.getElementById("bp_pic_name").value = "";
-}
+document.busines_pertner = new BuisinessPartnerForm( form_id_list );
+document.bp_pic = new BpPicForm( form_id_list );
 
-function clearBp(){
-    document.getElementById("biz_offer_business_partner_id").value = "";
-    document.getElementById("business_partner_name").value = "";
-    document.getElementById("biz_offer_bp_pic_id").value = "";
-    document.getElementById("bp_pic_name").value = "";
-}
-
-document.setBpPic = function(bp_pic){
-    document.getElementById("biz_offer_bp_pic_id").value = bp_pic.id;
-    document.getElementById("bp_pic_name").value = bp_pic.bp_pic_name;
-}
-
-function clearBpPic(){
-    document.getElementById("biz_offer_bp_pic_id").value = "";
-    document.getElementById("bp_pic_name").value = "";
-}
-
-document.setContactUser = function(user){
-    document.getElementById("biz_offer_contact_pic_id").value = user.pic_id;
-    document.getElementById("contact_pic_name").value = user.pic_name;
-}
-
-function clearContactUser(){
-    document.getElementById("biz_offer_contact_pic_id").value = "";
-    document.getElementById("contact_pic_name").value = "";
-}
-
-document.setSalesUser = function(user){
-    document.getElementById("biz_offer_sales_pic_id").value = user.pic_id;
-    document.getElementById("sales_pic_name").value = user.pic_name;
-}
-
-function clearSalesUser(){
-    document.getElementById("biz_offer_sales_pic_id").value = "";
-    document.getElementById("sales_pic_name").value = "";
-}
-
-// -->
+//-->
 </script>

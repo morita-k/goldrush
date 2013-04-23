@@ -141,3 +141,9 @@ function validateTime(objText)
   if (returnval==false) objText.select();
   return returnval;
 }
+
+
+function getModelName(url)
+{
+  return location.href.split(location.host)[1].split("/")[1];
+}
