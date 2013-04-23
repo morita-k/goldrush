@@ -1,5 +1,4 @@
 <h1><%=getLongName('table_name','import_mails')%>一覧</h1>
-
 <%= form_tag do %>
 <table>
     <tr>
@@ -17,13 +16,20 @@
 <% end %>
 
 <%= paginate(@import_mails) %>
-
+<div style="color:gray">※案件、人材フラグが黒文字になっているメールは、既に案件、人材として登録されているものです。</div>
+<div style="color:gray">※案件が登録されているメールは、案件フラグを変更できません。</div>
+<div style="color:gray">※人材が登録されているメールは、人材フラグを変更できません。</div>
 <table class="list_table">
   <tr>
-    <th colspan=6>取り込みメール一覧</th>
+    <th>#</th>
+    <th>送信者</th>
+    <th>件名</th>
+    <th>受信日付</th>
+    <th>添付</th>
+    <th>フラグ</th>
   </tr>
 <% for import_mail in @import_mails %>
-  <tr <%= "bgcolor = #999999" if !import_mail.wanted? %> id="tr_<%= import_mail.id %>">
+  <tr <%= "bgcolor=lightgray" unless import_mail.wanted? %> id="tr_<%= import_mail.id %>">
     <td>
       <%=h import_mail.id %></td>
     <td style="overflow: hidden">
@@ -37,10 +43,8 @@
     <td><%=h _time(import_mail.received_at) %></td>
     <td align=center><%=h "○" if import_mail.attachment? %></td>
     
-    <td style='width: 7em;text-align:center;margin:0px;padding: 0px'>
-      <%= build_flag_link("案件", :biz_offer, :biz_offer_flg, import_mail) %>
-      <%= build_flag_link("人材", :bp_member, :bp_member_flg, import_mail) %>
-      <%= build_flag_link("不要", :unwanted, :unwanted, import_mail) %>
+    <td class='flag_container'>
+      <%= build_flag_link("案件", :biz_offer, :biz_offer_flg, import_mail) %>|<%= build_flag_link("人材", :bp_member, :bp_member_flg, import_mail) %>|<%= build_flag_link("不要", :unwanted, :unwanted, import_mail) %>
     </td>
     
   </tr>
@@ -55,29 +59,43 @@
 
 <script type="text/javascript">
 <!--
-var font_styles = ["normal","bold"];
-var color_styles = ["","blue"];
+var registered = "registered"
+var flagged_up = "flagged_up"
 var ajax_url = '<%= url_for(:controller => :import_mail, :action => :change_flg) %>';
 
 function changeFlg(import_mail_id, type){
+  // AJAX処理開始
   jQuery.ajax({
     url: ajax_url + '?import_mail_id=' + import_mail_id + '&type=' + type,
     success: function(data, dataType){
-        var str =data.split(",");
-
-        $("#biz_offer_icon_" + import_mail_id)[0].style.fontWeight = font_styles[str[0]];
-        $("#bp_member_icon_" + import_mail_id)[0].style.fontWeight = font_styles[str[1]];
-        $("#unwanted_icon_" + import_mail_id)[0].style.fontWeight = font_styles[str[2]];
-
-        $("#biz_offer_icon_" + import_mail_id)[0].style.color = color_styles[str[0]];
-        $("#bp_member_icon_" + import_mail_id)[0].style.color = color_styles[str[1]];
-        $("#unwanted_icon_" + import_mail_id)[0].style.color = color_styles[str[2]];
-
-        if (str[2] == 1) {
-          $("#tr_" + import_mail_id)[0].style.backgroundColor = '#999999';
-        } else {
-          $("#tr_" + import_mail_id)[0].style.backgroundColor = '#ffffff';
+      // 不要フラグの取得
+      var unwanted = ( data.unwanted == 1 )
+      // 不要フラグによって行の色を変更
+      var bgcolor = 'white'
+      if ( unwanted ) { bgcolor = 'lightgray'; }
+      $("#tr_" + import_mail_id)[0].style.backgroundColor = bgcolor
+      
+      // フラグの列挙
+      flags = [ "biz_offer", "bp_member", "unwanted" ];
+      
+      // それぞれのフラグについて繰り返す
+      for( i = 0; flags.length > i; i++ ){
+        // フラグを表す要素を取得する
+        var jq = $("#" + flags[i] + "_icon_" + import_mail_id); // jQueryオブジェクト
+        var element = jq[0]; // HTMLElement
+        
+        // 要素のスタイルを変更
+        // 案件、人材を登録済みの場合は変更しない
+        if( !jq.hasClass( registered ) ){
+          // フラグが立っていればクラスを追加、立っていなければクラスを除去
+          if( data[ flags[i] ] == 1 ){
+            jq.addClass( flagged_up )
+          }else{
+            jq.removeClass( flagged_up )
+          }
         }
+      }
+      
     }
   });
   return false;

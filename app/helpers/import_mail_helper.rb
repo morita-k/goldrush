@@ -3,42 +3,39 @@ module ImportMailHelper
   # 各メールのフラグを変更するリンクタグを生成する
   def build_flag_link(text, mode, style_flag, import_mail)
     # 対象のリンク生成モードで、メールに紐付くレコードがある場合、"true"になる
-    reg = is_registerd?(import_mail, mode)
+    registered = is_registerd?(import_mail, mode)
+    
     # spanタグにつけるIDを生成する
     span_id = "#{mode}_icon_#{import_mail.id}"
-    # spanタグのスタイルを取得する
-    style = flag_style( import_mail.send(style_flag), reg )
+    
+    # フラグの値を取得する
+    flagged_up = (import_mail.send(style_flag) == 1)
+    
     # onclickイベントを生成する
     onclick = "return changeFlg(#{import_mail.id}, '#{mode}');"
     
     # 各タグを生成する
-    span = content_tag(:span, :id => span_id, :style => style ){ text }
-    link = content_tag(:a, :href => "#", :onclick => onclick){ span }
+    div = content_tag(:div, :id => span_id, :class => flag_style_class(registered, flagged_up) ){ text }
+    link = content_tag(:a, :href => "#", :onclick => onclick){ div }
     
     # 紐づくレコードがある場合、リンクにしない
     # メールの解析をしたら、案件、人材を手動で振り分ける事はない想定
     # 解析テンプレートがない場合のみ
-    if(reg)
-      return raw(span)
+    if( registered )
+      return raw( div )
     else
-      return raw(link)
+      return raw( link )
     end
   end
   
-  def flag_style(flg, registered)
-    ["margin:0px","padding:0px","width:34%",flag_font(flg), flag_color(flg), flag_bg(registered)].compact.join(";");
-  end
-  
-  def flag_font(flg)
-    flg.to_i == 1 ? "font-weight: bold" : nil
-  end
-  
-  def flag_color(flg)
-    flg.to_i == 1 ? "color: blue" : nil
-  end
-  
-  def flag_bg(flg)
-    "background-color: gray" if flg
+  def flag_style_class(registered, flagged_up)
+    clazz = "flag"
+    if    registered
+      clazz += " registered"
+    elsif flagged_up
+      clazz += " flagged_up"
+    end
+    return clazz
   end
   
   def is_registerd?(import_mail, reg_to)

@@ -6,8 +6,6 @@ class ImportMailController < ApplicationController
     render :action => 'list'
   end
 
-
-
   # GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)
 #  verify :method => :post, :only => [ :destroy, :create, :update ],
 #         :redirect_to => { :action => :list }
@@ -189,8 +187,10 @@ class ImportMailController < ApplicationController
     end
     set_user_column target_mail
     target_mail.save!
- #   render :text => "{biz_offer_flg: '#{target_mail.biz_offer_flg.to_s}', bp_member_flg: '#{target_mail.bp_member_flg.to_s}', unwanted: '#{target_mail.unwanted.to_s}'}"
-    render :text => target_mail.biz_offer_flg.to_s + ',' + target_mail.bp_member_flg.to_s + ',' + target_mail.unwanted.to_s
+    render :json => { biz_offer: target_mail.biz_offer_flg,
+                      bp_member: target_mail.bp_member_flg,
+                      unwanted: target_mail.unwanted }
+    # render :text => target_mail.biz_offer_flg.to_s + ',' + target_mail.bp_member_flg.to_s + ',' + target_mail.unwanted.to_s
   end
   
 end

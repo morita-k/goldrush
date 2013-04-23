@@ -126,3 +126,29 @@ span.linked_star a:hover {
 select {
   width: auto;
 }
+
+div.registered {
+  color : black;
+  font-weight : bold;
+}
+
+div.flagged_up {
+  color : tomato;
+  font-weight : bold;
+}
+
+div.flag {
+  margin:0px;
+  padding:0px;
+  height:100%;
+  display:inline-block;
+}
+
+td.flag_container {
+  margin-top:0px;
+  margin-bottom:0px;
+  margin-right:auto;
+  margin-left:auto;
+  padding: 0px;
+  white-space: nowrap;
+}
