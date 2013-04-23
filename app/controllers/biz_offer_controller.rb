@@ -26,9 +26,10 @@ class BizOfferController < ApplicationController
     now = Time.now
     
     @biz_offer = BizOffer.new
-    @biz_offer.biz_offered_at = now
+    @biz_offer.biz_offered_at = Date.parse(now.strftime("%Y/%m/%d"))
     @biz_offered_at_hour = now.hour
     @biz_offered_at_min = (now.min / 10) * 10
+
     if params[:business_id]
       # 照会を案件に追加する場合（案件は存在している）
       @business = Business.find(params[:business_id])
@@ -36,10 +37,11 @@ class BizOfferController < ApplicationController
       @issue_datetime_min = (@business.issue_datetime.min / 10) * 10
     else
       @business = Business.new
-      @business.issue_datetime = now
+      @business.issue_datetime = Date.parse(now.strftime("%Y/%m/%d"))
       @issue_datetime_hour = now.hour
       @issue_datetime_min = (now.min / 10) * 10
     end
+    
     # メール取り込みからの遷移
     if params[:import_mail_id]# && params[:template_id]
       import_mail = ImportMail.find(params[:import_mail_id])
@@ -112,13 +114,18 @@ class BizOfferController < ApplicationController
 
   def edit
     @calendar = true
+
     @biz_offer = BizOffer.find(params[:id])
+    @biz_offer.biz_offered_at = Date.parse(@biz_offer.biz_offered_at.strftime("%Y/%m/%d"))
     @biz_offered_at_hour = @biz_offer.biz_offered_at.hour
     @biz_offered_at_min = (@biz_offer.biz_offered_at.min / 10) * 10
+
     @business = @biz_offer.business
+    @business.issue_datetime = Date.parse(@business.issue_datetime.strftime("%Y/%m/%d"))
     @issue_datetime_hour = @business.issue_datetime.hour
     @issue_datetime_min = (@business.issue_datetime.min / 10) * 10
-# メール取り込みからの遷移
+
+    # メール取り込みからの遷移
     if params[:import_mail_id] && params[:template_id]
       import_mail = ImportMail.find(params[:import_mail_id])
       AnalysisTemplate.analyze(params[:template_id], import_mail, [@biz_offer, @business])
