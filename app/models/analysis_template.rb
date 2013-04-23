@@ -86,7 +86,7 @@ class AnalysisTemplate::MailParser
     # scanメソッドが成功した場合、["項目名", "条件", "ゴミ"] な配列を得る
     # 失敗した場合は[]
     wrapped_conditions = conditions.map{ |c|
-      c.scan(/(#{key_pattern})[\s　]*[:：]?[\s　]*?((:?.*\n)*)/)
+      c.scan(/(#{key_pattern})[\s　]*[:：]?[\s　]*((:?.*\n)*)/)
     }.reject{ |c| c == []}
     
     # 一致した場合、複数改行及び改行直後の空白を一つの改行にまとめ、内容のみを返す

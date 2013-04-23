@@ -123,6 +123,10 @@ span.linked_star a:hover {
   text-decoration: none;
 }
 
+select {
+  width: auto;
+}
+
 div.registered {
   color : black;
   font-weight : bold;
