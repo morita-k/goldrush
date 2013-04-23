@@ -62,6 +62,7 @@ class AnalysisTemplate::MailParser
   
   def add_indent_pattern(pattern)
     @indtent_pattern.push(/#{regex_escape(pattern)}/)
+    self
   end
   
   def conditions_body(conditions_key)
