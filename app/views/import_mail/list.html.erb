@@ -1,5 +1,4 @@
 <h1><%=getLongName('table_name','import_mails')%>一覧</h1>
-<div style="color:gray">※案件、人材フラグが黒文字になっているメールは、既に案件、人材として登録されているものです。</div>
 <%= form_tag do %>
 <table>
     <tr>
@@ -17,10 +16,17 @@
 <% end %>
 
 <%= paginate(@import_mails) %>
-
+<div style="color:gray">※案件、人材フラグが黒文字になっているメールは、既に案件、人材として登録されているものです。</div>
+<div style="color:gray">※案件が登録されているメールは、案件フラグを変更できません。</div>
+<div style="color:gray">※人材が登録されているメールは、人材フラグを変更できません。</div>
 <table class="list_table">
   <tr>
-    <th colspan=6>取り込みメール一覧</th>
+    <th>#</th>
+    <th>送信者</th>
+    <th>件名</th>
+    <th>受信日付</th>
+    <th>添付</th>
+    <th>フラグ</th>
   </tr>
 <% for import_mail in @import_mails %>
   <tr <%= "bgcolor=lightgray" unless import_mail.wanted? %> id="tr_<%= import_mail.id %>">
@@ -37,8 +43,8 @@
     <td><%=h _time(import_mail.received_at) %></td>
     <td align=center><%=h "○" if import_mail.attachment? %></td>
     
-    <td style='margin:0px auto 0px auto;padding: 0px;white-space: nowrap;'>
-      <%= build_flag_link("案件", :biz_offer, :biz_offer_flg, import_mail) %><%= build_flag_link("人材", :bp_member, :bp_member_flg, import_mail) %><%= build_flag_link("不要", :unwanted, :unwanted, import_mail) %>
+    <td class='flag_container'>
+      <%= build_flag_link("案件", :biz_offer, :biz_offer_flg, import_mail) %>|<%= build_flag_link("人材", :bp_member, :bp_member_flg, import_mail) %>|<%= build_flag_link("不要", :unwanted, :unwanted, import_mail) %>
     </td>
     
   </tr>
@@ -53,9 +59,8 @@
 
 <script type="text/javascript">
 <!--
-
-var font_styles = ["normal","bold"];
-var color_styles = ["","tomato"];
+var registered = "registered"
+var flagged_up = "flagged_up"
 var ajax_url = '<%= url_for(:controller => :import_mail, :action => :change_flg) %>';
 
 function changeFlg(import_mail_id, type){
@@ -79,13 +84,15 @@ function changeFlg(import_mail_id, type){
         var jq = $("#" + flags[i] + "_icon_" + import_mail_id); // jQueryオブジェクト
         var element = jq[0]; // HTMLElement
         
-        // フラグの値を取得
-        var flag_value = data[ flags[i] ];
         // 要素のスタイルを変更
         // 案件、人材を登録済みの場合は変更しない
-        if( !jq.hasClass("registered") ){
-          element.style.fontWeight = font_styles[ flag_value ];
-          element.style.color = color_styles[ flag_value ];
+        if( !jq.hasClass( registered ) ){
+          // フラグが立っていればクラスを追加、立っていなければクラスを除去
+          if( data[ flags[i] ] == 1 ){
+            jq.addClass( flagged_up )
+          }else{
+            jq.removeClass( flagged_up )
+          }
         }
       }
       
