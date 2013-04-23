@@ -1,5 +1,4 @@
 # -*- encoding: utf-8 -*-
-require 'builder'
 module ImportMailHelper
   # 各メールのフラグを変更するリンクタグを生成する
   def build_flag_link(text, mode, style_flag, import_mail)
@@ -27,7 +26,7 @@ module ImportMailHelper
   end
   
   def flag_style(flg, registered)
-    ["margin:0px","padding:0px","width:34%",_b(flg), _c(flg), flag_bg(registered)].compact.join(";");
+    ["margin:0px","padding:0px","width:34%",flag_font(flg), flag_color(flg), flag_bg(registered)].compact.join(";");
   end
   
   def flag_font(flg)
