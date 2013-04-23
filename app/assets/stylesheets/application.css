@@ -122,3 +122,8 @@ table.input_table th {
 span.linked_star a:hover {
   text-decoration: none;
 }
+
+div.registered {
+  color : black
+  font-weight : bold;
+}

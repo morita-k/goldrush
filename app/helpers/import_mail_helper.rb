@@ -12,33 +12,35 @@ module ImportMailHelper
     onclick = "return changeFlg(#{import_mail.id}, '#{mode}');"
     
     # 各タグを生成する
-    span = content_tag(:span, :id => span_id, :style => style ){ text }
-    link = content_tag(:a, :href => "#", :onclick => onclick){ span }
+    div = content_tag(:div, :id => span_id, :style => style, :class => ( reg ? "registered" : "" ) ){ text }
+    link = content_tag(:a, :href => "#", :onclick => onclick){ div }
     
     # 紐づくレコードがある場合、リンクにしない
     # メールの解析をしたら、案件、人材を手動で振り分ける事はない想定
     # 解析テンプレートがない場合のみ
     if(reg)
-      return raw(span)
+      return raw(div)
     else
       return raw(link)
     end
   end
   
   def flag_style(flg, registered)
-    ["margin:0px","padding:0px","width:34%",flag_font(flg), flag_color(flg), flag_bg(registered)].compact.join(";");
+    [ "margin:0px",
+      "padding:0px",
+      "height:100%",
+      "display:inline-block",
+      flag_font(flg, registered),
+      flag_color(flg, registered)].compact.join(";");
   end
   
-  def flag_font(flg)
-    flg.to_i == 1 ? "font-weight: bold" : nil
+  def flag_font(flg, registered)
+    return "font-weight: bold" if flg.to_i == 1 || registered
   end
   
-  def flag_color(flg)
-    flg.to_i == 1 ? "color: blue" : nil
-  end
-  
-  def flag_bg(flg)
-    "background-color: gray" if flg
+  def flag_color(flg, registered)
+    return "color: black" if registered
+    return "color: tomato"  if flg.to_i == 1
   end
   
   def is_registerd?(import_mail, reg_to)
