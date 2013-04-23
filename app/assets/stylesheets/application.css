@@ -18,6 +18,10 @@ table td input[type="text"] {
   padding: 0 0 0 0;
 }
 
+input[type="text"].date-time-picker {
+  width: 10em;
+}
+
 table td input[type="password"] {
   width:80%;
   margin: 0 0 0 0;

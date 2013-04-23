@@ -62,7 +62,7 @@ module ApplicationHelper
 
 
   def edit?
-    controller.action_name == 'edit'
+    ["edit","update"].include?(controller.action_name)
   end
 
   def edit_detail?
@@ -116,7 +116,9 @@ EOS
 
   def date_field(object_name, method, options = {})
     
-    date = Time.now.strftime("%Y/%m/%d")
+    #date = Time.now.strftime("%Y/%m/%d")
+    options['data-provide'] = "typeahead"
+    options['class'] = [options['class'], "date-time-picker"].compact.join(" ")
 
     result = <<EOS
      <script type="text/javascript">
@@ -126,7 +128,7 @@ EOS
         });
         // ]]>
       </script>
-      <input id="#{object_name}_#{method}" name="#{object_name}[#{method}]" type="text" data-provide="typeahead" value="#{date}" />
+      #{text_field object_name, method, options}
       <script>
         jQuery(function() {
         //テキストボックスにカレンダーをバインドする（パラメータは必要に応じて）

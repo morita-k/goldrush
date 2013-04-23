@@ -4,15 +4,35 @@ require 'auto_type_name'
 class DeliveryMail < ActiveRecord::Base
   include AutoTypeName
 
+  attr_accessor :planned_setting_at_time, :planned_setting_at_date
+
   has_many :delivery_mail_targets, :conditions => "delivery_mail_targets.deleted = 0"
-  attr_accessible :bp_pic_group_id, :content, :id, :mail_bcc, :mail_cc, :mail_from, :mail_from_name, :mail_send_status_type, :mail_status_type, :owner_id, :planned_setting_at, :send_end_at, :subject, :lock_version
+  attr_accessible :bp_pic_group_id, :content, :id, :mail_bcc, :mail_cc, :mail_from, :mail_from_name, :mail_send_status_type, :mail_status_type, :owner_id, :planned_setting_at, :send_end_at, :subject, :lock_version, :planned_setting_at_time, :planned_setting_at_date
+
   after_initialize :default_values
+  before_save :_before_save
+
+  def unsend?
+    ['editing','unsend'].include?(mail_status_type)
+  end
 
   def default_values
-    self.mail_status_type ||= 'unsend'
+    self.planned_setting_at ||= Time.now
+    self.mail_status_type ||= 'editing'
     self.mail_send_status_type ||= 'ready'
   end
   
+  def _before_save
+    unless planned_setting_at_time.blank? || planned_setting_at_date.blank?
+      self.planned_setting_at = Time.parse(planned_setting_at_date.to_s + " " + planned_setting_at_time + ":00:00")
+    end
+  end
+
+  def setup_planned_setting_at
+    self.planned_setting_at_date = planned_setting_at.strftime("%Y/%m/%d")
+    self.planned_setting_at_time = planned_setting_at.hour
+  end
+
   # Broadcast Mails
   def DeliveryMail.send_mails
     fetch_key = Time.now.to_s + " " + rand().to_s
