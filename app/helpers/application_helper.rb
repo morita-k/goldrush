@@ -40,10 +40,6 @@ module ApplicationHelper
     current_auth
   end
 
-  def j(str)
-    str.gsub("'", "\\\\'")
-  end
-
   def show_default_initial_amount(x)
     over_super? ? x : '※ 表示できません'
   end
