@@ -61,12 +61,12 @@ class AnalysisTemplate::MailParser
   end
   
   def add_indent_pattern(pattern)
-    @indtent_pattern.push(/#{regex_escape(pattern)}/)
+    @indtent_pattern.push(/#{Regexp.escape(pattern)}/)
     self
   end
   
   def conditions_body(conditions_key)
-    key_pattern = /^#{regex_escape(conditions_key)}/
+    key_pattern = /^#{Regexp.escape(conditions_key)}/
     body = ""
     conditions = []
     
@@ -98,11 +98,6 @@ class AnalysisTemplate::MailParser
   def indent_judge(str)
     @indtent_pattern.any?{ |regex| regex =~ str}
   end
-  
-  def regex_escape(str)
-    str.gsub(/[\[\]]/, "[" => '\[', "]" => '\]')
-  end
-  
-  private :indent_judge, :regex_escape
+  private :indent_judge
   
 end
