@@ -6,7 +6,6 @@
   <tr>
     <th>ステータス</th>
     <th><%= getLongName('delivery_mails', 'subject') %></th>
-    <th><%= getLongName('delivery_mails', 'mail_from_name') %></th>
     <th><%= getLongName('delivery_mails', 'mail_from') %></th>
     <th><%= getLongName('delivery_mails', 'mail_cc') %></th>
     <th><%= getLongName('delivery_mails', 'mail_bcc') %></th>
@@ -16,17 +15,16 @@
   </tr>
 
 <% @delivery_mails.each do |delivery_mail| %>
-  <tr <%= "bgcolor = #999999" unless delivery_mail.unsend? %> id="tr_<%= delivery_mail.id %>">
+  <tr style="background-color: <%= delivery_mail.canceled? ? 'silver' : (delivery_mail.unsend? ? 'white' : 'skyblue') %>" id="tr_<%= delivery_mail.id %>">
     <td>
       <%= delivery_mail.mail_status_type_name %>
     </td>
     <td><%= back_to_link (delivery_mail.subject.blank? ? '(件名なし)' : delivery_mail.subject) , {:action => :show, :id => delivery_mail.id } %></td>
-    <td><%= delivery_mail.mail_from_name %></td>
-    <td><%= delivery_mail.mail_from %></td>
+    <td><%= delivery_mail.formated_mail_from %></td>
     <td><%= delivery_mail.mail_cc %></td>
     <td><%= delivery_mail.mail_bcc %></td>
     <td><%= _time(delivery_mail.planned_setting_at) %></td>
-    <td><%= delivery_mail.send_end_at %></td>
+    <td><%= _time(delivery_mail.send_end_at) %></td>
     <td>
       <% if delivery_mail.unsend? %>
         <%= back_to_link 'キャンセル', { :action => :cancel, :id => delivery_mail.id, :authenticity_token => form_authenticity_token }, :method => :put, data: { :confirm => 'キャンセルします。よろしいですか?' } %>
