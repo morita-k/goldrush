@@ -8,6 +8,10 @@ class AttachmentFile < ActiveRecord::Base
     where(:parent_table_name => parent_table_name, :parent_id => parent_id, :deleted => 0).order(:id)
   end
   
+  def read_file
+    @read_file ||= File.binread(file_path)
+  end
+
   # 拡張子チェックと取得
   def check_and_get_ext(filename)
     ext = File.extname(filename.to_s).downcase
