@@ -16,6 +16,18 @@ class User < ActiveRecord::Base
   # see. https://github.com/plataformatec/devise/wiki/How-To:-Allow-users-to-sign-in-using-their-username-or-email-address
   before_create :create_login
 
+  def zone
+    'Tokyo'
+  end
+
+  def zone_now
+    org = Time.zone
+    Time.zone = zone
+    now = Time.zone.now
+    Time.zone = org
+    return now
+  end
+
   def create_login             
     self.login = self.email
     self.access_level_type = 'normal'

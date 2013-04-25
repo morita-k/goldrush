@@ -3,7 +3,7 @@ class DeliveryMailsController < ApplicationController
   # GET /delivery_mails
   # GET /delivery_mails.json
   def index
-    @delivery_mails = DeliveryMail.where("bp_pic_group_id = ?", params[:id]).page().per(50)
+    @delivery_mails = DeliveryMail.where("bp_pic_group_id = ?", params[:id]).order("id desc").page().per(50)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -34,7 +34,7 @@ class DeliveryMailsController < ApplicationController
     @delivery_mail.mail_from = current_user.email
     @delivery_mail.mail_from_name = current_user.employee.employee_name
 
-    @delivery_mail.setup_planned_setting_at
+    @delivery_mail.setup_planned_setting_at(current_user.zone_now)
 
     respond_to do |format|
       format.html # new.html.erb
@@ -59,14 +59,14 @@ class DeliveryMailsController < ApplicationController
     @delivery_mail.bp_pic_group_id = params[:bp_pic_group_id]
     @delivery_mail.mail_from_name = params[:mail_from_name]
     @delivery_mail.mail_from = params[:mail_from]
-    
+    @delivery_mail.perse_planned_setting_at(current_user.zone)
     respond_to do |format|
       begin
         set_user_column(@delivery_mail)
          
         ActiveRecord::Base.transaction do
           @delivery_mail.save!
-          # �Y�t�t�@�C���̕ۑ�
+          # 添付ファイルの保存
           store_upload_file(@delivery_mail.id)
 	end
         
@@ -96,13 +96,15 @@ class DeliveryMailsController < ApplicationController
 
     respond_to do |format|
       begin
+        @delivery_mail.attributes = params[:delivery_mail]
+        @delivery_mail.perse_planned_setting_at(current_user.zone)
         set_user_column(@delivery_mail)
         ActiveRecord::Base.transaction do
-          @delivery_mail.update_attributes!(params[:delivery_mail])
-          # �Y�t�t�@�C���̕ۑ�
+          @delivery_mail.save!
+          # 添付ファイルの保存
           store_upload_file(@delivery_mail.id)
-	end
-	
+       end
+
         format.html { 
           redirect_to url_for(
             :controller => 'bp_pic_groups',
@@ -111,7 +113,7 @@ class DeliveryMailsController < ApplicationController
             :delivery_mail_id => @delivery_mail.id,
             :back_to => back_to
           ),
-	  notice: 'Delivery mail was successfully updated.' }
+        notice: 'Delivery mail was successfully updated.' }
         format.json { head :no_content }
       rescue ActiveRecord::RecordInvalid
         format.html { render action: "edit" }
@@ -123,6 +125,10 @@ class DeliveryMailsController < ApplicationController
   # POST /delivery_mails/add_details
   # POST /delivery_mails/add_details.json
   def add_details
+    if params[:bp_pic_ids].blank?
+      redirect_to back_to, notice: 'メール対象者が0人でなので、登録できません。'
+      return
+    end
     delivery_mail = DeliveryMail.find(params[:delivery_mail_id])
     ActiveRecord::Base.transaction do
       delivery_mail.mail_status_type = 'unsend'
@@ -143,7 +149,7 @@ class DeliveryMailsController < ApplicationController
     end
       
     respond_to do |format|
-      format.html { redirect_to url_for(:action => 'show', :id => delivery_mail), notice: 'Delivery mail targets were successfully created.' }
+      format.html { redirect_to url_for(:action => :index, :id => params[:bp_pic_group_id]), notice: 'Delivery mail targets were successfully created.' }
 #        format.json { render json: @delivery_mail_target, status: :created, location: @delivery_mail_target }
     end
   end
