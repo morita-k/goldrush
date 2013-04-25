@@ -474,6 +474,10 @@ EOS
   end
   
   def popup_hidden_field
-    hidden_field_tag :popup, params[:popup]
+    if popup?
+      return hidden_field_tag :popup, params[:popup]
+    else
+      return ''
+    end
   end
 end
