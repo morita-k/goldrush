@@ -1,6 +1,12 @@
 # -*- encoding: utf-8 -*-
 
 module StringUtil
+  # 全角トリム
+  def StringUtil.strip_with_full_size_space(str)
+    s = "　 \t\r\n\f\v"
+    str.sub(/^[#{s}]*(.*)/o, '\1').reverse.sub(/^[#{s}]*(.*)/o, '\1').reverse
+  end
+
   def StringUtil.hancut(str, bytes)
     arr = str.split(//)
     res = ""
