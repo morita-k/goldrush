@@ -37,5 +37,9 @@
 <!--[eoform:bp_pic]-->
 <%= hidden_field 'bp_pic', 'lock_version' %>
 <%= hidden_field 'bp_pic', 'business_partner_id' %>
+<% if params[:import_mail_id] %>
+  <input type="hidden" name="import_mail_id" value="<%= params[:import_mail_id] %>">
+  <div style="color: gray;">※この取引先担当は、呼び出し元画面のメールに紐付きます。</div>
+<% end %>
 <%= back_to_field_tag %>
 
