@@ -46,12 +46,8 @@ class DeliveryMail < ActiveRecord::Base
       DeliveryMail.where(:created_user => fetch_key).each {|mail|
         mail.delivery_mail_targets.each {|target|
           email = target.bp_pic.email1
-          title = mail.subject.
-            gsub("%%bp_pic_short_name%%", target.bp_pic.bp_pic_short_name).
-            gsub("%%business_partner_name%%", target.bp_pic.business_partner.business_partner_name)
-          body = mail.content.
-            gsub("%%bp_pic_short_name%%", target.bp_pic.bp_pic_short_name).
-            gsub("%%business_partner_name%%", target.bp_pic.business_partner.business_partner_name)
+          title = tags_replacemet(mail.subject)
+          body = tags_replacement(mail.content)
           
           attachment_files = AttachmentFile.attachment_files("delivery_mails", mail.id)
           
@@ -75,6 +71,14 @@ class DeliveryMail < ActiveRecord::Base
       update_all(:mail_status_type => 'send',:mail_send_status_type => 'finished',:send_end_at => Time.now)
       
   end
+  
+  # === Private === 
+  def tags_replacement(tag)
+    tag.
+    gsub("%%bp_pic_name%%", target.bp_pic.bp_pic_short_name).
+    gsub("%%business_partner_name%%", target.bp_pic.business_partner.business_partner_name)
+  end
+  private :tags_replacement
 
   # Private Mailer
   class MyMailer < ActionMailer::Base

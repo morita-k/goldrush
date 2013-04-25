@@ -58,20 +58,25 @@ class BusinessPartner < ActiveRecord::Base
     return companies[company_name.upcase]
   end
 
-  def BusinessPartner.create_bp_pic(companies, email, pic_name, company_name)
+  def BusinessPartner.create_bp_pic(companies, email, pic_name, company_name, memo = nil)
     bp, pics = companies[company_name.upcase]
     unless pics[pic_name.upcase]
-      unless pic = BpPic.where(:business_partner_id => bp.id,:bp_pic_name => pic_name, :deleted => 0).first
+#      unless pic = BpPic.where(:business_partner_id => bp.id,:bp_pic_name => pic_name, :deleted => 0).first
         pic = BpPic.new
         pic.business_partner_id = bp.id
         pic.bp_pic_name = pic_name
         pic.bp_pic_short_name = pic_name
         pic.bp_pic_name_kana = pic_name
         pic.email1 = email
+        pic.memo = memo
         pic.created_user = 'import'
         pic.updated_user = 'import'
-        pic.save!
-      end
+        begin
+          pic.save!
+        rescue ActiveRecord::RecordInvalid => e
+          puts e.message + pic.inspect
+        end
+#      end
       pics[pic_name.upcase] = pic
     end
     return pics[pic_name.upcase]
@@ -86,17 +91,17 @@ class BusinessPartner < ActiveRecord::Base
     CSV.parse(NKF.nkf("-w", readable_data)).each do |row|
       # Read email
       email,pic_name,com,pref,address,tel,birth,occupa,down_flg,upper_flg,bp_id,bp_pic_id,group = row
-      break if email.blank?
+      next if email.to_s.strip.blank?
       next if email == 'e-mail'
       email = StringUtil.to_test_address(email) unless prodmode
 
       a,b = com.split("　")
-      company_name = a.strip
+      company_name = StringUtil.strip_with_full_size_space(a)
 
       if pic_name =~ /(.*)様/
-        pic_name = $1
+        pic_name =  $1
       end
-
+      pic_name = StringUtil.strip_with_full_size_space(pic_name)
       if bp_id.blank?
         # bp新規登録
         bp, names = create_business_partner(companies, email, pic_name, company_name, upper_flg, down_flg)
@@ -116,7 +121,7 @@ class BusinessPartner < ActiveRecord::Base
       end
       if bp_pic_id.blank?
         # bp_pic新規登録
-        pic = create_bp_pic(companies, email, pic_name, company_name)
+        pic = create_bp_pic(companies, email, pic_name, company_name, row[3..7].reject{|x| x.blank?}.join("\n"))
         bp_pic_id = pic.id
         bp_pic_id_cache << pic.id
       else
