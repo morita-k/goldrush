@@ -45,8 +45,9 @@
   <%= form_tag url_for_bp_pic_list(@delivery_mail), :method => :post do %>
     <% if @delivery_mail %>
       <%= hidden_field_tag 'delivery_mail_id', @delivery_mail.id %>
+      <%= hidden_field_tag 'bp_pic_group_id', @bp_pic_group.id %>
       <%= submit_tag "メール作成" %>
-      <%= back_to_field_tag %>
+      <%= hidden_field_tag :back_to, request_url %>
     <% else %>
       <%= submit_tag "選択した担当者を削除", :confirm => "選択した担当者をリストから削除します。\nよろしいですか？" %>
       <%= hidden_field_tag 'back_to', back_to  %>
