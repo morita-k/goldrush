@@ -102,13 +102,27 @@ class BpPicGroupDetailsController < ApplicationController
     end
   end
   
+  def suspend
+    @bp_pic_group_detail = BpPicGroupDetail.find(params[:id])
+    @bp_pic_group_detail.suspended = (@bp_pic_group_detail.suspended.to_i + 1) % 2
+    set_user_column @bp_pic_group_detail
+    @bp_pic_group_detail.save!
+    color = @bp_pic_group_detail.suspended? ? "disable_color" : "enable_color"
+    respond_to do |format|
+      format.js {render :text => <<EOS # javascript
+$("#tr_" + #{@bp_pic_group_detail.id})[0].style.backgroundColor = #{color};
+EOS
+      }
+    end
+  end
+  
   private
   def delete(id)
     @bp_pic_group_detail = BpPicGroupDetail.find(id)
     @bp_pic_group_detail.deleted = 9
     @bp_pic_group_detail.deleted_at = Time.now
     set_user_column @bp_pic_group_detail
-    return @bp_pic_group_detail.save!
+    @bp_pic_group_detail.save!
   end
   
 end
