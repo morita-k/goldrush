@@ -4,7 +4,11 @@ GoldRush::Application.routes.draw do
   resources :remarks
 
 
-  resources :bp_pic_group_details
+  resources :bp_pic_group_details do
+    member do
+      put 'suspend'
+    end
+  end
 
   resources :bp_pic_groups
 

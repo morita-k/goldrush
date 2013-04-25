@@ -27,7 +27,7 @@
   <th><%= getLongName('bp_pics', 'email2') %></th><td><%=h @bp_pic.email2 %></td>
 </tr>
 <tr>
-  <th><%= getLongName('bp_pics', 'memo') %></th><td><%=h @bp_pic.memo %></td>
+  <th><%= getLongName('bp_pics', 'memo') %></th><td><%=simple_format(h @bp_pic.memo) %></td>
 </tr>
 </table>
 <%= back_to_link '編集', :action => 'edit', :id => @bp_pic %> |

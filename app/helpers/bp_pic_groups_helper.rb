@@ -17,4 +17,13 @@ module BpPicGroupsHelper
       return url_for(:controller => :bp_pic_group_details, :action => :destroy_selection)
     end
   end
+  
+  def suspended_color(detail)
+    suspended_colors[detail.suspended]
+  end
+  
+  def suspended_colors
+    {1 => "silver", 0 => "white"}
+  end
+  
 end
