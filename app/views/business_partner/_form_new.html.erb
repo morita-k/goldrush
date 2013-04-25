@@ -2,9 +2,11 @@
 
 <h2>取引先</h2>
 
+<% if params[:id] %>
+  <%= render :partial => 'show_table' %>
+<% else %>
 <input type=button value='登録済の取引先を選択' onClick="disp_wide('<%=url_for :controller => 'business_partner', :action => 'list', :popup =>1, :flg => 'mail' %>');return false;" />
 <input type=button value='取引先情報クリア' onClick="clearBp();return false;" />
-
 <table class="show_table">
 <tr>
 <th><label for="business_partner_business_partner_code"><%=getLongName('business_partners','business_partner_code')%>(任意英数3桁)</label></th><td><%= text_field 'business_partner', 'business_partner_code', :size => 10  %></td>
@@ -67,6 +69,7 @@
 <th><label for="business_partner_memo"><%=getLongName('business_partners','memo')%></label></th><td><%= resizable_area 'business_partner', 'memo'  %></td>
 </tr>
 </table>
+<% end %>
 <!--[form:business_partner]-->
 <!--[eoform:business_partner]-->
 

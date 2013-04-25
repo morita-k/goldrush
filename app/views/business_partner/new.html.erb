@@ -1,6 +1,6 @@
 <h1><%=getLongName('table_name','business_partners')%>新規作成</h1>
 
-<%= form_tag :action => 'create' do %>
+<%= form_for @business_partner, :url => url_for(:controller => :business_partner, :action => :create) + "?popup=1" do %>
   <%= render :partial => 'form_new' %>
   <%= submit_tag "登録" %>
 <% end %>
