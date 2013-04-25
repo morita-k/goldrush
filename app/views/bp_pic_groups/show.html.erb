@@ -49,26 +49,28 @@
       <%= back_to_field_tag %>
     <% else %>
       <%= submit_tag "選択した担当者を削除", :confirm => "選択した担当者をリストから削除します。\nよろしいですか？" %>
-      <%= hidden_field_tag 'back_to', request.url  %>
+      <%= hidden_field_tag 'back_to', back_to  %>
     <% end %>
     <table class="show_table" style="margin-top:2px;">
       <tr>
-        <th></th>
+        <th style="width:30px"></th>
         <th><%= getLongName('business_partners', 'business_partner_name') %></th>
         <th><%= getLongName('bp_pics', 'bp_pic_name') %></th>
+        <th><%= getLongName('bp_pics', 'memo') %></th>
+        <th>操作</th>
       </tr>
       <% @bp_pic_group.bp_pic_group_details.each do | detail | %>
-        <% if (not detail.bp_pic.nil?) and (not detail.bp_pic.business_partner.nil?) %>
-          <tr>
-            <% if @delivery_mail %>
-              <td><%= check_box_tag 'bp_pic_ids[]', detail.bp_pic_id, @delivery_mail %></td>
-            <% else %>
-              <td><%= check_box_tag 'ids[]', detail.id, @delivery_mail %></td>
-            <% end %>
-            <td><%= back_to_link detail.bp_pic.business_partner.business_partner_name, :controller => :business_partner, :action => :show, :id => detail.bp_pic.business_partner_id %></td>
-            <td><%= back_to_link detail.bp_pic.bp_pic_name, :controller => :bp_pic, :action => :show, :id => detail.bp_pic_id %></td>
-          </tr>
-        <% end %>
+        <tr id="<%= "tr_#{detail.id}"%>" style="background-color:<%= suspended_color(detail) %>">
+          <% if @delivery_mail %>
+            <td><%= check_box_tag 'bp_pic_ids[]', detail.bp_pic_id, !detail.suspended? %></td>
+          <% else %>
+            <td><%= check_box_tag 'ids[]', detail.id, false %></td>
+          <% end %>
+          <td><%= back_to_link detail.bp_pic.business_partner.business_partner_name, :controller => :business_partner, :action => :show, :id => detail.bp_pic.business_partner_id %></td>
+          <td><%= back_to_link detail.bp_pic.bp_pic_name, :controller => :bp_pic, :action => :show, :id => detail.bp_pic_id %></td>
+          <td><%= detail.bp_pic.memo%></td>
+          <td><%= link_to "停止", {:controller => :bp_pic_group_details, :action => :suspend, :id => detail, :authenticity_token => form_authenticity_token}, :remote => true, :method => :put %></td>
+        </tr>
       <% end %>
     </table>
   <% end %>
@@ -114,5 +116,8 @@ clearBpPic = function(){
   $("#submit_bp_pic_group_detail").attr("disabled", "disabled");
 }
 
-//-->
+var enable_color =  '<%=suspended_colors[0]%>';
+var disable_color = '<%=suspended_colors[1]%>';
+// -->
 </script>
+
