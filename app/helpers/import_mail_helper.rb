@@ -87,4 +87,8 @@ module ImportMailHelper
     link_to text, url_for(:controller => 'business_partner', :action => 'new', :popup => 1, :import_mail_id => import_mail), :class => :analysis_mail_link
   end
   
+  def link_to_bp_pic_create(text, import_mail)
+    link_to text, url_for(:controller => :bp_pic, :action => :new, :popup => 1, :import_mail_id => import_mail, :business_partner_id => import_mail.business_partner_id), :class => :analysis_mail_link
+  end
+  
 end
