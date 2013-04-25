@@ -16,17 +16,18 @@
 <% end %>
 
 <%= paginate(@import_mails) %>
-<div style="color:gray">※案件、人材フラグが黒文字になっているメールは、既に案件、人材として登録されているものです。</div>
-<div style="color:gray">※案件が登録されているメールは、案件フラグを変更できません。</div>
-<div style="color:gray">※人材が登録されているメールは、人材フラグを変更できません。</div>
+<div class="alert alert-block">
+ <button type="button" class="close" data-dismiss="alert" onclick="">&times;</button>
+ <h4>注意!</h4>
+ <p>
+   ※案件、人材フラグが黒文字になっているメールは、既に案件、人材として登録されているものです。<br/>
+   ※案件が登録されているメールは、案件フラグを変更できません。<br/>
+   ※人材が登録されているメールは、人材フラグを変更できません。
+ </p>
+</div>
 <table class="list_table">
   <tr>
-    <th>#</th>
-    <th>送信者</th>
-    <th>件名</th>
-    <th>受信日付</th>
-    <th>添付</th>
-    <th>フラグ</th>
+    <th colspan=6>取り込みメール一覧</th>
   </tr>
 <% for import_mail in @import_mails %>
   <tr <%= "bgcolor=lightgray" unless import_mail.wanted? %> id="tr_<%= import_mail.id %>">
@@ -34,14 +35,14 @@
       <%=h import_mail.id %></td>
     <td style="overflow: hidden">
       <div style="overflow: hidden;height:1.5em;width:25em">
-        <div style="width:1000px;"><%= link_to_bp_detail(import_mail) if import_mail.business_partner_id.blank? %></div>
+        <div style="width:1000px;"><%= import_mail.business_partner_id.blank? ? import_mail.mail_sender_name : link_to_bp_detail(import_mail) %></div>
       </div>
     </td>
     <td>
       <div style="overflow: hidden;height:1.5em;"><%= link_to_detail(import_mail, request_url) %></div>
     </td>
     <td><%=h _time(import_mail.received_at) %></td>
-    <td align=center><%=h "○" if import_mail.attachment? %></td>
+    <td align=center><%=raw '<span title="添付ファイルあり">○</span>' if import_mail.attachment? %></td>
     
     <td class='flag_container'>
       <%= build_flag_link("案件", :biz_offer, :biz_offer_flg, import_mail) %>|<%= build_flag_link("人材", :bp_member, :bp_member_flg, import_mail) %>|<%= build_flag_link("不要", :unwanted, :unwanted, import_mail) %>
