@@ -38,8 +38,8 @@
     <th><%=getShortName('business_partners', 'business_partner_name') %></th>
     <th><%=getShortName('business_partners', 'self_flg') %></th>
     <th><%=getShortName('business_partners', 'eu_flg') %></th>
-    <th><%=getShortName('business_partners', 'upper_flg') %></th>
-    <th><%=getShortName('business_partners', 'down_flg') %></th>
+    <th>案件</th>
+    <th>人材</th>
   </tr>
   
 <% for business_partner in @business_partners %>
@@ -59,8 +59,8 @@
 <% end %>
     <td><%=h business_partner.self_flg %></td>
     <td><%=h business_partner.eu_flg %></td>
-    <td><%=h business_partner.upper_flg %></td>
     <td><%=h business_partner.down_flg %></td>
+    <td><%=h business_partner.upper_flg %></td>
   </tr>
 <% end %>
 </table>
