@@ -54,12 +54,11 @@ class DeliveryMail < ActiveRecord::Base
     
     begin
       DeliveryMail.where(:created_user => fetch_key).each {|mail|
+        attachment_files = AttachmentFile.attachment_files("delivery_mails", mail.id)
         mail.delivery_mail_targets.each {|target|
           email = target.bp_pic.email1
           title = tags_replacemet(mail.subject)
           body = tags_replacement(mail.content)
-          
-          attachment_files = AttachmentFile.attachment_files("delivery_mails", mail.id)
           
           MyMailer.send_del_mail(
             email,
@@ -94,7 +93,7 @@ class DeliveryMail < ActiveRecord::Base
   class MyMailer < ActionMailer::Base
     def send_del_mail(destination, cc, bcc, from, subject, body, attachment_files)
       attachment_files.each do |af|
-        attachments[af.file_name] = File.read(af.file_path)
+        attachments[af.file_name] = af.read_file
       end
       mail(
         to: destination,
