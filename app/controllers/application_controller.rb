@@ -173,5 +173,9 @@ class ApplicationController < ActionController::Base
   def j(str)
     str.gsub("'", "\\\\'")
   end
-
+  
+  def popup?
+    @popup_mode
+  end
+  
 end
