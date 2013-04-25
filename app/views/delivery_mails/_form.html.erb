@@ -58,7 +58,7 @@
     <td><%= date_field('delivery_mail', 'planned_setting_at_date') %><%= select "delivery_mail", "planned_setting_at_time", (0..23).to_a, {:include_blank => true} %></td>
   </tr>
   <tr>
-    <td colspan="2"><a href='javascript:insertAtCursor(xtarget, "%%bp_pic_short_name%%");'>担当者名</a>　<a href='javascript:insertAtCursor(xtarget, "%%business_partner_name%%");'>取引先会社名</a><br/>
+    <td colspan="2"><a href='javascript:insertAtCursor(xtarget, "%%bp_pic_name%%");'>担当者名</a>　<a href='javascript:insertAtCursor(xtarget, "%%business_partner_name%%");'>取引先会社名</a><br/>
         <%= f.text_area :content, :style => "width:90%" , :onFocus => "xtarget = this;" %></td>
   </tr>
 </table>

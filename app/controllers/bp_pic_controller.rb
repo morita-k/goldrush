@@ -29,12 +29,22 @@ class BpPicController < ApplicationController
     @bp_pic = BpPic.new
     business_partner = BusinessPartner.find(params[:business_partner_id])
     @bp_pic.business_partner = business_partner
+    
   end
 
   def create
     @bp_pic = BpPic.new(params[:bp_pic])
     set_user_column @bp_pic
     @bp_pic.save!
+    
+    if params[:import_mail_id]
+      ActiveRecord::Base.transaction do 
+        @import_mail = ImportMail.find(params[:import_mail_id])
+        @import_mail.bp_pic_id = @bp_pic.id
+        @import_mail.save!
+      end
+    end
+    
     flash[:notice] = 'BpPic was successfully created.'
     if params[:back_to].blank?
       redirect_to :action => 'list'
