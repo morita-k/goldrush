@@ -46,8 +46,11 @@ class DeliveryMail < ActiveRecord::Base
       DeliveryMail.where(:created_user => fetch_key).each {|mail|
         mail.delivery_mail_targets.each {|target|
           email = target.bp_pic.email1
+          title = mail.subject.
+            gsub("%%bp_pic_short_name%%", target.bp_pic.bp_pic_short_name).
+            gsub("%%business_partner_name%%", target.bp_pic.business_partner.business_partner_name)
           body = mail.content.
-            gsub("%%bp_pic_name%%", target.bp_pic.bp_pic_name).
+            gsub("%%bp_pic_short_name%%", target.bp_pic.bp_pic_short_name).
             gsub("%%business_partner_name%%", target.bp_pic.business_partner.business_partner_name)
           
           attachment_files = AttachmentFile.attachment_files("delivery_mails", mail.id)
@@ -57,7 +60,7 @@ class DeliveryMail < ActiveRecord::Base
             mail.mail_cc,
             mail.mail_bcc,
             "#{mail.mail_from_name} <#{mail.mail_from}>",
-            mail.subject,
+            title,
             body,
             attachment_files
           ).deliver

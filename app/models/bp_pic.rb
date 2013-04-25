@@ -9,5 +9,6 @@ class BpPic < ActiveRecord::Base
   validates_presence_of :bp_pic_name, :bp_pic_name_kana, :email1
   validates_uniqueness_of :bp_pic_name, :case_sensitive => false, :scope => :business_partner_id
   validates_uniqueness_of :bp_pic_name_kana, :case_sensitive => false, :scope => :business_partner_id
+  validates_uniqueness_of :email1, :case_sensitive => false
   
 end

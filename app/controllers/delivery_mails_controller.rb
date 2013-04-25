@@ -28,8 +28,11 @@ class DeliveryMailsController < ApplicationController
     @delivery_mail = DeliveryMail.new
     @delivery_mail.bp_pic_group_id = params[:id]
 
-    @delivery_mail.mail_from = SysConfig.get_value("delivery_mails", "mail_from")
-    @delivery_mail.mail_from_name = SysConfig.get_value("delivery_mails", "mail_from_name")
+#    @delivery_mail.mail_from = SysConfig.get_value("delivery_mails", "mail_from")
+#    @delivery_mail.mail_from_name = SysConfig.get_value("delivery_mails", "mail_from_name")
+
+    @delivery_mail.mail_from = current_user.email
+    @delivery_mail.mail_from_name = current_user.employee.employee_name
 
     @delivery_mail.setup_planned_setting_at
 

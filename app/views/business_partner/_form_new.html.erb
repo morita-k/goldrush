@@ -2,7 +2,7 @@
 
 <h2>取引先</h2>
 
-<input type=button value='登録済の取引先を選択' onClick="disp_wide('<%=url_for :controller => 'business_partner', :action => 'list', :popup =>1, :flg => 'mail' %>');return false;" />
+<input type=button value='登録済の取引先を選択' onClick="disp_wide('<%=url_for :controller => 'business_partner', :action => 'list', :popup =>1, :flg => 'eu,down,upper,self', :mail => 1 %>');return false;" />
 <input type=button value='取引先情報クリア' onClick="clearBp();return false;" />
 
 <table class="show_table">
@@ -62,6 +62,9 @@
 </tr>
 <tr>
 <th><label for="business_partner_upper_flg"><%=getLongName('business_partners','upper_flg')%></label></th><td><%= check_box 'business_partner', 'upper_flg'  %></td>
+</tr>
+<tr>
+<th><label for="business_partner_down_flg"><%=getLongName('business_partners','down_flg')%></label></th><td><%= check_box 'business_partner', 'down_flg'  %></td>
 </tr>
 <tr>
 <th><label for="business_partner_memo"><%=getLongName('business_partners','memo')%></label></th><td><%= resizable_area 'business_partner', 'memo'  %></td>
