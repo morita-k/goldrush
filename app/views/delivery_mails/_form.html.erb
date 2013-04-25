@@ -19,14 +19,10 @@
     <td><%= f.text_field :subject, :onFocus => "xtarget = this;" %></td>
   </tr>
   <tr>
-    <th><%= f.label :mail_from_name, getLongName('delivery_mails', 'mail_from_name') %></th>
-    <td><%=h (current_user.employee.employee_name + ' <' + current_user.email + '>') %></td>
-    <%= hidden_field_tag 'mail_from_name', (current_user.employee.employee_name) %>
-  </tr>
-  <tr>
     <th><%= f.label :mail_from, getLongName('delivery_mails', 'mail_from') %></th>
-    <td><%=h current_user.email %></td>
-    <%= hidden_field_tag 'mail_from', current_user.email %>
+    <td><%=h (@delivery_mail.mail_from_name + ' <' + @delivery_mail.mail_from + '>') %></td>
+    <%= hidden_field_tag 'mail_from_name', @delivery_mail.mail_from_name %>
+    <%= hidden_field_tag 'mail_from', @delivery_mail.mail_from %>
   </tr>
   <tr>
     <th><%= f.label :mail_cc, getLongName('delivery_mails', 'mail_cc') %></th>
