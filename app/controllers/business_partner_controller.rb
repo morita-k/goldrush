@@ -68,27 +68,26 @@ class BusinessPartnerController < ApplicationController
 #    param = []
 #    sql = "deleted = 0 and (1 = 0"
 #    order_by = ""
-    if self_flg || eu_flg || upper_flg || down_flg
-      cond[0] += " and (1 = 0"
 
-      if self_flg
-        cond[0] += " or self_flg = 1"
-      end
+    cond[0] += " and (1 = 0"
 
-      if eu_flg
-        cond[0] += " or eu_flg = 1"
-      end
-
-      if upper_flg
-        cond[0] += " or upper_flg = 1"
-      end
-
-      if down_flg
-        cond[0] += " or down_flg = 1"
-      end
-
-      cond[0] += ")"
+    if self_flg
+      cond[0] += " or self_flg = 1"
     end
+
+    if eu_flg
+      cond[0] += " or eu_flg = 1"
+    end
+
+    if upper_flg
+      cond[0] += " or upper_flg = 1"
+    end
+
+    if down_flg
+      cond[0] += " or down_flg = 1"
+    end
+
+    cond[0] += ")"
 
     return [cond, incl]
   end
@@ -121,21 +120,16 @@ class BusinessPartnerController < ApplicationController
   end
 
   def new
-    # IDが渡された時は新規作成をしない
-    if params[:id]
-      @business_partner = BusinessPartner.find(params[:id])
-    else
-      @business_partner = BusinessPartner.new
-      if params[:flg] == 'eu'
-        @business_partner.eu_flg = 1
-      elsif params[:flg] == 'upper'
-        @business_partner.upper_flg = 1
-      elsif params[:flg] == 'down'
-        @business_partner.down_flg = 1
-      elsif params[:flg] == 'eu_or_upper'
-        @business_partner.eu_flg = 1
-        @business_partner.upper_flg = 1
-      end
+    @business_partner = BusinessPartner.new
+    if params[:flg] == 'eu'
+      @business_partner.eu_flg = 1
+    elsif params[:flg] == 'upper'
+      @business_partner.upper_flg = 1
+    elsif params[:flg] == 'down'
+      @business_partner.down_flg = 1
+    elsif params[:flg] == 'eu_or_upper'
+      @business_partner.eu_flg = 1
+      @business_partner.upper_flg = 1
     end
     
     @bp_pic = BpPic.new
@@ -151,37 +145,34 @@ class BusinessPartnerController < ApplicationController
     mail_flg = false
     ActiveRecord::Base.transaction do
       
-      @import_mail = nil
       if !(params[:business_partner][:id]).blank?
-        # BPが既に存在している場合
+        # 取り込みメールからのBP・BP担当登録で、BPを登録済のものから選択した場合
         @business_partner = BusinessPartner.find(params[:business_partner][:id])
-        # エラー発生の際に参照できるように、取り込みメールを取得する
-        if !@business_partner.import_mail_id.blank?
-          @import_mail = ImportMail.find(@business_partner.import_mail_id)
-        end
+        mail_flg = true
       else
         @business_partner = BusinessPartner.new(params[:business_partner])
         @business_partner.tag_text = Tag.normalize_tag(@business_partner.tag_text).join(" ")
-        @business_partner.business_partner_name = space_trim(params[:business_partner][:business_partner_name])
-        set_user_column @business_partner
-        @business_partner.save!
-        
-        # タグ作成
+      end
+
+      @business_partner.business_partner_name = space_trim(params[:business_partner][:business_partner_name])
+      set_user_column @business_partner
+      @business_partner.save!
+
+      unless mail_flg
         Tag.create_tags!('business_partners', @business_partner.id, @business_partner.tag_text)
       end
       
-      # 取引先担当作成
       @bp_pic.business_partner_id = @business_partner.id
       @bp_pic.bp_pic_name = space_trim(params[:bp_pic][:bp_pic_name]).gsub(/　/," ")
       set_user_column @bp_pic
       @bp_pic.save!
       
-      # 取り込みメール更新
-      if @import_mail
-        @import_mail.business_partner_id = @business_partner.id
-        @import_mail.bp_pic_id = @bp_pic.id
-        set_user_column @import_mail
-        @import_mail.save!
+      if !@business_partner.import_mail_id.blank?
+        import_mail = ImportMail.find(@business_partner.import_mail_id)
+        import_mail.business_partner_id = @business_partner.id
+        import_mail.bp_pic_id = @bp_pic.id
+        set_user_column import_mail
+        import_mail.save!
       end
       
     end
@@ -193,11 +184,7 @@ class BusinessPartnerController < ApplicationController
       redirect_to(params[:back_to] || {:action => 'list'})
     end
   rescue ActiveRecord::RecordInvalid
-    if @import_mail
-      params[:import_mail_id] = @import_mail
-      params[:id] = @business_partner.id
-    end
-    render :action => :new
+    render :action => 'new'
   end
 
   def edit

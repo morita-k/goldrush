@@ -84,13 +84,7 @@ module ImportMailHelper
   end
   
   def link_to_bp_create(text, import_mail)
-    url = url_for(:controller => :business_partner,
-                  :action => :new,
-                  :popup => 1,
-                  :import_mail_id => import_mail,
-                  :id => import_mail.business_partner_id )
-    
-    return link_to( text, url, :class => :analysis_mail_link )
+    link_to text, url_for(:controller => 'business_partner', :action => 'new', :popup => 1, :import_mail_id => import_mail), :class => :analysis_mail_link
   end
   
 end
