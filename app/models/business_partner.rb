@@ -101,7 +101,7 @@ class BusinessPartner < ActiveRecord::Base
       if pic_name =~ /(.*)様/
         pic_name =  $1
       end
-      pic_name = StringUtil.strip_with_full_size_space(pic_name)
+      pic_name = StringUtil.strip_with_full_size_space(pic_name.to_s)
       if bp_id.blank?
         # bp新規登録
         bp, names = create_business_partner(companies, email, pic_name, company_name, upper_flg, down_flg)
