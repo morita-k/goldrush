@@ -10,27 +10,37 @@ class DeliveryMail < ActiveRecord::Base
   attr_accessible :bp_pic_group_id, :content, :id, :mail_bcc, :mail_cc, :mail_from, :mail_from_name, :mail_send_status_type, :mail_status_type, :owner_id, :planned_setting_at, :send_end_at, :subject, :lock_version, :planned_setting_at_time, :planned_setting_at_date
 
   after_initialize :default_values
-  before_save :_before_save
+
+  def formated_mail_from
+    "#{mail_from_name} <#{mail_from}>"
+  end
 
   def unsend?
     ['editing','unsend'].include?(mail_status_type)
   end
 
+  def canceled?
+    ['canceled'].include?(mail_status_type)
+  end
+
   def default_values
-    self.planned_setting_at ||= Time.now
     self.mail_status_type ||= 'editing'
     self.mail_send_status_type ||= 'ready'
   end
   
-  def _before_save
+  def perse_planned_setting_at(time_zone)
     unless planned_setting_at_time.blank? || planned_setting_at_date.blank?
-      self.planned_setting_at = Time.parse(planned_setting_at_date.to_s + " " + planned_setting_at_time + ":00:00")
+      org = Time.zone
+      Time.zone = time_zone
+      self.planned_setting_at = Time.zone.parse(planned_setting_at_date.to_s + " " + planned_setting_at_time + ":00:00")
+      Time.zone = org
     end
   end
 
-  def setup_planned_setting_at
-    self.planned_setting_at_date = planned_setting_at.strftime("%Y/%m/%d")
-    self.planned_setting_at_time = planned_setting_at.hour
+  def setup_planned_setting_at(zone_now)
+    self.planned_setting_at = zone_now
+    self.planned_setting_at_date = planned_setting_at.in_time_zone(zone_now.time_zone).strftime("%Y/%m/%d")
+    self.planned_setting_at_time = planned_setting_at.in_time_zone(zone_now.time_zone).hour
   end
 
   # Broadcast Mails
@@ -44,12 +54,11 @@ class DeliveryMail < ActiveRecord::Base
     
     begin
       DeliveryMail.where(:created_user => fetch_key).each {|mail|
+        attachment_files = AttachmentFile.attachment_files("delivery_mails", mail.id)
         mail.delivery_mail_targets.each {|target|
           email = target.bp_pic.email1
           title = tags_replacemet(mail.subject)
           body = tags_replacement(mail.content)
-          
-          attachment_files = AttachmentFile.attachment_files("delivery_mails", mail.id)
           
           MyMailer.send_del_mail(
             email,
@@ -84,7 +93,7 @@ class DeliveryMail < ActiveRecord::Base
   class MyMailer < ActionMailer::Base
     def send_del_mail(destination, cc, bcc, from, subject, body, attachment_files)
       attachment_files.each do |af|
-        attachments[af.file_name] = File.read(af.file_path)
+        attachments[af.file_name] = af.read_file
       end
       mail(
         to: destination,

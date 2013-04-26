@@ -20,7 +20,7 @@
   </tr>
   <tr>
     <th><%= f.label :mail_from, getLongName('delivery_mails', 'mail_from') %></th>
-    <td><%=h (@delivery_mail.mail_from_name + ' <' + @delivery_mail.mail_from + '>') %></td>
+    <td><%=h (@delivery_mail.formated_mail_from) %></td>
     <%= hidden_field_tag 'mail_from_name', @delivery_mail.mail_from_name %>
     <%= hidden_field_tag 'mail_from', @delivery_mail.mail_from %>
   </tr>

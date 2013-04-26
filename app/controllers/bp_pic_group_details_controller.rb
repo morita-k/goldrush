@@ -109,10 +109,7 @@ class BpPicGroupDetailsController < ApplicationController
     @bp_pic_group_detail.save!
     color = @bp_pic_group_detail.suspended? ? "disable_color" : "enable_color"
     respond_to do |format|
-      format.js {render :text => <<EOS # javascript
-$("#tr_" + #{@bp_pic_group_detail.id})[0].style.backgroundColor = #{color};
-EOS
-      }
+      format.js {render :text => "$('#tr_' + #{@bp_pic_group_detail.id})[0].style.backgroundColor = #{color};"}
     end
   end
   
