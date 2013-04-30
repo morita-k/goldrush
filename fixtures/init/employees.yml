@@ -5,8 +5,8 @@ employees_1:
   department_id: 1
   employee_type: "regular"
   position: "管理者"
-  employee_code: "9801"
-  insurance_code: "001"
+  employee_code: "9800"
+  insurance_code: "000"
   employee_name: "管理者"
   employee_kana_name: "管理者"
   employee_short_name: "管理者"
@@ -49,7 +49,7 @@ employees_1:
   account_name: ""
   active_date: 
   inactive_date: 
-  leave_day: 
+  leave_day: 0
   active_flg: 0
   approver_flg: 0
   credit_card_flg: 0
