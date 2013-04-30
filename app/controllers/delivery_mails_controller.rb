@@ -68,6 +68,11 @@ class DeliveryMailsController < ApplicationController
         set_user_column(@delivery_mail)
         @delivery_mail.save!
         
+        # # 予約日時を過ぎていたら即送信
+        # if(@delivery_mail.planned_setting_at) > Time.now
+        #   DeliveryMail.send_mails
+        # end
+        
         format.html {
           redirect_to url_for(
             :controller => 'bp_pic_groups',

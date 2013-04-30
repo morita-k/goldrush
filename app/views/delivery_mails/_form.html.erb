@@ -49,6 +49,10 @@
 </table>
   <div class="actions">
     <%= hidden_field_tag 'bp_pic_group_id', @delivery_mail.bp_pic_group_id %>
-    <%= f.submit %>
+    <% if(false) %>
+      <%= f.submit(:confirm => '送信予約日時を過ぎています。今すぐ送信しますか？') %>
+    <% else %>
+      <%= f.submit(:confirm => '以上の内容で送信予約しますか？') %>
+    <% end %>
   </div>
 <% end %>

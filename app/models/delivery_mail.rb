@@ -52,7 +52,7 @@ class DeliveryMail < ActiveRecord::Base
   class Mailer < ActionMailer::Base
     def send_del_mail(destination, cc, bcc, from, subject, body)
       mail(
-        recipients: destination,
+        to: destination,
         cc: cc,
         bcc: bcc,
         from: from, 
