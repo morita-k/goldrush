@@ -37,8 +37,8 @@
 
 <% @employees.each_index do |idx| employee = @employees[idx] %>
   <tr>
-    <td align="center"><%=h params[:page]? ((params[:page].to_i-1) * 50).to_i+idx+1 : idx+1 %></td>
-    <td><%= link_to "#{employee.user.login}", :action => 'show', :id => employee.user %></td>
+    <td align="center"><%=h employee.employee_code %></td>
+    <td><%= back_to_link "#{employee.user.login}", :action => 'show', :id => employee.user %></td>
     <td><%=h TypeUtil.getLongType('access_level_type', employee.user.access_level_type) %></td>
     <% if employee %>
       <td><%=h employee.department.department_shortname %></td>

@@ -14,8 +14,9 @@ class BpPicGroupsController < ApplicationController
   # GET /bp_pic_groups/1
   # GET /bp_pic_groups/1.json
   def show
-    @delivery_mail_id = params[:delivery_mail_id]
-    @called_by_delivery_mail_create = !@delivery_mail_id.blank?  # メール作成画面からの遷移かどうか
+    unless params[:delivery_mail_id].blank?
+      @delivery_mail = DeliveryMail.find(params[:delivery_mail_id])
+    end
     
     @bp_pic_group = BpPicGroup.find(params[:id])
         

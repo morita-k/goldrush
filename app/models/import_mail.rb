@@ -27,11 +27,9 @@ class ImportMail < ActiveRecord::Base
       subject = tryConv(m, 'Subject') { m.subject }
       import_mail.mail_subject = subject.blank? ? 'unknown subject' : subject
       import_mail.mail_from = m.from != nil ? m.from[0].to_s : "unknown"
-puts ">>>>>>>>>" + import_mail.mail_from
       unless SysConfig.email_prodmode?
         import_mail.mail_from = StringUtil.to_test_address(import_mail.mail_from)
       end
-puts ">>>>>>>>>" + import_mail.mail_from
       import_mail.set_bp
       import_mail.mail_sender_name = tryConv(m,'From')
       import_mail.mail_to = tryConv(m,'To')
@@ -48,32 +46,24 @@ puts ">>>>>>>>>" + import_mail.mail_from
       import_mail.bp_member_flg = 0
       #---------- mail_body ここから ----------
       if m.multipart?
-        puts">>>>>>>>>>>>>>>>>>>>>>>>>>> MULTIPART MODE"
         # パートに分かれている(=返信元メールや添付ファイルが存在している)場合
         m.parts.each do |part|
-          puts">>>>>>>>>>>>>>>>>>>>>>>>>>> content_type : #{part.content_type}"
           if part.content_type.include?('multipart/alternative')
-            puts">>>>>>>>>>>>>>>>>>>>>>>>>>> ALTERNATIVE MODE"
             # multipart/alternativeの場合、メール本文の含まれるパートなので、さらにその中のパートを調べる。
             part.parts.each do |ppart|
-              puts">>>>>>>>>>>>>>>>>>>>>>>>>>> content_type in alternative : #{ppart.content_type}"
               if ppart.content_type == 'text/plain'
-                puts">>>>>>>>>>>>>>>>>>>>>>>>> REGIST MAIL BODY(text/plain in alternative)"
                 # text/plainの場合、メール本文（返信だと添付ファイルの可能性も・・・）。
                 import_mail.mail_body = get_encode_body(m, ppart.body)
                 break
               end # ppart.content_type == 'text/plain'
             end # part.parts.each do
             if import_mail.mail_body.blank?
-              puts">>>>>>>>>>>>>>>>>>>>>>>>> REGIST MAIL BODY(other in alternative)"
               # メール本文にまだ何も代入されてない(=プレーンテキストがなかった)場合、
               # 最初のbodyの値をエンコードして代入する
               import_mail.mail_body = get_encode_body(m, part.parts[0].body)
             end # import_mail.mail_body.blank?
           elsif !part.filename.blank?
-            # filenameがある = 添付ファイルなのでパス
-            puts">>>>>>>>>>>>>>>>>>>>>>>>> REGIST ATTEMPT FILE"
-            #---------- 添付ファイル ここから ----------
+            # filenameがある = 添付ファイル
             upfile = part.body.decoded
             #part.base64_decode
             file_name = part.filename.to_s
@@ -82,23 +72,15 @@ puts ">>>>>>>>>" + import_mail.mail_from
             attachment_file.create_by_import(upfile, import_mail.id, file_name)
             import_mail.biz_offer_flg = 0
             import_mail.bp_member_flg = 1
-              
-            #---------- 添付ファイル ここまで ----------
-            
-            puts">>>>>>>>>>>>>>>>>>>>>>>>> REGIST ATTEMPT FILE"
-            
           elsif part.content_type.include?('text/plain')
             # 添付ファイルでなくtext/plainの場合、メール本文。
             # 上書きされる可能性あり？
-            puts">>>>>>>>>>>>>>>>>>>>>>>>> REGIST MAIL BODY(text/plain)"
             import_mail.mail_body = get_encode_body(m, part.body)
           else
             # multipart/alternativeでもファイルでもtext/plainでもない場合は何もしない（ありえない？）
           end
         end # m.parts.each do
       else
-        puts">>>>>>>>>>>>>>>>>>>>>>>>>>> SINGLEPART MODE"
-        puts">>>>>>>>>>>>>>>>>>>>>>>>>>> REGIST MAIL BODY"
         # パートに分かれていなければ、bodyをそのままエンコードして代入する
         import_mail.mail_body = get_encode_body(m, m.body)
       end # m.multipart?
@@ -112,9 +94,8 @@ puts ">>>>>>>>>" + import_mail.mail_from
   
   def ImportMail.import
     Pop3Client.pop_mail do |m, src|
-      puts">>>>>>>>>>>>>>>>>>>>>>>>>>> MAIL IMPORT START"
+      puts">>>>>>>>>>>>>>>>>>>>>>>>>>> POP3 MAIL"
       ImportMail.import_mail(m, src)
-      puts">>>>>>>>>>>>>>>>>>>>>>>>>>> MAIL IMPORT END"
     end # Pop3Client.pop_mail do
   end # def
   

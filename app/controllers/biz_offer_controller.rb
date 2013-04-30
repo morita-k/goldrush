@@ -53,7 +53,7 @@ class BizOfferController < ApplicationController
         else
           AnalysisTemplate.analyze_content(
             params[:template_id],
-            import_mail.mail_body[params[:from], params[:end]],
+            import_mail.mail_body[params[:from].to_i .. params[:end].to_i],
             [@biz_offer, @business]
           )
         end

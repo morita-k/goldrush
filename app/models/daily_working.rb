@@ -529,5 +529,4 @@ puts">>>>>>>comp_total : #{comp_total}"
     end
     comp_total
   end
-
 end

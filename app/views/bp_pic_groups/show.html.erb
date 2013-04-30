@@ -1,40 +1,51 @@
-<h1><%= @bp_pic_group.bp_pic_group_name %> 詳細</h1>
+<% if @delivery_mail %>
+<h1><%= getLongName('table_name','delivery_mails')%> 確認</h1>
 
-  <%= back_to_link "取引先担当の新規追加", :action => :new_details, :id => @bp_pic_group.id, :delivery_mail_id => @delivery_mail_id %>
+<%= render 'delivery_mails/show' %>
+
+<h1><%= @bp_pic_group.bp_pic_group_name %>のメンバーを選択してください。</h1>
+<% else %>
+<h1><%= @bp_pic_group.bp_pic_group_name %> 詳細</h1>
+<% end %>
+
+
   <%= form_tag(url_for(:controller => :delivery_mails, :action => :add_details), :method => :post) do %>
     <%= back_to_field_tag %>
     <table class="show_table">
       <tr>
-        <% if @called_by_delivery_mail_create %>
+        <% if @delivery_mail %>
           <th></th>
         <% end %>
         <th><%= getLongName('business_partners', 'business_partner_name') %></th>
         <th><%= getLongName('bp_pics', 'bp_pic_name') %></th>
-        <% unless @called_by_delivery_mail_create %>
-          <th>削除</th>
+        <% unless @delivery_mail %>
+          <th></th>
         <% end %>
       </tr>
       <% @bp_pic_group.bp_pic_group_details.each do |detail| %>
-        <% if (not detail.bp_pic.nil?) and (not detail.bp_pic.business_partner.nil?) %>
-          <tr>
-            <% if @called_by_delivery_mail_create %>
-              <td><%= check_box_tag 'bp_pic_ids[]', detail.bp_pic_id, true %></td>
-            <% end %>
-            <td><%= back_to_link detail.bp_pic.business_partner.business_partner_name, :controller => :business_partner, :action => :show, :id => detail.bp_pic.business_partner_id %></td>
-            <td><%= back_to_link detail.bp_pic.bp_pic_name, :controller => :bp_pic, :action => :show, :id => detail.bp_pic_id %></td>
-            <% unless @called_by_delivery_mail_create %>
-              <td><%= back_to_link '削除', {:controller => :bp_pic_group_details, :action => :destroy, :id => detail.id, :authenticity_token => form_authenticity_token}, :method => :delete %></td>
-            <% end %>
-          </tr>
+        <% if detail.supended? %>
+        <tr style="background-color: silver">
+        <% else %>
+        <tr>
         <% end %>
+          <% if @delivery_mail %>
+            <td><%= check_box_tag 'bp_pic_ids[]', detail.bp_pic_id, !detail.supended? %></td>
+          <% end %>
+          <td><%= back_to_link detail.bp_pic.business_partner.business_partner_name, :controller => :business_partner, :action => :show, :id => detail.bp_pic.business_partner_id %></td>
+          <td><%= back_to_link detail.bp_pic.bp_pic_name, :controller => :bp_pic, :action => :show, :id => detail.bp_pic_id %></td>
+          <% unless @delivery_mail %>
+            <td><%= back_to_link '削除', {:controller => :bp_pic_group_details, :action => :destroy, :id => detail.id, :authenticity_token => form_authenticity_token}, :method => :delete, :confirm => "このレコードを削除します。よろしいですか？" %></td>
+          <% end %>
+        </tr>
       <% end %>
     </table>
-    <% if @called_by_delivery_mail_create %>
-      <%= hidden_field_tag 'delivery_mail_id', @delivery_mail_id %>
+    <% if @delivery_mail %>
+      <%= hidden_field_tag 'delivery_mail_id', @delivery_mail.id %>
       <%= submit_tag "メール作成" %>
     <% end %>
   <% end %>
-<% unless @called_by_delivery_mail_create %>
+<% unless @delivery_mail %>
+  <%= back_to_link "取引先担当の新規追加", :action => :new_details, :id => @bp_pic_group.id %> |
   <%= back_to_link '編集', {:action => :edit, :id => @bp_pic_group.id} %> |
   <%= link_to '削除', {:action => :destroy, :id => @bp_pic_group.id, :authenticity_token => form_authenticity_token}, method: :delete, data: { confirm: '削除します。よろしいですか?' } %> |
 <% end %>

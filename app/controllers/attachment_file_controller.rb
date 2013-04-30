@@ -67,7 +67,7 @@ class AttachmentFileController < ApplicationController
 
   def download
     attachment_file = AttachmentFile.find(params[:id], :conditions =>["deleted = 0"])
-    send_file(attachment_file.file_path)
+    send_file(attachment_file.file_path, :filename => attachment_file.file_name)
   end
 
 end
