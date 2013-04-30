@@ -36,7 +36,7 @@ namespace :app do
   end
     
 
-  desc 'Generate calendars usage: rake app:basedategen START=2000/1/1 END=2010/12/31 (and put "holidays.yml" on RAILS_ROOT/config dir. before get holiday xml data by "http://www.h3.dion.ne.jp/~sakatsu/holiday_topic.htm")'
+  desc 'Generate calendars usage: RAILS_ENV=production rake app:basedategen START=2013/1/1 END=2018/12/31 (and put "holidays.yml" on RAILS_ROOT/config dir. before get holiday xml data by "http://www.h3.dion.ne.jp/~sakatsu/holiday_topic.htm")'
   task :basedategen => :environment do
     check_args
 
@@ -64,7 +64,7 @@ namespace :app do
     end
   end
 
-  desc 'Generate base months usage: rake app:basemonthgen START=2000/1 MCNT=3'
+  desc 'Generate base months usage: RAILS_ENV=production rake app:basemonthgen START=2013/1 MCNT=60'
   task :basemonthgen => :environment do
     check_basemonthgen_args
     month_start_date = SysConfig.get_month_start_date.value1
