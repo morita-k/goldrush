@@ -133,7 +133,7 @@ class BusinessPartner < ActiveRecord::Base
       end
       # グループ登録
       unless group.blank?
-        unless bp_pic_group = BpPicGroup.where(:bp_pic_group_name => group).first
+        unless bp_pic_group = BpPicGroup.where(:deleted => 0, :bp_pic_group_name => group).first
           bp_pic_group = BpPicGroup.new
           bp_pic_group.bp_pic_group_name = group
           bp_pic_group.created_user = 'import'
