@@ -1,7 +1,7 @@
 <h1><%=getLongName('table_name','business_partners')%>編集</h1>
 
 <%= form_tag :action => 'update', :id => @business_partner do %>
-  <%= render :partial => 'form_edit' %>
+  <%= render :partial => 'form' %>
   <%= submit_tag '更新' %>
 <% end %>
 

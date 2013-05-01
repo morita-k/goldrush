@@ -1,9 +1,11 @@
 <%= error_messages_for 'business_partner' %>
 
+<% if @business_partner.new_record? %>
 <h2>取引先</h2>
 
 <input type=button value='登録済の取引先を選択' onClick="disp_wide('<%=url_for :controller => 'business_partner', :action => 'list', :popup =>1, :flg => 'eu,down,upper,self', :mail => 1 %>');return false;" />
 <input type=button value='取引先情報クリア' onClick="clearBp();return false;" />
+<% end %>
 
 <table class="show_table">
 <tr>
@@ -37,7 +39,7 @@
 <th><label for="business_partner_zip"><%=getLongName('business_partners','zip')%></label></th><td><%= text_field 'business_partner', 'zip', :size => 12  %></td>
 </tr>
 <tr>
-<th><label for="business_partner_address1"><%=getLongName('business_partners','address1')%>(都道府県)</label></th><td><%= select 'business_partner', 'address1', User.get_prefs  %></td>
+<th><label for="business_partner_address1"><%=getLongName('business_partners','address1')%>(都道府県)</label></th><td><%= select 'business_partner', 'address1', User.get_prefs, {:include_blank => true} %></td>
 </tr>
 <tr>
 <th><label for="business_partner_address2"><%=getLongName('business_partners','address2')%></label></th><td><%= text_field 'business_partner', 'address2'  %></td>
@@ -55,16 +57,12 @@
 <th><label for="business_partner_category"><%=getLongName('business_partners','category')%></label></th><td><%= text_field 'business_partner', 'category'  %></td>
 </tr>
 <tr>
-<th><label for="business_partner_self_flg"><%=getLongName('business_partners','self_flg')%></label></th><td><%= check_box 'business_partner', 'self_flg'  %></td>
-</tr>
-<tr>
-<th><label for="business_partner_eu_flg"><%=getLongName('business_partners','eu_flg')%></label></th><td><%= check_box 'business_partner', 'eu_flg'  %></td>
-</tr>
-<tr>
-<th><label for="business_partner_upper_flg"><%=getLongName('business_partners','upper_flg')%></label></th><td><%= check_box 'business_partner', 'upper_flg'  %></td>
-</tr>
-<tr>
-<th><label for="business_partner_down_flg"><%=getLongName('business_partners','down_flg')%></label></th><td><%= check_box 'business_partner', 'down_flg'  %></td>
+<th><label for="flg">フラグ</label></th><td>
+  <%= check_box 'business_partner', 'self_flg'  %> 自社<br/>
+  <%= check_box 'business_partner', 'eu_flg'  %> エンドユーザー<br/>
+  <%= check_box 'business_partner', 'upper_flg'  %> 上位会社(人材メール対象)<br/>
+  <%= check_box 'business_partner', 'down_flg'  %> 下位会社(案件メール対象)
+</td>
 </tr>
 <tr>
 <th><label for="business_partner_memo"><%=getLongName('business_partners','memo')%></label></th><td><%= resizable_area 'business_partner', 'memo'  %></td>
@@ -74,6 +72,10 @@
 <!--[eoform:business_partner]-->
 
 
+<%= hidden_field 'business_partner', 'lock_version' %>
+<%= back_to_field_tag %>
+
+<% if @business_partner.new_record? %>
 <h2>取引先担当</h2>
 <!--[form:bp_pic]-->
   <%= render :partial => 'bp_pic/form' %>
@@ -84,8 +86,6 @@
 <%= hidden_field 'business_partner', 'import_mail_id' %>
 <%= hidden_field 'bp_pic', 'import_mail_id' %>
 
-<%= hidden_field 'business_partner', 'lock_version' %>
-<%= back_to_field_tag %>
 
 <script type="text/javascript">
 <!--
@@ -142,3 +142,4 @@ function clearBp(){
 
 // -->
 </script>
+<% end %>
