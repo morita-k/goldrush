@@ -68,4 +68,15 @@ module StringUtil
   def StringUtil.to_test_address(email)
     "test+" + email.sub("@","_") + "@i.applicative.jp"
   end
+  
+  def StringUtil.detect_words(str)
+    words = []
+    r = Regexp.new(/[a-zA-Z][a-zA-Z0-9 ]+/)
+    pos = 0
+    while ma = r.match(str, pos)
+      words << ma[0]
+      pos = ma.offset(0)[1]
+    end
+    words.uniq.sort
+  end
 end

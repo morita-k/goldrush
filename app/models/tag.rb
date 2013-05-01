@@ -6,7 +6,7 @@ class Tag < ActiveRecord::Base
   # タグの文字列を受け取って正規化する
   # 正規化=>小文字化、",",半角スペース、全角スペースで区切り、文字列の配列として戻す
   def Tag.normalize_tag(tag_string)
-    return tag_string.to_s.downcase.split(/[\s,　]/).delete_if{|x| x.blank? }.sort.uniq
+    return tag_string.to_s.downcase.split(",").delete_if{|x| x.blank? }.sort.uniq
   end
 
   def Tag.create_tags!(key, parent_id, tag_string)
