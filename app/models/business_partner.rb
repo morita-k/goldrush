@@ -60,26 +60,21 @@ class BusinessPartner < ActiveRecord::Base
 
   def BusinessPartner.create_bp_pic(companies, email, pic_name, company_name, memo = nil)
     bp, pics = companies[company_name.upcase]
-    unless pics[pic_name.upcase]
-#      unless pic = BpPic.where(:business_partner_id => bp.id,:bp_pic_name => pic_name, :deleted => 0).first
-        pic = BpPic.new
-        pic.business_partner_id = bp.id
-        pic.bp_pic_name = pic_name
-        pic.bp_pic_short_name = pic_name
-        pic.bp_pic_name_kana = pic_name
-        pic.email1 = email
-        pic.memo = memo
-        pic.created_user = 'import'
-        pic.updated_user = 'import'
-        begin
-          pic.save!
-        rescue ActiveRecord::RecordInvalid => e
-          puts e.message + pic.inspect
-        end
-#      end
-      pics[pic_name.upcase] = pic
+    pic = BpPic.new
+    pic.business_partner_id = bp.id
+    pic.bp_pic_name = pic_name
+    pic.bp_pic_short_name = pic_name
+    pic.bp_pic_name_kana = pic_name
+    pic.email1 = email
+    pic.memo = memo
+    pic.created_user = 'import'
+    pic.updated_user = 'import'
+    begin
+      pic.save!
+    rescue ActiveRecord::RecordInvalid => e
+      Rails.logger.error e.message + e.backtrace.join("\n") + pic.inspect
     end
-    return pics[pic_name.upcase]
+    return pic
   end
 
   def BusinessPartner.import_from_csv_data(readable_data, prodmode=false)
