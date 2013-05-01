@@ -38,7 +38,8 @@ class AnalysisTemplate < ActiveRecord::Base
           before_set(model, item, $1)
         end
         
-        model.send("#{item.target_column_name}=", mail_parser.conditions_body(item.pattern))
+        match_str = mail_parser.conditions_body(item.pattern)
+        model.send("#{item.target_column_name}=", match_str) unless match_str.blank?
         
         unless item.after_set_code.blank?
           eval <<-EOS
