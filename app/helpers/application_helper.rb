@@ -473,4 +473,11 @@ EOS
     flg.to_i == 1 ? "color: #ffff00" : "color: #dfdfdf"
   end
   
+  def popup_hidden_field
+    if popup?
+      return hidden_field_tag :popup, params[:popup]
+    else
+      return ''
+    end
+  end
 end

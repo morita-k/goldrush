@@ -1,0 +1,11 @@
+<% if !( flash[:notice] || flash[:err] || flash[:warning] ) %>
+  <div>処理が完了しました</div>
+<% end %>
+
+<div style="text-align:center">
+<% if @input_tag %>
+  <%= @input_tag %>
+<% else %>
+  <input type="button" value="閉じる" onclick="window.close();return;" style="margin-top:2em;margin-bottom:2em;width:8em;">
+<% end%>
+</div>

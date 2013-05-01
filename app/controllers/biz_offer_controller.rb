@@ -41,6 +41,7 @@ class BizOfferController < ApplicationController
       @issue_datetime_hour = now.hour
       @issue_datetime_min = (now.min / 10) * 10
     end
+    params[:business_id] = @business
     
     # メール取り込みからの遷移
     if params[:import_mail_id]# && params[:template_id]
@@ -102,11 +103,21 @@ class BizOfferController < ApplicationController
         import_mail.save!
       end
     end
-    flash[:notice] = 'BizOffer was successfully created.'
-    if new_flg
-      redirect_to back_to || {:action => 'list'}
+    
+    flash_notice = 'BizOffer was successfully created.'
+    
+    if popup?
+      # ポップアップウィンドウの場合、共通リザルト画面を表示する
+      flash.now[:notice] = flash_notice
+      render 'shared/popup/result'
     else
-      redirect_to :action => 'show', :id => @biz_offer
+      # ポップアップウィンドウでなければ通常の画面遷移
+      flash[:notice] = flash_notice
+      if new_flg
+        redirect_to back_to || {:action => 'list'}
+      else
+        redirect_to :action => 'show', :id => @biz_offer
+      end
     end
   rescue ActiveRecord::RecordInvalid
     render :action => 'new'

@@ -57,8 +57,8 @@ class DeliveryMail < ActiveRecord::Base
         attachment_files = AttachmentFile.attachment_files("delivery_mails", mail.id)
         mail.delivery_mail_targets.each {|target|
           email = target.bp_pic.email1
-          title = tags_replacemet(mail.subject)
-          body = tags_replacement(mail.content)
+          title = DeliveryMail.tags_replacement(mail.subject, target)
+          body = DeliveryMail.tags_replacement(mail.content, target)
           
           MyMailer.send_del_mail(
             email,
@@ -82,12 +82,11 @@ class DeliveryMail < ActiveRecord::Base
   end
   
   # === Private === 
-  def tags_replacement(tag)
+  def DeliveryMail.tags_replacement(tag, target)
     tag.
     gsub("%%bp_pic_name%%", target.bp_pic.bp_pic_short_name).
     gsub("%%business_partner_name%%", target.bp_pic.business_partner.business_partner_name)
   end
-  private :tags_replacement
 
   # Private Mailer
   class MyMailer < ActionMailer::Base
