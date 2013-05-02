@@ -177,11 +177,20 @@ class BusinessPartnerController < ApplicationController
       
     end
     
-    flash[:notice] = 'BusinessPartner was successfully created.'
-    if mail_flg
-      redirect_to :controller => :business_partner, :action => :show, :id => @business_partner.id
+    flash_notice = 'BusinessPartner was successfully created.'
+    
+    if popup?
+      # ポップアップウィンドウの場合、共通リザルト画面を表示する
+      flash.now[:notice] = flash_notice
+      render 'shared/popup/result'
     else
-      redirect_to(params[:back_to] || {:action => 'list'})
+      # ポップアップウィンドウでなければ通常の画面遷移
+      flash[:notice] = flash_notice
+      if mail_flg
+        redirect_to :controller => :business_partner, :action => :show, :id => @business_partner.id
+      else
+        redirect_to(params[:back_to] || {:action => 'list'})
+      end
     end
   rescue ActiveRecord::RecordInvalid
     render :action => 'new'
