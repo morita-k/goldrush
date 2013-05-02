@@ -96,7 +96,7 @@ module ImportMailHelper
   end
   
   def format_tags(tag_text, words)
-    tag_text.split(",").map do |x|
+    tag_text.to_s.split(",").map do |x|
       if words.include?(x)
         "<strong>#{x}</strong>"
       else
