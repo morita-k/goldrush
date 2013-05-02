@@ -64,23 +64,27 @@ module ImportMailHelper
   
   # 
   def link_to_import_api(text)
-  	link_to text, {:controller => :api, :action => :import_mail_pop3}, :confirm => "POP3にてメールを取り込みます。よろしいですか？"
+    back_to_link text, {:controller => :api, :action => :import_mail_pop3}, :confirm => "POP3にてメールを取り込みます。よろしいですか？"
+  end
+  
+  def link_to_analyze_tags_api(text)
+    back_to_link text, {:controller => :api, :action => :analyze_tags}, :confirm => "取り込みメールのタグを再計算します。よろしいですか？"
   end
   
   def link_to_detail(import_mail, back_to_url)
-  	link_to h(import_mail.mail_subject), :action => :show, :id => import_mail, :back_to => back_to_url
+    link_to h(import_mail.mail_subject), :action => :show, :id => import_mail, :back_to => back_to_url
   end
   
   def link_to_bp_detail(import_mail)
-  	link_to import_mail.mail_sender_name, :controller => :business_partner, :action => :show, :id => import_mail.business_partner_id
+    link_to import_mail.mail_sender_name, :controller => :business_partner, :action => :show, :id => import_mail.business_partner_id
   end
   
   def link_to_biz_create(text, import_mail)
-  	link_to text, url_for(:controller => 'analysis_template', :action => 'list', :popup => 1, :mode => 'biz_offer', :import_mail_id => import_mail), :class => :analysis_mail_link
+    link_to text, url_for(:controller => 'analysis_template', :action => 'list', :popup => 1, :mode => 'biz_offer', :import_mail_id => import_mail), :class => :analysis_mail_link
   end
   
   def link_to_hresource_create(text, import_mail)
-  	link_to text, url_for(:controller => 'analysis_template', :action => 'list', :popup => 1, :mode => 'bp_member', :import_mail_id => import_mail), :class => :analysis_mail_link
+    link_to text, url_for(:controller => 'analysis_template', :action => 'list', :popup => 1, :mode => 'bp_member', :import_mail_id => import_mail), :class => :analysis_mail_link
   end
   
   def link_to_bp_create(text, import_mail)
@@ -91,4 +95,13 @@ module ImportMailHelper
     link_to text, url_for(:controller => :bp_pic, :action => :new, :popup => 1, :import_mail_id => import_mail, :business_partner_id => import_mail.business_partner_id), :class => :analysis_mail_link
   end
   
+  def format_tags(tag_text, words)
+    tag_text.split(",").map do |x|
+      if words.include?(x)
+        "<strong>#{x}</strong>"
+      else
+        x
+      end
+    end.join(", ")
+  end
 end

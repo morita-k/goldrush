@@ -9,6 +9,12 @@ class SysConfig < ActiveRecord::Base
   validates_length_of :value2, :maximum=>255, :allow_blank => true
   validates_length_of :value3, :maximum=>255, :allow_blank => true
   
+  after_save :purge_cache
+  
+  def purge_cache
+    SysConfig.purge_cache
+  end
+  
   @@cache = nil
 
   # カラム名を受け取ってそれがシステムカラムなのかを返す
@@ -205,6 +211,10 @@ class SysConfig < ActiveRecord::Base
   end
 
   def self.email_prodmode?
-    get_config("business_partners", "prodmode")
+    get_configuration("business_partners", "prodmode")
+  end
+  
+  def self.get_skill_major_words
+    get_configuration("skill", "major_words").config_description_text.split
   end
 end

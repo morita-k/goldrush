@@ -90,9 +90,10 @@ class ImportMail < ActiveRecord::Base
         import_mail.mail_body = get_encode_body(m, m.body)
       end # m.multipart?
       #---------- mail_body ここまで ----------
-      
       import_mail.created_user = 'import_mail'
       import_mail.updated_user = 'import_mail'
+      import_mail.save!
+      import_mail.make_tags!
       import_mail.save!
     end # transaction
   end
@@ -145,7 +146,52 @@ class ImportMail < ActiveRecord::Base
     end
   end
 
+  def make_tags
+    require 'string_util'
+    body = mail_body.gsub(/[\_\-\+\.\w]+@[\-a-z0-9]+(\.[\-a-z0-9]+)*\.[a-z]{2,6}/i, "").gsub(/https?:\/\/\w[\w\.\-\/]+/i,"")
+    words = StringUtil.detect_words(body).inject([]) do |r,item|
+      arr = item.split(" ")
+      arr.each do |w| # スペースで分割
+        StringUtil.splitplus(w).each do |ww| # +で分割
+          StringUtil.breaknum(ww).each do |www| # 数字の前後で分割(数字のみは排除)
+            r << www
+          end
+        end
+      end
+      r << arr.join("")
+    end
+    words = words.uniq.reject{|w|
+      ignores.include?(w.downcase) || w =~ /^\d/ # 辞書に存在するか、数字で始まる単語
+    }
+    self.tag_text = words.join(",")
+  end
+
+  def make_tags!
+    make_tags
+    Tag.update_tags!("import_mails", id, tag_text)
+  end
+
+  def ImportMail.analyze_tags
+    where(:deleted => 0).each do |mail|
+      mail.make_tags!
+      mail.save!
+    end
+  end
+
+  def ImportMail.analyze_tags_dry
+    File.open("tagtest.txt","w"){|f|
+    where(:deleted => 0).each do |mail|
+      f.write(mail.id.to_s + ": " + mail.make_tags + "\n")
+    end
+    }
+  end
+
 private
+  def ignores
+    ["e-mail", "email", "fax", "jp", "mail", "mailto", "new", "ng", "or", "or2", "or3", "or4",
+     "os", "pc", "pg", "phone", "phs", "pj", "pmi", "popteen", "pr", "pro", "se", "service", "ses", "tel", "url", "zip"]
+  end
+
   def ImportMail.get_encode_body(mail, body)
     if mail.content_transfer_encoding == 'ISO-2022-JP'
       return NKF.nkf('-w -J', body)

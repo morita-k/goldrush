@@ -10,45 +10,40 @@
 
 <table class="show_table">
 <% if @import_mail.business_partner %>
-	<tr>
-	  <th><%= getLongName('import_mails', 'business_partner_id') %></th><td><%=link_to @import_mail.business_partner.business_partner_name, :controller => :business_partner, :action => :show, :id => @import_mail.business_partner_id %></td>
-	</tr>
+  <tr>
+    <th><%= getLongName('import_mails', 'business_partner_id') %></th><td><%=link_to @import_mail.business_partner.business_partner_name, :controller => :business_partner, :action => :show, :id => @import_mail.business_partner_id %></td>
+  </tr>
 <% end %>
-	
 <% if @import_mail.bp_pic %>
-	<tr>
-	  <th><%= getLongName('import_mails', 'bp_pic_id') %></th><td><%=link_to @import_mail.bp_pic.bp_pic_name, :controller => :bp_pic, :action => :show, :id => @import_mail.bp_pic_id %></td>
-	</tr>
+  <tr>
+    <th><%= getLongName('import_mails', 'bp_pic_id') %></th><td><%=link_to @import_mail.bp_pic.bp_pic_name, :controller => :bp_pic, :action => :show, :id => @import_mail.bp_pic_id %></td>
+  </tr>
 <% end %>
-	
-	<tr>
-	  <th><%= getLongName('import_mails', 'mail_sender_name') %></th><td><%=h @import_mail.mail_sender_name %></td>
-	</tr>
-	
-	<tr>
-	  <th><%= getLongName('import_mails', 'mail_to') %></th><td><%=h @import_mail.mail_to %></td>
-	</tr>
-	
-	<tr>
-	  <th><%= getLongName('import_mails', 'mail_cc') %></th><td><%=h @import_mail.mail_cc %></td>
-	</tr>
-	
-	<tr>
-	  <th><%= getLongName('import_mails', 'mail_bcc') %></th><td><%=h @import_mail.mail_bcc %></td>
-	</tr>
-	
-	<tr>
-	  <th><%= getLongName('import_mails', 'received_at') %></th><td><%=h _time_long(@import_mail.received_at) %></td>
-	</tr>
-	
-	<tr>
-	  <th><%= getLongName('import_mails', 'mail_subject') %></th><td><%=h @import_mail.mail_subject %></td>
-	</tr>
-	
-	<tr>
-	  <td colspan=2><pre id="mail_body"><%=h(@import_mail.mail_body) %></pre></td>
-	</tr>
-	
+  <tr>
+    <th><%= getLongName('import_mails', 'mail_sender_name') %></th><td><%=h @import_mail.mail_sender_name %></td>
+  </tr>
+  <tr>
+    <th><%= getLongName('import_mails', 'mail_to') %></th><td><%=h @import_mail.mail_to %></td>
+  </tr>
+  <tr>
+    <th><%= getLongName('import_mails', 'mail_cc') %></th><td><%=h @import_mail.mail_cc %></td>
+  </tr>
+  <tr>
+    <th><%= getLongName('import_mails', 'mail_bcc') %></th><td><%=h @import_mail.mail_bcc %></td>
+  </tr>
+  <tr>
+    <th><%= getLongName('import_mails', 'received_at') %></th><td><%=h _time_long(@import_mail.received_at) %></td>
+  </tr>
+  <tr>
+    <th><%= getLongName('import_mails', 'tag_text') %></th><td><%=raw format_tags(@import_mail.tag_text, @major_words) %></td>
+  </tr>
+  <tr>
+    <th><%= getLongName('import_mails', 'mail_subject') %></th><td><%=h @import_mail.mail_subject %></td>
+  </tr>
+  <tr>
+    <td colspan=2><pre id="mail_body"><%=h(@import_mail.mail_body) %></pre></td>
+  </tr>
+  
 </table>
 
 <% if !@attachment_files.blank? %>

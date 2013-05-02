@@ -152,6 +152,9 @@ class BpMemberController < ApplicationController
         set_user_column @human_resource
         @human_resource.save!
       end
+      # タグを更新
+      @human_resource.make_skill_tags!
+      @human_resource.save!
       
       set_user_column @bp_member
       @bp_member.save!
@@ -192,10 +195,14 @@ class BpMemberController < ApplicationController
     @human_resource.attributes = params[:human_resource]
     @human_resource.initial = initial_trim(params[:human_resource][:initial])
     @bp_member.attributes = params[:bp_member]
-    set_user_column @human_resource
-    set_user_column @bp_member
-    @human_resource.save!
-    @bp_member.save!
+    ActiveRecord::Base.transaction do
+      # タグを更新
+      @human_resource.make_skill_tags!
+      set_user_column @human_resource
+      set_user_column @bp_member
+      @human_resource.save!
+      @bp_member.save!
+    end
     flash[:notice] = 'BpMember was successfully updated.'
     redirect_to back_to || {:action => 'show', :id => @bp_member}
   rescue ActiveRecord::RecordInvalid

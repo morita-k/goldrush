@@ -2,9 +2,9 @@
 <%- for column in SysConfig.columns -%>
   <%- if system_column?(column.name) then next end -%>
 <tr>
-  <th><%= getLongName('sys_configs', column.name) %></th><td><%=h @configuration.send(column.name) %></td>
+  <th><%= getLongName('sys_configs', column.name) %></th><td><%=simple_format h(@sys_config.send(column.name)) %></td>
 </tr>
 <% end %>
 </table>
-<%= link_to '編集', :action => 'edit', :id => @configuration %> |
+<%= link_to '編集', :action => 'edit', :id => @sys_config %> |
 <%= link_to '一覧', :action => 'list' %>
