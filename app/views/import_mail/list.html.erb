@@ -56,8 +56,10 @@
 
 <br />
 
-<%= link_to_import_api('取り込み') %>
-
+<% if Rails.env == "development" %>
+<%= link_to_import_api('取り込み') %> |
+<%= link_to_analyze_tags_api('タグ解析') %>
+<% end %>
 <script type="text/javascript">
 <!--
 var registered = "registered"

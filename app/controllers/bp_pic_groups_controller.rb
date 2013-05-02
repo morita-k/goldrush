@@ -18,8 +18,7 @@ class BpPicGroupsController < ApplicationController
       @delivery_mail = DeliveryMail.find(params[:delivery_mail_id])
     end
     
-    @bp_pic_group = BpPicGroup.find(params[:id])
-    p @bp_pic_group
+    @bp_pic_group = BpPicGroup.includes(:bp_pic_group_details => {:bp_pic => :business_partner}).find(params[:id])
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @bp_pic_group }

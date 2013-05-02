@@ -15,7 +15,7 @@
   <tr>
   <% for column in SysConfig.columns %>
     <% if system_column?(column.name) then next end %>
-    <td><%=h sys_config.send(column.name) %></td>
+    <td><%=simple_format(h sys_config.send(column.name)) %></td>
   <% end %>
     <td>
       <%= link_to '表示', :action => 'show', :id => sys_config %>, 
