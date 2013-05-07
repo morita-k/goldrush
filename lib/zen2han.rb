@@ -1,5 +1,5 @@
 # -*- encoding: utf-8 -*-
-require 'jcode'
+#require 'jcode'
 # 全角カナ→半角カナ変換ユーティリティ
 
 class Zen2Han
@@ -50,7 +50,7 @@ class Zen2Han
   end
   def Zen2Han.toHan(str)
     result = ""
-    str.to_s.each_char{|x| result += (@@map[x]||x).to_s}
+    str.to_s.each_char{|x| result += (@@map[x].blank? ? x : @@map[x][0])}
     return result
   end
   def Zen2Han.toZen(str)
