@@ -108,8 +108,9 @@ class BpPicGroupDetailsController < ApplicationController
     set_user_column @bp_pic_group_detail
     @bp_pic_group_detail.save!
     color = @bp_pic_group_detail.suspended? ? "disable_color" : "enable_color"
+    s = @bp_pic_group_detail.suspended? ? "解除" : "停止"
     respond_to do |format|
-      format.js {render :text => "$('#tr_' + #{@bp_pic_group_detail.id})[0].style.backgroundColor = #{color};"}
+      format.js {render :text => "$('#tr_#{@bp_pic_group_detail.id}')[0].style.backgroundColor = #{color};$('#tr_#{@bp_pic_group_detail.id} a')[2].innerHTML = '#{s}'"}
     end
   end
   
