@@ -5,7 +5,7 @@
 <!--[form:contract_term]-->
 <table class="show_table">
 <tr>
-<th><label for="contract_term_contract_type"><%=getLongName('contract_terms','contract_type')%></label></th><td><%= select model_name, 'contract_type', $TYPE_CONDITIONS['contract_type']  %></td>
+<th><label for="contract_term_term_type"><%=getLongName('contract_terms','term_type')%></label></th><td><%= select model_name, 'term_type', $TYPE_CONDITIONS['term_type']  %></td>
 </tr>
 <tr>
 <th><label for="contract_term_payment"><%=getLongName('contract_terms','payment')%></label></th><td><%= text_field model_name, 'payment_view', :size => 6 %>万円</td>
