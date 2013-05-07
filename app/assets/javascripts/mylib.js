@@ -1,3 +1,8 @@
+function fixmessage(url){
+  jQuery.ajax({url: url, type: "PUT"});
+  return false;
+}
+
 function insertAtCursor(objText, value) 
 {
   objText.focus();

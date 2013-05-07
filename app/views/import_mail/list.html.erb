@@ -16,8 +16,9 @@
 <% end %>
 
 <%= paginate(@import_mails) %>
+<% unless session[:msgids].to_s.split(",").include?("123") %>
 <div class="alert alert-block">
- <button type="button" class="close" data-dismiss="alert" onclick="">&times;</button>
+ <button type="button" class="close" data-dismiss="alert" onclick="fixmessage('<%=url_for(:controller => :users, :action => :fixmessage, :id => '123', :authenticity_token => form_authenticity_token)%>')">&times;</button>
  <h4>注意!</h4>
  <p>
    ※案件、人材フラグが黒文字になっているメールは、既に案件、人材として登録されているものです。<br/>
@@ -25,6 +26,7 @@
    ※人材が登録されているメールは、人材フラグを変更できません。
  </p>
 </div>
+<% end %>
 <table class="list_table">
   <tr>
     <th colspan=6>取り込みメール一覧</th>
