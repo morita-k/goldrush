@@ -81,8 +81,9 @@ class SysConfig < ActiveRecord::Base
   def self.get_configuration(section, key)
     load_cache unless @@cache
     @@cache.each do |conf|
-      break conf if conf.config_section == section and conf.config_key == key
+      return conf if conf.config_section == section and conf.config_key == key
     end
+    return nil
 #    SysConfig.find(:first, :conditions => ["deleted = 0 and config_section = ? and config_key = ?", section, key])
   end
 
