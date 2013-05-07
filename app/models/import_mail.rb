@@ -148,7 +148,8 @@ class ImportMail < ActiveRecord::Base
 
   def make_tags
     require 'string_util'
-    body = mail_body.gsub(/[\_\-\+\.\w]+@[\-a-z0-9]+(\.[\-a-z0-9]+)*\.[a-z]{2,6}/i, "").gsub(/https?:\/\/\w[\w\.\-\/]+/i,"")
+    require 'zen2han'
+    body = Zen2Han.toHan(mail_body).gsub(/[\_\-\+\.\w]+@[\-a-z0-9]+(\.[\-a-z0-9]+)*\.[a-z]{2,6}/i, "").gsub(/https?:\/\/\w[\w\.\-\/]+/i,"")
     words = StringUtil.detect_words(body).inject([]) do |r,item|
       arr = item.split(" ")
       arr.each do |w| # スペースで分割
@@ -159,6 +160,9 @@ class ImportMail < ActiveRecord::Base
         end
       end
       r << arr.join("")
+    end
+    if body =~ /(^|[^a-zA-Z])(C)([^a-zA-Z#\+]|$)/
+      words << $2
     end
     words = words.uniq.reject{|w|
       ignores.include?(w.downcase) || w =~ /^\d/ # 辞書に存在するか、数字で始まる単語

@@ -80,4 +80,13 @@ class UsersController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  def fixmessage
+    session[:msgids] ||= ""
+    session[:msgids] = (session[:msgids].split(",") << params[:id]).uniq.join(",")
+    respond_to do |format|
+      format.js {render :text => ";"}
+    end
+  end
+  
 end

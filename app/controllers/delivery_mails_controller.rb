@@ -45,7 +45,7 @@ class DeliveryMailsController < ApplicationController
   # GET /delivery_mails/1/edit
   def edit
     @delivery_mail = DeliveryMail.find(params[:id])
-    @delivery_mail.setup_planned_setting_at(current_user.zone_now)
+    @delivery_mail.setup_planned_setting_at(current_user.zone_at(@delivery_mail.planned_setting_at))
     respond_to do |format|
       format.html # edit.html.erb
       format.json { render json: @delivery_mail }

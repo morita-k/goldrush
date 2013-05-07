@@ -26,11 +26,11 @@ def around_http_client(&block)
 #  api_logfile = File.open(File.join('log',"cloud_api_call.#{Process.pid}.log"), "a")
   agent = HTTPClient.new
   agent.receive_timeout = 300
-  agent.debug_dev = STDOUT
+#  agent.debug_dev = STDOUT
 #  agent.debug_dev = api_logfile
   block.call agent
 ensure
-  agent.debug_dev = nil
+#  agent.debug_dev = nil
 #  api_logfile.close
 end
 
