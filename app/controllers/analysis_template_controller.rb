@@ -58,6 +58,10 @@ class AnalysisTemplateController < ApplicationController
       items = get_items(params[:mode], params)
       items.each do |item|
         item.analysis_template_id = @analysis_template.id
+        unless AnalysisTemplateItem.correct_regex(item.pattern)
+          flash[:err] = "Invalid Regex pattern"
+          raise  ActiveRecord::RecordInvalid.new(item)
+        end
         item.save!
       end
     end # transaction
@@ -103,12 +107,16 @@ class AnalysisTemplateController < ApplicationController
       items = get_items(@mode, params)
       items.each do |item|
         item.analysis_template_id = @analysis_template.id
+        unless AnalysisTemplateItem.correct_regex(item.pattern)
+          flash[:err] = "Invalid Regex pattern"
+          raise  ActiveRecord::RecordInvalid.new(item)
+        end
         item.save!
       end
     end # transaction
 
     flash[:notice] = 'AnalysisTemplate was successfully updated.'
-
+    
     redirect_to(params[:back_to] || {:action => :show, :id => @analysis_template})
   rescue ActiveRecord::RecordInvalid
     if @mode == "biz_offer"
