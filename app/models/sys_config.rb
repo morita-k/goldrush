@@ -17,7 +17,7 @@ class SysConfig < ActiveRecord::Base
   
   @@cache = nil
 
-  # カラム名を受け取ってそれがシステムカラムなのかを返す
+  # 繧ｫ繝ｩ繝蜷阪ｒ蜿励￠蜿悶▲縺ｦ縺昴ｌ縺後す繧ｹ繝�繝繧ｫ繝ｩ繝縺ｪ縺ｮ縺九ｒ霑斐☆
   def SysConfig.system_columns
     ['created_at','updated_at','lock_version','created_user','updated_user','deleted_at','deleted']
   end
@@ -217,5 +217,8 @@ class SysConfig < ActiveRecord::Base
   
   def self.get_skill_major_words
     get_configuration("skill", "major_words").config_description_text.split
+  end
+  def self.get_indent_pattern
+    get_configuration("analysis_templates", "indent").value1.gsub(/[\s縲]/, "").split(",").reject{|s| s == ""}
   end
 end
