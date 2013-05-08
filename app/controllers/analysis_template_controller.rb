@@ -116,7 +116,7 @@ class AnalysisTemplateController < ApplicationController
     end # transaction
 
     flash[:notice] = 'AnalysisTemplate was successfully updated.'
-    
+
     redirect_to(params[:back_to] || {:action => :show, :id => @analysis_template})
   rescue ActiveRecord::RecordInvalid
     if @mode == "biz_offer"
