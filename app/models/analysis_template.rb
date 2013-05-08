@@ -67,7 +67,8 @@ class AnalysisTemplate::MailParser
   end
   
   def conditions_body(conditions_key)
-    key_pattern = /^#{Regexp.escape(conditions_key)}/
+    # key_pattern = /^#{conditions_key}/
+    key_pattern = /^#{conditions_key.gsub('(', '(?:')}/
     body = ""
     conditions = []
     
