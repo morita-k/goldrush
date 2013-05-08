@@ -21,7 +21,7 @@ class AnalysisTemplate < ActiveRecord::Base
   def AnalysisTemplate.analyze_content(analysis_template_id, content, models)
     items = AnalysisTemplateItem.find(:all, 
       :conditions => ["deleted = 0 and analysis_template_id = ?", analysis_template_id])
-    mail_parser = MailParser.new(content)
+    mail_parser = MailParser.new(content).add_indent_pattern(SysConfig.get_indent_pattern)
     
     items.each{ |item|
       models.each{ |model|
@@ -61,13 +61,16 @@ class AnalysisTemplate::MailParser
     @indtent_pattern = [/\t/, /\s/, /　/]
   end
   
-  def add_indent_pattern(pattern)
-    @indtent_pattern.push(/#{Regexp.escape(pattern)}/)
+  def add_indent_pattern(patterns)
+    patterns.each { |pattern|
+      @indtent_pattern.push(/#{Regexp.escape(pattern)}/)
+    }
     self
   end
   
   def conditions_body(conditions_key)
-    key_pattern = /^#{Regexp.escape(conditions_key)}/
+    # key_pattern = /^#{conditions_key}/
+    key_pattern = /^#{conditions_key.gsub('(', '(?:')}/
     body = ""
     conditions = []
     
