@@ -148,5 +148,22 @@ class ExpenseApplication < ActiveRecord::Base
     x = Employee.find(:first, :conditions => ["user_id = ?", sales_person_id])
     x && x.employee_name
   end
-
+  
+  # 経費申請区分に応じた入力必須項目リストを返す
+  def ExpenseApplication.required_item_list(type)
+    required_items = case type
+    when 'expense_account_app'
+      ['payment_no']
+    when 'meeting_expenses_app'
+      ['payment_no']
+    when 'fee_expense_app'
+      ['payment_no', 'account_item', 'payment_amount', 'plan_buy_date', 'book_no']
+    when 'temporary_app'
+      ['account_item', 'approximate_amount', 'plan_buy_date']
+    when 'business_trip_app'
+      ['payment_no']
+    else
+      []
+    end
+  end
 end

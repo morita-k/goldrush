@@ -7,7 +7,7 @@
 <%= error_messages_for 'analysis_template' %>
 <table class="show_table">
 <tr>
-  <th><label for="analysis_template_analysis_template_name"><%=getLongName('analysis_templates','analysis_template_name')%></label></th><td><%= text_field 'analysis_template', 'analysis_template_name'  %></td>
+  <th><label for="analysis_template_analysis_template_name"><%=getLongName('analysis_templates','analysis_template_name')%>(*)</label></th><td><%= text_field 'analysis_template', 'analysis_template_name'  %></td>
 </tr>
 <tr>
   <th><label for="analysis_template_analysis_template_type"><%=getLongName('analysis_templates','analysis_template_type')%></label></th><td><%= @analysis_template.analysis_template_type_name %></td>
