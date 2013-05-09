@@ -161,12 +161,12 @@ class ImportMail < ActiveRecord::Base
       end
       r << arr.join("")
     end
+    words = words.uniq.reject{|w|
+      ignores.include?(w.downcase) || w =~ /^\d/ || w.length == 1 # 辞書に存在するか、数字で始まる単語、1文字
+    }
     if body =~ /(^|[^a-zA-Z])(C)([^a-zA-Z#\+]|$)/
       words << $2
     end
-    words = words.uniq.reject{|w|
-      ignores.include?(w.downcase) || w =~ /^\d/ # 辞書に存在するか、数字で始まる単語
-    }
     self.tag_text = words.join(",")
   end
 

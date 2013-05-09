@@ -65,6 +65,7 @@ class ImportMailController < ApplicationController
                               .page(params[:page])
                               .per(current_user.per_page)
                               .order("id desc")
+    @major_words = SysConfig.get_skill_major_words
 =begin    
     @mail_registered_to = {}
     @import_mails.each do |mail|

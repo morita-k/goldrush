@@ -104,4 +104,14 @@ module ImportMailHelper
       end
     end.join(", ")
   end
+
+  def format_only_major_tags(tag_text, words)
+    tag_text.to_s.split(",").map do |x|
+      if words.include?(x)
+        "<strong>#{x}</strong>"
+      else
+        nil
+      end
+    end.compact.join(", ")
+  end
 end

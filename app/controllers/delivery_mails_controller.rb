@@ -68,7 +68,7 @@ class DeliveryMailsController < ApplicationController
           @delivery_mail.save!
           # 添付ファイルの保存
           store_upload_file(@delivery_mail.id)
-	end
+        end
         
         format.html {
           redirect_to url_for(
