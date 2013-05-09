@@ -24,7 +24,10 @@
 <% expense_fields[@expense_application.expense_app_type].each do |field| %>
   <tr>
     <% if field[:field] %>
-      <th width="120"><label for="expense_application_<%=field[:prop]%>"><%= field[:label] || getLongName('expense_applications', field[:prop]) %></label></th>
+      <th width="120"><label for="expense_application_<%=field[:prop]%>"><%= field[:label] || getLongName('expense_applications', field[:prop]) %>
+        <% if ExpenseApplication.required_item_list(@expense_application.expense_app_type).member?(field[:prop]) %>
+          (*)
+        <% end %></label></th>
     <% end %>
     <% if field[:field].blank? %>
     <% elsif field[:field] == 'select' %>
