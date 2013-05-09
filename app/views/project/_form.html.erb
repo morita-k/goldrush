@@ -9,25 +9,25 @@
 <th><label for="project_business_partner_id"><%=getLongName('projects','business_partner_id')%></label></th><td><%= select 'project', 'business_partner_id', @business_partner_select_items %></td>
 </tr>
 <tr>
-<th><label for="project_project_name"><%=getLongName('projects','project_name')%></label></th><td><%= text_field 'project', 'project_name', :size => 60 %></td>
+<th><label for="project_project_name"><%=getLongName('projects','project_name')%>(*)</label></th><td><%= text_field 'project', 'project_name', :size => 60 %></td>
 </tr>
 <tr>
-<th><label for="project_project_short_name"><%=getLongName('projects','project_short_name')%></label></th><td><%= text_field 'project', 'project_short_name', :size => 60 %></td>
+<th><label for="project_project_short_name"><%=getLongName('projects','project_short_name')%>(*)</label></th><td><%= text_field 'project', 'project_short_name', :size => 60 %></td>
 </tr>
 <tr>
-<th><label for="project_project_name_kana"><%=getLongName('projects','project_name_kana')%></label></th><td><%= text_field 'project', 'project_name_kana', :size => 60 %></td>
+<th><label for="project_project_name_kana"><%=getLongName('projects','project_name_kana')%>(*)</label></th><td><%= text_field 'project', 'project_name_kana', :size => 60 %></td>
 </tr>
 <tr>
-<th><label for="project_project_code_name"><%=getLongName('projects','project_code_name')%></label></th><td><%= text_field 'project', 'project_code_name'  %></td>
+<th><label for="project_project_code_name"><%=getLongName('projects','project_code_name')%>(*)</label></th><td><%= text_field 'project', 'project_code_name'  %></td>
 </tr>
 <tr>
 <th><label for="project_pic_id"><%=getLongName('projects','pic_id')%></label></th><td><%= select 'project', 'pic_id', @pic_select_items %></td>
 </tr>
 <tr>
-<th><label for="project_project_start_date"><%=getLongName('projects','project_start_date')%></label></th><td><%= date_field 'project', 'project_start_date'  %></td>
+<th><label for="project_project_start_date"><%=getLongName('projects','project_start_date')%>(*)</label></th><td><%= date_field 'project', 'project_start_date'  %></td>
 </tr>
 <tr>
-<th><label for="project_project_end_date"><%=getLongName('projects','project_end_date')%></label></th><td><%= date_field 'project', 'project_end_date'  %></td>
+<th><label for="project_project_end_date"><%=getLongName('projects','project_end_date')%>(*)</label></th><td><%= date_field 'project', 'project_end_date'  %></td>
 </tr>
 <tr>
 <th><label for="project_order_amount"><%=getLongName('projects','order_amount')%></label></th><td><%= currency_field 'project', 'order_amount'  %></td>
