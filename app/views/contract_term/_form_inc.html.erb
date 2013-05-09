@@ -5,7 +5,7 @@
 <!--[form:contract_term]-->
 <table class="show_table">
 <tr>
-<th><label for="contract_term_contract_type"><%=getLongName('contract_terms','contract_type')%></label></th><td><%= select model_name, 'contract_type', $TYPE_CONDITIONS['contract_type']  %></td>
+<th><label for="contract_term_term_type"><%=getLongName('contract_terms','term_type')%></label></th><td><%= select model_name, 'term_type', $TYPE_CONDITIONS['term_type']  %></td>
 </tr>
 <tr>
 <th><label for="contract_term_payment"><%=getLongName('contract_terms','payment')%></label></th><td><%= text_field model_name, 'payment_view', :size => 6 %>万円</td>
@@ -23,7 +23,7 @@
 <th><label for="contract_term_time_adjust_under"><%=getLongName('contract_terms','time_adjust_under')%></label></th><td><%= text_field model_name, 'time_adjust_under'  %></td>
 </tr>
 <tr>
-<th><label for="contract_term_time_adjust_type"><%=getLongName('contract_terms','time_adjust_type')%></label></th><td><%= select model_name, 'time_adjust_type', [[]] + $TYPE_CONDITIONS['time_adjust_type']  %></td>
+<th><label for="contract_term_time_adjust_type"><%=getLongName('contract_terms','time_adjust_type')%></label></th><td><%= select model_name, 'time_adjust_type', $TYPE_CONDITIONS['time_adjust_type']  %></td>
 </tr>
 <tr>
 <th><label for="contract_term_over_time_payment"><%=getLongName('contract_terms','over_time_payment')%></label></th><td><%= text_field model_name, 'over_time_payment'  %></td>
@@ -35,7 +35,7 @@
 <th><label for="contract_term_cutoff_date"><%=getLongName('contract_terms','cutoff_date')%></label></th><td><%= text_field model_name, 'cutoff_date'  %></td>
 </tr>
 <tr>
-<th><label for="contract_term_time_adjust_type"><%=getLongName('contract_terms','payment_sight_type')%></label></th><td><%= select model_name, 'payment_sight_type', [[]] + $TYPE_CONDITIONS['payment_sight_type']  %></td>
+<th><label for="contract_term_time_adjust_type"><%=getLongName('contract_terms','payment_sight_type')%></label></th><td><%= select model_name, 'payment_sight_type', $TYPE_CONDITIONS['payment_sight_type']  %></td>
 </tr>
 <tr>
 <th><label for="contract_term_contract_end_date"><%=getLongName('contract_terms','contract_end_date')%></label></th><td><%= date_field model_name, 'contract_end_date'  %></td>

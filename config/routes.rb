@@ -16,7 +16,11 @@ GoldRush::Application.routes.draw do
 
   resources :delivery_mail_targets
 
-  resources :users
+  resources :users do
+    member do
+      put 'fixmessage'
+    end
+  end
 
   devise_for :auth, :class_name => User
   # The priority is based upon order of creation:
