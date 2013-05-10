@@ -29,7 +29,7 @@
 <% end %>
 <table class="list_table">
   <tr>
-    <th colspan=7>取り込みメール一覧</th>
+    <th colspan=9>取り込みメール一覧</th>
   </tr>
 <% for import_mail in @import_mails %>
   <tr <%= "bgcolor=lightgray" unless import_mail.wanted? %> id="tr_<%= import_mail.id %>">
@@ -46,11 +46,12 @@
     <td>
       <div style="overflow: hidden;height:1.5em;"><%= raw format_only_major_tags(import_mail.tag_text, @major_words) %></div>
     </td>
+    <td><div style="width:2.5em"><%=import_mail.payment_text %></div></td>
+    <td><div style="width:2.5em"><%=import_mail.age_text %></div></td>
     <td><%=h _time(import_mail.received_at) %></td>
     <td align=center><%=raw '<span title="添付ファイルあり">○</span>' if import_mail.attachment? %></td>
-    
     <td class='flag_container'>
-      <%= build_flag_link("案件", :biz_offer, :biz_offer_flg, import_mail) %>|<%= build_flag_link("人材", :bp_member, :bp_member_flg, import_mail) %>|<%= build_flag_link("不要", :unwanted, :unwanted, import_mail) %>
+      <%= build_flag_link("案", :biz_offer, :biz_offer_flg, import_mail) %>|<%= build_flag_link("人", :bp_member, :bp_member_flg, import_mail) %>|<%= build_flag_link("不", :unwanted, :unwanted, import_mail) %>
     </td>
     
   </tr>
