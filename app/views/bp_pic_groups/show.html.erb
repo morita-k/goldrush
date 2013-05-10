@@ -46,7 +46,7 @@
     <% if @delivery_mail %>
       <%= hidden_field_tag 'delivery_mail_id', @delivery_mail.id %>
       <%= hidden_field_tag 'bp_pic_group_id', @bp_pic_group.id %>
-      <%= submit_tag "メール作成" %>
+      <%= submit_tag "メール送信" %>
       <%= hidden_field_tag :back_to, request_url %>
     <% else %>
       <%= submit_tag "選択した担当者を削除", :confirm => "選択した担当者をリストから削除します。\nよろしいですか？" %>
