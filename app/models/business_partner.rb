@@ -152,4 +152,119 @@ class BusinessPartner < ActiveRecord::Base
     end
   end
 end
+
+  def BusinessPartner.select_content_list
+    Employee.select("id, employee_short_name").map{|content| [content.employee_short_name, content.id]}
+  end
+  
+  # 名刺管理アカウントから出力されたCSVファイルをインポート(google.csv)
+  def BusinessPartner.import_google_csv_data(readable_file, sales_pic_id, prodmode=false)   
+    ActiveRecord::Base.transaction do
+      require 'csv'
+      CSV.parse(NKF.nkf("-w", readable_file)).each {|row|
+        r = nil_2_blank(row)
+        next if /Name/ =~ r[0]
+        # 各データを整形して変数へ代入
+        phone_number = {r[31] => r[32], r[33] => r[34], r[35] => r[36]}
+        email_address = {r[27] => r[28], r[29] => r[30]}
+        
+        pic_data = {
+          :name => r[0],
+          :short_name => r[3],
+          :position => r[49],
+          # :email1 => (StringUtil.to_test_address(email_address.fetch('* Work', "")) unless prodmode),
+          # :email2 => (StringUtil.to_test_address(email_address.fetch('Work', "")) unless prodmode),
+          :email1 => email_address.fetch('* Work', ""),
+          :email2 => email_address.fetch('Work', ""),
+          :mobile => colon_2_comma(phone_number.fetch('Mobile', "")),
+          :pic => sales_pic_id
+        }
+        bp_data = {
+          :company_name => r[47],
+          :url => r[55],
+          :postal_code => get_first(r[43]),
+          :city => get_first(r[39]),
+          :state => get_first(r[42]),
+          :tel => colon_2_comma(phone_number.fetch('Work', "")),
+          :fax => colon_2_comma(phone_number.fetch('Work Fax', ""))
+        }
+        
+        # existing_pic = BpPic.find_by_email1(pic_data[:email1])
+        # existing_bp = BusinessPartner.find_by_business_partner_name(bp_data[:company_name])
+        existing_pic = BpPic.where(:email1 => pic_data[:email1], :deleted => 0).first
+        existing_bp = BusinessPartner.where(:business_partner_name => bp_data[:company_name], :deleted => 0).first
+        
+        if existing_pic != nil
+          update_business_partner(existing_bp, bp_data)
+          update_bp_pic(existing_pic, pic_data)
+        elsif existing_bp != nil
+          update_business_partner(existing_bp, bp_data)
+          update_bp_pic(BpPic.new, pic_data, existing_bp.id)
+        else
+          bp = update_business_partner(BusinessPartner.new, bp_data)
+          update_bp_pic(BpPic.new, pic_data, bp.id)
+        end
+      }
+    end
+  end
+  
+  # helper methods 4 import_google_csv_data
+  def BusinessPartner.get_first(str)
+    first_str = str.split(":::")[0]
+    (first_str.nil? ? "" : first_str).strip
+  end
+  
+  def BusinessPartner.colon_2_comma(str)
+    str.gsub(" ::: ", ", ")
+  end
+  
+  def BusinessPartner.nil_2_blank(string_array)
+    string_array.map{ |str| str == nil ? "" : str }
+  end
+  
+  def BusinessPartner.update_bp_pic(pic_obj, data, bp_id=nil)
+    unless bp_id.nil?
+      pic_obj.business_partner_id = bp_id
+    end
+    pic_obj.bp_pic_name = data[:name]
+    pic_obj.bp_pic_short_name = data[:short_name]
+    pic_obj.bp_pic_name_kana = data[:name]
+    pic_obj.position = data[:position]
+    pic_obj.tel_mobile = data[:mobile]
+    pic_obj.email1 = data[:email1]
+    pic_obj.email2 = data[:email2]
+    pic_obj.sales_pic_id = data[:pic]
+    pic_obj.created_user = 'import'
+    pic_obj.updated_user = 'import'
+    begin
+      pic_obj.save!
+    rescue ActiveRecord::RecordInvalid => e
+      Rails.logger.error e.message + e.backtrace.join("\n") + pic_obj.inspect
+    end
+    pic_obj
+  end
+  
+  def BusinessPartner.update_business_partner(bp_obj, data)
+    bp_obj.business_partner_name = data[:company_name]
+    bp_obj.business_partner_short_name = data[:company_name]
+    bp_obj.business_partner_name_kana = data[:company_name]
+    bp_obj.url = data[:url]
+    bp_obj.zip = data[:postal_code]
+    bp_obj.address1 = data[:state]
+    bp_obj.address2 = data[:city]
+    bp_obj.tel = data[:tel]
+    bp_obj.fax = data[:fax]
+    bp_obj.sales_status_type = 'prospect'
+    bp_obj.upper_flg = 1
+    bp_obj.down_flg = 1
+    bp_obj.created_user = 'import'
+    bp_obj.updated_user = 'import'
+    begin
+      bp_obj.save!
+    rescue ActiveRecord::RecordInvalid => e
+      Rails.logger.error e.message + e.backtrace.join("\n") + bp_obj.inspect
+    end
+    bp_obj
+  end
+
 end

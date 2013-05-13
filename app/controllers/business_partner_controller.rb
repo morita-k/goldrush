@@ -256,6 +256,19 @@ class BusinessPartnerController < ApplicationController
     redirect_to(back_to || {:action => :list})
   end
   
+  def upload_google_csv
+    unless file = params[:google_csv_upload_file]
+      flash[:notice] = 'ファイルを選択してください'
+      redirect_to(back_to || {:action => :list})
+      return
+    end
+    ext = File.extname(file.original_filename.to_s).downcase
+    raise ValidationAbort.new("インポートするファイルは、拡張子がcsvのファイルでなければなりません") if ext != '.csv'
+    BusinessPartner.import_google_csv_data(file.read, params[:sales_pic_id], SysConfig.email_prodmode?)
+    flash[:notice] = 'インポートが完了しました'
+    redirect_to(back_to || {:action => :list})
+  end
+  
   def change_star
     business_partner = BusinessPartner.find(params[:id])
     if business_partner.starred == 1
