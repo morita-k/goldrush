@@ -157,7 +157,7 @@ end
     Employee.select("id, employee_short_name").map{|content| [content.employee_short_name, content.id]}
   end
   
-  # Import data from Google.csv
+  # 名刺管理アカウントから出力されたCSVファイルをインポート(google.csv)
   def BusinessPartner.import_google_csv_data(readable_file, sales_pic_id, prodmode=false)   
     ActiveRecord::Base.transaction do
       require 'csv'
