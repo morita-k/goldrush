@@ -149,7 +149,7 @@ class ImportMail < ActiveRecord::Base
 
   def preprocbody
     require 'zen2han'
-    Zen2Han.toHan(mail_body).gsub(/[\_\-\+\.\w]+@[\-a-z0-9]+(\.[\-a-z0-9]+)*\.[a-z]{2,6}/i, "").gsub(/https?:\/\/\w[\w\.\-\/]+/i,"")
+    Zen2Han.toHan(subject+mail_body).gsub(/[\_\-\+\.\w]+@[\-a-z0-9]+(\.[\-a-z0-9]+)*\.[a-z]{2,6}/i, "").gsub(/https?:\/\/\w[\w\.\-\/]+/i,"")
   end
 
   def detect_ages
