@@ -97,7 +97,7 @@ module ImportMailHelper
   
   def format_tags(tag_text, words)
     tag_text.to_s.split(",").map do |x|
-      if words.include?(x)
+      if words.include?(x.downcase)
         "<strong>#{x}</strong>"
       else
         x
@@ -107,7 +107,7 @@ module ImportMailHelper
 
   def format_only_major_tags(tag_text, words)
     tag_text.to_s.split(",").map do |x|
-      if words.include?(x)
+      if words.include?(x.downcase)
         "<strong>#{x}</strong>"
       else
         nil

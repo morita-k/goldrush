@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
 require 'nkf'
+require 'string_util'
 class ImportMail < ActiveRecord::Base
 
   belongs_to :business_partner
@@ -20,9 +21,9 @@ class ImportMail < ActiveRecord::Base
     end
   end
   
-  # ƒ[ƒ‹‚ğæ‚è‚Ş
-  #  m   : æ‚è‚ŞMailƒIƒuƒWƒFƒNƒg
-  #  src : æ‚è‚Şƒ[ƒ‹‚Ìƒ\[ƒXƒeƒLƒXƒg
+  # ãƒ¡ãƒ¼ãƒ«ã‚’å–ã‚Šè¾¼ã‚€
+  #  m   : å–ã‚Šè¾¼ã‚€Mailã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+  #  src : å–ã‚Šè¾¼ã‚€ãƒ¡ãƒ¼ãƒ«ã®ã‚½ãƒ¼ã‚¹ãƒ†ã‚­ã‚¹ãƒˆ
   def ImportMail.import_mail(m, src)
     ActiveRecord::Base::transaction do
       import_mail = ImportMail.new
@@ -43,32 +44,32 @@ class ImportMail < ActiveRecord::Base
       import_mail.message_source = src
       import_mail.message_id = m.message_id
       
-      # attempt_file‚Ì‚½‚ß(import_mail_id‚ª•K—v)‚Éˆê’U“o˜^
+      # attempt_fileã®ãŸã‚(import_mail_idãŒå¿…è¦)ã«ä¸€æ—¦ç™»éŒ²
       import_mail.save!
       
-      # “Y•tƒtƒ@ƒCƒ‹‚ª‚È‚¯‚ê‚ÎˆÄŒA‚ ‚ê‚ÎlŞ‚ÆŠ„‚èØ‚é
+      # æ·»ä»˜ãƒ•ã‚¡ã‚¤ãƒ«ãŒãªã‘ã‚Œã°æ¡ˆä»¶ã€ã‚ã‚Œã°äººæã¨å‰²ã‚Šåˆ‡ã‚‹
       import_mail.biz_offer_flg = 1
       import_mail.bp_member_flg = 0
-      #---------- mail_body ‚±‚±‚©‚ç ----------
+      #---------- mail_body ã“ã“ã‹ã‚‰ ----------
       if m.multipart?
-        # ƒp[ƒg‚É•ª‚©‚ê‚Ä‚¢‚é(=•ÔMŒ³ƒ[ƒ‹‚â“Y•tƒtƒ@ƒCƒ‹‚ª‘¶İ‚µ‚Ä‚¢‚é)ê‡
+        # ãƒ‘ãƒ¼ãƒˆã«åˆ†ã‹ã‚Œã¦ã„ã‚‹(=è¿”ä¿¡å…ƒãƒ¡ãƒ¼ãƒ«ã‚„æ·»ä»˜ãƒ•ã‚¡ã‚¤ãƒ«ãŒå­˜åœ¨ã—ã¦ã„ã‚‹)å ´åˆ
         m.parts.each do |part|
           if part.content_type.include?('multipart/alternative')
-            # multipart/alternative‚Ìê‡Aƒ[ƒ‹–{•¶‚ÌŠÜ‚Ü‚ê‚éƒp[ƒg‚È‚Ì‚ÅA‚³‚ç‚É‚»‚Ì’†‚Ìƒp[ƒg‚ğ’²‚×‚éB
+            # multipart/alternativeã®å ´åˆã€ãƒ¡ãƒ¼ãƒ«æœ¬æ–‡ã®å«ã¾ã‚Œã‚‹ãƒ‘ãƒ¼ãƒˆãªã®ã§ã€ã•ã‚‰ã«ãã®ä¸­ã®ãƒ‘ãƒ¼ãƒˆã‚’èª¿ã¹ã‚‹ã€‚
             part.parts.each do |ppart|
               if ppart.content_type == 'text/plain'
-                # text/plain‚Ìê‡Aƒ[ƒ‹–{•¶i•ÔM‚¾‚Æ“Y•tƒtƒ@ƒCƒ‹‚Ì‰Â”\«‚àEEEjB
+                # text/plainã®å ´åˆã€ãƒ¡ãƒ¼ãƒ«æœ¬æ–‡ï¼ˆè¿”ä¿¡ã ã¨æ·»ä»˜ãƒ•ã‚¡ã‚¤ãƒ«ã®å¯èƒ½æ€§ã‚‚ãƒ»ãƒ»ãƒ»ï¼‰ã€‚
                 import_mail.mail_body = get_encode_body(m, ppart.body)
                 break
               end # ppart.content_type == 'text/plain'
             end # part.parts.each do
             if import_mail.mail_body.blank?
-              # ƒ[ƒ‹–{•¶‚É‚Ü‚¾‰½‚à‘ã“ü‚³‚ê‚Ä‚È‚¢(=ƒvƒŒ[ƒ“ƒeƒLƒXƒg‚ª‚È‚©‚Á‚½)ê‡A
-              # Å‰‚Ìbody‚Ì’l‚ğƒGƒ“ƒR[ƒh‚µ‚Ä‘ã“ü‚·‚é
+              # ãƒ¡ãƒ¼ãƒ«æœ¬æ–‡ã«ã¾ã ä½•ã‚‚ä»£å…¥ã•ã‚Œã¦ãªã„(=ãƒ—ãƒ¬ãƒ¼ãƒ³ãƒ†ã‚­ã‚¹ãƒˆãŒãªã‹ã£ãŸ)å ´åˆã€
+              # æœ€åˆã®bodyã®å€¤ã‚’ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰ã—ã¦ä»£å…¥ã™ã‚‹
               import_mail.mail_body = get_encode_body(m, part.parts[0].body)
             end # import_mail.mail_body.blank?
           elsif !part.filename.blank?
-            # filename‚ª‚ ‚é = “Y•tƒtƒ@ƒCƒ‹
+            # filenameãŒã‚ã‚‹ = æ·»ä»˜ãƒ•ã‚¡ã‚¤ãƒ«
             upfile = part.body.decoded
             #part.base64_decode
             file_name = part.filename.to_s
@@ -78,18 +79,18 @@ class ImportMail < ActiveRecord::Base
             import_mail.biz_offer_flg = 0
             import_mail.bp_member_flg = 1
           elsif part.content_type.include?('text/plain')
-            # “Y•tƒtƒ@ƒCƒ‹‚Å‚È‚­text/plain‚Ìê‡Aƒ[ƒ‹–{•¶B
-            # ã‘‚«‚³‚ê‚é‰Â”\«‚ ‚èH
+            # æ·»ä»˜ãƒ•ã‚¡ã‚¤ãƒ«ã§ãªãtext/plainã®å ´åˆã€ãƒ¡ãƒ¼ãƒ«æœ¬æ–‡ã€‚
+            # ä¸Šæ›¸ãã•ã‚Œã‚‹å¯èƒ½æ€§ã‚ã‚Šï¼Ÿ
             import_mail.mail_body = get_encode_body(m, part.body)
           else
-            # multipart/alternative‚Å‚àƒtƒ@ƒCƒ‹‚Å‚àtext/plain‚Å‚à‚È‚¢ê‡‚Í‰½‚à‚µ‚È‚¢i‚ ‚è‚¦‚È‚¢Hj
+            # multipart/alternativeã§ã‚‚ãƒ•ã‚¡ã‚¤ãƒ«ã§ã‚‚text/plainã§ã‚‚ãªã„å ´åˆã¯ä½•ã‚‚ã—ãªã„ï¼ˆã‚ã‚Šãˆãªã„ï¼Ÿï¼‰
           end
         end # m.parts.each do
       else
-        # ƒp[ƒg‚É•ª‚©‚ê‚Ä‚¢‚È‚¯‚ê‚ÎAbody‚ğ‚»‚Ì‚Ü‚ÜƒGƒ“ƒR[ƒh‚µ‚Ä‘ã“ü‚·‚é
+        # ãƒ‘ãƒ¼ãƒˆã«åˆ†ã‹ã‚Œã¦ã„ãªã‘ã‚Œã°ã€bodyã‚’ãã®ã¾ã¾ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰ã—ã¦ä»£å…¥ã™ã‚‹
         import_mail.mail_body = get_encode_body(m, m.body)
       end # m.multipart?
-      #---------- mail_body ‚±‚±‚Ü‚Å ----------
+      #---------- mail_body ã“ã“ã¾ã§ ----------
       import_mail.created_user = 'import_mail'
       import_mail.updated_user = 'import_mail'
       import_mail.save!
@@ -124,12 +125,12 @@ class ImportMail < ActiveRecord::Base
     end
   end
   
-  # æ‚è‚İƒ[ƒ‹‚É•R‚Ã‚­æˆøæ‚ğæ“¾‚·‚é
+  # å–ã‚Šè¾¼ã¿ãƒ¡ãƒ¼ãƒ«ã«ç´ã¥ãå–å¼•å…ˆã‚’å–å¾—ã™ã‚‹
   def get_bizp(id)
     return BusinessPartner.find(id)
   end
   
-  # æ‚è‚İƒ[ƒ‹‚É•R‚Ã‚­æˆøæ’S“–‚ğæ“¾‚·‚é
+  # å–ã‚Šè¾¼ã¿ãƒ¡ãƒ¼ãƒ«ã«ç´ã¥ãå–å¼•å…ˆæ‹…å½“ã‚’å–å¾—ã™ã‚‹
   def get_bpic(id)
     return BpPic.find(id)
   end
@@ -146,15 +147,36 @@ class ImportMail < ActiveRecord::Base
     end
   end
 
-  def make_tags
-    require 'string_util'
+  def preprocbody
     require 'zen2han'
-    body = Zen2Han.toHan(mail_body).gsub(/[\_\-\+\.\w]+@[\-a-z0-9]+(\.[\-a-z0-9]+)*\.[a-z]{2,6}/i, "").gsub(/https?:\/\/\w[\w\.\-\/]+/i,"")
+    Zen2Han.toHan(mail_subject+mail_body).gsub(/[\_\-\+\.\w]+@[\-a-z0-9]+(\.[\-a-z0-9]+)*\.[a-z]{2,6}/i, "").gsub(/https?:\/\/\w[\w\.\-\/]+/i,"")
+  end
+
+  def detect_ages
+    detect_ages_in(preprocbody)
+  end
+
+  def detect_ages_in(body)
+    StringUtil.detect_regex(body, /[0-9]+[æ‰æ­³]/).sort.reverse.first.to_s.gsub("æ‰","æ­³")
+  end
+
+  def detect_payments
+    detect_payments_in(preprocbody)
+  end
+
+  def detect_payments_in(body)
+    StringUtil.detect_regex(body, /[0-9]+[ä¸‡]/).sort.reverse.first
+  end
+
+  def make_tags
+    body = preprocbody
+    self.age_text = detect_ages_in(body)
+    self.payment_text = detect_payments_in(body)
     words = StringUtil.detect_words(body).inject([]) do |r,item|
       arr = item.split(" ")
-      arr.each do |w| # ƒXƒy[ƒX‚Å•ªŠ„
-        StringUtil.splitplus(w).each do |ww| # +‚Å•ªŠ„
-          StringUtil.breaknum(ww).each do |www| # ”š‚Ì‘OŒã‚Å•ªŠ„(”š‚Ì‚İ‚Í”rœ)
+      arr.each do |w| # ã‚¹ãƒšãƒ¼ã‚¹ã§åˆ†å‰²
+        StringUtil.splitplus(w).each do |ww| # +ã§åˆ†å‰²
+          StringUtil.breaknum(ww).each do |www| # æ•°å­—ã®å‰å¾Œã§åˆ†å‰²(æ•°å­—ã®ã¿ã¯æ’é™¤)
             r << www
           end
         end
@@ -162,7 +184,7 @@ class ImportMail < ActiveRecord::Base
       r << arr.join("")
     end
     words = words.uniq.reject{|w|
-      ignores.include?(w.downcase) || w =~ /^\d/ || w.length == 1 # «‘‚É‘¶İ‚·‚é‚©A”š‚Ån‚Ü‚é’PŒêA1•¶š
+      ignores.include?(w.downcase) || w =~ /^\d/ || w.length == 1 # è¾æ›¸ã«å­˜åœ¨ã™ã‚‹ã‹ã€æ•°å­—ã§å§‹ã¾ã‚‹å˜èªã€1æ–‡å­—
     }
     if body =~ /(^|[^a-zA-Z])(C)([^a-zA-Z#\+]|$)/
       words << $2
@@ -178,6 +200,15 @@ class ImportMail < ActiveRecord::Base
   def ImportMail.analyze_tags
     where(:deleted => 0).each do |mail|
       mail.make_tags!
+      mail.save!
+    end
+  end
+
+  def ImportMail.analyze_others
+    where(:deleted => 0).each do |mail|
+      body = mail.preprocbody
+      mail.age_text = mail.detect_ages_in(body)
+      mail.payment_text = mail.detect_payments_in(body)
       mail.save!
     end
   end
@@ -202,7 +233,7 @@ private
     elsif mail.content_transfer_encoding == 'UTF-8'
       return body
     else
-      # ‚»‚Ì‚Ù‚©‚Í
+      # ãã®ã»ã‹ã¯
       return NKF.nkf('-w', body.to_s)
     end
   end

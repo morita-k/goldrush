@@ -5,7 +5,7 @@ class Employee < ActiveRecord::Base
   belongs_to :user
   belongs_to :department
   
-  validates_presence_of     :insurance_code, :employee_code, :employee_name, :employee_kana_name, :birthday_date, :entry_date
+  validates_presence_of     :insurance_code, :employee_code, :employee_name, :employee_kana_name, :employee_short_name, :birthday_date, :entry_date
   validates_uniqueness_of   :insurance_code, :employee_code
   validates_numericality_of :insurance_code, :employee_code, :on => :create
   

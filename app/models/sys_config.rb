@@ -216,7 +216,7 @@ class SysConfig < ActiveRecord::Base
   end
   
   def self.get_skill_major_words
-    get_configuration("skill", "major_words").config_description_text.split
+    get_configuration("skill", "major_words").config_description_text.downcase.split
   end
   def self.get_indent_pattern
     get_configuration("analysis_templates", "indent").value1.gsub(/[\s　]/, "").split(",").reject{|s| s == ""}
