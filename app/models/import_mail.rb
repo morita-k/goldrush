@@ -149,7 +149,7 @@ class ImportMail < ActiveRecord::Base
 
   def preprocbody
     require 'zen2han'
-    Zen2Han.toHan(subject+mail_body).gsub(/[\_\-\+\.\w]+@[\-a-z0-9]+(\.[\-a-z0-9]+)*\.[a-z]{2,6}/i, "").gsub(/https?:\/\/\w[\w\.\-\/]+/i,"")
+    Zen2Han.toHan(mail_subject+mail_body).gsub(/[\_\-\+\.\w]+@[\-a-z0-9]+(\.[\-a-z0-9]+)*\.[a-z]{2,6}/i, "").gsub(/https?:\/\/\w[\w\.\-\/]+/i,"")
   end
 
   def detect_ages
@@ -157,8 +157,7 @@ class ImportMail < ActiveRecord::Base
   end
 
   def detect_ages_in(body)
-    StringUtil.detect_regex(body, /[0-9]+[才歳]/).sort.reverse.first
-
+    StringUtil.detect_regex(body, /[0-9]+[才歳]/).sort.reverse.first.to_s.gsub("才","歳")
   end
 
   def detect_payments
@@ -207,9 +206,9 @@ class ImportMail < ActiveRecord::Base
 
   def ImportMail.analyze_others
     where(:deleted => 0).each do |mail|
-      body = preprocbody
-      self.age_text = detect_ages_in(body)
-      self.payment_text = detect_payments_in(body)
+      body = mail.preprocbody
+      mail.age_text = mail.detect_ages_in(body)
+      mail.payment_text = mail.detect_payments_in(body)
       mail.save!
     end
   end
