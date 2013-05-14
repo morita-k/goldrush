@@ -80,7 +80,6 @@
 <%= form_tag({:action => 'upload_google_csv'} , {:multipart => true}) do %>
   <p>Googleアカウントより担当者のリストをインポート</p>  
   <%= file_field_tag 'google_csv_upload_file' %><%= submit_tag 'インポート', :onclick => "if($('#google_csv_upload_file').val()==''){alert('ファイルを選択してください');return false;}else if($('#parson_in_charge').val()==''){alert('担当者を選択してください');return false;}else{if(!confirm('リストをインポートします。よろしいですか？')){return false;}}" %>
-  <p>担当者: <%= select_tag 'sales_pic_id', options_for_select(BusinessPartner.select_content_list), :include_blank => true %></p>
 <% end %>
 <% if popup? %>
 <script type="text/javascript">

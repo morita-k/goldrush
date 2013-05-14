@@ -115,4 +115,12 @@ class Employee < ActiveRecord::Base
     monthes = base_date.month - enday.month
     return years * 12 + monthes
   end
+  
+  def Employee.map_for_googleimport
+    res = {}
+    where(:deleted => 0).each do |emp|
+      res[emp.employee_short_name] = emp.user_id
+    end
+    res
+  end
 end
