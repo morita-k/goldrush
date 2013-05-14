@@ -27,6 +27,15 @@
   <th><%= getLongName('bp_pics', 'email2') %></th><td><%=h @bp_pic.email2 %></td>
 </tr>
 <tr>
+  <th><%= getLongName('bp_pics', 'contact_date') %></th><td><%=@bp_pic.contact_date %></td>
+</tr>
+<tr>
+  <th><%= getLongName('bp_pics', 'sales_pic_id') %></th><td><%=@bp_pic.sales_pic_name(@bp_pic.sales_pic_id) %></td>
+</tr>
+<tr>
+  <th><%= getLongName('bp_pics', 'contact_mail_flg') %></th><td><%=@bp_pic.contact_mail_status(@bp_pic.contact_mail_flg) %></td>
+</tr>
+<tr>
   <th><%= getLongName('bp_pics', 'memo') %></th><td><%=simple_format(h @bp_pic.memo) %></td>
 </tr>
 </table>
