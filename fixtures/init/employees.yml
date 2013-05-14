@@ -49,7 +49,7 @@ employees_1:
   account_name: ""
   active_date: 
   inactive_date: 
-  leave_day: 
+  leave_day: 0
   active_flg: 0
   approver_flg: 0
   credit_card_flg: 0
