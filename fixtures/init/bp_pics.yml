@@ -1,0 +1,220 @@
+bp_pics_1:
+  id: 1
+  owner_id: 
+  business_partner_id: 1
+  bp_pic_name: "田中 恵次"
+  bp_pic_short_name: "田中"
+  bp_pic_name_kana: "タナカ ケイジ"
+  depertment: "HRC"
+  position: "部長"
+  tel_direct: ""
+  tel_mobile: ""
+  email1: "tanaka-k@applicative.jp"
+  email2: "tanaka-k@sharingss.com"
+  import_mail_id: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+bp_pics_2:
+  id: 2
+  owner_id: 
+  business_partner_id: 1
+  bp_pic_name: "井原 研一"
+  bp_pic_short_name: "井原"
+  bp_pic_name_kana: "イハラ ケンイチ"
+  depertment: "HRC"
+  position: ""
+  tel_direct: ""
+  tel_mobile: ""
+  email1: "ihara-k@applicative.jp"
+  email2: "ihara-k@sharingss.com"
+  import_mail_id: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+bp_pics_3:
+  id: 3
+  owner_id: 
+  business_partner_id: 2
+  bp_pic_name: "志賀 俊彦"
+  bp_pic_short_name: "志賀"
+  bp_pic_name_kana: "シガ トシヒコ"
+  depertment: "HRC"
+  position: ""
+  tel_direct: ""
+  tel_mobile: ""
+  email1: "shiga-t@sharingss.com"
+  email2: "shiga-t@applicative.jp"
+  import_mail_id: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+bp_pics_4:
+  id: 4
+  owner_id: 
+  business_partner_id: 2
+  bp_pic_name: "佐藤 一実"
+  bp_pic_short_name: "佐藤"
+  bp_pic_name_kana: "サトウ カズミ"
+  depertment: "HRC"
+  position: ""
+  tel_direct: ""
+  tel_mobile: ""
+  email1: "satou-k@sharingss.com"
+  email2: "satou-k@applicative.jp"
+  import_mail_id: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+bp_pics_5:
+  id: 5
+  owner_id: 
+  business_partner_id: 3
+  bp_pic_name: "鶴岡 崇"
+  bp_pic_short_name: "鶴岡"
+  bp_pic_name_kana: "ツルオカ タカシ"
+  depertment: "HRC"
+  position: ""
+  tel_direct: ""
+  tel_mobile: "090-1534-4937"
+  email1: "t_tsuruoka@enzantrades.co.jp"
+  email2: ""
+  import_mail_id: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+bp_pics_6:
+  id: 6
+  owner_id: 
+  business_partner_id: 4
+  bp_pic_name: "篠田 和典"
+  bp_pic_short_name: "篠田"
+  bp_pic_name_kana: "シノダ　カズノリ"
+  depertment: ""
+  position: ""
+  tel_direct: "03-6226-0970"
+  tel_mobile: "090-6048-9529"
+  email1: "kazunori.shinoda@futureantiques.co.jp"
+  email2: ""
+  import_mail_id: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+bp_pics_7:
+  id: 7
+  owner_id: 
+  business_partner_id: 5
+  bp_pic_name: "奈良　英人"
+  bp_pic_short_name: "奈良"
+  bp_pic_name_kana: "ナラ ヒデオ"
+  depertment: ""
+  position: ""
+  tel_direct: ""
+  tel_mobile: "080-5913-9627"
+  email1: "nara@asgard.jpn.com"
+  email2: ""
+  import_mail_id: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+bp_pics_8:
+  id: 8
+  owner_id: 
+  business_partner_id: 6
+  bp_pic_name: "西田　頌平"
+  bp_pic_short_name: "西田"
+  bp_pic_name_kana: "ニシダ ショウヘイ"
+  depertment: ""
+  position: ""
+  tel_direct: ""
+  tel_mobile: "090-2662-4198"
+  email1: "syohei.nishida@acro-net.com"
+  email2: ""
+  import_mail_id: 
+  memo: 外出していることが多いため携帯にご連絡お願いします。
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+bp_pics_9:
+  id: 9
+  owner_id: 
+  business_partner_id: 7
+  bp_pic_name: "木住野　晃史"
+  bp_pic_short_name: "木住野"
+  bp_pic_name_kana: "キシノコウジ"
+  depertment: ""
+  position: "営業担当"
+  tel_direct: ""
+  tel_mobile: "080-3406-1131"
+  email1: "kishino@mytec-software.co.jp"
+  email2: ""
+  import_mail_id: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+bp_pics_10:
+  id: 10
+  owner_id: 
+  business_partner_id: 8
+  bp_pic_name: "上田徳二"
+  bp_pic_short_name: "上田"
+  bp_pic_name_kana: "ウエダトクジ"
+  depertment: ""
+  position: ""
+  tel_direct: ""
+  tel_mobile: "090-9313-8642"
+  email1: "tokuni.ueda@global-thinking.com"
+  email2: ""
+  import_mail_id: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
