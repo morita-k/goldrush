@@ -12,7 +12,17 @@
  *= require_self
  */
 
+.field_with_errors input {
+  background-color:pink;
+}
+
 table td input[type="text"] {
+  width:80%;
+  margin: 0 0 0 0;
+  padding: 0 0 0 0;
+}
+
+table td input[type="email"] {
   width:80%;
   margin: 0 0 0 0;
   padding: 0 0 0 0;
@@ -96,6 +106,22 @@ table.show_table td {
   border: #808080 1px solid;
 }
 table.show_table th {
+  text-align: left;
+  width: 25%;
+  border: #808080 1px solid;
+  background-color: #F0BB8C
+}
+
+table.form_table {
+  margin-top: 2em;
+  border-collapse: collapse;
+  border-spacing: 0px;
+  width: 97%;
+}
+table.form_table td {
+  border: #808080 1px solid;
+}
+table.form_table th {
   text-align: left;
   width: 25%;
   border: #808080 1px solid;
