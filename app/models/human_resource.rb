@@ -13,4 +13,11 @@ class HumanResource < ActiveRecord::Base
   def change_status_type
     
   end
+  
+  def make_skill_tags!
+    require 'string_util'
+    words = StringUtil.detect_words(skill)
+    Tag.update_tags!("human_resources", id, words.join(","))
+    self.skill_tag = words.join(",")
+  end
 end

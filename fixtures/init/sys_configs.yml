@@ -862,3 +862,135 @@ sys_configs_54:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
+sys_configs_55:
+  id: 55
+  owner_id: 
+  config_section: "skill"
+  config_key: "major_words"
+  value1: ""
+  value2: ""
+  value3: ""
+  config_description_text: "Access
+AccessVBA
+ActiveDirectory
+Ajax
+AIX
+Android
+Apache
+AS400
+ASP
+ASP.NET
+BI
+C#
+C#.NET
+C++
+CCNA
+CentOS
+Cisco
+Citrix
+COBOL
+CSS
+CSS3
+DB
+DB2
+DBA
+DWH
+Delphi
+Eclipse
+Excel
+Exchange
+Fedora
+HP-UX
+HTML
+HTML5
+IIS
+Illustrator
+iOS
+iphone
+Java
+JavaScript
+JCL
+JP1
+JQuery
+JSP
+JUnit
+KVS
+L2
+L3
+LAMP
+Linux
+LPIC
+MySQL
+NW
+Objective-C
+Oracle
+Photoshop
+PHP
+PL
+PostgreSQL
+PowerPoint
+Rails
+RHEL
+RPG
+Ruby
+SAP
+Seasar
+shell
+Solaris
+SQL
+SQLServer
+Struts
+TOEIC
+Tomcat
+Unity
+UNIX
+VB
+VB.NET
+VBA
+VC++
+VMWare
+web
+Weblogic
+Word "
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+sys_configs_56:
+  id: 56
+  owner_id: 
+  config_section: "analysis_templates"
+  config_key: "indent"
+  value1: "※"
+  value2: ""
+  value3: ""
+  config_description_text: "カンマ区切りで指定
+全半角空白は無視される
+正規表現でない"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+sys_configs_57:
+  id: 57
+  owner_id: 
+  config_section: "business_partners"
+  config_key: "prodmode"
+  value1: "1"
+  value2: ""
+  value3: ""
+  config_description_text: "本番環境では1。それ以外はレコードなし。
+データ取り込み時にメールアドレスをテスト用に変換するロジックをOFFにする"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0

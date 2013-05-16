@@ -4,7 +4,11 @@
     <tr>
       <td><%= column_name[1] %>(<%= column_name[0] %>)</td>
       <td><%= text_field_tag "analysis_template_item_#{table_name}_#{column_name[0]}_analysis_template_item_name", item.analysis_template_item_name ||= column_name[1] %></td>
-      <td><%= text_field_tag "analysis_template_item_#{table_name}_#{column_name[0]}_pattern", item.pattern %></td>
+      <td><%= text_field_tag "analysis_template_item_#{table_name}_#{column_name[0]}_pattern", item.pattern %>
+        <% if item.pattern != nil && !AnalysisTemplateItem.correct_regex(item.pattern) %>
+          <%= 'Invalid Regex' %>
+        <% end %>
+      </td>
       <td><%= check_box_tag "analysis_template_item_#{table_name}_#{column_name[0]}_ignore_flg", 1, (item.ignore_flg == 1), :title => "改行無視フラグ" %></td>
     </tr>
     <%= hidden_field_tag "analysis_template_item_#{table_name}_#{column_name[0]}_target_column_name", column_name[0] %>

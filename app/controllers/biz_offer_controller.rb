@@ -87,6 +87,9 @@ class BizOfferController < ApplicationController
       @business.save!
       @biz_offer.business_id = @business.id
 
+      @business.make_skill_tags!
+      @business.save!
+
       if date = DateTimeUtil.str_to_date(params[:biz_offer][:biz_offered_at])
         @biz_offer.biz_offered_at = Time.local(date.year, date.month, date.day, params[:biz_offered_at_hour].to_i, params[:biz_offered_at_minute].to_i)
       end
@@ -145,7 +148,7 @@ class BizOfferController < ApplicationController
 
   def update
     @calendar = true
-    BizOffer.transaction do
+    ActiveRecord::Base.transaction do
       @business = Business.find(params[:business_id], :conditions =>["deleted = 0"])
       @biz_offer = BizOffer.find(params[:id], :conditions =>["deleted = 0"])
       @business.attributes = params[:business]
@@ -154,6 +157,7 @@ class BizOfferController < ApplicationController
         @business.issue_datetime = Time.local(date.year, date.month, date.day, params[:issue_datetime_hour].to_i, params[:issue_datetime_minute].to_i)
       end
       
+      @business.make_skill_tags!
       set_user_column @business
       @business.save!
       

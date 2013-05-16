@@ -12,7 +12,7 @@ class TagJournal < ActiveRecord::Base
     tj.save!
   end
 
-  def TagJournal.summry_tags
+  def TagJournal.summry_tags!
     fetch_key = "summry_tags " + Time.now.to_s + " " + rand().to_s
     # 他のプロセスと更新がかぶらないようにする
     TagJournal.update_all("summary_status_type = 'fetched', updated_user = '#{fetch_key}' ", "summary_status_type = 'new'")

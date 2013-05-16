@@ -2,14 +2,15 @@
 
 <h2><%=getLongName('table_name','businesses')%>情報</h2>
 <%= render :partial => 'business/show' %>
-<%= back_to_link '照会に追加', :action => 'new', :business_id => @business %>
+<%= back_to_link '別照会を追加', :action => 'new', :business_id => @business %>
 <p></p>
 
 <h2><%=getLongName('table_name','biz_offers')%>情報</h2>
 <%= render :partial => 'biz_offer/show' %>
 <%= back_to_link '編集', :action => 'edit', :id => @biz_offer %> |
 <% if !@biz_offer.import_mail_id.blank? %>
-  <%= back_to_link '解析テンプレートで再解析を行う', {:controller => 'analysis_template', :action => 'list', :mode => 'biz_offer', :target_id => @biz_offer.id, :import_mail_id => @biz_offer.import_mail_id}, :popup => ['new_window', 'height=800,width=900', 'scrollbars=yes'], :confirm => '解析された項目は上書きされますがよろしいですか？' %> | 
+  <%= link_to '解析元メールを見る', "#", :onclick => "disp_wide('#{url_for({:controller => 'import_mail', :action => 'show', :id => @biz_offer.import_mail_id, :popup => 1})}');return false;" %> | 
+  <%= link_to '解析テンプレートで再解析を行う', "#", :onclick => "disp_wide('#{url_for({:controller => 'analysis_template', :action => 'list', :mode => 'biz_offer', :target_id => @biz_offer.id, :import_mail_id => @biz_offer.import_mail_id, :popup => 1})}');return false;" %> | 
 <% end %>
 <%= link_or_back '戻る', :action => 'list' %>
 <p></p>

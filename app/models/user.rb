@@ -28,6 +28,14 @@ class User < ActiveRecord::Base
     return now
   end
 
+  def zone_at(at)
+    org = Time.zone
+    Time.zone = zone
+    now = Time.zone.at(at)
+    Time.zone = org
+    return now
+  end
+
   def create_login             
     self.login = self.email
     self.access_level_type = 'normal'

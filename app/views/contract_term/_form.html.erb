@@ -3,8 +3,8 @@
 
 <!--[form:contract_term]-->
 
-<p><label for="contract_term_contract_type"><%=getLongName('contract_terms','contract_type')%></label><br />
-<%= select 'contract_term', 'contract_type', $TYPE_CONDITIONS['contract_type']  %>
+<p><label for="contract_term_term_type"><%=getLongName('contract_terms','term_type')%></label><br />
+<%= select 'contract_term', 'term_type', $TYPE_CONDITIONS['term_type']  %>
 </p>
 
 
@@ -19,7 +19,7 @@
 <p><label for="contract_term_time_adjust_under"><%=getLongName('contract_terms','time_adjust_under')%></label><br /><%= text_field 'contract_term', 'time_adjust_under'  %></p>
 
 <p><label for="contract_term_time_adjust_type"><%=getLongName('contract_terms','time_adjust_type')%></label><br />
-<%= select model_name, 'time_adjust_type', [[]] + $TYPE_CONDITIONS['time_adjust_type']  %>
+<%= select model_name, 'time_adjust_type', $TYPE_CONDITIONS['time_adjust_type']  %>
 </p>
 
 <p><label for="contract_term_over_time_payment"><%=getLongName('contract_terms','over_time_payment')%></label><br /><%= text_field 'contract_term', 'over_time_payment'  %></p>
@@ -29,7 +29,7 @@
 <p><label for="contract_term_cutoff_date"><%=getLongName('contract_terms','cutoff_date')%></label><br /><%= text_field 'contract_term', 'cutoff_date'  %></p>
 
 <p><label for="contract_term_time_adjust_type"><%=getLongName('contract_terms','payment_sight_type')%></label><br />
-<%= select model_name, 'payment_sight_type', [[]] + $TYPE_CONDITIONS['payment_sight_type']  %>
+<%= select model_name, 'payment_sight_type', $TYPE_CONDITIONS['payment_sight_type']  %>
 </p>
 
 <p><label for="contract_term_contract_end_date"><%=getLongName('contract_terms','contract_end_date')%></label><br /><%= date_field 'contract_term', 'contract_end_date'  %></p>

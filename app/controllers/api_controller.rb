@@ -26,7 +26,11 @@ class ApiController < ApplicationController
 
   def import_mail_pop3
     ImportMail.import
-    render :text => 'REQUEST OK!'
+    if params[:back_to]
+      redirect_to params[:back_to]
+    else
+      render :text => 'REQUEST OK!'
+    end
   end
   
   def import_mail
@@ -39,6 +43,26 @@ class ApiController < ApplicationController
     DeliveryMail.send_mails
     
     render :text => 'REQUEST OK!'
+  end
+
+  def analyze_tags
+    ImportMail.analyze_tags
+
+    if params[:back_to]
+      redirect_to params[:back_to], :notice => "Analyze tags successfully finished."
+    else
+      render :text => 'REQUEST OK!'
+    end
+  end
+
+  def summry_tags
+    TagJournal.summry_tags!
+
+    if params[:back_to]
+      redirect_to params[:back_to]
+    else
+      render :text => 'REQUEST OK!'
+    end
   end
 
 end

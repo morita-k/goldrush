@@ -9,9 +9,15 @@ class SysConfig < ActiveRecord::Base
   validates_length_of :value2, :maximum=>255, :allow_blank => true
   validates_length_of :value3, :maximum=>255, :allow_blank => true
   
+  after_save :purge_cache
+  
+  def purge_cache
+    SysConfig.purge_cache
+  end
+  
   @@cache = nil
 
-  # カラム名を受け取ってそれがシステムカラムなのかを返す
+  # 繧ｫ繝ｩ繝蜷阪ｒ蜿励￠蜿悶▲縺ｦ縺昴ｌ縺後す繧ｹ繝�繝繧ｫ繝ｩ繝縺ｪ縺ｮ縺九ｒ霑斐☆
   def SysConfig.system_columns
     ['created_at','updated_at','lock_version','created_user','updated_user','deleted_at','deleted']
   end
@@ -75,8 +81,9 @@ class SysConfig < ActiveRecord::Base
   def self.get_configuration(section, key)
     load_cache unless @@cache
     @@cache.each do |conf|
-      break conf if conf.config_section == section and conf.config_key == key
+      return conf if conf.config_section == section and conf.config_key == key
     end
+    return nil
 #    SysConfig.find(:first, :conditions => ["deleted = 0 and config_section = ? and config_key = ?", section, key])
   end
 
@@ -205,6 +212,13 @@ class SysConfig < ActiveRecord::Base
   end
 
   def self.email_prodmode?
-    get_config("business_partners", "prodmode")
+    get_configuration("business_partners", "prodmode")
+  end
+  
+  def self.get_skill_major_words
+    get_configuration("skill", "major_words").config_description_text.downcase.split
+  end
+  def self.get_indent_pattern
+    get_configuration("analysis_templates", "indent").value1.gsub(/[\s縲]/, "").split(",").reject{|s| s == ""}
   end
 end

@@ -9,15 +9,9 @@
 <p><label for="sys_config_value1"><%=getLongName('sys_configs','value1')%></label><br /><%= text_field 'sys_config', 'value1'  %></p>
 <p><label for="sys_config_value2"><%=getLongName('sys_configs','value2')%></label><br /><%= text_field 'sys_config', 'value2'  %></p>
 <p><label for="sys_config_value3"><%=getLongName('sys_configs','value3')%></label><br /><%= text_field 'sys_config', 'value3'  %></p>
-<!--
-<p><label for="sys_config_created_at"><%=getLongName('sys_configs','created_at')%></label><br /><%= datetime_select 'sys_config', 'created_at'  %></p>
-<p><label for="sys_config_updated_at"><%=getLongName('sys_configs','updated_at')%></label><br /><%= datetime_select 'sys_config', 'updated_at'  %></p>
-<p><label for="sys_config_lock_version"><%=getLongName('sys_configs','lock_version')%></label><br /><%= text_field 'sys_config', 'lock_version'  %></p>
-<p><label for="sys_config_created_user"><%=getLongName('sys_configs','created_user')%></label><br /><%= text_field 'sys_config', 'created_user'  %></p>
-<p><label for="sys_config_updated_user"><%=getLongName('sys_configs','updated_user')%></label><br /><%= text_field 'sys_config', 'updated_user'  %></p>
-<p><label for="sys_config_deleted"><%=getLongName('sys_configs','deleted')%></label><br /><%= text_field 'sys_config', 'deleted'  %></p>
--->
+<p><label for="sys_config_value3"><%=getLongName('sys_configs','config_description_text')%></label><br /><%= text_area 'sys_config', 'config_description_text'  %></p>
 <p><%= hidden_field 'sys_config', 'lock_version'  %></p>
+<p><%= hidden_field_tag 'back_to', back_to  %></p>
 <!--[eoform:sys_config]-->
 
 

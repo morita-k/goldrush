@@ -1,14 +1,18 @@
 <h1><%= @human_resource.human_resource_name.blank? ? @human_resource.initial : @human_resource.human_resource_name %>(<%= @bp_member.business_partner.business_partner_code_name %>)詳細</h1>
 
+<h2><%=getLongName('table_name','human_resources')%>情報</h2>
+<%= render :partial => 'human_resource/show' %>
+<%= back_to_link '別所属を追加', :action => 'new', :human_resource_id => @human_resource %>
+<p></p>
+
 <h2><%=getLongName('table_name','bp_members')%>情報</h2>
 <%= render :partial => 'bp_member/show' %>
 <%= back_to_link '編集', :action => 'edit', :id => @bp_member, :human_resource_id => @human_resource %> |
+<% if !@bp_member.import_mail_id.blank? %>
+  <%= link_to '解析元メールを見る', "#", :onclick => "disp_wide('#{url_for({:controller => 'import_mail', :action => 'show', :id => @bp_member.import_mail_id, :popup => 1})}');return false;" %> | 
+  <%= link_to '解析テンプレートで再解析を行う', "#", :onclick => "disp_wide('#{url_for({:controller => 'analysis_template', :action => 'list', :mode => 'bp_member', :target_id => @bp_member.id, :import_mail_id => @bp_member.import_mail_id, :popup => 1})}');return false;" %> | 
+<% end %>
 <%= link_or_back '戻る', :action => 'list' %>
-<p></p>
-
-<h2><%=getLongName('table_name','human_resources')%>情報</h2>
-<%= render :partial => 'human_resource/show' %>
-<%= back_to_link '所属に追加', :action => 'new', :human_resource_id => @human_resource %>
 <p></p>
 
 <h2>経歴書一覧</h2>
@@ -22,10 +26,7 @@
   <table>
     <tr>
       <td rowspan=2>経歴書のアップロード </td>
-      <td><%= file_field_tag 'upfile', :size => 60 %></td>
-    </tr>
-    <tr>
-      <td><%= submit_tag "アップロードする" %></td>
+      <td><%= file_field_tag 'upfile', :size => 60 %><%= submit_tag "アップロードする" %></td>
     </tr>
   </table>
   </div>

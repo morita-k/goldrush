@@ -5,7 +5,7 @@ class Employee < ActiveRecord::Base
   belongs_to :user
   belongs_to :department
   
-  validates_presence_of     :insurance_code, :employee_code, :employee_name, :employee_kana_name, :birthday_date, :entry_date
+  validates_presence_of     :insurance_code, :employee_code, :employee_name, :employee_kana_name, :employee_short_name, :birthday_date, :entry_date
   validates_uniqueness_of   :insurance_code, :employee_code
   validates_numericality_of :insurance_code, :employee_code, :on => :create
   
@@ -114,5 +114,13 @@ class Employee < ActiveRecord::Base
     years = base_date.year - enday.year
     monthes = base_date.month - enday.month
     return years * 12 + monthes
+  end
+  
+  def Employee.map_for_googleimport
+    res = {}
+    where(:deleted => 0).each do |emp|
+      res[emp.employee_short_name] = emp.user_id
+    end
+    res
   end
 end

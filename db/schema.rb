@@ -297,6 +297,7 @@ ActiveRecord::Schema.define(:version => 0) do
     t.integer  "owner_id",        :limit => 8
     t.integer  "bp_pic_group_id", :limit => 8,                 :null => false
     t.integer  "bp_pic_id",       :limit => 8,                 :null => false
+    t.integer  "suspended",                     :default => 0
     t.text     "memo"
     t.datetime "created_at",                                   :null => false
     t.datetime "updated_at",                                   :null => false
@@ -916,6 +917,7 @@ ActiveRecord::Schema.define(:version => 0) do
     t.integer  "bp_member_flg",                             :default => 0
     t.integer  "registed",                                  :default => 0
     t.integer  "unwanted",                                  :default => 0
+    t.text     "tag_text"
     t.datetime "created_at",                                               :null => false
     t.datetime "updated_at",                                               :null => false
     t.integer  "lock_version",        :limit => 8,          :default => 0

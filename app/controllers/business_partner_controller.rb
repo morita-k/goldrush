@@ -107,7 +107,7 @@ class BusinessPartnerController < ApplicationController
       cond, incl = make_conditions
     end
     #@business_partner_pages, @business_partners = paginate(:business_partners, cond)
-    @business_partners = BusinessPartner.includes(incl).where(cond).page(params[:page]).per(current_user.per_page)
+    @business_partners = BusinessPartner.includes(incl).where(cond).order("id desc").page(params[:page]).per(current_user.per_page)
   end
 
   def show
@@ -261,6 +261,19 @@ class BusinessPartnerController < ApplicationController
     ext = File.extname(file.original_filename.to_s).downcase
     raise ValidationAbort.new("インポートするファイルは、拡張子がcsvのファイルでなければなりません") if ext != '.csv'
     BusinessPartner.import_from_csv_data(file.read, SysConfig.email_prodmode?)
+    flash[:notice] = 'インポートが完了しました'
+    redirect_to(back_to || {:action => :list})
+  end
+  
+  def upload_google_csv
+    unless file = params[:google_csv_upload_file]
+      flash[:notice] = 'ファイルを選択してください'
+      redirect_to(back_to || {:action => :list})
+      return
+    end
+    ext = File.extname(file.original_filename.to_s).downcase
+    raise ValidationAbort.new("インポートするファイルは、拡張子がcsvのファイルでなければなりません") if ext != '.csv'
+    BusinessPartner.import_google_csv_data(file.read, SysConfig.email_prodmode?)
     flash[:notice] = 'インポートが完了しました'
     redirect_to(back_to || {:action => :list})
   end

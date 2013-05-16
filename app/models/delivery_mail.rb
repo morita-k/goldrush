@@ -9,7 +9,16 @@ class DeliveryMail < ActiveRecord::Base
   has_many :delivery_mail_targets, :conditions => "delivery_mail_targets.deleted = 0"
   attr_accessible :bp_pic_group_id, :content, :id, :mail_bcc, :mail_cc, :mail_from, :mail_from_name, :mail_send_status_type, :mail_status_type, :owner_id, :planned_setting_at, :send_end_at, :subject, :lock_version, :planned_setting_at_time, :planned_setting_at_date
 
+  validates_presence_of :subject, :content, :mail_from_name, :mail_from, :planned_setting_at
+
   after_initialize :default_values
+  
+  before_save :normalize_cc_bcc!
+
+  def normalize_cc_bcc!
+    self.mail_cc = mail_cc.to_s.split(/[ ,;]/).join(",")
+    self.mail_bcc = mail_bcc.to_s.split(/[ ,;]/).join(",")
+  end
 
   def formated_mail_from
     "#{mail_from_name} <#{mail_from}>"

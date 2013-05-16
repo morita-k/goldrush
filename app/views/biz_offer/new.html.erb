@@ -9,5 +9,5 @@
 <% if params[:import_mail_id] && params[:template_id] %>
   <%= link_or_back '解析テンプレート選択に戻る', :controller => 'analysis_template', :action => 'list' %>
 <% else %>
-  <%= link_to '一覧に戻る', :action => 'list' %>
+  <%= link_or_back '戻る', :action => 'list' %>
 <% end %>

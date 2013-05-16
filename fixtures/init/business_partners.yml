@@ -1,0 +1,264 @@
+business_partners_1:
+  id: 1
+  owner_id: 
+  sales_code: "10001"
+  business_partner_code: "APP"
+  sales_management_code: "50001"
+  business_partner_name: "アプリカティブ株式会社"
+  business_partner_short_name: "アプリカ"
+  business_partner_name_kana: "アプリカティブ"
+  business_partner_name_en: "Applicative Inc."
+  sales_status_type: "business"
+  ceo_name: "玉置龍範"
+  url: "http://www.applicative.jp"
+  zip: "110-0005"
+  address1: "東京都"
+  address2: "台東区上野5-7-11 MRビル3F "
+  tel: "03-5843-7204"
+  fax: "03-5812-7214"
+  email: "info@applicative.jp"
+  category: "開発"
+  self_flg: 1
+  eu_flg: 1
+  upper_flg: 0
+  down_flg: 0
+  import_mail_id: 
+  memo: アプリカティブ株式会社は、2012年に創業した新しい会社で、コンピュータシステムの開発力と納品力を武器とした技術者集団です。 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+business_partners_2:
+  id: 2
+  owner_id: 
+  sales_code: "10002"
+  business_partner_code: "SHA"
+  sales_management_code: "50002"
+  business_partner_name: "株式会社シェアリングス"
+  business_partner_short_name: "シェアリングス"
+  business_partner_name_kana: "シェアリングス"
+  business_partner_name_en: "SHARINGSS Co.,Ltd."
+  sales_status_type: "listup"
+  ceo_name: "池田友喜"
+  url: "http://www.sharingss.com"
+  zip: "101-0021"
+  address1: "東京都"
+  address2: "千代田区外神田5-3-1 秋葉原OSビル9F"
+  tel: "03-5812-6036"
+  fax: "03-5812-6037"
+  email: "info@sharingss.jp"
+  category: "コンサル"
+  self_flg: 0
+  eu_flg: 1
+  upper_flg: 0
+  down_flg: 0
+  import_mail_id: 
+  memo: シェアリングスは「ITで世界を変える」という言葉をキーワードに、業界という世界、我々の住む世界など様々な世界をIT技術を利用し、より良い方向へ変えてくことを存在意義としています。
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+business_partners_3:
+  id: 3
+  owner_id: 
+  sales_code: "10003"
+  business_partner_code: "EZT"
+  sales_management_code: "50003"
+  business_partner_name: "エンザントレイズ株式会社"
+  business_partner_short_name: "エンザン"
+  business_partner_name_kana: "エンザントレイズ"
+  business_partner_name_en: "EnzanTrades Inc."
+  sales_status_type: "listup"
+  ceo_name: "鍋嶋正孝"
+  url: "http://www.enzantrades.co.jp"
+  zip: "110-0005"
+  address1: "東京都"
+  address2: "台東区上野5-7-11 MRビル3F"
+  tel: "03-5812-7224"
+  fax: "03-5812-7214"
+  email: "info@enzantrades.jp"
+  category: "開発"
+  self_flg: 0
+  eu_flg: 0
+  upper_flg: 0
+  down_flg: 1
+  import_mail_id: 
+  memo: 我々エンザントレイズは、ＩＴという事業分野において、とにかく積極的に未開拓の事業や特殊な分野にも挑戦して行きたいと考えています。
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+business_partners_4:
+  id: 4
+  owner_id: 
+  sales_code: "10004"
+  business_partner_code: "FAN"
+  sales_management_code: "50004"
+  business_partner_name: "フューチャー・アンティークス株式会社"
+  business_partner_short_name: "フューチャーアンティークス"
+  business_partner_name_kana: "フューチャー・アンティークス"
+  business_partner_name_en: "Future Antiques"
+  sales_status_type: "listup"
+  ceo_name: ""
+  url: ""
+  zip: ""
+  address1: ""
+  address2: ""
+  tel: ""
+  fax: ""
+  email: ""
+  category: ""
+  self_flg: 0
+  eu_flg: 0
+  upper_flg: 1
+  down_flg: 0
+  import_mail_id: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+business_partners_5:
+  id: 5
+  owner_id: 
+  sales_code: "10005"
+  business_partner_code: "AMS"
+  sales_management_code: "50005"
+  business_partner_name: "アネモス株式会社"
+  business_partner_short_name: "アネモス"
+  business_partner_name_kana: "アネモス"
+  business_partner_name_en: "anemos"
+  sales_status_type: "listup"
+  ceo_name: "長谷川 滉司"
+  url: "http://anemos.tv"
+  zip: "225-0002"
+  address1: "神奈川県"
+  address2: "横浜市青葉区"
+  tel: "03-5456-4451"
+  fax: "03-5456-4455"
+  email: ""
+  category: ""
+  self_flg: 0
+  eu_flg: 0
+  upper_flg: 1
+  down_flg: 0
+  import_mail_id: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+business_partners_6:
+  id: 6
+  owner_id: 
+  sales_code: "10006"
+  business_partner_code: "ACR"
+  sales_management_code: "50006"
+  business_partner_name: "株式会社アクロネット"
+  business_partner_short_name: "アクロネット"
+  business_partner_name_kana: "アクロネット"
+  business_partner_name_en: "Acronet Co., Ltd"
+  sales_status_type: "listup"
+  ceo_name: "代表取締役CEO 石田 知義 代表取締役COO小野 賀津雄"
+  url: "http://www.acro-net.com/"
+  zip: "103-0023"
+  address1: "東京都"
+  address2: "中央区"
+  tel: "03-4530-0001"
+  fax: "03-4530-0002"
+  email: ""
+  category: ""
+  self_flg: 0
+  eu_flg: 0
+  upper_flg: 0
+  down_flg: 1
+  import_mail_id: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+business_partners_7:
+  id: 7
+  owner_id: 
+  sales_code: "10007"
+  business_partner_code: "MYT"
+  sales_management_code: "50007"
+  business_partner_name: "株式会社マイテックソフトウェア"
+  business_partner_short_name: "MYTEC"
+  business_partner_name_kana: "マイテックソフトウェア"
+  business_partner_name_en: "MYTEC"
+  sales_status_type: "listup"
+  ceo_name: "大塚　英俊"
+  url: "http://www.mytec-software.co.jp/"
+  zip: "180-0013"
+  address1: "東京都"
+  address2: "武蔵野市西久保2-1-10　Y'sビル2F"
+  tel: "0422-50-1170"
+  fax: "0422-56-1053"
+  email: ""
+  category: ""
+  self_flg: 0
+  eu_flg: 0
+  upper_flg: 1
+  down_flg: 0
+  import_mail_id: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+business_partners_8:
+  id: 8
+  owner_id: 
+  sales_code: "10008"
+  business_partner_code: "GLT"
+  sales_management_code: "50008"
+  business_partner_name: "株式会社グローバルシンキング"
+  business_partner_short_name: "グローバルシンキング"
+  business_partner_name_kana: "グローバルシンキング"
+  business_partner_name_en: "global-thinking"
+  sales_status_type: "listup"
+  ceo_name: "園部　英昭"
+  url: "http://www.global-thinking.com/"
+  zip: "170-0013"
+  address1: "東京都"
+  address2: "豊島区"
+  tel: "03-6907-8642"
+  fax: "03-6907-8643"
+  email: "eigyo@global-thinking.com"
+  category: ""
+  self_flg: 0
+  eu_flg: 0
+  upper_flg: 0
+  down_flg: 1
+  import_mail_id: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0

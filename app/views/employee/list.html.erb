@@ -11,7 +11,7 @@
   <tr>
     <td><%=h employee.department.department_name %></td>
     <td>
-       <%= link_to "#{employee.employee_name}", '#', :onClick => "set#{params[:mode]}User(#{employee.user_id}, '#{employee.employee_name}'); return false;" %></td>
+       <%= link_to "#{employee.employee_name}", '#', :onclick => "setUser(#{employee.user_id}, '#{employee.employee_name}'); return false;" %></td>
     </td>
   </tr>
 <% end %>
@@ -22,7 +22,7 @@
 
 <script type="text/javascript">
 <!--
-function set<%=params[:mode]%>User(user_id, user_name) {
+function setUser(user_id, user_name) {
   if(window.opener.document.set<%=params[:mode]%>User){
     var user = new Object();
     user.pic_id = user_id;
