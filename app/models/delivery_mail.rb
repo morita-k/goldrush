@@ -100,17 +100,25 @@ class DeliveryMail < ActiveRecord::Base
   # Private Mailer
   class MyMailer < ActionMailer::Base
     def send_del_mail(destination, cc, bcc, from, subject, body, attachment_files)
-      attachment_files.each do |af|
-        attachments[af.file_name] = af.read_file
+      
+      attachment_files.each do |file|
+        attachments[file.file_name] = file.read_file
       end
-      mail(
-        to: destination,
-        cc: cc,
-        bcc: bcc,
-        from: from, 
-        subject: subject,
-        body: body
-      )
+      
+      mail( to: destination,
+            cc: cc,
+            bcc: bcc,
+            from: from, 
+            subject: subject,
+            body: body )
+      
+      # Return-path の設定
+      return_path = SysConfig.get_value(:delivery_mail, :return_path)
+      if return_path
+        headers[:return_path] = return_path
+      else
+        logger.warn '"Return-Path"が設定されていません。'
+      end
     end
   end
 end
