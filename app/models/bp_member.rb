@@ -9,7 +9,8 @@ class BpMember < ActiveRecord::Base
   belongs_to :bp_pic
   belongs_to :import_mail
 
-  validates_presence_of     :business_partner_id
+  validates_presence_of     :business_partner_id, :bp_pic_id
+  validates_uniqueness_of   :bp_pic_id, :scope => [:human_resource_id]
 
   def attachment?
     AttachmentFile.count(:conditions => ["deleted = 0 and parent_table_name = 'bp_members' and parent_id = ?", self]) > 0

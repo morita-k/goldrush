@@ -1,0 +1,46 @@
+<h2>登録内容の修正</h2>
+
+<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f| %>
+  <%= devise_error_messages! %>
+<table class="form_table">
+  <tr>
+  <th><%= f.label :email, 'Eメール' %></th>
+  <td><%= f.email_field :email, :autofocus => true %></td>
+  </tr>
+
+  <tr>
+  <th><%= f.label :nickname, 'ハンドル名' %></th>
+  <td><%= f.text_field :nickname %></td>
+  </tr>
+
+  <tr>
+  <th><%= f.label :current_password, '現在のパスワード' %></th>
+  <td><%= f.password_field :current_password %><br/><i>(登録内容を変更する場合、現在のパスワードが必要です)</td>
+  </tr>
+
+  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+    <tr>
+    <th>Currently waiting confirmation for</th>
+    <td><%= resource.unconfirmed_email %></td>
+    </tr>
+  <% end %>
+
+  <tr>
+  <th><%= f.label :password, 'パスワード' %></th>
+  <td><%= f.password_field :password, :autocomplete => "off" %><br/><i>(変更しない場合はブランクにしてください)</i></td>
+  </tr>
+
+  <tr>
+  <th><%= f.label :password_confirmation, 'パスワード確認' %></th>
+  <td><%= f.password_field :password_confirmation %></td>
+  </tr>
+</table>
+  <p><%= f.submit "変更する" %></p>
+<% end %>
+
+<% if false %>
+<h3>Cancel my account</h3>
+
+<p>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), :data => { :confirm => "Are you sure?" }, :method => :delete %></p>
+<% end %>
+<%= link_to "戻る", :back %>

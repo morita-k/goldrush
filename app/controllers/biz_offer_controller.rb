@@ -41,7 +41,7 @@ class BizOfferController < ApplicationController
       @issue_datetime_hour = now.hour
       @issue_datetime_min = (now.min / 10) * 10
     end
-    params[:business_id] = @business
+    params[:business_id] = @business.id
     
     # メール取り込みからの遷移
     if params[:import_mail_id]# && params[:template_id]
@@ -71,12 +71,10 @@ class BizOfferController < ApplicationController
       new_flg = true
     end
     ActiveRecord::Base.transaction do
-      if new_flg
-        @business = Business.new(params[:business])
-      else
-        @business = Business.find(params[:business_id], :conditions =>["deleted = 0"])
-        @business.attributes = params[:business]
+      unless @business = @biz_offer.business
+        @business = Business.new
       end
+      @business.attributes = params[:business]
       
       if date = DateTimeUtil.str_to_date(params[:business][:issue_datetime])
         @business.issue_datetime = Time.local(date.year, date.month, date.day, params[:issue_datetime_hour].to_i, params[:issue_datetime_minute].to_i)
@@ -85,7 +83,7 @@ class BizOfferController < ApplicationController
       @business.business_status_type = 'offered'
       set_user_column @business
       @business.save!
-      @biz_offer.business_id = @business.id
+      @biz_offer.business = @business
 
       @business.make_skill_tags!
       @business.save!

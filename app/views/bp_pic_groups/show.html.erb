@@ -3,6 +3,8 @@
   <h1><%= getLongName('table_name','delivery_mails')%> 確認</h1>
 
   <%= render 'delivery_mails/show' %>
+  <p></p>
+  <%= back_to_link 'メールの内容を再編集する', edit_delivery_mail_path(@delivery_mail) %>
 
   <h1><%= @bp_pic_group.bp_pic_group_name %>のメンバーを選択してください。</h1>
 <% else %>
@@ -43,15 +45,7 @@
 
 <div>
   <%= form_tag url_for_bp_pic_list(@delivery_mail), :method => :post do %>
-    <% if @delivery_mail %>
-      <%= hidden_field_tag 'delivery_mail_id', @delivery_mail.id %>
-      <%= hidden_field_tag 'bp_pic_group_id', @bp_pic_group.id %>
-      <%= submit_tag "メール送信" %>
-      <%= hidden_field_tag :back_to, request_url %>
-    <% else %>
-      <%= submit_tag "選択した担当者を削除", :confirm => "選択した担当者をリストから削除します。\nよろしいですか？" %>
-      <%= hidden_field_tag 'back_to', back_to  %>
-    <% end %>
+    <%= send_buttons %>
     <table class="show_table" style="margin-top:2px;">
       <tr>
         <th style="width:30px"></th>
@@ -74,6 +68,7 @@
         </tr>
       <% end %>
     </table>
+    <%= send_buttons %>
   <% end %>
 <div>
 <div><a href="#top">ページトップ</a></div>

@@ -407,12 +407,12 @@ EOS
     DateTimeUtil.calHourMinuteFormat(sec)
   end
   
-    def star_links(target)
-    link_to(raw("<span id='starred_icon_#{target.id}' name='starred_icon_name_#{target.id}' style='#{_starstyle(target.starred)}'>★</span>"), "#", :onclick => "return changeFlg(#{target.id}, 'starred');")
+  def star_links(target)
+    raw "<span class=linked_star>" + link_to(raw("<span id='starred_icon_#{target.id}' class='starred_icon_#{target.id}' name='starred_icon_name_#{target.id}' style='#{_starstyle(target.starred)}'>★</span>"), {:controller => :home, :action => :change_star, :id => target.id, :model => target.class.name, :authenticity_token => form_authenticity_token}, :remote => true, :method => :put) + "</span>"
   end
   
   def _starstyle(flg)
-    flg.to_i == 1 ? "color: #ffff00" : "color: #dfdfdf"
+    "color: #{SysConfig.star_color[flg]}"
   end
   
   def popup_hidden_field

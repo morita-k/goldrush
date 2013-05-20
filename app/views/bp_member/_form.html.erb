@@ -9,6 +9,7 @@
 
 <h2>所属</h2>
 <!--[form:bp_member]-->
+  <%= hidden_field_tag 'human_resource_id', params[:human_resource_id] %>
   <%= hidden_field 'bp_member', 'human_resource_id', :value => @human_resource.id %>
 <table class="show_table">
 <tr>

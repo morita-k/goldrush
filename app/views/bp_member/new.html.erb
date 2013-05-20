@@ -1,6 +1,6 @@
 <h1><%=getLongName('table_name','bp_members')%>新規作成</h1>
 
-<%= form_tag :action => 'create', :human_resource_id => @human_resource do %>
+<%= form_tag :action => 'create' do %>
   <%= render :partial => 'form' %>
   <%= submit_tag "登録" %>
   <%= popup_hidden_field %>
