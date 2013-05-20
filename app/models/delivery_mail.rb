@@ -113,7 +113,7 @@ class DeliveryMail < ActiveRecord::Base
             body: body )
       
       # Return-path の設定
-      return_path = SysConfig.get_value(:delivery_mail, :return_path)
+      return_path = SysConfig.get_value(:delivery_mails, :return_path)
       if return_path
         headers[:return_path] = return_path
       else
