@@ -24,53 +24,6 @@ class BusinessPartnerGoogleImporter < BusinessPartner
           email2 = StringUtil.to_test_address(email2)
         end
         bp_name = r["Organization 1 - Name"]
-
-        # if bp_pic = BpPic.where(:email1 => email1, :deleted => 0).first
-        #   bp = bp_pic.business_partner
-        # else 
-        #   bp_pic = BpPic.new
-        #   if bp = BusinessPartner.where(:business_partner_name => r["Organization 1 - Name"], :deleted => 0).first
-        #     bp_pic.business_partner = bp
-        #   else
-        #     bp = BusinessPartner.new
-        #     bp_pic.business_partner = bp
-        #   end
-        # end
-        
-        # if bp_pic = BpPic.where(:email1 => email1, :deleted_at => 0).first
-        #   other_bp = BusinessPartner.where(:business_partner_name => r["Organization 1 - Name"]).first
-        #   if !other_bp.blank? && bp_pic.business_partner.business_partner_name == other_bp.business_partner_name
-        #     conditions = {:business_partner_id => other_bp.id, :deleted => 0}
-            
-        #     # 担当者から得られる取引先と、インポートで得られた取引先名が一致していなかった場合の処理
-        #     # 既存の取引先と紐づくデータを新しく取り込む取引先に紐付け
-        #     BusinessPartnerGoogleImporter.change_bp(BpPic.where(conditions), bp)
-        #     BusinessPartnerGoogleImporter.change_bp(BpMember.where(conditions), bp)
-        #     BusinessPartnerGoogleImporter.change_bp(BizOffer.where(conditions), bp)
-        #     BusinessPartnerGoogleImporter.change_bp(Business.where(conditions), bp)
-        #     BusinessPartnerGoogleImporter.change_bp(ImportMail.where(conditions), bp)
-        #     BusinessPartnerGoogleImporter.change_bp(Project.where(conditions), bp)
-        #     BusinessPartnerGoogleImporter.change_bp(AnalysisTemplate.where(conditions), bp)
-        #     BusinessPartnerGoogleImporter.change_bp(ContactHistory.where(conditions), bp)
-        #     BusinessPartnerGoogleImporter.change_bp(Interview.where(conditions), bp)
-        #     BusinessPartnerGoogleImporter.change_bp(DeliveryError.where(conditions), bp)
-            
-        #     # other_bp.business_partner_name = old_bp.business_partner_name + " deleted"
-        #     other_bp.deleted = 1
-        #     other_bp.save!
-        #   else
-        #     # arienai
-        #   end
-        # else
-        #   if bp = BusinessPartner.where(:business_partner_name => r["Organization 1 - Name"]).first
-        #     bp_pic = BpPic.new
-        #     bp_pic.business_partner = bp
-        #   else
-        #     bp_pic = BpPic.new
-        #     bp = BusinessPartner.new
-        #     bp_pic.business_partner = bp
-        #   end
-        # end
         
         if bp_pic = BpPic.where(:email1 => email1, :deleted => 0).first
           bp = bp_pic.business_partner
