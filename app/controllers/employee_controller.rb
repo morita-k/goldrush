@@ -147,7 +147,12 @@ class EmployeeController < ApplicationController
     @calendar = true
     @page_title = '[アカウント情報変更]'
     @user = User.find(params[:id], :conditions => "deleted = 0 ")
-    @employee = @user.employee
+    unless @employee = @user.employee
+      @employee = Employee.new(:user_id => @user.id)
+      conf_hour_total = SysConfig.get_hour_total_full
+      @employee.regular_working_hour = conf_hour_total.value1.split(':')[0]
+    end
+
     @departments = Department.find(:all, :order => "display_order") 
     
     if request.post?
