@@ -3,6 +3,11 @@ GoldRush::Application.routes.draw do
 
   resources :remarks
 
+  resources :home do
+    member do
+      put 'change_star'
+    end
+  end
 
   resources :bp_pic_group_details do
     member do

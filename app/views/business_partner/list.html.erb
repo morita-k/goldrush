@@ -48,14 +48,14 @@
     <td><%=h business_partner.business_partner_code %></td>
 <% if popup? %>
   <% if params[:flg]=='eu' %>
-    <td><span class="linked_star"><%= star_links(business_partner) %></span> <%= link_to h(business_partner.business_partner_name), '#', :onClick => "setEuBpToParentWindow(#{business_partner.id},'#{j business_partner.business_partner_name}');return false;" %></td>
+    <td><%= star_links(business_partner) %> <%= link_to h(business_partner.business_partner_name), '#', :onClick => "setEuBpToParentWindow(#{business_partner.id},'#{j business_partner.business_partner_name}');return false;" %></td>
   <% elsif !params[:mail].blank? %>
-    <td><span class="linked_star"><%= star_links(business_partner) %></span> <%= link_to h(business_partner.business_partner_short_name), '#', :onClick => %Q|setBpToParentWindowFull(#{business_partner.id},'#{j business_partner.business_partner_code}','#{j business_partner.sales_management_code}','#{j business_partner.business_partner_name}','#{j business_partner.business_partner_short_name}','#{j business_partner.business_partner_name_kana}','#{j business_partner.business_partner_name_en}','#{j business_partner.sales_status_type}','#{j business_partner.ceo_name}','#{j business_partner.url}','#{j business_partner.zip}','#{j business_partner.address1}','#{j business_partner.address2}','#{j business_partner.tel}','#{j business_partner.fax}','#{j business_partner.email}','#{j business_partner.category}','#{business_partner.self_flg}','#{business_partner.eu_flg}','#{business_partner.upper_flg}','#{business_partner.down_flg}','#{j business_partner.memo}');return false;| %></td>
+    <td><%= star_links(business_partner) %> <%= link_to h(business_partner.business_partner_short_name), '#', :onClick => %Q|setBpToParentWindowFull(#{business_partner.id},'#{j business_partner.business_partner_code}','#{j business_partner.sales_management_code}','#{j business_partner.business_partner_name}','#{j business_partner.business_partner_short_name}','#{j business_partner.business_partner_name_kana}','#{j business_partner.business_partner_name_en}','#{j business_partner.sales_status_type}','#{j business_partner.ceo_name}','#{j business_partner.url}','#{j business_partner.zip}','#{j business_partner.address1}','#{j business_partner.address2}','#{j business_partner.tel}','#{j business_partner.fax}','#{j business_partner.email}','#{j business_partner.category}','#{business_partner.self_flg}','#{business_partner.eu_flg}','#{business_partner.upper_flg}','#{business_partner.down_flg}','#{j business_partner.memo}');return false;| %></td>
   <% else %>
-    <td><span class="linked_star"><%= star_links(business_partner) %></span> <%= link_to h(business_partner.business_partner_short_name), '#', :onClick => "setBpToParentWindow(#{business_partner.id},'#{j business_partner.business_partner_name}');return false;" %></td>
+    <td><%= star_links(business_partner) %> <%= link_to h(business_partner.business_partner_short_name), '#', :onClick => "setBpToParentWindow(#{business_partner.id},'#{j business_partner.business_partner_name}');return false;" %></td>
   <% end %>
 <% else %>
-    <td><span class="linked_star"><%= star_links(business_partner) %></span> <%=back_to_link h(business_partner.business_partner_short_name), :action => :show, :id => business_partner %></td>
+    <td><%= star_links(business_partner) %> <%=back_to_link h(business_partner.business_partner_short_name), :action => :show, :id => business_partner %></td>
 <% end %>
     <td><%=h business_partner.self_flg %></td>
     <td><%=h business_partner.eu_flg %></td>
@@ -139,25 +139,3 @@ function setBpToParentWindowFull(business_partner_id, business_partner_code, sal
 // -->
 </script>
 <% end # if popup? %>
-
-
-<script type="text/javascript">
-<!--
-var ajax_url = '<%= url_for(:controller => :business_partner, :action => :change_star) %>';
-
-function changeFlg(id, type){
-  jQuery.ajax({
-    url: ajax_url + '?id=' + id + '&type=' + type,
-    success: function(data, dataType){
-        if (data == '1') {
-          $("#starred_icon_" + id)[0].style.color = '#ffff00';
-        } else {
-          $("#starred_icon_" + id)[0].style.color = '#dfdfdf';
-        }
-    }
-  });
-  return false;
-}
-
-// -->
-</script>

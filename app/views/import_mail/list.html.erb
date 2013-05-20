@@ -37,7 +37,7 @@
       <%=h import_mail.id %></td>
     <td style="overflow: hidden">
       <div style="overflow: hidden;height:1.5em;width:20em">
-        <div style="width:1000px;"><%= import_mail.business_partner_id.blank? ? import_mail.mail_sender_name : link_to_bp_detail(import_mail) %></div>
+        <div style="width:1000px;"><%= import_mail.bp_pic_id.blank? ? "" : star_links(import_mail.bp_pic) %> <%= import_mail.bp_pic_id.blank? ? import_mail.mail_sender_name : link_to_bp_detail(import_mail) %></div>
       </div>
     </td>
     <td>
