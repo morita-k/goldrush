@@ -84,32 +84,6 @@ module ApplicationHelper
     text_field_tag(name, money_format(value), options)
   end
 
-=begin
-  def date_field(object_name, method, options = {})
-    cal = "cal_#{object_name}_#{method}"
-    flg = "flg_cal_#{object_name}_#{method}"
-    result = <<EOS
-<script type="text/javascript"><!--
-  var #{cal} = new JKL.Calendar('#{cal}','#{options[:formid]}','#{object_name}[#{method}]');
-  var #{flg} = true;
-//-->
-</script>
-EOS
-    options[:onChange] = "#{cal}.getFormValue(); #{cal}.hide();"
-    options[:onClick] = "if(!this.readOnly){offsetCalendar($('#{cal}'), this); #{cal}.write();}"
-    options[:size] = 15 unless options[:size]
-    options[:onblur] = "if (#{flg}) {#{cal}.hide();}"
-    if o = eval("@#{object_name}")
-      if val = (o.respond_to?(method) && o.send(method))
-        options[:value] = val.to_date
-      end
-    end
-    result << text_field(object_name, method, options)
-    result << "<span id='#{cal}' onmouseover='#{flg} = false;' onmouseout='#{flg} = true;' ></span>"
-    return result
-  end
-=end
-
   def date_field(object_name, method, options = {})
     
     #date = Time.now.strftime("%Y/%m/%d")
@@ -165,27 +139,6 @@ EOS
     time_str = value && (value.is_a?(DateTime)||value.is_a?(Time)) && value.strftime('%H:%M') || ''
     date_field(object_name, method, options) + " " + text_field_tag("#{object_name}_#{method}_time", time_str, :size => 10)
   end
-
-=begin
-  def date_field_tag(name, value = nil, options = {})
-    cal = "cal_#{name}"
-    flg = "flg_cal_#{name}"
-    result = <<EOS
-<script type="text/javascript"><!--
-  var #{cal} = new JKL.Calendar('#{cal}','#{options[:formid]}','#{name}');
-  var #{flg} = true;
-//-->
-</script>
-EOS
-    options[:onChange] = "#{cal}.getFormValue(); #{cal}.hide();"
-    options[:onClick] = "if(!this.readOnly){offsetCalendar($('#{cal}'), this); #{cal}.write();}"
-    options[:size] = 15 unless options[:size]
-    options[:onblur] = "if (#{flg}) {#{cal}.hide();}"
-    result << text_field_tag(name, value, options)
-    result << "<span id='#{cal}' onmouseover='#{flg} = false;' onmouseout='#{flg} = true;' ></span>"
-    return result
-  end
-=end
 
   def date_field_tag(name, value = nil, options = {})
        result = <<EOS
@@ -294,14 +247,6 @@ EOS
     "<span class='paginate_span'>#{first} #{prev} #{numbers} #{nex} #{last} #{total_count_str}</span>"
   end
 
-  def put_textarea_size_change(eid)
-    <<EOS
-<a class="size_change" href="#" tabindex="-1" onClick="e = $('#{eid}');e.setAttribute('cols',45);e.setAttribute('rows',3);return false;">45x3</a> 
-<a class="size_change" href="#" tabindex="-1" onClick="e = $('#{eid}');e.setAttribute('cols',80);e.setAttribute('rows',20);return false;">80x20</a> 
-<a class="size_change" href="#" tabindex="-1" onClick="e = $('#{eid}');e.setAttribute('cols',100);e.setAttribute('rows',40);return false;">100x40</a>
-EOS
-  end
-  
   def support_over_color(attend)
     if attend.support_end_date.class == Date && attend.support_end_date < Date.today
       "style='background-color: silver;'"
@@ -309,16 +254,13 @@ EOS
   end
 
   def resizable_area(object_name, method, options = {})
-#    options[:size] = '45x3' if options[:size].blank?
-#    raw(put_textarea_size_change(object_name + '_' + method) + "<br/>\n" + text_area(object_name, method, options))
-    
     options[:style] = ';width: 80%;height: 6em' if options[:style].blank?
     text_area(object_name, method, options)
   end
 
   def resizable_area_tag(name, value = nil, options = {})
-    options[:size] = '45x3' if options[:size].blank?
-    raw(put_textarea_size_change(name) + "<br/>\n" + text_area_tag(name, value, options))
+    options[:style] = ';width: 80%;height: 6em' if options[:style].blank?
+    raw(text_area_tag(name, value, options))
   end
 
   
@@ -370,9 +312,9 @@ EOS
   def back_to_link(name, options = {}, html_options = {}, &block)
     if options.class == String
       x = if options.include?('?')
-        options += "&"
+        "&"
       else
-        options += "?"
+        "?"
       end
       options += x + "back_to=" + URI.encode(request_url, Regexp.new("[^#{URI::PATTERN::ALNUM}]"))
     elsif options.is_a?(ActiveRecord::Base)
