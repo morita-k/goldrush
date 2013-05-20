@@ -54,15 +54,31 @@ class ApiController < ApplicationController
       render :text => 'REQUEST OK!'
     end
   end
-
+  
   def summry_tags
     TagJournal.summry_tags!
-
+    
     if params[:back_to]
       redirect_to params[:back_to]
     else
       render :text => 'REQUEST OK!'
     end
   end
-
+  
+  def bounce_mail_report
+    recipient = params[:recipient]
+    reason = params[:reason]
+    
+    if recipient && reason
+      ActiveRecord::Base.transaction do
+        bp_pics = BpPic.where(:email1 => recipient)
+        bp_pics.each do |pic|
+          pic.nondelivery_score += BpPic.score_nondelivery(reason)
+          pic.save!
+        end
+      end
+    end
+    render :text => 'REQUEST OK!'
+  end
+  
 end

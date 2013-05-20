@@ -112,6 +112,7 @@ class BpMemberController < ApplicationController
     else
       @human_resource = HumanResource.new
     end
+    
 # メール取り込みからの遷移
     if params[:import_mail_id] && params[:template_id]
       @bp_member.import_mail_id = params[:import_mail_id]
@@ -167,11 +168,21 @@ class BpMemberController < ApplicationController
         import_mail.save!
       end
     end
-    flash[:notice] = 'BpMember was successfully created.'
-    if new_flg
-      redirect_to back_to || {:action => 'list'}
+    
+    flash_notice = 'BpMember was successfully created.'
+    
+    if popup?
+      # ポップアップウィンドウの場合、共通リザルト画面を表示する
+      flash.now[:notice] = flash_notice
+      render 'shared/popup/result'
     else
-      redirect_to :action => 'show', :id => @bp_member
+      # ポップアップウィンドウでなければ通常の画面遷移
+      flash[:notice] = flash_notice
+      if new_flg
+        redirect_to back_to || {:action => 'list'}
+      else
+        redirect_to :action => 'show', :id => @bp_member
+      end
     end
   rescue ActiveRecord::RecordInvalid
     render :action => 'new'

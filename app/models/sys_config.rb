@@ -30,7 +30,12 @@ class SysConfig < ActiveRecord::Base
   end
 
   def SysConfig.get_value(section, key)
-    SysConfig.get_config(section, key).value1
+    config = SysConfig.get_config(section, key)
+    if config
+      return config.value1
+    else
+      return nil
+    end
   end
 
   def SysConfig.init_seq(key, seq)
