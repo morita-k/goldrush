@@ -994,3 +994,19 @@ sys_configs_57:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
+sys_configs_58:
+  id: 54
+  owner_id: 
+  config_section: "delivery_mails"
+  config_key: "return_path"
+  value1: "error@gr.applicative.jp"
+  value2: ""
+  value3: ""
+  config_description_text: "エラーメールの返送先アドレス"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
