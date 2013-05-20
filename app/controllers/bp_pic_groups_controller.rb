@@ -16,6 +16,7 @@ class BpPicGroupsController < ApplicationController
   def show
     unless params[:delivery_mail_id].blank?
       @delivery_mail = DeliveryMail.find(params[:delivery_mail_id])
+      @attachment_files = AttachmentFile.attachment_files("delivery_mails", @delivery_mail.id)
     end
     
     @bp_pic_group = BpPicGroup.includes(:bp_pic_group_details => {:bp_pic => :business_partner}).find(params[:id])

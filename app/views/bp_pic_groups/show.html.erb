@@ -3,8 +3,8 @@
   <h1><%= getLongName('table_name','delivery_mails')%> 確認</h1>
 
   <%= render 'delivery_mails/show' %>
-  
-  <%= back_to_link 'メールの内容を再編集する', edit_delivery_mail_path %>
+  <p></p>
+  <%= back_to_link 'メールの内容を再編集する', edit_delivery_mail_path(@delivery_mail) %>
 
   <h1><%= @bp_pic_group.bp_pic_group_name %>のメンバーを選択してください。</h1>
 <% else %>
