@@ -982,7 +982,7 @@ sys_configs_57:
   owner_id: 
   config_section: "delivery_mails"
   config_key: "return_path"
-  value1: "error.dev@gr.applicative.jp"
+  value1: "dev.error@gr.applicative.jp"
   value2: ""
   value3: ""
   config_description_text: "エラーメールの返送先アドレス"
