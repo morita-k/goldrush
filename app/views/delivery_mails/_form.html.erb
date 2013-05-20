@@ -64,6 +64,6 @@
 </table>
   <div class="actions">
     <%= hidden_field_tag 'bp_pic_group_id', @delivery_mail.bp_pic_group_id %>
-    <%= f.submit(:confirm => "以上の内容で送信予約しますか？\n※予約日時が過去の場合、すぐに送信されます。") %>
+    <%= f.submit(:value => 'メールを作成し、対象者選択へ進む') %>
   </div>
 <% end %>
