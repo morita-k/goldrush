@@ -56,7 +56,7 @@
 </p>
 
 <% if @user.employee.blank? %>
-<%= link_to 'New Employee', :controller => :employee, :action => :new, :id => @user %> |
+<%= link_to 'New Employee', :controller => :employee, :action => :edit, :id => @user %> |
 <% end %>
 <%= link_to 'Edit', edit_user_path(@user) %> |
 <%= link_to 'Back', users_path %>

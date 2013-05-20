@@ -107,7 +107,7 @@ class BusinessPartnerController < ApplicationController
       cond, incl = make_conditions
     end
     #@business_partner_pages, @business_partners = paginate(:business_partners, cond)
-    @business_partners = BusinessPartner.includes(incl).where(cond).order("id desc").page(params[:page]).per(current_user.per_page)
+    @business_partners = BusinessPartner.includes(incl).where(cond).order("updated_at desc").page(params[:page]).per(current_user.per_page)
   end
 
   def show
