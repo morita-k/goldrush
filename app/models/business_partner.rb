@@ -9,7 +9,7 @@ class BusinessPartner < ActiveRecord::Base
   has_many :bp_members, :conditions => ["bp_members.deleted = 0"]
 
   validates_presence_of :business_partner_name, :business_partner_short_name, :business_partner_name_kana
-  validates_uniqueness_of :business_partner_code, :case_sensitive => false, :scope => [:deleted, :deleted_at]
+  validates_uniqueness_of :business_partner_code, :case_sensitive => false, :allow_blank => true, :scope => [:deleted, :deleted_at]
   validates_uniqueness_of :business_partner_name, :case_sensitive => false, :scope => [:deleted, :deleted_at]
 
   def set_default
