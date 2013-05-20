@@ -159,8 +159,21 @@ class BpMemberController < ApplicationController
         import_mail.save!
       end
     end
-    flash[:notice] = 'BpMember was successfully created.'
-    redirect_to back_to || {:action => 'list'}
+    flash_notice = 'BpMember was successfully created.'
+    
+    if popup?
+      # ポップアップウィンドウの場合、共通リザルト画面を表示する
+      flash.now[:notice] = flash_notice
+      render 'shared/popup/result'
+    else
+      # ポップアップウィンドウでなければ通常の画面遷移
+      flash[:notice] = flash_notice
+      if new_flg
+        redirect_to back_to || {:action => 'list'}
+      else
+        redirect_to :action => 'show', :id => @bp_member
+      end
+    end
   rescue ActiveRecord::RecordInvalid
     render :action => 'new'
   end
