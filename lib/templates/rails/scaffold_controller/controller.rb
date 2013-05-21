@@ -8,7 +8,7 @@ class <%= controller_class_name %>Controller < ApplicationController
   # GET <%= route_url %>
   # GET <%= route_url %>.json
   def index
-    @<%= plural_table_name %> = <%= class_name %>.page(params[:page]).per(50)
+    @<%= plural_table_name %> = <%= class_name %>.where(deleted: 0).page(params[:page]).per(50)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -47,6 +47,7 @@ class <%= controller_class_name %>Controller < ApplicationController
   # POST <%= route_url %>.json
   def create
     @<%= singular_table_name %> = <%= orm_class.build(class_name, "params[:#{singular_table_name}]") %>
+    set_user_column @<%= singular_table_name %>
 
     respond_to do |format|
       begin
@@ -64,10 +65,12 @@ class <%= controller_class_name %>Controller < ApplicationController
   # PUT <%= route_url %>/1.json
   def update
     @<%= singular_table_name %> = <%= orm_class.find(class_name, "params[:id]") %>
+    @<%= singular_table_name %>.attributes = <%="params[:#{singular_table_name}]"%>
+    set_user_column @<%= singular_table_name %>
 
     respond_to do |format|
       begin
-        @<%= singular_table_name %>.update_attributes!(<%="params[:#{singular_table_name}]"%>)
+        @<%= singular_table_name %>.save!
         format.html { redirect_to @<%= singular_table_name %>, <%= key_value :notice, "'#{human_name} was successfully updated.'" %> }
         format.json { head :no_content }
       rescue ActiveRecord::RecordInvalid
@@ -81,8 +84,10 @@ class <%= controller_class_name %>Controller < ApplicationController
   # DELETE <%= route_url %>/1.json
   def destroy
     @<%= singular_table_name %> = <%= orm_class.find(class_name, "params[:id]") %>
-    @<%= orm_instance.destroy %>
-
+    @<%= singular_table_name %>.deleted = 9
+    set_user_column @<%= singular_table_name %>
+    @<%= singular_table_name %>.save!
+    
     respond_to do |format|
       format.html { redirect_to <%= index_helper %>_url }
       format.json { head :no_content }
