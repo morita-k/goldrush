@@ -2,8 +2,8 @@ departments_1:
   id: 1
   owner_id: 
   department_code: "01"
-  department_name: "çµŒå–¶å®¤"
-  department_shortname: "çµŒå–¶"
+  department_name: "Œo‰cŽº"
+  department_shortname: "Œo‰c"
   display_order: 1
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
@@ -15,8 +15,8 @@ departments_2:
   id: 2
   owner_id: 
   department_code: "02"
-  department_name: "å–¶æ¥­éƒ¨"
-  department_shortname: "å–¶æ¥­"
+  department_name: "‰c‹Æ•”"
+  department_shortname: "‰c‹Æ"
   display_order: 2
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
@@ -28,8 +28,8 @@ departments_3:
   id: 3
   owner_id:  
   department_code: "03"
-  department_name: "é–‹ç™ºéƒ¨"
-  department_shortname: "é–‹ç™º"
+  department_name: "ŠJ”­•”"
+  department_shortname: "ŠJ”­"
   display_order: 3
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>

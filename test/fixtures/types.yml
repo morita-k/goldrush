@@ -3,10 +3,10 @@ types_1:
   owner_id: 
   type_section: "logic_bind_type"
   type_key: "bind"
-  long_name: "æŸç¸›"
-  short_name: "æŸç¸›"
-  other_name: "æŸç¸›"
-  type_description: "åŒºåˆ†ã®å€¤ã‚„æ•°ãŒãƒ—ãƒ­ã‚°ãƒ©ãƒ ã«ãƒãƒ¼ãƒ‰ã‚³ãƒ¼ãƒ‰"
+  long_name: "‘©”›"
+  short_name: "‘©”›"
+  other_name: "‘©”›"
+  type_description: "‹æ•ª‚Ì’l‚â”‚ªƒvƒƒOƒ‰ƒ€‚Éƒn[ƒhƒR[ƒh"
   type_description_text: ""
   display_order1: 1
   display_order2: 1
@@ -23,10 +23,10 @@ types_2:
   owner_id: 
   type_section: "logic_bind_type"
   type_key: "unbind"
-  long_name: "éæŸç¸›"
-  short_name: "éæŸç¸›"
-  other_name: "éæŸç¸›"
-  type_description: "åŒºåˆ†ã®å€¤ã‚„æ•°ãŒãƒ—ãƒ­ã‚°ãƒ©ãƒ ã«æ›¸ã‹ã‚Œã¦ã„ãªã„"
+  long_name: "”ñ‘©”›"
+  short_name: "”ñ‘©”›"
+  other_name: "”ñ‘©”›"
+  type_description: "‹æ•ª‚Ì’l‚â”‚ªƒvƒƒOƒ‰ƒ€‚É‘‚©‚ê‚Ä‚¢‚È‚¢"
   type_description_text: ""
   display_order1: 2
   display_order2: 2
@@ -43,9 +43,9 @@ types_3:
   owner_id: 
   type_section: "access_level_type"
   type_key: "normal"
-  long_name: "ä¸€èˆ¬ãƒ¦ãƒ¼ã‚¶"
-  short_name: "ä¸€èˆ¬"
-  other_name: "ä¸€èˆ¬ãƒ¦ãƒ¼ã‚¶"
+  long_name: "ˆê”Êƒ†[ƒU"
+  short_name: "ˆê”Ê"
+  other_name: "ˆê”Êƒ†[ƒU"
   type_description: ""
   type_description_text: ""
   display_order1: 1
@@ -63,9 +63,9 @@ types_4:
   owner_id: 
   type_section: "access_level_type"
   type_key: "leader"
-  long_name: "ãƒªãƒ¼ãƒ€ãƒ¼"
-  short_name: "ãƒªãƒ¼ãƒ€ãƒ¼"
-  other_name: "ãƒªãƒ¼ãƒ€ãƒ¼"
+  long_name: "ƒŠ[ƒ_["
+  short_name: "ƒŠ[ƒ_["
+  other_name: "ƒŠ[ƒ_["
   type_description: ""
   type_description_text: ""
   display_order1: 2
@@ -83,9 +83,9 @@ types_5:
   owner_id: 
   type_section: "access_level_type"
   type_key: "personnel_department"
-  long_name: "äººäº‹éƒ¨"
-  short_name: "äººäº‹"
-  other_name: "äººäº‹éƒ¨"
+  long_name: "l–•”"
+  short_name: "l–"
+  other_name: "l–•”"
   type_description: ""
   type_description_text: ""
   display_order1: 3
@@ -103,9 +103,9 @@ types_6:
   owner_id: 
   type_section: "access_level_type"
   type_key: "accounting"
-  long_name: "çµŒç†éƒ¨"
-  short_name: "çµŒç†"
-  other_name: "çµŒç†éƒ¨"
+  long_name: "Œo—•”"
+  short_name: "Œo—"
+  other_name: "Œo—•”"
   type_description: ""
   type_description_text: ""
   display_order1: 4
@@ -123,9 +123,9 @@ types_7:
   owner_id: 
   type_section: "access_level_type"
   type_key: "super"
-  long_name: "ç®¡ç†è€…æ¨©é™"
-  short_name: "ç®¡ç†"
-  other_name: "ç®¡ç†è€…æ¨©é™"
+  long_name: "ŠÇ—ÒŒ ŒÀ"
+  short_name: "ŠÇ—"
+  other_name: "ŠÇ—ÒŒ ŒÀ"
   type_description: ""
   type_description_text: ""
   display_order1: 5
@@ -143,9 +143,9 @@ types_8:
   owner_id: 
   type_section: "auth_status_type"
   type_key: "unsend"
-  long_name: "æœªé€ä¿¡"
-  short_name: "æœªé€ä¿¡"
-  other_name: "æœªé€ä¿¡"
+  long_name: "–¢‘—M"
+  short_name: "–¢‘—M"
+  other_name: "–¢‘—M"
   type_description: ""
   type_description_text: ""
   display_order1: 1
@@ -163,9 +163,9 @@ types_9:
   owner_id: 
   type_section: "auth_status_type"
   type_key: "send"
-  long_name: "é€ä¿¡æ¸ˆ"
-  short_name: "é€ä¿¡æ¸ˆ"
-  other_name: "é€ä¿¡æ¸ˆ"
+  long_name: "‘—MÏ"
+  short_name: "‘—MÏ"
+  other_name: "‘—MÏ"
   type_description: ""
   type_description_text: ""
   display_order1: 2
@@ -183,9 +183,9 @@ types_10:
   owner_id: 
   type_section: "auth_status_type"
   type_key: "authed"
-  long_name: "ç¢ºèªæ¸ˆ"
-  short_name: "ç¢ºèªæ¸ˆ"
-  other_name: "ç¢ºèªæ¸ˆ"
+  long_name: "Šm”FÏ"
+  short_name: "Šm”FÏ"
+  other_name: "Šm”FÏ"
   type_description: ""
   type_description_text: ""
   display_order1: 3
@@ -203,9 +203,9 @@ types_11:
   owner_id: 
   type_section: "calendar_parent_type"
   type_key: "user"
-  long_name: "ãƒ¦ãƒ¼ã‚¶ãƒ¼"
+  long_name: "ƒ†[ƒU["
   short_name: "U"
-  other_name: "ãƒ¦ãƒ¼ã‚¶ãƒ¼"
+  other_name: "ƒ†[ƒU["
   type_description: ""
   type_description_text: ""
   display_order1: 1
@@ -223,9 +223,9 @@ types_12:
   owner_id: 
   type_section: "calendar_parent_type"
   type_key: "group"
-  long_name: "ã‚°ãƒ«ãƒ¼ãƒ—"
+  long_name: "ƒOƒ‹[ƒv"
   short_name: "G"
-  other_name: "ã‚°ãƒ«ãƒ¼ãƒ—"
+  other_name: "ƒOƒ‹[ƒv"
   type_description: ""
   type_description_text: ""
   display_order1: 2
@@ -243,9 +243,9 @@ types_13:
   owner_id: 
   type_section: "calendar_parent_type"
   type_key: "system"
-  long_name: "ã‚·ã‚¹ãƒ†ãƒ "
+  long_name: "ƒVƒXƒeƒ€"
   short_name: "S"
-  other_name: "ã‚·ã‚¹ãƒ†ãƒ "
+  other_name: "ƒVƒXƒeƒ€"
   type_description: ""
   type_description_text: ""
   display_order1: 3
@@ -263,9 +263,9 @@ types_14:
   owner_id: 
   type_section: "calendar_parent_type"
   type_key: "template"
-  long_name: "ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ"
+  long_name: "ƒeƒ“ƒvƒŒ[ƒg"
   short_name: "T"
-  other_name: "ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ"
+  other_name: "ƒeƒ“ƒvƒŒ[ƒg"
   type_description: ""
   type_description_text: ""
   display_order1: 4
@@ -283,9 +283,9 @@ types_15:
   owner_id: 
   type_section: "calendar_event_type"
   type_key: "holiday"
-  long_name: "ç¥æ—¥"
-  short_name: "ç¥"
-  other_name: "ç¥æ—¥"
+  long_name: "j“ú"
+  short_name: "j"
+  other_name: "j“ú"
   type_description: ""
   type_description_text: ""
   display_order1: 1
@@ -303,9 +303,9 @@ types_16:
   owner_id: 
   type_section: "expense_type"
   type_key: "transportation_expense"
-  long_name: "å‡ºå¼µ"
-  short_name: "å‡ºå¼µ"
-  other_name: "å‡ºå¼µ"
+  long_name: "o’£"
+  short_name: "o’£"
+  other_name: "o’£"
   type_description: ""
   type_description_text: ""
   display_order1: 1
@@ -323,9 +323,9 @@ types_17:
   owner_id: 
   type_section: "expense_type"
   type_key: "meeting_expense"
-  long_name: "ä¼šè­°"
-  short_name: "ä¼šè­°"
-  other_name: "ä¼šè­°"
+  long_name: "‰ï‹c"
+  short_name: "‰ï‹c"
+  other_name: "‰ï‹c"
   type_description: ""
   type_description_text: ""
   display_order1: 2
@@ -343,9 +343,9 @@ types_18:
   owner_id: 
   type_section: "expense_type"
   type_key: "expense_account"
-  long_name: "äº¤éš›è²»"
-  short_name: "äº¤éš›è²»"
-  other_name: "äº¤éš›è²»"
+  long_name: "ŒğÛ”ï"
+  short_name: "ŒğÛ”ï"
+  other_name: "ŒğÛ”ï"
   type_description: ""
   type_description_text: ""
   display_order1: 3
@@ -363,9 +363,9 @@ types_19:
   owner_id: 
   type_section: "expense_type"
   type_key: "book_expense"
-  long_name: "æ›¸ç±ä»£"
-  short_name: "æ›¸ç±"
-  other_name: "æ›¸ç±ä»£"
+  long_name: "‘Ğ‘ã"
+  short_name: "‘Ğ"
+  other_name: "‘Ğ‘ã"
   type_description: ""
   type_description_text: ""
   display_order1: 4
@@ -383,9 +383,9 @@ types_20:
   owner_id: 
   type_section: "expense_type"
   type_key: "equipment_expense"
-  long_name: "å‚™å“ä»£"
-  short_name: "å‚™å“"
-  other_name: "å‚™å“ä»£"
+  long_name: "”õ•i‘ã"
+  short_name: "”õ•i"
+  other_name: "”õ•i‘ã"
   type_description: ""
   type_description_text: ""
   display_order1: 5
@@ -403,9 +403,9 @@ types_21:
   owner_id: 
   type_section: "expense_type"
   type_key: "other_expense"
-  long_name: "ãã®ä»–"
-  short_name: "ãã®ä»–"
-  other_name: "ãã®ä»–"
+  long_name: "‚»‚Ì‘¼"
+  short_name: "‚»‚Ì‘¼"
+  other_name: "‚»‚Ì‘¼"
   type_description: ""
   type_description_text: ""
   display_order1: 6
@@ -423,9 +423,9 @@ types_22:
   owner_id: 
   type_section: "expense_type"
   type_key: "traffic_expense"
-  long_name: "äº¤é€šè²»"
-  short_name: "äº¤é€š"
-  other_name: "äº¤é€šè²»"
+  long_name: "Œğ’Ê”ï"
+  short_name: "Œğ’Ê"
+  other_name: "Œğ’Ê”ï"
   type_description: ""
   type_description_text: ""
   display_order1: 7
@@ -443,9 +443,9 @@ types_23:
   owner_id: 
   type_section: "expense_type"
   type_key: "food_expense"
-  long_name: "é£Ÿäº‹ä»£"
-  short_name: "é£Ÿäº‹"
-  other_name: "é£Ÿäº‹ä»£"
+  long_name: "H–‘ã"
+  short_name: "H–"
+  other_name: "H–‘ã"
   type_description: ""
   type_description_text: ""
   display_order1: 8
@@ -463,9 +463,9 @@ types_24:
   owner_id: 
   type_section: "expense_type"
   type_key: "fee_expense"
-  long_name: "è¬ç¤¼"
-  short_name: "è¬ç¤¼"
-  other_name: "è¬ç¤¼"
+  long_name: "Ó—ç"
+  short_name: "Ó—ç"
+  other_name: "Ó—ç"
   type_description: ""
   type_description_text: ""
   display_order1: 9
@@ -483,9 +483,9 @@ types_25:
   owner_id: 
   type_section: "working_type"
   type_key: "all_day_working"
-  long_name: "å…¨æ—¥å‡ºå‹¤"
-  short_name: "å…¨å‡º"
-  other_name: "å…¨æ—¥å‡ºå‹¤"
+  long_name: "‘S“úo‹Î"
+  short_name: "‘So"
+  other_name: "‘S“úo‹Î"
   type_description: ""
   type_description_text: ""
   display_order1: 1
@@ -503,9 +503,9 @@ types_26:
   owner_id: 
   type_section: "working_type"
   type_key: "only_PM_working"
-  long_name: "åˆå‰ä¼‘"
-  short_name: "åˆå‰ä¼‘"
-  other_name: "åˆå‰ä¼‘"
+  long_name: "Œß‘O‹x"
+  short_name: "Œß‘O‹x"
+  other_name: "Œß‘O‹x"
   type_description: ""
   type_description_text: ""
   display_order1: 2
@@ -523,9 +523,9 @@ types_27:
   owner_id: 
   type_section: "working_type"
   type_key: "only_AM_working"
-  long_name: "åˆå¾Œä¼‘"
-  short_name: "åˆå¾Œä¼‘"
-  other_name: "åˆå¾Œä¼‘"
+  long_name: "ŒßŒã‹x"
+  short_name: "ŒßŒã‹x"
+  other_name: "ŒßŒã‹x"
   type_description: ""
   type_description_text: ""
   display_order1: 3
@@ -543,9 +543,9 @@ types_28:
   owner_id: 
   type_section: "working_type"
   type_key: "on_holiday_working"
-  long_name: "ä¼‘æ—¥å‡ºå‹¤"
-  short_name: "ä¼‘å‡º"
-  other_name: "ä¼‘æ—¥å‡ºå‹¤"
+  long_name: "‹x“úo‹Î"
+  short_name: "‹xo"
+  other_name: "‹x“úo‹Î"
   type_description: ""
   type_description_text: ""
   display_order1: 4
@@ -563,9 +563,9 @@ types_29:
   owner_id: 
   type_section: "working_type"
   type_key: "vacation_dayoff"
-  long_name: "æœ‰çµ¦ä¼‘æš‡"
-  short_name: "æœ‰ä¼‘"
-  other_name: "æœ‰çµ¦ä¼‘æš‡"
+  long_name: "—L‹‹‹x‰É"
+  short_name: "—L‹x"
+  other_name: "—L‹‹‹x‰É"
   type_description: ""
   type_description_text: ""
   display_order1: 5
@@ -583,9 +583,9 @@ types_30:
   owner_id: 
   type_section: "working_type"
   type_key: "compensatory_dayoff"
-  long_name: "ä»£ä¼‘"
-  short_name: "ä»£ä¼‘"
-  other_name: "ä»£ä¼‘"
+  long_name: "‘ã‹x"
+  short_name: "‘ã‹x"
+  other_name: "‘ã‹x"
   type_description: ""
   type_description_text: ""
   display_order1: 6
@@ -603,9 +603,9 @@ types_31:
   owner_id: 
   type_section: "working_type"
   type_key: "absence_dayoff"
-  long_name: "æ¬ å‹¤"
-  short_name: "æ¬ å‹¤"
-  other_name: "æ¬ å‹¤"
+  long_name: "Œ‡‹Î"
+  short_name: "Œ‡‹Î"
+  other_name: "Œ‡‹Î"
   type_description: ""
   type_description_text: ""
   display_order1: 7
@@ -623,9 +623,9 @@ types_32:
   owner_id: 
   type_section: "working_type"
   type_key: "summer_dayoff"
-  long_name: "å¤æœŸä¼‘æš‡"
-  short_name: "å¤æœŸ"
-  other_name: "å¤æœŸä¼‘æš‡"
+  long_name: "‰ÄŠú‹x‰É"
+  short_name: "‰ÄŠú"
+  other_name: "‰ÄŠú‹x‰É"
   type_description: ""
   type_description_text: ""
   display_order1: 8
@@ -643,9 +643,9 @@ types_33:
   owner_id: 
   type_section: "working_type"
   type_key: "occasion_dayoff"
-  long_name: "â€»æ…¶å¼”ä¼‘æš‡"
-  short_name: "æ…¶å¼”"
-  other_name: "â€»æ…¶å¼”ä¼‘æš‡"
+  long_name: "¦Œc’¢‹x‰É"
+  short_name: "Œc’¢"
+  other_name: "¦Œc’¢‹x‰É"
   type_description: ""
   type_description_text: ""
   display_order1: 9
@@ -663,9 +663,9 @@ types_34:
   owner_id: 
   type_section: "working_type"
   type_key: "life_plan_dayoff"
-  long_name: "â€»ãƒ©ã‚¤ãƒ•ãƒ—ãƒ©ãƒ³ä¼‘æš‡"
+  long_name: "¦ƒ‰ƒCƒtƒvƒ‰ƒ“‹x‰É"
   short_name: "LP"
-  other_name: "â€»ãƒ©ã‚¤ãƒ•ãƒ—ãƒ©ãƒ³ä¼‘æš‡"
+  other_name: "¦ƒ‰ƒCƒtƒvƒ‰ƒ“‹x‰É"
   type_description: ""
   type_description_text: ""
   display_order1: 10
@@ -683,9 +683,9 @@ types_35:
   owner_id: 
   type_section: "working_type"
   type_key: "suspension1_dayoff"
-  long_name: "â€»ä¼‘æ¥­"
-  short_name: "â€»ä¼‘æ¥­"
-  other_name: "â€»ä¼‘æ¥­"
+  long_name: "¦‹x‹Æ"
+  short_name: "¦‹x‹Æ"
+  other_name: "¦‹x‹Æ"
   type_description: ""
   type_description_text: ""
   display_order1: 11
@@ -703,9 +703,9 @@ types_36:
   owner_id: 
   type_section: "working_type"
   type_key: "suspension2_dayoff"
-  long_name: "â€»ä¼‘è·"
-  short_name: "â€»ä¼‘è·"
-  other_name: "â€»ä¼‘è·"
+  long_name: "¦‹xE"
+  short_name: "¦‹xE"
+  other_name: "¦‹xE"
   type_description: ""
   type_description_text: ""
   display_order1: 12
@@ -723,9 +723,9 @@ types_37:
   owner_id: 
   type_section: "working_option_type"
   type_key: "over_time_app"
-  long_name: "æ®‹æ¥­ç”³è«‹"
-  short_name: "æ®‹æ¥­"
-  other_name: "æ®‹æ¥­ç”³è«‹"
+  long_name: "c‹Æ\¿"
+  short_name: "c‹Æ"
+  other_name: "c‹Æ\¿"
   type_description: ""
   type_description_text: ""
   display_order1: 1
@@ -743,9 +743,9 @@ types_38:
   owner_id: 
   type_section: "working_option_type"
   type_key: "go_directly_app"
-  long_name: "ç›´è¡Œç”³è«‹"
-  short_name: "ç›´è¡Œ"
-  other_name: "ç›´è¡Œç”³è«‹"
+  long_name: "’¼s\¿"
+  short_name: "’¼s"
+  other_name: "’¼s\¿"
   type_description: ""
   type_description_text: ""
   display_order1: 3
@@ -763,9 +763,9 @@ types_39:
   owner_id: 
   type_section: "working_option_type"
   type_key: "back_directly_app"
-  long_name: "ç›´å¸°ç”³è«‹"
-  short_name: "ç›´å¸°"
-  other_name: "ç›´å¸°ç”³è«‹"
+  long_name: "’¼‹A\¿"
+  short_name: "’¼‹A"
+  other_name: "’¼‹A\¿"
   type_description: ""
   type_description_text: ""
   display_order1: 4
@@ -783,9 +783,9 @@ types_40:
   owner_id: 
   type_section: "working_option_type"
   type_key: "come_lately_app"
-  long_name: "é…åˆ»ç”³è«‹"
-  short_name: "é…åˆ»"
-  other_name: "é…åˆ»ç”³è«‹"
+  long_name: "’x\¿"
+  short_name: "’x"
+  other_name: "’x\¿"
   type_description: ""
   type_description_text: ""
   display_order1: 5
@@ -803,9 +803,9 @@ types_41:
   owner_id: 
   type_section: "working_option_type"
   type_key: "leave_early_app"
-  long_name: "æ—©é€€ç”³è«‹"
-  short_name: "æ—©é€€"
-  other_name: "æ—©é€€ç”³è«‹"
+  long_name: "‘‘Ş\¿"
+  short_name: "‘‘Ş"
+  other_name: "‘‘Ş\¿"
   type_description: ""
   type_description_text: ""
   display_order1: 6
@@ -823,9 +823,9 @@ types_42:
   owner_id: 
   type_section: "approval_status_type"
   type_key: "entry"
-  long_name: "ç”³è«‹ä¸­"
-  short_name: "ç”³"
-  other_name: "ç”³è«‹ä¸­"
+  long_name: "\¿’†"
+  short_name: "\"
+  other_name: "\¿’†"
   type_description: ""
   type_description_text: ""
   display_order1: 1
@@ -843,9 +843,9 @@ types_43:
   owner_id: 
   type_section: "approval_status_type"
   type_key: "retry"
-  long_name: "å†æå‡º"
-  short_name: "å†"
-  other_name: "å†æå‡º"
+  long_name: "Ä’ño"
+  short_name: "Ä"
+  other_name: "Ä’ño"
   type_description: ""
   type_description_text: ""
   display_order1: 2
@@ -863,9 +863,9 @@ types_44:
   owner_id: 
   type_section: "approval_status_type"
   type_key: "approved"
-  long_name: "æ‰¿èªä¸­"
-  short_name: "æ‰¿"
-  other_name: "æ‰¿èªä¸­"
+  long_name: "³”F’†"
+  short_name: "³"
+  other_name: "³”F’†"
   type_description: ""
   type_description_text: ""
   display_order1: 3
@@ -883,9 +883,9 @@ types_45:
   owner_id: 
   type_section: "approval_status_type"
   type_key: "reject"
-  long_name: "å´ä¸‹æ¸ˆ"
-  short_name: "å´"
-  other_name: "å´ä¸‹æ¸ˆ"
+  long_name: "‹p‰ºÏ"
+  short_name: "‹p"
+  other_name: "‹p‰ºÏ"
   type_description: ""
   type_description_text: ""
   display_order1: 4
@@ -903,9 +903,9 @@ types_46:
   owner_id: 
   type_section: "approval_status_type"
   type_key: "fixed"
-  long_name: "æ‰¿èªæ¸ˆ"
-  short_name: "æ‰¿"
-  other_name: "æ‰¿èªæ¸ˆ"
+  long_name: "³”FÏ"
+  short_name: "³"
+  other_name: "³”FÏ"
   type_description: ""
   type_description_text: ""
   display_order1: 5
@@ -923,9 +923,9 @@ types_47:
   owner_id: 
   type_section: "approval_status_type"
   type_key: "canceled"
-  long_name: "å–æ¶ˆæ¸ˆ"
-  short_name: "æ¶ˆ"
-  other_name: "å–æ¶ˆæ¸ˆ"
+  long_name: "æÁÏ"
+  short_name: "Á"
+  other_name: "æÁÏ"
   type_description: ""
   type_description_text: ""
   display_order1: 6
@@ -943,9 +943,9 @@ types_48:
   owner_id: 
   type_section: "suspension1_dayoff_type"
   type_key: "suspension1_1_dayoff"
-  long_name: "å…¬æ°‘æ¨©è¡Œä½¿ã®æ™‚é–“"
-  short_name: "å…¬æ°‘æ¨©è¡Œä½¿ã®æ™‚é–“"
-  other_name: "å…¬æ°‘æ¨©è¡Œä½¿ã®æ™‚é–“"
+  long_name: "Œö–¯Œ sg‚ÌŠÔ"
+  short_name: "Œö–¯Œ sg‚ÌŠÔ"
+  other_name: "Œö–¯Œ sg‚ÌŠÔ"
   type_description: ""
   type_description_text: ""
   display_order1: 1
@@ -963,9 +963,9 @@ types_49:
   owner_id: 
   type_section: "suspension1_dayoff_type"
   type_key: "suspension1_2_dayoff"
-  long_name: "ç”Ÿç†æ—¥ã®ä¼‘æš‡"
-  short_name: "ç”Ÿç†æ—¥ã®ä¼‘æš‡"
-  other_name: "ç”Ÿç†æ—¥ã®ä¼‘æš‡"
+  long_name: "¶—“ú‚Ì‹x‰É"
+  short_name: "¶—“ú‚Ì‹x‰É"
+  other_name: "¶—“ú‚Ì‹x‰É"
   type_description: ""
   type_description_text: ""
   display_order1: 2
@@ -983,9 +983,9 @@ types_50:
   owner_id: 
   type_section: "suspension1_dayoff_type"
   type_key: "suspension1_3_dayoff"
-  long_name: "è‚²å…ä¼‘æš‡"
-  short_name: "è‚²å…ä¼‘æš‡"
-  other_name: "è‚²å…ä¼‘æš‡"
+  long_name: "ˆç™‹x‰É"
+  short_name: "ˆç™‹x‰É"
+  other_name: "ˆç™‹x‰É"
   type_description: ""
   type_description_text: ""
   display_order1: 3
@@ -1003,9 +1003,9 @@ types_51:
   owner_id: 
   type_section: "suspension1_dayoff_type"
   type_key: "suspension1_4_dayoff"
-  long_name: "å¥åº·è¨ºæŸ»ç­‰ã®æ™‚é–“"
-  short_name: "å¥åº·è¨ºæŸ»ç­‰ã®æ™‚é–“"
-  other_name: "å¥åº·è¨ºæŸ»ç­‰ã®æ™‚é–“"
+  long_name: "Œ’Nf¸“™‚ÌŠÔ"
+  short_name: "Œ’Nf¸“™‚ÌŠÔ"
+  other_name: "Œ’Nf¸“™‚ÌŠÔ"
   type_description: ""
   type_description_text: ""
   display_order1: 4
@@ -1023,9 +1023,9 @@ types_52:
   owner_id: 
   type_section: "suspension1_dayoff_type"
   type_key: "suspension1_5_dayoff"
-  long_name: "ç”£å‰ç”£å¾Œã®ä¼‘æ¥­"
-  short_name: "ç”£å‰ç”£å¾Œã®ä¼‘æ¥­"
-  other_name: "ç”£å‰ç”£å¾Œã®ä¼‘æ¥­"
+  long_name: "Y‘OYŒã‚Ì‹x‹Æ"
+  short_name: "Y‘OYŒã‚Ì‹x‹Æ"
+  other_name: "Y‘OYŒã‚Ì‹x‹Æ"
   type_description: ""
   type_description_text: ""
   display_order1: 5
@@ -1043,9 +1043,9 @@ types_53:
   owner_id: 
   type_section: "suspension1_dayoff_type"
   type_key: "suspension1_6_dayoff"
-  long_name: "çœ‹è­·ä¼‘æš‡"
-  short_name: "çœ‹è­·ä¼‘æš‡"
-  other_name: "çœ‹è­·ä¼‘æš‡"
+  long_name: "ŠÅŒì‹x‰É"
+  short_name: "ŠÅŒì‹x‰É"
+  other_name: "ŠÅŒì‹x‰É"
   type_description: ""
   type_description_text: ""
   display_order1: 6
@@ -1063,9 +1063,9 @@ types_54:
   owner_id: 
   type_section: "suspension1_dayoff_type"
   type_key: "suspension1_7_dayoff"
-  long_name: "è‚²å…ä¼‘æ¥­ç­‰"
-  short_name: "è‚²å…ä¼‘æ¥­ç­‰"
-  other_name: "è‚²å…ä¼‘æ¥­ç­‰"
+  long_name: "ˆç™‹x‹Æ“™"
+  short_name: "ˆç™‹x‹Æ“™"
+  other_name: "ˆç™‹x‹Æ“™"
   type_description: ""
   type_description_text: ""
   display_order1: 7
@@ -1083,9 +1083,9 @@ types_55:
   owner_id: 
   type_section: "suspension1_dayoff_type"
   type_key: "suspension1_8_dayoff"
-  long_name: "ä»‹è­·ä¼‘æ¥­ç­‰"
-  short_name: "ä»‹è­·ä¼‘æ¥­ç­‰"
-  other_name: "ä»‹è­·ä¼‘æ¥­ç­‰"
+  long_name: "‰îŒì‹x‹Æ“™"
+  short_name: "‰îŒì‹x‹Æ“™"
+  other_name: "‰îŒì‹x‹Æ“™"
   type_description: ""
   type_description_text: ""
   display_order1: 8
@@ -1103,9 +1103,9 @@ types_56:
   owner_id: 
   type_section: "suspension1_dayoff_type"
   type_key: "suspension1_9_dayoff"
-  long_name: "æ¥­å‹™ä¸Šã®ä¼‘æ¥­"
-  short_name: "æ¥­å‹™ä¸Šã®ä¼‘æ¥­"
-  other_name: "æ¥­å‹™ä¸Šã®ä¼‘æ¥­"
+  long_name: "‹Æ–±ã‚Ì‹x‹Æ"
+  short_name: "‹Æ–±ã‚Ì‹x‹Æ"
+  other_name: "‹Æ–±ã‚Ì‹x‹Æ"
   type_description: ""
   type_description_text: ""
   display_order1: 9
@@ -1123,9 +1123,9 @@ types_57:
   owner_id: 
   type_section: "expense_app_type"
   type_key: "business_trip_app"
-  long_name: "å‡ºå¼µ"
-  short_name: "å‡ºå¼µ"
-  other_name: "å‡ºå¼µ"
+  long_name: "o’£"
+  short_name: "o’£"
+  other_name: "o’£"
   type_description: ""
   type_description_text: ""
   display_order1: 2
@@ -1143,9 +1143,9 @@ types_58:
   owner_id: 
   type_section: "expense_app_type"
   type_key: "expense_account_app"
-  long_name: "äº¤éš›è²»"
-  short_name: "äº¤éš›è²»"
-  other_name: "äº¤éš›è²»"
+  long_name: "ŒğÛ”ï"
+  short_name: "ŒğÛ”ï"
+  other_name: "ŒğÛ”ï"
   type_description: ""
   type_description_text: ""
   display_order1: 2
@@ -1163,9 +1163,9 @@ types_59:
   owner_id: 
   type_section: "expense_app_type"
   type_key: "meeting_expenses_app"
-  long_name: "ä¼šè­°"
-  short_name: "ä¼šè­°"
-  other_name: "ä¼šè­°"
+  long_name: "‰ï‹c"
+  short_name: "‰ï‹c"
+  other_name: "‰ï‹c"
   type_description: ""
   type_description_text: ""
   display_order1: 3
@@ -1183,9 +1183,9 @@ types_60:
   owner_id: 
   type_section: "expense_app_type"
   type_key: "material_expenses_app"
-  long_name: "ç‰©å“è³¼å…¥"
-  short_name: "ç‰©å“"
-  other_name: "ç‰©å“è³¼å…¥"
+  long_name: "•¨•iw“ü"
+  short_name: "•¨•i"
+  other_name: "•¨•iw“ü"
   type_description: ""
   type_description_text: ""
   display_order1: 4
@@ -1203,9 +1203,9 @@ types_61:
   owner_id: 
   type_section: "expense_app_type"
   type_key: "fee_expense_app"
-  long_name: "è¬ç¤¼"
-  short_name: "è¬ç¤¼"
-  other_name: "è¬ç¤¼"
+  long_name: "Ó—ç"
+  short_name: "Ó—ç"
+  other_name: "Ó—ç"
   type_description: ""
   type_description_text: ""
   display_order1: 5
@@ -1223,9 +1223,9 @@ types_62:
   owner_id: 
   type_section: "expense_app_type"
   type_key: "temporary_app"
-  long_name: "ä»®æ‰•"
-  short_name: "ä»®æ‰•"
-  other_name: "ä»®æ‰•"
+  long_name: "‰¼•¥"
+  short_name: "‰¼•¥"
+  other_name: "‰¼•¥"
   type_description: ""
   type_description_text: ""
   display_order1: 6
@@ -1243,9 +1243,9 @@ types_63:
   owner_id: 
   type_section: "relative_status_type"
   type_key: "spouse"
-  long_name: "é…å¶è€…"
-  short_name: "é…å¶è€…"
-  other_name: "é…å¶è€…"
+  long_name: "”z‹ôÒ"
+  short_name: "”z‹ôÒ"
+  other_name: "”z‹ôÒ"
   type_description: ""
   type_description_text: ""
   display_order1: 1
@@ -1263,9 +1263,9 @@ types_64:
   owner_id: 
   type_section: "relative_status_type"
   type_key: "dependent"
-  long_name: "æ‰¶é¤Šå®¶æ—"
-  short_name: "æ‰¶é¤Š"
-  other_name: "æ‰¶é¤Šå®¶æ—"
+  long_name: "•}—{‰Æ‘°"
+  short_name: "•}—{"
+  other_name: "•}—{‰Æ‘°"
   type_description: ""
   type_description_text: ""
   display_order1: 2
@@ -1283,9 +1283,9 @@ types_65:
   owner_id: 
   type_section: "application_type"
   type_key: "monthly_working_app"
-  long_name: "æ—¥å ±æœˆç· "
-  short_name: "æœˆç· "
-  other_name: "æ—¥å ±æœˆç· "
+  long_name: "“ú•ñŒ’÷"
+  short_name: "Œ’÷"
+  other_name: "“ú•ñŒ’÷"
   type_description: ""
   type_description_text: ""
   display_order1: 1
@@ -1303,9 +1303,9 @@ types_66:
   owner_id: 
   type_section: "application_type"
   type_key: "weekly_report_app"
-  long_name: "é€±å ±"
-  short_name: "é€±å ±"
-  other_name: "é€±å ±"
+  long_name: "T•ñ"
+  short_name: "T•ñ"
+  other_name: "T•ñ"
   type_description: ""
   type_description_text: ""
   display_order1: 2
@@ -1323,9 +1323,9 @@ types_67:
   owner_id: 
   type_section: "application_type"
   type_key: "payment_per_month_app"
-  long_name: "çµŒè²»æœˆç· "
-  short_name: "çµŒæœˆ"
-  other_name: "çµŒè²»æœˆç· "
+  long_name: "Œo”ïŒ’÷"
+  short_name: "ŒoŒ"
+  other_name: "Œo”ïŒ’÷"
   type_description: ""
   type_description_text: ""
   display_order1: 3
@@ -1343,9 +1343,9 @@ types_68:
   owner_id: 
   type_section: "application_type"
   type_key: "payment_per_case_app"
-  long_name: "çµŒè²»éƒ½åº¦"
-  short_name: "éƒ½åº¦"
-  other_name: "çµŒè²»éƒ½åº¦"
+  long_name: "Œo”ï“s“x"
+  short_name: "“s“x"
+  other_name: "Œo”ï“s“x"
   type_description: ""
   type_description_text: ""
   display_order1: 4
@@ -1363,9 +1363,9 @@ types_69:
   owner_id: 
   type_section: "application_type"
   type_key: "business_trip_app"
-  long_name: "å‡ºå¼µ"
-  short_name: "å‡ºå¼µ"
-  other_name: "å‡ºå¼µ"
+  long_name: "o’£"
+  short_name: "o’£"
+  other_name: "o’£"
   type_description: ""
   type_description_text: ""
   display_order1: 5
@@ -1383,9 +1383,9 @@ types_70:
   owner_id: 
   type_section: "application_type"
   type_key: "holiday_app"
-  long_name: "ä¼‘æš‡"
-  short_name: "ä¼‘æš‡"
-  other_name: "ä¼‘æš‡"
+  long_name: "‹x‰É"
+  short_name: "‹x‰É"
+  other_name: "‹x‰É"
   type_description: ""
   type_description_text: ""
   display_order1: 6
@@ -1403,9 +1403,9 @@ types_71:
   owner_id: 
   type_section: "application_type"
   type_key: "other_app"
-  long_name: "ä»–å‹¤æ€ "
-  short_name: "ä»–å‹¤æ€ "
-  other_name: "ä»–å‹¤æ€ "
+  long_name: "‘¼‹Î‘Ó"
+  short_name: "‘¼‹Î‘Ó"
+  other_name: "‘¼‹Î‘Ó"
   type_description: ""
   type_description_text: ""
   display_order1: 7
@@ -1423,9 +1423,9 @@ types_72:
   owner_id: 
   type_section: "application_type"
   type_key: "expense_app"
-  long_name: "çµŒè²»"
-  short_name: "çµŒè²»"
-  other_name: "çµŒè²»"
+  long_name: "Œo”ï"
+  short_name: "Œo”ï"
+  other_name: "Œo”ï"
   type_description: ""
   type_description_text: ""
   display_order1: 8
@@ -1443,9 +1443,9 @@ types_73:
   owner_id: 
   type_section: "account_type"
   type_key: "general"
-  long_name: "æ™®é€š"
-  short_name: "æ™®é€š"
-  other_name: "æ™®é€š"
+  long_name: "•’Ê"
+  short_name: "•’Ê"
+  other_name: "•’Ê"
   type_description: ""
   type_description_text: ""
   display_order1: 1
@@ -1463,9 +1463,9 @@ types_74:
   owner_id: 
   type_section: "account_type"
   type_key: "current"
-  long_name: "å½“åº§"
-  short_name: "å½“åº§"
-  other_name: "å½“åº§"
+  long_name: "“–À"
+  short_name: "“–À"
+  other_name: "“–À"
   type_description: ""
   type_description_text: ""
   display_order1: 2
@@ -1483,9 +1483,9 @@ types_75:
   owner_id: 
   type_section: "sex_type"
   type_key: "unknown"
-  long_name: "ä¸æ˜"
-  short_name: "ä¸"
-  other_name: "ä¸æ˜"
+  long_name: "•s–¾"
+  short_name: "•s"
+  other_name: "•s–¾"
   type_description: ""
   type_description_text: ""
   display_order1: 1
@@ -1503,9 +1503,9 @@ types_76:
   owner_id: 
   type_section: "sex_type"
   type_key: "man"
-  long_name: "ç”·æ€§"
-  short_name: "ç”·"
-  other_name: "ç”·æ€§"
+  long_name: "’j«"
+  short_name: "’j"
+  other_name: "’j«"
   type_description: ""
   type_description_text: ""
   display_order1: 2
@@ -1523,9 +1523,9 @@ types_77:
   owner_id: 
   type_section: "sex_type"
   type_key: "woman"
-  long_name: "å¥³æ€§"
-  short_name: "å¥³"
-  other_name: "å¥³æ€§"
+  long_name: "—«"
+  short_name: "—"
+  other_name: "—«"
   type_description: ""
   type_description_text: ""
   display_order1: 3
@@ -1543,9 +1543,9 @@ types_78:
   owner_id: 
   type_section: "sex_type"
   type_key: "other"
-  long_name: "ãã®ä»–"
-  short_name: "ä»–"
-  other_name: "ãã®ä»–"
+  long_name: "‚»‚Ì‘¼"
+  short_name: "‘¼"
+  other_name: "‚»‚Ì‘¼"
   type_description: ""
   type_description_text: ""
   display_order1: 4
@@ -1563,10 +1563,10 @@ types_79:
   owner_id: 
   type_section: "approver_type"
   type_key: "report_xxx"
-  long_name: "é€±å ±ãƒ»å‡ºé€€å‹¤è¡¨"
-  short_name: "å‹¤å‹™è¡¨"
-  other_name: "é€±å ±ãƒ»å‡ºé€€å‹¤è¡¨"
-  type_description: "é€±å ±ã€ä½œæ¥­æ—¥å ±ã®æœˆç· ã®æ‰¿èªç”³è«‹ã‚’è¡Œã†ç›¸æ‰‹"
+  long_name: "T•ñEo‘Ş‹Î•\"
+  short_name: "‹Î–±•\"
+  other_name: "T•ñEo‘Ş‹Î•\"
+  type_description: "T•ñAì‹Æ“ú•ñ‚ÌŒ’÷‚Ì³”F\¿‚ğs‚¤‘Šè"
   type_description_text: ""
   display_order1: 1
   display_order2: 1
@@ -1583,10 +1583,10 @@ types_80:
   owner_id: 
   type_section: "approver_type"
   type_key: "working_xxx"
-  long_name: "å‹¤æ€ ç”³è«‹"
-  short_name: "å‹¤æ€ "
-  other_name: "å‹¤æ€ ç”³è«‹"
-  type_description: "æœ‰çµ¦ã€é…åˆ»æ—©é€€ãªã©ã®ç”³è«‹ã‚’è¡Œã†ç›¸æ‰‹"
+  long_name: "‹Î‘Ó\¿"
+  short_name: "‹Î‘Ó"
+  other_name: "‹Î‘Ó\¿"
+  type_description: "—L‹‹A’x‘‘Ş‚È‚Ç‚Ì\¿‚ğs‚¤‘Šè"
   type_description_text: ""
   display_order1: 2
   display_order2: 2
@@ -1603,10 +1603,10 @@ types_81:
   owner_id: 
   type_section: "approver_type"
   type_key: "business_trip_xxx"
-  long_name: "å‡ºå¼µç”³è«‹"
-  short_name: "å‡ºå¼µ"
-  other_name: "å‡ºå¼µç”³è«‹"
-  type_description: "å‡ºå¼µç”³è«‹ã‚’è¡Œã†ç›¸æ‰‹"
+  long_name: "o’£\¿"
+  short_name: "o’£"
+  other_name: "o’£\¿"
+  type_description: "o’£\¿‚ğs‚¤‘Šè"
   type_description_text: ""
   display_order1: 3
   display_order2: 3
@@ -1623,10 +1623,10 @@ types_82:
   owner_id: 
   type_section: "approver_type"
   type_key: "expense_xxx"
-  long_name: "å„ç¨®ç²¾ç®—"
-  short_name: "ç²¾ç®—"
-  other_name: "å„ç¨®ç²¾ç®—"
-  type_description: "çµŒè²»ç²¾ç®—ã®ç²¾ç®—ã‚’è¡Œã†ç›¸æ‰‹"
+  long_name: "Šeí¸Z"
+  short_name: "¸Z"
+  other_name: "Šeí¸Z"
+  type_description: "Œo”ï¸Z‚Ì¸Z‚ğs‚¤‘Šè"
   type_description_text: ""
   display_order1: 4
   display_order2: 4
@@ -1643,9 +1643,9 @@ types_83:
   owner_id: 
   type_section: "cutoff_status_type"
   type_key: "open"
-  long_name: "æœªç²¾ç®—"
-  short_name: "æœª"
-  other_name: "æœªç²¾ç®—"
+  long_name: "–¢¸Z"
+  short_name: "–¢"
+  other_name: "–¢¸Z"
   type_description: ""
   type_description_text: ""
   display_order1: 1
@@ -1663,9 +1663,9 @@ types_84:
   owner_id: 
   type_section: "cutoff_status_type"
   type_key: "waiting"
-  long_name: "ç²¾ç®—å¾…"
-  short_name: "å¾…"
-  other_name: "ç²¾ç®—å¾…"
+  long_name: "¸Z‘Ò"
+  short_name: "‘Ò"
+  other_name: "¸Z‘Ò"
   type_description: ""
   type_description_text: ""
   display_order1: 2
@@ -1683,9 +1683,9 @@ types_85:
   owner_id: 
   type_section: "cutoff_status_type"
   type_key: "closed"
-  long_name: "ç²¾ç®—æ¸ˆ"
-  short_name: "æ¸ˆ"
-  other_name: "ç²¾ç®—æ¸ˆ"
+  long_name: "¸ZÏ"
+  short_name: "Ï"
+  other_name: "¸ZÏ"
   type_description: ""
   type_description_text: ""
   display_order1: 3
@@ -1703,9 +1703,9 @@ types_86:
   owner_id: 
   type_section: "payment_method_type"
   type_key: "direct"
-  long_name: "æŒå‚"
-  short_name: "æŒ"
-  other_name: "æŒå‚"
+  long_name: "Q"
+  short_name: ""
+  other_name: "Q"
   type_description: ""
   type_description_text: ""
   display_order1: 1
@@ -1723,9 +1723,9 @@ types_87:
   owner_id: 
   type_section: "payment_method_type"
   type_key: "transfer"
-  long_name: "æŒ¯è¾¼"
-  short_name: "æŒ¯"
-  other_name: "æŒ¯è¾¼"
+  long_name: "U"
+  short_name: "U"
+  other_name: "U"
   type_description: ""
   type_description_text: ""
   display_order1: 2
@@ -1743,9 +1743,9 @@ types_88:
   owner_id: 
   type_section: "business_partner_type"
   type_key: "normal"
-  long_name: "ä¸€èˆ¬"
-  short_name: "èˆ¬"
-  other_name: "ä¸€èˆ¬"
+  long_name: "ˆê”Ê"
+  short_name: "”Ê"
+  other_name: "ˆê”Ê"
   type_description: ""
   type_description_text: ""
   display_order1: 1
@@ -1763,9 +1763,9 @@ types_89:
   owner_id: 
   type_section: "business_partner_type"
   type_key: "internal"
-  long_name: "ç¤¾å†…"
-  short_name: "å†…"
-  other_name: "ç¤¾å†…"
+  long_name: "Ğ“à"
+  short_name: "“à"
+  other_name: "Ğ“à"
   type_description: ""
   type_description_text: ""
   display_order1: 2
@@ -1783,9 +1783,9 @@ types_90:
   owner_id: 
   type_section: "project_type"
   type_key: "develop"
-  long_name: "é–‹ç™º"
-  short_name: "é–‹ç™º"
-  other_name: "é–‹ç™º"
+  long_name: "ŠJ”­"
+  short_name: "ŠJ”­"
+  other_name: "ŠJ”­"
   type_description: ""
   type_description_text: ""
   display_order1: 1
@@ -1803,9 +1803,9 @@ types_91:
   owner_id: 
   type_section: "project_type"
   type_key: "ses"
-  long_name: "æ”¯æ´"
-  short_name: "æ”¯æ´"
-  other_name: "æ”¯æ´"
+  long_name: "x‰‡"
+  short_name: "x‰‡"
+  other_name: "x‰‡"
   type_description: ""
   type_description_text: ""
   display_order1: 2
@@ -1823,9 +1823,9 @@ types_92:
   owner_id: 
   type_section: "project_type"
   type_key: "sales"
-  long_name: "è²©å£²"
-  short_name: "è²©å£²"
-  other_name: "è²©å£²"
+  long_name: "”Ì”„"
+  short_name: "”Ì”„"
+  other_name: "”Ì”„"
   type_description: ""
   type_description_text: ""
   display_order1: 3
@@ -1843,9 +1843,9 @@ types_93:
   owner_id: 
   type_section: "project_type"
   type_key: "internal"
-  long_name: "ç¤¾å†…"
-  short_name: "ç¤¾å†…"
-  other_name: "ç¤¾å†…"
+  long_name: "Ğ“à"
+  short_name: "Ğ“à"
+  other_name: "Ğ“à"
   type_description: ""
   type_description_text: ""
   display_order1: 4
@@ -1863,9 +1863,9 @@ types_94:
   owner_id: 
   type_section: "employee_type"
   type_key: "regular"
-  long_name: "æ­£ç¤¾å“¡"
-  short_name: "æ­£"
-  other_name: "æ­£ç¤¾å“¡"
+  long_name: "³Ğˆõ"
+  short_name: "³"
+  other_name: "³Ğˆõ"
   type_description: ""
   type_description_text: ""
   display_order1: 1
@@ -1883,9 +1883,9 @@ types_95:
   owner_id: 
   type_section: "employee_type"
   type_key: "temporary"
-  long_name: "å¥‘ç´„ç¤¾å“¡"
-  short_name: "å¥‘"
-  other_name: "å¥‘ç´„ç¤¾å“¡"
+  long_name: "Œ_–ñĞˆõ"
+  short_name: "Œ_"
+  other_name: "Œ_–ñĞˆõ"
   type_description: ""
   type_description_text: ""
   display_order1: 2
@@ -1903,9 +1903,9 @@ types_96:
   owner_id: 
   type_section: "employee_type"
   type_key: "dispatched"
-  long_name: "æ´¾é£ç¤¾å“¡"
-  short_name: "æ´¾"
-  other_name: "æ´¾é£ç¤¾å“¡"
+  long_name: "”hŒ­Ğˆõ"
+  short_name: "”h"
+  other_name: "”hŒ­Ğˆõ"
   type_description: ""
   type_description_text: ""
   display_order1: 3
@@ -1923,9 +1923,9 @@ types_97:
   owner_id: 
   type_section: "employee_type"
   type_key: "freelance"
-  long_name: "å€‹äººäº‹æ¥­ä¸»"
-  short_name: "å€‹"
-  other_name: "å€‹äººäº‹æ¥­ä¸»"
+  long_name: "ŒÂl–‹Æå"
+  short_name: "ŒÂ"
+  other_name: "ŒÂl–‹Æå"
   type_description: ""
   type_description_text: ""
   display_order1: 4
@@ -1943,9 +1943,9 @@ types_98:
   owner_id: 
   type_section: "employee_type"
   type_key: "bp"
-  long_name: "ãƒ‘ãƒ¼ãƒˆãƒŠãƒ¼"
+  long_name: "ƒp[ƒgƒi["
   short_name: "BP"
-  other_name: "ãƒ‘ãƒ¼ãƒˆãƒŠãƒ¼"
+  other_name: "ƒp[ƒgƒi["
   type_description: ""
   type_description_text: ""
   display_order1: 5
@@ -1963,9 +1963,9 @@ types_99:
   owner_id: 
   type_section: "employee_type"
   type_key: "other"
-  long_name: "ãã®ä»–"
-  short_name: "ä»–"
-  other_name: "ãã®ä»–"
+  long_name: "‚»‚Ì‘¼"
+  short_name: "‘¼"
+  other_name: "‚»‚Ì‘¼"
   type_description: ""
   type_description_text: ""
   display_order1: 6
@@ -1983,9 +1983,9 @@ types_100:
   owner_id: 
   type_section: "project_status_type"
   type_key: "active"
-  long_name: "æ´»å‹•ä¸­"
-  short_name: "â—‹"
-  other_name: "æ´»å‹•ä¸­"
+  long_name: "Šˆ“®’†"
+  short_name: "›"
+  other_name: "Šˆ“®’†"
   type_description: ""
   type_description_text: ""
   display_order1: 1
@@ -2003,9 +2003,9 @@ types_101:
   owner_id: 
   type_section: "project_status_type"
   type_key: "inactive"
-  long_name: "æ´»å‹•çµ‚äº†"
-  short_name: "Ã—"
-  other_name: "æ´»å‹•çµ‚äº†"
+  long_name: "Šˆ“®I—¹"
+  short_name: "~"
+  other_name: "Šˆ“®I—¹"
   type_description: ""
   type_description_text: ""
   display_order1: 2
@@ -2023,9 +2023,9 @@ types_102:
   owner_id: 
   type_section: "approach_status_type"
   type_key: "approaching"
-  long_name: "ææ¡ˆä¸­"
-  short_name: "ææ¡ˆä¸­"
-  other_name: "ææ¡ˆä¸­"
+  long_name: "’ñˆÄ’†"
+  short_name: "’ñˆÄ’†"
+  other_name: "’ñˆÄ’†"
   type_description: ""
   type_description_text: ""
   display_order1: 1
@@ -2043,9 +2043,9 @@ types_103:
   owner_id: 
   type_section: "approach_status_type"
   type_key: "adjust"
-  long_name: "ææ¡ˆèª¿æ•´ä¸­"
-  short_name: "ææ¡ˆèª¿æ•´ä¸­"
-  other_name: "ææ¡ˆèª¿æ•´ä¸­"
+  long_name: "’ñˆÄ’²®’†"
+  short_name: "’ñˆÄ’²®’†"
+  other_name: "’ñˆÄ’²®’†"
   type_description: ""
   type_description_text: ""
   display_order1: 2
@@ -2063,9 +2063,9 @@ types_104:
   owner_id: 
   type_section: "approach_status_type"
   type_key: "result_waiting"
-  long_name: "é¢è«‡çµæœå¾…ã¡"
-  short_name: "é¢è«‡çµæœå¾…ã¡"
-  other_name: "é¢è«‡çµæœå¾…ã¡"
+  long_name: "–Ê’kŒ‹‰Ê‘Ò‚¿"
+  short_name: "–Ê’kŒ‹‰Ê‘Ò‚¿"
+  other_name: "–Ê’kŒ‹‰Ê‘Ò‚¿"
   type_description: ""
   type_description_text: ""
   display_order1: 3
@@ -2083,9 +2083,9 @@ types_105:
   owner_id: 
   type_section: "approach_status_type"
   type_key: "success"
-  long_name: "æˆç´„"
-  short_name: "æˆç´„"
-  other_name: "æˆç´„"
+  long_name: "¬–ñ"
+  short_name: "¬–ñ"
+  other_name: "¬–ñ"
   type_description: ""
   type_description_text: ""
   display_order1: 4
@@ -2103,9 +2103,9 @@ types_106:
   owner_id: 
   type_section: "approach_status_type"
   type_key: "approach_failure"
-  long_name: "ææ¡ˆå¤±æ•—"
-  short_name: "ææ¡ˆå¤±æ•—"
-  other_name: "ææ¡ˆå¤±æ•—"
+  long_name: "’ñˆÄ¸”s"
+  short_name: "’ñˆÄ¸”s"
+  other_name: "’ñˆÄ¸”s"
   type_description: ""
   type_description_text: ""
   display_order1: 5
@@ -2123,9 +2123,9 @@ types_107:
   owner_id: 
   type_section: "approach_status_type"
   type_key: "interview_failure"
-  long_name: "é¢è«‡å¤±æ•—"
-  short_name: "é¢è«‡å¤±æ•—"
-  other_name: "é¢è«‡å¤±æ•—"
+  long_name: "–Ê’k¸”s"
+  short_name: "–Ê’k¸”s"
+  other_name: "–Ê’k¸”s"
   type_description: ""
   type_description_text: ""
   display_order1: 6
@@ -2143,9 +2143,9 @@ types_108:
   owner_id: 
   type_section: "approach_status_type"
   type_key: "other_failure"
-  long_name: "ä»–ç¤¾å¤±æ•—"
-  short_name: "ä»–ç¤¾å¤±æ•—"
-  other_name: "ä»–ç¤¾å¤±æ•—"
+  long_name: "‘¼Ğ¸”s"
+  short_name: "‘¼Ğ¸”s"
+  other_name: "‘¼Ğ¸”s"
   type_description: ""
   type_description_text: ""
   display_order1: 7
@@ -2163,9 +2163,9 @@ types_109:
   owner_id: 
   type_section: "approach_status_type"
   type_key: "lost_failure"
-  long_name: "æ¶ˆæ»…å¤±æ•—"
-  short_name: "æ¶ˆæ»…å¤±æ•—"
-  other_name: "æ¶ˆæ»…å¤±æ•—"
+  long_name: "Á–Å¸”s"
+  short_name: "Á–Å¸”s"
+  other_name: "Á–Å¸”s"
   type_description: ""
   type_description_text: ""
   display_order1: 8
@@ -2183,9 +2183,9 @@ types_110:
   owner_id: 
   type_section: "approach_status_type"
   type_key: "natural_lost"
-  long_name: "è‡ªç„¶æ¶ˆæ»…"
-  short_name: "è‡ªç„¶æ¶ˆæ»…"
-  other_name: "è‡ªç„¶æ¶ˆæ»…"
+  long_name: "©‘RÁ–Å"
+  short_name: "©‘RÁ–Å"
+  other_name: "©‘RÁ–Å"
   type_description: ""
   type_description_text: ""
   display_order1: 9
@@ -2203,9 +2203,9 @@ types_111:
   owner_id: 
   type_section: "approach_status_type"
   type_key: "other_success"
-  long_name: "åˆ¥æˆç´„"
-  short_name: "åˆ¥æˆç´„"
-  other_name: "åˆ¥æˆç´„"
+  long_name: "•Ê¬–ñ"
+  short_name: "•Ê¬–ñ"
+  other_name: "•Ê¬–ñ"
   type_description: ""
   type_description_text: ""
   display_order1: 10
@@ -2223,9 +2223,9 @@ types_112:
   owner_id: 
   type_section: "business_status_type"
   type_key: "offered"
-  long_name: "å‹Ÿé›†ä¸­"
-  short_name: "å‹Ÿé›†ä¸­"
-  other_name: "å‹Ÿé›†ä¸­"
+  long_name: "•åW’†"
+  short_name: "•åW’†"
+  other_name: "•åW’†"
   type_description: ""
   type_description_text: ""
   display_order1: 1
@@ -2243,9 +2243,9 @@ types_113:
   owner_id: 
   type_section: "business_status_type"
   type_key: "contracting"
-  long_name: "å¥‘ç´„ä¸­"
-  short_name: "å¥‘ç´„ä¸­"
-  other_name: "å¥‘ç´„ä¸­"
+  long_name: "Œ_–ñ’†"
+  short_name: "Œ_–ñ’†"
+  other_name: "Œ_–ñ’†"
   type_description: ""
   type_description_text: ""
   display_order1: 2
@@ -2263,9 +2263,9 @@ types_114:
   owner_id: 
   type_section: "business_status_type"
   type_key: "finished"
-  long_name: "æ¡ˆä»¶çµ‚äº†"
-  short_name: "æ¡ˆä»¶çµ‚äº†"
-  other_name: "æ¡ˆä»¶çµ‚äº†"
+  long_name: "ˆÄŒI—¹"
+  short_name: "ˆÄŒI—¹"
+  other_name: "ˆÄŒI—¹"
   type_description: ""
   type_description_text: ""
   display_order1: 3
@@ -2283,9 +2283,9 @@ types_115:
   owner_id: 
   type_section: "business_status_type"
   type_key: "other_failure"
-  long_name: "ä»–ç¤¾å¤±æ•—"
-  short_name: "ä»–ç¤¾å¤±æ•—"
-  other_name: "ä»–ç¤¾å¤±æ•—"
+  long_name: "‘¼Ğ¸”s"
+  short_name: "‘¼Ğ¸”s"
+  other_name: "‘¼Ğ¸”s"
   type_description: ""
   type_description_text: ""
   display_order1: 4
@@ -2303,9 +2303,9 @@ types_116:
   owner_id: 
   type_section: "business_status_type"
   type_key: "lost_failure"
-  long_name: "æ¶ˆæ»…å¤±æ•—"
-  short_name: "æ¶ˆæ»…å¤±æ•—"
-  other_name: "æ¶ˆæ»…å¤±æ•—"
+  long_name: "Á–Å¸”s"
+  short_name: "Á–Å¸”s"
+  other_name: "Á–Å¸”s"
   type_description: ""
   type_description_text: ""
   display_order1: 5
@@ -2323,9 +2323,9 @@ types_117:
   owner_id: 
   type_section: "business_status_type"
   type_key: "natural_lost"
-  long_name: "è‡ªç„¶æ¶ˆæ»…"
-  short_name: "è‡ªç„¶æ¶ˆæ»…"
-  other_name: "è‡ªç„¶æ¶ˆæ»…"
+  long_name: "©‘RÁ–Å"
+  short_name: "©‘RÁ–Å"
+  other_name: "©‘RÁ–Å"
   type_description: ""
   type_description_text: ""
   display_order1: 6
@@ -2343,9 +2343,9 @@ types_118:
   owner_id: 
   type_section: "sales_status_type"
   type_key: "listup"
-  long_name: "ãƒªã‚¹ãƒˆã‚¢ãƒƒãƒ—"
-  short_name: "ãƒªã‚¹ãƒˆ"
-  other_name: "ãƒªã‚¹ãƒˆã‚¢ãƒƒãƒ—"
+  long_name: "ƒŠƒXƒgƒAƒbƒv"
+  short_name: "ƒŠƒXƒg"
+  other_name: "ƒŠƒXƒgƒAƒbƒv"
   type_description: ""
   type_description_text: ""
   display_order1: 1
@@ -2363,9 +2363,9 @@ types_119:
   owner_id: 
   type_section: "sales_status_type"
   type_key: "prospect"
-  long_name: "è¦‹è¾¼å®¢"
-  short_name: "è¦‹è¾¼"
-  other_name: "è¦‹è¾¼å®¢"
+  long_name: "Œ©‹q"
+  short_name: "Œ©"
+  other_name: "Œ©‹q"
   type_description: ""
   type_description_text: ""
   display_order1: 2
@@ -2383,9 +2383,9 @@ types_120:
   owner_id: 
   type_section: "sales_status_type"
   type_key: "business"
-  long_name: "å–å¼•å…ˆ"
-  short_name: "å–å¼•"
-  other_name: "å–å¼•å…ˆ"
+  long_name: "æˆøæ"
+  short_name: "æˆø"
+  other_name: "æˆøæ"
   type_description: ""
   type_description_text: ""
   display_order1: 3
@@ -2403,9 +2403,9 @@ types_121:
   owner_id: 
   type_section: "employment_type"
   type_key: "unknown"
-  long_name: "ä¸æ˜"
-  short_name: "ä¸"
-  other_name: "ä¸æ˜"
+  long_name: "•s–¾"
+  short_name: "•s"
+  other_name: "•s–¾"
   type_description: ""
   type_description_text: ""
   display_order1: 1
@@ -2423,9 +2423,9 @@ types_122:
   owner_id: 
   type_section: "employment_type"
   type_key: "permanent"
-  long_name: "æ­£ç¤¾å“¡"
-  short_name: "æ­£"
-  other_name: "æ­£ç¤¾å“¡"
+  long_name: "³Ğˆõ"
+  short_name: "³"
+  other_name: "³Ğˆõ"
   type_description: ""
   type_description_text: ""
   display_order1: 2
@@ -2443,9 +2443,9 @@ types_123:
   owner_id: 
   type_section: "employment_type"
   type_key: "temporary"
-  long_name: "å¥‘ç´„ç¤¾å“¡"
-  short_name: "å¥‘"
-  other_name: "å¥‘ç´„ç¤¾å“¡"
+  long_name: "Œ_–ñĞˆõ"
+  short_name: "Œ_"
+  other_name: "Œ_–ñĞˆõ"
   type_description: ""
   type_description_text: ""
   display_order1: 3
@@ -2463,9 +2463,9 @@ types_124:
   owner_id: 
   type_section: "employment_type"
   type_key: "freelance"
-  long_name: "å€‹äººäº‹æ¥­ä¸»"
-  short_name: "å€‹"
-  other_name: "å€‹äººäº‹æ¥­ä¸»"
+  long_name: "ŒÂl–‹Æå"
+  short_name: "ŒÂ"
+  other_name: "ŒÂl–‹Æå"
   type_description: ""
   type_description_text: ""
   display_order1: 4
@@ -2483,9 +2483,9 @@ types_125:
   owner_id: 
   type_section: "employment_type"
   type_key: "bp"
-  long_name: "ãƒ‘ãƒ¼ãƒˆãƒŠãƒ¼"
+  long_name: "ƒp[ƒgƒi["
   short_name: "BP"
-  other_name: "ãƒ‘ãƒ¼ãƒˆãƒŠãƒ¼"
+  other_name: "ƒp[ƒgƒi["
   type_description: ""
   type_description_text: ""
   display_order1: 5
@@ -2503,9 +2503,9 @@ types_126:
   owner_id: 
   type_section: "communication_type"
   type_key: "unknown"
-  long_name: "ä¸æ˜"
-  short_name: "ä¸æ˜"
-  other_name: "ä¸æ˜"
+  long_name: "•s–¾"
+  short_name: "•s–¾"
+  other_name: "•s–¾"
   type_description: ""
   type_description_text: ""
   display_order1: 1
@@ -2523,9 +2523,9 @@ types_127:
   owner_id: 
   type_section: "communication_type"
   type_key: "level5"
-  long_name: "ã¨ã¦ã‚‚è‰¯ã„"
-  short_name: "è‰¯è‰¯"
-  other_name: "ã¨ã¦ã‚‚è‰¯ã„"
+  long_name: "‚Æ‚Ä‚à—Ç‚¢"
+  short_name: "—Ç—Ç"
+  other_name: "‚Æ‚Ä‚à—Ç‚¢"
   type_description: ""
   type_description_text: ""
   display_order1: 2
@@ -2543,9 +2543,9 @@ types_128:
   owner_id: 
   type_section: "communication_type"
   type_key: "level4"
-  long_name: "è‰¯ã„"
-  short_name: "è‰¯ã„"
-  other_name: "è‰¯ã„"
+  long_name: "—Ç‚¢"
+  short_name: "—Ç‚¢"
+  other_name: "—Ç‚¢"
   type_description: ""
   type_description_text: ""
   display_order1: 3
@@ -2563,9 +2563,9 @@ types_129:
   owner_id: 
   type_section: "communication_type"
   type_key: "level3"
-  long_name: "æ™®é€š"
-  short_name: "æ™®é€š"
-  other_name: "æ™®é€š"
+  long_name: "•’Ê"
+  short_name: "•’Ê"
+  other_name: "•’Ê"
   type_description: ""
   type_description_text: ""
   display_order1: 4
@@ -2583,9 +2583,9 @@ types_130:
   owner_id: 
   type_section: "communication_type"
   type_key: "level2"
-  long_name: "æ‚ªã„"
-  short_name: "æ‚ªã„"
-  other_name: "æ‚ªã„"
+  long_name: "ˆ«‚¢"
+  short_name: "ˆ«‚¢"
+  other_name: "ˆ«‚¢"
   type_description: ""
   type_description_text: ""
   display_order1: 5
@@ -2603,9 +2603,9 @@ types_131:
   owner_id: 
   type_section: "communication_type"
   type_key: "level1"
-  long_name: "ã¨ã¦ã‚‚æ‚ªã„"
-  short_name: "æ‚ªæ‚ª"
-  other_name: "ã¨ã¦ã‚‚æ‚ªã„"
+  long_name: "‚Æ‚Ä‚àˆ«‚¢"
+  short_name: "ˆ«ˆ«"
+  other_name: "‚Æ‚Ä‚àˆ«‚¢"
   type_description: ""
   type_description_text: ""
   display_order1: 6
@@ -2623,9 +2623,9 @@ types_132:
   owner_id: 
   type_section: "biz_offer_status_type"
   type_key: "open"
-  long_name: "æœªææ¡ˆ"
-  short_name: "æœªææ¡ˆ"
-  other_name: "æœªææ¡ˆ"
+  long_name: "–¢’ñˆÄ"
+  short_name: "–¢’ñˆÄ"
+  other_name: "–¢’ñˆÄ"
   type_description: ""
   type_description_text: ""
   display_order1: 1
@@ -2643,9 +2643,9 @@ types_133:
   owner_id: 
   type_section: "biz_offer_status_type"
   type_key: "approached"
-  long_name: "ææ¡ˆä¸­"
-  short_name: "ææ¡ˆä¸­"
-  other_name: "ææ¡ˆä¸­"
+  long_name: "’ñˆÄ’†"
+  short_name: "’ñˆÄ’†"
+  other_name: "’ñˆÄ’†"
   type_description: ""
   type_description_text: ""
   display_order1: 2
@@ -2663,9 +2663,9 @@ types_134:
   owner_id: 
   type_section: "biz_offer_status_type"
   type_key: "success"
-  long_name: "æˆç´„"
-  short_name: "æˆç´„"
-  other_name: "æˆç´„"
+  long_name: "¬–ñ"
+  short_name: "¬–ñ"
+  other_name: "¬–ñ"
   type_description: ""
   type_description_text: ""
   display_order1: 3
@@ -2683,9 +2683,9 @@ types_135:
   owner_id: 
   type_section: "biz_offer_status_type"
   type_key: "other_failure"
-  long_name: "ä»–ç¤¾å¤±æ•—"
-  short_name: "ä»–ç¤¾å¤±æ•—"
-  other_name: "ä»–ç¤¾å¤±æ•—"
+  long_name: "‘¼Ğ¸”s"
+  short_name: "‘¼Ğ¸”s"
+  other_name: "‘¼Ğ¸”s"
   type_description: ""
   type_description_text: ""
   display_order1: 4
@@ -2703,9 +2703,9 @@ types_136:
   owner_id: 
   type_section: "biz_offer_status_type"
   type_key: "lost_failure"
-  long_name: "æ¶ˆæ»…å¤±æ•—"
-  short_name: "æ¶ˆæ»…å¤±æ•—"
-  other_name: "æ¶ˆæ»…å¤±æ•—"
+  long_name: "Á–Å¸”s"
+  short_name: "Á–Å¸”s"
+  other_name: "Á–Å¸”s"
   type_description: ""
   type_description_text: ""
   display_order1: 5
@@ -2723,9 +2723,9 @@ types_137:
   owner_id: 
   type_section: "biz_offer_status_type"
   type_key: "natural_lost"
-  long_name: "è‡ªç„¶æ¶ˆæ»…"
-  short_name: "è‡ªç„¶æ¶ˆæ»…"
-  other_name: "è‡ªç„¶æ¶ˆæ»…"
+  long_name: "©‘RÁ–Å"
+  short_name: "©‘RÁ–Å"
+  other_name: "©‘RÁ–Å"
   type_description: ""
   type_description_text: ""
   display_order1: 6
@@ -2743,9 +2743,9 @@ types_138:
   owner_id: 
   type_section: "biz_offer_status_type"
   type_key: "other_success"
-  long_name: "åˆ¥æˆç´„"
-  short_name: "åˆ¥æˆç´„"
-  other_name: "åˆ¥æˆç´„"
+  long_name: "•Ê¬–ñ"
+  short_name: "•Ê¬–ñ"
+  other_name: "•Ê¬–ñ"
   type_description: ""
   type_description_text: ""
   display_order1: 7
@@ -2763,9 +2763,9 @@ types_139:
   owner_id: 
   type_section: "interview_status_type"
   type_key: "interview_waiting"
-  long_name: "é¢è«‡å¾…ã¡"
-  short_name: "é¢è«‡å¾…ã¡"
-  other_name: "é¢è«‡å¾…ã¡"
+  long_name: "–Ê’k‘Ò‚¿"
+  short_name: "–Ê’k‘Ò‚¿"
+  other_name: "–Ê’k‘Ò‚¿"
   type_description: ""
   type_description_text: ""
   display_order1: 1
@@ -2783,9 +2783,9 @@ types_140:
   owner_id: 
   type_section: "interview_status_type"
   type_key: "result_waiting"
-  long_name: "é¢è«‡çµæœå¾…ã¡"
-  short_name: "é¢è«‡çµæœå¾…ã¡"
-  other_name: "é¢è«‡çµæœå¾…ã¡"
+  long_name: "–Ê’kŒ‹‰Ê‘Ò‚¿"
+  short_name: "–Ê’kŒ‹‰Ê‘Ò‚¿"
+  other_name: "–Ê’kŒ‹‰Ê‘Ò‚¿"
   type_description: ""
   type_description_text: ""
   display_order1: 2
@@ -2803,9 +2803,9 @@ types_141:
   owner_id: 
   type_section: "interview_status_type"
   type_key: "adjusting"
-  long_name: "é¢è«‡èª¿æ•´ä¸­"
-  short_name: "é¢è«‡èª¿æ•´ä¸­"
-  other_name: "é¢è«‡èª¿æ•´ä¸­"
+  long_name: "–Ê’k’²®’†"
+  short_name: "–Ê’k’²®’†"
+  other_name: "–Ê’k’²®’†"
   type_description: ""
   type_description_text: ""
   display_order1: 3
@@ -2823,9 +2823,9 @@ types_142:
   owner_id: 
   type_section: "interview_status_type"
   type_key: "finished"
-  long_name: "é¢è«‡å®Œäº†"
-  short_name: "é¢è«‡å®Œäº†"
-  other_name: "é¢è«‡å®Œäº†"
+  long_name: "–Ê’kŠ®—¹"
+  short_name: "–Ê’kŠ®—¹"
+  other_name: "–Ê’kŠ®—¹"
   type_description: ""
   type_description_text: ""
   display_order1: 4
@@ -2843,9 +2843,9 @@ types_143:
   owner_id: 
   type_section: "interview_status_type"
   type_key: "interview_failure"
-  long_name: "é¢è«‡å¤±æ•—"
-  short_name: "é¢è«‡å¤±æ•—"
-  other_name: "é¢è«‡å¤±æ•—"
+  long_name: "–Ê’k¸”s"
+  short_name: "–Ê’k¸”s"
+  other_name: "–Ê’k¸”s"
   type_description: ""
   type_description_text: ""
   display_order1: 5
@@ -2863,9 +2863,9 @@ types_144:
   owner_id: 
   type_section: "interview_status_type"
   type_key: "other_success"
-  long_name: "åˆ¥æˆç´„"
-  short_name: "åˆ¥æˆç´„"
-  other_name: "åˆ¥æˆç´„"
+  long_name: "•Ê¬–ñ"
+  short_name: "•Ê¬–ñ"
+  other_name: "•Ê¬–ñ"
   type_description: ""
   type_description_text: ""
   display_order1: 6
@@ -2883,9 +2883,9 @@ types_145:
   owner_id: 
   type_section: "interview_status_type"
   type_key: "other_failure"
-  long_name: "ä»–ç¤¾å¤±æ•—"
-  short_name: "ä»–ç¤¾å¤±æ•—"
-  other_name: "ä»–ç¤¾å¤±æ•—"
+  long_name: "‘¼Ğ¸”s"
+  short_name: "‘¼Ğ¸”s"
+  other_name: "‘¼Ğ¸”s"
   type_description: ""
   type_description_text: ""
   display_order1: 7
@@ -2903,9 +2903,9 @@ types_146:
   owner_id: 
   type_section: "contract_status_type"
   type_key: "preparing"
-  long_name: "å¥‘ç´„æº–å‚™ä¸­"
-  short_name: "å¥‘ç´„æº–å‚™ä¸­"
-  other_name: "å¥‘ç´„æº–å‚™ä¸­"
+  long_name: "Œ_–ñ€”õ’†"
+  short_name: "Œ_–ñ€”õ’†"
+  other_name: "Œ_–ñ€”õ’†"
   type_description: ""
   type_description_text: ""
   display_order1: 1
@@ -2923,9 +2923,9 @@ types_147:
   owner_id: 
   type_section: "contract_status_type"
   type_key: "waiting"
-  long_name: "å…¥å ´å¾…ã¡"
-  short_name: "å…¥å ´å¾…ã¡"
-  other_name: "å…¥å ´å¾…ã¡"
+  long_name: "“üê‘Ò‚¿"
+  short_name: "“üê‘Ò‚¿"
+  other_name: "“üê‘Ò‚¿"
   type_description: ""
   type_description_text: ""
   display_order1: 2
@@ -2943,9 +2943,9 @@ types_148:
   owner_id: 
   type_section: "contract_status_type"
   type_key: "running"
-  long_name: "ç¨¼åƒä¸­"
-  short_name: "ç¨¼åƒä¸­"
-  other_name: "ç¨¼åƒä¸­"
+  long_name: "‰Ò“­’†"
+  short_name: "‰Ò“­’†"
+  other_name: "‰Ò“­’†"
   type_description: ""
   type_description_text: ""
   display_order1: 3
@@ -2963,9 +2963,9 @@ types_149:
   owner_id: 
   type_section: "contract_status_type"
   type_key: "finished"
-  long_name: "å¥‘ç´„çµ‚äº†"
-  short_name: "å¥‘ç´„çµ‚äº†"
-  other_name: "å¥‘ç´„çµ‚äº†"
+  long_name: "Œ_–ñI—¹"
+  short_name: "Œ_–ñI—¹"
+  other_name: "Œ_–ñI—¹"
   type_description: ""
   type_description_text: ""
   display_order1: 4
@@ -2983,9 +2983,9 @@ types_150:
   owner_id: 
   type_section: "human_resource_status_type"
   type_key: "sales"
-  long_name: "å–¶æ¥­ä¸­"
-  short_name: "å–¶æ¥­ä¸­"
-  other_name: "å–¶æ¥­ä¸­"
+  long_name: "‰c‹Æ’†"
+  short_name: "‰c‹Æ’†"
+  other_name: "‰c‹Æ’†"
   type_description: ""
   type_description_text: ""
   display_order1: 1
@@ -3003,9 +3003,9 @@ types_151:
   owner_id: 
   type_section: "human_resource_status_type"
   type_key: "approached"
-  long_name: "ææ¡ˆä¸­"
-  short_name: "ææ¡ˆä¸­"
-  other_name: "ææ¡ˆä¸­"
+  long_name: "’ñˆÄ’†"
+  short_name: "’ñˆÄ’†"
+  other_name: "’ñˆÄ’†"
   type_description: ""
   type_description_text: ""
   display_order1: 2
@@ -3023,9 +3023,9 @@ types_152:
   owner_id: 
   type_section: "human_resource_status_type"
   type_key: "working"
-  long_name: "ç¨¼åƒä¸­"
-  short_name: "ç¨¼åƒä¸­"
-  other_name: "ç¨¼åƒä¸­"
+  long_name: "‰Ò“­’†"
+  short_name: "‰Ò“­’†"
+  other_name: "‰Ò“­’†"
   type_description: ""
   type_description_text: ""
   display_order1: 3
@@ -3043,9 +3043,9 @@ types_153:
   owner_id: 
   type_section: "human_resource_status_type"
   type_key: "unknown"
-  long_name: "ä¸æ˜"
-  short_name: "ä¸æ˜"
-  other_name: "ä¸æ˜"
+  long_name: "•s–¾"
+  short_name: "•s–¾"
+  other_name: "•s–¾"
   type_description: ""
   type_description_text: ""
   display_order1: 4
@@ -3063,9 +3063,9 @@ types_154:
   owner_id: 
   type_section: "time_adjust_type"
   type_key: "suspense"
-  long_name: "æœªå®š"
-  short_name: "æœªå®š"
-  other_name: "æœªå®š"
+  long_name: "–¢’è"
+  short_name: "–¢’è"
+  other_name: "–¢’è"
   type_description: ""
   type_description_text: ""
   display_order1: 1
@@ -3083,9 +3083,9 @@ types_155:
   owner_id: 
   type_section: "time_adjust_type"
   type_key: "top"
-  long_name: "ä¸Šé™"
-  short_name: "ä¸Šé™"
-  other_name: "ä¸Šé™"
+  long_name: "ãŒÀ"
+  short_name: "ãŒÀ"
+  other_name: "ãŒÀ"
   type_description: ""
   type_description_text: ""
   display_order1: 2
@@ -3103,9 +3103,9 @@ types_156:
   owner_id: 
   type_section: "time_adjust_type"
   type_key: "bottom"
-  long_name: "ä¸‹é™"
-  short_name: "ä¸‹é™"
-  other_name: "ä¸‹é™"
+  long_name: "‰ºŒÀ"
+  short_name: "‰ºŒÀ"
+  other_name: "‰ºŒÀ"
   type_description: ""
   type_description_text: ""
   display_order1: 3
@@ -3123,9 +3123,9 @@ types_157:
   owner_id: 
   type_section: "time_adjust_type"
   type_key: "top_bottom"
-  long_name: "ä¸Šä¸‹"
-  short_name: "ä¸Šä¸‹"
-  other_name: "ä¸Šä¸‹"
+  long_name: "ã‰º"
+  short_name: "ã‰º"
+  other_name: "ã‰º"
   type_description: ""
   type_description_text: ""
   display_order1: 4
@@ -3143,9 +3143,9 @@ types_158:
   owner_id: 
   type_section: "time_adjust_type"
   type_key: "center"
-  long_name: "ä¸­å¤®"
-  short_name: "ä¸­å¤®"
-  other_name: "ä¸­å¤®"
+  long_name: "’†‰›"
+  short_name: "’†‰›"
+  other_name: "’†‰›"
   type_description: ""
   type_description_text: ""
   display_order1: 5
@@ -3163,9 +3163,9 @@ types_159:
   owner_id: 
   type_section: "payment_sight_type"
   type_key: "suspense"
-  long_name: "æœªå®š"
-  short_name: "æœª"
-  other_name: "æœªå®š"
+  long_name: "–¢’è"
+  short_name: "–¢"
+  other_name: "–¢’è"
   type_description: ""
   type_description_text: ""
   display_order1: 1
@@ -3183,9 +3183,9 @@ types_160:
   owner_id: 
   type_section: "payment_sight_type"
   type_key: "next_5"
-  long_name: "ç¿Œæœˆ5æ—¥"
-  short_name: "ç¿Œ5"
-  other_name: "ç¿Œæœˆ5æ—¥"
+  long_name: "—‚Œ5“ú"
+  short_name: "—‚5"
+  other_name: "—‚Œ5“ú"
   type_description: ""
   type_description_text: ""
   display_order1: 2
@@ -3203,9 +3203,9 @@ types_161:
   owner_id: 
   type_section: "payment_sight_type"
   type_key: "next_10"
-  long_name: "ç¿Œæœˆ10æ—¥"
-  short_name: "ç¿Œ10"
-  other_name: "ç¿Œæœˆ10æ—¥"
+  long_name: "—‚Œ10“ú"
+  short_name: "—‚10"
+  other_name: "—‚Œ10“ú"
   type_description: ""
   type_description_text: ""
   display_order1: 3
@@ -3223,9 +3223,9 @@ types_162:
   owner_id: 
   type_section: "payment_sight_type"
   type_key: "next_15"
-  long_name: "ç¿Œæœˆ15æ—¥"
-  short_name: "ç¿Œ15"
-  other_name: "ç¿Œæœˆ15æ—¥"
+  long_name: "—‚Œ15“ú"
+  short_name: "—‚15"
+  other_name: "—‚Œ15“ú"
   type_description: ""
   type_description_text: ""
   display_order1: 4
@@ -3243,9 +3243,9 @@ types_163:
   owner_id: 
   type_section: "payment_sight_type"
   type_key: "next_20"
-  long_name: "ç¿Œæœˆ20æ—¥"
-  short_name: "ç¿Œ20"
-  other_name: "ç¿Œæœˆ20æ—¥"
+  long_name: "—‚Œ20“ú"
+  short_name: "—‚20"
+  other_name: "—‚Œ20“ú"
   type_description: ""
   type_description_text: ""
   display_order1: 5
@@ -3263,9 +3263,9 @@ types_164:
   owner_id: 
   type_section: "payment_sight_type"
   type_key: "next_25"
-  long_name: "ç¿Œæœˆ25æ—¥"
-  short_name: "ç¿Œ25"
-  other_name: "ç¿Œæœˆ25æ—¥"
+  long_name: "—‚Œ25“ú"
+  short_name: "—‚25"
+  other_name: "—‚Œ25“ú"
   type_description: ""
   type_description_text: ""
   display_order1: 6
@@ -3283,9 +3283,9 @@ types_165:
   owner_id: 
   type_section: "payment_sight_type"
   type_key: "next_last"
-  long_name: "ç¿Œæœˆæœ«æ—¥"
-  short_name: "ç¿Œæœ«"
-  other_name: "ç¿Œæœˆæœ«æ—¥"
+  long_name: "—‚Œ––“ú"
+  short_name: "—‚––"
+  other_name: "—‚Œ––“ú"
   type_description: ""
   type_description_text: ""
   display_order1: 7
@@ -3303,9 +3303,9 @@ types_166:
   owner_id: 
   type_section: "payment_sight_type"
   type_key: "next_next_5"
-  long_name: "ç¿Œã€…æœˆ5æ—¥"
-  short_name: "ç¿Œã€…5"
-  other_name: "ç¿Œã€…æœˆ5æ—¥"
+  long_name: "—‚XŒ5“ú"
+  short_name: "—‚X5"
+  other_name: "—‚XŒ5“ú"
   type_description: ""
   type_description_text: ""
   display_order1: 8
@@ -3323,9 +3323,9 @@ types_167:
   owner_id: 
   type_section: "payment_sight_type"
   type_key: "next_next_10"
-  long_name: "ç¿Œã€…æœˆ10æ—¥"
-  short_name: "ç¿Œã€…10"
-  other_name: "ç¿Œã€…æœˆ10æ—¥"
+  long_name: "—‚XŒ10“ú"
+  short_name: "—‚X10"
+  other_name: "—‚XŒ10“ú"
   type_description: ""
   type_description_text: ""
   display_order1: 9
@@ -3343,9 +3343,9 @@ types_168:
   owner_id: 
   type_section: "payment_sight_type"
   type_key: "next_next_15"
-  long_name: "ç¿Œã€…æœˆ15æ—¥"
-  short_name: "ç¿Œã€…15"
-  other_name: "ç¿Œã€…æœˆ15æ—¥"
+  long_name: "—‚XŒ15“ú"
+  short_name: "—‚X15"
+  other_name: "—‚XŒ15“ú"
   type_description: ""
   type_description_text: ""
   display_order1: 10
@@ -3363,9 +3363,9 @@ types_169:
   owner_id: 
   type_section: "payment_sight_type"
   type_key: "next_next_20"
-  long_name: "ç¿Œã€…æœˆ20æ—¥"
-  short_name: "ç¿Œã€…20"
-  other_name: "ç¿Œã€…æœˆ20æ—¥"
+  long_name: "—‚XŒ20“ú"
+  short_name: "—‚X20"
+  other_name: "—‚XŒ20“ú"
   type_description: ""
   type_description_text: ""
   display_order1: 11
@@ -3383,9 +3383,9 @@ types_170:
   owner_id: 
   type_section: "payment_sight_type"
   type_key: "next_next_25"
-  long_name: "ç¿Œã€…æœˆ25æ—¥"
-  short_name: "ç¿Œã€…25"
-  other_name: "ç¿Œã€…æœˆ25æ—¥"
+  long_name: "—‚XŒ25“ú"
+  short_name: "—‚X25"
+  other_name: "—‚XŒ25“ú"
   type_description: ""
   type_description_text: ""
   display_order1: 12
@@ -3403,9 +3403,9 @@ types_171:
   owner_id: 
   type_section: "payment_sight_type"
   type_key: "next_next_last"
-  long_name: "ç¿Œã€…æœˆæœ«æ—¥"
-  short_name: "ç¿Œã€…æœ«"
-  other_name: "ç¿Œã€…æœˆæœ«æ—¥"
+  long_name: "—‚XŒ––“ú"
+  short_name: "—‚X––"
+  other_name: "—‚XŒ––“ú"
   type_description: ""
   type_description_text: ""
   display_order1: 13
@@ -3423,9 +3423,9 @@ types_172:
   owner_id: 
   type_section: "payment_sight_type"
   type_key: "other"
-  long_name: "ãã®ä»–"
-  short_name: "ä»–"
-  other_name: "ãã®ä»–"
+  long_name: "‚»‚Ì‘¼"
+  short_name: "‘¼"
+  other_name: "‚»‚Ì‘¼"
   type_description: ""
   type_description_text: ""
   display_order1: 14
@@ -3443,9 +3443,9 @@ types_173:
   owner_id: 
   type_section: "term_type"
   type_key: "suspense"
-  long_name: "æœªå®š"
-  short_name: "æœª"
-  other_name: "æœªå®š"
+  long_name: "–¢’è"
+  short_name: "–¢"
+  other_name: "–¢’è"
   type_description: ""
   type_description_text: ""
   display_order1: 1
@@ -3463,9 +3463,9 @@ types_174:
   owner_id: 
   type_section: "term_type"
   type_key: "delegete"
-  long_name: "æº–å§”ä»»å¥‘ç´„"
-  short_name: "æº–å§”"
-  other_name: "æº–å§”ä»»å¥‘ç´„"
+  long_name: "€ˆÏ”CŒ_–ñ"
+  short_name: "€ˆÏ"
+  other_name: "€ˆÏ”CŒ_–ñ"
   type_description: ""
   type_description_text: ""
   display_order1: 2
@@ -3483,9 +3483,9 @@ types_175:
   owner_id: 
   type_section: "term_type"
   type_key: "contract"
-  long_name: "è«‹è² å¥‘ç´„"
-  short_name: "è«‹è² "
-  other_name: "è«‹è² å¥‘ç´„"
+  long_name: "¿•‰Œ_–ñ"
+  short_name: "¿•‰"
+  other_name: "¿•‰Œ_–ñ"
   type_description: ""
   type_description_text: ""
   display_order1: 3
@@ -3503,9 +3503,9 @@ types_176:
   owner_id: 
   type_section: "term_type"
   type_key: "temporary"
-  long_name: "æ´¾é£å¥‘ç´„"
-  short_name: "æ´¾é£"
-  other_name: "æ´¾é£å¥‘ç´„"
+  long_name: "”hŒ­Œ_–ñ"
+  short_name: "”hŒ­"
+  other_name: "”hŒ­Œ_–ñ"
   type_description: ""
   type_description_text: ""
   display_order1: 4
@@ -3523,9 +3523,9 @@ types_177:
   owner_id: 
   type_section: "term_type"
   type_key: "other"
-  long_name: "ãã®ä»–"
-  short_name: "ä»–"
-  other_name: "ãã®ä»–"
+  long_name: "‚»‚Ì‘¼"
+  short_name: "‘¼"
+  other_name: "‚»‚Ì‘¼"
   type_description: ""
   type_description_text: ""
   display_order1: 5
@@ -3543,9 +3543,9 @@ types_178:
   owner_id: 
   type_section: "analysis_template_type"
   type_key: "biz_offer"
-  long_name: "æ¡ˆä»¶ãƒ»ç…§ä¼š"
-  short_name: "ç…§ä¼š"
-  other_name: "ç…§ä¼š"
+  long_name: "ˆÄŒEÆ‰ï"
+  short_name: "Æ‰ï"
+  other_name: "Æ‰ï"
   type_description: ""
   type_description_text: ""
   display_order1: 1
@@ -3563,9 +3563,9 @@ types_179:
   owner_id: 
   type_section: "analysis_template_type"
   type_key: "bp_member"
-  long_name: "äººæãƒ»æ‰€å±"
-  short_name: "æ‰€å±"
-  other_name: "æ‰€å±"
+  long_name: "lŞEŠ‘®"
+  short_name: "Š‘®"
+  other_name: "Š‘®"
   type_description: ""
   type_description_text: ""
   display_order1: 2
@@ -3583,9 +3583,9 @@ types_180:
   owner_id: 
   type_section: "mail_status_type"
   type_key: "editing"
-  long_name: "ç·¨é›†ä¸­"
-  short_name: "ç·¨é›†"
-  other_name: "ç·¨é›†ä¸­"
+  long_name: "•ÒW’†"
+  short_name: "•ÒW"
+  other_name: "•ÒW’†"
   type_description: ""
   type_description_text: ""
   display_order1: 1
@@ -3603,9 +3603,9 @@ types_181:
   owner_id: 
   type_section: "mail_status_type"
   type_key: "unsend"
-  long_name: "æœªé€ä¿¡"
-  short_name: "æœªé€"
-  other_name: "æœªé€ä¿¡"
+  long_name: "–¢‘—M"
+  short_name: "–¢‘—"
+  other_name: "–¢‘—M"
   type_description: ""
   type_description_text: ""
   display_order1: 2
@@ -3623,9 +3623,9 @@ types_182:
   owner_id: 
   type_section: "mail_status_type"
   type_key: "send"
-  long_name: "é€ä¿¡æ¸ˆ"
-  short_name: "é€æ¸ˆ"
-  other_name: "é€ä¿¡æ¸ˆ"
+  long_name: "‘—MÏ"
+  short_name: "‘—Ï"
+  other_name: "‘—MÏ"
   type_description: ""
   type_description_text: ""
   display_order1: 3
@@ -3643,9 +3643,9 @@ types_183:
   owner_id: 
   type_section: "mail_status_type"
   type_key: "canceled"
-  long_name: "ã‚­ãƒ£ãƒ³ã‚»ãƒ«"
-  short_name: "å–æ¶ˆ"
-  other_name: "ã‚­ãƒ£ãƒ³ã‚»ãƒ«"
+  long_name: "ƒLƒƒƒ“ƒZƒ‹"
+  short_name: "æÁ"
+  other_name: "ƒLƒƒƒ“ƒZƒ‹"
   type_description: ""
   type_description_text: ""
   display_order1: 4
@@ -3663,9 +3663,9 @@ types_184:
   owner_id: 
   type_section: "mail_send_status_type"
   type_key: "ready"
-  long_name: "æº–å‚™ä¸­"
-  short_name: "æº–å‚™"
-  other_name: "æº–å‚™ä¸­"
+  long_name: "€”õ’†"
+  short_name: "€”õ"
+  other_name: "€”õ’†"
   type_description: ""
   type_description_text: ""
   display_order1: 1
@@ -3683,9 +3683,9 @@ types_185:
   owner_id: 
   type_section: "mail_send_status_type"
   type_key: "running"
-  long_name: "å‡¦ç†ä¸­"
-  short_name: "å‡¦ç†"
-  other_name: "å‡¦ç†ä¸­"
+  long_name: "ˆ—’†"
+  short_name: "ˆ—"
+  other_name: "ˆ—’†"
   type_description: ""
   type_description_text: ""
   display_order1: 2
@@ -3703,9 +3703,9 @@ types_186:
   owner_id: 
   type_section: "mail_send_status_type"
   type_key: "finished"
-  long_name: "å®Œäº†"
-  short_name: "å®Œäº†"
-  other_name: "å®Œäº†"
+  long_name: "Š®—¹"
+  short_name: "Š®—¹"
+  other_name: "Š®—¹"
   type_description: ""
   type_description_text: ""
   display_order1: 3
@@ -3723,9 +3723,9 @@ types_187:
   owner_id: 
   type_section: "mail_error_type"
   type_key: "bounce"
-  long_name: "æ‹’å¦"
-  short_name: "æ‹’å¦"
-  other_name: "æ‹’å¦"
+  long_name: "‹‘”Û"
+  short_name: "‹‘”Û"
+  other_name: "‹‘”Û"
   type_description: ""
   type_description_text: ""
   display_order1: 1
@@ -3743,9 +3743,9 @@ types_188:
   owner_id: 
   type_section: "mail_error_type"
   type_key: "other"
-  long_name: "ãã®ä»–"
-  short_name: "ä»–"
-  other_name: "ãã®ä»–"
+  long_name: "‚»‚Ì‘¼"
+  short_name: "‘¼"
+  other_name: "‚»‚Ì‘¼"
   type_description: ""
   type_description_text: ""
   display_order1: 2

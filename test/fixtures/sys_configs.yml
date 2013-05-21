@@ -22,7 +22,7 @@ sys_configs_2:
   value1: ""
   value2: ""
   value3: ""
-  config_description_text: "N*6ãƒ¶æœˆå‹¤å‹™(1ï½6ãƒ¶æœˆã¯åŠå¹´è¨ˆç®—ã§)"
+  config_description_text: "N*6ƒ–Œ‹Î–±(1`6ƒ–Œ‚Í”¼”NŒvZ‚Å)"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -38,7 +38,7 @@ sys_configs_3:
   value1: "10"
   value2: ""
   value3: ""
-  config_description_text: "N*6ãƒ¶æœˆå‹¤å‹™"
+  config_description_text: "N*6ƒ–Œ‹Î–±"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -54,7 +54,7 @@ sys_configs_4:
   value1: "10"
   value2: ""
   value3: ""
-  config_description_text: "N*6ãƒ¶æœˆå‹¤å‹™"
+  config_description_text: "N*6ƒ–Œ‹Î–±"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -70,7 +70,7 @@ sys_configs_5:
   value1: "11"
   value2: ""
   value3: ""
-  config_description_text: "N*6ãƒ¶æœˆå‹¤å‹™"
+  config_description_text: "N*6ƒ–Œ‹Î–±"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -86,7 +86,7 @@ sys_configs_6:
   value1: "11"
   value2: ""
   value3: ""
-  config_description_text: "N*6ãƒ¶æœˆå‹¤å‹™"
+  config_description_text: "N*6ƒ–Œ‹Î–±"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -102,7 +102,7 @@ sys_configs_7:
   value1: "12"
   value2: ""
   value3: ""
-  config_description_text: "N*6ãƒ¶æœˆå‹¤å‹™"
+  config_description_text: "N*6ƒ–Œ‹Î–±"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -118,7 +118,7 @@ sys_configs_8:
   value1: "12"
   value2: ""
   value3: ""
-  config_description_text: "N*6ãƒ¶æœˆå‹¤å‹™"
+  config_description_text: "N*6ƒ–Œ‹Î–±"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -134,7 +134,7 @@ sys_configs_9:
   value1: "14"
   value2: ""
   value3: ""
-  config_description_text: "N*6ãƒ¶æœˆå‹¤å‹™"
+  config_description_text: "N*6ƒ–Œ‹Î–±"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -150,7 +150,7 @@ sys_configs_10:
   value1: "14"
   value2: ""
   value3: ""
-  config_description_text: "N*6ãƒ¶æœˆå‹¤å‹™"
+  config_description_text: "N*6ƒ–Œ‹Î–±"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -166,7 +166,7 @@ sys_configs_11:
   value1: "16"
   value2: ""
   value3: ""
-  config_description_text: "N*6ãƒ¶æœˆå‹¤å‹™"
+  config_description_text: "N*6ƒ–Œ‹Î–±"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -182,7 +182,7 @@ sys_configs_12:
   value1: "16"
   value2: ""
   value3: ""
-  config_description_text: "N*6ãƒ¶æœˆå‹¤å‹™"
+  config_description_text: "N*6ƒ–Œ‹Î–±"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -198,7 +198,7 @@ sys_configs_13:
   value1: "18"
   value2: ""
   value3: ""
-  config_description_text: "N*6ãƒ¶æœˆå‹¤å‹™"
+  config_description_text: "N*6ƒ–Œ‹Î–±"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -214,7 +214,7 @@ sys_configs_14:
   value1: "18"
   value2: ""
   value3: ""
-  config_description_text: "N*6ãƒ¶æœˆå‹¤å‹™"
+  config_description_text: "N*6ƒ–Œ‹Î–±"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -230,7 +230,7 @@ sys_configs_15:
   value1: "20"
   value2: ""
   value3: ""
-  config_description_text: "N*6ãƒ¶æœˆå‹¤å‹™"
+  config_description_text: "N*6ƒ–Œ‹Î–±"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -246,7 +246,7 @@ sys_configs_16:
   value1: "20"
   value2: ""
   value3: ""
-  config_description_text: "N*6ãƒ¶æœˆå‹¤å‹™(14*åŠå¹´ä»¥ä¸ŠçµŒé(8å¹´ç›®))"
+  config_description_text: "N*6ƒ–Œ‹Î–±(14*”¼”NˆÈãŒo‰ß(8”N–Ú))"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -262,7 +262,7 @@ sys_configs_17:
   value1: "2"
   value2: ""
   value3: ""
-  config_description_text: "1ãƒ¶æœˆå‹¤å‹™"
+  config_description_text: "1ƒ–Œ‹Î–±"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -278,7 +278,7 @@ sys_configs_18:
   value1: "3"
   value2: ""
   value3: ""
-  config_description_text: "1ãƒ¶æœˆå‹¤å‹™"
+  config_description_text: "1ƒ–Œ‹Î–±"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -294,7 +294,7 @@ sys_configs_19:
   value1: "4"
   value2: ""
   value3: ""
-  config_description_text: "1ãƒ¶æœˆå‹¤å‹™"
+  config_description_text: "1ƒ–Œ‹Î–±"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -310,7 +310,7 @@ sys_configs_20:
   value1: "5"
   value2: ""
   value3: ""
-  config_description_text: "1ãƒ¶æœˆå‹¤å‹™"
+  config_description_text: "1ƒ–Œ‹Î–±"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -326,7 +326,7 @@ sys_configs_21:
   value1: "6"
   value2: ""
   value3: ""
-  config_description_text: "1ãƒ¶æœˆå‹¤å‹™"
+  config_description_text: "1ƒ–Œ‹Î–±"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -342,7 +342,7 @@ sys_configs_22:
   value1: "8"
   value2: ""
   value3: ""
-  config_description_text: "1ãƒ¶æœˆå‹¤å‹™"
+  config_description_text: "1ƒ–Œ‹Î–±"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -406,7 +406,7 @@ sys_configs_26:
   value1: "9:30"
   value2: ""
   value3: ""
-  config_description_text: "å§‹æ¥­æ™‚é–“"
+  config_description_text: "n‹ÆŠÔ"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -422,7 +422,7 @@ sys_configs_27:
   value1: "10:30"
   value2: ""
   value3: ""
-  config_description_text: "äº‹å®Ÿä¸Šã®å§‹æ¥­æ™‚é–“(ã“ã‚Œä»¥é™é…åˆ»)"
+  config_description_text: "–Àã‚Ìn‹ÆŠÔ(‚±‚êˆÈ~’x)"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -438,7 +438,7 @@ sys_configs_28:
   value1: "13:30"
   value2: ""
   value3: ""
-  config_description_text: "PMå‡ºå‹¤ã®å ´åˆã®å§‹æ¥­æ™‚é–“"
+  config_description_text: "PMo‹Î‚Ìê‡‚Ìn‹ÆŠÔ"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -454,7 +454,7 @@ sys_configs_29:
   value1: "17:30"
   value2: ""
   value3: ""
-  config_description_text: "å°±æ¥­æ™‚é–“"
+  config_description_text: "A‹ÆŠÔ"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -470,7 +470,7 @@ sys_configs_30:
   value1: "12:30"
   value2: ""
   value3: ""
-  config_description_text: "AMå‡ºå‹¤ã®å ´åˆã®æ—©é€€æ™‚é–“"
+  config_description_text: "AMo‹Î‚Ìê‡‚Ì‘‘ŞŠÔ"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -486,7 +486,7 @@ sys_configs_31:
   value1: "15:30"
   value2: ""
   value3: ""
-  config_description_text: "å…¨æ—¥å‡ºå‹¤ã®å ´åˆã®æ—©é€€æ™‚é–“"
+  config_description_text: "‘S“úo‹Î‚Ìê‡‚Ì‘‘ŞŠÔ"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -502,7 +502,7 @@ sys_configs_32:
   value1: "29:00"
   value2: ""
   value3: ""
-  config_description_text: "é€€å‹¤æ™‚é–“ã®æœ€å¤§å€¤"
+  config_description_text: "‘Ş‹ÎŠÔ‚ÌÅ‘å’l"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -518,7 +518,7 @@ sys_configs_33:
   value1: "1:00"
   value2: ""
   value3: ""
-  config_description_text: "åŸºæœ¬ä¼‘æ†©æ™‚é–“"
+  config_description_text: "Šî–{‹xŒeŠÔ"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -534,7 +534,7 @@ sys_configs_34:
   value1: "0:00"
   value2: ""
   value3: ""
-  config_description_text: "åŠä¼‘æ™‚ã®ä¼‘æ†©æ™‚é–“"
+  config_description_text: "”¼‹x‚Ì‹xŒeŠÔ"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -550,7 +550,7 @@ sys_configs_35:
   value1: "7:00"
   value2: ""
   value3: ""
-  config_description_text: "åŸºæº–åŠ´åƒæ™‚é–“"
+  config_description_text: "Šî€˜J“­ŠÔ"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -566,7 +566,7 @@ sys_configs_36:
   value1: "0:00"
   value2: ""
   value3: ""
-  config_description_text: "åŠ´åƒæ™‚é–“ãªã—ã®å ´åˆ(æœªä½¿ç”¨)"
+  config_description_text: "˜J“­ŠÔ‚È‚µ‚Ìê‡(–¢g—p)"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -582,7 +582,7 @@ sys_configs_37:
   value1: "20:00"
   value2: ""
   value3: ""
-  config_description_text: "ã“ã‚Œä»¥é™ã€æ®‹æ¥­å¤œé£Ÿä»£ãŒå‡ºã‚‹"
+  config_description_text: "‚±‚êˆÈ~Ac‹Æ–éH‘ã‚ªo‚é"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -598,7 +598,7 @@ sys_configs_38:
   value1: "22:00"
   value2: ""
   value3: ""
-  config_description_text: "ã“ã‚Œä»¥é™ã€ã‚¿ã‚¯ã‚·ãƒ¼ã®åˆ©ç”¨ãŒèªã‚ã‚‰ã‚Œã‚‹"
+  config_description_text: "‚±‚êˆÈ~Aƒ^ƒNƒV[‚Ì—˜—p‚ª”F‚ß‚ç‚ê‚é"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -614,7 +614,7 @@ sys_configs_39:
   value1: "1"
   value2: ""
   value3: ""
-  config_description_text: "ä½œæ¥­æœˆã®é–‹å§‹æ—¥-1æ—¥"
+  config_description_text: "ì‹ÆŒ‚ÌŠJn“ú-1“ú"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -630,7 +630,7 @@ sys_configs_40:
   value1: "04/01"
   value2: ""
   value3: ""
-  config_description_text: "æœ‰çµ¦ä¼‘æš‡ã®ä»˜ä¸ã‚¿ã‚¤ãƒŸãƒ³ã‚°"
+  config_description_text: "—L‹‹‹x‰É‚Ì•t—^ƒ^ƒCƒ~ƒ“ƒO"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -646,7 +646,7 @@ sys_configs_41:
   value1: "2"
   value2: ""
   value3: ""
-  config_description_text: "æœ‰çµ¦ä¼‘æš‡â†’ãƒ©ã‚¤ãƒ•ãƒ—ãƒ©ãƒ³ã™ã‚‹å¹´æ•°"
+  config_description_text: "—L‹‹‹x‰É¨ƒ‰ƒCƒtƒvƒ‰ƒ“‚·‚é”N”"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -662,7 +662,7 @@ sys_configs_42:
   value1: "2"
   value2: ""
   value3: ""
-  config_description_text: "ä»£ä¼‘ä¼‘æš‡ãŒç„¡åŠ¹ã«ãªã‚‹æœˆæ•°"
+  config_description_text: "‘ã‹x‹x‰É‚ª–³Œø‚É‚È‚éŒ”"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -710,7 +710,7 @@ sys_configs_45:
   value1: "2009/07/01"
   value2: ""
   value3: ""
-  config_description_text: "å¤æœŸä¼‘æš‡å–å¾—é–‹å§‹æ—¥"
+  config_description_text: "‰ÄŠú‹x‰Éæ“¾ŠJn“ú"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -726,7 +726,7 @@ sys_configs_46:
   value1: "2009/09/30"
   value2: ""
   value3: ""
-  config_description_text: "å¤æœŸä¼‘æš‡å–å¾—çµ‚äº†æ—¥"
+  config_description_text: "‰ÄŠú‹x‰Éæ“¾I—¹“ú"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -742,7 +742,7 @@ sys_configs_47:
   value1: "3"
   value2: ""
   value3: ""
-  config_description_text: "å¤æœŸä¼‘æš‡æ—¥æ•°"
+  config_description_text: "‰ÄŠú‹x‰É“ú”"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -758,7 +758,7 @@ sys_configs_48:
   value1: "2008"
   value2: ""
   value3: ""
-  config_description_text: "å¹´æ¬¡ãƒãƒƒãƒå®Ÿè¡Œãƒ­ã‚°"
+  config_description_text: "”NŸƒoƒbƒ`ÀsƒƒO"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -774,7 +774,7 @@ sys_configs_49:
   value1: "#90ee90"
   value2: ""
   value3: ""
-  config_description_text: "ç”³è«‹ä¸­ã®ã‚«ãƒ©ãƒ¼"
+  config_description_text: "\¿’†‚ÌƒJƒ‰["
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -790,7 +790,7 @@ sys_configs_50:
   value1: "#add8e6"
   value2: ""
   value3: ""
-  config_description_text: "æ‰¿èªæ¸ˆã®ã‚«ãƒ©ãƒ¼"
+  config_description_text: "³”FÏ‚ÌƒJƒ‰["
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -806,7 +806,7 @@ sys_configs_51:
   value1: "#ff0000"
   value2: ""
   value3: ""
-  config_description_text: "å´ä¸‹æ¸ˆã®ã‚«ãƒ©ãƒ¼"
+  config_description_text: "‹p‰ºÏ‚ÌƒJƒ‰["
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -822,7 +822,7 @@ sys_configs_52:
   value1: "50100"
   value2: ""
   value3: ""
-  config_description_text: "è²©å£²ç®¡ç†ã‚·ã‚¹ãƒ†ãƒ ã®ã‚³ãƒ¼ãƒ‰"
+  config_description_text: "”Ì”„ŠÇ—ƒVƒXƒeƒ€‚ÌƒR[ƒh"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -851,7 +851,7 @@ sys_configs_54:
   owner_id: 
   config_section: "delivery_mails"
   config_key: "mail_from_name"
-  value1: "ã‚¢ãƒ—ãƒªã‚«ãƒ†ã‚£ãƒ–æ¡ˆä»¶æƒ…å ±"
+  value1: "ƒAƒvƒŠƒJƒeƒBƒuˆÄŒî•ñ"
   value2: ""
   value3: ""
   config_description_text: ""
@@ -964,12 +964,12 @@ sys_configs_56:
   owner_id: 
   config_section: "analysis_templates"
   config_key: "indent"
-  value1: "â€»"
+  value1: "¦"
   value2: ""
   value3: ""
-  config_description_text: "ã‚«ãƒ³ãƒåŒºåˆ‡ã‚Šã§æŒ‡å®š
-å…¨åŠè§’ç©ºç™½ã¯ç„¡è¦–ã•ã‚Œã‚‹
-æ­£è¦è¡¨ç¾ã§ãªã„"
+  config_description_text: "ƒJƒ“ƒ}‹æØ‚è‚Åw’è
+‘S”¼Šp‹ó”’‚Í–³‹‚³‚ê‚é
+³‹K•\Œ»‚Å‚È‚¢"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0

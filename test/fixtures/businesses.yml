@@ -7,9 +7,9 @@ businesses_1:
   issue_datetime: <%= "2000/01/01 00:00:00" %>
   due_date: <%= "2000/01/01 00:00:00" %>
   term_type: "suspense"
-  business_title: "æ¡ˆä»¶1"
-  business_point: "ãƒã‚¤ãƒ³ãƒˆ"
-  business_description: "èª¬æ˜"
+  business_title: "ˆÄŒ1"
+  business_point: "ƒ|ƒCƒ“ƒg"
+  business_description: "à–¾"
   member_change_flg: 0
   place: ""
   period: ""

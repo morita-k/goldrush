@@ -2,15 +2,19 @@ bp_pics_1:
   id: 1
   owner_id: 
   business_partner_id: 2
-  bp_pic_name: "å¤ªéƒŽ"
-  bp_pic_short_name: "å¤ªéƒŽ"
-  bp_pic_name_kana: "å¤ªéƒŽ"
+  bp_pic_name: "‘¾˜Y"
+  bp_pic_short_name: "‘¾˜Y"
+  bp_pic_name_kana: "‘¾˜Y"
   depertment: ""
   position: ""
   tel_direct: ""
   tel_mobile: ""
   email1: "tarou@hoge.com"
   email2: ""
+  contact_date: 
+  sales_pic_id: 
+  contact_mail_flg: 
+  nondelivery_score: 
   starred: 
   rating: 
   import_mail_id: 
@@ -27,15 +31,19 @@ bp_pics_2:
   id: 2
   owner_id: 
   business_partner_id: 2
-  bp_pic_name: "æ¬¡éƒŽ"
-  bp_pic_short_name: "æ¬¡éƒŽ"
-  bp_pic_name_kana: "æ¬¡éƒŽ"
+  bp_pic_name: "ŽŸ˜Y"
+  bp_pic_short_name: "ŽŸ˜Y"
+  bp_pic_name_kana: "ŽŸ˜Y"
   depertment: ""
   position: ""
   tel_direct: ""
   tel_mobile: ""
   email1: "jiro@hoge.com"
   email2: ""
+  contact_date: 
+  sales_pic_id: 
+  contact_mail_flg: 
+  nondelivery_score: 
   starred: 
   rating: 
   import_mail_id: 
