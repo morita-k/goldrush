@@ -1,0 +1,50 @@
+bp_pics_1:
+  id: 1
+  owner_id: 
+  business_partner_id: 2
+  bp_pic_name: "太郎"
+  bp_pic_short_name: "太郎"
+  bp_pic_name_kana: "太郎"
+  depertment: ""
+  position: ""
+  tel_direct: ""
+  tel_mobile: ""
+  email1: "tarou@hoge.com"
+  email2: ""
+  starred: 
+  rating: 
+  import_mail_id: 
+  tag_text: ""
+  memo: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+bp_pics_2:
+  id: 2
+  owner_id: 
+  business_partner_id: 2
+  bp_pic_name: "次郎"
+  bp_pic_short_name: "次郎"
+  bp_pic_name_kana: "次郎"
+  depertment: ""
+  position: ""
+  tel_direct: ""
+  tel_mobile: ""
+  email1: "jiro@hoge.com"
+  email2: ""
+  starred: 
+  rating: 
+  import_mail_id: 
+  tag_text: ""
+  memo: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
