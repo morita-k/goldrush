@@ -1,7 +1,7 @@
 class BusinessPartnerGoogleImporter < BusinessPartner
 
-  # ���h�Ǘ��A�J�E���g����o�͂��ꂽCSV�t�@�C�����C���|�[�g(google.csv)
-  def BusinessPartnerGoogleImporter.import_google_csv_data(readable_file, prodmode=false)
+  # 名刺管理アカウントから出力されたCSVファイルをインポート(google.csv)
+  def BusinessPartnerGoogleImporter.import_google_csv_data(readable_file, userlogin, prodmode=false)
     employees = Employee.map_for_googleimport
     ActiveRecord::Base.transaction do
       require 'csv'
@@ -13,7 +13,7 @@ class BusinessPartnerGoogleImporter < BusinessPartner
           header = BusinessPartnerGoogleImporter.analyze_header(row)
           next
         end
-        # �e�f�[�^�𐮌`���ĕϐ��֑��
+        # 各データを整形して変数へ代入
         phone_number = {r["Phone 1 - Type"] => r["Phone 1 - Value"], r["Phone 2 - Type"] => r["Phone 2 - Value"], r["Phone 3 - Type"] => r["Phone 3 - Value"]}
         email_address = {r["E-mail 1 - Type"] => r["E-mail 1 - Value"], r["E-mail 2 - Type"] => r["E-mail 2 - Value"]}
 
@@ -23,19 +23,34 @@ class BusinessPartnerGoogleImporter < BusinessPartner
           email1 = StringUtil.to_test_address(email1)
           email2 = StringUtil.to_test_address(email2)
         end
-
+        bp_name = r["Organization 1 - Name"]
+        
         if bp_pic = BpPic.where(:email1 => email1, :deleted => 0).first
           bp = bp_pic.business_partner
+          if bp.business_partner_name != bp_name
+            if other_bp = BusinessPartner.where(:business_partner_name => bp_name, :deleted => 0).first
+              BusinessPartnerGoogleImporter.change_bp(bp, other_bp)
+              bp.deleted = 9
+              bp.deleted_at = Time.now
+              bp.created_user = userlogin if bp.new_record?
+              bp.updated_user = userlogin
+              bp.save!
+              bp = other_bp
+              BpPic.uncached do
+                bp_pic = BpPic.where(:email1 => email1, :deleted => 0).first
+              end
+            end
+          end
         else
           bp_pic = BpPic.new
-          if bp = BusinessPartner.where(:business_partner_name => r["Organization 1 - Name"], :deleted => 0).first
+          if bp = BusinessPartner.where(:business_partner_name => r["Organization 1 - Name"]).first
             bp_pic.business_partner = bp
           else
             bp = BusinessPartner.new
             bp_pic.business_partner = bp
           end
         end
-
+        
         bp_pic.attributes = {
           :bp_pic_name => r["Name"],
           :bp_pic_short_name => r["Family Name"],
@@ -112,6 +127,17 @@ class BusinessPartnerGoogleImporter < BusinessPartner
     r
   end
 
+  def BusinessPartnerGoogleImporter.change_bp(bp, other_bp)
+    # 担当者から得られる取引先と、インポートで得られた取引先名が一致していなかった場合の処理
+    # 既存の取引先と紐づくデータを新しく取り込む取引先に紐付け
+    [BpPic, Project, AnalysisTemplate, ContactHistory, BizOffer, BpMember, Interview, ImportMail, DeliveryError, Business].each do |sym|
+      sym.where(:business_partner_id => bp.id, :deleted => 0).each do |target|
+        target.business_partner = other_bp
+        target.save!
+      end
+    end
+  end
+  
   COLUMN_NAMES = [
     "Name",
     "Given Name",
@@ -168,6 +194,7 @@ class BusinessPartnerGoogleImporter < BusinessPartner
     "Organization 1 - Location",
     "Organization 1 - Job Description",
     "Website 1 - Type",
-    "Website 1 - Value"]
-
+    "Website 1 - Value"
+  ]
+    
 end
