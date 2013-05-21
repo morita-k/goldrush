@@ -7,6 +7,7 @@ class DeliveryMail < ActiveRecord::Base
   attr_accessor :planned_setting_at_time, :planned_setting_at_date
 
   has_many :delivery_mail_targets, :conditions => "delivery_mail_targets.deleted = 0"
+  belongs_to :bp_pic_group
   attr_accessible :bp_pic_group_id, :content, :id, :mail_bcc, :mail_cc, :mail_from, :mail_from_name, :mail_send_status_type, :mail_status_type, :owner_id, :planned_setting_at, :send_end_at, :subject, :lock_version, :planned_setting_at_time, :planned_setting_at_date
 
   validates_presence_of :subject, :content, :mail_from_name, :mail_from, :planned_setting_at
@@ -52,9 +53,13 @@ class DeliveryMail < ActiveRecord::Base
     self.planned_setting_at_time = planned_setting_at.in_time_zone(zone_now.time_zone).hour
   end
 
+  def attachment_files
+    AttachmentFile.attachment_files("delivery_mails", id)
+  end
+
   def DeliveryMail.send_test_mail(mail)
     opt = {:bp_pic_name => "ご担当者", :business_partner_name => "株式会社テストメール"}
-    attachment_files = AttachmentFile.attachment_files("delivery_mails", mail.id)
+    attachment_files = mail.attachment_files
     MyMailer.send_del_mail(
       mail.mail_from,
       nil,
@@ -77,7 +82,7 @@ class DeliveryMail < ActiveRecord::Base
     
     begin
       DeliveryMail.where(:created_user => fetch_key).each {|mail|
-        attachment_files = AttachmentFile.attachment_files("delivery_mails", mail.id)
+        attachment_files = mail.attachment_files
         mail.delivery_mail_targets.each {|target|
           opt = {:bp_pic_name => target.bp_pic.bp_pic_short_name, :business_partner_name => target.bp_pic.business_partner.business_partner_name}
           MyMailer.send_del_mail(
