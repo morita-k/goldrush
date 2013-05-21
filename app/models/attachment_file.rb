@@ -56,10 +56,10 @@ class AttachmentFile < ActiveRecord::Base
 
 
   def create_by_import(upfile, parent_id, file_name)
-    create_and_store!(upfile, parent_id, file_name, "import_mails")
+    create_and_store!(upfile, parent_id, file_name, "import_mails", "import_mail")
   end
 
-  def create_and_store!(upfile, parent_id, file_name, parent_table_name)
+  def create_and_store!(upfile, parent_id, file_name, parent_table_name, loginuser)
     ActiveRecord::Base::transaction do
       # attachmentFileに項目を入れるメソッド
       # 親テーブル名
@@ -76,8 +76,8 @@ class AttachmentFile < ActiveRecord::Base
       self.extention = ext
       self.file_path = 'temp' # 後で変える。not nullなので一時的にtempとする
       
-      self.created_user = 'import_mail'
-      self.updated_user = 'import_mail'
+      self.created_user = loginuser
+      self.updated_user = loginuser
       self.save! # idが欲しい
       
       self.file_path = File.join(detail_dir, create_store_parent_table_name)

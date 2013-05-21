@@ -8,12 +8,10 @@
 
   <h1><%= @bp_pic_group.bp_pic_group_name %>のメンバーを選択してください。</h1>
 <% else %>
-  <h1><%= @bp_pic_group.bp_pic_group_name %></h1>
-  <div style="color:gray"><%= @bp_pic_group.memo %></div>
-  <div style="text-align:right">
+  <h1><%= getLongName('table_name','bp_pic_groups')%> 確認</h1>
+  <%= render 'bp_pic_groups/show_table' %>
   <%= back_to_link 'グループ名とメモの編集', {:action => :edit, :id => @bp_pic_group.id} %> |
-  <%= link_to 'グループを削除', {:action => :destroy, :id => @bp_pic_group.id, :authenticity_token => form_authenticity_token}, method: :delete, data: { confirm: '削除します。よろしいですか?' } %>
-  </div>
+  <%= link_to 'グループを削除', {:action => :destroy, :id => @bp_pic_group.id, :authenticity_token => form_authenticity_token}, method: :delete, data: { confirm: '削除します。よろしいですか?' } %> |
   <%= link_or_back '戻る', bp_pic_groups_path %>
   <hr />
 <% end %>
@@ -52,7 +50,7 @@
         <th><%= getLongName('business_partners', 'business_partner_name') %></th>
         <th><%= getLongName('bp_pics', 'bp_pic_name') %></th>
         <th><%= getLongName('bp_pics', 'memo') %></th>
-        <th>操作</th>
+        <th style="width:30px">操作</th>
       </tr>
       <% @bp_pic_group.bp_pic_group_details.each do | detail | %>
         <tr id="<%= "tr_#{detail.id}"%>" style="background-color:<%= suspended_color(detail) %>">
@@ -61,8 +59,8 @@
           <% else %>
             <td><%= check_box_tag 'ids[]', detail.id, false %></td>
           <% end %>
-          <td><%= back_to_link detail.bp_pic.business_partner.business_partner_name, :controller => :business_partner, :action => :show, :id => detail.bp_pic.business_partner_id %></td>
-          <td><%= back_to_link detail.bp_pic.bp_pic_name, :controller => :bp_pic, :action => :show, :id => detail.bp_pic_id %></td>
+          <td><%= star_links(detail.bp_pic.business_partner) %> <%= back_to_link detail.bp_pic.business_partner.business_partner_name, :controller => :business_partner, :action => :show, :id => detail.bp_pic.business_partner_id %></td>
+          <td><%= star_links(detail.bp_pic) %> <%= back_to_link "#{detail.bp_pic.bp_pic_name} <#{detail.bp_pic.email1}>", :controller => :bp_pic, :action => :show, :id => detail.bp_pic_id %></td>
           <td><%= detail.bp_pic.memo%></td>
           <td><%= link_to (detail.suspended? ? "解除" : "停止"), {:controller => :bp_pic_group_details, :action => :suspend, :id => detail, :authenticity_token => form_authenticity_token}, :remote => true, :method => :put %></td>
         </tr>

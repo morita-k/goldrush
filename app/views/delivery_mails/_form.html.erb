@@ -15,14 +15,18 @@
 
 <table class="show_table">
   <tr>
-    <th><%= f.label :subject, getLongName('delivery_mails', 'subject') %>(*)</th>
+    <th><label>対象グループ</label></th>
+    <td><%= @delivery_mail.bp_pic_group.bp_pic_group_name%></td>
+  </tr>
+  <tr>
+    <th><%= f.label :subject, getLongName('delivery_mails', 'subject') + "(*)" %></th>
     <td><%= f.text_field :subject, :onFocus => "xtarget = this;" %></td>
   </tr>
   <tr>
     <th><%= f.label :mail_from, getLongName('delivery_mails', 'mail_from') %></th>
     <td><%=h (@delivery_mail.formated_mail_from) %></td>
-    <%= hidden_field_tag 'mail_from_name', @delivery_mail.mail_from_name %>
-    <%= hidden_field_tag 'mail_from', @delivery_mail.mail_from %>
+    <%= hidden_field 'delivery_mail', 'mail_from_name' %>
+    <%= hidden_field 'delivery_mail', 'mail_from' %>
   </tr>
   <tr>
     <th><%= f.label :mail_cc, getLongName('delivery_mails', 'mail_cc') %></th>
@@ -63,7 +67,9 @@
   </tr>
 </table>
   <div class="actions">
-    <%= hidden_field_tag 'bp_pic_group_id', @delivery_mail.bp_pic_group_id %>
-    <%= f.submit(:value => 'メールを作成し、対象者選択へ進む') %>
+    <%= hidden_field_tag 'src_mail_id', @src_mail_id %>
+    <%= hidden_field 'delivery_mail', 'bp_pic_group_id' %>
+    <%= f.submit(:value => 'メールを作成し、対象者選択へ進む') %> <%= f.submit(:name => 'testmail', :value => 'テストメールを送信する', :confirm => "一旦メールを保存し、送信者宛てにテストメールを送信してこの画面に戻ります。") %>
+
   </div>
 <% end %>
