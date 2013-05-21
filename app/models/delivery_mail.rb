@@ -52,6 +52,20 @@ class DeliveryMail < ActiveRecord::Base
     self.planned_setting_at_time = planned_setting_at.in_time_zone(zone_now.time_zone).hour
   end
 
+  def DeliveryMail.send_test_mail(mail)
+    opt = {:bp_pic_name => "ご担当者", :business_partner_name => "株式会社テストメール"}
+    attachment_files = AttachmentFile.attachment_files("delivery_mails", mail.id)
+    MyMailer.send_del_mail(
+      mail.mail_from,
+      nil,
+      nil,
+      "#{mail.mail_from_name} <#{mail.mail_from}>",
+      DeliveryMail.tags_replacement(mail.subject, opt),
+      DeliveryMail.tags_replacement(mail.content, opt),
+      attachment_files
+    ).deliver
+  end
+
   # Broadcast Mails
   def DeliveryMail.send_mails
     fetch_key = Time.now.to_s + " " + rand().to_s
@@ -65,17 +79,14 @@ class DeliveryMail < ActiveRecord::Base
       DeliveryMail.where(:created_user => fetch_key).each {|mail|
         attachment_files = AttachmentFile.attachment_files("delivery_mails", mail.id)
         mail.delivery_mail_targets.each {|target|
-          email = target.bp_pic.email1
-          title = DeliveryMail.tags_replacement(mail.subject, target)
-          body = DeliveryMail.tags_replacement(mail.content, target)
-          
+          opt = {:bp_pic_name => target.bp_pic.bp_pic_short_name, :business_partner_name => target.bp_pic.business_partner.business_partner_name}
           MyMailer.send_del_mail(
-            email,
+            target.bp_pic.email1,
             mail.mail_cc,
             mail.mail_bcc,
             "#{mail.mail_from_name} <#{mail.mail_from}>",
-            title,
-            body,
+            DeliveryMail.tags_replacement(mail.subject, opt),
+            DeliveryMail.tags_replacement(mail.content, opt),
             attachment_files
           ).deliver
         }
@@ -91,10 +102,8 @@ class DeliveryMail < ActiveRecord::Base
   end
   
   # === Private === 
-  def DeliveryMail.tags_replacement(tag, target)
-    tag.
-    gsub("%%bp_pic_name%%", target.bp_pic.bp_pic_short_name).
-    gsub("%%business_partner_name%%", target.bp_pic.business_partner.business_partner_name)
+  def DeliveryMail.tags_replacement(tag, option)
+    option.inject(tag){|str, k| str.gsub("%%#{k[0].to_s}%%", k[1])}
   end
 
   # Private Mailer

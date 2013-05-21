@@ -46,6 +46,7 @@ class DeliveryMailsController < ApplicationController
   def edit
     @delivery_mail = DeliveryMail.find(params[:id])
     @delivery_mail.setup_planned_setting_at(current_user.zone_at(@delivery_mail.planned_setting_at))
+    @attachment_files = AttachmentFile.attachment_files("delivery_mails", @delivery_mail.id)
     respond_to do |format|
       format.html # edit.html.erb
       format.json { render json: @delivery_mail }
@@ -70,6 +71,18 @@ class DeliveryMailsController < ApplicationController
           store_upload_file(@delivery_mail.id)
         end
         
+        if params[:testmail]
+          DeliveryMail.send_test_mail(@delivery_mail)
+          format.html {
+            redirect_to({
+              :controller => 'delivery_mails',
+              :action => 'edit',
+              :id => @delivery_mail,
+              :back_to => back_to
+            },
+            notice: 'Delivery mail was successfully created.')
+          }
+        end
         format.html {
           redirect_to url_for(
             :controller => 'bp_pic_groups',
@@ -105,6 +118,18 @@ class DeliveryMailsController < ApplicationController
           store_upload_file(@delivery_mail.id)
        end
 
+        if params[:testmail]
+          DeliveryMail.send_test_mail(@delivery_mail)
+          format.html {
+            redirect_to({
+              :controller => 'delivery_mails',
+              :action => 'edit',
+              :id => @delivery_mail,
+              :back_to => back_to
+            },
+            notice: 'Delivery mail was successfully created.')
+          }
+        end
         format.html { 
           redirect_to url_for(
             :controller => 'bp_pic_groups',
