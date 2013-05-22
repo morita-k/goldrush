@@ -1,0 +1,1344 @@
+approval_authorities_1:
+  id: 1
+  owner_id: 
+  user_id: 3
+  approver_id: 3
+  approver_type: "report_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_2:
+  id: 2
+  owner_id: 
+  user_id: 3
+  approver_id: 5
+  approver_type: "report_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_3:
+  id: 3
+  owner_id: 
+  user_id: 3
+  approver_id: 9
+  approver_type: "report_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_4:
+  id: 4
+  owner_id: 
+  user_id: 3
+  approver_id: 3
+  approver_type: "working_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_5:
+  id: 5
+  owner_id: 
+  user_id: 3
+  approver_id: 5
+  approver_type: "working_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_6:
+  id: 6
+  owner_id: 
+  user_id: 3
+  approver_id: 9
+  approver_type: "working_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_7:
+  id: 7
+  owner_id: 
+  user_id: 3
+  approver_id: 3
+  approver_type: "business_trip_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_8:
+  id: 8
+  owner_id: 
+  user_id: 3
+  approver_id: 5
+  approver_type: "business_trip_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_9:
+  id: 9
+  owner_id: 
+  user_id: 3
+  approver_id: 9
+  approver_type: "business_trip_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_10:
+  id: 10
+  owner_id: 
+  user_id: 3
+  approver_id: 3
+  approver_type: "expense_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_11:
+  id: 11
+  owner_id: 
+  user_id: 3
+  approver_id: 5
+  approver_type: "expense_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_12:
+  id: 12
+  owner_id: 
+  user_id: 3
+  approver_id: 9
+  approver_type: "expense_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_13:
+  id: 13
+  owner_id: 
+  user_id: 4
+  approver_id: 3
+  approver_type: "report_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_14:
+  id: 14
+  owner_id: 
+  user_id: 4
+  approver_id: 5
+  approver_type: "report_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_15:
+  id: 15
+  owner_id: 
+  user_id: 4
+  approver_id: 9
+  approver_type: "report_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_16:
+  id: 16
+  owner_id: 
+  user_id: 4
+  approver_id: 3
+  approver_type: "working_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_17:
+  id: 17
+  owner_id: 
+  user_id: 4
+  approver_id: 5
+  approver_type: "working_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_18:
+  id: 18
+  owner_id: 
+  user_id: 4
+  approver_id: 9
+  approver_type: "working_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_19:
+  id: 19
+  owner_id: 
+  user_id: 4
+  approver_id: 3
+  approver_type: "business_trip_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_20:
+  id: 20
+  owner_id: 
+  user_id: 4
+  approver_id: 5
+  approver_type: "business_trip_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_21:
+  id: 21
+  owner_id: 
+  user_id: 4
+  approver_id: 9
+  approver_type: "business_trip_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_22:
+  id: 22
+  owner_id: 
+  user_id: 4
+  approver_id: 3
+  approver_type: "expense_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_23:
+  id: 23
+  owner_id: 
+  user_id: 4
+  approver_id: 5
+  approver_type: "expense_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_24:
+  id: 24
+  owner_id: 
+  user_id: 4
+  approver_id: 9
+  approver_type: "expense_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_25:
+  id: 25
+  owner_id: 
+  user_id: 5
+  approver_id: 3
+  approver_type: "report_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_26:
+  id: 26
+  owner_id: 
+  user_id: 5
+  approver_id: 5
+  approver_type: "report_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_27:
+  id: 27
+  owner_id: 
+  user_id: 5
+  approver_id: 9
+  approver_type: "report_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_28:
+  id: 28
+  owner_id: 
+  user_id: 5
+  approver_id: 3
+  approver_type: "working_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_29:
+  id: 29
+  owner_id: 
+  user_id: 5
+  approver_id: 5
+  approver_type: "working_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_30:
+  id: 30
+  owner_id: 
+  user_id: 5
+  approver_id: 9
+  approver_type: "working_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_31:
+  id: 31
+  owner_id: 
+  user_id: 5
+  approver_id: 3
+  approver_type: "business_trip_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_32:
+  id: 32
+  owner_id: 
+  user_id: 5
+  approver_id: 5
+  approver_type: "business_trip_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_33:
+  id: 33
+  owner_id: 
+  user_id: 5
+  approver_id: 9
+  approver_type: "business_trip_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_34:
+  id: 34
+  owner_id: 
+  user_id: 5
+  approver_id: 3
+  approver_type: "expense_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_35:
+  id: 35
+  owner_id: 
+  user_id: 5
+  approver_id: 5
+  approver_type: "expense_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_36:
+  id: 36
+  owner_id: 
+  user_id: 5
+  approver_id: 9
+  approver_type: "expense_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_37:
+  id: 37
+  owner_id: 
+  user_id: 6
+  approver_id: 6
+  approver_type: "report_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_38:
+  id: 38
+  owner_id: 
+  user_id: 6
+  approver_id: 5
+  approver_type: "report_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_39:
+  id: 39
+  owner_id: 
+  user_id: 6
+  approver_id: 9
+  approver_type: "report_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_40:
+  id: 40
+  owner_id: 
+  user_id: 6
+  approver_id: 6
+  approver_type: "working_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_41:
+  id: 41
+  owner_id: 
+  user_id: 6
+  approver_id: 5
+  approver_type: "working_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_42:
+  id: 42
+  owner_id: 
+  user_id: 6
+  approver_id: 9
+  approver_type: "working_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_43:
+  id: 43
+  owner_id: 
+  user_id: 6
+  approver_id: 6
+  approver_type: "business_trip_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_44:
+  id: 44
+  owner_id: 
+  user_id: 6
+  approver_id: 5
+  approver_type: "business_trip_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_45:
+  id: 45
+  owner_id: 
+  user_id: 6
+  approver_id: 9
+  approver_type: "business_trip_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_46:
+  id: 46
+  owner_id: 
+  user_id: 6
+  approver_id: 6
+  approver_type: "expense_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_47:
+  id: 47
+  owner_id: 
+  user_id: 6
+  approver_id: 5
+  approver_type: "expense_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_48:
+  id: 48
+  owner_id: 
+  user_id: 6
+  approver_id: 9
+  approver_type: "expense_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_49:
+  id: 49
+  owner_id: 
+  user_id: 7
+  approver_id: 7
+  approver_type: "report_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_50:
+  id: 50
+  owner_id: 
+  user_id: 7
+  approver_id: 5
+  approver_type: "report_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_51:
+  id: 51
+  owner_id: 
+  user_id: 7
+  approver_id: 9
+  approver_type: "report_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_52:
+  id: 52
+  owner_id: 
+  user_id: 7
+  approver_id: 7
+  approver_type: "working_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_53:
+  id: 53
+  owner_id: 
+  user_id: 7
+  approver_id: 5
+  approver_type: "working_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_54:
+  id: 54
+  owner_id: 
+  user_id: 7
+  approver_id: 9
+  approver_type: "working_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_55:
+  id: 55
+  owner_id: 
+  user_id: 7
+  approver_id: 7
+  approver_type: "business_trip_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_56:
+  id: 56
+  owner_id: 
+  user_id: 7
+  approver_id: 5
+  approver_type: "business_trip_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_57:
+  id: 57
+  owner_id: 
+  user_id: 7
+  approver_id: 9
+  approver_type: "business_trip_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_58:
+  id: 58
+  owner_id: 
+  user_id: 7
+  approver_id: 7
+  approver_type: "expense_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_59:
+  id: 59
+  owner_id: 
+  user_id: 7
+  approver_id: 5
+  approver_type: "expense_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_60:
+  id: 60
+  owner_id: 
+  user_id: 7
+  approver_id: 9
+  approver_type: "expense_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_61:
+  id: 61
+  owner_id: 
+  user_id: 8
+  approver_id: 3
+  approver_type: "report_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_62:
+  id: 62
+  owner_id: 
+  user_id: 8
+  approver_id: 5
+  approver_type: "report_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_63:
+  id: 63
+  owner_id: 
+  user_id: 8
+  approver_id: 9
+  approver_type: "report_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_64:
+  id: 64
+  owner_id: 
+  user_id: 8
+  approver_id: 3
+  approver_type: "working_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_65:
+  id: 65
+  owner_id: 
+  user_id: 8
+  approver_id: 5
+  approver_type: "working_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_66:
+  id: 66
+  owner_id: 
+  user_id: 8
+  approver_id: 9
+  approver_type: "working_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_67:
+  id: 67
+  owner_id: 
+  user_id: 8
+  approver_id: 3
+  approver_type: "business_trip_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_68:
+  id: 68
+  owner_id: 
+  user_id: 8
+  approver_id: 5
+  approver_type: "business_trip_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_69:
+  id: 69
+  owner_id: 
+  user_id: 8
+  approver_id: 9
+  approver_type: "business_trip_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_70:
+  id: 70
+  owner_id: 
+  user_id: 8
+  approver_id: 3
+  approver_type: "expense_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_71:
+  id: 71
+  owner_id: 
+  user_id: 8
+  approver_id: 5
+  approver_type: "expense_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_72:
+  id: 72
+  owner_id: 
+  user_id: 8
+  approver_id: 9
+  approver_type: "expense_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_73:
+  id: 73
+  owner_id: 
+  user_id: 9
+  approver_id: 3
+  approver_type: "report_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_74:
+  id: 74
+  owner_id: 
+  user_id: 9
+  approver_id: 5
+  approver_type: "report_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_75:
+  id: 75
+  owner_id: 
+  user_id: 9
+  approver_id: 9
+  approver_type: "report_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_76:
+  id: 76
+  owner_id: 
+  user_id: 9
+  approver_id: 3
+  approver_type: "working_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_77:
+  id: 77
+  owner_id: 
+  user_id: 9
+  approver_id: 5
+  approver_type: "working_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_78:
+  id: 78
+  owner_id: 
+  user_id: 9
+  approver_id: 9
+  approver_type: "working_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_79:
+  id: 79
+  owner_id: 
+  user_id: 9
+  approver_id: 3
+  approver_type: "business_trip_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_80:
+  id: 80
+  owner_id: 
+  user_id: 9
+  approver_id: 5
+  approver_type: "business_trip_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_81:
+  id: 81
+  owner_id: 
+  user_id: 9
+  approver_id: 9
+  approver_type: "business_trip_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_82:
+  id: 82
+  owner_id: 
+  user_id: 9
+  approver_id: 3
+  approver_type: "expense_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_83:
+  id: 83
+  owner_id: 
+  user_id: 9
+  approver_id: 5
+  approver_type: "expense_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_84:
+  id: 84
+  owner_id: 
+  user_id: 9
+  approver_id: 9
+  approver_type: "expense_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_85:
+  id: 85
+  owner_id: 
+  user_id: 10
+  approver_id: 10
+  approver_type: "report_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_86:
+  id: 86
+  owner_id: 
+  user_id: 10
+  approver_id: 5
+  approver_type: "report_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_87:
+  id: 87
+  owner_id: 
+  user_id: 10
+  approver_id: 9
+  approver_type: "report_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_88:
+  id: 88
+  owner_id: 
+  user_id: 10
+  approver_id: 10
+  approver_type: "working_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_89:
+  id: 89
+  owner_id: 
+  user_id: 10
+  approver_id: 5
+  approver_type: "working_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_90:
+  id: 90
+  owner_id: 
+  user_id: 10
+  approver_id: 9
+  approver_type: "working_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_91:
+  id: 91
+  owner_id: 
+  user_id: 10
+  approver_id: 10
+  approver_type: "business_trip_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_92:
+  id: 92
+  owner_id: 
+  user_id: 10
+  approver_id: 5
+  approver_type: "business_trip_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_93:
+  id: 93
+  owner_id: 
+  user_id: 10
+  approver_id: 9
+  approver_type: "business_trip_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_94:
+  id: 94
+  owner_id: 
+  user_id: 10
+  approver_id: 10
+  approver_type: "expense_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_95:
+  id: 95
+  owner_id: 
+  user_id: 10
+  approver_id: 5
+  approver_type: "expense_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+approval_authorities_96:
+  id: 96
+  owner_id: 
+  user_id: 10
+  approver_id: 9
+  approver_type: "expense_xxx"
+  active_flg: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
