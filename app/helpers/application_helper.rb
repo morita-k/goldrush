@@ -422,4 +422,10 @@ EOS
       return ''
     end
   end
+  
+  def disp_wide_link(text, url_option, option={})
+    url = url_for(url_option)
+    option[:onclick] = "disp_wide('#{url}');return false"
+    link_to text, "#", option
+  end
 end

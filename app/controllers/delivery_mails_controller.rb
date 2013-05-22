@@ -43,6 +43,19 @@ class DeliveryMailsController < ApplicationController
   def new
     @delivery_mail = DeliveryMail.new
     @delivery_mail.bp_pic_group_id = params[:id]
+    @delivery_mail.content = <<EOS
+%%business_partner_name%%
+%%bp_pic_name%%様
+EOS
+    unless current_user.mail_signature.blank?
+    @delivery_mail.content += <<EOS
+
+
+
+--
+#{current_user.mail_signature}
+EOS
+    end
 
     new_proc
 
@@ -66,6 +79,9 @@ class DeliveryMailsController < ApplicationController
   # POST /delivery_mails
   # POST /delivery_mails.json
   def create
+    unless params[:bp_pic_id].blank?
+      return contact_mail_create(params[:bp_pic_id])
+    end
     @delivery_mail = DeliveryMail.new(params[:delivery_mail])
     @delivery_mail.perse_planned_setting_at(current_user.zone)
     respond_to do |format|
@@ -213,6 +229,64 @@ class DeliveryMailsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def conatct_mail_new
+    @bp_pic = BpPic.find(params[:id])
+    @delivery_mail = DeliveryMail.new
+    #@delivery_mail.bp_pic_group_id = params[:id]
+    unless sales_pic = @bp_pic.sales_pic
+      raise ValidationAbort.new("Contact mail method is wants sales_pic id.")
+    end
+    if t = sales_pic.contact_mail_template
+      @delivery_mail.mail_cc = t.mail_cc
+      @delivery_mail.mail_bcc = t.mail_bcc
+      @delivery_mail.subject = t.subject
+      @delivery_mail.content = t.content
+      unless sales_pic.mail_signature.blank?
+      @delivery_mail.content += <<EOS
+
+--
+#{sales_pic.mail_signature}
+EOS
+      end
+    end
+    @delivery_mail.mail_from = sales_pic.email
+    @delivery_mail.mail_from_name =sales_pic.employee.employee_name
+    @delivery_mail.setup_planned_setting_at(sales_pic.zone_now)
+
+    respond_to do |format|
+      format.html { render action: "new" }
+    end
+  end
+
+  def contact_mail_create(bp_pic_id)
+    @bp_pic = BpPic.find(bp_pic_id)
+    @delivery_mail = DeliveryMail.new(params[:delivery_mail])
+    @delivery_mail.perse_planned_setting_at(current_user.zone)
+    respond_to do |format|
+      begin
+        set_user_column(@delivery_mail)
+         
+        ActiveRecord::Base.transaction do
+          @delivery_mail.save!
+          @bp_pic.contact_mail_flg = 1
+          set_user_column @bp_pic
+          @bp_pic.save!
+          # 添付ファイルの保存
+          store_upload_files(@delivery_mail.id)
+          # メール送信
+          DeliveryMail.send_contact_mail(@delivery_mail, @bp_pic)
+        end
+        
+        format.html {
+          redirect_to(back_to , notice: 'Delivery mail was successfully created.')
+        }
+      rescue ActiveRecord::RecordInvalid
+        format.html { render action: "new" }
+      end
+    end
+  end
+
 private
   def new_proc
     @delivery_mail.mail_from = current_user.email

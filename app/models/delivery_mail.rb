@@ -71,6 +71,20 @@ class DeliveryMail < ActiveRecord::Base
     ).deliver
   end
 
+  def DeliveryMail.send_contact_mail(mail, bp_pic)
+    opt = {:bp_pic_name => bp_pic.bp_pic_short_name, :business_partner_name => bp_pic.business_partner.business_partner_name}
+    attachment_files = mail.attachment_files
+    MyMailer.send_del_mail(
+      mail.mail_from,
+      nil,
+      nil,
+      "#{mail.mail_from_name} <#{mail.mail_from}>",
+      DeliveryMail.tags_replacement(mail.subject, opt),
+      DeliveryMail.tags_replacement(mail.content, opt),
+      attachment_files
+    ).deliver
+  end
+
   # Broadcast Mails
   def DeliveryMail.send_mails
     fetch_key = Time.now.to_s + " " + rand().to_s

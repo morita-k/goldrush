@@ -1,6 +1,7 @@
 # -*- encoding: utf-8 -*-
 class BpPic < ActiveRecord::Base
   belongs_to :business_partner
+  belongs_to :sales_pic, :class_name => 'User'
   has_one :delivery_mail_target
   has_many :businesses
   has_many :bp_members

@@ -1,6 +1,9 @@
 # -*- encoding: utf-8 -*-
 GoldRush::Application.routes.draw do
 
+  resources :mail_templates
+
+
   resources :remarks
 
   resources :home do
@@ -17,7 +20,12 @@ GoldRush::Application.routes.draw do
 
   resources :bp_pic_groups
 
-  resources :delivery_mails
+  resources :delivery_mails do
+    member do
+      get 'conatct_mail_new'
+      post 'conatct_mail_create'
+    end
+  end
 
   resources :delivery_mail_targets
 

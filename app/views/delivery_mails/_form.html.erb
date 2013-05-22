@@ -1,4 +1,5 @@
 <%= form_for(@delivery_mail, :html => {:enctype => 'multipart/form-data'}) do |f| %>
+<%= hidden_field_tag 'bp_pic_id', @bp_pic && @bp_pic.id %>
 <%= back_to_field_tag %>
 <%= f.hidden_field :lock_version %>
   <% if @delivery_mail.errors.any? %>
@@ -13,11 +14,20 @@
     </div>
   <% end %>
 
-<table class="show_table">
+<%= disp_wide_link "テンプレートからメールを作成する", :controller => :mail_templates, :action => :index, :popup => 1 %>
+<table class="show_table" style="margin-top: 0em;">
+<%if  @delivery_mail.bp_pic_group %>
   <tr>
     <th><label>対象グループ</label></th>
     <td><%= @delivery_mail.bp_pic_group.bp_pic_group_name%></td>
   </tr>
+<% end %>
+<%if @bp_pic %>
+  <tr>
+    <th><label>対象</label></th>
+    <td><%= @bp_pic.business_partner.business_partner_name + " " + @bp_pic.bp_pic_name %></td>
+  </tr>
+<% end %>
   <tr>
     <th><%= f.label :subject, getLongName('delivery_mails', 'subject') + "(*)" %></th>
     <td><%= f.text_field :subject, :onFocus => "xtarget = this;" %></td>
@@ -57,19 +67,33 @@
     <td><%= file_field_tag :attachment5 %></td>
   </tr>
   <tr>
+    <td colspan="2">
+      <a href='javascript:insertAtCursor(xtarget, "%%bp_pic_name%%");'>担当者名</a>　<a href='javascript:insertAtCursor(xtarget, "%%business_partner_name%%");'>取引先会社名</a><br/>
+      <%= f.text_area :content, :style => "width:90%" , :onFocus => "xtarget = this;" %>
+    </td>
+  </tr>
+  <tr>
     <% options = @select_options %>
     <th><%= f.label :planned_setting_at, getLongName('delivery_mails', 'planned_setting_at') %></th>
     <td><%= date_field('delivery_mail', 'planned_setting_at_date') %><%= select "delivery_mail", "planned_setting_at_time", (0..23).to_a, {:include_blank => true} %></td>
   </tr>
-  <tr>
-    <td colspan="2"><a href='javascript:insertAtCursor(xtarget, "%%bp_pic_name%%");'>担当者名</a>　<a href='javascript:insertAtCursor(xtarget, "%%business_partner_name%%");'>取引先会社名</a><br/>
-        <%= f.text_area :content, :style => "width:90%" , :onFocus => "xtarget = this;" %></td>
-  </tr>
 </table>
-  <div class="actions">
-    <%= hidden_field_tag 'src_mail_id', @src_mail_id %>
-    <%= hidden_field 'delivery_mail', 'bp_pic_group_id' %>
-    <%= f.submit(:value => 'メールを作成し、対象者選択へ進む') %> <%= f.submit(:name => 'testmail', :value => 'テストメールを送信する', :confirm => "一旦メールを保存し、送信者宛てにテストメールを送信してこの画面に戻ります。") %>
 
-  </div>
-<% end %>
+<div class="actions">
+  <%= hidden_field_tag 'src_mail_id', @src_mail_id %>
+  <%= hidden_field 'delivery_mail', 'bp_pic_group_id' %>
+  <%= f.submit(:value => 'メールを作成し、対象者選択へ進む') %> <%unless @bp_pic %><%= f.submit(:name => 'testmail', :value => 'テストメールを送信する', :confirm => "一旦メールを保存し、送信者宛てにテストメールを送信してこの画面に戻ります。") %><%end%>
+</div>
+<% end %><%# form_for %>
+
+<script type="text/javascript">
+<!--
+
+function setMailTemplate(t) {
+  $('#delivery_mail_mail_cc')[0].value = t.mail_cc;
+  $('#delivery_mail_mail_bcc')[0].value = t.mail_bcc;
+  $('#delivery_mail_subject')[0].value = t.subject;
+  $('#delivery_mail_content')[0].value = t.content;
+}
+// -->
+</script>

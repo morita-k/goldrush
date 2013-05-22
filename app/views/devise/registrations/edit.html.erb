@@ -9,11 +9,6 @@
   </tr>
 
   <tr>
-  <th><%= f.label :nickname, 'ハンドル名' %></th>
-  <td><%= f.text_field :nickname %></td>
-  </tr>
-
-  <tr>
   <th><%= f.label :current_password, '現在のパスワード' %></th>
   <td><%= f.password_field :current_password %><br/><i>(登録内容を変更する場合、現在のパスワードが必要です)</td>
   </tr>
@@ -34,6 +29,17 @@
   <th><%= f.label :password_confirmation, 'パスワード確認' %></th>
   <td><%= f.password_field :password_confirmation %></td>
   </tr>
+
+  <tr>
+  <th><%= f.label :mail_signature, 'メール著名' %></th>
+  <td><%= f.text_area :mail_signature %></td>
+  </tr>
+
+  <tr>
+  <th><%= f.label :contact_mail_template_id, 'あいさつメールテンプレート' %></th>
+  <td><%= f.select :contact_mail_template_id, MailTemplate.all.collect {|x| [ x.mail_template_name, x.id ] }, { :include_blank => true } %></td>
+  </tr>
+
 </table>
   <p><%= f.submit "変更する" %></p>
 <% end %>

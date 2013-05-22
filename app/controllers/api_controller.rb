@@ -2,6 +2,7 @@
 require 'pop3_client'
 
 class ApiController < ApplicationController
+  skip_before_filter :verify_authenticity_token
   skip_before_filter :authenticate_auth!
   before_filter :api_auth_required, :except => [:error]
 
