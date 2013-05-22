@@ -30,10 +30,10 @@
   <th><%= getLongName('bp_pics', 'contact_date') %></th><td><%=@bp_pic.contact_date %></td>
 </tr>
 <tr>
-  <th><%= getLongName('bp_pics', 'sales_pic_id') %></th><td><%=@bp_pic.sales_pic_name(@bp_pic.sales_pic_id) %></td>
+  <th><%= getLongName('bp_pics', 'sales_pic_id') %></th><td><%=@bp_pic.sales_pic_name %></td>
 </tr>
 <tr>
-  <th><%= getLongName('bp_pics', 'contact_mail_flg') %></th><td><%=@bp_pic.contact_mail_status(@bp_pic.contact_mail_flg) %><% if @bp_pic.sales_pic %> (<%= back_to_link "あいさつメールを送る", conatct_mail_new_delivery_mail_path(@bp_pic)%>)<% end %></td>
+  <th><%= getLongName('bp_pics', 'contact_mail_flg') %></th><td><%=@bp_pic.contact_mail_status %><% if @bp_pic.sales_pic %> (<%= back_to_link "あいさつメールを送る", conatct_mail_new_delivery_mail_path(@bp_pic)%>)<% end %></td>
 </tr>
 <tr>
   <th><%= getLongName('bp_pics', 'memo') %></th><td><%=simple_format(h @bp_pic.memo) %></td>
