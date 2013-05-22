@@ -1,6 +1,9 @@
 # -*- encoding: utf-8 -*-
 GoldRush::Application.routes.draw do
 
+  resources :mail_templates
+
+
   resources :remarks
 
   resources :home do

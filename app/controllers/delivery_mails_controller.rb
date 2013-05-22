@@ -43,6 +43,19 @@ class DeliveryMailsController < ApplicationController
   def new
     @delivery_mail = DeliveryMail.new
     @delivery_mail.bp_pic_group_id = params[:id]
+    @delivery_mail.content = <<EOS
+%%business_partner_name%%
+%%bp_pic_name%%様
+EOS
+    unless current_user.mail_signature.blank?
+    @delivery_mail.content += <<EOS
+
+
+
+--
+#{current_user.mail_signature}
+EOS
+    end
 
     new_proc
 
