@@ -76,8 +76,8 @@ class DeliveryMail < ActiveRecord::Base
     attachment_files = mail.attachment_files
     MyMailer.send_del_mail(
       bp_pic.email1,
-      nil,
-      nil,
+      mail.mail_cc,
+      mail.mail_bcc,
       "#{mail.mail_from_name} <#{mail.mail_from}>",
       DeliveryMail.tags_replacement(mail.subject, opt),
       DeliveryMail.tags_replacement(mail.content, opt),

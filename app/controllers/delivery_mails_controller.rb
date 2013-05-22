@@ -250,6 +250,7 @@ EOS
 EOS
       end
     end
+    @delivery_mail.mail_bcc = @delivery_mail.mail_bcc.to_s.split(",").push(sales_pic.email).join(",")
     @delivery_mail.mail_from = sales_pic.email
     @delivery_mail.mail_from_name =sales_pic.employee.employee_name
     @delivery_mail.setup_planned_setting_at(sales_pic.zone_now)
