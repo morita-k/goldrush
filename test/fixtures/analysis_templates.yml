@@ -2,7 +2,7 @@ analysis_templates_1:
   id: 1
   owner_id: 
   business_partner_id: 2
-  bp_pic_id: 1
+  bp_pic_id: 2
   analysis_template_name: "解析テンプレート名"
   analysis_template_type: "biz_offer"
   memo: ""

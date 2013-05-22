@@ -3,7 +3,7 @@ bp_members_1:
   owner_id: 
   human_resource_id: 
   business_partner_id: 2
-  bp_pic_id: 1
+  bp_pic_id: 2
   employment_type: "parmanent"
   reprint_flg: 
   can_start_date: 
