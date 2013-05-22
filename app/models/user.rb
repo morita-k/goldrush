@@ -55,6 +55,7 @@ class User < ActiveRecord::Base
   has_one :employee, :conditions => "employees.deleted = 0"
   has_one :route_expense, :conditions => "route_expenses.deleted = 0"
   has_one :vacation, :conditions => "vacations.deleted = 0"
+  belongs_to :contact_mail_template, :class_name => "MailTemplate", :conditions => "mail_templates.deleted = 0"
   has_many :employee_families, :conditions => "employee_families.deleted = 0"
   has_many :approval_authorities, :conditions => "approval_authorities.deleted = 0"
   has_many :annual_vacations, :conditions => "annual_vacations.deleted = 0", :order => "year"
