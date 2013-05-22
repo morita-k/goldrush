@@ -75,7 +75,7 @@ class DeliveryMail < ActiveRecord::Base
     opt = {:bp_pic_name => bp_pic.bp_pic_short_name, :business_partner_name => bp_pic.business_partner.business_partner_name}
     attachment_files = mail.attachment_files
     MyMailer.send_del_mail(
-      mail.mail_from,
+      bp_pic.email1,
       nil,
       nil,
       "#{mail.mail_from_name} <#{mail.mail_from}>",

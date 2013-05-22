@@ -262,7 +262,7 @@ EOS
   def contact_mail_create(bp_pic_id)
     @bp_pic = BpPic.find(bp_pic_id)
     @delivery_mail = DeliveryMail.new(params[:delivery_mail])
-    @delivery_mail.perse_planned_setting_at(current_user.zone)
+    @delivery_mail.setup_planned_setting_at(@bp_pic.sales_pic.zone_now)
     respond_to do |format|
       begin
         set_user_column(@delivery_mail)
