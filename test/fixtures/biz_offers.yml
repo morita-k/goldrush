@@ -1,0 +1,62 @@
+biz_offers_1:
+  id: 1
+  owner_id: 
+  business_id: 1
+  business_partner_id: 2
+  bp_pic_id: 2
+  biz_offer_status_type: "open"
+  biz_offered_at: <%= Time.now.to_s(:db) %>
+  due_date: 
+  reprint_flg: 
+  winning_rate: ""
+  sales_route: ""
+  contact_pic_id: 
+  sales_pic_id: 
+  payment_text: ""
+  payment_max: 
+  time_adjust_text: ""
+  skill_consideration_flg: 
+  interview_times: 
+  interview_times_memo: ""
+  sales_route_limit: ""
+  application_format: ""
+  import_mail_id: 
+  memo: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+biz_offers_2:
+  id: id
+  owner_id: owner_id
+  business_id: business_id
+  business_partner_id: business_partner_id
+  bp_pic_id: bp_pic_id
+  biz_offer_status_type: "biz_offer_status_type$"
+  biz_offered_at: biz_offered_at
+  due_date: due_date
+  reprint_flg: reprint_flg
+  winning_rate: "winning_rate$"
+  sales_route: "sales_route$"
+  contact_pic_id: contact_pic_id
+  sales_pic_id: sales_pic_id
+  payment_text: "payment_text$"
+  payment_max: payment_max
+  time_adjust_text: "time_adjust_text$"
+  skill_consideration_flg: skill_consideration_flg
+  interview_times: interview_times
+  interview_times_memo: "interview_times_memo$"
+  sales_route_limit: "sales_route_limit$"
+  application_format: ""
+  import_mail_id: import_mail_id
+  memo: "memo$"
+  created_at: created_at
+  updated_at: updated_at
+  lock_version: lock_version
+  created_user: "created_user$"
+  updated_user: "updated_user$"
+  deleted_at: deleted_at
+  deleted: deleted
