@@ -153,10 +153,6 @@ class BusinessPartner < ActiveRecord::Base
   end
 end
 
-  def BusinessPartner.select_content_list
-    Employee.select("id, employee_short_name").map{|content| [content.employee_short_name, content.id]}
-  end
-  
   # 名刺管理アカウントから出力されたCSVファイルをインポート(google.csv)
   def BusinessPartner.import_google_csv_data(readable_file, prodmode=false)
     BusinessPartnerGoogleImporter.import_google_csv_data(readable_file, prodmode)

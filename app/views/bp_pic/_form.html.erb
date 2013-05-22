@@ -31,7 +31,7 @@
 </tr>
 <th><label for="bp_pic_contact_date"><%=getLongName('bp_pics','contact_date')%></label></th><td><%=date_field('bp_pic', 'contact_date') %></td>
 </tr>
-<th><label for="bp_pic_sales_pic_id"><%=getLongName('bp_pics','sales_pic_id')%></label></th><td><%= select('bp_pic', 'sales_pic_id', options_for_select(BusinessPartner.select_content_list, @bp_pic.sales_pic_id), :include_blank => true) %></td>
+<th><label for="bp_pic_sales_pic_id"><%=getLongName('bp_pics','sales_pic_id')%></label></th><td><%= select('bp_pic', 'sales_pic_id', options_for_select(BpPic.select_content_list, @bp_pic.sales_pic_id), :include_blank => true) %></td>
 </tr>
 <th><label for="bp_pic_contact_mail_flg"><%=getLongName('bp_pics','contact_mail_flg')%></label></th><td><%= check_box('bp_pic', 'contact_mail_flg', {}, 1, 0) %></td>
 </tr>

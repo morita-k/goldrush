@@ -15,13 +15,16 @@ class BpPic < ActiveRecord::Base
   BOUNCE_MAIL_REASON_ERROR = [:hostunknown, :userunknown]
   BOUNCE_MAIL_REASON_WARN = [:hasmoved, :rejected, :filtered, :mailboxfull, :exceedlimit, :systemfull, :notaccept, :suspend, :mailererror, :systemerror, :mesgtoobig, :securityerr, :contenterr, :expired, :onhold]
   
-  def sales_pic_name(sales_pic_id)
-    short_name = Employee.find_by_id(sales_pic_id)
-    short_name.nil? ? "" : short_name.employee_short_name
+  def sales_pic_name
+    sales_pic && sales_pic.employee.employee_short_name
   end
   
-  def contact_mail_status(mail_flg)
-    mail_flg == 1 ? "送信済み" : "未送信"
+  def BpPic.select_content_list
+    Employee.where(deleted: 0).map{|e| [e.employee_short_name, e.user_id]}
+  end
+  
+  def contact_mail_status
+    contact_mail_flg == 1 ? "送信済み" : "未送信"
   end
   
   def nondelivery?
