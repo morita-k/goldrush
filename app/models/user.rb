@@ -14,7 +14,8 @@ class User < ActiveRecord::Base
   # attr_accessible :title, :body
 
   # see. https://github.com/plataformatec/devise/wiki/How-To:-Allow-users-to-sign-in-using-their-username-or-email-address
-  before_create :create_login
+#  before_create :create_login
+  before_save :create_login
 
   def zone
     'Tokyo'
@@ -38,7 +39,6 @@ class User < ActiveRecord::Base
 
   def create_login             
     self.login = self.email
-    self.access_level_type = 'normal'
   end
 
   def self.find_for_database_authentication(conditions)
