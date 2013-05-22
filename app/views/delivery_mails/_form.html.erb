@@ -25,7 +25,7 @@
 <%if @bp_pic %>
   <tr>
     <th><label>対象</label></th>
-    <td><%= @bp_pic.business_partner.business_partner_name + " " + @bp_pic.bp_pic_name %></td>
+    <td><%= "#{@bp_pic.business_partner.business_partner_name} #{@bp_pic.bp_pic_name}<#{@bp_pic.email1}>" %></td>
   </tr>
 <% end %>
   <tr>
@@ -72,17 +72,22 @@
       <%= f.text_area :content, :style => "width:90%" , :onFocus => "xtarget = this;" %>
     </td>
   </tr>
+  <% unless @bp_pic %>
   <tr>
-    <% options = @select_options %>
     <th><%= f.label :planned_setting_at, getLongName('delivery_mails', 'planned_setting_at') %></th>
     <td><%= date_field('delivery_mail', 'planned_setting_at_date') %><%= select "delivery_mail", "planned_setting_at_time", (0..23).to_a, {:include_blank => true} %></td>
   </tr>
+  <% end %>
 </table>
 
 <div class="actions">
   <%= hidden_field_tag 'src_mail_id', @src_mail_id %>
   <%= hidden_field 'delivery_mail', 'bp_pic_group_id' %>
-  <%= f.submit(:value => 'メールを作成し、対象者選択へ進む') %> <%unless @bp_pic %><%= f.submit(:name => 'testmail', :value => 'テストメールを送信する', :confirm => "一旦メールを保存し、送信者宛てにテストメールを送信してこの画面に戻ります。") %><%end%>
+  <% unless @bp_pic %>
+    <%= f.submit(:value => 'メールを作成し、対象者選択へ進む') %> <%= f.submit(:name => 'testmail', :value => 'テストメールを送信する', :confirm => "一旦メールを保存し、送信者宛てにテストメールを送信してこの画面に戻ります。") %>
+  <% else %>
+    <%= f.submit(:value => 'メールを送信する') %>
+  <% end %>
 </div>
 <% end %><%# form_for %>
 
