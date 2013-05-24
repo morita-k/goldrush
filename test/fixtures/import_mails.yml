@@ -1,0 +1,30 @@
+import_mails_1:
+  id: 1
+  owner_id: 
+  business_partner_id: 1
+  bp_pic_id: 1
+  in_reply_to: ""
+  received_at: <%= Time.now.to_s(:db) %>
+  mail_subject: "件名"
+  mail_body: "本文"
+  mail_from: "from"
+  mail_sender_name: "送信者名"
+  mail_to: ""
+  mail_cc: ""
+  mail_bcc: ""
+  message_source: "メッセージソース"
+  message_id: ""
+  biz_offer_flg: 
+  bp_member_flg: 
+  registed: 
+  unwanted: 
+  tag_text: ""
+  payment_text: ""
+  age_text: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0

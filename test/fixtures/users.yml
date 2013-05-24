@@ -372,3 +372,139 @@ users_11:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
+users_12:
+  id: 12
+  owner_id: 
+  login: "user11@aaa.com"
+  fullname: ""
+  shortname: ""
+  nickname: "大林"
+  access_level_type: "normal"
+  per_page: 50
+  email: "user11@aaa.com"
+  encrypted_password: "$2a$10$ojHlby3zaA6ux5w8/1QINO9ALaPwYboB1eYxSXq4G6ZAaVmaTvadi"
+  reset_password_token: "NULL"
+  reset_password_sent_at: NULL
+  remember_created_at: NULL
+  sign_in_count: 0
+  current_sign_in_at: 
+  last_sign_in_at: 
+  current_sign_in_ip: ""
+  last_sign_in_ip: ""
+  confirmation_token: ""
+  confirmed_at: 
+  confirmation_sent_at: 
+  unconfirmed_email: ""
+  failed_attempts: 0
+  unlock_token: ""
+  locked_at: 
+  authentication_token: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+users_13:
+  id: 13
+  owner_id: 
+  login: "user12@aaa.com"
+  fullname: ""
+  shortname: ""
+  nickname: "中林"
+  access_level_type: "normal"
+  per_page: 50
+  email: "user12@aaa.com"
+  encrypted_password: "$2a$10$ojHlby3zaA6ux5w8/1QINO9ALaPwYboB1eYxSXq4G6ZAaVmaTvadi"
+  reset_password_token: "NULL"
+  reset_password_sent_at: NULL
+  remember_created_at: NULL
+  sign_in_count: 0
+  current_sign_in_at: 
+  last_sign_in_at: 
+  current_sign_in_ip: ""
+  last_sign_in_ip: ""
+  confirmation_token: ""
+  confirmed_at: 
+  confirmation_sent_at: 
+  unconfirmed_email: ""
+  failed_attempts: 0
+  unlock_token: ""
+  locked_at: 
+  authentication_token: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+users_14:
+  id: 14
+  owner_id: 
+  login: "user13@aaa.com"
+  fullname: ""
+  shortname: ""
+  nickname: "小林"
+  access_level_type: "normal"
+  per_page: 50
+  email: "user13@aaa.com"
+  encrypted_password: "$2a$10$ojHlby3zaA6ux5w8/1QINO9ALaPwYboB1eYxSXq4G6ZAaVmaTvadi"
+  reset_password_token: "NULL"
+  reset_password_sent_at: NULL
+  remember_created_at: NULL
+  sign_in_count: 0
+  current_sign_in_at: 
+  last_sign_in_at: 
+  current_sign_in_ip: ""
+  last_sign_in_ip: ""
+  confirmation_token: ""
+  confirmed_at: 
+  confirmation_sent_at: 
+  unconfirmed_email: ""
+  failed_attempts: 0
+  unlock_token: ""
+  locked_at: 
+  authentication_token: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+users_15:
+  id: 15
+  owner_id: 
+  login: "user14@aaa.com"
+  fullname: ""
+  shortname: ""
+  nickname: "林"
+  access_level_type: "normal"
+  per_page: 50
+  email: "user14@aaa.com"
+  encrypted_password: "$2a$10$ojHlby3zaA6ux5w8/1QINO9ALaPwYboB1eYxSXq4G6ZAaVmaTvadi"
+  reset_password_token: "NULL"
+  reset_password_sent_at: NULL
+  remember_created_at: NULL
+  sign_in_count: 0
+  current_sign_in_at: 
+  last_sign_in_at: 
+  current_sign_in_ip: ""
+  last_sign_in_ip: ""
+  confirmation_token: ""
+  confirmed_at: 
+  confirmation_sent_at: 
+  unconfirmed_email: ""
+  failed_attempts: 0
+  unlock_token: ""
+  locked_at: 
+  authentication_token: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0

@@ -127,8 +127,8 @@ ActiveRecord::Schema.define(:version => 0) do
     t.integer  "approach_pic_id",                 :limit => 8
     t.date     "approach_start_date"
     t.date     "can_interview_date"
-    t.integer  "approach_upper_contract_term_id", :limit => 8
-    t.integer  "approach_down_contract_term_id",  :limit => 8
+    t.integer  "approach_upper_contract_term_id", :limit => 8,                 :null => false
+    t.integer  "approach_down_contract_term_id",  :limit => 8,                 :null => false
     t.text     "memo"
     t.datetime "created_at",                                                   :null => false
     t.datetime "updated_at",                                                   :null => false
@@ -217,9 +217,9 @@ ActiveRecord::Schema.define(:version => 0) do
 
   create_table "base_months", :force => true do |t|
     t.integer  "owner_id",     :limit => 8
-    t.integer  "report_month", :limit => 8
-    t.date     "start_date"
-    t.date     "end_date"
+    t.integer  "report_month", :limit => 8,                 :null => false
+    t.date     "start_date",                                :null => false
+    t.date     "end_date",                                  :null => false
     t.integer  "last_flg",                   :default => 0
     t.integer  "current_flg",                :default => 0
     t.datetime "created_at",                                :null => false
@@ -271,8 +271,8 @@ ActiveRecord::Schema.define(:version => 0) do
     t.integer  "owner_id",            :limit => 8
     t.integer  "human_resource_id",   :limit => 8,                                                  :null => false
     t.integer  "business_partner_id", :limit => 8,                                                  :null => false
-    t.integer  "bp_pic_id",           :limit => 8
-    t.string   "employment_type",     :limit => 40
+    t.integer  "bp_pic_id",           :limit => 8,                                                  :null => false
+    t.string   "employment_type",     :limit => 40,                                                 :null => false
     t.integer  "reprint_flg",                                                      :default => 0
     t.date     "can_start_date"
     t.date     "can_interview_date"
@@ -312,7 +312,7 @@ ActiveRecord::Schema.define(:version => 0) do
 
   create_table "bp_pic_groups", :force => true do |t|
     t.integer  "owner_id",          :limit => 8
-    t.string   "bp_pic_group_name"
+    t.string   "bp_pic_group_name",                              :null => false
     t.text     "memo"
     t.datetime "created_at",                                     :null => false
     t.datetime "updated_at",                                     :null => false
@@ -331,12 +331,16 @@ ActiveRecord::Schema.define(:version => 0) do
     t.string   "bp_pic_name",                                        :null => false
     t.string   "bp_pic_short_name",                                  :null => false
     t.string   "bp_pic_name_kana",                                   :null => false
-    t.string   "depertment",          :limit => 40
-    t.string   "position",            :limit => 40
+    t.string   "depertment"
+    t.string   "position"
     t.string   "tel_direct",          :limit => 40
     t.string   "tel_mobile",          :limit => 40
-    t.string   "email1"
+    t.string   "email1",                                             :null => false
     t.string   "email2"
+    t.date     "contact_date"
+    t.integer  "sales_pic_id",        :limit => 8
+    t.integer  "contact_mail_flg"
+    t.integer  "nondelivery_score",                 :default => 0
     t.integer  "starred",                           :default => 0
     t.float    "rating",                            :default => 0.0
     t.integer  "import_mail_id",      :limit => 8
@@ -362,7 +366,7 @@ ActiveRecord::Schema.define(:version => 0) do
     t.string   "business_partner_short_name",                                :null => false
     t.string   "business_partner_name_kana"
     t.string   "business_partner_name_en"
-    t.string   "sales_status_type",           :limit => 40
+    t.string   "sales_status_type",           :limit => 40,                  :null => false
     t.string   "ceo_name"
     t.string   "url"
     t.string   "zip",                         :limit => 40
@@ -428,7 +432,7 @@ ActiveRecord::Schema.define(:version => 0) do
     t.datetime "issue_datetime",                                      :null => false
     t.date     "due_date"
     t.string   "term_type",            :limit => 40
-    t.string   "business_title"
+    t.string   "business_title",                                      :null => false
     t.string   "business_point"
     t.string   "business_description"
     t.integer  "member_change_flg",                  :default => 0
@@ -500,7 +504,7 @@ ActiveRecord::Schema.define(:version => 0) do
 
   create_table "contract_terms", :force => true do |t|
     t.integer  "owner_id",               :limit => 8
-    t.string   "contract_type",          :limit => 40,                                                 :null => false
+    t.string   "term_type",              :limit => 40,                                                 :null => false
     t.decimal  "payment",                              :precision => 12, :scale => 2, :default => 0.0
     t.integer  "time_adjust_flg",        :limit => 8
     t.integer  "time_adjust_upper",      :limit => 8
@@ -629,13 +633,13 @@ ActiveRecord::Schema.define(:version => 0) do
     t.integer  "owner_id",              :limit => 8
     t.integer  "bp_pic_group_id",       :limit => 8
     t.string   "mail_status_type",      :limit => 40,                        :null => false
-    t.string   "subject"
-    t.text     "content",               :limit => 2147483647
-    t.string   "mail_from_name"
-    t.string   "mail_from"
+    t.string   "subject",                                                    :null => false
+    t.text     "content",               :limit => 2147483647,                :null => false
+    t.string   "mail_from_name",                                             :null => false
+    t.string   "mail_from",                                                  :null => false
     t.string   "mail_cc"
     t.string   "mail_bcc"
-    t.datetime "planned_setting_at"
+    t.datetime "planned_setting_at",                                         :null => false
     t.string   "mail_send_status_type", :limit => 40,                        :null => false
     t.datetime "send_end_at"
     t.datetime "created_at",                                                 :null => false
@@ -651,10 +655,10 @@ ActiveRecord::Schema.define(:version => 0) do
 
   create_table "departments", :force => true do |t|
     t.integer  "owner_id",             :limit => 8
-    t.string   "department_code",      :limit => 40
-    t.string   "department_name",      :limit => 100
-    t.string   "department_shortname", :limit => 100
-    t.integer  "display_order",        :limit => 8
+    t.string   "department_code",      :limit => 40,                 :null => false
+    t.string   "department_name",      :limit => 100,                :null => false
+    t.string   "department_shortname", :limit => 100,                :null => false
+    t.integer  "display_order",        :limit => 8,   :default => 0
     t.text     "memo"
     t.datetime "created_at",                                         :null => false
     t.datetime "updated_at",                                         :null => false
@@ -673,13 +677,13 @@ ActiveRecord::Schema.define(:version => 0) do
     t.integer  "department_id",        :limit => 8
     t.string   "employee_type",        :limit => 40,                 :null => false
     t.string   "position",             :limit => 100
-    t.string   "employee_code",        :limit => 40
+    t.string   "employee_code",        :limit => 40,                 :null => false
     t.string   "insurance_code",       :limit => 40
-    t.string   "employee_name",        :limit => 100
-    t.string   "employee_kana_name",   :limit => 100
-    t.string   "employee_short_name",  :limit => 100
-    t.date     "birthday_date"
-    t.string   "sex_type",             :limit => 40
+    t.string   "employee_name",        :limit => 100,                :null => false
+    t.string   "employee_kana_name",   :limit => 100,                :null => false
+    t.string   "employee_short_name",  :limit => 100,                :null => false
+    t.date     "birthday_date",                                      :null => false
+    t.string   "sex_type",             :limit => 40,                 :null => false
     t.string   "email",                :limit => 40
     t.string   "zip1",                 :limit => 40
     t.string   "address1_1"
@@ -703,7 +707,7 @@ ActiveRecord::Schema.define(:version => 0) do
     t.string   "address3_3"
     t.string   "address3_4"
     t.string   "tel3",                 :limit => 40
-    t.date     "entry_date"
+    t.date     "entry_date",                                         :null => false
     t.date     "resignation_date"
     t.string   "resignation_reason"
     t.string   "attached_file1"
@@ -918,6 +922,8 @@ ActiveRecord::Schema.define(:version => 0) do
     t.integer  "registed",                                  :default => 0
     t.integer  "unwanted",                                  :default => 0
     t.text     "tag_text"
+    t.string   "payment_text"
+    t.string   "age_text"
     t.datetime "created_at",                                               :null => false
     t.datetime "updated_at",                                               :null => false
     t.integer  "lock_version",        :limit => 8,          :default => 0
@@ -953,21 +959,22 @@ ActiveRecord::Schema.define(:version => 0) do
   add_index "interviews", ["id"], :name => "id", :unique => true
 
   create_table "mail_templates", :force => true do |t|
-    t.integer  "owner_id",           :limit => 8
-    t.string   "mail_template_name"
-    t.string   "subject"
-    t.text     "content"
+    t.integer  "owner_id",               :limit => 8
+    t.string   "mail_template_category",                              :null => false
+    t.string   "mail_template_name",                                  :null => false
+    t.string   "subject",                                             :null => false
+    t.text     "content",                                             :null => false
     t.string   "mail_from_name"
     t.string   "mail_from"
     t.string   "mail_cc"
     t.string   "mail_bcc"
-    t.datetime "created_at",                                      :null => false
-    t.datetime "updated_at",                                      :null => false
-    t.integer  "lock_version",       :limit => 8,  :default => 0
-    t.string   "created_user",       :limit => 80
-    t.string   "updated_user",       :limit => 80
+    t.datetime "created_at",                                          :null => false
+    t.datetime "updated_at",                                          :null => false
+    t.integer  "lock_version",           :limit => 8,  :default => 0
+    t.string   "created_user",           :limit => 80
+    t.string   "updated_user",           :limit => 80
     t.datetime "deleted_at"
-    t.integer  "deleted",                          :default => 0
+    t.integer  "deleted",                              :default => 0
   end
 
   add_index "mail_templates", ["id"], :name => "id", :unique => true
@@ -1013,8 +1020,8 @@ ActiveRecord::Schema.define(:version => 0) do
     t.string   "name_section",     :limit => 40,                 :null => false
     t.string   "name_key",         :limit => 40,                 :null => false
     t.string   "long_name",        :limit => 100,                :null => false
-    t.string   "short_name",       :limit => 100
-    t.string   "other_name",       :limit => 100
+    t.string   "short_name",       :limit => 100,                :null => false
+    t.string   "other_name",       :limit => 100,                :null => false
     t.string   "name_description"
     t.datetime "created_at",                                     :null => false
     t.datetime "updated_at",                                     :null => false
@@ -1205,10 +1212,10 @@ ActiveRecord::Schema.define(:version => 0) do
   create_table "route_expense_details", :force => true do |t|
     t.integer  "owner_id",          :limit => 8
     t.integer  "route_expense_id",  :limit => 8
-    t.string   "organization_name", :limit => 100
-    t.string   "station_from",      :limit => 100
-    t.string   "station_to",        :limit => 100
-    t.decimal  "monthly_amount",                   :precision => 12, :scale => 2
+    t.string   "organization_name", :limit => 100,                                               :null => false
+    t.string   "station_from",      :limit => 100,                                               :null => false
+    t.string   "station_to",        :limit => 100,                                               :null => false
+    t.decimal  "monthly_amount",                   :precision => 12, :scale => 2,                :null => false
     t.text     "memo"
     t.datetime "created_at",                                                                     :null => false
     t.datetime "updated_at",                                                                     :null => false
@@ -1236,6 +1243,9 @@ ActiveRecord::Schema.define(:version => 0) do
   end
 
   add_index "route_expenses", ["id"], :name => "id", :unique => true
+
+  create_table "schema_versions", :primary_key => "version", :force => true do |t|
+  end
 
   create_table "sessions", :force => true do |t|
     t.integer  "owner_id",     :limit => 8
@@ -1336,6 +1346,7 @@ ActiveRecord::Schema.define(:version => 0) do
     t.integer  "display_order1", :limit => 8
     t.integer  "display_order2", :limit => 8
     t.integer  "display_order3", :limit => 8
+    t.integer  "starred",                      :default => 0
     t.datetime "created_at",                                  :null => false
     t.datetime "updated_at",                                  :null => false
     t.integer  "lock_version",   :limit => 8,  :default => 0
@@ -1352,8 +1363,8 @@ ActiveRecord::Schema.define(:version => 0) do
     t.string   "type_section",          :limit => 40,                 :null => false
     t.string   "type_key",              :limit => 40,                 :null => false
     t.string   "long_name",             :limit => 100,                :null => false
-    t.string   "short_name",            :limit => 100
-    t.string   "other_name",            :limit => 100
+    t.string   "short_name",            :limit => 100,                :null => false
+    t.string   "other_name",            :limit => 100,                :null => false
     t.string   "type_description"
     t.text     "type_description_text"
     t.integer  "display_order1"
@@ -1372,19 +1383,19 @@ ActiveRecord::Schema.define(:version => 0) do
   add_index "types", ["type_section", "type_key"], :name => "idx_types_2", :unique => true
 
   create_table "users", :force => true do |t|
-    t.integer  "owner_id",               :limit => 8
-    t.string   "login",                                               :null => false
+    t.integer  "owner_id",                 :limit => 8
+    t.string   "login",                                                 :null => false
     t.string   "fullname"
     t.string   "shortname"
     t.string   "nickname"
-    t.string   "access_level_type",      :limit => 40,                :null => false
-    t.integer  "per_page",                             :default => 0
-    t.string   "email",                                               :null => false
-    t.string   "encrypted_password",                                  :null => false
+    t.string   "access_level_type",        :limit => 40,                :null => false
+    t.integer  "per_page",                               :default => 0
+    t.string   "email",                                                 :null => false
+    t.string   "encrypted_password",                                    :null => false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                        :default => 0
+    t.integer  "sign_in_count",                          :default => 0
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
@@ -1393,17 +1404,19 @@ ActiveRecord::Schema.define(:version => 0) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string   "unconfirmed_email"
-    t.integer  "failed_attempts",                      :default => 0
+    t.integer  "failed_attempts",                        :default => 0
     t.string   "unlock_token"
     t.datetime "locked_at"
     t.string   "authentication_token"
-    t.datetime "created_at",                                          :null => false
-    t.datetime "updated_at",                                          :null => false
-    t.integer  "lock_version",           :limit => 8,  :default => 0
-    t.string   "created_user",           :limit => 80
-    t.string   "updated_user",           :limit => 80
+    t.text     "mail_signature"
+    t.integer  "contact_mail_template_id", :limit => 8
+    t.datetime "created_at",                                            :null => false
+    t.datetime "updated_at",                                            :null => false
+    t.integer  "lock_version",             :limit => 8,  :default => 0
+    t.string   "created_user",             :limit => 80
+    t.string   "updated_user",             :limit => 80
     t.datetime "deleted_at"
-    t.integer  "deleted",                              :default => 0
+    t.integer  "deleted",                                :default => 0
   end
 
   add_index "users", ["email"], :name => "idx_users_5"
