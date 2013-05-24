@@ -1,0 +1,31 @@
+biz_offers_1:
+  id: 1
+  owner_id: 
+  business_id: 1
+  business_partner_id: 1
+  bp_pic_id: 1
+  biz_offer_status_type: "open"
+  biz_offered_at: <%= Time.now.to_s(:db) %>
+  due_date: 
+  reprint_flg: 
+  winning_rate: ""
+  sales_route: ""
+  contact_pic_id: 
+  sales_pic_id: 
+  payment_text: ""
+  payment_max: 
+  time_adjust_text: ""
+  skill_consideration_flg: 
+  interview_times: 
+  interview_times_memo: ""
+  sales_route_limit: ""
+  application_format: ""
+  import_mail_id: 
+  memo: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
