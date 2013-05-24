@@ -7,6 +7,7 @@ class ImportMail < ActiveRecord::Base
   belongs_to :bp_pic
   has_many :bp_members
   has_many :biz_offers
+  has_many :tag_details, :foreign_key  => :parent_id, :conditions => "tag_details.tag_key = 'import_mails'"
 
   def ImportMail.tryConv(map, header_key, &block)
     str = nil

@@ -10,6 +10,10 @@
         <%= check_box_tag 'registed', 1, session[:import_mail_search][:registed].to_i == 1 %> 登録済み
       </td>
     </tr>
+    </tr>
+      <td style="text-align: right">タグ:</td>
+      <td><%= text_field_tag 'tag', session[:import_mail_search][:tag]%></td>
+    </tr>
 </table>
 <br/>
 <%= submit_tag '　　検索　　', :name => 'search_button' %> <%= submit_tag '　　クリア　　', :name => 'clear_button' %>
@@ -44,7 +48,7 @@
       <div style="overflow: hidden;height:1.5em;"><%= link_to_detail(import_mail, request_url) %></div>
     </td>
     <td>
-      <div style="overflow: hidden;height:1.5em;"><%= raw format_only_major_tags(import_mail.tag_text, @major_words) %></div>
+      <div style="overflow: hidden;height:1.4em;"><span style="line-height: 90%;"><%= raw format_only_major_tags(import_mail.tag_text, @major_words) %></span></div>
     </td>
     <td><div style="width:2.5em"><%=import_mail.payment_text %></div></td>
     <td><div style="width:2.5em"><%=import_mail.age_text %></div></td>
@@ -109,6 +113,26 @@ function changeFlg(import_mail_id, type){
   });
   return false;
 }
+
+function isInclude(src, word){
+  return (src.toUpperCase().split(",").indexOf(word) > -1);
+}
+
+$(function(){
+  $('.tag').click(function(){
+    var v = document.forms[0].tag.value;
+    if (v){
+      var w = this.innerHTML;
+      if(!isInclude(v, w.toUpperCase())){
+        var x = v.split(",")
+        x.push(this.innerHTML);
+        document.forms[0].tag.value = x.join(",");
+      }
+    }else{
+      document.forms[0].tag.value = this.innerHTML;
+    }
+  });
+});
 
 // -->
 </script>

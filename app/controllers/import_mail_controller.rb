@@ -15,19 +15,48 @@ class ImportMailController < ApplicationController
       :biz_offer_flg => params[:biz_offer_flg],
       :bp_member_flg => params[:bp_member_flg],
       :unwanted => params[:unwanted],
-      :registed => params[:registed]
-      }
+      :registed => params[:registed],
+      :tag => params[:tag]
+    }
+  end
+
+  def combine_tags?(tags)
+    tags && tags.split(",").size > 1
+  end
+
+  def make_conditions_for_tag(tags)
+    joins = []
+    sqls = []
+    sql_params = []
+   tags.split(",").each do |tag|
+      sqls << "tag_details.tag_text = ?"
+      sql_params << tag.strip.downcase
+    end
+    if combine_tags?(tags)
+      my_sql = "select parent_id, count(parent_id) as cnt from tag_details where (#{sqls.join(' or ')}) group by parent_id having count(parent_id) > ?"
+      sql_params << (sqls.size - 1)
+      parent_ids = TagDetail.find_by_sql(sql_params.unshift(my_sql)).map{|x| x.parent_id}
+      sql = " and import_mails.id in (?)"
+      sql_params << parent_ids
+      return [" and import_mails.id in (?)", [parent_ids], []]
+    else
+      return [" and (#{sqls.first})", sql_params, [:tag_details]]
+      #ã“ã‚“ãªæ„Ÿã˜
+      #ImportMail.joins(:tag_details).where(:id => 240,"tag_details.tag_text" => "java")
+    end
   end
 
   def make_conditions
-    param = []
+    sql_params = []
     incl = []
+    joins = []
     sql = "import_mails.deleted = 0"
-    # TODO ƒfƒtƒHƒ‹ƒg‚Å•s—vƒtƒ‰ƒO—§‚Á‚Ä‚È‚¢‚à‚ÌH
+    # TODO ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã§ä¸è¦ãƒ•ãƒ©ã‚°ç«‹ã£ã¦ãªã„ã‚‚ã®ï¼Ÿ
     order_by = ""
 
     if params[:id]
-      sql += " and business_partner_id = #{params[:id]}"
+      sql += " and business_partner_id = ?"
+      sql_params << params[:id]
     end
 
     if !(self_flg = session[:import_mail_search][:biz_offer_flg]).blank?
@@ -45,8 +74,16 @@ class ImportMailController < ApplicationController
     if !(down_flg = session[:import_mail_search][:registed]).blank?
       sql += " and registed = 1"
     end
+    
 
-    return [param.unshift(sql), incl]
+    unless session[:import_mail_search][:tag].blank?
+      s, p, j = make_conditions_for_tag(session[:import_mail_search][:tag])
+      sql += s
+      sql_params += p
+      joins += j
+    end
+
+    return [sql_params.unshift(sql), incl, joins]
   end
 
   def list
@@ -58,9 +95,10 @@ class ImportMailController < ApplicationController
         session[:import_mail_search] = {}
       end
     end
-    cond, incl = make_conditions
+    cond, incl, joins = make_conditions
     
     @import_mails = ImportMail.includes(incl)
+                              .joins(joins)
                               .where(cond)
                               .page(params[:page])
                               .per(current_user.per_page)
@@ -158,7 +196,7 @@ class ImportMailController < ApplicationController
   end
   
   
-  # Ajax‚Å‚Ìflgˆ—
+  # Ajaxã§ã®flgå‡¦ç†
   def change_flg
   puts">>>>>>>>>>>>>>>>>>>> flg changing now !!!"
   puts">>>>>>>>>>>>>>>>>>>> import_mail_id : #{params[:import_mail_id]}"

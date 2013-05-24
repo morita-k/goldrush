@@ -1,0 +1,67 @@
+<%= form_for(@tag) do |f| %>
+<%= hidden_field_tag 'back_to', back_to %>
+<%= f.hidden_field :lock_version %>
+  <% if @tag.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@tag.errors.count, "error") %> prohibited this tag from being saved:</h2>
+
+      <ul>
+      <% @tag.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+<table class="form_table">
+
+  <tr>
+    <th><%= f.label :tag_key, getLongName('tags', 'tag_key') %></th>
+    <td><%= f.text_field :tag_key %></td>
+  </tr>
+
+  <tr>
+    <th><%= f.label :tag_text, getLongName('tags', 'tag_text') %></th>
+    <td><%= f.text_field :tag_text %></td>
+  </tr>
+
+  <tr>
+    <th><%= f.label :tag_count, getLongName('tags', 'tag_count') %></th>
+    <td><%= f.number_field :tag_count %></td>
+  </tr>
+
+  <tr>
+    <th><%= f.label :inc_count, getLongName('tags', 'inc_count') %></th>
+    <td><%= f.number_field :inc_count %></td>
+  </tr>
+
+  <tr>
+    <th><%= f.label :tag_level, getLongName('tags', 'tag_level') %></th>
+    <td><%= f.number_field :tag_level %></td>
+  </tr>
+
+  <tr>
+    <th><%= f.label :display_order1, getLongName('tags', 'display_order1') %></th>
+    <td><%= f.number_field :display_order1 %></td>
+  </tr>
+
+  <tr>
+    <th><%= f.label :display_order2, getLongName('tags', 'display_order2') %></th>
+    <td><%= f.number_field :display_order2 %></td>
+  </tr>
+
+  <tr>
+    <th><%= f.label :display_order3, getLongName('tags', 'display_order3') %></th>
+    <td><%= f.number_field :display_order3 %></td>
+  </tr>
+
+  <tr>
+    <th><%= f.label :starred, getLongName('tags', 'starred') %></th>
+    <td><%= f.number_field :starred %></td>
+  </tr>
+
+</table>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
