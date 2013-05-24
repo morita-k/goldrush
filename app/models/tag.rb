@@ -2,6 +2,12 @@
 class Tag < ActiveRecord::Base
   has_many :tag_details, :conditions => ["tag_details.deleted = 0"]
   has_many :tag_journals, :conditions => ["tag_journals.deleted = 0"]
+  
+  before_save :clear_tag_cache
+  
+  def clear_tag_cache
+    Tag.clear_tag_cache
+  end
 
   # タグの文字列を受け取って正規化する
   # 正規化=>小文字化、",",半角スペース、全角スペースで区切り、文字列の配列として戻す
@@ -20,7 +26,7 @@ class Tag < ActiveRecord::Base
 #        t.updated_user = self.updated_user
         t.save!
       end
-      TagDetail.create_tags!(t.id, parent_id, tag_text)
+      TagDetail.create_tags!(t.id, parent_id, tag_text, key)
       TagJournal.put_journal!(t.id, 1)
       # TODO: 利用者が少ないため、ここで集計しているが本来cronで定期的に集計する
       # 利用者が増えたら対応
@@ -43,6 +49,25 @@ class Tag < ActiveRecord::Base
 
   def Tag.delete_tags!(key, parent_id)
     Tag.update_tags!(key, parent_id, "")
+  end
+  
+  def Tag.clear_tag_cache
+    puts "clear"
+    @@good_tags = nil
+    @@bad_tags = nil
+  end
+  Tag.clear_tag_cache
+  
+  def Tag.good_tags
+    @@good_tags || (@@good_tags = starred_tags(1))
+  end
+
+  def Tag.bad_tags
+    @@bad_tags || (@@bad_tags = starred_tags(2))
+  end
+
+  def Tag.starred_tags(star)
+    where(deleted: 0, tag_key: "import_mails", starred: star).map{|x| x.tag_text}
   end
 end
 
