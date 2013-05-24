@@ -36,7 +36,7 @@ class Tag < ActiveRecord::Base
 
   def Tag.update_tags!(key, parent_id, tag_string)
      # 旧Tagに対する処理
-    details = TagDetail.find(:all, :joins => :tag, :readonly => false, :conditions => ["tag_key = ? and parent_id = ? and tags.deleted = 0 and tag_details.deleted = 0", key, parent_id])
+    details = TagDetail.find(:all, :joins => :tag, :readonly => false, :conditions => ["tags.tag_key = ? and parent_id = ? and tags.deleted = 0 and tag_details.deleted = 0", key, parent_id])
     details.each do |detail|
       detail.deleted = 9
       detail.deleted_at = Time.now
