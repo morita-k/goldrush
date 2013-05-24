@@ -1,7 +1,7 @@
 delivery_errors_1:
   id: 1
   owner_id: 
-  business_partner_id: 2
+  business_partner_id: 1
   bp_pic_id: 1
   email: ""
   mail_error_type: "bounce"

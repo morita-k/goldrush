@@ -1,7 +1,7 @@
 projects_1:
   id: 1
   owner_id: 
-  business_partner_id: 2
+  business_partner_id: 1
   project_name: "プロジェクト名"
   project_short_name: "プロジェクト略称"
   project_name_kana: "プロジェクト名カナ"

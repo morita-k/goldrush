@@ -2,8 +2,8 @@ bp_members_1:
   id: 1
   owner_id: 
   human_resource_id: 1
-  business_partner_id: 2
-  bp_pic_id: 2
+  business_partner_id: 1
+  bp_pic_id: 1
   employment_type: "parmanent"
   reprint_flg: 
   can_start_date: 

@@ -2,8 +2,8 @@ biz_offers_1:
   id: 1
   owner_id: 
   business_id: 1
-  business_partner_id: 2
-  bp_pic_id: 2
+  business_partner_id: 1
+  bp_pic_id: 1
   biz_offer_status_type: "open"
   biz_offered_at: <%= Time.now.to_s(:db) %>
   due_date: 

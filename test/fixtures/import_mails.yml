@@ -1,7 +1,7 @@
 import_mails_1:
   id: 1
   owner_id: 
-  business_partner_id: 2
+  business_partner_id: 1
   bp_pic_id: 1
   in_reply_to: ""
   received_at: <%= Time.now.to_s(:db) %>
