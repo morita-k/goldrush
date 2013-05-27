@@ -1,37 +1,60 @@
-<h1><%= @business_partner.blank? ? getLongName('table_name','bp_pics') : "#{@business_partner.business_partner_name}担当" %>一覧</h1>
+<h1><%= @business_partner.blank? ? getLongName('table_name','business_partners') : "#{@business_partner.business_partner_name}担当" %>一覧</h1>
+
+<% unless popup? %>
+<%= form_tag_popup_mode do %>
+<table>
+  <tr>
+    <th style="text-align: right">コード(営業|取引|販管):</td>
+    <td><%= text_field_tag 'sales_code', search_value(:sales_code), :size => 60 %>　</td>
+  </tr>
+  <tr>
+    <th style="text-align: right">取引先名（カナ）:</td>
+    <td><%= text_field_tag 'business_partner_name', search_value(:business_partner_name), :size => 60 %></td>
+  </tr>
+  <tr>
+    <th style="text-align: right">担当者名（カナ）:</td>
+    <td><%= text_field_tag 'bp_pic_name', search_value(:bp_pic_name), :size => 60 %></td>
+  </tr>
+  <tr>
+    <th style="text-align: right">電話番号(担当者|会社):</td>
+    <td><%= text_field_tag 'tel', search_value(:tel), :size => 60 %></td>
+  </tr>
+  <tr>
+    <th style="text-align: right">Eメール:</td>
+    <td><%= text_field_tag 'email', search_value(:email), :size => 60 %></td>
+  </tr>
+</table>
+<p><%= submit_tag '　　検索　　', :name => 'search_button' %> <%= submit_tag '　　クリア　　', :name => 'clear_button' %></p>
+<br />
+<% end %>
+<% end %>
 
 <%= paginate(@bp_pics) %>
 
 <table class="list_table">
   <tr>
+<% unless popup? %>
+    <th><%=getShortName('bp_pics', 'business_partner_id') %></th>
+<% end %>
     <th><%=getShortName('bp_pics', 'bp_pic_name') %></th>
-    <th><%=getShortName('bp_pics', 'bp_pic_name_kana') %></th>
-    <th><%=getShortName('bp_pics', 'depertment') %></th>
-    <th><%=getShortName('bp_pics', 'position') %></th>
     <th><%=getShortName('bp_pics', 'tel_direct') %></th>
     <th><%=getShortName('bp_pics', 'tel_mobile') %></th>
     <th><%=getShortName('bp_pics', 'email1') %></th>
-    <th><%=getShortName('bp_pics', 'email2') %></th>
+    <th>最終更新</th>
   </tr>
   
 <% for bp_pic in @bp_pics %>
   <tr>
 <% if popup? %>
-  <% if params[:mode]=='eu' %>
-    <td><%=link_to h(bp_pic.bp_pic_name), '#', :onClick => "setEuBpPicToParentWindow(#{bp_pic.id},'#{bp_pic.bp_pic_name}');return false;" %></td>
-  <% else %>
-    <td><%=link_to h(bp_pic.bp_pic_name), '#', :onClick => "setBpPicToParentWindow(#{bp_pic.id},'#{bp_pic.bp_pic_name}');return false;" %></td>
-  <% end %>
+    <td><%= star_links(bp_pic) %> <%=link_to h(bp_pic.bp_pic_name), '#', :onClick => "setBpPicToParentWindow(#{bp_pic.id},'#{bp_pic.bp_pic_name}');return false;" %></td>
 <% else %>
-    <td><%=h bp_pic.bp_pic_name %></td>
+    <td><%= star_links(bp_pic.business_partner) %> <%=back_to_link bp_pic.business_partner.business_partner_name, :controller => :business_partner, :action => :show, :id => bp_pic.business_partner %></td>
+    <td><%= star_links(bp_pic) %> <%=back_to_link bp_pic.bp_pic_name, :action => :show, :id => bp_pic %></td>
 <% end %>
-    <td><%=h bp_pic.bp_pic_name_kana %></td>
-    <td><%=h bp_pic.depertment %></td>
-    <td><%=h bp_pic.position %></td>
     <td><%=h bp_pic.tel_direct %></td>
     <td><%=h bp_pic.tel_mobile %></td>
     <td><%=h bp_pic.email1 %></td>
-    <td><%=h bp_pic.email2 %></td>
+    <td><%=h _time(bp_pic.updated_at) %></td>
   </tr>
 <% end %>
 </table>
@@ -46,20 +69,11 @@
 <script type="text/javascript">
 <!--
 function setBpPicToParentWindow(bp_pic_id, bp_pic_name) {
-  if(window.opener.document.setBpPic){
+  if(window.opener.document.set<%= params[:mode].blank? ? '' : 'Eu' %>BpPic){
     var bp_pic = new Object();
     bp_pic.id = bp_pic_id;
     bp_pic.bp_pic_name = bp_pic_name;
     window.opener.document.setBpPic(bp_pic);
-  }
-  window.close();
-}
-function setEuBpPicToParentWindow(bp_pic_id, bp_pic_name) {
-  if(window.opener.document.setEuBpPic){
-    var bp_pic = new Object();
-    bp_pic.id = bp_pic_id;
-    bp_pic.bp_pic_name = bp_pic_name;
-    window.opener.document.setEuBpPic(bp_pic);
   }
   window.close();
 }
