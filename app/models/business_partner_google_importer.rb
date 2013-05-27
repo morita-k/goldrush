@@ -28,7 +28,7 @@ class BusinessPartnerGoogleImporter < BusinessPartner
         end
         bp_name = r["Organization 1 - Name"]
         
-        if bp_name.blank? || r["Name"].blank? || email1.blank?
+        if bp_name.blank? || r["Name"].blank? || r["Family Name"].blank? || email1.blank?
           error_list.push(data_total + 1)
           next
         end
