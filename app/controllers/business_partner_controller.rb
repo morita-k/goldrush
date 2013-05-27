@@ -273,8 +273,12 @@ class BusinessPartnerController < ApplicationController
     end
     ext = File.extname(file.original_filename.to_s).downcase
     raise ValidationAbort.new("インポートするファイルは、拡張子がcsvのファイルでなければなりません") if ext != '.csv'
-    BusinessPartner.import_google_csv_data(file.read, SysConfig.email_prodmode?)
-    flash[:notice] = 'インポートが完了しました'
+    cnt, errors = BusinessPartner.import_google_csv_data(file.read, SysConfig.email_prodmode?)
+    unless errors.empty?
+      flash[:warning] = errors.to_s.gsub(/[\[\]]/, "") + "行目のデータが取りこめませんでした"
+    else
+      flash[:notice] = "全#{cnt}件のインポートが完了しました"
+    end
     redirect_to(back_to || {:action => :list})
   end
   
