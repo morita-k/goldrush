@@ -7,6 +7,16 @@ module ApplicationHelper
   include NameUtil
   include TypeUtil
 
+  def _date(date)
+    if date.blank?
+      ""
+    elsif date.year == Time.now.year
+      date.strftime("%m/%d")
+    else
+      date.strftime("%Y/%m/%d")
+    end
+  end
+
   def _time(time)
     if time.blank?
       ""
@@ -14,6 +24,8 @@ module ApplicationHelper
       t = time.to_time.getlocal
       if t.today?
         t.strftime("%H:%M")
+      elsif t.year == Time.now.year
+        t.strftime("%m/%d")
       else
         t.strftime("%Y/%m/%d")
       end
