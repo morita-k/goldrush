@@ -214,7 +214,7 @@ class BusinessPartnerController < ApplicationController
       @business_partner.save!
     end
     flash[:notice] = 'BusinessPartner was successfully updated.'
-    redirect_to :action => 'show', :id => @business_partner
+    redirect_to(back_to || {:action => 'show', :id => @business_partner})
   rescue ActiveRecord::RecordInvalid
     render :action => 'edit'
   end
@@ -226,7 +226,7 @@ class BusinessPartnerController < ApplicationController
     set_user_column @business_partner
     @business_partner.save!
     
-    redirect_to :action => 'list'
+    redirect_to(back_to || {:action => 'list'})
   end
   
   def space_trim(bp_name)
