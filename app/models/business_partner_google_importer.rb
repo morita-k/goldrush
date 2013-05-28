@@ -2,18 +2,22 @@ class BusinessPartnerGoogleImporter < BusinessPartner
 
   # 名刺管理アカウントから出力されたCSVファイルをインポート(google.csv)
   def BusinessPartnerGoogleImporter.import_google_csv_data(readable_file, userlogin, prodmode=false)
+    data_total = 0 # ヘッダーを含まないデータの総数
+    error_list = [] # ヘッダーを含めた行番号リスト
     employees = Employee.map_for_googleimport
+    
     ActiveRecord::Base.transaction do
       require 'csv'
       header = nil
       CSV.parse(NKF.nkf("-w", readable_file)).each {|row|
         if header
           r = BusinessPartnerGoogleImporter.analyze_row(header, row)
+          data_total += 1
         else
           header = BusinessPartnerGoogleImporter.analyze_header(row)
           next
         end
-        # 各データを整形して変数へ代入
+        
         phone_number = {r["Phone 1 - Type"] => r["Phone 1 - Value"], r["Phone 2 - Type"] => r["Phone 2 - Value"], r["Phone 3 - Type"] => r["Phone 3 - Value"]}
         email_address = {r["E-mail 1 - Type"] => r["E-mail 1 - Value"], r["E-mail 2 - Type"] => r["E-mail 2 - Value"]}
         email1 = email_address['* Work']
@@ -23,6 +27,11 @@ class BusinessPartnerGoogleImporter < BusinessPartner
           email2 = StringUtil.to_test_address(email2)
         end
         bp_name = r["Organization 1 - Name"]
+        
+        if bp_name.blank? || r["Name"].blank? || r["Family Name"].blank? || email1.blank?
+          error_list.push(data_total + 1)
+          next
+        end
         
         if bp_pic = BpPic.where(:email1 => email1, :deleted => 0).first
           bp = bp_pic.business_partner
@@ -96,6 +105,8 @@ class BusinessPartnerGoogleImporter < BusinessPartner
         bp_pic.save!
       }
     end
+
+    return [data_total, error_list]
   end
   
   # helper methods 4 import_google_csv_data
