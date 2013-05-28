@@ -7,6 +7,10 @@ module ApplicationHelper
   include NameUtil
   include TypeUtil
 
+  def bp_pic_edit_icon(bp_pic)
+    back_to_link(image_tag((bp_pic.memo.blank? ? 'icon-edit.png' : 'icon-comment.png')), {:action => :edit, :id => bp_pic}, :title => bp_pic.memo)
+  end
+
   def _date(date)
     if date.blank?
       ""
