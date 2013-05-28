@@ -36,7 +36,7 @@
 <% unless popup? %>
     <th><%=getShortName('bp_pics', 'business_partner_id') %></th>
 <% end %>
-    <th><%=getShortName('bp_pics', 'bp_pic_name') %></th>
+    <th colspan=2><%=getShortName('bp_pics', 'bp_pic_name') %></th>
     <th><%=getShortName('bp_pics', 'tel_direct') %></th>
     <th><%=getShortName('bp_pics', 'tel_mobile') %></th>
     <th><%=getShortName('bp_pics', 'email1') %></th>
@@ -51,7 +51,8 @@
     <td><%= star_links(bp_pic) %> <%=link_to h(bp_pic.bp_pic_name), '#', :onClick => "setBpPicToParentWindow(#{bp_pic.id},'#{bp_pic.bp_pic_name}');return false;" %></td>
 <% else %>
     <td><%= star_links(bp_pic.business_partner) %> <%=back_to_link bp_pic.business_partner.business_partner_name, {:controller => :business_partner, :action => :show, :id => bp_pic.business_partner} %></td>
-    <td><%= star_links(bp_pic) %> <%=back_to_link bp_pic.bp_pic_name, {:action => :show, :id => bp_pic} %> <%= bp_pic_edit_icon(bp_pic) %></td>
+    <td style="border-right-color: silver;"><%= star_links(bp_pic) %> <%=back_to_link bp_pic.bp_pic_name, {:action => :show, :id => bp_pic} %></td>
+    <td style="text-align:center;"><%= bp_pic_edit_icon(bp_pic) %></td>
 <% end %>
     <td><%=h bp_pic.tel_direct %></td>
     <td><%=h bp_pic.tel_mobile %></td>
