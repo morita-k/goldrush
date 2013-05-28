@@ -50,8 +50,8 @@
 <% if popup? %>
     <td><%= star_links(bp_pic) %> <%=link_to h(bp_pic.bp_pic_name), '#', :onClick => "setBpPicToParentWindow(#{bp_pic.id},'#{bp_pic.bp_pic_name}');return false;" %></td>
 <% else %>
-    <td><%= star_links(bp_pic.business_partner) %> <%=back_to_link bp_pic.business_partner.business_partner_name, :controller => :business_partner, :action => :show, :id => bp_pic.business_partner %></td>
-    <td><%= star_links(bp_pic) %> <%=back_to_link bp_pic.bp_pic_name, :action => :show, :id => bp_pic %></td>
+    <td><%= star_links(bp_pic.business_partner) %> <%=back_to_link bp_pic.business_partner.business_partner_name, {:controller => :business_partner, :action => :show, :id => bp_pic.business_partner} %></td>
+    <td><%= star_links(bp_pic) %> <%=back_to_link bp_pic.bp_pic_name, {:action => :show, :id => bp_pic} %> <%= bp_pic.memo.blank? ? "" : back_to_link(image_tag('fukidasi.png'), {:action => :edit, :id => bp_pic}, :title => bp_pic.memo) %></td>
 <% end %>
     <td><%=h bp_pic.tel_direct %></td>
     <td><%=h bp_pic.tel_mobile %></td>
