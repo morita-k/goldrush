@@ -154,7 +154,7 @@ class BusinessPartner < ActiveRecord::Base
 end
 
   # 名刺管理アカウントから出力されたCSVファイルをインポート(google.csv)
-  def BusinessPartner.import_google_csv_data(readable_file, prodmode=false)
-    BusinessPartnerGoogleImporter.import_google_csv_data(readable_file, prodmode)
+  def BusinessPartner.import_google_csv_data(readable_file, userlogin, prodmode=false)
+    BusinessPartnerGoogleImporter.import_google_csv_data(readable_file, userlogin, prodmode)
   end
 end
