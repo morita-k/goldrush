@@ -23,12 +23,16 @@ class BpPic < ActiveRecord::Base
     Employee.where(deleted: 0).map{|e| [e.employee_short_name, e.user_id]}
   end
   
+  def contact_mail?
+    contact_mail_flg == 1
+  end
+
   def contact_mail_status
-    contact_mail_flg == 1 ? "送信済み" : "未送信"
+    contact_mail? ? "送信済み" : "未送信"
   end
   
   def contact_mail_short_status
-    contact_mail_flg == 1 ? "済" : ""
+    contact_mail? ? "済" : ""
   end
 
   def nondelivery?
