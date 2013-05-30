@@ -36,7 +36,7 @@
 <% unless popup? %>
     <th><%=getShortName('bp_pics', 'business_partner_id') %></th>
 <% end %>
-    <th colspan=2><%=getShortName('bp_pics', 'bp_pic_name') %></th>
+    <th <%= !popup? && "colspan=2"%>><%=getShortName('bp_pics', 'bp_pic_name') %></th>
     <th><%=getShortName('bp_pics', 'tel_direct') %></th>
     <th><%=getShortName('bp_pics', 'tel_mobile') %></th>
     <th><%=getShortName('bp_pics', 'email1') %></th>
@@ -58,7 +58,7 @@
     <td><%=h bp_pic.tel_mobile %></td>
     <td><%=h bp_pic.email1 %></td>
     <td><%=h _date(bp_pic.contact_date) %></td>
-    <td><%=h bp_pic.contact_mail_short_status %></td>
+    <td style="text-align:center;"><%= back_to_link(image_tag(bp_pic.contact_mail? ? 'icon-check.png' : 'icon-emailforward.png'), conatct_mail_new_delivery_mail_path(bp_pic)) %></td>
     <td><%=h _time(bp_pic.updated_at) %></td>
   </tr>
 <% end %>
