@@ -54,4 +54,16 @@ class BpPic < ActiveRecord::Base
     return 0
   end
   
+  def to_test
+    self.email1 = StringUtil.to_test_address(email1)
+  end
+  
+  def BpPic.to_test_all!
+    require 'string_util'
+    BpPic.where("email1 not like ?", "test%").where(:deleted => 0).each do |b|
+      b.to_test
+      b.updated_user = 'to_test_all!'
+      b.save!
+    end
+  end
 end
