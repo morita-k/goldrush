@@ -1,0 +1,264 @@
+vacations_1:
+  id: 1
+  owner_id: 
+  user_id: 1
+  compensatory_hour_total: 0
+  compensatory_used_total: 0
+  cutoff_compensatory_hour_total: 0
+  summer_vacation_day_total: 10
+  summer_vacation_used_total: 0
+  day_total: 10
+  used_total: 0
+  cutoff_day_total: 0
+  life_plan_day_total: 10
+  life_plan_used_total: 0
+  pre_comp_hour_total: 0
+  pre_comp_used_total: 0
+  pre_cutoff_comp_hour_total: 0
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+vacations_2:
+  id: 2
+  owner_id: 
+  user_id: 2
+  compensatory_hour_total: 0
+  compensatory_used_total: 0
+  cutoff_compensatory_hour_total: 0
+  summer_vacation_day_total: 10
+  summer_vacation_used_total: 0
+  day_total: 10
+  used_total: 0
+  cutoff_day_total: 0
+  life_plan_day_total: 10
+  life_plan_used_total: 0
+  pre_comp_hour_total: 0
+  pre_comp_used_total: 0
+  pre_cutoff_comp_hour_total: 0
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+vacations_3:
+  id: 3
+  owner_id: 
+  user_id: 3
+  compensatory_hour_total: 0
+  compensatory_used_total: 0
+  cutoff_compensatory_hour_total: 0
+  summer_vacation_day_total: 10
+  summer_vacation_used_total: 0
+  day_total: 10
+  used_total: 0
+  cutoff_day_total: 0
+  life_plan_day_total: 10
+  life_plan_used_total: 0
+  pre_comp_hour_total: 0
+  pre_comp_used_total: 0
+  pre_cutoff_comp_hour_total: 0
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+vacations_4:
+  id: 4
+  owner_id: 
+  user_id: 4
+  compensatory_hour_total: 0
+  compensatory_used_total: 0
+  cutoff_compensatory_hour_total: 0
+  summer_vacation_day_total: 10
+  summer_vacation_used_total: 0
+  day_total: 10
+  used_total: 0
+  cutoff_day_total: 0
+  life_plan_day_total: 10
+  life_plan_used_total: 0
+  pre_comp_hour_total: 0
+  pre_comp_used_total: 0
+  pre_cutoff_comp_hour_total: 0
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+vacations_5:
+  id: 5
+  owner_id: 
+  user_id: 5
+  compensatory_hour_total: 0
+  compensatory_used_total: 0
+  cutoff_compensatory_hour_total: 0
+  summer_vacation_day_total: 10
+  summer_vacation_used_total: 0
+  day_total: 10
+  used_total: 0
+  cutoff_day_total: 0
+  life_plan_day_total: 10
+  life_plan_used_total: 0
+  pre_comp_hour_total: 0
+  pre_comp_used_total: 0
+  pre_cutoff_comp_hour_total: 0
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+vacations_6:
+  id: 6
+  owner_id: 
+  user_id: 6
+  compensatory_hour_total: 0
+  compensatory_used_total: 0
+  cutoff_compensatory_hour_total: 0
+  summer_vacation_day_total: 10
+  summer_vacation_used_total: 0
+  day_total: 10
+  used_total: 0
+  cutoff_day_total: 0
+  life_plan_day_total: 10
+  life_plan_used_total: 0
+  pre_comp_hour_total: 0
+  pre_comp_used_total: 0
+  pre_cutoff_comp_hour_total: 0
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+vacations_7:
+  id: 7
+  owner_id: 
+  user_id: 7
+  compensatory_hour_total: 0
+  compensatory_used_total: 0
+  cutoff_compensatory_hour_total: 0
+  summer_vacation_day_total: 10
+  summer_vacation_used_total: 0
+  day_total: 10
+  used_total: 0
+  cutoff_day_total: 0
+  life_plan_day_total: 10
+  life_plan_used_total: 0
+  pre_comp_hour_total: 0
+  pre_comp_used_total: 0
+  pre_cutoff_comp_hour_total: 0
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+vacations_8:
+  id: 8
+  owner_id: 
+  user_id: 8
+  compensatory_hour_total: 0
+  compensatory_used_total: 0
+  cutoff_compensatory_hour_total: 0
+  summer_vacation_day_total: 10
+  summer_vacation_used_total: 0
+  day_total: 10
+  used_total: 0
+  cutoff_day_total: 0
+  life_plan_day_total: 10
+  life_plan_used_total: 0
+  pre_comp_hour_total: 0
+  pre_comp_used_total: 0
+  pre_cutoff_comp_hour_total: 0
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+vacations_9:
+  id: 9
+  owner_id: 
+  user_id: 9
+  compensatory_hour_total: 0
+  compensatory_used_total: 0
+  cutoff_compensatory_hour_total: 0
+  summer_vacation_day_total: 10
+  summer_vacation_used_total: 0
+  day_total: 10
+  used_total: 0
+  cutoff_day_total: 0
+  life_plan_day_total: 10
+  life_plan_used_total: 0
+  pre_comp_hour_total: 0
+  pre_comp_used_total: 0
+  pre_cutoff_comp_hour_total: 0
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+vacations_10:
+  id: 10
+  owner_id: 
+  user_id: 10
+  compensatory_hour_total: 0
+  compensatory_used_total: 0
+  cutoff_compensatory_hour_total: 0
+  summer_vacation_day_total: 10
+  summer_vacation_used_total: 0
+  day_total: 10
+  used_total: 0
+  cutoff_day_total: 0
+  life_plan_day_total: 10
+  life_plan_used_total: 0
+  pre_comp_hour_total: 0
+  pre_comp_used_total: 0
+  pre_cutoff_comp_hour_total: 0
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+vacations_11:
+  id: 11
+  owner_id: 
+  user_id: 11
+  compensatory_hour_total: 0
+  compensatory_used_total: 0
+  cutoff_compensatory_hour_total: 0
+  summer_vacation_day_total: 10
+  summer_vacation_used_total: 0
+  day_total: 10
+  used_total: 0
+  cutoff_day_total: 0
+  life_plan_day_total: 10
+  life_plan_used_total: 0
+  pre_comp_hour_total: 0
+  pre_comp_used_total: 0
+  pre_cutoff_comp_hour_total: 0
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0

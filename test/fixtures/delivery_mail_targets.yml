@@ -1,0 +1,13 @@
+delivery_mail_targets_1:
+  id: 1
+  owner_id: 
+  delivery_mail_id: 1
+  bp_pic_id: 1
+  message_id: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
