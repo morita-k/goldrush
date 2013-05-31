@@ -25,7 +25,7 @@
 </tr>
 </tr>
 <tr>
-<th><label for="human_resource_age"><%=getLongName('human_resources','age')%><%=@human_resource.created_at.blank? ? "" : "（#{@human_resource.created_at}登録）" %></label></th><td><%= text_field 'human_resource', 'age', :size => 10  %></td>
+<th><label for="human_resource_age"><%=getLongName('human_resources','age')%></label></th><td><%= text_field 'human_resource', 'age', :size => 10  %></td>
 </tr>
 <tr>
 <th><label for="human_resource_birthday_date"><%=getLongName('human_resources','birthday_date')%></label></th><td><%= date_field 'human_resource', 'birthday_date'  %></td>
@@ -68,5 +68,6 @@
 
 <!--[eoform:human_resource]-->
 
+<%= hidden_field 'human_resource', 'id' %>
 <%= hidden_field 'human_resource', 'lock_version' %>
 <%= back_to_field_tag %>

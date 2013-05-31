@@ -1,5 +1,5 @@
 <%%= form_for(@<%= singular_table_name %>) do |f| %>
-<%%= hidden_field_tag 'back_to' %>
+<%%= hidden_field_tag 'back_to', back_to %>
 <%%= f.hidden_field :lock_version %>
   <%% if @<%= singular_table_name %>.errors.any? %>
     <div id="error_explanation">
@@ -13,8 +13,9 @@
     </div>
   <%% end %>
 
-<table class="show_table">
-<% attributes.each do |attribute| -%>
+<table class="form_table">
+<% attributes.each do |attribute|
+   next if [:created_at, :updated_at, :lock_version, :deleted_at, :deleted].include?(attribute.name) -%>
   <tr>
     <th><%%= f.label :<%= attribute.name %>, getLongName('<%= plural_table_name %>', '<%= attribute.name %>') %></th>
     <td><%%= f.<%= attribute.field_type %> :<%= attribute.name %> %></td>

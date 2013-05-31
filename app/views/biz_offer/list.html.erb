@@ -16,7 +16,7 @@
   
 <% for biz_offer in @biz_offers %>
   <tr>
-    <td><span class="linked_star"><%= star_links(biz_offer.business) %></span> <%=back_to_link h(biz_offer.business.business_title), :action => :show, :id => biz_offer %></td>
+    <td><%= star_links(biz_offer.business) %> <%=back_to_link h(biz_offer.business.business_title), :action => :show, :id => biz_offer %></td>
     <td><%=h _time(biz_offer.business.issue_datetime) %></td>
     <td><%=h biz_offer.business.skill_tag %></td>
     <td><%=h biz_offer.business.eubp.blank? ? "" : biz_offer.business.eubp.business_partner_code_name %></td>
@@ -33,31 +33,3 @@
 <br />
 
 <%= back_to_link (getLongName('table_name','biz_offers')+'の新規作成'), :action => 'new' %>
-
-<script type="text/javascript">
-<!--
-var ajax_url = '<%= url_for(:controller => :business, :action => :change_star) %>';
-
-function changeFlg(id, type){
-  jQuery.ajax({
-    url: ajax_url + '?id=' + id + '&type=' + type,
-    success: function(data, dataType){
-    
-    star_list = document.getElementsByName("starred_icon_name_" + id);
-    
-        if (data == '1') {
-          for (i=0; i < star_list.length; i++){
-            star_list[i].style.color = '#ffff00';
-          }
-        } else {
-          for(i=0; i < star_list.length; i++){
-            star_list[i].style.color = '#dfdfdf';
-          }
-        }
-    }
-  });
-  return false;
-}
-
-// -->
-</script>

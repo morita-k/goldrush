@@ -1,5 +1,71 @@
 # -*- encoding: utf-8 -*-
 class BpPicController < ApplicationController
+
+  def set_conditions
+    session[:bp_pic_search] = {
+      :sales_code => params[:sales_code],
+      :business_partner_name => params[:business_partner_name],
+      :bp_pic_name => params[:bp_pic_name],
+      :tel => params[:tel],
+      :email => params[:email],
+    }
+  end
+
+  def make_conditions
+    param = []
+    incl = [:business_partner]
+    sql = "business_partners.deleted = 0 and bp_pics.deleted = 0"
+    order_by = ""
+
+    if !(x = session[:bp_pic_search][:sales_code]).blank?
+      sql += " and (business_partner_code = ? or sales_code = ?)"
+      param << x << x
+    end
+
+    if !(x = session[:bp_pic_search][:business_partner_name]).blank?
+      sql += " and (business_partner_name like ? or business_partner_name_kana like ?)"
+      param << "%#{x}%" << "%#{x}%"
+    end
+    
+    if !(x = session[:bp_pic_search][:bp_pic_name]).blank?
+      sql += " and (bp_pic_name like ? or bp_pic_name_kana like ? or bp_pic_short_name like ?)"
+      param << "%#{x}%" << "%#{x}%" << "%#{x}%"
+    end
+    
+    if !(x = session[:bp_pic_search][:tel]).blank?
+      x = x.gsub("-","")
+      sql += " and (tel_direct like ? or tel_mobile like ?)"
+      param << "%#{x}%" << "%#{x}%"
+    end
+    
+    if !(x = session[:bp_pic_search][:email]).blank?
+      sql += " and (email1 like ? or email2 like ?)"
+      param << "%#{x}%" << "%#{x}%"
+    end
+    
+    if params[:id]
+      sql += " and business_partner_id = ?"
+      param << params[:id]
+      @business_partner = BusinessPartner.find(params[:id])
+    end
+    
+    return [param.unshift(sql), incl]
+  end
+
+  def list
+    session[:bp_pic_search] ||= {}
+    incl = []
+    if params[:search_button]
+      set_conditions
+    elsif params[:clear_button]
+      session[:bp_pic_search] = {}
+    end
+
+    # 検索条件を処理
+    cond, incl = make_conditions
+    @bp_pics = BpPic.includes(incl).where(cond).order("bp_pics.updated_at desc").page(params[:page]).per(current_user.per_page)
+  end
+
   def index
     list
     render :action => 'list'
@@ -9,16 +75,15 @@ class BpPicController < ApplicationController
   verify :method => :post, :only => [ :destroy, :create, :update ],
          :redirect_to => { :action => :list }
 
-  def list
-
-    if params[:id].blank?
-      condition = ["deleted = 0"]
-    else
-      condition = ["deleted = 0 and business_partner_id = ?", params[:id]]
-      @business_partner = BusinessPartner.find(params[:id])
-    end
-    @bp_pic_pages, @bp_pics = paginate :bp_pics, :conditions => condition, :per_page => current_user.per_page
-  end
+#  def list
+#    if params[:id].blank?
+#      condition = ["deleted = 0"]
+#    else
+#      condition = ["deleted = 0 and business_partner_id = ?", params[:id]]
+#      @business_partner = BusinessPartner.find(params[:id])
+#    end
+#    @bp_pic_pages, @bp_pics = paginate :bp_pics, :conditions => condition, :per_page => current_user.per_page
+#  end
 
   def show
     @bp_pic = BpPic.find(params[:id])

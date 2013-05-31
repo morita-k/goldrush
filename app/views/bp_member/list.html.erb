@@ -69,17 +69,9 @@
 <% for bp_member in @bp_members %>
   <tr>
 <% if popup? %>
-  <% if bp_member.human_resource.human_resource_name.blank? %>
-    <td><%=link_to h(bp_member.human_resource.initial), '#', :onClick => "setBpMember(#{bp_member.id},'#{bp_member.business_partner.business_partner_name}','#{bp_member.human_resource.initial}');return false;" %></td>
-  <% else %>
-    <td><span class="linked_star"><%= star_links(bp_member.human_resource) %><%=link_to h(bp_member.human_resource.human_resource_name), '#', :onClick => "setBpMember(#{bp_member.id},'#{bp_member.business_partner.business_partner_name}','#{bp_member.human_resource.human_resource_name}');return false;" %></td>
-  <% end %>
+    <td><%= star_links(bp_member.human_resource) %> <%=link_to h(bp_member.human_resource.useful_name), '#', :onClick => "setBpMember(#{bp_member.id},'#{bp_member.business_partner.business_partner_name}','#{bp_member.human_resource.initial}');return false;" %></td>
 <% else %>
-  <% if bp_member.human_resource.human_resource_name.blank? %>
-    <td><%=back_to_link h(bp_member.human_resource.initial), :action => :show, :id => bp_member %></td>
-  <% else %>
-    <td><span class="linked_star"><%= star_links(bp_member.human_resource) %><%=back_to_link h(bp_member.human_resource.human_resource_name), :action => :show, :id => bp_member %></td>
-  <% end %>
+    <td><%= star_links(bp_member.human_resource) %> <%=back_to_link h(bp_member.human_resource.useful_name), :action => :show, :id => bp_member %></td>
 <% end %>
     <td><%=h bp_member.human_resource.age %></td>
     <td><%=h bp_member.human_resource.sex_type_short_name %></td>

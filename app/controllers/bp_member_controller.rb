@@ -112,7 +112,7 @@ class BpMemberController < ApplicationController
     else
       @human_resource = HumanResource.new
     end
-# メール取り込みからの遷移
+    # メール取り込みからの遷移
     if params[:import_mail_id] && params[:template_id]
       @bp_member.import_mail_id = params[:import_mail_id]
       import_mail = ImportMail.find(params[:import_mail_id])
@@ -133,25 +133,17 @@ class BpMemberController < ApplicationController
 
   def create
     @calendar = true
-# TODO 所属に人材IDが入っていなかったら（新規、@bp_member.human_resource_id.blank?）先に人材を作成してIDを入れる
     @bp_member = BpMember.new(params[:bp_member])
-    if @bp_member.human_resource_id.blank?
-      new_flg = true
-    end
     ActiveRecord::Base.transaction do
-      if new_flg
-        @human_resource = HumanResource.new(params[:human_resource])
-        @human_resource.initial = initial_trim(params[:human_resource][:initial])
-        set_user_column @human_resource
-        @human_resource.save!
-        @bp_member.human_resource_id = @human_resource.id
-      else
-        @human_resource = HumanResource.find(params[:human_resource_id], :conditions =>["deleted = 0"])
-        @human_resource.attributes = params[:human_resource]
-        @human_resource.initial = initial_trim(params[:human_resource][:initial])
-        set_user_column @human_resource
-        @human_resource.save!
+      unless @human_resource = @bp_member.human_resource
+        @human_resource = HumanResource.new
       end
+      @human_resource.attributes = params[:human_resource]
+      @human_resource.initial = initial_trim(params[:human_resource][:initial])
+      set_user_column @human_resource
+      @human_resource.save!
+      @bp_member.human_resource = @human_resource
+      
       # タグを更新
       @human_resource.make_skill_tags!
       @human_resource.save!
@@ -167,11 +159,20 @@ class BpMemberController < ApplicationController
         import_mail.save!
       end
     end
-    flash[:notice] = 'BpMember was successfully created.'
-    if new_flg
-      redirect_to back_to || {:action => 'list'}
+    flash_notice = 'BpMember was successfully created.'
+    
+    if popup?
+      # ポップアップウィンドウの場合、共通リザルト画面を表示する
+      flash.now[:notice] = flash_notice
+      render 'shared/popup/result'
     else
-      redirect_to :action => 'show', :id => @bp_member
+      # ポップアップウィンドウでなければ通常の画面遷移
+      flash[:notice] = flash_notice
+      if new_flg
+        redirect_to back_to || {:action => 'list'}
+      else
+        redirect_to :action => 'show', :id => @bp_member
+      end
     end
   rescue ActiveRecord::RecordInvalid
     render :action => 'new'

@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  mail_template_category: MyString
+  mail_template_name: MyString
+  subject: MyString
+  content: MyString
+  mail_from_name: MyString
+  mail_from: MyString
+  mail_cc: MyString
+  mail_bcc: MyString
+
+two:
+  mail_template_category: MyString
+  mail_template_name: MyString
+  subject: MyString
+  content: MyString
+  mail_from_name: MyString
+  mail_from: MyString
+  mail_cc: MyString
+  mail_bcc: MyString

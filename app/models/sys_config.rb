@@ -30,7 +30,12 @@ class SysConfig < ActiveRecord::Base
   end
 
   def SysConfig.get_value(section, key)
-    SysConfig.get_config(section, key).value1
+    config = SysConfig.get_config(section, key)
+    if config
+      return config.value1
+    else
+      return nil
+    end
   end
 
   def SysConfig.init_seq(key, seq)
@@ -220,5 +225,12 @@ class SysConfig < ActiveRecord::Base
   end
   def self.get_indent_pattern
     get_configuration("analysis_templates", "indent").value1.gsub(/[\s　]/, "").split(",").reject{|s| s == ""}
+  end
+  def self.star_color
+    {
+      0 => 'silver',
+      1 => 'yellow',
+      2 => 'black',
+    }
   end
 end
