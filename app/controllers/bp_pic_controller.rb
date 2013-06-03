@@ -111,11 +111,7 @@ class BpPicController < ApplicationController
     end
     
     flash[:notice] = 'BpPic was successfully created.'
-    if params[:back_to].blank?
-      redirect_to :action => 'list'
-    else
-      redirect_to params[:back_to]
-    end
+    redirect_to(back_to || {:action => 'list'})
   rescue ActiveRecord::RecordInvalid
     render :action => 'new'
   end
@@ -131,7 +127,7 @@ class BpPicController < ApplicationController
     set_user_column @bp_pic
     @bp_pic.save!
     flash[:notice] = 'BpPic was successfully updated.'
-    redirect_to back_to || {:action => 'show', :id => @bp_pic}
+    redirect_to(back_to || {:action => 'show', :id => @bp_pic})
   rescue ActiveRecord::RecordInvalid
     render :action => 'edit'
   end
@@ -155,7 +151,7 @@ class BpPicController < ApplicationController
     set_user_column @bp_pic
     @bp_pic.save!
     
-    redirect_to :action => 'list'
+    redirect_to(back_to || {:action => 'list'})
   end
 private
   def valid_of_business_partner_id

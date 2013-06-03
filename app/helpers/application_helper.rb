@@ -7,6 +7,20 @@ module ApplicationHelper
   include NameUtil
   include TypeUtil
 
+  def bp_pic_edit_icon(bp_pic)
+    back_to_link(image_tag((bp_pic.memo.blank? ? 'icon-edit.png' : 'icon-comment.png')), {:action => :edit, :id => bp_pic}, :title => bp_pic.memo)
+  end
+
+  def _date(date)
+    if date.blank?
+      ""
+    elsif date.year == Time.now.year
+      date.strftime("%m/%d")
+    else
+      date.strftime("%Y/%m/%d")
+    end
+  end
+
   def _time(time)
     if time.blank?
       ""
@@ -14,6 +28,8 @@ module ApplicationHelper
       t = time.to_time.getlocal
       if t.today?
         t.strftime("%H:%M")
+      elsif t.year == Time.now.year
+        t.strftime("%m/%d")
       else
         t.strftime("%Y/%m/%d")
       end
