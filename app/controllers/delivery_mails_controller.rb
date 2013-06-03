@@ -237,18 +237,19 @@ EOS
     unless sales_pic = @bp_pic.sales_pic
       raise ValidationAbort.new("Contact mail method is wants sales_pic id.")
     end
+    @delivery_mail.content = ""
     if t = sales_pic.contact_mail_template
       @delivery_mail.mail_cc = t.mail_cc
       @delivery_mail.mail_bcc = t.mail_bcc
       @delivery_mail.subject = t.subject
       @delivery_mail.content = t.content
-      unless sales_pic.mail_signature.blank?
+    end
+    unless sales_pic.mail_signature.blank?
       @delivery_mail.content += <<EOS
 
 --
 #{sales_pic.mail_signature}
 EOS
-      end
     end
     @delivery_mail.mail_bcc = @delivery_mail.mail_bcc.to_s.split(",").push(sales_pic.email).join(",")
     @delivery_mail.mail_from = sales_pic.email
@@ -257,6 +258,13 @@ EOS
 
     respond_to do |format|
       format.html { render action: "new" }
+    end
+  rescue ValidationAbort => e
+    respond_to do |format|
+      format.html {
+        flash[:warning] = '営業担当が設定されていません。'
+        redirect_to(back_to)
+      }
     end
   end
 
