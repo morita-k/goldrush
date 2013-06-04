@@ -1,7 +1,7 @@
 delivery_mails_1:
   id: 1
   owner_id: 
-  bp_pic_group_id: 
+  bp_pic_group_id: 1
   mail_status_type: "unsend"
   subject: "どうも"
   content: "こんにちは"
@@ -9,7 +9,7 @@ delivery_mails_1:
   mail_from: "aaaaa@aaatttest.com"
   mail_cc: ""
   mail_bcc: ""
-  planned_setting_at: <%= Time.now.to_s(:db) %>
+  planned_setting_at: <%= "2000/01/01 00:00:00" %>
   mail_send_status_type: "ready"
   send_end_at: 
   created_at: <%= Time.now.to_s(:db) %>
