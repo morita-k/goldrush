@@ -618,6 +618,7 @@ ActiveRecord::Schema.define(:version => 0) do
     t.integer  "owner_id",         :limit => 8
     t.integer  "delivery_mail_id", :limit => 8,                 :null => false
     t.integer  "bp_pic_id",        :limit => 8,                 :null => false
+    t.string   "message_id"
     t.datetime "created_at",                                    :null => false
     t.datetime "updated_at",                                    :null => false
     t.integer  "lock_version",     :limit => 8,  :default => 0
