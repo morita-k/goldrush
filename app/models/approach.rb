@@ -1,6 +1,10 @@
 # -*- encoding: utf-8 -*-
 class Approach < ActiveRecord::Base
   include AutoTypeName
+  include BusinessFlow
+  
+  after_initialize :after_initialize
+
   belongs_to :biz_offer
   belongs_to :bp_member
   belongs_to :approach_upper_contract_term, :class_name => 'ContractTerm'
@@ -9,6 +13,35 @@ class Approach < ActiveRecord::Base
   has_many :interviews, :conditions => ["interviews.deleted = 0"]
   has_one :contract
   
+  def after_initialize 
+    init_actions([
+      [:approaching, :adjust, :want],
+      [:approaching, :result_waiting, :success_approach],
+      [:approaching, :other_failure, :choice_other],
+      [:approaching, :lost_failure, :lost],
+      [:approaching, :natural_lost, :pass_away],
+      [:approaching, :other_success, :other_success],
+      [:adjust, :approaching, :reapproach],
+      [:adjust, :approach_failure, :reject_approach],
+      [:adjust, :other_failure, :choice_other],
+      [:adjust, :lost_failure, :lost],
+      [:adjust, :natural_lost, :pass_away],
+      [:adjust, :other_success, :other_success],
+      [:result_waiting, :working, :get_job],
+      [:result_waiting, :approach_failure, :reject_approach],
+      [:result_waiting, :other_failure, :choice_other],
+      [:result_waiting, :lost_failure, :lost],
+      [:result_waiting, :natural_lost, :pass_away],
+      [:result_waiting, :other_success, :other_success],
+      [:working, :finished, :finish, ->(a){
+        # 提案が完了する際に、照会と人材のステータスも変化する
+        biz_offer.change_status(:finish)
+        bp_member.human_resource.change_status(:finish)
+        return a.to
+      }],
+    ])
+  end
+
   def approach_employee_name
    if self.approach_pic_id
      employee = Employee.find(self.approach_pic_id)
@@ -18,7 +51,7 @@ class Approach < ActiveRecord::Base
   
   def process_interview
     self.interviews.each do |interview|
-puts ">>>>>>>>>>>>>>>>>>>>> #{interview.interview_status_type}"
+#puts ">>>>>>>>>>>>>>>>>>>>> #{interview.interview_status_type}"
       return true if interview.interview_status_type != 'finished'
     end
     return false

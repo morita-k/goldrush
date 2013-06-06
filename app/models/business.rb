@@ -1,6 +1,10 @@
 # -*- encoding: utf-8 -*-
+#require 'business_flow'
 class Business < ActiveRecord::Base
   include AutoTypeName
+  include BusinessFlow
+  
+  after_initialize :after_initialize
 
   validates_presence_of :business_status_type, :issue_datetime, :business_title
 
@@ -15,4 +19,21 @@ class Business < ActiveRecord::Base
     self.skill_tag = words.join(",")
   end
 
+  def after_initialize 
+    init_actions([
+      [:open, ->(x){:approached}, :approach],
+      [:open, :other_failure, :choice_other],
+      [:open, :lost_failure, :lost],
+      [:open, :natural_lost, :pass_away],
+      [:approached, :open, :reject_approach],
+      [:approached, :working, :get_job],
+      [:approached, :other_failure, :choice_other],
+      [:approached, :lost_failure, :lost],
+      [:approached, :natural_lost, :pass_away],
+      [:working, :finished, :finish],
+      [:other_failure, :open, :revert],
+      [:lost_failure, :open, :revert],
+      [:natural_lost, :open, :revert],
+    ])
+  end
 end
