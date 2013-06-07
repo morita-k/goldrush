@@ -99,7 +99,7 @@ class DeliveryMail < ActiveRecord::Base
         attachment_files = mail.attachment_files
         mail.delivery_mail_targets.each {|target|
           opt = {:bp_pic_name => target.bp_pic.bp_pic_short_name, :business_partner_name => target.bp_pic.business_partner.business_partner_name}
-          MyMailer.send_del_mail(
+          current_mail = MyMailer.send_del_mail(
             target.bp_pic.email1,
             mail.mail_cc,
             mail.mail_bcc,
@@ -107,7 +107,10 @@ class DeliveryMail < ActiveRecord::Base
             DeliveryMail.tags_replacement(mail.subject, opt),
             DeliveryMail.tags_replacement(mail.content, opt),
             attachment_files
-          ).deliver
+          )
+          current_mail.deliver
+          target.message_id = current_mail.header['Message-ID'].to_s
+          target.save!
         }
       }
     rescue => e
@@ -127,7 +130,8 @@ class DeliveryMail < ActiveRecord::Base
 
   # Private Mailer
   class MyMailer < ActionMailer::Base
-    def send_del_mail(destination, cc, bcc, from, subject, body, attachment_files)
+    def send_del_mail(destination, cc, bcc, from, subject, body, attachment_files)      
+      headers['Message-ID'] = "#{SecureRandom.uuid}@#{ActionMailer::Base.smtp_settings[:domain]}"
       
       attachment_files.each do |file|
         attachments[file.file_name] = file.read_file
