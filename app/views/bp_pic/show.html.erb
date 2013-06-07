@@ -40,6 +40,7 @@
 </tr>
 </table>
 <%= back_to_link '編集', :action => 'edit', :id => @bp_pic %> |
+<%= delete_to '削除', @bp_pic %> |
 <%= link_or_back '戻る', :action => 'list' %>
 
 <%= render :partial => 'remarks/list', :locals => {:remark_key => "bp_pics", :remark_target_id => @bp_pic} %>

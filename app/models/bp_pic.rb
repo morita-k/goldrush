@@ -9,7 +9,7 @@ class BpPic < ActiveRecord::Base
   validates_presence_of :bp_pic_name, :bp_pic_short_name, :bp_pic_name_kana, :email1
 #  validates_uniqueness_of :bp_pic_name, :case_sensitive => false, :scope => :business_partner_id
 #  validates_uniqueness_of :bp_pic_name_kana, :case_sensitive => false, :scope => :business_partner_id
-  validates_uniqueness_of :email1, :case_sensitive => false
+  validates_uniqueness_of :email1, :case_sensitive => false, :scope => [:deleted, :deleted_at]
   
   NONDELIVERY_LIMIT=3
   BOUNCE_MAIL_REASON_ERROR = [:hostunknown, :userunknown]
@@ -23,10 +23,18 @@ class BpPic < ActiveRecord::Base
     Employee.where(deleted: 0).map{|e| [e.employee_short_name, e.user_id]}
   end
   
+  def contact_mail?
+    contact_mail_flg == 1
+  end
+
   def contact_mail_status
-    contact_mail_flg == 1 ? "送信済み" : "未送信"
+    contact_mail? ? "送信済み" : "未送信"
   end
   
+  def contact_mail_short_status
+    contact_mail? ? "済" : ""
+  end
+
   def nondelivery?
     self.nondelivery_score >= NONDELIVERY_LIMIT
   end
@@ -46,4 +54,16 @@ class BpPic < ActiveRecord::Base
     return 0
   end
   
+  def to_test
+    self.email1 = StringUtil.to_test_address(email1)
+  end
+  
+  def BpPic.to_test_all!
+    require 'string_util'
+    BpPic.where("email1 not like ?", "test%").where(:deleted => 0).each do |b|
+      b.to_test
+      b.updated_user = 'to_test_all!'
+      b.save!
+    end
+  end
 end
