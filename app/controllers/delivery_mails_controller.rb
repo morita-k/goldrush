@@ -45,7 +45,7 @@ class DeliveryMailsController < ApplicationController
     @delivery_mail.bp_pic_group_id = params[:id]
     @delivery_mail.content = <<EOS
 %%business_partner_name%%
-%%bp_pic_name%%様
+%%bp_pic_name%%　様
 EOS
     unless current_user.mail_signature.blank?
     @delivery_mail.content += <<EOS
