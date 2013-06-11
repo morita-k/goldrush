@@ -1,23 +1,19 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
-
-one:
-  tag_key: MyString
-  tag_text: MyString
-  tag_count: 1
-  inc_count: 1
-  tag_level: 1
-  display_order1: 1
-  display_order2: 1
-  display_order3: 1
-  starred: 1
-
-two:
-  tag_key: MyString
-  tag_text: MyString
-  tag_count: 1
-  inc_count: 1
-  tag_level: 1
-  display_order1: 1
-  display_order2: 1
-  display_order3: 1
-  starred: 1
+tags_1:
+  id: 1
+  owner_id: 
+  tag_key: "tag_key"
+  tag_text: "tag_text"
+  tag_count: 0
+  inc_count: 0
+  tag_level: 0
+  display_order1: 
+  display_order2: 
+  display_order3: 
+  starred: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
