@@ -31,48 +31,51 @@ module NameUtil
     }
   end
 
-  initNames unless @@names
+  def  NameUtil.getNames
+    initNames unless @@names
+    @@names
+  end
   
   def getNameObject(section, key)
-    if @@names[section.to_s].nil?
+    if NameUtil.getNames[section.to_s].nil?
       nil
     else
-      @@names[section.to_s][key.to_s]
+      NameUtil.getNames[section.to_s][key.to_s]
     end
   end
 
   def getLongName(section, key)
-    if @@names[section.to_s].nil?
+    if NameUtil.getNames[section.to_s].nil?
       "Unknown name"
     else
-      name = @@names[section.to_s][key.to_s]
+      name = NameUtil.getNames[section.to_s][key.to_s]
       name.nil? ? "Unknown name" : name.long_name
     end
   end
 
   def self.getLongNameX(section, key)
-    if @@names[section.to_s].nil?
+    if NameUtil.getNames[section.to_s].nil?
       "Unknown name"
     else
-      name = @@names[section.to_s][key.to_s]
+      name = NameUtil.getNames[section.to_s][key.to_s]
       name.nil? ? "Unknown name" : name.long_name
     end
   end
 
   def getShortName(section, key)
-    if @@names[section.to_s].nil?
+    if NameUtil.getNames[section.to_s].nil?
       "Unknown name"
     else
-      name = @@names[section.to_s][key.to_s]
+      name = NameUtil.getNames[section.to_s][key.to_s]
       name.nil? ? "Unknown name" : name.short_name
     end
   end
 
   def getOtherName(section, key)
-    if @@names[section.to_s].nil?
+    if NameUtil.getNames[section.to_s].nil?
       "Unknown name"
     else
-      name = @@names[section.to_s][key.to_s]
+      name = NameUtil.getNames[section.to_s][key.to_s]
       name.nil? ? "Unknown name" : name.other_name
     end
   end
