@@ -1,5 +1,6 @@
 #!/bin/sh
-cat << EOS > config/database.yml
+cur=`dirname $0`
+cat << EOS > $cur/../config/database.yml
 test:
   adapter: mysql2
   encoding: utf8
