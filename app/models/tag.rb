@@ -52,7 +52,6 @@ class Tag < ActiveRecord::Base
   end
   
   def Tag.clear_tag_cache
-    puts "clear"
     @@good_tags = nil
     @@bad_tags = nil
   end
