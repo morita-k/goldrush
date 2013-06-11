@@ -1,8 +1,11 @@
+# -*- encoding: utf-8 -*-
 require 'test_helper'
 
 class BpPicGroupsControllerTest < ActionController::TestCase
   setup do
-    @bp_pic_group = bp_pic_groups(:one)
+    sign_in users(:users_1)
+    @bp_pic_group = bp_pic_groups(:bp_pic_groups_1)
+    request.env['REQUEST_URI'] = ""
   end
 
   test "should get index" do
@@ -18,10 +21,10 @@ class BpPicGroupsControllerTest < ActionController::TestCase
 
   test "should create bp_pic_group" do
     assert_difference('BpPicGroup.count') do
-      post :create, bp_pic_group: { bp_pic_group_name: @bp_pic_group.bp_pic_group_name, id: @bp_pic_group.id, memo: @bp_pic_group.memo }
+      post :create, bp_pic_group: { bp_pic_group_name: @bp_pic_group.bp_pic_group_name, memo: @bp_pic_group.memo }, id: @bp_pic_group.id, back_to: "/bp_pic_groups"
     end
-
-    assert_redirected_to bp_pic_group_path(assigns(:bp_pic_group))
+ 
+    assert_redirected_to "/bp_pic_groups"
   end
 
   test "should show bp_pic_group" do
@@ -35,15 +38,14 @@ class BpPicGroupsControllerTest < ActionController::TestCase
   end
 
   test "should update bp_pic_group" do
-    put :update, id: @bp_pic_group, bp_pic_group: { bp_pic_group_name: @bp_pic_group.bp_pic_group_name, id: @bp_pic_group.id, memo: @bp_pic_group.memo }
-    assert_redirected_to bp_pic_group_path(assigns(:bp_pic_group))
+    put :update, id: @bp_pic_group, bp_pic_group: { bp_pic_group_name: @bp_pic_group.bp_pic_group_name, memo: @bp_pic_group.memo }, id: @bp_pic_group.id, back_to: "/bp_pic_groups"
+    assert_redirected_to "/bp_pic_groups"
   end
 
   test "should destroy bp_pic_group" do
-    assert_difference('BpPicGroup.count', -1) do
-      delete :destroy, id: @bp_pic_group
-    end
-
+    delete :destroy, id: @bp_pic_group
+    assert(BpPicGroup.where(id: @bp_pic_group, deleted: 0).empty?)
+    
     assert_redirected_to bp_pic_groups_path
   end
 end
