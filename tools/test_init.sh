@@ -2,5 +2,5 @@
 
 bundle install
 bundle update
-tools/test_init_db.sh localhost grtest
+tools/test_init_db.sh $1 $2
 
