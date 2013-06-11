@@ -27,7 +27,7 @@
 <th><label for="business_partner_business_partner_name_en"><%=getLongName('business_partners','business_partner_name_en')%></label></th><td><%= text_field 'business_partner', 'business_partner_name_en', :size => 50  %></td>
 </tr>
 <tr>
-<th><label for="business_partner_sales_status_type"><%=getLongName('business_partners','sales_status_type')%></label></th><td><%= select 'business_partner', 'sales_status_type', $TYPE_CONDITIONS['sales_status_type'] %></td>
+<th><label for="business_partner_sales_status_type"><%=getLongName('business_partners','sales_status_type')%></label></th><td><%= select 'business_partner', 'sales_status_type', getTypes('sales_status_type') %></td>
 </tr>
 <tr>
 <th><label for="business_partner_ceo_name"><%=getLongName('business_partners','ceo_name')%></label></th><td><%= text_field 'business_partner', 'ceo_name'  %></td>
