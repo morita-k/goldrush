@@ -1,8 +1,11 @@
+# -*- encoding: utf-8 -*-
 require 'test_helper'
 
 class UsersControllerTest < ActionController::TestCase
   setup do
-    @user = users(:users_1)
+    sign_in users(:users_1)
+    @user = users(:users_1)  
+    # request.env['REQUEST_URI'] = ""
   end
 
   test "should get index" do
@@ -17,8 +20,8 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test "should create user" do
-    assert_difference('User.count') do
-      post :create, user: { access_level_type: @user.access_level_type, current_sign_in_at: @user.current_sign_in_at, current_sign_in_ip: @user.current_sign_in_ip, last_sign_in_at: @user.last_sign_in_at, last_sign_in_ip: @user.last_sign_in_ip, locked_at: @user.locked_at, login: @user.login, nickname: @user.nickname, per_page: @user.per_page, sign_in_count: @user.sign_in_count }
+    assert_difference('User.count') do      
+      post :create, user: {login: "login", nickname: "nickname", access_level_type: "super", email: "test+email@tttest.jp", password: "password"}
     end
 
     assert_redirected_to user_path(assigns(:user))
