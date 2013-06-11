@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 module TypeUtil
-  $TYPES = nil
-  $TYPE_CONDITIONS = nil
+  @@types = nil
+  @@type_conditions = nil
 
   def TypeUtil.initTypes
     yaml_file = File.join(Rails.root,'config','types.yml')
@@ -13,46 +13,48 @@ module TypeUtil
   end
 
   # 名称マスタの初期読み込み
-  # $TYPES[:type_section][:type_key]で名称にアクセスできる
+  # @@types[:type_section][:type_key]で名称にアクセスできる
   def TypeUtil.setTypes
     types = Type.find(:all, :conditions => "deleted = 0 ", :order => " type_section, display_order1")
-    $TYPES = Hash.new
-    $TYPE_CONDITIONS = Hash.new
+    @@types = Hash.new
+    @@type_conditions = Hash.new
     types.each {|x|
-      $TYPES[x.type_section] = Hash.new if $TYPES[x.type_section].nil?
-      $TYPES[x.type_section][x.type_key] = x
-      $TYPE_CONDITIONS[x.type_section] = Array.new if $TYPE_CONDITIONS[x.type_section].nil?
-      $TYPE_CONDITIONS[x.type_section].push [x.long_name, x.type_key]
+      @@types[x.type_section] = Hash.new if @@types[x.type_section].nil?
+      @@types[x.type_section][x.type_key] = x
+      @@type_conditions[x.type_section] = Array.new if @@type_conditions[x.type_section].nil?
+      @@type_conditions[x.type_section].push [x.long_name, x.type_key]
     }
   end
   
   def TypeUtil.setTypes_offline(yaml_file)
     yaml = YAML.load_file(yaml_file)
-    $TYPES = Hash.new
-    $TYPE_CONDITIONS = Hash.new
+    @@types = Hash.new
+    @@type_conditions = Hash.new
     yaml.each{|key,val|
       val.delete('id')
       x = Type.new(val)
-      $TYPES[x.type_section] = Hash.new if $TYPES[x.type_section].nil?
-      $TYPES[x.type_section][x.type_key] = x
-      $TYPE_CONDITIONS[x.type_section] = Array.new if $TYPE_CONDITIONS[x.type_section].nil?
-      $TYPE_CONDITIONS[x.type_section].push [x.long_name, x.type_key]
+      @@types[x.type_section] = Hash.new if @@types[x.type_section].nil?
+      @@types[x.type_section][x.type_key] = x
+      @@type_conditions[x.type_section] = Array.new if @@type_conditions[x.type_section].nil?
+      @@type_conditions[x.type_section].push [x.long_name, x.type_key]
     }
   end
 
-  # キャッシュデータの初期化
-  initTypes unless $TYPES
 
-  def getTypeConditions(section)
+  def getTypes(section)
     TypeUtil.getTypeConditions(section)
   end
 
   def TypeUtil.getTypeConditions(section)
-    $TYPE_CONDITIONS[section] || []
+    # キャッシュデータの初期化
+    initTypes unless @@types
+    @@type_conditions[section] || []
   end
 
   def TypeUtil.getTypes(section)
-    $TYPES[section] || {}
+    # キャッシュデータの初期化
+    initTypes unless @@types
+    @@types[section.to_s] || {}
   end
   
   # 名称オブジェクトを取得
@@ -79,10 +81,10 @@ module TypeUtil
   # 区分略称を取得
   def getShortType(section, key)
     return '' if key.blank?
-    if $TYPES[section.to_s].nil?
+    if TypeUtil.getTypes(section).nil?
       "Unknown type(#{key})"
     else
-      type = $TYPES[section.to_s][key.to_s]
+      type = TypeUtil.getTypeObject(section, key)
       type.nil? ? "Unknown type(#{key})" : type.short_name
     end
   end
@@ -90,10 +92,10 @@ module TypeUtil
   # 区分その他の名前を取得
   def getOtherType(section, key)
     return '' if key.blank?
-    if $TYPES[section.to_s].nil?
+    if TypeUtil.getTypes(section).nil?
       "Unknown type(#{key})"
     else
-      type = $TYPES[section.to_s][key.to_s]
+      type = TypeUtil.getTypeObject(section, key)
       type.nil? ? "Unknown type(#{key})" : type.other_name
     end
   end

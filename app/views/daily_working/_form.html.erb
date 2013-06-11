@@ -72,7 +72,7 @@ function ctlForms()
   <tr>
     <th><%=getLongName('daily_workings','working_type')%></th>
     <td>
-    <%= select 'daily_working', 'working_type', $TYPE_CONDITIONS['working_type'], {}, :onChange => "return ctlForms();" %>
+    <%= select 'daily_working', 'working_type', getTypes('working_type'), {}, :onChange => "return ctlForms();" %>
     </td>
   </tr>
   <tr>

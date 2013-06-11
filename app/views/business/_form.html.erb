@@ -24,7 +24,7 @@
 <th><label for="business_due_date"><%=getLongName('businesses','due_date')%></label></th><td><%= date_field 'business', 'due_date'  %></td>
 </tr>
 <tr>
-<th><label for="business_term_type"><%=getLongName('businesses','term_type')%></label></th><td><%= select 'business', 'term_type', $TYPE_CONDITIONS['term_type']  %></td>
+<th><label for="business_term_type"><%=getLongName('businesses','term_type')%></label></th><td><%= select 'business', 'term_type', getTypes('term_type')  %></td>
 </tr>
 <tr>
 <th><label for="business_business_title"><%=getLongName('businesses','business_title')%>(*)</label></th><td><%= text_field 'business', 'business_title'  %></td>
