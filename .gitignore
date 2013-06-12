@@ -24,3 +24,5 @@
 config/database.yml
 
 /files
+
+/coverage

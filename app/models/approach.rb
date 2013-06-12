@@ -34,7 +34,7 @@ class Approach < ActiveRecord::Base
       [:result_waiting, :natural_lost, :pass_away],
       [:result_waiting, :other_success, :other_success],
       [:working, :finished, :finish, ->(a){
-        # ’ñˆÄ‚ªŠ®—¹‚·‚éÛ‚ÉAÆ‰ï‚ÆlŞ‚ÌƒXƒe[ƒ^ƒX‚à•Ï‰»‚·‚é
+        # ææ¡ˆãŒå®Œäº†ã™ã‚‹éš›ã«ã€ç…§ä¼šã¨äººæã®ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ã‚‚å¤‰åŒ–ã™ã‚‹
         biz_offer.change_status(:finish)
         bp_member.human_resource.change_status(:finish)
         return a.to
@@ -62,7 +62,7 @@ class Approach < ActiveRecord::Base
   end
   
   def approach_status_type_active
-    # ¸”s‚µ‚Ä‚È‚¢ƒXƒe[ƒ^ƒX‚ğ•À‚×—§‚Ä‚é(’ñˆÄ’†A’ñˆÄ’²®’†A–Ê’kŒ‹‰Ê‘Ò‚¿A¬–ñ)
+    # å¤±æ•—ã—ã¦ãªã„ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ã‚’ä¸¦ã¹ç«‹ã¦ã‚‹(ææ¡ˆä¸­ã€ææ¡ˆèª¿æ•´ä¸­ã€é¢è«‡çµæœå¾…ã¡ã€æˆç´„)
     self.approach_status_type == 'approaching' || self.approach_status_type == 'adjust' || self.approach_status_type == 'result_waiting' || self.approach_status_type == 'success'
   end
   
