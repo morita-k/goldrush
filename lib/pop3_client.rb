@@ -10,7 +10,7 @@ class Pop3Client
   class_attribute :settings
 
   # ---------------------------------------------------------------------------
-  # ƒ[ƒ‹‚ðƒ|ƒbƒv‚·‚éˆ—
+  # ãƒ¡ãƒ¼ãƒ«ã‚’ãƒãƒƒãƒ—ã™ã‚‹å‡¦ç†
   # ---------------------------------------------------------------------------
   def Pop3Client.pop_mail(&block)
     Pop3Client.pop_mail_with_settings(Pop3Client.settings, &block)
