@@ -110,7 +110,7 @@ class BpPicGroupDetailsController < ApplicationController
     color = @bp_pic_group_detail.suspended? ? "disable_color" : "enable_color"
     s = @bp_pic_group_detail.suspended? ? "OFF" : "ON"
     respond_to do |format|
-      format.js {render :text => "$('#tr_#{@bp_pic_group_detail.id}')[0].style.backgroundColor = #{color};$('#tr_#{@bp_pic_group_detail.id} a')[4].innerHTML = '#{s}'"}
+      format.js {render :text => "$('#tr_#{@bp_pic_group_detail.id}')[0].style.backgroundColor = #{color};$('.status_#{@bp_pic_group_detail.id} a')[0].innerHTML = '#{s}'"}
     end
   end
   
