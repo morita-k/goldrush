@@ -5,4 +5,9 @@ class BpPicGroupDetail < ActiveRecord::Base
   def suspended?
     suspended == 1
   end
+  
+  def nondelivery?
+    bp_pic.nondelivery?
+  end
+  
 end
