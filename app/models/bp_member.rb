@@ -12,6 +12,10 @@ class BpMember < ActiveRecord::Base
   validates_presence_of     :business_partner_id, :bp_pic_id
   validates_uniqueness_of   :bp_pic_id, :scope => [:human_resource_id]
 
+  def human_resource_name
+    human_resource.useful_name
+  end
+
   def attachment?
     AttachmentFile.count(:conditions => ["deleted = 0 and parent_table_name = 'bp_members' and parent_id = ?", self]) > 0
   end
