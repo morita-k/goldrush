@@ -37,12 +37,12 @@ GoldRush::Application.configure do
   config.assets.debug = true
 end
 
-ActionMailer::Base.delivery_method = :file
+ActionMailer::Base.delivery_method = :smtp
 ActionMailer::Base.perform_deliveries = true
 ActionMailer::Base.raise_delivery_errors = true
 ActionMailer::Base.smtp_settings = {
-  :address            => '192.168.22.2',
-  :domain             => 'dev.applicative.jp',
+  :address            => '133.242.165.187',
+  :domain             => 'gr.applicative.jp',
 }
 
 ActionMailer::Base.file_settings = {
