@@ -1,8 +1,11 @@
+# -*- encoding: utf-8 -*-
 require 'test_helper'
 
 class TagsControllerTest < ActionController::TestCase
   setup do
-    @tag = tags(:one)
+    sign_in users(:users_1)
+    @tag = tags(:tags_1)
+    request.env['REQUEST_URI'] = ""
   end
 
   test "should get index" do
@@ -39,11 +42,4 @@ class TagsControllerTest < ActionController::TestCase
     assert_redirected_to tag_path(assigns(:tag))
   end
 
-  test "should destroy tag" do
-    assert_difference('Tag.count', -1) do
-      delete :destroy, id: @tag
-    end
-
-    assert_redirected_to tags_path
-  end
 end

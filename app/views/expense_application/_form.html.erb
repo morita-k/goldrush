@@ -31,7 +31,7 @@
     <% end %>
     <% if field[:field].blank? %>
     <% elsif field[:field] == 'select' %>
-      <td><%= send(field[:field], 'expense_application', field[:prop],  $TYPE_CONDITIONS[field[:prop]], field[:option]) %></td>
+      <td><%= send(field[:field], 'expense_application', field[:prop],  getTypes(field[:prop]), field[:option]) %></td>
     <% elsif field[:prop] == 'book_no' %>
       <td><%= send(field[:field], 'expense_application', field[:prop], field[:option]) %></td>
       <% if edit? && @expense_application.sales_person_id %>

@@ -14,7 +14,7 @@
     </td>
     <td style="text-align: right">性別：</td>
     <td>
-      <%=select_tag 'sex_type', options_for_select([[]] + $TYPE_CONDITIONS['sex_type'], session[:bp_member_search] && session[:bp_member_search][:sex_type]) %>
+      <%=select_tag 'sex_type', options_for_select([[]] + getTypes('sex_type'), session[:bp_member_search] && session[:bp_member_search][:sex_type]) %>
     </td>
   </tr>
   <tr>
@@ -24,7 +24,7 @@
     </td>
     <td style="text-align: right">ステータス：</td>
     <td>
-      <%= select_tag 'human_resource_status_type', options_for_select([[]] + $TYPE_CONDITIONS['human_resource_status_type'], session[:bp_member_search] && session[:bp_member_search][:human_resource_status_type]) %>
+      <%= select_tag 'human_resource_status_type', options_for_select([[]] + getTypes('human_resource_status_type'), session[:bp_member_search] && session[:bp_member_search][:human_resource_status_type]) %>
     </td>
     <td style="text-align: right">下流取引先：</td>
     <td>
@@ -37,7 +37,7 @@
   <tr>
     <td style="text-align: right">雇用形態：</td>
     <td>
-      <%=select_tag 'employment_type', options_for_select([[]] + $TYPE_CONDITIONS['employment_type'], session[:bp_member_search] && session[:bp_member_search][:employment_type]) %>
+      <%=select_tag 'employment_type', options_for_select([[]] + getTypes('employment_type'), session[:bp_member_search] && session[:bp_member_search][:employment_type]) %>
     </td>
     <td style="text-align: right">単価下限：</td>
     <td>

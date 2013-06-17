@@ -63,7 +63,7 @@ function clear_row(index){
   <th width="60" style="background-color: #80ffff"><label for="expense_detail_amount">操作</label></th>
 <% end %>
 </tr>
-<% expense_type = $TYPE_CONDITIONS['expense_type'].dup
+<% expense_type = getTypes('expense_type').dup
    expense_type.delete_if{|x| ['fee_expense','temporary_expense'].include?(x[1])} %>
 <% expense_type.unshift([[]]) %>
 <%= hidden_field_tag 'update_month', params[:id] %>

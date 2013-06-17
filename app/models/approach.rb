@@ -1,6 +1,10 @@
 # -*- encoding: utf-8 -*-
 class Approach < ActiveRecord::Base
   include AutoTypeName
+  include BusinessFlow
+  
+  after_initialize :after_initialize
+
   belongs_to :biz_offer
   belongs_to :bp_member
   belongs_to :approach_upper_contract_term, :class_name => 'ContractTerm'
@@ -9,6 +13,35 @@ class Approach < ActiveRecord::Base
   has_many :interviews, :conditions => ["interviews.deleted = 0"]
   has_one :contract
   
+  def after_initialize 
+    init_actions([
+      [:approaching, :adjust, :want],
+      [:approaching, :result_waiting, :success_approach],
+      [:approaching, :other_failure, :choice_other],
+      [:approaching, :lost_failure, :lost],
+      [:approaching, :natural_lost, :pass_away],
+      [:approaching, :other_success, :other_success],
+      [:adjust, :approaching, :reapproach],
+      [:adjust, :approach_failure, :reject_approach],
+      [:adjust, :other_failure, :choice_other],
+      [:adjust, :lost_failure, :lost],
+      [:adjust, :natural_lost, :pass_away],
+      [:adjust, :other_success, :other_success],
+      [:result_waiting, :working, :get_job],
+      [:result_waiting, :approach_failure, :reject_approach],
+      [:result_waiting, :other_failure, :choice_other],
+      [:result_waiting, :lost_failure, :lost],
+      [:result_waiting, :natural_lost, :pass_away],
+      [:result_waiting, :other_success, :other_success],
+      [:working, :finished, :finish, ->(a){
+        # ææ¡ˆãŒå®Œäº†ã™ã‚‹éš›ã«ã€ç…§ä¼šã¨äººæã®ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ã‚‚å¤‰åŒ–ã™ã‚‹
+        biz_offer.change_status(:finish)
+        bp_member.human_resource.change_status(:finish)
+        return a.to
+      }],
+    ])
+  end
+
   def approach_employee_name
    if self.approach_pic_id
      employee = Employee.find(self.approach_pic_id)
@@ -18,7 +51,7 @@ class Approach < ActiveRecord::Base
   
   def process_interview
     self.interviews.each do |interview|
-puts ">>>>>>>>>>>>>>>>>>>>> #{interview.interview_status_type}"
+#puts ">>>>>>>>>>>>>>>>>>>>> #{interview.interview_status_type}"
       return true if interview.interview_status_type != 'finished'
     end
     return false
@@ -29,7 +62,7 @@ puts ">>>>>>>>>>>>>>>>>>>>> #{interview.interview_status_type}"
   end
   
   def approach_status_type_active
-    # ¸”s‚µ‚Ä‚È‚¢ƒXƒe[ƒ^ƒX‚ğ•À‚×—§‚Ä‚é(’ñˆÄ’†A’ñˆÄ’²®’†A–Ê’kŒ‹‰Ê‘Ò‚¿A¬–ñ)
+    # å¤±æ•—ã—ã¦ãªã„ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ã‚’ä¸¦ã¹ç«‹ã¦ã‚‹(ææ¡ˆä¸­ã€ææ¡ˆèª¿æ•´ä¸­ã€é¢è«‡çµæœå¾…ã¡ã€æˆç´„)
     self.approach_status_type == 'approaching' || self.approach_status_type == 'adjust' || self.approach_status_type == 'result_waiting' || self.approach_status_type == 'success'
   end
   

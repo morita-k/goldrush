@@ -36,10 +36,10 @@
 <th><label for="project_subcontract_cost"><%=getLongName('projects','subcontract_cost')%></label></th><td><%= currency_field 'project', 'subcontract_cost'  %></td>
 </tr>
 <tr>
-<th><label for="project_project_type"><%=getLongName('projects','project_type')%></label></th><td><%= select 'project', 'project_type', $TYPE_CONDITIONS['project_type']  %></td>
+<th><label for="project_project_type"><%=getLongName('projects','project_type')%></label></th><td><%= select 'project', 'project_type', getTypes('project_type')  %></td>
 </tr>
 <tr>
-<th><label for="project_project_type"><%=getLongName('projects','project_status_type')%></label></th><td><%= select 'project', 'project_status_type', $TYPE_CONDITIONS['project_status_type']  %></td>
+<th><label for="project_project_type"><%=getLongName('projects','project_status_type')%></label></th><td><%= select 'project', 'project_status_type', getTypes('project_status_type')  %></td>
 </tr>
 <tr>
 <th><label for="project_memo"><%=getLongName('projects','memo')%></label></th><td><%= text_area 'project', 'memo', :size => "45x5"  %></td>

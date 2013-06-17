@@ -1,7 +1,19 @@
 # -*- encoding: utf-8 -*-
+
+if require 'simplecov'
+  require 'simplecov-rcov'
+  SimpleCov.formatter = SimpleCov::Formatter::RcovFormatter
+  SimpleCov.start 'rails'
+  puts "required simplecov"
+end
+
 ENV["RAILS_ENV"] = "test"
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
+
+class ActionController::TestCase
+  include Devise::TestHelpers
+end
 
 class ActiveSupport::TestCase
   # Setup all fixtures in test/fixtures/*.(yml|csv) for all tests in alphabetical order.

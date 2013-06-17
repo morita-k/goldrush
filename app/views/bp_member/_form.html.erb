@@ -26,7 +26,7 @@
 </tr>
 <tr>
 <th><%= hidden_field 'bp_member', 'business_partner_id' %>
-    <label for="bp_member_employment_type"><%=getLongName('bp_members','employment_type')%></label></th><td><%= select 'bp_member', 'employment_type', $TYPE_CONDITIONS['employment_type'] %></td>
+    <label for="bp_member_employment_type"><%=getLongName('bp_members','employment_type')%></label></th><td><%= select 'bp_member', 'employment_type', getTypes('employment_type') %></td>
 </tr>
 <tr>
 <th><label for="bp_member_reprint_flg"><%=getLongName('bp_members','reprint_flg')%></label></th><td><%= check_box 'bp_member', 'reprint_flg'  %></td>
