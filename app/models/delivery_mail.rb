@@ -98,6 +98,7 @@ class DeliveryMail < ActiveRecord::Base
       DeliveryMail.where(:created_user => fetch_key).each {|mail|
         attachment_files = mail.attachment_files
         mail.delivery_mail_targets.each {|target|
+          next if target.bp_pic.nondelivery?
           opt = {:bp_pic_name => target.bp_pic.bp_pic_short_name, :business_partner_name => target.bp_pic.business_partner.business_partner_name}
           current_mail = MyMailer.send_del_mail(
             target.bp_pic.email1,

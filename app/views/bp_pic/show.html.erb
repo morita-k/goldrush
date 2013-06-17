@@ -6,6 +6,9 @@
   <th><%= getLongName('bp_pics', 'bp_pic_name') %></th><td><%=h @bp_pic.bp_pic_name %></td>
 </tr>
 <tr>
+  <th><%= getLongName('bp_pics', 'bp_pic_short_name') %></th><td><%=h @bp_pic.bp_pic_name %></td>
+</tr>
+<tr>
   <th><%= getLongName('bp_pics', 'bp_pic_name_kana') %></th><td><%=h @bp_pic.bp_pic_name_kana %></td>
 </tr>
 <tr>
@@ -34,6 +37,9 @@
 </tr>
 <tr>
   <th><%= getLongName('bp_pics', 'contact_mail_flg') %></th><td><%=@bp_pic.contact_mail_status %><% if @bp_pic.sales_pic %> (<%= back_to_link "あいさつメールを送る", conatct_mail_new_delivery_mail_path(@bp_pic)%>)<% end %></td>
+</tr>
+<tr>
+  <th><%= getLongName('bp_pics', 'nondelivery_score') %></th><td><%=@bp_pic.nondelivery_score %><%= @bp_pic.nondelivery? ? '(メール停止)' : '' %></td>
 </tr>
 <tr>
   <th><%= getLongName('bp_pics', 'memo') %></th><td><%=simple_format(h @bp_pic.memo) %></td>

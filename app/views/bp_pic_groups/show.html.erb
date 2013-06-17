@@ -55,12 +55,12 @@
       <% @bp_pic_group.bp_pic_group_details.each do | detail | %>
         <tr id="<%= "tr_#{detail.id}"%>" style="background-color:<%= suspended_color(detail) %>">
           <% if @delivery_mail %>
-            <td><%= check_box_tag 'bp_pic_ids[]', detail.bp_pic_id, !detail.suspended? %></td>
+            <td><%= check_box_tag 'bp_pic_ids[]', detail.bp_pic_id, !(detail.suspended? || detail.nondelivery?) %></td>
           <% else %>
             <td><%= check_box_tag 'ids[]', detail.id, false %></td>
           <% end %>
           <td><%= star_links(detail.bp_pic.business_partner) %> <%= back_to_link detail.bp_pic.business_partner.business_partner_name, :controller => :business_partner, :action => :show, :id => detail.bp_pic.business_partner_id %></td>
-          <td><%= star_links(detail.bp_pic) %> <%= back_to_link "#{detail.bp_pic.bp_pic_name} <#{detail.bp_pic.email1}>", :controller => :bp_pic, :action => :show, :id => detail.bp_pic_id %></td>
+          <td><%= star_links(detail.bp_pic) %> <%= back_to_link "#{detail.bp_pic.usefulname} <#{detail.bp_pic.email1}>", :controller => :bp_pic, :action => :show, :id => detail.bp_pic_id %></td>
           <td><%= detail.bp_pic.memo%></td>
           <td><span class="<%= "status_#{detail.id}"%>"><%= link_to (detail.suspended? ? "OFF" : "ON"), {:controller => :bp_pic_group_details, :action => :suspend, :id => detail, :authenticity_token => form_authenticity_token}, :remote => true, :method => :put %></span></td>
         </tr>
