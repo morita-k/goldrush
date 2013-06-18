@@ -20,9 +20,9 @@ class ContractController < ApplicationController
     @contract = Contract.find(params[:id])
   end
 
-  def quick_new
+  def contract_objects_new
     # 案件
-    @business = Business.new
+    @business = Business.new(params[:business])
     # 人材
     @human_resource = HumanResource.new
     # 所属
@@ -30,25 +30,37 @@ class ContractController < ApplicationController
     @bp_member.human_resource = @human_resource
     @bp_member.business_partner = BusinessPartner.new
     # 照会
-    @biz_offer = BizOffer.new
+    @biz_offer = BizOffer.new(params[:biz_offer])
     @biz_offer.business = @business
     # 提案
-    @approach = Approach.new
+    @approach = Approach.new(params[:approach])
     @approach.biz_offer = @biz_offer
     @approach.bp_member = @bp_member
-    @approach_upper_contract_term = ContractTerm.new
-    @approach_down_contract_term = ContractTerm.new
+    @approach_upper_contract_term = ContractTerm.new(params[:approach_upper_contract_term])
+    @approach_down_contract_term = ContractTerm.new(params[:approach_down_contract_term])
     @approach.approach_upper_contract_term = @approach_upper_contract_term
     @approach.approach_down_contract_term = @approach_down_contract_term
     # 契約
-    @contract = Contract.new
-    @upper_contract_term = ContractTerm.new
-    @down_contract_term = ContractTerm.new
+    @contract = Contract.new(params[:contract])
+    @upper_contract_term = ContractTerm.new(params[:upper_contract_term])
+    @down_contract_term = ContractTerm.new(params[:down_contract_term])
     @contract.approach = @approach
     @contract.upper_contract_term = @upper_contract_term
     @contract.down_contract_term = @down_contract_term
+  end
+
+  def quick_new
+    contract_objects_new
 
     init_set(@contract)
+  end
+
+  def quick_create
+    contract_objects_new
+    
+    ActiveRecord::Base.transaction do
+    
+    end # transaction
   end
 
   def new
@@ -153,6 +165,59 @@ private
     contract.upper_contract_term.tax_type = 'exclude'
     contract.upper_contract_term.time_adjust_type = 'suspense'
     contract.upper_contract_term.time_adjust_base_type = 'suspense'
+    contract.upper_contract_term.time_adjust_time = 60
+    contract.upper_contract_term.cutoff_date_type = 'suspense'
+    contract.upper_contract_term.payment_sight_type = 'suspense'
+
+    contract.down_contract_term.term_type = contract.upper_contract_term.term_type
+    contract.down_contract_term.tax_type = contract.upper_contract_term.tax_type
+    contract.down_contract_term.time_adjust_type = contract.upper_contract_term.time_adjust_type
+    contract.down_contract_term.time_adjust_base_type = contract.upper_contract_term.time_adjust_base_type
+    contract.down_contract_term.time_adjust_time = contract.upper_contract_term.time_adjust_time
+    contract.down_contract_term.cutoff_date_type = contract.upper_contract_term.cutoff_date_type
+    contract.down_contract_term.payment_sight_type = contract.upper_contract_term.payment_sight_type
+
+    contract.approach.approach_status_type = 'working'
+    contract.approach.approached_at = contract.closed_at
+
+    contract.approach.approach_upper_contract_term.term_type = contract.upper_contract_term.term_type
+    contract.approach.approach_upper_contract_term.tax_type = contract.upper_contract_term.tax_type
+    contract.approach.approach_upper_contract_term.time_adjust_type = contract.upper_contract_term.time_adjust_type
+    contract.approach.approach_upper_contract_term.time_adjust_base_type = contract.upper_contract_term.time_adjust_base_type
+    contract.approach.approach_upper_contract_term.time_adjust_time = contract.upper_contract_term.time_adjust_time
+    contract.approach.approach_upper_contract_term.cutoff_date_type = contract.upper_contract_term.cutoff_date_type
+    contract.approach.approach_upper_contract_term.payment_sight_type = contract.upper_contract_term.payment_sight_type
+
+    contract.approach.approach_down_contract_term.term_type = contract.upper_contract_term.term_type
+    contract.approach.approach_down_contract_term.tax_type = contract.upper_contract_term.tax_type
+    contract.approach.approach_down_contract_term.time_adjust_type = contract.upper_contract_term.time_adjust_type
+    contract.approach.approach_down_contract_term.time_adjust_base_type = contract.upper_contract_term.time_adjust_base_type
+    contract.approach.approach_down_contract_term.time_adjust_time = contract.upper_contract_term.time_adjust_time
+    contract.approach.approach_down_contract_term.cutoff_date_type = contract.upper_contract_term.cutoff_date_type
+    contract.approach.approach_down_contract_term.payment_sight_type = contract.upper_contract_term.payment_sight_type
+
+    contract.approach.biz_offer.biz_offer_status_type = 'working'
+    contract.approach.biz_offer.biz_offered_at = contract.closed_at
+
+    contract.approach.biz_offer.business.business_status_type = 'working'
+    contract.approach.biz_offer.business.issue_datetime = contract.closed_at
+    contract.approach.biz_offer.business.term_type = contract.upper_contract_term.term_type
+
+    contract.approach.bp_member.employment_type = 'unknown'
+    
+    contract.approach.bp_member.human_resource.human_resource_status_type = 'waiting'
+  end
+
+  def create_set(contract)
+    #contract.contract_status_type = 'open'
+    #contract.closed_at = Time.now
+    #contract.upper_contract_status_type = 'waiting_order'
+    #contract.down_contract_status_type = 'waiting_offer'
+
+    #contract.upper_contract_term.term_type = 'suspense'
+    #contract.upper_contract_term.tax_type = 'exclude'
+    #contract.upper_contract_term.time_adjust_type = 'suspense'
+    #contract.upper_contract_term.time_adjust_base_type = 'suspense'
     contract.upper_contract_term.time_adjust_time = 60
     contract.upper_contract_term.cutoff_date_type = 'suspense'
     contract.upper_contract_term.payment_sight_type = 'suspense'

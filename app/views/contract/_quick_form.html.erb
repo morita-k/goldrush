@@ -172,9 +172,12 @@
 <h2><%=getLongName('table_name','bp_members')%>選択</h2>
 <table class="show_table">
 <tr>
-<th><label for="human_resource_name"><%=getLongName('human_resources','human_resource_name')%></label></th><td><%= text_field_tag 'human_resource_name', @bp_member.human_resource_name, :readOnly => true, :style => "background-color: silver;", :size => 30 %>
-  <input type=button value='...' onClick="disp_wide('<%=url_for :controller => 'bp_member', :action => 'list', :popup =>1 %>');return false;" />
-  <input type=button value='クリア' onClick="clearBpMember();return false;" /></td>
+  <th><label for="human_resource_name"><%=getLongName('human_resources','human_resource_name')%></label></th>
+  <td><%= text_field_tag 'human_resource_name', @bp_member.human_resource_name, :readOnly => true, :style => "background-color: silver;", :size => 30 %>
+    <input type=button value='...' onClick="disp_wide('<%=url_for :controller => 'bp_member', :action => 'list', :popup =>1 %>');return false;" />
+    <input type=button value='クリア' onClick="clearBpMember();return false;" />
+    <%= hidden_field 'approach', 'bp_member_id' %>
+  </td>
 </tr>
 <tr>
 <th><label for="business_partner_name">下流<%=getLongName('business_partners','business_partner_name')%></label></th><td><%= text_field_tag 'business_partner_name', @bp_member.business_partner.business_partner_name, :readOnly => true, :style => "background-color: silver;", :size => 30 %>
