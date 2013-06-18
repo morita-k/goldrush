@@ -48,10 +48,10 @@
 <% for bp_pic in @bp_pics %>
   <tr>
 <% if popup? %>
-    <td><%= star_links(bp_pic) %> <%=link_to h(bp_pic.bp_pic_name), '#', :onClick => "setBpPicToParentWindow(#{bp_pic.id},'#{bp_pic.bp_pic_name}');return false;" %></td>
+    <td><%= star_links(bp_pic) %> <%=link_to h(bp_pic.usefulname), '#', :onClick => "setBpPicToParentWindow(#{bp_pic.id},'#{bp_pic.usefulname}');return false;" %></td>
 <% else %>
     <td><%= star_links(bp_pic.business_partner) %> <%=back_to_link bp_pic.business_partner.business_partner_name, {:controller => :business_partner, :action => :show, :id => bp_pic.business_partner} %></td>
-    <td style="border-right-color: silver;"><%= star_links(bp_pic) %> <%=back_to_link bp_pic.bp_pic_name, {:action => :show, :id => bp_pic} %></td>
+    <td style="border-right-color: silver;"><%= star_links(bp_pic) %> <%=back_to_link bp_pic.usefulname, {:action => :show, :id => bp_pic} %></td>
     <td style="text-align:center;"><%= bp_pic_edit_icon(bp_pic) %></td>
 <% end %>
     <td><%=h bp_pic.tel_direct %></td>
