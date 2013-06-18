@@ -13,19 +13,20 @@
   <%= hidden_field 'bp_member', 'human_resource_id', :value => @human_resource.id %>
 <table class="show_table">
 <tr>
-<th><label for="business_partner_name">下流取引先</label></th><td><%= text_field_tag 'business_partner_name', @bp_member.business_partner.blank? ? "" : @bp_member.business_partner.business_partner_name, :readOnly => true, :style => "background-color: silver;", :size => 30 %>
-    <input type=button value='...' onClick="disp_wide('<%=url_for :controller => 'business_partner', :action => 'list', :popup =>1, :flg => 'down' %>');return false;" />
-    <input type=button value='クリア' onClick="clearBp();return false;" />
-</td>
+  <th><label for="business_partner_name">下流取引先</label></th>
+  <td><%= text_field_tag 'business_partner_name', @bp_member.business_partner.blank? ? "" : @bp_member.business_partner.business_partner_name, :readOnly => true, :style => "background-color: silver;", :size => 30 %></td>
 </tr>
 <tr>
-<th><label for="bp_pic_name">下流取引先担当</label></th><td><%= text_field_tag 'bp_pic_name', @bp_member.bp_pic.blank? ? "" : @bp_member.bp_pic.bp_pic_name, :readOnly => true, :style => "background-color: silver;", :size => 30 %>
-    <input type=button value='...' onClick='<%= url_for :controller => "bp_pic", :action => "list", :popup =>1 %>&id=' + document.busines_pertner.getId() + ";return false;" />
+  <th><label for="bp_pic_name">下流取引先担当</label></th>
+  <td>
+    <%= text_field_tag 'bp_pic_name', @bp_member.bp_pic.blank? ? "" : @bp_member.bp_pic.bp_pic_name, :readOnly => true, :style => "background-color: silver;", :size => 30 %>
+    <input type=button value='...' onClick="disp_wide('<%=url_for_bp_pic_popup%>');return false;" />
     <input type=button value='クリア' onClick="clearBpPic();return false;" />
-</td>
+    <%= hidden_field 'bp_member', 'bp_pic_id' %>
+  </td>
 </tr>
 <tr>
-<th><%= hidden_field 'bp_member', 'business_partner_id' %>
+<th>
     <label for="bp_member_employment_type"><%=getLongName('bp_members','employment_type')%></label></th><td><%= select 'bp_member', 'employment_type', getTypes('employment_type') %></td>
 </tr>
 <tr>
@@ -56,23 +57,23 @@
 <!--[eoform:bp_member]-->
 
 <%= hidden_field 'bp_member', 'lock_version' %>
-<%= hidden_field 'bp_member', 'bp_pic_id' %>
 <%= hidden_field 'bp_member', 'import_mail_id' %>
 
 <%= back_to_field_tag %>
 <script type="text/javascript">
 <!--
-// ID定義
-var form_id_list = {
-  business_partner_id: "bp_member_business_partner_id",
-  business_partner_name: "business_partner_name",
-  bp_pic_id: "bp_member_bp_pic_id",
-  bp_pic_name: "bp_pic_name"
+
+document.setBpPic = function(bp_pic){
+    document.getElementById("business_partner_name").value = bp_pic.business_partner_name;
+    document.getElementById("bp_member_bp_pic_id").value = bp_pic.id;
+    document.getElementById("bp_pic_name").value = bp_pic.bp_pic_name;
 }
 
-// UI操作オブジェクト作成
-document.busines_pertner = new BuisinessPartnerForm( form_id_list );
-document.bp_pic = new BpPicForm( form_id_list );
+function clearBpPic(){
+    document.getElementById("business_partner_name").value = "";
+    document.getElementById("bp_member_bp_pic_id").value = "";
+    document.getElementById("bp_pic_name").value = "";
+}
 
 // -->
 </script>

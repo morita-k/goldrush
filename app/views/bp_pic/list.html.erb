@@ -48,7 +48,7 @@
 <% for bp_pic in @bp_pics %>
   <tr>
 <% if popup? %>
-    <td><%= star_links(bp_pic) %> <%=link_to h(bp_pic.usefulname), '#', :onClick => "setBpPicToParentWindow(#{bp_pic.id},'#{bp_pic.usefulname}');return false;" %></td>
+    <td><%= star_links(bp_pic) %> <%=link_to h(bp_pic.usefulname), '#', :onClick => "setBpPicToParentWindow(#{bp_pic.id},'#{bp_pic.usefulname}', '#{bp_pic.business_partner_name}');return false;" %></td>
 <% else %>
     <td><%= star_links(bp_pic.business_partner) %> <%=back_to_link bp_pic.business_partner.business_partner_name, {:controller => :business_partner, :action => :show, :id => bp_pic.business_partner} %></td>
     <td style="border-right-color: silver;"><%= star_links(bp_pic) %> <%=back_to_link bp_pic.usefulname, {:action => :show, :id => bp_pic} %></td>
@@ -90,13 +90,12 @@
 <% else %>
 <script type="text/javascript">
 <!--
-function setBpPicToParentWindow(bp_pic_id, bp_pic_name) {
-  if(window.opener.document.set<%= params[:mode].blank? ? '' : 'Eu' %>BpPic){
-    var bp_pic = new Object();
-    bp_pic.id = bp_pic_id;
-    bp_pic.bp_pic_name = bp_pic_name;
-    window.opener.document.setBpPic(bp_pic);
-  }
+function setBpPicToParentWindow(bp_pic_id, bp_pic_name, business_partner_name) {
+  var bp_pic = new Object();
+  bp_pic.business_partner_name = business_partner_name
+  bp_pic.id = bp_pic_id;
+  bp_pic.bp_pic_name = bp_pic_name;
+  window.opener.document.<%=params[:callback]%>(bp_pic);
   window.close();
 }
 // -->
