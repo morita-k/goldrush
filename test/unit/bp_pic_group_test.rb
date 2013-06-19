@@ -29,7 +29,7 @@ class BpPicGroupTest < ActiveSupport::TestCase
     clone_first_detail = clone.bp_pic_group_details.shift
     
     assert(!BpPicGroupDetail.where(bp_pic_group_id: clone.id).blank?)
-    # ↓validationで生成してるし異なるのはそもそも自明？
+    # ↓Associationで生成してるし異なるのはそもそも自明？
     # assert_not_equal(source_first_detail.bp_pic_group_id, clone_first_detail.bp_pic_group_id)
     assert_equal(source_first_detail.bp_pic_id, clone_first_detail.bp_pic_id)
     assert_equal(source_first_detail.suspended, clone_first_detail.suspended)
