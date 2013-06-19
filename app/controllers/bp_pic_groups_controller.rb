@@ -80,7 +80,7 @@ class BpPicGroupsController < ApplicationController
   # PUT /bp_pic_groups/1.json
   def update
     @bp_pic_group = BpPicGroup.find(params[:id])
-    
+
     respond_to do |format|
       begin
         @bp_pic_group.update_attributes!(params[:bp_pic_group])
