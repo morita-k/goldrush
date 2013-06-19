@@ -98,7 +98,7 @@ class BaseApplicationController < ApplicationController
     else
       @target_user = current_user
     end
-    @filter_types = $TYPE_CONDITIONS['approval_status_type'].dup.unshift([])
+    @filter_types = getTypes('approval_status_type').dup.unshift([])
     @calendar = true
     if params[:mode]
       @types = BaseApplication.send("#{params[:mode]}_application_typs")

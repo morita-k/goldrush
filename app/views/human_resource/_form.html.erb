@@ -31,7 +31,7 @@
 <th><label for="human_resource_birthday_date"><%=getLongName('human_resources','birthday_date')%></label></th><td><%= date_field 'human_resource', 'birthday_date'  %></td>
 </tr>
 <tr>
-<th><label for="human_resource_sex_type"><%=getLongName('human_resources','sex_type')%></label></th><td><%= select 'human_resource', 'sex_type', $TYPE_CONDITIONS['sex_type']  %></td>
+<th><label for="human_resource_sex_type"><%=getLongName('human_resources','sex_type')%></label></th><td><%= select 'human_resource', 'sex_type', getTypes('sex_type')  %></td>
 </tr>
 <tr>
 <th><label for="human_resource_nationality"><%=getLongName('human_resources','nationality')%></label></th><td><%= text_field 'human_resource', 'nationality'  %></td>
@@ -52,13 +52,13 @@
 <th><label for="human_resource_qualification"><%=getLongName('human_resources','qualification')%></label></th><td><%= resizable_area 'human_resource', 'qualification'  %></td>
 </tr>
 <tr>
-<th><label for="human_resource_communication_type"><%=getLongName('human_resources','communication_type')%></label></th><td><%= select 'human_resource', 'communication_type', $TYPE_CONDITIONS['communication_type']  %></td>
+<th><label for="human_resource_communication_type"><%=getLongName('human_resources','communication_type')%></label></th><td><%= select 'human_resource', 'communication_type', getTypes('communication_type')  %></td>
 </tr>
 <tr>
 <th><label for="human_resource_attendance"><%=getLongName('human_resources','attendance')%></label></th><td><%= text_field 'human_resource', 'attendance'  %></td>
 </tr>
 <tr>
-<th><label for="human_resource_human_resource_status_type"><%=getLongName('human_resources','human_resource_status_type')%></label></th><td><%= select 'human_resource', 'human_resource_status_type', $TYPE_CONDITIONS['human_resource_status_type']  %></td>
+<th><label for="human_resource_human_resource_status_type"><%=getLongName('human_resources','human_resource_status_type')%></label></th><td><%= select 'human_resource', 'human_resource_status_type', getTypes('human_resource_status_type')  %></td>
 </tr>
 <tr>
 <th><label for="human_resource_memo"><%=getLongName('human_resources','memo')%></label></th><td><%= resizable_area 'human_resource', 'memo'  %></td>

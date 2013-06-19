@@ -26,7 +26,7 @@
     <td style="text-align: right">年齢制限:</td>
     <td><%= text_field_tag 'age_limit', session[:business_search] && session[:business_search][:age_limit] %></td>
     <td style="text-align: right">案件ステータス:</td>
-    <td><%= select_tag 'business_status_type', options_for_select([[]] + $TYPE_CONDITIONS['business_status_type'], session[:business_search][:business_status_type]) %></td>
+    <td><%= select_tag 'business_status_type', options_for_select([[]] + getTypes('business_status_type'), session[:business_search][:business_status_type]) %></td>
   </tr>
 </table>
 <p><%= submit_tag '　　検索　　', :name => 'search_button' %> <%= submit_tag '　　クリア　　', :name => 'clear_button' %></p>

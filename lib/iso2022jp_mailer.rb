@@ -2,10 +2,10 @@
 # app/model/iso2022jp_mailer.rb
 require 'nkf'
 class Iso2022jpMailer < ActionMailer::Base
-  @@default_charset = 'iso-2022-jp'  # ‚±‚ê‚ª‚È‚¢‚Æ "Content-Type: charset=utf-8" ‚É‚È‚é
-  @@encode_subject  = false          # ƒfƒtƒHƒ‹ƒg‚ÌƒGƒ“ƒR[ƒhˆ—‚Ís‚í‚È‚¢(Ž©•ª‚Å‚â‚é)
+  @@default_charset = 'iso-2022-jp'  # ã“ã‚ŒãŒãªã„ã¨ "Content-Type: charset=utf-8" ã«ãªã‚‹
+  @@encode_subject  = false          # ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰å‡¦ç†ã¯è¡Œã‚ãªã„(è‡ªåˆ†ã§ã‚„ã‚‹)
 
-  # 1) base64 ‚Ì•„†‰» (http://wiki.fdiary.net/rails/?ActionMailer ‚æ‚è)
+  # 1) base64 ã®ç¬¦å·åŒ– (http://wiki.fdiary.net/rails/?ActionMailer ã‚ˆã‚Š)
   def base64(text, charset="iso-2022-jp", convert=true)
     if convert
       if charset == "iso-2022-jp"
@@ -16,11 +16,11 @@ class Iso2022jpMailer < ActionMailer::Base
     "=?#{charset}?B?#{text}?="
   end
 
-  # 2) –{•¶‚ð iso-2022-jp ‚Ö•ÏŠ·
-  # ‚Ç‚±‚Å‚â‚ê‚Î‚¢‚¢‚Ì‚©–À‚Á‚½‚Ì‚ÅA‚Æ‚è‚ ‚¦‚¸ create! ‚É”í‚¹‚Ä‚¢‚Ü‚·
+  # 2) æœ¬æ–‡ã‚’ iso-2022-jp ã¸å¤‰æ›
+  # ã©ã“ã§ã‚„ã‚Œã°ã„ã„ã®ã‹è¿·ã£ãŸã®ã§ã€ã¨ã‚Šã‚ãˆãš create! ã«è¢«ã›ã¦ã„ã¾ã™
   def create! (*)
     super
     @mail.body = NKF::nkf('-j', @mail.body)
-    return @mail   # ƒƒ\ƒbƒhƒ`ƒFƒCƒ“‚ðŠú‘Ò‚µ‚½•ÏX‚ª‚ ‚Á‚½‚ç•|‚¢‚Ì‚Å
+    return @mail   # ãƒ¡ã‚½ãƒƒãƒ‰ãƒã‚§ã‚¤ãƒ³ã‚’æœŸå¾…ã—ãŸå¤‰æ›´ãŒã‚ã£ãŸã‚‰æ€–ã„ã®ã§
   end
 end

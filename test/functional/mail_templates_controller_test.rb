@@ -1,8 +1,11 @@
+# -*- encoding: utf-8 -*-
 require 'test_helper'
 
 class MailTemplatesControllerTest < ActionController::TestCase
   setup do
+    sign_in users(:users_1)
     @mail_template = mail_templates(:one)
+    request.env['REQUEST_URI'] = ""
   end
 
   test "should get index" do
@@ -40,9 +43,8 @@ class MailTemplatesControllerTest < ActionController::TestCase
   end
 
   test "should destroy mail_template" do
-    assert_difference('MailTemplate.count', -1) do
-      delete :destroy, id: @mail_template
-    end
+    delete :destroy, id: @mail_template
+    assert(MailTemplate.where(id: @mail_template, deleted: 0).empty?)
 
     assert_redirected_to mail_templates_path
   end

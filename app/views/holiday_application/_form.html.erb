@@ -28,7 +28,7 @@ function ctlForms()
 
 <%= error_messages_for 'holiday_application' %>
 
-<% working_types = $TYPE_CONDITIONS['working_type'].dup
+<% working_types = getTypes('working_type').dup
    working_types.delete_if{|x| HolidayApplication.hide_select_types.include?(x[1])} %>
 
 <table class="input_table">

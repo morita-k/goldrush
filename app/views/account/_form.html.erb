@@ -22,7 +22,7 @@
   </tr>
   <tr>
     <th>アクセス権限(*)</th>
-    <td><%= select :user, :access_level_type, $TYPE_CONDITIONS['access_level_type'] %></td>
+    <td><%= select :user, :access_level_type, getTypes('access_level_type') %></td>
   </tr>
   <tr>
     <th>承認者権限</th>
@@ -56,7 +56,7 @@
 </tr>
 <tr>
   <th><%=getLongName('employees','employee_type')%></th>
-  <td><%= select 'employee', 'employee_type', $TYPE_CONDITIONS['employee_type'] %></td>
+  <td><%= select 'employee', 'employee_type', getTypes('employee_type') %></td>
 </tr>
 <tr>
   <th>部署</th>
@@ -131,7 +131,7 @@
 <tr>
   <th><%=getLongName('employees','sex_type')%></th>
   <td>
-  <%= select 'employee', 'sex_type', $TYPE_CONDITIONS['sex_type'] %>
+  <%= select 'employee', 'sex_type', getTypes('sex_type') %>
   </td>
 </tr>
 <tr>
@@ -229,7 +229,7 @@
 <tr>
   <th><%=getLongName('employees','account_type')%></th>
   <td>
-  <%= select 'employee', 'account_type', $TYPE_CONDITIONS['account_type'] %>
+  <%= select 'employee', 'account_type', getTypes('account_type') %>
   </td>
 </tr>
 <tr>
