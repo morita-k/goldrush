@@ -48,4 +48,20 @@ class BpPicGroupsControllerTest < ActionController::TestCase
     
     assert_redirected_to bp_pic_groups_path
   end
+  
+  test "should get copy(new)" do
+    get :new, src_id: 1
+    
+    assert_response :success
+    assert !@bp_pic_group.bp_pic_group_name.blank?, "bp_pic_group_name is blank"
+    assert !@bp_pic_group.memo.blank?, "memo is blank"
+  end
+  
+  test "should copy(update) bp_pic_group" do
+    assert_difference('BpPicGroup.count') do
+      post :create, bp_pic_group: { bp_pic_group_name: @bp_pic_group.bp_pic_group_name, memo: @bp_pic_group.memo }, id: @bp_pic_group.id, back_to: "/bp_pic_groups"
+    end
+ 
+    assert_redirected_to "/bp_pic_groups"
+  end
 end
