@@ -81,16 +81,8 @@ class BpPicGroupsController < ApplicationController
   def update
     @bp_pic_group = BpPicGroup.find(params[:id])
     
-    if src_id = params[:src_id]
-      params[:back_to] = bp_pic_groups_path
-      source_group = BpPicGroup.find(src_id)
-      @bp_pic_group.bp_pic_group_name = "#{source_group.bp_pic_group_name}"
-      @bp_pic_group.memo = source_group.memo
-    end
-
     respond_to do |format|
       begin
-        @bp_pic_group.create_clone_group(src_id) unless src_id.blank?
         @bp_pic_group.update_attributes!(params[:bp_pic_group])
         format.html { redirect_to back_to, notice: 'Bp pic group was successfully updated.' }
         format.json { head :no_content }
