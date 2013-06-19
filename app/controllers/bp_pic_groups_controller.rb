@@ -30,7 +30,14 @@ class BpPicGroupsController < ApplicationController
   # GET /bp_pic_groups/new.json
   def new
     @bp_pic_group = BpPicGroup.new
-
+    
+    # コピーして新規作成
+    if src_id = params[:src_id]
+      source_group = BpPicGroup.find(src_id)
+      @bp_pic_group.bp_pic_group_name = source_group.bp_pic_group_name
+      @bp_pic_group.memo = source_group.memo
+    end
+    
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @bp_pic_group }
@@ -50,11 +57,16 @@ class BpPicGroupsController < ApplicationController
   # POST /bp_pic_groups.json
   def create
     @bp_pic_group = BpPicGroup.new(params[:bp_pic_group])
-
+    source_group_id = params[:src_id]
+    
     respond_to do |format|
       begin
         set_user_column(@bp_pic_group)
         @bp_pic_group.save!
+        
+        # params[:src_id]があった場合、グループのコピーとみなす
+        @bp_pic_group.create_clone_group(source_group_id) unless source_group_id.nil?
+        
         format.html { redirect_to back_to, notice: 'Bp pic group was successfully created.' }
         format.json { render json: @bp_pic_group, status: :created, location: @bp_pic_group }
       rescue ActiveRecord::RecordInvalid
@@ -68,9 +80,17 @@ class BpPicGroupsController < ApplicationController
   # PUT /bp_pic_groups/1.json
   def update
     @bp_pic_group = BpPicGroup.find(params[:id])
+    
+    if src_id = params[:src_id]
+      params[:back_to] = bp_pic_groups_path
+      source_group = BpPicGroup.find(src_id)
+      @bp_pic_group.bp_pic_group_name = "#{source_group.bp_pic_group_name}"
+      @bp_pic_group.memo = source_group.memo
+    end
 
     respond_to do |format|
       begin
+        @bp_pic_group.create_clone_group(src_id) unless src_id.blank?
         @bp_pic_group.update_attributes!(params[:bp_pic_group])
         format.html { redirect_to back_to, notice: 'Bp pic group was successfully updated.' }
         format.json { head :no_content }
@@ -149,6 +169,6 @@ class BpPicGroupsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to bp_pic_groups_path }
     end
-    
   end
+
 end

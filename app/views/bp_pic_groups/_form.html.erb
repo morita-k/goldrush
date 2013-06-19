@@ -1,5 +1,7 @@
 <%= form_for(@bp_pic_group) do |f| %>
 <%= back_to_field_tag %>
+<% source_group_id = params[:src_id] %>
+<%= hidden_field_tag('src_id', source_group_id) unless source_group_id.nil? %>
 <%= f.hidden_field :lock_version %>
   <% if @bp_pic_group.errors.any? %>
     <div id="error_explanation">

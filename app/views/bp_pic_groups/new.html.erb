@@ -1,4 +1,13 @@
-<h1><%= getLongName('table_name','bp_pic_groups')%> の新規作成</h1>
+<% if @bp_pic_group.bp_pic_group_name.nil? %>
+  <h1><%= getLongName('table_name','bp_pic_groups')%> の新規作成</h1>
+<% else %>
+  <h1><%= @bp_pic_group.bp_pic_group_name %> からコピーして新規作成</h1>
+  
+  <% unless @bp_pic_group.bp_pic_group_name.nil? %>
+    <% @bp_pic_group.add_copy_string %>
+  <% end %>
+
+<% end %>
 
 <%= render 'form' %>
 
