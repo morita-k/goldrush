@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 class BpPicGroup < ActiveRecord::Base
   has_many :bp_pic_group_details, :conditions => "bp_pic_group_details.deleted = 0"
   attr_accessible :bp_pic_group_name, :memo, :lock_version
@@ -14,7 +15,7 @@ class BpPicGroup < ActiveRecord::Base
   end
   
   def add_copy_string
-    self.bp_pic_group_name += "no copy"
+    self.bp_pic_group_name += "のコピー"
   end
   
   def create_clone_group(source_group_id)
