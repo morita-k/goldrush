@@ -15,7 +15,9 @@ class BpPicGroup < ActiveRecord::Base
   end
   
   def add_copy_string
-    self.bp_pic_group_name += "のコピー"
+    unless self.bp_pic_group_name =~ /.+(のコピー)$/
+      self.bp_pic_group_name += "のコピー"
+    end
   end
   
   def create_clone_group(source_group_id)
