@@ -87,6 +87,11 @@
   <td><%=h @approach_down_contract_term.payment_sight_type %></td>
 </tr>
 <tr>
+  <th><%= getLongName('contract_terms', 'contract_start_date') %></th>
+  <td><%=h @approach_upper_contract_term.contract_start_date %></td>
+  <td><%=h @approach_down_contract_term.contract_start_date %></td>
+</tr>
+<tr>
   <th><%= getLongName('contract_terms', 'contract_end_date') %></th>
   <td><%=h @approach_upper_contract_term.contract_end_date %></td>
   <td><%=h @approach_down_contract_term.contract_end_date %></td>

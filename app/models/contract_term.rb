@@ -3,6 +3,8 @@ class ContractTerm < ActiveRecord::Base
 
   has_many :approaches, :conditions => ["approaches.deleted = 0"]
   
+  validates_presence_of     :payment
+
   def payment_view=(x)
     self.payment = x.to_f * 10000
   end

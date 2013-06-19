@@ -21,7 +21,7 @@
   <th colspan=2>単価差額</th><td colspan=2><%=h (@upper_contract_term.payment_view - @down_contract_term.payment_view) %>万円</td>
 </tr>
 <tr>
-  <th rowspan=17>契約上下流契約条件</th>
+  <th rowspan=18>契約上下流契約条件</th>
   <th></th>
   <th>契約上流契約条件</th>
   <th>契約下流契約条件</th>
@@ -85,6 +85,11 @@
   <th><%= getLongName('contract_terms', 'contract_end_date') %></th>
   <td><%=h @upper_contract_term.contract_end_date %></td>
   <td><%=h @down_contract_term.contract_end_date %></td>
+</tr>
+<tr>
+  <th><%= getLongName('contract_terms', 'contract_start_date') %></th>
+  <td><%=h @upper_contract_term.contract_start_date %></td>
+  <td><%=h @down_contract_term.contract_start_date %></td>
 </tr>
 <tr>
   <th><%= getLongName('contract_terms', 'contract_renewal_unit') %></th>
