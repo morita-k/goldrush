@@ -21,15 +21,15 @@
   <th colspan=2>単価差額</th><td colspan=2><%=h (@approach_upper_contract_term.payment_view - @approach_down_contract_term.payment_view) %>万円</td>
 </tr>
 <tr>
-  <th rowspan=18>提案上下流契約条件</th>
+  <th rowspan=20>提案上下流契約条件</th>
   <th></th>
   <th>提案上流契約条件</th>
   <th>提案下流契約条件</th>
 </tr>
 <tr>
   <th><%= getLongName('contract_terms', 'term_type') %></th>
-  <td><%=h @approach_upper_contract_term.term_type %></td>
-  <td><%=h @approach_down_contract_term.term_type %></td>
+  <td><%=h @approach_upper_contract_term.term_type_name%></td>
+  <td><%=h @approach_down_contract_term.term_type_name%></td>
 </tr>
 <tr>
   <th><%= getLongName('contract_terms', 'payment') %></th>
@@ -37,7 +37,12 @@
   <td><%=h @approach_down_contract_term.payment_view %>万円</td>
 </tr>
 <tr>
-  <th><%= getLongName('contract_terms', 'time_adjust_flg') %></th>
+  <th><%= getLongName('contract_terms', 'tax_type') %></th>
+  <td><%=h (@approach_upper_contract_term.tax_type) %></td>
+  <td><%=h (@approach_down_contract_term.tax_type) %></td>
+</tr>
+<tr>
+  <th><%= getLongName('contract_terms', 'time_adjust_type') %></th>
   <td><%=h (@approach_upper_contract_term.time_adjust_type) %></td>
   <td><%=h (@approach_down_contract_term.time_adjust_type) %></td>
 </tr>
@@ -58,8 +63,8 @@
 </tr>
 <tr>
   <th><%= getLongName('contract_terms', 'time_adjust_base_type') %></th>
-  <td><%=h @approach_upper_contract_term.time_adjust_base_type %></td>
-  <td><%=h @approach_down_contract_term.time_adjust_base_type %></td>
+  <td><%=h @approach_upper_contract_term.time_adjust_base_type_name%></td>
+  <td><%=h @approach_down_contract_term.time_adjust_base_type_name%></td>
 </tr>
 <tr>
   <th><%= getLongName('contract_terms', 'over_time_payment') %></th>
@@ -78,13 +83,13 @@
 </tr>
 <tr>
   <th><%= getLongName('contract_terms', 'cutoff_date_type') %></th>
-  <td><%=h @approach_upper_contract_term.cutoff_date_type %></td>
-  <td><%=h @approach_down_contract_term.cutoff_date_type %></td>
+  <td><%=h @approach_upper_contract_term.cutoff_date_type_name%></td>
+  <td><%=h @approach_down_contract_term.cutoff_date_type_name%></td>
 </tr>
 <tr>
   <th><%= getLongName('contract_terms', 'payment_sight_type') %></th>
-  <td><%=h @approach_upper_contract_term.payment_sight_type %></td>
-  <td><%=h @approach_down_contract_term.payment_sight_type %></td>
+  <td><%=h @approach_upper_contract_term.payment_sight_type_name%></td>
+  <td><%=h @approach_down_contract_term.payment_sight_type_name%></td>
 </tr>
 <tr>
   <th><%= getLongName('contract_terms', 'contract_start_date') %></th>
@@ -113,12 +118,12 @@
 </tr>
 <tr>
   <th><%= getLongName('contract_terms', 'memo') %></th>
-  <td><%=h @approach_upper_contract_term.memo %></td>
-  <td><%=h @approach_down_contract_term.memo %></td>
+  <td><%=simple_format @approach_upper_contract_term.memo %></td>
+  <td><%=simple_format @approach_down_contract_term.memo %></td>
 </tr>
 
 <tr>
-  <th colspan=2><%= getLongName('approaches', 'memo') %></th><td colspan=2><%=h @approach.memo %></td>
+  <th colspan=2><%= getLongName('approaches', 'memo') %></th><td colspan=2><%=simple_format @approach.memo %></td>
 </tr>
 </table>
 <%= link_to '編集', :action => 'edit', :id => @approach, :biz_offer_id => @biz_offer %> |

@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
 class ContractTerm < ActiveRecord::Base
+  include AutoTypeName
 
   has_many :approaches, :conditions => ["approaches.deleted = 0"]
   

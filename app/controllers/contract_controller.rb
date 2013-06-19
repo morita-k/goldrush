@@ -198,6 +198,7 @@ private
     contract.down_contract_term.other_terms = contract.upper_contract_term.other_terms
 
     contract.approach.approached_at = contract.closed_at
+    contract.approach.approach_pic_id = contract.contract_pic_id
 
     contract.approach.approach_upper_contract_term.term_type = contract.upper_contract_term.term_type
     contract.approach.approach_upper_contract_term.payment = contract.upper_contract_term.payment
@@ -238,6 +239,8 @@ private
     contract.approach.approach_down_contract_term.other_terms = contract.upper_contract_term.other_terms
 
     contract.approach.biz_offer.biz_offered_at = contract.closed_at
+    contract.approach.biz_offer.contact_pic_id = contract.contract_pic_id
+    contract.approach.biz_offer.sales_pic_id = contract.contract_pic_id
 
     contract.approach.biz_offer.business.issue_datetime = contract.closed_at
     contract.approach.biz_offer.business.term_type = contract.upper_contract_term.term_type
