@@ -64,7 +64,7 @@ class BpPicController < ApplicationController
     # 検索条件を処理
     cond, incl = make_conditions
     @bp_pics = BpPic.includes(incl).where(cond).order("bp_pics.updated_at desc").page(params[:page]).per(current_user.per_page)
-    if params[:callback].blank?
+    if params[:popup] && params[:callback].blank?
       flash[:warning] = 'ポップアップのパラメータが不正です'
     end
   end
