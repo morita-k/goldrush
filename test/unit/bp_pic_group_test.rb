@@ -18,11 +18,13 @@ class BpPicGroupTest < ActiveSupport::TestCase
   
   test "create clone bp_pic_group" do
 	  	clone = BpPicGroup.new(bp_pic_group_name: "test_group")
-	  	clone.save!
 	  	
-	  	clone.create_clone_group(1)
-	  	assert_equal(2, BpPicGroupDetail.count)
-	  	assert(!BpPicGroupDetail.where(id: clone.id).blank?)
+	  	assert_difference('BpPicGroupDetail.count') do
+		  	clone.save!
+		  	clone.create_clone_group(1)
+	  	end
+	  		
+	  	assert(!BpPicGroupDetail.where(bp_pic_group_id: clone.id).blank?)
   end
   
 end
