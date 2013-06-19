@@ -103,7 +103,6 @@ class ImportMailController < ApplicationController
                               .page(params[:page])
                               .per(current_user.per_page)
                               .order("id desc")
-    @major_words = SysConfig.get_skill_major_words
 =begin    
     @mail_registered_to = {}
     @import_mails.each do |mail|
@@ -153,7 +152,6 @@ class ImportMailController < ApplicationController
     @biz_offers = BizOffer.find(:all, :conditions => ["deleted = 0 and import_mail_id = ?", params[:id]])
     @bp_members = BpMember.find(:all, :conditions => ["deleted = 0 and import_mail_id = ?", params[:id]])
     @attachment_files = AttachmentFile.find(:all, :conditions => ["deleted = 0 and parent_table_name = 'import_mails' and parent_id = ?", @import_mail.id])
-    @major_words = SysConfig.get_skill_major_words
   end
 
   def new
