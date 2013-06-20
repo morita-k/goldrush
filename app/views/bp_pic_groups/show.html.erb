@@ -11,6 +11,7 @@
   <h1><%= getLongName('table_name','bp_pic_groups')%> 確認</h1>
   <%= render 'bp_pic_groups/show_table' %>
   <%= back_to_link 'グループ名とメモの編集', {:action => :edit, :id => @bp_pic_group.id} %> |
+  <%= link_to 'グループをコピー', {action: :new, src_id: @bp_pic_group.id, back_to: back_to} %> |
   <%= link_to 'グループを削除', {:action => :destroy, :id => @bp_pic_group.id, :authenticity_token => form_authenticity_token}, method: :delete, data: { confirm: '削除します。よろしいですか?' } %> |
   <%= link_or_back '戻る', bp_pic_groups_path %>
   <hr />

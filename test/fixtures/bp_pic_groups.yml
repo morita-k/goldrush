@@ -2,7 +2,7 @@ bp_pic_groups_1:
   id: 1
   owner_id: 
   bp_pic_group_name: "テストグループ"
-  memo: ""
+  memo: "メモ"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
