@@ -10,6 +10,16 @@ class Interview < ActiveRecord::Base
   belongs_to :approach
   belongs_to :interview_pic, :class_name => 'User'
   
+  before_save :derive_business_partner
+
+  def derive_business_partner
+    if interview_bp_pic
+      if interview_bp_id.blank? || interview_bp_id != bp_pic.business_partner_id
+        self.interview_bp_id = interview_bp_pic.business_partner_id
+      end
+    end
+  end
+
   def after_initialize 
     init_actions([
       [:interview_waiting, :result_waiting, :interview],

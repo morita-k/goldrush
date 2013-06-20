@@ -11,6 +11,8 @@ class Contract < ActiveRecord::Base
   belongs_to :contract_pic, :class_name => 'User'
   belongs_to :approach
 
+  validates_presence_of     :closed_at, :contract_pic_id, :start_date
+
   def make_contract_proc(str)
     return ->(a){
       if ["contracted"].include?(attributes["#{str}_contract_status_type"])

@@ -1,0 +1,156 @@
+<%= error_messages_for 'contract', 'business', 'human_resource', 'bp_member', 'biz_offer', 'approach', 'upper_contract_term', 'down_contract_term' %>
+
+<!--[form:contract]-->
+<%#= hidden_field 'contract', 'approach_id' %>
+<%#= hidden_field 'contract', 'upper_contract_term_id' %>
+<%#= hidden_field 'contract', 'down_contract_term_id' %>
+<table class="input_table">
+<tr>
+  <th><label for="contract_contract_status_type"><%=getLongName('contracts','contract_status_type')%></label></th>
+  <td><%= @contract.contract_status_type_name  %></td>
+</tr>
+<tr>
+  <th><label for="contract_upper_contract_status_type"><%=getLongName('contracts','upper_contract_status_type')%></label></th>
+  <td><%= @contract.upper_contract_status_type_name  %></td>
+</tr>
+<tr>
+  <th><label for="contract_down_contract_status_type"><%=getLongName('contracts','down_contract_status_type')%></label></th>
+  <td><%= @contract.down_contract_status_type_name  %></td>
+</tr>
+<tr>
+  <th><label for="contract_closed_at"><%=getLongName('contracts','closed_at')%>(*)</label></th>
+  <td><%= date_field 'contract', 'closed_at' %>
+      <%= select_tag 'closed_at_hour', options_for_select((0..23).to_a.map{|x| sprintf("%0.2d", x)}, sprintf("%0.2d", @closed_at_hour.to_i)) %> : 
+      <%= select_tag 'closed_at_minute', options_for_select((0..5).to_a.map{|x| sprintf("%0.2d", x * 10)}, sprintf("%0.2d", @closed_at_min.to_i)) %></td>
+</tr>
+<tr>
+  <th><label for="contract_contract_pic_name">契約担当(*)</label></th>
+  <td><%= text_field_tag 'contract_pic_name', @contract.contract_pic.blank? ? "" : @contract.contract_pic.employee.employee_name, :readOnly => true, :style => "background-color: silver;", :size => 30 %>
+    <input type=button value='...' onClick="disp_wide('<%=url_for :controller => 'employee', :action => 'list', :popup =>1, :mode => 'Contract' %>');return false;" />
+    <input type=button value='クリア' onClick="clearContractUser();return false;" />
+    <%= hidden_field 'contract', 'contract_pic_id' %></td>
+</tr>
+<tr>
+  <th><label for="contract_start_date"><%=getLongName('contracts','start_date')%>(*)</label></th>
+  <td><%= date_field 'contract', 'start_date' %></td>
+</tr>
+<tr>
+  <th><label for="contract_memo"><%=getLongName('contracts','memo')%></label></th>
+  <td><%= resizable_area 'contract', 'memo' %></td>
+</tr>
+</table>
+
+<h2>契約上流契約条件</h2>
+<%= render :partial => 'contract_term/form_inc', :locals => {:contract_term => @contract.upper_contract_term, :model_name => 'upper_contract_term'} %>
+<!--[eoform:contract]-->
+
+
+<h2>契約下流契約条件</h2>
+<% model_name = 'down_contract_term' %>
+<table class="input_table">
+<tr>
+<th><label for="<%=model_name%>_payment"><%=getLongName('contract_terms','payment')%></label></th>
+<td><%= text_field model_name, 'payment_view', :size => 6 %>万円</td>
+</tr>
+</table>
+
+<h2>照会</h2>
+<table class="input_table">
+<tr>
+  <th><label for="upper_business_partner_name">上流取引先</label></th>
+  <td><%= text_field_tag 'upper_business_partner_name', @biz_offer.business_partner.blank? ? "" : @biz_offer.business_partner.business_partner_name, :readOnly => true, :style => "background-color: silver;", :size => 30 %></td>
+</tr>
+<tr>
+  <th><label for="bp_pic_name">上流取引先担当</label></th>
+  <td>
+    <%= text_field_tag 'bp_pic_name', @biz_offer.bp_pic.blank? ? "" : @biz_offer.bp_pic.bp_pic_name, :readOnly => true, :style => "background-color: silver;", :size => 30 %>
+    <input type=button value='...' onClick="disp_wide('<%=url_for_bp_pic_popup%>');return false;" />
+    <input type=button value='クリア' onClick="clearBpPic();return false;" />
+    <%= hidden_field 'biz_offer', 'bp_pic_id' %>
+  </td>
+</tr>
+</table>
+
+<h2>案件</h2>
+<table class="input_table">
+<tr>
+  <th><label for="eubp_name">エンド取引先</label></th>
+  <td><%= text_field_tag 'eubp_name', @business.eubp.blank? ? "" : @business.eubp.business_partner_name, :readOnly => true, :style => "background-color: silver;", :size => 30 %></td>
+</tr>
+<th><label for="eubp_pic_name">エンド取引先担当</label></th><td><%= text_field_tag 'eubp_pic_name', @business.eubp_pic.blank? ? "" : @business.eubp_pic.bp_pic_name, :readOnly => true, :style => "background-color: silver;", :size => 30 %>
+  <input type=button value='...' onClick="disp_wide('<%=url_for_bp_pic_popup :setEuBpPic%>');return false;" />
+  <input type=button value='クリア' onClick="clearEuBpPic();return false;" />
+  <%= hidden_field 'business', 'eubp_pic_id' %></td>
+</tr>
+<tr>
+<th><label for="business_business_title"><%=getLongName('businesses','business_title')%>(*)</label></th><td><%= text_field 'business', 'business_title'  %></td>
+</tr>
+</table>
+
+<h2><%=getLongName('table_name','bp_members')%>選択</h2>
+<table class="show_table">
+<tr>
+  <th><label for="human_resource_name"><%=getLongName('human_resources','human_resource_name')%></label></th>
+  <td><%= text_field_tag 'human_resource_name', @bp_member && @bp_member.human_resource_name, :readOnly => true, :style => "background-color: silver;", :size => 30 %>
+    <input type=button value='...' onClick="disp_wide('<%=url_for :controller => 'bp_member', :action => 'list', :popup =>1 %>');return false;" />
+    <input type=button value='クリア' onClick="clearBpMember();return false;" />
+    <%= hidden_field 'approach', 'bp_member_id' %>
+  </td>
+</tr>
+<tr>
+<th><label for="business_partner_name">下流<%=getLongName('business_partners','business_partner_name')%></label></th><td><%= text_field_tag 'business_partner_name', @bp_member && @bp_member.business_partner.business_partner_name, :readOnly => true, :style => "background-color: silver;", :size => 30 %>
+</td>
+</tr>
+</table>
+
+<script type="text/javascript">
+<!--
+document.setContractUser = function(user){
+    document.getElementById("contract_contract_pic_id").value = user.pic_id;
+    document.getElementById("contract_pic_name").value = user.pic_name;
+}
+
+function clearContractUser(){
+    document.getElementById("contract_contract_pic_id").value = "";
+    document.getElementById("contract_pic_name").value = "";
+}
+
+document.setBpPic = function(bp_pic){
+    document.getElementById("upper_business_partner_name").value = bp_pic.business_partner_name;
+    document.getElementById("biz_offer_bp_pic_id").value = bp_pic.id;
+    document.getElementById("bp_pic_name").value = bp_pic.bp_pic_name;
+}
+
+function clearBpPic(){
+    document.getElementById("upper_business_partner_name").value = "";
+    document.getElementById("biz_offer_bp_pic_id").value = "";
+    document.getElementById("bp_pic_name").value = "";
+}
+
+document.setEuBpPic = function(bp_pic){
+    document.getElementById("eubp_name").value = bp_pic.business_partner_name;
+    document.getElementById("business_eubp_pic_id").value = bp_pic.id;
+    document.getElementById("eubp_pic_name").value = bp_pic.bp_pic_name;
+}
+
+function clearEuBpPic(){
+    document.getElementById("business_eubp_pic_id").value = "";
+    document.getElementById("eubp_pic_name").value = "";
+}
+
+document.setBpMember = function(bp_member){
+    document.getElementById("approach_bp_member_id").value = bp_member.bp_member_id;
+    document.getElementById("business_partner_name").value = bp_member.business_partner_name;
+    document.getElementById("human_resource_name").value = bp_member.human_resource_name;
+}
+
+function clearBpMember(){
+    document.getElementById("approach_bp_member_id").value = "";
+    document.getElementById("business_partner_name").value = "";
+    document.getElementById("human_resource_name").value = "";
+}
+
+// -->
+</script>
+
+

@@ -13,6 +13,8 @@ class Approach < ActiveRecord::Base
   has_many :interviews, :conditions => ["interviews.deleted = 0"]
   has_one :contract
   
+  validates_presence_of     :biz_offer_id, :bp_member_id
+
   def after_initialize 
     init_actions([
       [:approaching, :adjust, :want],
