@@ -32,7 +32,7 @@
 <%= select model_name, 'payment_sight_type', getTypes('payment_sight_type')  %>
 </p>
 
-<p><label for="contract_term_contract_end_date"><%=getLongName('contract_terms','contract_end_date')%></label><br /><%= date_field 'contract_term', 'contract_end_date'  %></p>
+<p><label for="contract_term_contract_start_date"><%=getLongName('contract_terms','contract_start_date')%></label><br /><%= date_field 'contract_term', 'contract_startdate'  %></p>
 
 <p><label for="contract_term_contract_renewal_unit"><%=getLongName('contract_terms','contract_renewal_unit')%></label><br /><%= text_field 'contract_term', 'contract_renewal_unit'  %></p>
 

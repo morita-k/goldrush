@@ -46,12 +46,15 @@ var BpPicForm = (function(){
   return klass;
 })();
 
+
 function openBpPicList(url) {
+  alert("openBpPicList was deprecated!");
   var bp_id = document.busines_pertner.getId();
   if ( bp_id != ""){ disp_wide(url + '&id=' + bp_id ); }
 }
 
 document.setBp = function(bp) {
+  alert("setBp was deprecated!");
   document.busines_pertner.setId( bp.id );
   document.busines_pertner.setName( bp.business_partner_name );
   document.bp_pic.setId( "" );
@@ -59,6 +62,7 @@ document.setBp = function(bp) {
 }
 
 function clearBp(){
+  alert("clearBp was deprecated!");
   document.busines_pertner.setId( "" );
   document.busines_pertner.setName( "" );
   document.bp_pic.setId( "" );
@@ -66,11 +70,13 @@ function clearBp(){
 }
 
 document.setBpPic = function(bp_pic){
+  alert("setBpPic was deprecated!");
   document.bp_pic.setId( bp_pic.id );
   document.bp_pic.setName( bp_pic.bp_pic_name );
 }
 
 function clearBpPic(){
+  alert("clearBpPic was deprecated!");
   document.bp_pic.setId( "" );
   document.bp_pic.setName( "" );
 }

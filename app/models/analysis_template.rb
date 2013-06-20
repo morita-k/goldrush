@@ -2,12 +2,22 @@
 class AnalysisTemplate < ActiveRecord::Base
   include AutoTypeName
 
-  validates_presence_of :analysis_template_name
+  validates_presence_of :analysis_template_name, :bp_pic_id
   
   belongs_to :business_partner
   belongs_to :bp_pic
   has_many :analysis_template_items, :conditions => ["analysis_template_items.deleted = 0"]
-  
+
+  before_save :derive_business_partner
+
+  def derive_business_partner
+    if bp_pic
+      if business_partner_id.blank? || business_partner_id != bp_pic.business_partner_id
+        self.business_partner_id = bp_pic.business_partner_id
+      end
+    end
+  end
+
   #
   # メール解析処理のメイン
   # 考え方:
