@@ -220,7 +220,7 @@ private
     contract.approach.approach_upper_contract_term.other_terms = contract.upper_contract_term.other_terms
 
     contract.approach.approach_down_contract_term.term_type = contract.upper_contract_term.term_type
-    contract.approach.approach_down_contract_term.payment = contract.upper_contract_term.payment
+    contract.approach.approach_down_contract_term.payment = contract.down_contract_term.payment # ここだけ下流
     contract.approach.approach_down_contract_term.tax_type = contract.upper_contract_term.tax_type
     contract.approach.approach_down_contract_term.time_adjust_type = contract.upper_contract_term.time_adjust_type
     contract.approach.approach_down_contract_term.time_adjust_upper = contract.upper_contract_term.time_adjust_upper
