@@ -16,7 +16,7 @@ class HumanResource < ActiveRecord::Base
       [:approached, :sales, :reject_interview],
       [:approached, :waiting, :get_job],
       [:waiting, :working, :start_work],
-      [:working, :sales, :finish],
+      [:working, :sales, :exit],
       [:unknown, :sales, :check_status],
       [:unknown, :approached, :approach],
     ])

@@ -26,6 +26,9 @@
   </td>
 </tr>
 <tr>
+<th><label for="biz_offer_biz_offer_status_type"><%=getLongName('biz_offers','biz_offer_status_type')%></label></th><td><%= select 'biz_offer', 'biz_offer_status_type', getTypes('biz_offer_status_type')  %></td>
+</tr>
+<tr>
 <th><label for="biz_offer_biz_offered_at"><%=getLongName('biz_offers','biz_offered_at')%></label></th><td><%= date_field 'biz_offer', 'biz_offered_at' %>
 <%= select_tag 'biz_offered_at_hour', options_for_select((0..23).to_a.map{|x| sprintf("%0.2d", x)}, sprintf("%0.2d", @biz_offered_at_hour.to_i)) %> : 
 <%= select_tag 'biz_offered_at_minute', options_for_select((0..5).to_a.map{|x| sprintf("%0.2d", x * 10)}, sprintf("%0.2d", @biz_offered_at_min.to_i)) %>

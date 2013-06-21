@@ -12,6 +12,7 @@ class Approach < ActiveRecord::Base
   belongs_to :approach_pic, :class_name => 'User'
   has_many :interviews, :conditions => ["interviews.deleted = 0"]
   has_one :contract
+  has_many :contracts, :conditions => ["contracts.deleted = 0"], :order => "id"
   
   validates_presence_of     :biz_offer_id, :bp_member_id
 

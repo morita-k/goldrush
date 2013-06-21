@@ -49,7 +49,7 @@
   <tr>
     <td rowspan=2><%=h contract.id %></td>
 
-    <td rowspan=2><%=back_to_link contract.approach.bp_member.human_resource.useful_name, :action => :show, :id => contract %></td>
+    <td rowspan=2><%=back_to_link contract.approach.bp_member.human_resource.useful_name, :controller => :approach, :action => :show, :id => contract.approach %></td>
 
     <td rowspan=2><%=h contract.contract_pic.employee.employee_short_name %></td>
 

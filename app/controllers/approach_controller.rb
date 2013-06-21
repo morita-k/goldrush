@@ -180,7 +180,7 @@ class ApproachController < ApplicationController
       @approach.approach_down_contract_term.save!
     end
     flash[:notice] = 'Approach was successfully updated.'
-    redirect_to :action => 'show', :id => @approach
+    redirect_to(back_to || {:action => 'show', :id => @approach})
   rescue ActiveRecord::RecordInvalid
     render :action => 'edit'
   end

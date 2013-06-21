@@ -43,7 +43,6 @@ class ContractController < ApplicationController
   end
 
   def new
-    @calendar = true
     @contract = Contract.new
     @contract.closed_at = Date.today
     @closed_at_hour = Time.new.hour
@@ -57,7 +56,6 @@ class ContractController < ApplicationController
   end
 
   def create
-    @calendar = true
     Contract.transaction do
       @contract = Contract.new(params[:contract])
       @contract.upper_contract_term = ContractTerm.new(params[:upper_contract_term])
@@ -84,22 +82,17 @@ class ContractController < ApplicationController
   end
 
   def edit
-    @calendar = true
     @contract = Contract.find(params[:id])
-    @closed_at_hour = @contract.closed_at.hour
-    @closed_at_min = (@contract.closed_at.min / 10) * 10
-    @contracted_at_hour = @contract.contracted_at && @contract.contracted_at.hour
-    @contracted_at_min = @contract.contracted_at && (@contract.contracted_at.min / 10) * 10
-    @contract.setup_closed_at(current_user.zone_now)
+    @contract.setup_closed_at(@contract.closed_at)
+    @contract.setup_contracted_at(@contract.contracted_at)
   end
 
   def update
-    @calendar = true
     Contract.transaction do
       @contract = Contract.find(params[:id], :conditions =>["deleted = 0"])
-      @contract.upper_contract_term = ContractTerm.find(@contract.upper_contract_term, :conditions =>["deleted = 0"])
-      @contract.down_contract_term = ContractTerm.find(@contract.down_contract_term, :conditions =>["deleted = 0"])
       @contract.attributes = params[:contract]
+      @contract.perse_closed_at(current_user)
+      @contract.perse_contracted_at(current_user)
       @contract.upper_contract_term.attributes = params[:upper_contract_term]
       @contract.down_contract_term.attributes = params[:down_contract_term]
       set_user_column @contract
@@ -131,6 +124,15 @@ class ContractController < ApplicationController
     @contract.save!
     
     redirect_to :action => 'list'
+  end
+
+  def do_action
+    @contract = Contract.find(params[:id], :conditions =>["deleted = 0"])
+    @contract.do_action(params[:a].to_sym, params[:type].to_sym)
+    set_user_column @contract
+    @contract.save!
+    
+    redirect_to back_to
   end
 
 private

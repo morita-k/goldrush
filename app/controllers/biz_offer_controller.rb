@@ -169,7 +169,7 @@ class BizOfferController < ApplicationController
       @biz_offer.save!
     end
     flash[:notice] = 'BizOffer was successfully updated.'
-    redirect_to back_to || {:action => 'show', :id => @biz_offer}
+    redirect_to(back_to || {:action => 'show', :id => @biz_offer})
   rescue ActiveRecord::RecordInvalid
     render :action => 'edit'
   end

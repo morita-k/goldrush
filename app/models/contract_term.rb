@@ -4,7 +4,7 @@ class ContractTerm < ActiveRecord::Base
 
   has_many :approaches, :conditions => ["approaches.deleted = 0"]
   
-  validates_presence_of     :payment
+  validates_presence_of     :payment, :contract_start_date, :contract_end_date
 
   def cutoff_and_sight
     "#{cutoff_date_type_name}締め#{payment_sight_type_name}払い"

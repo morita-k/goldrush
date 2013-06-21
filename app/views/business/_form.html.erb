@@ -13,6 +13,9 @@
   <%= hidden_field 'business', 'eubp_pic_id' %></td>
 </tr>
 <tr>
+<th><label for="business_business_status_type"><%=getLongName('businesses','business_status_type')%></label></th><td><%= select 'business', 'business_status_type', getTypes('business_status_type')  %></td>
+</tr>
+<tr>
 <th><label for="business_issue_datetime"><%=getLongName('businesses','issue_datetime')%></label></th><td><%= date_field 'business', 'issue_datetime' %>
 <%= select_tag 'issue_datetime_hour', options_for_select((0..23).to_a.map{|x| sprintf("%0.2d", x)}, sprintf("%0.2d", @issue_datetime_hour.to_i)) %> : 
 <%= select_tag 'issue_datetime_minute', options_for_select((0..5).to_a.map{|x| sprintf("%0.2d", x * 10)}, sprintf("%0.2d", @issue_datetime_min.to_i)) %>

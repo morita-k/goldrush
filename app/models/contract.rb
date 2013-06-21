@@ -3,7 +3,7 @@ class Contract < ActiveRecord::Base
   include AutoTypeName
   include BusinessFlow
   
-  attr_accessor :closed_at_date, :closed_at_hour, :closed_at_minute
+  attr_accessor :closed_at_date, :closed_at_hour, :closed_at_minute, :contracted_at_date, :contracted_at_hour, :contracted_at_minute
   after_initialize :after_initialize
 
   has_many :interviews, :conditions => ["interviews.deleted = 0"]
@@ -62,6 +62,21 @@ class Contract < ActiveRecord::Base
   def perse_closed_at(user)
     unless closed_at_date.blank? || closed_at_hour.blank? || closed_at_minute.blank?
       self.closed_at = user.zone_parse("#{closed_at_date} #{closed_at_hour}:#{closed_at_minute}:00")
+    end
+  end
+
+  def setup_contracted_at(zone_now)
+    if zone_now
+      date, hour, min = DateTimeUtil.split_date_hour_minute(zone_now)
+      self.contracted_at_date = date
+      self.contracted_at_hour = hour
+      self.contracted_at_minute = min
+    end
+  end
+
+  def perse_contracted_at(user)
+    unless contracted_at_date.blank? || contracted_at_hour.blank? || contracted_at_minute.blank?
+      self.contracted_at = user.zone_parse("#{contracted_at_date} #{contracted_at_hour}:#{contracted_at_minute}:00")
     end
   end
 

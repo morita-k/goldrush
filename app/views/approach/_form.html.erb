@@ -7,7 +7,7 @@
     <th><label><%=getLongName('businesses','business_title')%></label></th><td><%=h @business.business_title %></td>
   </tr>
   <tr>
-    <th><label><%=getLongName('businesses','business_status_type')%></label></th><td><%=h @business.business_status_type %></td>
+    <th><label><%=getLongName('businesses','business_status_type')%></label></th><td><%=h @business.business_status_type_name %></td>
   </tr>
   <tr>
     <th><label>EU取引先</label></th><td><%=h @business.eubp.blank? ? "" : @business.eubp.business_partner_name %></td>
@@ -58,6 +58,9 @@
 </td>
 </tr>
 <tr>
+<th><label for="approach_approach_status_type"><%=getLongName('approaches','approach_status_type')%></label></th><td><%= select 'approach', 'approach_status_type', getTypes('approach_status_type')  %></td>
+</tr>
+<tr>
 <th><label for="approach_approach_start_date"><%=getLongName('approaches','approach_start_date')%></label></th><td><%= date_field 'approach', 'approach_start_date'  %></td>
 </tr>
 <tr>
@@ -71,17 +74,10 @@
 <!--[eoform:approach]-->
 
 
-<h2>提案上流契約条件</h2>
-<!--[form:contract_term]-->
-  <%= render :partial => 'contract_term/form_inc', :locals => {:contract_term => @approach.approach_upper_contract_term, :model_name => 'approach_upper_contract_term'} %>
-<!--[eoform:contract_term]-->
-
-
-<h2>提案下流契約条件</h2>
-<!--[form:contract_term]-->
-  <%= render :partial => 'contract_term/form_inc', :locals => {:contract_term => @approach.approach_down_contract_term, :model_name => 'approach_down_contract_term'} %>
-<!--[eoform:contract_term]-->
-
+<h2>提案契約契約条件</h2>
+<table class="show_table">
+  <%= render :partial => 'contract_term/form_inc_2col', :locals => {:upper_contract_term => @approach.approach_upper_contract_term, :down_contract_term => @approach.approach_down_contract_term, :upper_model_name => 'approach_upper_contract_term', :down_model_name => 'approach_down_contract_term', :contract => nil} %>
+</table>
 
 <%= hidden_field_tag 'business_id' %>
 <%= hidden_field 'approach', 'biz_offer_id' %>
