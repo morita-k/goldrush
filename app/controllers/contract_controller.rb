@@ -24,6 +24,7 @@ class ContractController < ApplicationController
     contract_objects_new
     init_values(@contract)
     init_copies(@contract)
+    @contract.setup_closed_at(current_user.zone_now)
   end
 
   def quick_create
@@ -37,6 +38,8 @@ class ContractController < ApplicationController
       flash[:notice] = 'Contract was successfully created.'
       redirect_to :controller => :contract, :action => :list
     end # transaction
+  rescue ActiveRecord::RecordInvalid
+    render :action => 'quick_new'
   end
 
   def new
@@ -50,6 +53,7 @@ class ContractController < ApplicationController
     @contracted_at_min = (Time.new.min / 10) * 10
     @contract.upper_contract_term = ContractTerm.new
     @contract.down_contract_term = ContractTerm.new
+    @contract.setup_closed_at(current_user.zone_now)
   end
 
   def create
@@ -68,7 +72,7 @@ class ContractController < ApplicationController
       if contracted_at_date = DateTimeUtil.str_to_date(params[:contract][:contracted_at])
         @contract.contracted_at = Time.local(contracted_at_date.year, contracted_at_date.month, contracted_at_date.day, params[:contracted_at_hour].to_i, params[:contracted_at_minute].to_i)
       end
-      
+      @contract.perse_closed_at(current_user)
       @contract.save!
       @contract.upper_contract_term.save!
       @contract.down_contract_term.save!
@@ -84,10 +88,9 @@ class ContractController < ApplicationController
     @contract = Contract.find(params[:id])
     @closed_at_hour = @contract.closed_at.hour
     @closed_at_min = (@contract.closed_at.min / 10) * 10
-    @contracted_at_hour = @contract.contracted_at.hour
-    @contracted_at_min = (@contract.contracted_at.min / 10) * 10
-    @contract.upper_contract_term = ContractTerm.find(@contract.upper_contract_term)
-    @contract.down_contract_term = ContractTerm.find(@contract.down_contract_term)
+    @contracted_at_hour = @contract.contracted_at && @contract.contracted_at.hour
+    @contracted_at_min = @contract.contracted_at && (@contract.contracted_at.min / 10) * 10
+    @contract.setup_closed_at(current_user.zone_now)
   end
 
   def update
@@ -264,6 +267,7 @@ private
     contract.attributes = params[:contract]
     contract.upper_contract_term.attributes = params[:upper_contract_term]
     contract.down_contract_term.attributes = params[:down_contract_term]
+    contract.perse_closed_at(current_user)
     set_user_column contract
     set_user_column contract.upper_contract_term
     set_user_column contract.down_contract_term

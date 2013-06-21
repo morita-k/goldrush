@@ -126,8 +126,8 @@
   <th colspan=2><%= getLongName('approaches', 'memo') %></th><td colspan=2><%=simple_format @approach.memo %></td>
 </tr>
 </table>
-<%= link_to '編集', :action => 'edit', :id => @approach, :biz_offer_id => @biz_offer %> |
-<%= link_to '一覧', :controller => 'biz_offer', :action => 'show', :id => @biz_offer %>
+<%= link_to '編集', :action => 'edit', :id => @approach %> |
+<%= link_or_back '戻る', :action => :list %>
 <p></p>
 
 <!-- 案件詳細 -->

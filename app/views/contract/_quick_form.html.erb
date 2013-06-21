@@ -19,9 +19,11 @@
 </tr>
 <tr>
   <th><label for="contract_closed_at"><%=getLongName('contracts','closed_at')%>(*)</label></th>
-  <td><%= date_field 'contract', 'closed_at' %>
-      <%= select_tag 'closed_at_hour', options_for_select((0..23).to_a.map{|x| sprintf("%0.2d", x)}, sprintf("%0.2d", @closed_at_hour.to_i)) %> : 
-      <%= select_tag 'closed_at_minute', options_for_select((0..5).to_a.map{|x| sprintf("%0.2d", x * 10)}, sprintf("%0.2d", @closed_at_min.to_i)) %></td>
+  <td>
+    <%= date_field 'contract', 'closed_at_date' %>
+    <%= select 'contract', 'closed_at_hour', (0..23).to_a.map{|x| sprintf("%0.2d", x)} %> : 
+    <%= select 'contract', 'closed_at_minute', (0..5).to_a.map{|x| x.to_s + "0"} %>
+  </td>
 </tr>
 <tr>
   <th><label for="contract_contract_pic_name">契約担当(*)</label></th>
@@ -91,14 +93,14 @@
 <table class="show_table">
 <tr>
   <th><label for="human_resource_name"><%=getLongName('human_resources','human_resource_name')%></label></th>
-  <td><%= text_field_tag 'human_resource_name', @bp_member && @bp_member.human_resource_name, :readOnly => true, :style => "background-color: silver;", :size => 30 %>
+  <td><%= text_field_tag 'human_resource_name', @contract.approach.bp_member && @contract.approach.bp_member.human_resource_name, :readOnly => true, :style => "background-color: silver;", :size => 30 %>
     <input type=button value='...' onClick="disp_wide('<%=url_for :controller => 'bp_member', :action => 'list', :popup =>1 %>');return false;" />
     <input type=button value='クリア' onClick="clearBpMember();return false;" />
     <%= hidden_field 'approach', 'bp_member_id' %>
   </td>
 </tr>
 <tr>
-<th><label for="business_partner_name">下流<%=getLongName('business_partners','business_partner_name')%></label></th><td><%= text_field_tag 'business_partner_name', @bp_member && @bp_member.business_partner.business_partner_name, :readOnly => true, :style => "background-color: silver;", :size => 30 %>
+<th><label for="business_partner_name">下流<%=getLongName('business_partners','business_partner_name')%></label></th><td><%= text_field_tag 'business_partner_name', @contract.approach.bp_member && @contract.approach.bp_member.business_partner.business_partner_name, :readOnly => true, :style => "background-color: silver;", :size => 30 %>
 </td>
 </tr>
 </table>

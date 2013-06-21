@@ -3,6 +3,7 @@ class Contract < ActiveRecord::Base
   include AutoTypeName
   include BusinessFlow
   
+  attr_accessor :closed_at_date, :closed_at_hour, :closed_at_minute
   after_initialize :after_initialize
 
   has_many :interviews, :conditions => ["interviews.deleted = 0"]
@@ -51,6 +52,19 @@ class Contract < ActiveRecord::Base
     ], :down_contract_status_type)
   end
 
+  def setup_closed_at(zone_now)
+    date, hour, min = DateTimeUtil.split_date_hour_minute(zone_now)
+    self.closed_at_date = date
+    self.closed_at_hour = hour
+    self.closed_at_minute = min
+  end
+
+  def perse_closed_at(user)
+    unless closed_at_date.blank? || closed_at_hour.blank? || closed_at_minute.blank?
+      self.closed_at = user.zone_parse("#{closed_at_date} #{closed_at_hour}:#{closed_at_minute}:00")
+    end
+  end
+
   def upper_contract_status_type_next_actions
     next_actions(upper_contract_status_type, :upper_contract_status_type)
   end
@@ -69,5 +83,17 @@ class Contract < ActiveRecord::Base
 
   def contract_employee_name
     contract_pic && contract_pic.employee.employee_name
+  end
+  
+  def payment_diff
+    upper_contract_term.payment_diff(down_contract_term)
+  end
+  
+  def payment_diff_veiw
+    payment_diff / 10000.0
+  end
+  
+  def payment_redio
+    (100.0 * payment_diff / upper_contract_term.payment).round(1)
   end
 end
