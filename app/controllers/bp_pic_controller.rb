@@ -156,7 +156,6 @@ class BpPicController < ApplicationController
   
   def add_bp_pic_into_selected_group
     selected_group = BpPicGroup.find(params[:group_id])
-    # bp_pic_id_list = params[:ids].map{|id| id.to_i}
     bp_pic_id_list = params[:ids]
     
     if bp_pic_id_list && !selected_group.nil?
@@ -166,7 +165,9 @@ class BpPicController < ApplicationController
       end
       
       respond_to do |format|
-        format.html { redirect_to back_to, notice: "選択した取引先担当者が「#{selected_group.bp_pic_group_name}」グループに追加されました。" }
+        group_str = selected_group.bp_pic_group_name =~ /グループ$/ ? "" : "グループ"
+        
+        format.html { redirect_to back_to, notice: "選択した取引先担当者が「#{selected_group.bp_pic_group_name}」#{group_str}に追加されました。" }
       end
     elsif selected_group.nil?
       # グループが選択されていなければエラー

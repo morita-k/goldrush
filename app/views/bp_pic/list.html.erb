@@ -51,7 +51,7 @@
 <p>
   追加先グループ:
   <%= select_tag 'group_id', options_for_select(BpPicGroup.available_group_list), include_blank: true %>
-  <%= submit_tag '選択した取引先担当をグループに追加', confirm: "選択した取引先担当をグループに追加します。よろしいですか？" %>
+  <%= submit_tag '選択した取引先担当をグループに追加', :onclick => "if($('#group_id').val()==''){alert('グループを選択してください。');return false;}else{if(!confirm('選択した担当者をグループに追加します。よろしいですか？')){return false;}}" %>
 </p>
 <% for bp_pic in @bp_pics %>
   <tr>
