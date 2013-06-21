@@ -162,7 +162,7 @@ class BpPicController < ApplicationController
     if bp_pic_id_list && !selected_group.nil?
       bp_pic_id_list.each do |id|
         target = BpPic.find(id)
-        target.into_group(selected_group)
+        target.into_group(selected_group.id)
       end
       
       respond_to do |format|

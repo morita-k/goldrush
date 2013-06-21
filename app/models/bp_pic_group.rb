@@ -35,7 +35,7 @@ class BpPicGroup < ActiveRecord::Base
   
   # [[bp_pic_group_name, id]]
   def BpPicGroup.available_group_list
-    BpPicGroup.where(deleted: 0).map {|group| [group.bp_pic_group_name, group.id.to_s]}
+    BpPicGroup.where(deleted: 0).map {|group| [group.bp_pic_group_name, group.id]}
   end
   
 end
