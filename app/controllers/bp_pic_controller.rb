@@ -172,13 +172,14 @@ class BpPicController < ApplicationController
       end
     elsif selected_group.nil?
       # グループが選択されていなければエラー
-      # View側でチェックしてるので、到達不可処理
+      # View側でチェックしてるので、現状到達不可処理
       respond_to do |format|
         flash[:warning] = '追加先グループが選択されていません。'        
         format.html {redirect_to back_to}
       end
     else
       # IDのリストが取得できなければエラー
+      # View側でチェックしてるので、現状到達不可処理
       respond_to do |format|
         flash[:warning] = '取引先担当者が選択されていません。'
         format.html {redirect_to back_to}
