@@ -12,6 +12,16 @@ class Business < ActiveRecord::Base
   belongs_to :eubp_pic, :class_name => 'BpPic'
   has_many :biz_offers, :conditions => ["biz_offers.deleted = 0"]
 
+  before_save :derive_business_partner
+
+  def derive_business_partner
+    if eubp_pic
+      if eubp_id.blank? || eubp_id != eubp_pic.business_partner_id
+        self.eubp_id = eubp_pic.business_partner_id
+      end
+    end
+  end
+
   def make_skill_tags!
     require 'string_util'
     words = StringUtil.detect_words([skill_must, skill_want].join(" "))

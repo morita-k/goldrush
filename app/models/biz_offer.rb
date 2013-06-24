@@ -5,7 +5,7 @@ class BizOffer < ActiveRecord::Base
   
   after_initialize :after_initialize
   
-  validates_presence_of :business_id, :business_partner_id, :bp_pic_id, :biz_offer_status_type, :biz_offered_at
+  validates_presence_of :business_id, :bp_pic_id, :biz_offer_status_type, :biz_offered_at
   
   has_many :approaches, :conditions => ["approaches.deleted = 0"]
   belongs_to :business
@@ -14,7 +14,17 @@ class BizOffer < ActiveRecord::Base
   belongs_to :contact_pic, :class_name => 'User'
   belongs_to :sales_pic, :class_name => 'User'
   belongs_to :import_mail
-  
+
+  before_save :derive_business_partner
+
+  def derive_business_partner
+    if bp_pic
+      if business_partner_id.blank? || business_partner_id != bp_pic.business_partner_id
+        self.business_partner_id = bp_pic.business_partner_id
+      end
+    end
+  end
+
   def after_initialize 
     init_actions([
       [:open, :approached, :approach],

@@ -15,6 +15,10 @@ class BpPic < ActiveRecord::Base
   BOUNCE_MAIL_REASON_ERROR = [:hostunknown, :userunknown]
   BOUNCE_MAIL_REASON_WARN = [:hasmoved, :rejected, :filtered, :mailboxfull, :exceedlimit, :systemfull, :notaccept, :suspend, :mailererror, :systemerror, :mesgtoobig, :securityerr, :contenterr, :expired, :onhold]
   
+  def business_partner_name
+    business_partner && business_partner.business_partner_name
+  end
+  
   def usefulname
     bp_pic_name + (nondelivery? ? ' (送信停止)' : '')
   end

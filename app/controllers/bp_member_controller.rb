@@ -168,11 +168,7 @@ class BpMemberController < ApplicationController
     else
       # ポップアップウィンドウでなければ通常の画面遷移
       flash[:notice] = flash_notice
-      if new_flg
-        redirect_to back_to || {:action => 'list'}
-      else
-        redirect_to :action => 'show', :id => @bp_member
-      end
+      redirect_to back_to || {:action => 'list'}
     end
   rescue ActiveRecord::RecordInvalid
     render :action => 'new'
