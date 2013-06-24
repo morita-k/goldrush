@@ -25,7 +25,7 @@ class BpPicGroupTest < ActiveSupport::TestCase
       clone.create_clone_group(1)
     end
     
-    p source_first_detail = source.shift.bp_pic_group_details.shift
+    source_first_detail = source.shift.bp_pic_group_details.shift
     clone_first_detail = clone.bp_pic_group_details.shift
     
     assert(!BpPicGroupDetail.where(bp_pic_group_id: clone.id).blank?)
