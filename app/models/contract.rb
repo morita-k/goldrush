@@ -153,5 +153,10 @@ class Contract < ActiveRecord::Base
   
   # 次回契約を確認ステータスで作る
   def Contract.make_next(date)
+    ActiveRecord::Base.transaction do
+      Contract.where(:deleted => 0, :contract_status_type => :contract).each do |c|
+        if c.upper_contract_term.contract_end_date - 1.month
+      end
+    end
   end
 end
