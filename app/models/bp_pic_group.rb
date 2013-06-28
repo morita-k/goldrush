@@ -32,5 +32,10 @@ class BpPicGroup < ActiveRecord::Base
       clone.save!
     end
   end
-
+  
+  # [[bp_pic_group_name, id]]
+  def BpPicGroup.available_group_list
+    BpPicGroup.where(deleted: 0).map {|group| [group.bp_pic_group_name, group.id]}
+  end
+  
 end

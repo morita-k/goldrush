@@ -29,39 +29,51 @@
 
 <%= paginate(@bp_pics) %>
 
-<table class="list_table">
-  <tr>
-    <th><%=getShortName('bp_pics', 'business_partner_id') %></th>
-    <th <%= !popup? && "colspan=2"%>><%=getShortName('bp_pics', 'bp_pic_name') %></th>
-    <th><%=getShortName('bp_pics', 'tel_mobile') %></th>
-    <th><%=getShortName('bp_pics', 'email1') %></th>
-<% unless popup? %>
-    <th>初会</th>
-    <th>あ</th>
-    <th>更新</th>
-<% end %>
-  </tr>
+<%= form_tag url_for(controller: :bp_pic, action: :add_bp_pic_into_selected_group), method: :post do %>
+  <%= hidden_field_tag 'back_to', request_url %>
   
-<% for bp_pic in @bp_pics %>
-  <tr>
-<% if popup? %>
-    <td><%= star_links(bp_pic.business_partner) %> <%= bp_pic.business_partner.business_partner_name %></td>
-    <td><%= star_links(bp_pic) %> <%=link_to h(bp_pic.usefulname), '#', :onClick => "setBpPicToParentWindow(#{bp_pic.id},'#{bp_pic.usefulname}', '#{bp_pic.business_partner_name}');return false;" %></td>
-<% else %>
-    <td><%= star_links(bp_pic.business_partner) %> <%=back_to_link bp_pic.business_partner.business_partner_name, {:controller => :business_partner, :action => :show, :id => bp_pic.business_partner} %></td>
-    <td style="border-right-color: silver;"><%= star_links(bp_pic) %> <%=back_to_link bp_pic.usefulname, {:action => :show, :id => bp_pic} %></td>
-    <td style="text-align:center;"><%= bp_pic_edit_icon(bp_pic) %></td>
+  <p>追加先グループ:
+    <%= select_tag 'group_id', options_for_select(BpPicGroup.available_group_list), include_blank: true %>
+    <%= submit_tag '選択した取引先担当をグループに追加', :onclick => "if($('#group_id').val()==''){alert('グループを選択してください。');return false;}else if($('[name=\"ids[]\"]:checked').length <= 0){alert('取引先担当者を選択してください。');return false}else{if(!confirm('選択した担当者をグループに追加します。よろしいですか？')){return false;}}" %>
+  </p>
+
+  <table class="list_table">
+    <tr>
+      <th></th>
+      <th><%=getShortName('bp_pics', 'business_partner_id') %></th>
+      <th <%= !popup? && "colspan=2"%>><%=getShortName('bp_pics', 'bp_pic_name') %></th>
+      <th><%=getShortName('bp_pics', 'tel_mobile') %></th>
+      <th><%=getShortName('bp_pics', 'email1') %></th>  
+      <% unless popup? %>
+        <th>初会</th>
+        <th>あ</th>
+        <th>更新</th>
+      <% end %>
+    </tr>
+  
+    <% for bp_pic in @bp_pics %>
+      <tr>
+        <% if popup? %>
+          <td><%= star_links(bp_pic.business_partner) %> <%= bp_pic.business_partner.business_partner_name %></td>
+          <td><%= star_links(bp_pic) %> <%=link_to h(bp_pic.usefulname), '#', :onClick => "setBpPicToParentWindow(#{bp_pic.id},'#{bp_pic.usefulname}', '#{bp_pic.business_partner_name}');return false;" %></td>
+        <% else %>
+          <td><%= check_box_tag 'ids[]', bp_pic.id, false %></td>
+          <td><%= star_links(bp_pic.business_partner) %> <%=back_to_link bp_pic.business_partner.business_partner_name, {:controller => :business_partner, :action => :show, :id => bp_pic.business_partner} %></td>
+          <td style="border-right-color: silver;"><%= star_links(bp_pic) %> <%=back_to_link bp_pic.usefulname, {:action => :show, :id => bp_pic} %></td>
+          <td style="text-align:center;"><%= bp_pic_edit_icon(bp_pic) %></td>
+        <% end %>      
+        <td><%=h bp_pic.tel_mobile %></td>
+        <td><%=h bp_pic.email1 %></td>
+        <% unless popup? %>
+          <td><%=h _date(bp_pic.contact_date) %></td>
+          <td style="text-align:center;"><%= back_to_link(image_tag(bp_pic.contact_mail? ? 'icon-check.png' : 'icon-emailforward.png'), conatct_mail_new_delivery_mail_path(bp_pic)) %></td>
+          <td><%=h _time(bp_pic.updated_at) %></td>
+        <% end %>
+      </tr>
+    <% end %>
+    
+  </table>
 <% end %>
-    <td><%=h bp_pic.tel_mobile %></td>
-    <td><%=h bp_pic.email1 %></td>
-<% unless popup? %>
-    <td><%=h _date(bp_pic.contact_date) %></td>
-    <td style="text-align:center;"><%= back_to_link(image_tag(bp_pic.contact_mail? ? 'icon-check.png' : 'icon-emailforward.png'), conatct_mail_new_delivery_mail_path(bp_pic)) %></td>
-    <td><%=h _time(bp_pic.updated_at) %></td>
-<% end %>
-  </tr>
-<% end %>
-</table>
 
 <%= paginate(@bp_pics) %>
 

@@ -156,6 +156,40 @@ class BpPicController < ApplicationController
     
     redirect_to(back_to || {:action => 'list'})
   end
+  
+  def add_bp_pic_into_selected_group
+    selected_group = BpPicGroup.find(params[:group_id])
+    bp_pic_id_list = params[:ids]
+    
+    if bp_pic_id_list && !selected_group.nil?
+      
+      bp_pic_id_list.each do |id|
+        target = BpPic.find(id)
+        target.into_group(selected_group.id)
+      end
+      
+      group_str = selected_group.bp_pic_group_name =~ /グループ$/ ? "" : "グループ"
+      respond_to do |format|
+        flash[:notice] = "#{bp_pic_id_list.length}人の取引先担当者が「#{selected_group.bp_pic_group_name}」#{group_str}に追加されました。"
+        format.html {redirect_to back_to}
+      end
+    elsif selected_group.nil?
+      # グループが選択されていなければエラー
+      # View側でチェックしてるので、現状到達不可処理
+      respond_to do |format|
+        flash[:warning] = '追加先グループが選択されていません。'        
+        format.html {redirect_to back_to}
+      end
+    else
+      # IDのリストが取得できなければエラー
+      # View側でチェックしてるので、現状到達不可処理
+      respond_to do |format|
+        flash[:warning] = '取引先担当者が選択されていません。'
+        format.html {redirect_to back_to}
+      end
+    end
+  end
+  
 private
   def valid_of_business_partner_id
     if params[:business_partner_id].blank?
@@ -171,5 +205,5 @@ private
     end
     trimed_bp_name
   end
-  
+
 end
