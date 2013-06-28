@@ -39,7 +39,9 @@ class Approach < ActiveRecord::Base
       [:working, :finished, :finish, ->(a){
         # 提案が完了する際に、照会と人材のステータスも変化する
         biz_offer.change_status(:finish)
+        biz_offer.save!
         bp_member.human_resource.change_status(:finish)
+        bp_member.human_resource.save!
         return a.to
       }],
     ])

@@ -96,3 +96,14 @@
 <br />
 
 <%= back_to_link (getLongName('table_name','contracts')+'の新規作成'), :action => 'quick_new' %>
+
+<% unless session[:msgids].to_s.split(",").include?("keiyaku1") %>
+<div class="alert alert-block">
+ <button type="button" class="close" data-dismiss="alert" onclick="fixmessage('<%=url_for(:controller => :users, :action => :fixmessage, :id => '123', :authenticity_token => form_authenticity_token)%>')">&times;</button>
+ <h4>注意!</h4>
+ <p>
+   ※契約を登録する前に、人材所属を前もって登録しておく必要があります。<br/>
+   ※未登録の場合、メニューから、人材所属を選択し、新規登録してください。
+ </p>
+</div>
+<% end %>
