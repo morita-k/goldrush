@@ -152,6 +152,7 @@ class BusinessPartnerController < ApplicationController
       else
         @business_partner = BusinessPartner.new(params[:business_partner])
         @business_partner.basic_contract_status_type ||= 'none'
+        @business_partner.nda_status_type ||= 'none'
         @business_partner.tag_text = Tag.normalize_tag(@business_partner.tag_text).join(" ")
       end
 
