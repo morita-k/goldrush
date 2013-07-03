@@ -15,7 +15,7 @@ class ImportMail < ActiveRecord::Base
       if block_given?
         return block.call
       else
-	return map[header_key].to_s
+        return map[header_key].to_s
       end
     rescue Encoding::UndefinedConversionError => e
       return NKF.nkf('-w', map.header[header_key].value)

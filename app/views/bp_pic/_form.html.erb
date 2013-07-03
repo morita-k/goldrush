@@ -36,6 +36,9 @@
 <th><label for="bp_pic_contact_mail_flg"><%=getLongName('bp_pics','contact_mail_flg')%></label></th><td><%= check_box('bp_pic', 'contact_mail_flg', {}, 1, 0) %></td>
 </tr>
 <tr>
+<th><label for="bp_pic_nondelivery_score"><%=getLongName('bp_pics','nondelivery_score')%></label></th><td><%= text_field 'bp_pic', 'nondelivery_score'  %></td>
+</tr>
+<tr>
 <th><label for="bp_pic_memo"><%=getLongName('bp_pics','memo')%></label></th><td><%= resizable_area 'bp_pic', 'memo'  %></td>
 </tr>
 </table>

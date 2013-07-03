@@ -2082,10 +2082,10 @@ types_105:
   id: 105
   owner_id: 
   type_section: "approach_status_type"
-  type_key: "success"
-  long_name: "成約"
-  short_name: "成約"
-  other_name: "成約"
+  type_key: "working"
+  long_name: "稼働中"
+  short_name: "稼働中"
+  other_name: "稼働中"
   type_description: ""
   type_description_text: ""
   display_order1: 4
@@ -2100,6 +2100,26 @@ types_105:
   deleted: 0
 types_106:
   id: 106
+  owner_id: 
+  type_section: "approach_status_type"
+  type_key: "finished"
+  long_name: "案件終了"
+  short_name: "案件終了"
+  other_name: "案件終了"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 4
+  display_order2: 4
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_107:
+  id: 107
   owner_id: 
   type_section: "approach_status_type"
   type_key: "approach_failure"
@@ -2118,8 +2138,8 @@ types_106:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_107:
-  id: 107
+types_108:
+  id: 108
   owner_id: 
   type_section: "approach_status_type"
   type_key: "interview_failure"
@@ -2138,8 +2158,8 @@ types_107:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_108:
-  id: 108
+types_109:
+  id: 109
   owner_id: 
   type_section: "approach_status_type"
   type_key: "other_failure"
@@ -2158,8 +2178,8 @@ types_108:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_109:
-  id: 109
+types_110:
+  id: 110
   owner_id: 
   type_section: "approach_status_type"
   type_key: "lost_failure"
@@ -2178,8 +2198,8 @@ types_109:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_110:
-  id: 110
+types_111:
+  id: 111
   owner_id: 
   type_section: "approach_status_type"
   type_key: "natural_lost"
@@ -2198,8 +2218,8 @@ types_110:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_111:
-  id: 111
+types_112:
+  id: 112
   owner_id: 
   type_section: "approach_status_type"
   type_key: "other_success"
@@ -2218,8 +2238,8 @@ types_111:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_112:
-  id: 112
+types_113:
+  id: 113
   owner_id: 
   type_section: "business_status_type"
   type_key: "offered"
@@ -2238,14 +2258,14 @@ types_112:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_113:
-  id: 113
+types_114:
+  id: 114
   owner_id: 
   type_section: "business_status_type"
-  type_key: "contracting"
-  long_name: "契約中"
-  short_name: "契約中"
-  other_name: "契約中"
+  type_key: "working"
+  long_name: "稼働中"
+  short_name: "稼働中"
+  other_name: "稼働中"
   type_description: ""
   type_description_text: ""
   display_order1: 2
@@ -2258,8 +2278,8 @@ types_113:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_114:
-  id: 114
+types_115:
+  id: 115
   owner_id: 
   type_section: "business_status_type"
   type_key: "finished"
@@ -2278,8 +2298,8 @@ types_114:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_115:
-  id: 115
+types_116:
+  id: 116
   owner_id: 
   type_section: "business_status_type"
   type_key: "other_failure"
@@ -2298,8 +2318,8 @@ types_115:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_116:
-  id: 116
+types_117:
+  id: 117
   owner_id: 
   type_section: "business_status_type"
   type_key: "lost_failure"
@@ -2318,8 +2338,8 @@ types_116:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_117:
-  id: 117
+types_118:
+  id: 118
   owner_id: 
   type_section: "business_status_type"
   type_key: "natural_lost"
@@ -2338,8 +2358,8 @@ types_117:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_118:
-  id: 118
+types_119:
+  id: 119
   owner_id: 
   type_section: "sales_status_type"
   type_key: "listup"
@@ -2358,8 +2378,8 @@ types_118:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_119:
-  id: 119
+types_120:
+  id: 120
   owner_id: 
   type_section: "sales_status_type"
   type_key: "prospect"
@@ -2378,8 +2398,8 @@ types_119:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_120:
-  id: 120
+types_121:
+  id: 121
   owner_id: 
   type_section: "sales_status_type"
   type_key: "business"
@@ -2398,8 +2418,8 @@ types_120:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_121:
-  id: 121
+types_122:
+  id: 122
   owner_id: 
   type_section: "employment_type"
   type_key: "unknown"
@@ -2418,8 +2438,8 @@ types_121:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_122:
-  id: 122
+types_123:
+  id: 123
   owner_id: 
   type_section: "employment_type"
   type_key: "permanent"
@@ -2438,8 +2458,8 @@ types_122:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_123:
-  id: 123
+types_124:
+  id: 124
   owner_id: 
   type_section: "employment_type"
   type_key: "temporary"
@@ -2458,8 +2478,8 @@ types_123:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_124:
-  id: 124
+types_125:
+  id: 125
   owner_id: 
   type_section: "employment_type"
   type_key: "freelance"
@@ -2478,8 +2498,8 @@ types_124:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_125:
-  id: 125
+types_126:
+  id: 126
   owner_id: 
   type_section: "employment_type"
   type_key: "bp"
@@ -2498,8 +2518,8 @@ types_125:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_126:
-  id: 126
+types_127:
+  id: 127
   owner_id: 
   type_section: "communication_type"
   type_key: "unknown"
@@ -2518,8 +2538,8 @@ types_126:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_127:
-  id: 127
+types_128:
+  id: 128
   owner_id: 
   type_section: "communication_type"
   type_key: "level5"
@@ -2538,8 +2558,8 @@ types_127:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_128:
-  id: 128
+types_129:
+  id: 129
   owner_id: 
   type_section: "communication_type"
   type_key: "level4"
@@ -2558,8 +2578,8 @@ types_128:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_129:
-  id: 129
+types_130:
+  id: 130
   owner_id: 
   type_section: "communication_type"
   type_key: "level3"
@@ -2578,8 +2598,8 @@ types_129:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_130:
-  id: 130
+types_131:
+  id: 131
   owner_id: 
   type_section: "communication_type"
   type_key: "level2"
@@ -2598,8 +2618,8 @@ types_130:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_131:
-  id: 131
+types_132:
+  id: 132
   owner_id: 
   type_section: "communication_type"
   type_key: "level1"
@@ -2618,8 +2638,8 @@ types_131:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_132:
-  id: 132
+types_133:
+  id: 133
   owner_id: 
   type_section: "biz_offer_status_type"
   type_key: "open"
@@ -2638,8 +2658,8 @@ types_132:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_133:
-  id: 133
+types_134:
+  id: 134
   owner_id: 
   type_section: "biz_offer_status_type"
   type_key: "approached"
@@ -2658,14 +2678,14 @@ types_133:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_134:
-  id: 134
+types_135:
+  id: 135
   owner_id: 
   type_section: "biz_offer_status_type"
-  type_key: "success"
-  long_name: "成約"
-  short_name: "成約"
-  other_name: "成約"
+  type_key: "working"
+  long_name: "稼働中"
+  short_name: "稼働中"
+  other_name: "稼働中"
   type_description: ""
   type_description_text: ""
   display_order1: 3
@@ -2678,8 +2698,28 @@ types_134:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_135:
-  id: 135
+types_136:
+  id: 136
+  owner_id: 
+  type_section: "biz_offer_status_type"
+  type_key: "finished"
+  long_name: "案件終了"
+  short_name: "案件終了"
+  other_name: "案件終了"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 3
+  display_order2: 3
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_137:
+  id: 137
   owner_id: 
   type_section: "biz_offer_status_type"
   type_key: "other_failure"
@@ -2698,8 +2738,8 @@ types_135:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_136:
-  id: 136
+types_138:
+  id: 138
   owner_id: 
   type_section: "biz_offer_status_type"
   type_key: "lost_failure"
@@ -2718,8 +2758,8 @@ types_136:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_137:
-  id: 137
+types_139:
+  id: 139
   owner_id: 
   type_section: "biz_offer_status_type"
   type_key: "natural_lost"
@@ -2738,8 +2778,8 @@ types_137:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_138:
-  id: 138
+types_140:
+  id: 140
   owner_id: 
   type_section: "biz_offer_status_type"
   type_key: "other_success"
@@ -2758,8 +2798,8 @@ types_138:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_139:
-  id: 139
+types_141:
+  id: 141
   owner_id: 
   type_section: "interview_status_type"
   type_key: "interview_waiting"
@@ -2778,8 +2818,8 @@ types_139:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_140:
-  id: 140
+types_142:
+  id: 142
   owner_id: 
   type_section: "interview_status_type"
   type_key: "result_waiting"
@@ -2798,8 +2838,8 @@ types_140:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_141:
-  id: 141
+types_143:
+  id: 143
   owner_id: 
   type_section: "interview_status_type"
   type_key: "adjusting"
@@ -2818,8 +2858,8 @@ types_141:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_142:
-  id: 142
+types_144:
+  id: 144
   owner_id: 
   type_section: "interview_status_type"
   type_key: "finished"
@@ -2838,8 +2878,8 @@ types_142:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_143:
-  id: 143
+types_145:
+  id: 145
   owner_id: 
   type_section: "interview_status_type"
   type_key: "interview_failure"
@@ -2858,8 +2898,8 @@ types_143:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_144:
-  id: 144
+types_146:
+  id: 146
   owner_id: 
   type_section: "interview_status_type"
   type_key: "other_success"
@@ -2878,8 +2918,8 @@ types_144:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_145:
-  id: 145
+types_147:
+  id: 147
   owner_id: 
   type_section: "interview_status_type"
   type_key: "other_failure"
@@ -2898,14 +2938,14 @@ types_145:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_146:
-  id: 146
+types_148:
+  id: 148
   owner_id: 
   type_section: "contract_status_type"
-  type_key: "preparing"
-  long_name: "契約準備中"
-  short_name: "契約準備中"
-  other_name: "契約準備中"
+  type_key: "open"
+  long_name: "未契約"
+  short_name: "未契約"
+  other_name: "未契約"
   type_description: ""
   type_description_text: ""
   display_order1: 1
@@ -2918,14 +2958,14 @@ types_146:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_147:
-  id: 147
+types_149:
+  id: 149
   owner_id: 
   type_section: "contract_status_type"
-  type_key: "waiting"
-  long_name: "入場待ち"
-  short_name: "入場待ち"
-  other_name: "入場待ち"
+  type_key: "contract"
+  long_name: "契約中"
+  short_name: "契約中"
+  other_name: "契約中"
   type_description: ""
   type_description_text: ""
   display_order1: 2
@@ -2938,14 +2978,14 @@ types_147:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_148:
-  id: 148
+types_150:
+  id: 150
   owner_id: 
   type_section: "contract_status_type"
-  type_key: "running"
-  long_name: "稼働中"
-  short_name: "稼働中"
-  other_name: "稼働中"
+  type_key: "finished"
+  long_name: "契約終了"
+  short_name: "契約終了"
+  other_name: "契約終了"
   type_description: ""
   type_description_text: ""
   display_order1: 3
@@ -2958,14 +2998,74 @@ types_148:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_149:
-  id: 149
+types_151:
+  id: 151
   owner_id: 
-  type_section: "contract_status_type"
+  type_section: "upper_contract_status_type"
+  type_key: "waiting_order"
+  long_name: "注文書待ち"
+  short_name: "注文書待"
+  other_name: "注文書待ち"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 1
+  display_order2: 1
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_152:
+  id: 152
+  owner_id: 
+  type_section: "upper_contract_status_type"
+  type_key: "proc_acceptance"
+  long_name: "注文請書処理中"
+  short_name: "請書処理中"
+  other_name: "注文請書処理中"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 2
+  display_order2: 2
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_153:
+  id: 153
+  owner_id: 
+  type_section: "upper_contract_status_type"
+  type_key: "contracted"
+  long_name: "契約済み"
+  short_name: "契約済"
+  other_name: "契約済み"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 3
+  display_order2: 3
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_154:
+  id: 154
+  owner_id: 
+  type_section: "upper_contract_status_type"
   type_key: "finished"
-  long_name: "契約終了"
-  short_name: "契約終了"
-  other_name: "契約終了"
+  long_name: "契約満了"
+  short_name: "満了"
+  other_name: "契約満了"
   type_description: ""
   type_description_text: ""
   display_order1: 4
@@ -2978,8 +3078,228 @@ types_149:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_150:
-  id: 150
+types_155:
+  id: 155
+  owner_id: 
+  type_section: "upper_contract_status_type"
+  type_key: "abort"
+  long_name: "途中解約"
+  short_name: "解約"
+  other_name: "途中解約"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 5
+  display_order2: 5
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_156:
+  id: 156
+  owner_id: 
+  type_section: "upper_contract_status_type"
+  type_key: "confirming"
+  long_name: "更新確認待ち"
+  short_name: "更新確認"
+  other_name: "更新確認待ち"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 6
+  display_order2: 6
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_157:
+  id: 157
+  owner_id: 
+  type_section: "upper_contract_status_type"
+  type_key: "closed"
+  long_name: "更新なし"
+  short_name: "更新なし"
+  other_name: "更新なし"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 7
+  display_order2: 7
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_158:
+  id: 158
+  owner_id: 
+  type_section: "down_contract_status_type"
+  type_key: "waiting_offer"
+  long_name: "採用通知待ち"
+  short_name: "採用通知待ち"
+  other_name: "採用通知待ち"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 1
+  display_order2: 1
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_159:
+  id: 159
+  owner_id: 
+  type_section: "down_contract_status_type"
+  type_key: "proc_order"
+  long_name: "注文書処理中"
+  short_name: "注文書処理中"
+  other_name: "注文書処理中"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 1
+  display_order2: 1
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_160:
+  id: 160
+  owner_id: 
+  type_section: "down_contract_status_type"
+  type_key: "waiting_acceptance"
+  long_name: "注文請書待ち"
+  short_name: "注文請書待ち"
+  other_name: "注文請書待ち"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 1
+  display_order2: 1
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_161:
+  id: 161
+  owner_id: 
+  type_section: "down_contract_status_type"
+  type_key: "contracted"
+  long_name: "契約済み"
+  short_name: "契約済み"
+  other_name: "契約済み"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 1
+  display_order2: 1
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_162:
+  id: 162
+  owner_id: 
+  type_section: "down_contract_status_type"
+  type_key: "finished"
+  long_name: "契約満了"
+  short_name: "契約満了"
+  other_name: "契約満了"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 1
+  display_order2: 1
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_163:
+  id: 163
+  owner_id: 
+  type_section: "down_contract_status_type"
+  type_key: "abort"
+  long_name: "途中解約"
+  short_name: "途中解約"
+  other_name: "途中解約"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 1
+  display_order2: 1
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_164:
+  id: 164
+  owner_id: 
+  type_section: "down_contract_status_type"
+  type_key: "confirming"
+  long_name: "更新通知待ち"
+  short_name: "更新通知待ち"
+  other_name: "更新通知待ち"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 1
+  display_order2: 1
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_165:
+  id: 165
+  owner_id: 
+  type_section: "down_contract_status_type"
+  type_key: "closed"
+  long_name: "更新なし"
+  short_name: "更新なし"
+  other_name: "更新なし"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 1
+  display_order2: 1
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_166:
+  id: 166
   owner_id: 
   type_section: "human_resource_status_type"
   type_key: "sales"
@@ -2998,8 +3318,8 @@ types_150:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_151:
-  id: 151
+types_167:
+  id: 167
   owner_id: 
   type_section: "human_resource_status_type"
   type_key: "approached"
@@ -3018,14 +3338,14 @@ types_151:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_152:
-  id: 152
+types_168:
+  id: 168
   owner_id: 
   type_section: "human_resource_status_type"
-  type_key: "working"
-  long_name: "稼働中"
-  short_name: "稼働中"
-  other_name: "稼働中"
+  type_key: "waiting"
+  long_name: "入場待"
+  short_name: "入場待"
+  other_name: "入場待"
   type_description: ""
   type_description_text: ""
   display_order1: 3
@@ -3038,14 +3358,14 @@ types_152:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_153:
-  id: 153
+types_169:
+  id: 169
   owner_id: 
   type_section: "human_resource_status_type"
-  type_key: "unknown"
-  long_name: "不明"
-  short_name: "不明"
-  other_name: "不明"
+  type_key: "working"
+  long_name: "稼働中"
+  short_name: "稼働中"
+  other_name: "稼働中"
   type_description: ""
   type_description_text: ""
   display_order1: 4
@@ -3058,8 +3378,28 @@ types_153:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_154:
-  id: 154
+types_170:
+  id: 170
+  owner_id: 
+  type_section: "human_resource_status_type"
+  type_key: "unknown"
+  long_name: "不明"
+  short_name: "不明"
+  other_name: "不明"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 5
+  display_order2: 5
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_171:
+  id: 171
   owner_id: 
   type_section: "time_adjust_type"
   type_key: "suspense"
@@ -3078,10 +3418,90 @@ types_154:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_155:
-  id: 155
+types_172:
+  id: 172
   owner_id: 
   type_section: "time_adjust_type"
+  type_key: "adjust"
+  long_name: "精算あり"
+  short_name: "精算あり"
+  other_name: "精算あり"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 2
+  display_order2: 2
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_173:
+  id: 173
+  owner_id: 
+  type_section: "time_adjust_type"
+  type_key: "fixed"
+  long_name: "固定"
+  short_name: "固定"
+  other_name: "固定"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 3
+  display_order2: 3
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_174:
+  id: 174
+  owner_id: 
+  type_section: "time_adjust_type"
+  type_key: "byhour"
+  long_name: "時給"
+  short_name: "時給"
+  other_name: "時給"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 4
+  display_order2: 4
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_175:
+  id: 175
+  owner_id: 
+  type_section: "time_adjust_base_type"
+  type_key: "suspense"
+  long_name: "未定"
+  short_name: "未定"
+  other_name: "未定"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 1
+  display_order2: 1
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_176:
+  id: 176
+  owner_id: 
+  type_section: "time_adjust_base_type"
   type_key: "top"
   long_name: "上限"
   short_name: "上限"
@@ -3098,10 +3518,10 @@ types_155:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_156:
-  id: 156
+types_177:
+  id: 177
   owner_id: 
-  type_section: "time_adjust_type"
+  type_section: "time_adjust_base_type"
   type_key: "bottom"
   long_name: "下限"
   short_name: "下限"
@@ -3118,10 +3538,10 @@ types_156:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_157:
-  id: 157
+types_178:
+  id: 178
   owner_id: 
-  type_section: "time_adjust_type"
+  type_section: "time_adjust_base_type"
   type_key: "top_bottom"
   long_name: "上下"
   short_name: "上下"
@@ -3138,10 +3558,10 @@ types_157:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_158:
-  id: 158
+types_179:
+  id: 179
   owner_id: 
-  type_section: "time_adjust_type"
+  type_section: "time_adjust_base_type"
   type_key: "center"
   long_name: "中央"
   short_name: "中央"
@@ -3158,8 +3578,148 @@ types_158:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_159:
-  id: 159
+types_180:
+  id: 180
+  owner_id: 
+  type_section: "cutoff_date_type"
+  type_key: "suspense"
+  long_name: "未定"
+  short_name: "未"
+  other_name: "未定"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 1
+  display_order2: 1
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_181:
+  id: 181
+  owner_id: 
+  type_section: "cutoff_date_type"
+  type_key: "day_5"
+  long_name: "5日"
+  short_name: "5日"
+  other_name: "5日"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 2
+  display_order2: 2
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_182:
+  id: 182
+  owner_id: 
+  type_section: "cutoff_date_type"
+  type_key: "day_10"
+  long_name: "10日"
+  short_name: "10日"
+  other_name: "10日"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 3
+  display_order2: 3
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_183:
+  id: 183
+  owner_id: 
+  type_section: "cutoff_date_type"
+  type_key: "day_15"
+  long_name: "15日"
+  short_name: "15日"
+  other_name: "15日"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 4
+  display_order2: 4
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_184:
+  id: 184
+  owner_id: 
+  type_section: "cutoff_date_type"
+  type_key: "day_20"
+  long_name: "20日"
+  short_name: "20日"
+  other_name: "20日"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 5
+  display_order2: 5
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_185:
+  id: 185
+  owner_id: 
+  type_section: "cutoff_date_type"
+  type_key: "day_25"
+  long_name: "25日"
+  short_name: "25日"
+  other_name: "25日"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 6
+  display_order2: 6
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_186:
+  id: 186
+  owner_id: 
+  type_section: "cutoff_date_type"
+  type_key: "last"
+  long_name: "末日"
+  short_name: "末日"
+  other_name: "末日"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 7
+  display_order2: 7
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_187:
+  id: 187
   owner_id: 
   type_section: "payment_sight_type"
   type_key: "suspense"
@@ -3178,8 +3738,8 @@ types_159:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_160:
-  id: 160
+types_188:
+  id: 188
   owner_id: 
   type_section: "payment_sight_type"
   type_key: "next_5"
@@ -3198,8 +3758,8 @@ types_160:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_161:
-  id: 161
+types_189:
+  id: 189
   owner_id: 
   type_section: "payment_sight_type"
   type_key: "next_10"
@@ -3218,8 +3778,8 @@ types_161:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_162:
-  id: 162
+types_190:
+  id: 190
   owner_id: 
   type_section: "payment_sight_type"
   type_key: "next_15"
@@ -3238,8 +3798,8 @@ types_162:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_163:
-  id: 163
+types_191:
+  id: 191
   owner_id: 
   type_section: "payment_sight_type"
   type_key: "next_20"
@@ -3258,8 +3818,8 @@ types_163:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_164:
-  id: 164
+types_192:
+  id: 192
   owner_id: 
   type_section: "payment_sight_type"
   type_key: "next_25"
@@ -3278,8 +3838,8 @@ types_164:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_165:
-  id: 165
+types_193:
+  id: 193
   owner_id: 
   type_section: "payment_sight_type"
   type_key: "next_last"
@@ -3298,8 +3858,8 @@ types_165:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_166:
-  id: 166
+types_194:
+  id: 194
   owner_id: 
   type_section: "payment_sight_type"
   type_key: "next_next_5"
@@ -3318,8 +3878,8 @@ types_166:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_167:
-  id: 167
+types_195:
+  id: 195
   owner_id: 
   type_section: "payment_sight_type"
   type_key: "next_next_10"
@@ -3338,8 +3898,8 @@ types_167:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_168:
-  id: 168
+types_196:
+  id: 196
   owner_id: 
   type_section: "payment_sight_type"
   type_key: "next_next_15"
@@ -3358,8 +3918,8 @@ types_168:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_169:
-  id: 169
+types_197:
+  id: 197
   owner_id: 
   type_section: "payment_sight_type"
   type_key: "next_next_20"
@@ -3378,8 +3938,8 @@ types_169:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_170:
-  id: 170
+types_198:
+  id: 198
   owner_id: 
   type_section: "payment_sight_type"
   type_key: "next_next_25"
@@ -3398,8 +3958,8 @@ types_170:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_171:
-  id: 171
+types_199:
+  id: 199
   owner_id: 
   type_section: "payment_sight_type"
   type_key: "next_next_last"
@@ -3418,8 +3978,8 @@ types_171:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_172:
-  id: 172
+types_200:
+  id: 200
   owner_id: 
   type_section: "payment_sight_type"
   type_key: "other"
@@ -3438,8 +3998,8 @@ types_172:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_173:
-  id: 173
+types_201:
+  id: 201
   owner_id: 
   type_section: "term_type"
   type_key: "suspense"
@@ -3458,8 +4018,8 @@ types_173:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_174:
-  id: 174
+types_202:
+  id: 202
   owner_id: 
   type_section: "term_type"
   type_key: "delegete"
@@ -3478,8 +4038,8 @@ types_174:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_175:
-  id: 175
+types_203:
+  id: 203
   owner_id: 
   type_section: "term_type"
   type_key: "contract"
@@ -3498,8 +4058,8 @@ types_175:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_176:
-  id: 176
+types_204:
+  id: 204
   owner_id: 
   type_section: "term_type"
   type_key: "temporary"
@@ -3518,8 +4078,8 @@ types_176:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_177:
-  id: 177
+types_205:
+  id: 205
   owner_id: 
   type_section: "term_type"
   type_key: "other"
@@ -3538,8 +4098,8 @@ types_177:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_178:
-  id: 178
+types_206:
+  id: 206
   owner_id: 
   type_section: "analysis_template_type"
   type_key: "biz_offer"
@@ -3558,8 +4118,8 @@ types_178:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_179:
-  id: 179
+types_207:
+  id: 207
   owner_id: 
   type_section: "analysis_template_type"
   type_key: "bp_member"
@@ -3578,8 +4138,8 @@ types_179:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_180:
-  id: 180
+types_208:
+  id: 208
   owner_id: 
   type_section: "mail_status_type"
   type_key: "editing"
@@ -3598,8 +4158,8 @@ types_180:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_181:
-  id: 181
+types_209:
+  id: 209
   owner_id: 
   type_section: "mail_status_type"
   type_key: "unsend"
@@ -3618,8 +4178,8 @@ types_181:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_182:
-  id: 182
+types_210:
+  id: 210
   owner_id: 
   type_section: "mail_status_type"
   type_key: "send"
@@ -3638,8 +4198,8 @@ types_182:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_183:
-  id: 183
+types_211:
+  id: 211
   owner_id: 
   type_section: "mail_status_type"
   type_key: "canceled"
@@ -3658,8 +4218,8 @@ types_183:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_184:
-  id: 184
+types_212:
+  id: 212
   owner_id: 
   type_section: "mail_send_status_type"
   type_key: "ready"
@@ -3678,8 +4238,8 @@ types_184:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_185:
-  id: 185
+types_213:
+  id: 213
   owner_id: 
   type_section: "mail_send_status_type"
   type_key: "running"
@@ -3698,8 +4258,8 @@ types_185:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_186:
-  id: 186
+types_214:
+  id: 214
   owner_id: 
   type_section: "mail_send_status_type"
   type_key: "finished"
@@ -3718,8 +4278,8 @@ types_186:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_187:
-  id: 187
+types_215:
+  id: 215
   owner_id: 
   type_section: "mail_error_type"
   type_key: "bounce"
@@ -3738,8 +4298,8 @@ types_187:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_188:
-  id: 188
+types_216:
+  id: 216
   owner_id: 
   type_section: "mail_error_type"
   type_key: "other"
@@ -3750,6 +4310,66 @@ types_188:
   type_description_text: ""
   display_order1: 2
   display_order2: 2
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_217:
+  id: 217
+  owner_id: 
+  type_section: "tax_type"
+  type_key: "include"
+  long_name: "税抜"
+  short_name: "税抜"
+  other_name: "税抜"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 1
+  display_order2: 1
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_218:
+  id: 218
+  owner_id: 
+  type_section: "tax_type"
+  type_key: "exclude"
+  long_name: "税込"
+  short_name: "税込"
+  other_name: "税込"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 2
+  display_order2: 2
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_219:
+  id: 219
+  owner_id: 
+  type_section: "tax_type"
+  type_key: "none"
+  long_name: "非課税"
+  short_name: "非課"
+  other_name: "非課税"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 3
+  display_order2: 3
   logic_bind_type: "bind"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>

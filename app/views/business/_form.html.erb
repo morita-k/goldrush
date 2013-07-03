@@ -3,14 +3,12 @@
 <!--[form:business]-->
 <table class="show_table">
 <tr>
-<th><label for="eubp_name">EU取引先</label></th><td><%= text_field_tag 'eubp_name', @business.eubp.blank? ? "" : @business.eubp.business_partner_name, :readOnly => true, :style => "background-color: silver;", :size => 30 %>
-  <input type=button value='...' onClick="disp_wide('<%=url_for :controller => 'business_partner', :action => 'list', :popup =>1, :flg => 'eu' %>');return false;" />
-  <input type=button value='クリア' onClick="clearEuBp();return false;" />
-  <%= hidden_field 'business', 'eubp_id' %></td>
+  <th><label for="eubp_name">エンド取引先</label></th>
+  <td><%= text_field_tag 'eubp_name', @business.eubp.blank? ? "" : @business.eubp.business_partner_name, :readOnly => true, :style => "background-color: silver;", :size => 30 %></td>
 </tr>
 <tr>
-<th><label for="eubp_pic_name">EU取引先担当</label></th><td><%= text_field_tag 'eubp_pic_name', @business.eubp_pic.blank? ? "" : @business.eubp_pic.bp_pic_name, :readOnly => true, :style => "background-color: silver;", :size => 30 %>
-  <input type=button value='...' onClick="openEuBpPicList();return false;" />
+<th><label for="eubp_pic_name">エンド取引先担当</label></th><td><%= text_field_tag 'eubp_pic_name', @business.eubp_pic.blank? ? "" : @business.eubp_pic.bp_pic_name, :readOnly => true, :style => "background-color: silver;", :size => 30 %>
+  <input type=button value='...' onClick="disp_wide('<%=url_for_bp_pic_popup :setEuBpPic%>');return false;" />
   <input type=button value='クリア' onClick="clearEuBpPic();return false;" />
   <%= hidden_field 'business', 'eubp_pic_id' %></td>
 </tr>
@@ -88,37 +86,18 @@
 
 <script type="text/javascript">
 <!--
-function openEuBpPicList() {
-    if(document.getElementById("business_eubp_id").value != "")
-    {
-      disp_wide('<%=url_for :controller => 'bp_pic', :action => 'list', :popup =>1 %>' + '&id=' + document.getElementById("business_eubp_id").value + '&mode=eu')
-    }
-}
-
-document.setEuBp = function(bp) {
-    document.getElementById("business_eubp_id").value = bp.id;
-    document.getElementById("eubp_name").value = bp.business_partner_name;
-    document.getElementById("business_eubp_pic_id").value = "";
-    document.getElementById("eubp_pic_name").value = "";
-}
-
-function clearEuBp(){
-    document.getElementById("business_eubp_id").value = "";
-    document.getElementById("eubp_name").value = "";
-    document.getElementById("business_eubp_pic_id").value = "";
-    document.getElementById("eubp_pic_name").value = "";
-}
 
 document.setEuBpPic = function(bp_pic){
+    document.getElementById("eubp_name").value = bp_pic.business_partner_name;
     document.getElementById("business_eubp_pic_id").value = bp_pic.id;
     document.getElementById("eubp_pic_name").value = bp_pic.bp_pic_name;
 }
 
 function clearEuBpPic(){
+    document.getElementById("eubp_name").value = "";
     document.getElementById("business_eubp_pic_id").value = "";
     document.getElementById("eubp_pic_name").value = "";
 }
-
 
 // -->
 </script>
