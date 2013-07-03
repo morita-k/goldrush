@@ -56,6 +56,8 @@ class BusinessPartnerGoogleImporter < BusinessPartner
             bp_pic.business_partner = bp
           else
             bp = BusinessPartner.new
+            bp.basic_contract_status_type ||= 'none'
+            bp.nda_status_type ||= 'none'
             bp_pic.business_partner = bp
           end
         end
