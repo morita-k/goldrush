@@ -84,7 +84,37 @@ class DeliveryMail < ActiveRecord::Base
       attachment_files
     ).deliver
   end
-
+  
+  def DeliveryMail.send_mail_to_each_targets(mail)
+    mail.delivery_mail_targets.each do |target|
+      begin
+        next if target.bp_pic.nondelivery?
+        
+        opt = { :bp_pic_name => target.bp_pic.bp_pic_short_name,
+                :business_partner_name => target.bp_pic.business_partner.business_partner_name }
+        
+        current_mail = MyMailer.send_del_mail(
+          target.bp_pic.email1,
+          mail.mail_cc,
+          mail.mail_bcc,
+          "#{mail.mail_from_name} <#{mail.mail_from}>",
+          DeliveryMail.tags_replacement(mail.subject, opt),
+          DeliveryMail.tags_replacement(mail.content, opt),
+          mail.attachment_files
+        )
+        
+        current_mail.deliver
+        target.message_id = current_mail.header['Message-ID'].to_s
+        target.save!
+      rescue => e
+        DeliveryError.send_error(target.bp_pic, e).save!
+        
+        error_str = "Delivery Mail Send Error: " + e.message + "\n" + e.backtrace.join("\n")
+        SystemLog.error('delivery mail', 'mail send error',  error_str, 'delivery mail')
+      end
+    end
+  end
+  
   # Broadcast Mails
   def DeliveryMail.send_mails
     fetch_key = Time.now.to_s + " " + rand().to_s
@@ -94,34 +124,13 @@ class DeliveryMail < ActiveRecord::Base
              'unsend', 'ready', Time.now).
       update_all(:mail_send_status_type => 'running', :created_user => fetch_key)
     
-    begin
-      DeliveryMail.where(:created_user => fetch_key).each {|mail|
-        attachment_files = mail.attachment_files
-        mail.delivery_mail_targets.each {|target|
-          next if target.bp_pic.nondelivery?
-          opt = {:bp_pic_name => target.bp_pic.bp_pic_short_name, :business_partner_name => target.bp_pic.business_partner.business_partner_name}
-          current_mail = MyMailer.send_del_mail(
-            target.bp_pic.email1,
-            mail.mail_cc,
-            mail.mail_bcc,
-            "#{mail.mail_from_name} <#{mail.mail_from}>",
-            DeliveryMail.tags_replacement(mail.subject, opt),
-            DeliveryMail.tags_replacement(mail.content, opt),
-            attachment_files
-          )
-          current_mail.deliver
-          target.message_id = current_mail.header['Message-ID'].to_s
-          target.save!
-        }
-      }
-    rescue => e
-      error_str = "Delivery Mail Send Error: " + e.message + "\n" + e.backtrace.join("\n")
-      SystemLog.error('delivery mail', 'mail send error',  error_str, 'delivery mail')
-    end
+    DeliveryMail.where(:created_user => fetch_key).each {|mail|
+      self.send_mail_to_each_targets(mail)
+    }
+
     DeliveryMail.
       where(:created_user => fetch_key).
       update_all(:mail_status_type => 'send',:mail_send_status_type => 'finished',:send_end_at => Time.now)
-      
   end
   
   # === Private === 

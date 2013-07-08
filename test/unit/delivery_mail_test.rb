@@ -27,5 +27,32 @@ class DeliveryMailTest < ActiveSupport::TestCase
     target = DeliveryMailTarget.find(1)
     assert_match(/.*@#{ActionMailer::Base.smtp_settings[:domain]}/, target.message_id)
   end
-
+  
+  
+  test "error handling 001" do
+    
+    errs_before = DeliveryError.find(:all).size
+    
+    mail = DeliveryMail.find(2)
+    DeliveryMail.send_mail_to_each_targets(mail)
+    
+    assert_equal(errs_before + 1, DeliveryError.find(:all).size)
+    
+    err = DeliveryError.find(:all).last
+    assert_equal("send_error", err.mail_error_type)
+    assert_equal(4, err.bp_pic_id)
+  end
+  
+  # 特定の送信先でエラーを吐かせる為に、既存のメソッドを加工
+  class Mail::Message
+    alias deliver_org deliver
+    def deliver
+      if self.to[0] == "hogehoge"
+        raise "hogehoge"
+      else
+        deliver_org
+      end
+    end
+  end
+  
 end
