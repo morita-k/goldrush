@@ -3,6 +3,7 @@
 module StringUtil
   DETECT_WORD_REGEXP = Regexp.new(/[a-zA-Z][a-zA-Z0-9\.+\-# ]+/)
   FULLSPACE_TRIM_REGEXP = Regexp.new(/^[　 \t\r\n\f\v]*(.*)/o)
+  ASCII_SYMBOLS_REGEXP = /[!-\/:-@\[-`{-~]/
   # 全角トリム
   def StringUtil.strip_with_full_size_space(str)
     str.sub(FULLSPACE_TRIM_REGEXP, '\1').reverse.sub(FULLSPACE_TRIM_REGEXP, '\1').reverse
@@ -79,7 +80,11 @@ module StringUtil
     words = []
     pos = 0
     while ma = r.match(str, pos)
-      words << ma[0]
+      if block_given?
+        words << yield(ma[0])
+      else
+        words << ma[0]
+      end
       pos = ma.offset(0)[1]
     end
     words.map{|x| x.strip}.uniq.sort
@@ -136,5 +141,10 @@ module StringUtil
       end
     end
     arr << (word + plus)
+  end
+  
+  # 半角記号を除去
+  def StringUtil.remove_ascii_symbols(str)
+    return str.gsub(ASCII_SYMBOLS_REGEXP, "")
   end
 end

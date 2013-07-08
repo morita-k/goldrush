@@ -1,4 +1,6 @@
 # -*- encoding: utf-8 -*-
+require 'railroad_util'
+
 class ImportMailController < ApplicationController
 
   def index
@@ -23,7 +25,7 @@ class ImportMailController < ApplicationController
     param = []
     incl = []
     sql = "import_mails.deleted = 0"
-    # TODO ƒfƒtƒHƒ‹ƒg‚Å•s—vƒtƒ‰ƒO—§‚Á‚Ä‚È‚¢‚à‚ÌH
+    # TODO ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã§ä¸è¦ãƒ•ãƒ©ã‚°ç«‹ã£ã¦ãªã„ã‚‚ã®ï¼Ÿ
     order_by = ""
 
     if params[:id]
@@ -158,7 +160,7 @@ class ImportMailController < ApplicationController
   end
   
   
-  # Ajax‚Å‚Ìflgˆ—
+  # Ajaxã§ã®flgå‡¦ç†
   def change_flg
   puts">>>>>>>>>>>>>>>>>>>> flg changing now !!!"
   puts">>>>>>>>>>>>>>>>>>>> import_mail_id : #{params[:import_mail_id]}"
@@ -193,6 +195,25 @@ class ImportMailController < ApplicationController
                       bp_member: target_mail.bp_member_flg,
                       unwanted: target_mail.unwanted }
     # render :text => target_mail.biz_offer_flg.to_s + ',' + target_mail.bp_member_flg.to_s + ',' + target_mail.unwanted.to_s
+  end
+  
+  def analysis_test
+    max = ( params[:max] ? params[:max] : 50 )
+    mails = ImportMail.find(:all, :limit => max)
+    
+    text = "";
+    
+    mails.each do |mail|
+      body = mail.preprocbody
+      
+      nearest_st = mail.detect_nearest_station
+      nearest_st_short = ImportMail.extract_station_name(nearest_st) if nearest_st
+      
+      text += "#{mail.id} [#{nearest_st}] => #{nearest_st_short.to_s}<br/>"
+      
+    end
+    
+    render :text => text
   end
   
 end
