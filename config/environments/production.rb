@@ -33,12 +33,14 @@ GoldRush::Application.configure do
 
   # See everything in the log (default is :info)
   # config.log_level = :debug
+  config.log_level = :info
 
   # Prepend all log lines with the following tags
   # config.log_tags = [ :subdomain, :uuid ]
 
   # Use a different logger for distributed setups
   # config.logger = ActiveSupport::TaggedLogging.new(SyslogLogger.new)
+  config.logger = Logger.new("log/production.log", 5, 10 * 1024 * 1024)
 
   # Use a different cache store in production
   # config.cache_store = :mem_cache_store
@@ -66,3 +68,11 @@ GoldRush::Application.configure do
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
 end
+
+ActionMailer::Base.delivery_method = :smtp
+ActionMailer::Base.perform_deliveries = true
+ActionMailer::Base.raise_delivery_errors = true
+ActionMailer::Base.smtp_settings = {
+  :domain             => 'gr.applicative.jp',
+}
+

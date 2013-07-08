@@ -11,7 +11,8 @@
 
 <%% @<%= plural_table_name %>.each do |<%= singular_table_name %>| %>
   <tr>
-<% attributes.each do |attribute| -%>
+<% attributes.each do |attribute|
+   next if [:created_at, :updated_at, :lock_version, :deleted_at, :deleted].include?(attribute.name) -%>
 <%- if attribute === attributes[0] -%>
     <td><%%= back_to_link <%= singular_table_name %>.<%= attribute.name %>, <%= singular_table_name %> %></td>
 <%- else -%>

@@ -14,7 +14,7 @@
 <tr>
   <th><%=getLongName('employees','account_type')%></th>
   <td>
-  <%= select 'employee', 'account_type', $TYPE_CONDITIONS['account_type'] %>
+  <%= select 'employee', 'account_type', getTypes('account_type') %>
   </td>
 </tr>
 <tr>

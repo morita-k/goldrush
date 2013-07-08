@@ -8,31 +8,10 @@
   
 <% for bp_pic in @bp_pics %>
   <tr>
-    <td><span class="linked_star"><%= star_links(bp_pic) %></span> <%=back_to_link h(bp_pic.bp_pic_name), :controller => :bp_pic, :action => :show, :id => bp_pic %></td>
+    <td><%= star_links(bp_pic) %> <%=back_to_link h(bp_pic.bp_pic_name), :controller => :bp_pic, :action => :show, :id => bp_pic %></td>
     <td><%=h bp_pic.bp_pic_name_kana %></td>
     <td><%=h bp_pic.depertment %></td>
     <td><%=h bp_pic.position %></td>
   </tr>
 <% end %>
 </table>
-
-<script type="text/javascript">
-<!--
-var ajax_url = '<%= url_for(:controller => :bp_pic, :action => :change_star) %>';
-
-function changeFlg(id, type){
-  jQuery.ajax({
-    url: ajax_url + '?id=' + id + '&type=' + type,
-    success: function(data, dataType){
-        if (data == '1') {
-          $("#starred_icon_" + id)[0].style.color = '#ffff00';
-        } else {
-          $("#starred_icon_" + id)[0].style.color = '#dfdfdf';
-        }
-    }
-  });
-  return false;
-}
-
-// -->
-</script>

@@ -862,3 +862,19 @@ sys_configs_54:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
+sys_configs_55:
+  id: 56
+  owner_id: 
+  config_section: "analysis_templates"
+  config_key: "indent"
+  value1: "※"
+  value2: ""
+  value3: ""
+  config_description_text: "カンマ区切りで指定、全半角空白は無視される、正規表現でない"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0

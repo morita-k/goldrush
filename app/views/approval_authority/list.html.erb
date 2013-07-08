@@ -1,5 +1,5 @@
 <h1><%=getLongName('table_name','approval_authorities')%>一覧</h1>
-<% $TYPE_CONDITIONS['approver_type'].each do |item| %>
+<% getTypes('approver_type').each do |item| %>
 <%= item[1] == controller.action_name ? item[0] : link_to(item[0], :controller => :approval_authority, :action => item[1]) %> |
 <% end %>
 <br>
@@ -10,7 +10,7 @@
 <table class="list_table">
   <caption style="font-size:14px">
    <b>
-   <% item = $TYPE_CONDITIONS['approver_type'].rassoc(controller.action_name) %>
+   <% item = getTypes('approver_type').rassoc(controller.action_name) %>
    <% item[0] if item %>
   </b>
   </caption>

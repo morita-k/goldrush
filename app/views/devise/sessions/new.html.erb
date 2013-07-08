@@ -1,0 +1,25 @@
+<h2>ログイン</h2>
+
+<%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+<table class="form_table">
+  <tr>
+  <th><%= f.label :email, 'Eメール' %></th>
+  <td><%= f.email_field :email, :autofocus => true %></td>
+  </tr>
+
+  <tr>
+  <th><%= f.label :password, 'パスワード' %></th>
+  <td><%= f.password_field :password %></td>
+  </tr>
+
+  <% if devise_mapping.rememberable? -%>
+    <tr>
+    <th><%= f.label :remember_me, 'ログインしたままにする' %></th>
+    <td><%= f.check_box :remember_me %></td>
+   </tr>
+  <% end -%>
+</table>
+  <p><%= f.submit "ログイン"%></p>
+<% end %>
+
+<%= render "devise/shared/links" %>

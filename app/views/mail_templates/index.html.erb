@@ -1,0 +1,59 @@
+<h1><%= getLongName('table_name','mail_templates')%> 一覧</h1>
+
+<%= paginate(@mail_templates) %>
+
+<table class="list_table">
+  <tr>
+
+    <th><%= getLongName('mail_templates', 'mail_template_category') %></th>
+
+    <th><%= getLongName('mail_templates', 'mail_template_name') %></th>
+
+    <th><%= getLongName('mail_templates', 'subject') %></th>
+  </tr>
+
+<% @mail_templates.each do |mail_template| %>
+  <tr>
+
+    <td><%= mail_template.mail_template_category %></td>
+
+<% if popup? %>
+    <td><%= link_to mail_template.mail_template_name, "#", :onclick => "setMailTemplateToParentWindow('#{j mail_template.mail_cc}', '#{j mail_template.mail_bcc}', '#{j mail_template.subject}', '#{j with_signature(mail_template.content)}');return false;" %></td>
+<% else %>
+    <td><%= back_to_link mail_template.mail_template_name, mail_template %></td>
+<% end %>
+    <td><%= mail_template.subject %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= paginate(@mail_templates) %>
+
+<% unless popup? %>
+<%= back_to_link getLongName('table_name','mail_templates') + ' の新規作成', new_mail_template_path %>
+<% end %>
+
+<% if popup? %>
+<script type="text/javascript">
+<!--
+
+function MailTemplate(mail_cc, mail_bcc, subject, content){
+  this.mail_cc = mail_cc;
+  this.mail_bcc = mail_bcc;
+  this.subject = subject;
+  this.content = content;
+}
+
+function setMailTemplateToParentWindow(a,b,c,d) {
+  if(window.opener.setMailTemplate){
+    window.opener.setMailTemplate(new MailTemplate(a,b,c,d));
+    window.close();
+  }else{
+    alert("Dont defined setMailTemplate at parent window.");
+  }
+}
+// -->
+</script>
+<% end %><%# if popup? %>

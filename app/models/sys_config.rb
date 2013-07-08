@@ -226,4 +226,11 @@ class SysConfig < ActiveRecord::Base
   def self.get_indent_pattern
     get_configuration("analysis_templates", "indent").value1.gsub(/[\s　]/, "").split(",").reject{|s| s == ""}
   end
+  def self.star_color
+    {
+      0 => 'silver',
+      1 => 'yellow',
+      2 => 'black',
+    }
+  end
 end

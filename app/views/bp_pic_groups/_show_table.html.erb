@@ -1,0 +1,7 @@
+<table class="show_table">
+<tr><th>対象グループ</th></tr>
+<tr><td><%= @bp_pic_group.bp_pic_group_name%></td></tr>
+<% unless @bp_pic_group.memo.blank? %>
+<tr><td><%= simple_format @bp_pic_group.memo%></td></tr>
+<% end %>
+</table>

@@ -1,0 +1,75 @@
+<h1><%= getLongName('table_name','tags')%> 一覧</h1>
+
+<%= paginate(@tags) %>
+
+<table class="list_table">
+  <tr>
+
+    <th><%= getLongName('tags', 'tag_key') %></th>
+
+    <th><%= getLongName('tags', 'tag_text') %></th>
+
+    <th><%= getLongName('tags', 'tag_count') %></th>
+
+    <th><%= getLongName('tags', 'inc_count') %></th>
+
+    <th><%= getLongName('tags', 'tag_level') %></th>
+
+    <th><%= getLongName('tags', 'display_order1') %></th>
+
+    <th><%= getLongName('tags', 'display_order2') %></th>
+
+    <th><%= getLongName('tags', 'display_order3') %></th>
+
+    <th><%= getLongName('tags', 'starred') %></th>
+
+  </tr>
+
+<% @tags.each do |tag| %>
+  <tr>
+
+
+    <td><%= back_to_link tag.tag_key, tag %></td>
+
+
+
+    <td><%= star_links(tag) %> <%= tag.tag_text %></td>
+
+
+
+    <td><%= tag.tag_count %></td>
+
+
+
+    <td><%= tag.inc_count %></td>
+
+
+
+    <td><%= tag.tag_level %></td>
+
+
+
+    <td><%= tag.display_order1 %></td>
+
+
+
+    <td><%= tag.display_order2 %></td>
+
+
+
+    <td><%= tag.display_order3 %></td>
+
+
+
+    <td><%= tag.starred %></td>
+
+
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= paginate(@tags) %>
+
+<%= back_to_link getLongName('table_name','tags') + ' の新規作成', new_tag_path %>

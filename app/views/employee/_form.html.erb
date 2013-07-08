@@ -107,7 +107,7 @@
 <tr>
   <th><%=getLongName('employees','sex_type')%></th>
   <td>
-  <%= select 'employee', 'sex_type', $TYPE_CONDITIONS['sex_type'] %>
+  <%= select 'employee', 'sex_type', getTypes('sex_type') %>
   </td>
 </tr>
 <tr>
@@ -205,7 +205,7 @@
 <tr>
   <th><%=getLongName('employees','account_type')%></th>
   <td>
-  <%= select 'employee', 'account_type', $TYPE_CONDITIONS['account_type'] %>
+  <%= select 'employee', 'account_type', getTypes('account_type') %>
   </td>
 </tr>
 <tr>

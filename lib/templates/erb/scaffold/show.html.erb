@@ -1,4 +1,4 @@
-<h1><%%= getLongName('table_name','bp_pic_groups')%> 詳細</h1>
+<h1><%%= getLongName('table_name','<%= plural_table_name %>')%> 詳細</h1>
 
 <table class="show_table">
 <% attributes.each do |attribute| -%>
@@ -10,6 +10,6 @@
 </table>
 
 <%%= back_to_link '編集', edit_<%= singular_table_name %>_path(@<%= singular_table_name %>) %> |
-<%%= link_to '削除', @<%= singular_table_name %>, <%= key_value :method, ":delete" %>, <%= key_value :data, "{ #{key_value :confirm, "'削除します。よろしいですか?'"} }" %> %> |
+<%%= link_to '削除', {:id => @<%= singular_table_name %>, :authenticity_token => form_authenticity_token}, <%= key_value :method, ":delete" %>, <%= key_value :data, "{ #{key_value :confirm, "'削除します。よろしいですか?'"} }" %> %> |
 <%%= link_or_back '戻る', <%= index_helper %>_path %>
 

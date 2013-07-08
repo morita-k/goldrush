@@ -55,4 +55,22 @@ class HomeController < ApplicationController
 
   def stale_object
   end
+  
+  def change_star
+    model = params[:model].constantize.find(params[:id])
+    # 0 -> 1 -> 2 -> 0と遷移
+    model.starred = (model.starred + 1) % 3
+    set_user_column model
+    model.save!
+    color = SysConfig.star_color[model.starred]
+    respond_to do |format|
+      format.js {render :text => <<EOS
+var l = $('.starred_icon_#{model.id}');
+for(var i = 0; i < l.length + 1; i++){
+  l[i].style.color = '#{color}';
+}
+EOS
+}
+    end
+  end
 end

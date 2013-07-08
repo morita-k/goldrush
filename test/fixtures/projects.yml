@@ -1,0 +1,23 @@
+projects_1:
+  id: 1
+  owner_id: 
+  business_partner_id: 1
+  project_name: "プロジェクト名"
+  project_short_name: "プロジェクト略称"
+  project_name_kana: "プロジェクト名カナ"
+  project_code_name: "プロジェクトコードネーム"
+  pic_id: 1
+  project_start_date: <%= "2000/01/01 00:00:00" %>
+  project_end_date: <%= "2000/01/01 00:00:00" %>
+  order_amount: 
+  subcontract_cost: 
+  project_type: "develop"
+  project_status_type: "active"
+  memo: "Memo"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
