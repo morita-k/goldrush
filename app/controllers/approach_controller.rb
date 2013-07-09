@@ -47,12 +47,12 @@ class ApproachController < ApplicationController
         set_user_column @approach
         @approach.save!
         
-        # Æ‰ïƒXƒe[ƒ^ƒX‚ð•ÏX‚·‚éi–¢ŽÀ‘•j
+        # ç…§ä¼šã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ã‚’å¤‰æ›´ã™ã‚‹ï¼ˆæœªå®Ÿè£…ï¼‰
         @biz_offer.change_status_type
         set_user_column @biz_offer
         @biz_offer.save!
         
-        # lÞƒXƒe[ƒ^ƒX‚ð•ÏX‚·‚éi–¢ŽÀ‘•j
+        # äººæã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ã‚’å¤‰æ›´ã™ã‚‹ï¼ˆæœªå®Ÿè£…ï¼‰
         @human_resource.change_status_type
         set_user_column @human_resource
         @human_resource.save!
@@ -89,17 +89,17 @@ class ApproachController < ApplicationController
         set_user_column interview
         interview.save!
         
-        # ’ñˆÄƒXƒe[ƒ^ƒX‚ðu–Ê’kŽ¸”sv‚Ö•ÏX
+        # ææ¡ˆã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ã‚’ã€Œé¢è«‡å¤±æ•—ã€ã¸å¤‰æ›´
         @approach.approach_status_type = 'interview_failure'
         set_user_column @approach
         @approach.save!
         
-        # Æ‰ïƒXƒe[ƒ^ƒX‚ð•ÏX‚·‚éi–¢ŽÀ‘•j
+        # ç…§ä¼šã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ã‚’å¤‰æ›´ã™ã‚‹ï¼ˆæœªå®Ÿè£…ï¼‰
         @biz_offer.change_status_type
         set_user_column @biz_offer
         @biz_offer.save!
         
-        # lÞƒXƒe[ƒ^ƒX‚ð•ÏX‚·‚éi–¢ŽÀ‘•j
+        # äººæã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ã‚’å¤‰æ›´ã™ã‚‹ï¼ˆæœªå®Ÿè£…ï¼‰
         @human_resource.change_status_type
         set_user_column @human_resource
         @human_resource.save!

@@ -1,66 +1,112 @@
-<h1><%= @business_partner.blank? ? getLongName('table_name','bp_pics') : "#{@business_partner.business_partner_name}担当" %>一覧</h1>
+<h1><%= @business_partner.blank? ? getLongName('table_name','business_partners') : "#{@business_partner.business_partner_name}担当" %>一覧</h1>
+
+<%= form_tag_popup_mode do %>
+<table>
+  <tr>
+    <th style="text-align: right">コード(営業|取引|販管):</td>
+    <td><%= text_field_tag 'sales_code', search_value(:sales_code), :size => 60 %>　</td>
+  </tr>
+  <tr>
+    <th style="text-align: right">取引先名（カナ）:</td>
+    <td><%= text_field_tag 'business_partner_name', search_value(:business_partner_name), :size => 60 %></td>
+  </tr>
+  <tr>
+    <th style="text-align: right">担当者名（カナ）:</td>
+    <td><%= text_field_tag 'bp_pic_name', search_value(:bp_pic_name), :size => 60 %></td>
+  </tr>
+  <tr>
+    <th style="text-align: right">電話番号(担当者|会社):</td>
+    <td><%= text_field_tag 'tel', search_value(:tel), :size => 60 %></td>
+  </tr>
+  <tr>
+    <th style="text-align: right">Eメール:</td>
+    <td><%= text_field_tag 'email', search_value(:email), :size => 60 %></td>
+  </tr>
+</table>
+<p><%= submit_tag '　　検索　　', :name => 'search_button' %> <%= submit_tag '　　クリア　　', :name => 'clear_button' %></p>
+<br />
+<% end %>
 
 <%= paginate(@bp_pics) %>
 
-<table class="list_table">
-  <tr>
-    <th><%=getShortName('bp_pics', 'bp_pic_name') %></th>
-    <th><%=getShortName('bp_pics', 'bp_pic_name_kana') %></th>
-    <th><%=getShortName('bp_pics', 'depertment') %></th>
-    <th><%=getShortName('bp_pics', 'position') %></th>
-    <th><%=getShortName('bp_pics', 'tel_direct') %></th>
-    <th><%=getShortName('bp_pics', 'tel_mobile') %></th>
-    <th><%=getShortName('bp_pics', 'email1') %></th>
-    <th><%=getShortName('bp_pics', 'email2') %></th>
-  </tr>
+<%= form_tag url_for(controller: :bp_pic, action: :add_bp_pic_into_selected_group), method: :post do %>
+  <%= hidden_field_tag 'back_to', request_url %>
   
-<% for bp_pic in @bp_pics %>
-  <tr>
-<% if popup? %>
-  <% if params[:mode]=='eu' %>
-    <td><%=link_to h(bp_pic.bp_pic_name), '#', :onClick => "setEuBpPicToParentWindow(#{bp_pic.id},'#{bp_pic.bp_pic_name}');return false;" %></td>
-  <% else %>
-    <td><%=link_to h(bp_pic.bp_pic_name), '#', :onClick => "setBpPicToParentWindow(#{bp_pic.id},'#{bp_pic.bp_pic_name}');return false;" %></td>
-  <% end %>
-<% else %>
-    <td><%=h bp_pic.bp_pic_name %></td>
+  <p>追加先グループ:
+    <%= select_tag 'group_id', options_for_select(BpPicGroup.available_group_list), include_blank: true %>
+    <%= submit_tag '選択した取引先担当をグループに追加', :onclick => "if($('#group_id').val()==''){alert('グループを選択してください。');return false;}else if($('[name=\"ids[]\"]:checked').length <= 0){alert('取引先担当者を選択してください。');return false}else{if(!confirm('選択した担当者をグループに追加します。よろしいですか？')){return false;}}" %>
+  </p>
+
+  <table class="list_table">
+    <tr>
+      <th></th>
+      <th><%=getShortName('bp_pics', 'business_partner_id') %></th>
+      <th <%= !popup? && "colspan=2"%>><%=getShortName('bp_pics', 'bp_pic_name') %></th>
+      <th><%=getShortName('bp_pics', 'tel_mobile') %></th>
+      <th><%=getShortName('bp_pics', 'email1') %></th>  
+      <% unless popup? %>
+        <th>初会</th>
+        <th>あ</th>
+        <th>更新</th>
+      <% end %>
+    </tr>
+  
+    <% for bp_pic in @bp_pics %>
+      <tr>
+        <% if popup? %>
+          <td><%= star_links(bp_pic.business_partner) %> <%= bp_pic.business_partner.business_partner_name %></td>
+          <td><%= star_links(bp_pic) %> <%=link_to h(bp_pic.usefulname), '#', :onClick => "setBpPicToParentWindow(#{bp_pic.id},'#{bp_pic.usefulname}', '#{bp_pic.business_partner_name}');return false;" %></td>
+        <% else %>
+          <td><%= check_box_tag 'ids[]', bp_pic.id, false %></td>
+          <td><%= star_links(bp_pic.business_partner) %> <%=back_to_link bp_pic.business_partner.business_partner_name, {:controller => :business_partner, :action => :show, :id => bp_pic.business_partner} %></td>
+          <td style="border-right-color: silver;"><%= star_links(bp_pic) %> <%=back_to_link bp_pic.usefulname, {:action => :show, :id => bp_pic} %></td>
+          <td style="text-align:center;"><%= bp_pic_edit_icon(bp_pic) %></td>
+        <% end %>      
+        <td><%=h bp_pic.tel_mobile %></td>
+        <td><%=h bp_pic.email1 %></td>
+        <% unless popup? %>
+          <td><%=h _date(bp_pic.contact_date) %></td>
+          <td style="text-align:center;"><%= back_to_link(image_tag(bp_pic.contact_mail? ? 'icon-check.png' : 'icon-emailforward.png'), conatct_mail_new_delivery_mail_path(bp_pic)) %></td>
+          <td><%=h _time(bp_pic.updated_at) %></td>
+        <% end %>
+      </tr>
+    <% end %>
+    
+  </table>
 <% end %>
-    <td><%=h bp_pic.bp_pic_name_kana %></td>
-    <td><%=h bp_pic.depertment %></td>
-    <td><%=h bp_pic.position %></td>
-    <td><%=h bp_pic.tel_direct %></td>
-    <td><%=h bp_pic.tel_mobile %></td>
-    <td><%=h bp_pic.email1 %></td>
-    <td><%=h bp_pic.email2 %></td>
-  </tr>
-<% end %>
-</table>
 
 <%= paginate(@bp_pics) %>
 
 <br />
 
-<% if !popup? %>
-<%= back_to_link (getLongName('table_name','bp_pics')+'を追加'), :action => 'new', :business_partner_id => @business_partner %>
+<% unless popup? %>
+  <br />
+  <%= link_to (getLongName('table_name','business_partners')+'/'+getLongName('table_name','bp_pics')+'の新規作成'), :controller => :business_partner, :action => 'new', :flg => params[:flg], :back_to => request.env['REQUEST_URI'] %>
+  <br>
+  <br>
+  <%= form_tag ({:controller => :business_partner, :action => 'download_csv'}) do %>
+    <%= hidden_field_tag 'back_to', request_url %>
+    <%= submit_tag '担当者のリストをエクスポート', :confirm => "すべての担当者のリストをエクスポートします。よろしいですか？" %>
+  <% end %>
+  <%= form_tag({:controller => :business_partner, :action => 'upload_csv'} , {:multipart => true}) do %>
+    <%= hidden_field_tag 'back_to', request_url %>
+    <p>担当者のリストをインポート</p>  
+    <%= file_field_tag 'csv_upload_file' %><%= submit_tag 'インポート', :onclick => "if($('#csv_upload_file').val()==''){alert('ファイルを選択してください');return false;}else{if(!confirm('リストをインポートします。よろしいですか？')){return false;}}" %>
+  <% end %>
+  <%= form_tag({:controller => :business_partner, :action => 'upload_google_csv'} , {:multipart => true}) do %>
+    <%= hidden_field_tag 'back_to', request_url %>
+    <p>Googleアカウントより担当者のリストをインポート</p>  
+    <%= file_field_tag 'google_csv_upload_file' %><%= submit_tag 'インポート', :onclick => "if($('#google_csv_upload_file').val()==''){alert('ファイルを選択してください');return false;}else if($('#parson_in_charge').val()==''){alert('担当者を選択してください');return false;}else{if(!confirm('リストをインポートします。よろしいですか？')){return false;}}" %>
+  <% end %>
 <% else %>
 <script type="text/javascript">
 <!--
-function setBpPicToParentWindow(bp_pic_id, bp_pic_name) {
-  if(window.opener.document.setBpPic){
-    var bp_pic = new Object();
-    bp_pic.id = bp_pic_id;
-    bp_pic.bp_pic_name = bp_pic_name;
-    window.opener.document.setBpPic(bp_pic);
-  }
-  window.close();
-}
-function setEuBpPicToParentWindow(bp_pic_id, bp_pic_name) {
-  if(window.opener.document.setEuBpPic){
-    var bp_pic = new Object();
-    bp_pic.id = bp_pic_id;
-    bp_pic.bp_pic_name = bp_pic_name;
-    window.opener.document.setEuBpPic(bp_pic);
-  }
+function setBpPicToParentWindow(bp_pic_id, bp_pic_name, business_partner_name) {
+  var bp_pic = new Object();
+  bp_pic.business_partner_name = business_partner_name
+  bp_pic.id = bp_pic_id;
+  bp_pic.bp_pic_name = bp_pic_name;
+  window.opener.document.<%=params[:callback]%>(bp_pic);
   window.close();
 }
 // -->

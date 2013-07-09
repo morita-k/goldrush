@@ -1,0 +1,8 @@
+<h1><%=getLongName('table_name','contracts')%>新規作成</h1>
+
+<%= form_tag :action => 'quick_create' do %>
+  <%= render :partial => 'quick_form' %>
+  <%= submit_tag "登録" %>
+<% end %>
+
+<%#= link_to '戻る', :controller => 'approach', :action => 'show', :id => params[:approach] %>

@@ -7,6 +7,24 @@ module ApplicationHelper
   include NameUtil
   include TypeUtil
 
+  def url_for_bp_pic_popup(callback = :setBpPic)
+    url_for :controller => :bp_pic, :action => :list, :popup =>1, :callback => callback
+  end
+
+  def bp_pic_edit_icon(bp_pic)
+    back_to_link(image_tag((bp_pic.memo.blank? ? 'icon-edit.png' : 'icon-comment.png')), {:action => :edit, :id => bp_pic}, :title => bp_pic.memo)
+  end
+
+  def _date(date)
+    if date.blank?
+      ""
+    elsif date.year == Time.now.year
+      date.strftime("%m/%d")
+    else
+      date.strftime("%Y/%m/%d")
+    end
+  end
+
   def _time(time)
     if time.blank?
       ""
@@ -14,6 +32,8 @@ module ApplicationHelper
       t = time.to_time.getlocal
       if t.today?
         t.strftime("%H:%M")
+      elsif t.year == Time.now.year
+        t.strftime("%m/%d")
       else
         t.strftime("%Y/%m/%d")
       end
@@ -407,12 +427,12 @@ EOS
     DateTimeUtil.calHourMinuteFormat(sec)
   end
   
-    def star_links(target)
-    link_to(raw("<span id='starred_icon_#{target.id}' name='starred_icon_name_#{target.id}' style='#{_starstyle(target.starred)}'>★</span>"), "#", :onclick => "return changeFlg(#{target.id}, 'starred');")
+  def star_links(target)
+    raw "<span class=linked_star>" + link_to(raw("<span id='starred_icon_#{target.id}' class='starred_icon_#{target.id}' name='starred_icon_name_#{target.id}' style='#{_starstyle(target.starred)}'>★</span>"), {:controller => :home, :action => :change_star, :id => target.id, :model => target.class.name, :authenticity_token => form_authenticity_token}, :remote => true, :method => :put) + "</span>"
   end
   
   def _starstyle(flg)
-    flg.to_i == 1 ? "color: #ffff00" : "color: #dfdfdf"
+    "color: #{SysConfig.star_color[flg]}"
   end
   
   def popup_hidden_field
@@ -421,5 +441,11 @@ EOS
     else
       return ''
     end
+  end
+  
+  def disp_wide_link(text, url_option, option={})
+    url = url_for(url_option)
+    option[:onclick] = "disp_wide('#{url}');return false"
+    link_to text, "#", option
   end
 end

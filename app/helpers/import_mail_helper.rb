@@ -97,21 +97,23 @@ module ImportMailHelper
   
   def format_tags(tag_text, words)
     tag_text.to_s.split(",").map do |x|
-      if words.include?(x.downcase)
-        "<strong>#{x}</strong>"
+      if Tag.good_tags.include?(x.downcase)
+        "<span class='label label-inverse tag'>#{x}</span>"
+      elsif Tag.bad_tags.include?(x.downcase)
+        nil
       else
-        x
+        "<span class='label tag'>#{x}</span>"
       end
-    end.join(", ")
+    end.compact.join(" ")
   end
 
   def format_only_major_tags(tag_text, words)
     tag_text.to_s.split(",").map do |x|
-      if words.include?(x.downcase)
-        "<strong>#{x}</strong>"
+      if Tag.good_tags.include?(x.downcase)
+        "<span class='label label-inverse tag'>#{x}</span>"
       else
         nil
       end
-    end.compact.join(", ")
+    end.compact.join(" ")
   end
 end

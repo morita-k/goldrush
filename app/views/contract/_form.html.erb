@@ -4,7 +4,7 @@
 <%= hidden_field 'contract', 'approach_id', :value => params[:approach] %>
 
 <p><label for="contract_contract_status_type"><%=getLongName('contracts','contract_status_type')%></label><br />
-<%= select 'contract', 'contract_status_type', $TYPE_CONDITIONS['contract_status_type']  %>
+<%= select 'contract', 'contract_status_type', getTypes('contract_status_type')  %>
 </p>
 
 <p><label for="contract_closed_at"><%=getLongName('contracts','closed_at')%></label><br />

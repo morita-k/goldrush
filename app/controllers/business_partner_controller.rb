@@ -151,6 +151,8 @@ class BusinessPartnerController < ApplicationController
         mail_flg = true
       else
         @business_partner = BusinessPartner.new(params[:business_partner])
+        @business_partner.basic_contract_status_type ||= 'none'
+        @business_partner.nda_status_type ||= 'none'
         @business_partner.tag_text = Tag.normalize_tag(@business_partner.tag_text).join(" ")
       end
 
@@ -214,7 +216,7 @@ class BusinessPartnerController < ApplicationController
       @business_partner.save!
     end
     flash[:notice] = 'BusinessPartner was successfully updated.'
-    redirect_to :action => 'show', :id => @business_partner
+    redirect_to(back_to || {:action => 'show', :id => @business_partner})
   rescue ActiveRecord::RecordInvalid
     render :action => 'edit'
   end
@@ -226,7 +228,7 @@ class BusinessPartnerController < ApplicationController
     set_user_column @business_partner
     @business_partner.save!
     
-    redirect_to :action => 'list'
+    redirect_to(back_to || {:action => 'list'})
   end
   
   def space_trim(bp_name)
@@ -273,8 +275,12 @@ class BusinessPartnerController < ApplicationController
     end
     ext = File.extname(file.original_filename.to_s).downcase
     raise ValidationAbort.new("インポートするファイルは、拡張子がcsvのファイルでなければなりません") if ext != '.csv'
-    BusinessPartner.import_google_csv_data(file.read, SysConfig.email_prodmode?)
-    flash[:notice] = 'インポートが完了しました'
+    cnt, errors = BusinessPartner.import_google_csv_data(file.read, current_user.login, SysConfig.email_prodmode?)
+    unless errors.empty?
+      flash[:warning] = errors.to_s.gsub(/[\[\]]/, "") + "行目のデータが取りこめませんでした"
+    else
+      flash[:notice] = "全#{cnt}件のインポートが完了しました"
+    end
     redirect_to(back_to || {:action => :list})
   end
   

@@ -9,7 +9,7 @@ class BusinessPartner < ActiveRecord::Base
   has_many :bp_members, :conditions => ["bp_members.deleted = 0"]
 
   validates_presence_of :business_partner_name, :business_partner_short_name, :business_partner_name_kana
-  validates_uniqueness_of :business_partner_code, :case_sensitive => false, :scope => [:deleted, :deleted_at]
+  validates_uniqueness_of :business_partner_code, :case_sensitive => false, :allow_blank => true, :scope => [:deleted, :deleted_at]
   validates_uniqueness_of :business_partner_name, :case_sensitive => false, :scope => [:deleted, :deleted_at]
 
   def set_default
@@ -44,6 +44,8 @@ class BusinessPartner < ActiveRecord::Base
         bp.business_partner_short_name = company_name
         bp.business_partner_name_kana = company_name
         bp.sales_status_type = 'prospect'
+        bp.basic_contract_status_type ||= 'none'
+        bp.nda_status_type ||= 'none'
         bp.upper_flg = upper_flg
         bp.down_flg = down_flg
         if pic_name.include?('担当者')
@@ -153,12 +155,8 @@ class BusinessPartner < ActiveRecord::Base
   end
 end
 
-  def BusinessPartner.select_content_list
-    Employee.select("id, employee_short_name").map{|content| [content.employee_short_name, content.id]}
-  end
-  
   # 名刺管理アカウントから出力されたCSVファイルをインポート(google.csv)
-  def BusinessPartner.import_google_csv_data(readable_file, prodmode=false)
-    BusinessPartnerGoogleImporter.import_google_csv_data(readable_file, prodmode)
+  def BusinessPartner.import_google_csv_data(readable_file, userlogin, prodmode=false)
+    BusinessPartnerGoogleImporter.import_google_csv_data(readable_file, userlogin, prodmode)
   end
 end

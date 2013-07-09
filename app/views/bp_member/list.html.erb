@@ -14,7 +14,7 @@
     </td>
     <td style="text-align: right">性別：</td>
     <td>
-      <%=select_tag 'sex_type', options_for_select([[]] + $TYPE_CONDITIONS['sex_type'], session[:bp_member_search] && session[:bp_member_search][:sex_type]) %>
+      <%=select_tag 'sex_type', options_for_select([[]] + getTypes('sex_type'), session[:bp_member_search] && session[:bp_member_search][:sex_type]) %>
     </td>
   </tr>
   <tr>
@@ -24,7 +24,7 @@
     </td>
     <td style="text-align: right">ステータス：</td>
     <td>
-      <%= select_tag 'human_resource_status_type', options_for_select([[]] + $TYPE_CONDITIONS['human_resource_status_type'], session[:bp_member_search] && session[:bp_member_search][:human_resource_status_type]) %>
+      <%= select_tag 'human_resource_status_type', options_for_select([[]] + getTypes('human_resource_status_type'), session[:bp_member_search] && session[:bp_member_search][:human_resource_status_type]) %>
     </td>
     <td style="text-align: right">下流取引先：</td>
     <td>
@@ -37,7 +37,7 @@
   <tr>
     <td style="text-align: right">雇用形態：</td>
     <td>
-      <%=select_tag 'employment_type', options_for_select([[]] + $TYPE_CONDITIONS['employment_type'], session[:bp_member_search] && session[:bp_member_search][:employment_type]) %>
+      <%=select_tag 'employment_type', options_for_select([[]] + getTypes('employment_type'), session[:bp_member_search] && session[:bp_member_search][:employment_type]) %>
     </td>
     <td style="text-align: right">単価下限：</td>
     <td>
@@ -69,17 +69,9 @@
 <% for bp_member in @bp_members %>
   <tr>
 <% if popup? %>
-  <% if bp_member.human_resource.human_resource_name.blank? %>
-    <td><%=link_to h(bp_member.human_resource.initial), '#', :onClick => "setBpMember(#{bp_member.id},'#{bp_member.business_partner.business_partner_name}','#{bp_member.human_resource.initial}');return false;" %></td>
-  <% else %>
-    <td><span class="linked_star"><%= star_links(bp_member.human_resource) %><%=link_to h(bp_member.human_resource.human_resource_name), '#', :onClick => "setBpMember(#{bp_member.id},'#{bp_member.business_partner.business_partner_name}','#{bp_member.human_resource.human_resource_name}');return false;" %></td>
-  <% end %>
+    <td><%= star_links(bp_member.human_resource) %> <%=link_to h(bp_member.human_resource.useful_name), '#', :onClick => "setBpMember(#{bp_member.id},'#{bp_member.business_partner.business_partner_name}','#{bp_member.human_resource.initial}');return false;" %></td>
 <% else %>
-  <% if bp_member.human_resource.human_resource_name.blank? %>
-    <td><%=back_to_link h(bp_member.human_resource.initial), :action => :show, :id => bp_member %></td>
-  <% else %>
-    <td><span class="linked_star"><%= star_links(bp_member.human_resource) %><%=back_to_link h(bp_member.human_resource.human_resource_name), :action => :show, :id => bp_member %></td>
-  <% end %>
+    <td><%= star_links(bp_member.human_resource) %> <%=back_to_link h(bp_member.human_resource.useful_name), :action => :show, :id => bp_member %></td>
 <% end %>
     <td><%=h bp_member.human_resource.age %></td>
     <td><%=h bp_member.human_resource.sex_type_short_name %></td>

@@ -1,0 +1,39 @@
+<h1><%= getLongName('table_name','mail_templates')%> 詳細</h1>
+
+<table class="show_table">
+
+  <tr>
+    <th><%= getLongName('mail_templates', 'mail_template_category') %></th>
+    <td><%= @mail_template.mail_template_category %></td>
+  </tr>
+
+  <tr>
+    <th><%= getLongName('mail_templates', 'mail_template_name') %></th>
+    <td><%= @mail_template.mail_template_name %></td>
+  </tr>
+
+  <tr>
+    <th><%= getLongName('mail_templates', 'mail_cc') %></th>
+    <td><%= @mail_template.mail_cc %></td>
+  </tr>
+
+  <tr>
+    <th><%= getLongName('mail_templates', 'mail_bcc') %></th>
+    <td><%= @mail_template.mail_bcc %></td>
+  </tr>
+
+  <tr>
+    <th><%= getLongName('mail_templates', 'subject') %></th>
+    <td><%= @mail_template.subject %></td>
+  </tr>
+
+  <tr>
+    <td colspan=2><%= simple_format @mail_template.content %></td>
+  </tr>
+
+</table>
+
+<%= back_to_link '編集', edit_mail_template_path(@mail_template) %> |
+<%= link_to '削除', {:id => @mail_template, :authenticity_token => form_authenticity_token}, method: :delete, data: { confirm: '削除します。よろしいですか?' } %> |
+<%= link_or_back '戻る', mail_templates_path %>
+

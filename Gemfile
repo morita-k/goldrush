@@ -21,9 +21,11 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
-#group :test, :development do
+group :test, :development do
 #  gem "rspec-rails", "~> 2.0"
-#end
+  gem 'simplecov', :require => false
+  gem 'simplecov-rcov', :require => false
+end
 
 gem 'jquery-rails'
 

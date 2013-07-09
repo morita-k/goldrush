@@ -21,15 +21,15 @@
   <th colspan=2>単価差額</th><td colspan=2><%=h (@approach_upper_contract_term.payment_view - @approach_down_contract_term.payment_view) %>万円</td>
 </tr>
 <tr>
-  <th rowspan=17>提案上下流契約条件</th>
+  <th rowspan=20>提案上下流契約条件</th>
   <th></th>
   <th>提案上流契約条件</th>
   <th>提案下流契約条件</th>
 </tr>
 <tr>
   <th><%= getLongName('contract_terms', 'term_type') %></th>
-  <td><%=h @approach_upper_contract_term.term_type %></td>
-  <td><%=h @approach_down_contract_term.term_type %></td>
+  <td><%=h @approach_upper_contract_term.term_type_name%></td>
+  <td><%=h @approach_down_contract_term.term_type_name%></td>
 </tr>
 <tr>
   <th><%= getLongName('contract_terms', 'payment') %></th>
@@ -37,9 +37,14 @@
   <td><%=h @approach_down_contract_term.payment_view %>万円</td>
 </tr>
 <tr>
-  <th><%= getLongName('contract_terms', 'time_adjust_flg') %></th>
-  <td><%=h (@approach_upper_contract_term.time_adjust_flg == 1 ? "有" : "無" ) %></td>
-  <td><%=h (@approach_down_contract_term.time_adjust_flg == 1 ? "有" : "無" ) %></td>
+  <th><%= getLongName('contract_terms', 'tax_type') %></th>
+  <td><%=h (@approach_upper_contract_term.tax_type) %></td>
+  <td><%=h (@approach_down_contract_term.tax_type) %></td>
+</tr>
+<tr>
+  <th><%= getLongName('contract_terms', 'time_adjust_type') %></th>
+  <td><%=h (@approach_upper_contract_term.time_adjust_type) %></td>
+  <td><%=h (@approach_down_contract_term.time_adjust_type) %></td>
 </tr>
 <tr>
   <th><%= getLongName('contract_terms', 'time_adjust_upper') %></th>
@@ -57,9 +62,9 @@
   <td><%=h @approach_down_contract_term.time_adjust_under %></td>
 </tr>
 <tr>
-  <th><%= getLongName('contract_terms', 'time_adjust_type') %></th>
-  <td><%=h @approach_upper_contract_term.time_adjust_type %></td>
-  <td><%=h @approach_down_contract_term.time_adjust_type %></td>
+  <th><%= getLongName('contract_terms', 'time_adjust_base_type') %></th>
+  <td><%=h @approach_upper_contract_term.time_adjust_base_type_name%></td>
+  <td><%=h @approach_down_contract_term.time_adjust_base_type_name%></td>
 </tr>
 <tr>
   <th><%= getLongName('contract_terms', 'over_time_payment') %></th>
@@ -72,14 +77,24 @@
   <td><%=h @approach_down_contract_term.under_time_penalty %>円</td>
 </tr>
 <tr>
-  <th><%= getLongName('contract_terms', 'cutoff_date') %></th>
-  <td><%=h @approach_upper_contract_term.cutoff_date %></td>
-  <td><%=h @approach_down_contract_term.cutoff_date %></td>
+  <th><%= getLongName('contract_terms', 'time_adjust_time') %></th>
+  <td><%=h @approach_upper_contract_term.time_adjust_time %></td>
+  <td><%=h @approach_down_contract_term.time_adjust_time %></td>
+</tr>
+<tr>
+  <th><%= getLongName('contract_terms', 'cutoff_date_type') %></th>
+  <td><%=h @approach_upper_contract_term.cutoff_date_type_name%></td>
+  <td><%=h @approach_down_contract_term.cutoff_date_type_name%></td>
 </tr>
 <tr>
   <th><%= getLongName('contract_terms', 'payment_sight_type') %></th>
-  <td><%=h @approach_upper_contract_term.payment_sight_type %></td>
-  <td><%=h @approach_down_contract_term.payment_sight_type %></td>
+  <td><%=h @approach_upper_contract_term.payment_sight_type_name%></td>
+  <td><%=h @approach_down_contract_term.payment_sight_type_name%></td>
+</tr>
+<tr>
+  <th><%= getLongName('contract_terms', 'contract_start_date') %></th>
+  <td><%=h @approach_upper_contract_term.contract_start_date %></td>
+  <td><%=h @approach_down_contract_term.contract_start_date %></td>
 </tr>
 <tr>
   <th><%= getLongName('contract_terms', 'contract_end_date') %></th>
@@ -103,12 +118,12 @@
 </tr>
 <tr>
   <th><%= getLongName('contract_terms', 'memo') %></th>
-  <td><%=h @approach_upper_contract_term.memo %></td>
-  <td><%=h @approach_down_contract_term.memo %></td>
+  <td><%=simple_format @approach_upper_contract_term.memo %></td>
+  <td><%=simple_format @approach_down_contract_term.memo %></td>
 </tr>
 
 <tr>
-  <th colspan=2><%= getLongName('approaches', 'memo') %></th><td colspan=2><%=h @approach.memo %></td>
+  <th colspan=2><%= getLongName('approaches', 'memo') %></th><td colspan=2><%=simple_format @approach.memo %></td>
 </tr>
 </table>
 <%= link_to '編集', :action => 'edit', :id => @approach, :biz_offer_id => @biz_offer %> |
@@ -139,7 +154,7 @@
 <%= form_tag do %>
   <% if @approach.approach_status_type == 'approaching' %>
     <h3>提案ステータス変更ボタン</h3>
-    <%= submit_tag '　　提案成功　　', :name => 'approach_success', :onclick=>"return #{confirm_javascript_function("次は面談を作成してくださいね。")}" %> 
+    <%= submit_tag '　　提案成功　　', :name => 'approach_success', :confirm => "次は面談を作成してくださいね。" %> 
     <%= submit_tag '　　提案調整　　', :name => 'approach_adjustment' %> 
     <%= submit_tag '　　提案却下　　', :name => 'approach_reject' %> 
   <% elsif @approach.approach_status_type == 'adjust' %>
@@ -176,7 +191,7 @@
     <% end %>
     <% if @approach.last_interview %>
       <% if @approach.last_interview.interview_status_type == 'interview_waiting' %>
-        <%= submit_tag '　　面談結果待ち　　', :name => 'result_wait', :onclick=>"return #{confirm_javascript_function("面談ステータスを面談結果待ちに変更します。よろしいですか？")}" %> 
+        <%= submit_tag '　　面談結果待ち　　', :name => 'result_wait', :confirm => "面談ステータスを面談結果待ちに変更します。よろしいですか？" %> 
         <% #面談ステータスを「面談結果待ち」にする %>
       <% elsif @approach.last_interview.interview_status_type == 'result_waiting' %>
         <%= submit_tag '　　面談ＯＫ　　', :name => 'interview_finish', :onclick=>"return #{confirm_javascript_function("面談結果をＯＫとして更新します。よろしいですか？")}" %> 
