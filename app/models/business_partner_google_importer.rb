@@ -52,7 +52,7 @@ class BusinessPartnerGoogleImporter < BusinessPartner
           end
         else
           bp_pic = BpPic.new
-          if bp = BusinessPartner.where(:business_partner_name => r["Organization 1 - Name"]).first
+          if bp = BusinessPartner.where(:business_partner_name => r["Organization 1 - Name"], :deleted => 0).first
             bp_pic.business_partner = bp
           else
             bp = BusinessPartner.new
