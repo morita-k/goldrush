@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
 require 'auto_type_name'
+require 'date_time_util'
 
 class DeliveryMail < ActiveRecord::Base
   include AutoTypeName
@@ -38,19 +39,17 @@ class DeliveryMail < ActiveRecord::Base
     self.mail_send_status_type ||= 'ready'
   end
   
-  def perse_planned_setting_at(time_zone)
+  def perse_planned_setting_at(user)
     unless planned_setting_at_time.blank? || planned_setting_at_date.blank?
-      org = Time.zone
-      Time.zone = time_zone
-      self.planned_setting_at = Time.zone.parse(planned_setting_at_date.to_s + " " + planned_setting_at_time + ":00:00")
-      Time.zone = org
+      self.planned_setting_at = user.zone_parse(planned_setting_at_date.to_s + " " + planned_setting_at_time + ":00:00")
     end
   end
 
   def setup_planned_setting_at(zone_now)
     self.planned_setting_at = zone_now
-    self.planned_setting_at_date = planned_setting_at.in_time_zone(zone_now.time_zone).strftime("%Y/%m/%d")
-    self.planned_setting_at_time = planned_setting_at.in_time_zone(zone_now.time_zone).hour
+    date, hour = DateTimeUtil.split_date_time(zone_now)
+    self.planned_setting_at_date = date
+    self.planned_setting_at_time = hour
   end
 
   def attachment_files

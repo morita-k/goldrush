@@ -78,4 +78,13 @@ module DateTimeUtil
     end
   end
 
+  def DateTimeUtil.split_date_time(now)
+    [now.in_time_zone(now.time_zone).strftime("%Y/%m/%d"), now.in_time_zone(now.time_zone).hour]
+  end
+
+  def DateTimeUtil.split_date_hour_minute(now)
+    x = now.in_time_zone(now.time_zone)
+    [x.strftime("%Y/%m/%d"), sprintf("%0.2d", x.hour), (x.min / 10).to_s + "0"]
+  end
+
 end

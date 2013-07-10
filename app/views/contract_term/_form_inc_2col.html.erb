@@ -1,0 +1,113 @@
+<% eval("@#{upper_model_name} = upper_contract_term") %>
+<% eval("@#{down_model_name} = down_contract_term") %>
+<tr>
+  <th>契約流契約条件<%= hidden_field upper_model_name, 'lock_version'  %><%= hidden_field down_model_name, 'lock_version'  %></th>
+  <th>上流</th>
+  <th>下流</th>
+</tr>
+<% if contract %>
+<tr>
+  <th><label for="contract_upper_contract_status_type">契約条件ステータス</label></th>
+  <td><%= select :contract, 'upper_contract_status_type', getTypes('upper_contract_status_type')  %></td>
+  <td><%= select :contract, 'down_contract_status_type', getTypes('down_contract_status_type')  %></td>
+</tr>
+<% end %>
+<tr>
+  <th><label for="<%=upper_model_name%>_term_type"><%=getLongName('contract_terms','term_type')%></label></th>
+  <td><%= select upper_model_name, 'term_type', getTypes('term_type')  %></td>
+  <td><%= select down_model_name, 'term_type', getTypes('term_type')  %></td>
+</tr>
+<tr>
+  <th><label for="<%=upper_model_name%>_payment"><%=getLongName('contract_terms','payment')%>(*)</label></th>
+  <td><%= text_field upper_model_name, 'payment_view', :size => 6 %>万円</td>
+  <td><%= text_field down_model_name, 'payment_view', :size => 6 %>万円</td>
+</tr>
+<tr>
+  <th><label for="<%=upper_model_name%>_tax_type"><%=getLongName('contract_terms','tax_type')%></label></th>
+  <td><%= select upper_model_name, 'tax_type', getTypes('tax_type')  %></td>
+  <td><%= select down_model_name, 'tax_type', getTypes('tax_type')  %></td>
+</tr>
+<tr>
+  <th><label for="<%=upper_model_name%>_time_adjust_type"><%=getLongName('contract_terms','time_adjust_type')%></label></th>
+  <td><%= select upper_model_name, 'time_adjust_type', getTypes('time_adjust_type')  %></td>
+  <td><%= select down_model_name, 'time_adjust_type', getTypes('time_adjust_type')  %></td>
+</tr>
+<tr>
+  <th><label for="<%=upper_model_name%>_time_adjust_upper"><%=getLongName('contract_terms','time_adjust_upper')%></label></th>
+  <td><%= text_field upper_model_name, 'time_adjust_upper'  %></td>
+  <td><%= text_field down_model_name, 'time_adjust_upper'  %></td>
+</tr>
+<tr>
+  <th><label for="<%=upper_model_name%>_time_adjust_limit"><%=getLongName('contract_terms','time_adjust_limit')%></label></th>
+  <td><%= text_field upper_model_name, 'time_adjust_limit'  %></td>
+  <td><%= text_field down_model_name, 'time_adjust_limit'  %></td>
+</tr>
+<tr>
+  <th><label for="<%=upper_model_name%>_time_adjust_under"><%=getLongName('contract_terms','time_adjust_under')%></label></th>
+  <td><%= text_field upper_model_name, 'time_adjust_under'  %></td>
+  <td><%= text_field down_model_name, 'time_adjust_under'  %></td>
+</tr>
+<tr>
+  <th><label for="<%=upper_model_name%>time_adjust_time"><%=getLongName('contract_terms','time_adjust_time')%></label></th>
+  <td><%= select upper_model_name, 'time_adjust_time', [15,30,60]  %></td>
+  <td><%= select down_model_name, 'time_adjust_time', [15,30,60]  %></td>
+</tr>
+<tr>
+  <th><label for="<%=upper_model_name%>time_adjust_base_type"><%=getLongName('contract_terms','time_adjust_base_type')%></label></th>
+  <td><%= select upper_model_name, 'time_adjust_base_type', getTypes('time_adjust_base_type')  %></td>
+  <td><%= select down_model_name, 'time_adjust_base_type', getTypes('time_adjust_base_type')  %></td>
+</tr>
+<tr>
+  <th><label for="<%=upper_model_name%>_over_time_payment"><%=getLongName('contract_terms','over_time_payment')%></label></th>
+  <td><%= text_field upper_model_name, 'over_time_payment'  %></td>
+  <td><%= text_field down_model_name, 'over_time_payment'  %></td>
+</tr>
+<tr>
+  <th><label for="<%=upper_model_name%>_under_time_penalty"><%=getLongName('contract_terms','under_time_penalty')%></label></th>
+  <td><%= text_field upper_model_name, 'under_time_penalty'  %></td>
+  <td><%= text_field down_model_name, 'under_time_penalty'  %></td>
+</tr>
+<tr>
+  <th><label for="<%=upper_model_name%>_cutoff_date_type"><%=getLongName('contract_terms','cutoff_date_type')%></label></th>
+  <td><%= select upper_model_name, 'cutoff_date_type', getTypes('cutoff_date_type')  %></td>
+  <td><%= select down_model_name, 'cutoff_date_type', getTypes('cutoff_date_type')  %></td>
+</tr>
+<tr>
+  <th><label for="<%=upper_model_name%>_payment_sight_type"><%=getLongName('contract_terms','payment_sight_type')%></label></th>
+  <td><%= select upper_model_name, 'payment_sight_type', getTypes('payment_sight_type')  %></td>
+  <td><%= select down_model_name, 'payment_sight_type', getTypes('payment_sight_type')  %></td>
+</tr>
+<tr>
+  <th><label for="<%=upper_model_name%>_contract_start_date"><%=getLongName('contract_terms','contract_start_date')%>(*)</label></th>
+  <td><%= date_field upper_model_name, 'contract_start_date'  %></td>
+  <td><%= date_field down_model_name, 'contract_start_date'  %></td>
+</tr>
+<tr>
+  <th><label for="<%=upper_model_name%>_contract_end_date"><%=getLongName('contract_terms','contract_end_date')%>(*)</label></th>
+  <td><%= date_field upper_model_name, 'contract_end_date'  %></td>
+  <td><%= date_field down_model_name, 'contract_end_date'  %></td>
+</tr>
+<tr>
+  <th><label for="<%=upper_model_name%>_contract_renewal_unit"><%=getLongName('contract_terms','contract_renewal_unit')%>(*)</label></th>
+  <td><%= text_field upper_model_name, 'contract_renewal_unit'  %></td>
+  <td><%= text_field down_model_name, 'contract_renewal_unit'  %></td>
+</tr>
+<tr>
+  <th><label for="<%=upper_model_name%>_contract_renewal_terms"><%=getLongName('contract_terms','contract_renewal_terms')%>(*)</label></th>
+  <td><%= text_field upper_model_name, 'contract_renewal_terms'  %></td>
+  <td><%= text_field down_model_name, 'contract_renewal_terms'  %></td>
+</tr>
+<tr>
+  <th><label for="<%=upper_model_name%>_other_terms">ペナルティーなど</label></th>
+  <td><%= resizable_area upper_model_name, 'other_terms'  %></td>
+  <td><%= resizable_area down_model_name, 'other_terms'  %></td>
+</tr>
+<tr>
+  <th><label for="<%=upper_model_name%>_memo"><%=getLongName('contract_terms','memo')%></label></th>
+  <td><%= resizable_area upper_model_name, 'memo'  %></td>
+  <td><%= resizable_area down_model_name, 'memo'  %></td>
+</tr>
+
+<!--[eoform:contract_term]-->
+
+

@@ -12,6 +12,7 @@ class Approach < ActiveRecord::Base
   belongs_to :approach_pic, :class_name => 'User'
   has_many :interviews, :conditions => ["interviews.deleted = 0"]
   has_one :contract
+  has_many :contracts, :conditions => ["contracts.deleted = 0"], :order => "id"
   
   validates_presence_of     :biz_offer_id, :bp_member_id
 
@@ -38,7 +39,9 @@ class Approach < ActiveRecord::Base
       [:working, :finished, :finish, ->(a){
         # 提案が完了する際に、照会と人材のステータスも変化する
         biz_offer.change_status(:finish)
+        biz_offer.save!
         bp_member.human_resource.change_status(:finish)
+        bp_member.human_resource.save!
         return a.to
       }],
     ])
