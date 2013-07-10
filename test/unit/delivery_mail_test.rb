@@ -39,6 +39,7 @@ class DeliveryMailTest < ActiveSupport::TestCase
     assert_equal(errs_before + 1, DeliveryError.find(:all).size)
     
     err = DeliveryError.find(:all).last
+    assert_equal(2, err.delivery_mail_id)
     assert_equal("send_error", err.mail_error_type)
     assert_equal(4, err.bp_pic_id)
   end

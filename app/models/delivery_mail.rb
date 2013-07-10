@@ -107,7 +107,7 @@ class DeliveryMail < ActiveRecord::Base
         target.message_id = current_mail.header['Message-ID'].to_s
         target.save!
       rescue => e
-        DeliveryError.send_error(target.bp_pic, e).save!
+        DeliveryError.send_error(mail.id, target.bp_pic, e).save!
         
         error_str = "Delivery Mail Send Error: " + e.message + "\n" + e.backtrace.join("\n")
         SystemLog.error('delivery mail', 'mail send error',  error_str, 'delivery mail')
@@ -127,7 +127,7 @@ class DeliveryMail < ActiveRecord::Base
     DeliveryMail.where(:created_user => fetch_key).each {|mail|
       self.send_mail_to_each_targets(mail)
     }
-
+    
     DeliveryMail.
       where(:created_user => fetch_key).
       update_all(:mail_status_type => 'send',:mail_send_status_type => 'finished',:send_end_at => Time.now)
