@@ -83,7 +83,7 @@ EOS
       return contact_mail_create(params[:bp_pic_id])
     end
     @delivery_mail = DeliveryMail.new(params[:delivery_mail])
-    @delivery_mail.perse_planned_setting_at(current_user.zone)
+    @delivery_mail.perse_planned_setting_at(current_user) # zone
     respond_to do |format|
       begin
         set_user_column(@delivery_mail)
@@ -135,7 +135,7 @@ EOS
     respond_to do |format|
       begin
         @delivery_mail.attributes = params[:delivery_mail]
-        @delivery_mail.perse_planned_setting_at(current_user.zone)
+        @delivery_mail.perse_planned_setting_at(current_user) # zone
         set_user_column(@delivery_mail)
         ActiveRecord::Base.transaction do
           @delivery_mail.save!

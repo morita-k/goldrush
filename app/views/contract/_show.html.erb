@@ -1,127 +1,137 @@
+<% upper_contract_term = contract.upper_contract_term %>
+<% down_contract_term = contract.down_contract_term %>
+
 <table class="show_table">
 <tr>
-  <th colspan=2><%= getLongName('contracts', 'contract_status_type') %></th><td colspan=2><%=h @contract.contract_status_type_name%></td>
+  <th><%= getLongName('contracts', 'contract_status_type') %></th><td colspan=2><%=h contract.contract_status_type_name%></td>
 </tr>
 <tr>
-  <th colspan=2><%= getLongName('contracts', 'closed_at') %></th><td colspan=2><%=h @contract.closed_at %></td>
+  <th><%= getLongName('contracts', 'closed_at') %></th><td colspan=2><%=h contract.closed_at %></td>
 </tr>
 <tr>
-  <th colspan=2><%= getLongName('contracts', 'contracted_at') %></th><td colspan=2><%=h @contract.contracted_at %></td>
+  <th><%= getLongName('contracts', 'contracted_at') %></th><td colspan=2><%=h contract.contracted_at %></td>
 </tr>
 <tr>
-  <th colspan=2>契約担当者名</th><td colspan=2><%=h @contract.contract_employee_name %></td>
+  <th>契約担当者名</th><td colspan=2><%=h contract.contract_employee_name %></td>
 </tr>
 <tr>
-  <th colspan=2><%= getLongName('contracts', 'start_date') %></th><td colspan=2><%=h @contract.start_date %></td>
+  <th><%= getLongName('contracts', 'start_date') %></th><td colspan=2><%=h contract.start_date %></td>
 </tr>
 <tr>
-  <th colspan=2><%= getLongName('contracts', 'end_date') %></th><td colspan=2><%=h @contract.end_date %></td>
+  <th><%= getLongName('contracts', 'end_date') %></th><td colspan=2><%=h contract.end_date %></td>
 </tr>
 <tr>
-  <th colspan=2>単価差額</th><td colspan=2><%=h (@upper_contract_term.payment_view - @down_contract_term.payment_view) %>万円</td>
+  <th>粗利</th><td colspan=2><%=h contract.payment_diff_veiw %>万円</td>
 </tr>
 <tr>
-  <th rowspan=20>契約上下流契約条件</th>
-  <th></th>
-  <th>契約上流契約条件</th>
-  <th>契約下流契約条件</th>
+  <th>粗利率</th><td colspan=2><%=h contract.payment_redio %>%</td>
+</tr>
+<tr>
+  <th>契約流契約条件</th>
+  <th>上流</th>
+  <th>下流</th>
+</tr>
+<tr>
+  <th>契約条件ステータス</th>
+  <td><%=h contract.upper_contract_status_type_name %></td>
+  <td><%=h contract.down_contract_status_type_name %></td>
 </tr>
 <tr>
   <th><%= getLongName('contract_terms', 'term_type') %></th>
-  <td><%=h @upper_contract_term.term_type_name%></td>
-  <td><%=h @down_contract_term.term_type_name%></td>
+  <td><%=h upper_contract_term.term_type_name%></td>
+  <td><%=h down_contract_term.term_type_name%></td>
 </tr>
 <tr>
   <th><%= getLongName('contract_terms', 'payment') %></th>
-  <td><%=h @upper_contract_term.payment_view %>万円</td>
-  <td><%=h @down_contract_term.payment_view %>万円</td>
+  <td><%=h upper_contract_term.payment_view %>万円</td>
+  <td><%=h down_contract_term.payment_view %>万円</td>
 </tr>
 <tr>
   <th><%= getLongName('contract_terms', 'tax_type') %></th>
-  <td><%= @upper_contract_term.tax_type_name%></td>
-  <td><%= @down_contract_term.tax_type_name%></td>
+  <td><%= upper_contract_term.tax_type_name%></td>
+  <td><%= down_contract_term.tax_type_name%></td>
 </tr>
 <tr>
   <th><%= getLongName('contract_terms', 'time_adjust_type') %></th>
-  <td><%= @upper_contract_term.time_adjust_type_name%></td>
-  <td><%= @down_contract_term.time_adjust_type_name%></td>
+  <td><%= upper_contract_term.time_adjust_type_name%></td>
+  <td><%= down_contract_term.time_adjust_type_name%></td>
 </tr>
 <tr>
   <th><%= getLongName('contract_terms', 'time_adjust_upper') %></th>
-  <td><%=h @upper_contract_term.time_adjust_upper %></td>
-  <td><%=h @down_contract_term.time_adjust_upper %></td>
+  <td><%=h upper_contract_term.time_adjust_upper %></td>
+  <td><%=h down_contract_term.time_adjust_upper %></td>
 </tr>
 <tr>
   <th><%= getLongName('contract_terms', 'time_adjust_limit') %></th>
-  <td><%=h @upper_contract_term.time_adjust_limit %></td>
-  <td><%=h @down_contract_term.time_adjust_limit %></td>
+  <td><%=h upper_contract_term.time_adjust_limit %></td>
+  <td><%=h down_contract_term.time_adjust_limit %></td>
 </tr>
 <tr>
   <th><%= getLongName('contract_terms', 'time_adjust_under') %></th>
-  <td><%=h @upper_contract_term.time_adjust_under %></td>
-  <td><%=h @down_contract_term.time_adjust_under %></td>
+  <td><%=h upper_contract_term.time_adjust_under %></td>
+  <td><%=h down_contract_term.time_adjust_under %></td>
 </tr>
 <tr>
   <th><%= getLongName('contract_terms', 'time_adjust_type') %></th>
-  <td><%=h @upper_contract_term.time_adjust_base_type_name%></td>
-  <td><%=h @down_contract_term.time_adjust_base_type_name%></td>
+  <td><%=h upper_contract_term.time_adjust_base_type_name%></td>
+  <td><%=h down_contract_term.time_adjust_base_type_name%></td>
 </tr>
 <tr>
   <th><%= getLongName('contract_terms', 'over_time_payment') %></th>
-  <td><%=h @upper_contract_term.over_time_payment %>円</td>
-  <td><%=h @down_contract_term.over_time_payment %>円</td>
+  <td><%=h upper_contract_term.over_time_payment %>円</td>
+  <td><%=h down_contract_term.over_time_payment %>円</td>
 </tr>
 <tr>
   <th><%= getLongName('contract_terms', 'under_time_penalty') %></th>
-  <td><%=h @upper_contract_term.under_time_penalty %>円</td>
-  <td><%=h @down_contract_term.under_time_penalty %>円</td>
+  <td><%=h upper_contract_term.under_time_penalty %>円</td>
+  <td><%=h down_contract_term.under_time_penalty %>円</td>
 </tr>
 <tr>
   <th><%= getLongName('contract_terms', 'time_adjust_time') %></th>
-  <td><%=h @upper_contract_term.time_adjust_time %></td>
-  <td><%=h @down_contract_term.time_adjust_time %></td>
+  <td><%=h upper_contract_term.time_adjust_time %></td>
+  <td><%=h down_contract_term.time_adjust_time %></td>
 </tr>
 <tr>
   <th><%= getLongName('contract_terms', 'cutoff_date_type') %></th>
-  <td><%=h @upper_contract_term.cutoff_date_type_name%></td>
-  <td><%=h @down_contract_term.cutoff_date_type_name%></td>
+  <td><%=h upper_contract_term.cutoff_date_type_name%></td>
+  <td><%=h down_contract_term.cutoff_date_type_name%></td>
 </tr>
 <tr>
   <th><%= getLongName('contract_terms', 'payment_sight_type') %></th>
-  <td><%=h @upper_contract_term.payment_sight_type_name%></td>
-  <td><%=h @down_contract_term.payment_sight_type_name%></td>
+  <td><%=h upper_contract_term.payment_sight_type_name%></td>
+  <td><%=h down_contract_term.payment_sight_type_name%></td>
 </tr>
 <tr>
   <th><%= getLongName('contract_terms', 'contract_start_date') %></th>
-  <td><%=h @upper_contract_term.contract_start_date %></td>
-  <td><%=h @down_contract_term.contract_start_date %></td>
+  <td><%=h upper_contract_term.contract_start_date %></td>
+  <td><%=h down_contract_term.contract_start_date %></td>
 </tr>
 <tr>
   <th><%= getLongName('contract_terms', 'contract_end_date') %></th>
-  <td><%=h @upper_contract_term.contract_end_date %></td>
-  <td><%=h @down_contract_term.contract_end_date %></td>
+  <td><%=h upper_contract_term.contract_end_date %></td>
+  <td><%=h down_contract_term.contract_end_date %></td>
 </tr>
 <tr>
   <th><%= getLongName('contract_terms', 'contract_renewal_unit') %></th>
-  <td><%=h @upper_contract_term.contract_renewal_unit %></td>
-  <td><%=h @down_contract_term.contract_renewal_unit %></td>
+  <td><%=h upper_contract_term.contract_renewal_unit %></td>
+  <td><%=h down_contract_term.contract_renewal_unit %></td>
 </tr>
 <tr>
   <th><%= getLongName('contract_terms', 'contract_renewal_terms') %></th>
-  <td><%=simple_format h(h @upper_contract_term.contract_renewal_terms) %></td>
-  <td><%=simple_format h(h @down_contract_term.contract_renewal_terms) %></td>
+  <td><%=simple_format h(h upper_contract_term.contract_renewal_terms) %></td>
+  <td><%=simple_format h(h down_contract_term.contract_renewal_terms) %></td>
 </tr>
 <tr>
-  <th><%= getLongName('contract_terms', 'other_terms') %></th>
-  <td><%=simple_format h(h @upper_contract_term.other_terms) %></td>
-  <td><%=simple_format h(h @down_contract_term.other_terms) %></td>
+  <th>ペナルティーなど</th>
+  <td><%=simple_format h(h upper_contract_term.other_terms) %></td>
+  <td><%=simple_format h(h down_contract_term.other_terms) %></td>
 </tr>
 <tr>
   <th><%= getLongName('contract_terms', 'memo') %></th>
-  <td><%=simple_format @upper_contract_term.memo %></td>
-  <td><%=simple_format @down_contract_term.memo %></td>
+  <td><%=simple_format upper_contract_term.memo %></td>
+  <td><%=simple_format down_contract_term.memo %></td>
 </tr>
 <tr>
-  <th colspan=2><%= getLongName('contracts', 'memo') %></th><td colspan=2><%=simple_format h(@contract.memo) %></td>
+  <th><%= getLongName('contracts', 'memo') %></th><td colspan=2><%=simple_format h(contract.memo) %></td>
 </tr>
 </table>

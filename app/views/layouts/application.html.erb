@@ -21,12 +21,13 @@
         <ul class="nav">
         <% if logged_in? && !popup? %>
           <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">プロジェクト管理<b class="caret"></b></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">案件管理<b class="caret"></b></a>
             <ul class="dropdown-menu">
               <li><%= link_to '取引先', :controller => '/bp_pic' %></li>
-              <li><%= link_to '照会', :controller => '/biz_offer' %></li>
-              <li><%= link_to '所属', :controller => '/bp_member' %></li>
-              <li><%= link_to 'タグ管理', :controller => '/tags' %></li>
+              <li><%= link_to '契約', :controller => '/contract' %></li>
+              <li><%= link_to '案件照会', :controller => '/biz_offer' %></li>
+              <li><%= link_to '人材所属', :controller => '/bp_member' %></li>
+              <li class="divider"></li>
               <li><%= link_to 'プロジェクト', :controller => '/project' %></li>
               <li><%= link_to '売り上げ集計', :controller => '/project', :action => :summary %></li>
             </ul>
@@ -34,10 +35,14 @@
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">メール<b class="caret"></b></a>
             <ul class="dropdown-menu">
+              <li>メール送信</li>
               <li><%= link_to 'メールグループ', :controller => '/bp_pic_groups' %></li>
               <li><%= link_to 'メールテンプレート', :controller => '/mail_templates' %></li>
+              <li class="divider"></li>
+              <li>メール受信</li>
               <li><%= link_to '取り込みメール', :controller => '/import_mail' %></li>
               <li><%= link_to '解析テンプレート', :controller => '/analysis_template' %></li>
+              <li><%= link_to 'タグ管理', :controller => '/tags' %></li>
             </ul>
           </li>
           <li class="dropdown">

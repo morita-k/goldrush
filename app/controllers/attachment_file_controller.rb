@@ -20,26 +20,7 @@ class AttachmentFileController < ApplicationController
     
     Contract.transaction do
       attachment_file = AttachmentFile.new
-      
-      # attachmentFileに項目を入れるメソッド
-      # 親テーブル名
-      table_name = params[:parent_table]
-      attachment_file.parent_table_name = table_name
-      # 親テーブルId
-      parent_id = params[:parent_id]
-      attachment_file.parent_id = parent_id
-      # 添付ファイル名（オリジナルのファイル名）
-      attachment_file.file_name = upfile.original_filename
-      # 拡張子
-      ext = attachment_file.check_and_get_ext(upfile.original_filename)
-      attachment_file.extention = ext
-      
-      set_user_column attachment_file
-      attachment_file.save!
-      
-      # 保存するファイル名
-      store_file_name = attachment_file.create_store_parent_table_name
-      attachment_file.store(upfile, store_file_name)
+      attachment_file.create_and_store!(upfile, params[:parent_id], upfile.original_filename, params[:parent_table], current_user.login)
     end
     
     flash[:notice] = 'AttachmentFile was successfully uploaded.'

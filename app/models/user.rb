@@ -21,20 +21,30 @@ class User < ActiveRecord::Base
     'Tokyo'
   end
 
-  def zone_now
+  def zoned(&block)
     org = Time.zone
     Time.zone = zone
-    now = Time.zone.now
+    return block.call
+  ensure
     Time.zone = org
-    return now
+  end
+
+  def zone_now
+    zoned do
+      return Time.zone.now
+    end
   end
 
   def zone_at(at)
-    org = Time.zone
-    Time.zone = zone
-    now = Time.zone.at(at)
-    Time.zone = org
-    return now
+    zoned do
+      return Time.zone.at(at)
+    end
+  end
+
+  def zone_parse(str)
+    zoned do
+      return Time.zone.parse(str)
+    end
   end
 
   def create_login             
