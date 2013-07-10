@@ -197,7 +197,148 @@ class ImportMail < ActiveRecord::Base
     make_tags
     Tag.update_tags!("import_mails", id, tag_text)
   end
-
+  
+  STATION_NAME_SEPARATOR = '/:】'
+  
+  def detect_nearest_station
+    str = self.preprocbody
+    result = nil
+    
+    str.lines do |line|
+      if line =~ /(最寄|駅)/
+        result = line
+        break
+      end
+    end
+    
+    return result
+  end
+  
+  def ImportMail.extract_station_name(str)
+    
+    # 001：「～線～駅」にマッチする場合
+    result = Zen2Han.toHan(str).strip
+    result = StringUtil.detect_regex(str, /.*線(.*駅)/) do |match_str|
+      match_str =~ /.*線(.*駅)/
+      $1
+    end
+    if !result.empty?
+      # 別々の商流から来た人材情報の複数の最寄り駅の記載順が違っていても同じ駅名を取得できるようにする
+      result = result.sort.reverse.first.gsub(" ", "")
+      return Zen2Han.toZen( StringUtil.remove_ascii_symbols( result ) )
+    end
+    
+    # 002：空白で分割した際に「～駅」にマッチする場合
+    result = Zen2Han.toHan(str)
+    result = result.split(" ")
+    result.each do |item|
+      if !(item =~ /最寄/) && item =~ /.*駅/
+        result = item
+        break
+      end
+    end
+    if result.class === String
+      return Zen2Han.toZen( StringUtil.remove_ascii_symbols( result ) )
+    end
+    
+    # 003:「最寄駅:～」にマッチする場合
+    result = Zen2Han.toHan(str).gsub(" ", "")
+    result = StringUtil.detect_regex(str, /最寄(り|)(駅|):(.+)/) do |match_str|
+      match_str =~ /最寄(り|)(駅|):(.+)/
+      $3
+    end
+    if !result.empty?
+      result = result.sort.reverse.first
+      result.gsub!(/\(.*?\)/, "") # 括弧に囲まれた部分除去
+      result = StringUtil.remove_ascii_symbols( result )
+      return ImportMail.add_station_sufix( Zen2Han.toZen( result ) )
+    end
+    
+    # return nil
+    
+    # 以降、泥臭い処理で可能な限り駅名を抽出する
+    result = Zen2Han.toHan(str).strip
+    
+    # 区切り文字で文字列を分割
+    result_list = result.split(/[#{STATION_NAME_SEPARATOR}]/)
+    
+    # リストサイズが0の場合、区切り文字に空白を使用している可能性がある
+    result_list = result_list[0].split(" ") if (result_list.size == 1)
+    result_list.flatten!
+    
+    # リストの各要素を最適化
+    result_list.map! { |item| 
+      item.strip!
+      item.gsub!(/\(.*?\)/, "")   # 括弧に囲まれた部分除去
+      item.gsub!(/[\(\)]/, "")    # 括弧の除去 
+      item = nil if "" == item
+      item
+    }
+    result_list.compact!
+    
+    if(result_list.size > 1)
+      # 
+      result_list = result_list[-1].split(" ")
+      
+      
+      if(result_list.size > 1)
+        temp_list = []
+        for i in 0...result_list.size
+          next if result_list[i] == "駅"
+          temp_list.push(result_list[i]) if result_list[i] =~ /駅/ && result_list[i].size > 1
+          temp_list.push(result_list[i]) if result_list[i+1] == "駅"
+          temp_list.push(result_list[i]) if i-1 >= 0 && result_list[i-1] =~ /線/
+        end
+        result_list = temp_list.uniq
+        # list.reject!{ |item| !(item =~ /駅/) }]
+      end
+      
+      result_list.compact!
+      
+      # ここまででリストサイズは１になっている想定
+      result = result_list[0]
+      
+      if result =~ /線/
+        result = result.split("線")[1]
+      end
+      
+      if result =~ /駅/
+        result = result.split("駅")[0]
+      end
+      
+      if result =~ /or/
+        result = result.split("or").sort.reverse.first
+      end
+      
+      if result =~ /最寄(り|)(駅|)/
+        return nil
+      end
+      
+      if result
+        result.gsub!(/[:0-9a-zA-Z]/,"")
+        
+        # 空文字列ならnilを返す
+        return nil if result.empty? 
+      else
+        return nil
+      end
+      
+      # 結果を返す
+      return ImportMail.add_station_sufix( Zen2Han.toZen(result) )
+    end
+    
+    return nil
+  end
+  
+  # 引数の末尾に「駅」をつける
+  def ImportMail.add_station_sufix(target)
+    if target[-1] != "駅"
+      return target + "駅"
+    else
+      return target
+    end
+  end
+  
   def ImportMail.analyze_tags
     where(:deleted => 0).each do |mail|
       mail.make_tags!
@@ -221,7 +362,7 @@ class ImportMail < ActiveRecord::Base
     end
     }
   end
-
+  
 private
   def ignores
     ["e-mail", "email", "fax", "jp", "mail", "mailto", "new", "ng", "or", "or2", "or3", "or4",
