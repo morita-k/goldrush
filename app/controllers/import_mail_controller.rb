@@ -1,5 +1,4 @@
 # -*- encoding: utf-8 -*-
-require 'railroad_util'
 
 class ImportMailController < ApplicationController
 
