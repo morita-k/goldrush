@@ -40,6 +40,9 @@
 </div>
 <% end %>
 
+<% if @delivery_mail %>
+  <p><%= button_tag "全てのチェックをはずす", type: 'button', onclick: '$(".mail_status_check_box").attr("checked", false)' %></P>
+<% end %>
 <div>
   <%= form_tag url_for_bp_pic_list(@delivery_mail), :method => :post do %>
     <%= send_buttons %>
@@ -54,7 +57,7 @@
       <% @bp_pic_group.bp_pic_group_details.each do | detail | %>
         <tr id="<%= "tr_#{detail.id}"%>" style="background-color:<%= suspended_color(detail) %>">
           <% if @delivery_mail %>
-            <td><%= check_box_tag 'bp_pic_ids[]', detail.bp_pic_id, !(detail.suspended? || detail.nondelivery?) %></td>
+            <td><%= check_box_tag 'bp_pic_ids[]', detail.bp_pic_id, !(detail.suspended? || detail.nondelivery?), class: 'mail_status_check_box' %></td>
           <% else %>
             <td><%= check_box_tag 'ids[]', detail.id, false %></td>
           <% end %>
