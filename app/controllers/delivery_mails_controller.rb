@@ -246,7 +246,7 @@ EOS
     unless sales_pic.mail_signature.blank?
       @delivery_mail.content += <<EOS
 
---
+
 #{sales_pic.mail_signature}
 EOS
     end
