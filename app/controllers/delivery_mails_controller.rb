@@ -52,7 +52,6 @@ EOS
 
 
 
---
 #{current_user.mail_signature}
 EOS
     end
