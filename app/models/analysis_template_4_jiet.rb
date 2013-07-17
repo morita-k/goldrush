@@ -1,9 +1,15 @@
 # -*- encoding: utf-8 -*-
 
 class AnalysisTemplate::AnalysisTemplate4JIET
-
+  
+  def separate_jiet_mail_body(body)
+      # todo: sysconfigから取得出来るようにする
+      separator = /-----*/
+      body.split(Regexp.new(separator))
+  end
+  
   # def self.jiet_mail_parser(body)
-  def jiet_mail_parser(body)
+  def jiet_mail_parser(item)
     jiet_mail_item = {}
     
     body.split("\n").reject{|s| s == ""}.flat_map{|s|
@@ -11,6 +17,8 @@ class AnalysisTemplate::AnalysisTemplate4JIET
     }.each{|arr|
       jiet_mail_item[arr[0]] = arr[1]
     }
+    
+    jiet_mail_item
   end
   
   def self.create_business_and_biz_offer(mail, business_partner_id, bp_pic_id)
@@ -109,29 +117,25 @@ class AnalysisTemplate::AnalysisTemplate4JIET
   end
   
   #== private methods ==#
+  
   def domain_name(url)
     d = url.gsub(/.*?:\/\//, "")
     d = "i.applicative.jp" if d.blank?
   end
   
-  def separate_jiet_mail_body(body)
-  	  # todo: sysconfigから取得出来るようにする
-  	  separator = /---*?/
-  	  body.split(Regexp.new(separator))
-  end
-  
   def delimiter_with_comma(*str)
-    str.join(", ")
+    str.reject{|s| s == ""}.join(", ")
   end
   
   def delimiter_with_new_line(*str)
-    str.join("\n")
+    str.reject{|s| s == ""}.join("\n")
   end
   
-  private :domain_name, :separate_jiet_mail_body, :delimiter_with_comma, :delimiter_with_new_line
+  private :domain_name, :delimiter_with_comma, :delimiter_with_new_line
   
 end
 
+=begin
 BUSINESS_TAG = [
   "会社名",
   "URL",
@@ -183,3 +187,4 @@ HUMAN_TAG = [
   "コメント",
   "リンク"
 ]
+=end
