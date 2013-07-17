@@ -2,22 +2,85 @@
 
 class AnalysisTemplate::AnalysisTemplate4JIET
 
-  def self.jiet_mail_parser(body)
-    jiet_mail = {}
+  # def self.jiet_mail_parser(body)
+  def jiet_mail_parser(body)
+    jiet_mail_item = {}
     
-    separate_jiet_mail_body(body).each {|item|
-      item.split(/\n/).
+    body.split("\n").reject{|s| s == ""}.flat_map{|s|
+      s.scan(/(.*?)[\s　]*?：[\s　]*?(.*)/)
+    }.each{|arr|
+      jiet_mail_item[arr[0]] = arr[1]
     }
-    
-  end
-
-  def self.update_business_partner()
-  end
-
-  def self.update_bp_pic()
   end
   
-  def self.create_bp_and_bp_pic_4_jiet(mail)
+  def self.create_business_and_biz_offer(mail, business_partner_id, bp_pic_id)
+    business = Business.new
+    business.attributes = {
+      business_status_type: "offerd",
+      issue_datetime: mail["received_time"],
+      term_type: "unknown",
+      business_title: mail["business_title"],
+      business_point: mail["business_point"],
+      place: mail["place"],
+      period: mail["period"],
+      skill_title: mail["skill_title"],
+      skill_must: mail["skill_must"],
+      career_years: mail["career_years"],
+      agelimit: mail["agelimit"],
+      nationality_limit: mail["nationality_limit"],
+      link: mail["link"],
+      memo: mail["memo"]
+    }.reject!{|k, v| v.blank?}
+    
+    business.save!
+    
+    biz_offer = BizOffer.new
+    biz_offer.attributes = {
+      business_id: business.id,
+      business_partner_id: business_partner_id,
+      bp_pic_id: bp_pic_id,
+      biz_offer_status_type: "open",
+      biz_offered_at: mail["received_time"],
+      payment_text: mail["payment_text"],
+      sales_route_limit: mail["sales_route_limit"]
+    }.reject!{|k, v| v.blank?}
+    
+    biz_offer.save!
+    
+  end
+  
+  def self.create_human_resource_and_bp_member(mail, business_partner_id, bp_pic_id)
+    hr = HumanResource.new
+    hr.attirbutes = {
+      initial: "XX",
+      age: mail["age"],
+      sex_type: mails["sex_type"],
+      nationality: mails["nationality"],
+      near_station: mail["near_station"],
+      experience: mail["experience"],
+      skill_title: mail["skill_title"],
+      skill: mail["skill"],
+      communication_type: "unknown",
+      human_resource_status_type: "sales"
+      link: mail["link"],
+      memo: mail["memo"]
+    }.reject!{|k, v| v.blank?}
+    
+    hr.save!
+    
+    bp_member = BpMember.new
+    bp_member.attributes = {
+      human_resource_id: human_resource_id,
+      business_partner_id: business_partner_id,
+      bp_pic_id: bp_pic_id,
+      employment_type: mail["employment_type"],
+      can_start_date: mail["can_start_date"],
+      payment_memo: mail["payment_memo"],
+      moemo: mail["memo"]
+    }
+  end
+  
+  def self.create_bp_and_bp_pic(mail)
     bp = BusinessPartner.new
     bp.attributes = {
       business_partner_name: mail["business_partner_name"],
@@ -29,6 +92,7 @@ class AnalysisTemplate::AnalysisTemplate4JIET
       url: mail["url"],
       import_mail_id: mail["import_mail_id"]
     }.reject!{|k, v| v.blank?}
+    
     bp.save!
     
     pic = BpPic.new
@@ -39,6 +103,7 @@ class AnalysisTemplate::AnalysisTemplate4JIET
       bp_pic_name_kana: "ご担当者",
       email1: "unknown@#{domain_name(mail["url"])}"
     }.reject!{|k, v| v.blank?}
+    
     pic.save!
     
   end
@@ -51,10 +116,70 @@ class AnalysisTemplate::AnalysisTemplate4JIET
   
   def separate_jiet_mail_body(body)
   	  # todo: sysconfigから取得出来るようにする
-  	  separator = "-------------------------------------------------------------------------"
+  	  separator = /---*?/
   	  body.split(Regexp.new(separator))
   end
   
-  private :domain_name, :separate_jiet_mail_body
+  def delimiter_with_comma(*str)
+    str.join(", ")
+  end
+  
+  def delimiter_with_new_line(*str)
+    str.join("\n")
+  end
+  
+  private :domain_name, :separate_jiet_mail_body, :delimiter_with_comma, :delimiter_with_new_line
   
 end
+
+BUSINESS_TAG = [
+  "会社名",
+  "URL",
+  "案件概要",
+  "作業形態",
+  "作業地域",
+  "作業場所",
+  "ＯＳ",
+  "ＤＢ",
+  "言語",
+  "ハードウェア",
+  "ネットワーク",
+  "ツール",
+  "フレームワーク",
+  "参入時期",
+  "年齢範囲",
+  "予算",
+  "社員区分",
+  "国籍",
+  "業種",
+  "職務",
+  "経験年数",
+  "コメント",
+  "リンク"
+]
+
+HUMAN_TAG = [
+  "会社名",
+  "URL",
+  "人財概要",
+  "性別（年齢）",
+  "社員区分",
+  "作業希望形態",
+  "希望作業場所",
+  "ＯＳ",
+  "ＤＢ",
+  "言語",
+  "ハードウェア",
+  "ネットワーク",
+  "ツール",
+  "フレームワーク",
+  "稼動可能日",
+  "国籍",
+  "単価",
+  "業種",
+  "職務",
+  "経験年数",
+  "最寄り駅",
+  "コメント",
+  "リンク"
+]
