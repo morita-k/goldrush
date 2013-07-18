@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 
-class AnalysisTemplate::AnalysisTemplate4JIET
+class AnalysisTemplate4JIET < AnalysisTemplate
   
   def separate_jiet_mail_body(body)
       # todo: sysconfigから取得出来るようにする
@@ -12,7 +12,7 @@ class AnalysisTemplate::AnalysisTemplate4JIET
   def jiet_mail_parser(item)
     jiet_mail_item = {}
     
-    body.split("\n").reject{|s| s == ""}.flat_map{|s|
+    item.split("\n").group_by_indent.reject{|s| s == ""}.flat_map{|s|
       s.scan(/(.*?)[\s　]*?：[\s　]*?(.*)/)
     }.each{|arr|
       jiet_mail_item[arr[0]] = arr[1]
@@ -21,7 +21,7 @@ class AnalysisTemplate::AnalysisTemplate4JIET
     jiet_mail_item
   end
   
-  def self.create_business_and_biz_offer(mail, business_partner_id, bp_pic_id)
+  def AnalysisTemplate4JIET.create_business_and_biz_offer(mail, business_partner_id, bp_pic_id)
     business = Business.new
     business.attributes = {
       business_status_type: "offerd",
@@ -129,6 +129,9 @@ class AnalysisTemplate::AnalysisTemplate4JIET
   
   def delimiter_with_new_line(*str)
     str.reject{|s| s == ""}.join("\n")
+  end
+  
+  def group_by_indent(list)
   end
   
   private :domain_name, :delimiter_with_comma, :delimiter_with_new_line
