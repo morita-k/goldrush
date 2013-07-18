@@ -97,6 +97,19 @@ class ImportMail < ActiveRecord::Base
       import_mail.save!
       import_mail.make_tags!
       import_mail.save!
+      
+      # JIETの案件・人材メールだった場合、案件照会・人材所属を作成
+      if import_mail.jiet_mail?
+        info = import_mail.mail_subject.scan(/JIETメール配信サービス\[(..)情報\]/).shift.shift
+        
+        case info
+        when "案件"
+          analyze_jiet_offer(import_mail.mail_body, received_at, message_id)
+        when "人財"
+          analyze_jiet_human(import_mail.mail_body, received_at, message_id)
+        end
+      end
+      
     end # transaction
   end
   
@@ -363,6 +376,12 @@ class ImportMail < ActiveRecord::Base
     }
   end
   
+  def analyze_jiet_offer(body, received_at, message_id)
+  end
+  
+  def analyze_jiet_human(body, received_at, message_id)
+  end
+  
 private
   def ignores
     ["e-mail", "email", "fax", "jp", "mail", "mailto", "new", "ng", "or", "or2", "or3", "or4",
@@ -393,6 +412,8 @@ def ext( mail )
   CTYPE_TO_EXT[mail.content_type] || 'txt'
 end
 
-
+  def jiet_mail?
+    self.mail_from == "office@jiet.or.jp" && self.mail_subject ~= /^JIETメール配信サービス/
+  end
 
 end
