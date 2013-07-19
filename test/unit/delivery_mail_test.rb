@@ -43,6 +43,58 @@ class DeliveryMailTest < ActiveSupport::TestCase
     assert_equal(4, err.bp_pic_id)
   end
   
+  test "setup_planned_setting_at 001" do
+    date = "2013/07/19"
+    hour = "14"
+    minute = "55"
+    time_str = date + " " + [hour,minute,"00"].join(":")
+    time = User.find(1).zone_parse(time_str)
+    
+    mail = DeliveryMail.find(1)
+    mail.setup_planned_setting_at(time)
+    
+    # Asserts
+    assert_equal(date, mail.planned_setting_at_date)
+    assert_equal(hour, mail.planned_setting_at_hour)
+    assert_equal(minute, mail.planned_setting_at_minute)
+  end
+  
+  test "planned_setting_at_time 001" do
+    hour = "14"
+    minute = "55"
+    
+    mail = DeliveryMail.new
+    
+    mail.planned_setting_at_hour = nil
+    mail.planned_setting_at_minute = nil
+    assert_equal("", mail.planned_setting_at_time)
+    
+    mail.planned_setting_at_hour = ""
+    mail.planned_setting_at_minute = nil
+    assert_equal("", mail.planned_setting_at_time)
+    
+    mail.planned_setting_at_hour = nil
+    mail.planned_setting_at_minute = ""
+    assert_equal("", mail.planned_setting_at_time)
+    
+    mail.planned_setting_at_hour = ""
+    mail.planned_setting_at_minute = ""
+    assert_equal("", mail.planned_setting_at_time)
+    
+    mail.planned_setting_at_hour = hour
+    mail.planned_setting_at_minute = ""
+    assert_equal("", mail.planned_setting_at_time)
+    
+    mail.planned_setting_at_hour = ""
+    mail.planned_setting_at_minute = minute
+    assert_equal("", mail.planned_setting_at_time)
+    
+    mail.planned_setting_at_hour = hour
+    mail.planned_setting_at_minute = minute
+    assert_equal("14:55:00", mail.planned_setting_at_time)
+  end
+  
+  
   # 特定の送信先でエラーを吐かせる為に、既存のメソッドを加工
   class Mail::Message
     alias deliver_org deliver

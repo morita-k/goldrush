@@ -37,7 +37,7 @@ class User < ActiveRecord::Base
 
   def zone_at(at)
     zoned do
-      return Time.zone.at(at)
+      return Time.zone.at(at.to_i)
     end
   end
 
