@@ -10,16 +10,6 @@ $(function() {
     });
 });
 
-// 引数に指定した文字列の長さを計算する
-function getTextWidth(text, style){
-  key = "calc_text_length_" + Date.now();
-  $("body").append("<span id='" + key + "' style='display:none !important;" + style + "'>" + text + "</span>");
-  var width = $("#" + key).width();
-  $("#" + key).remove();
-  return width;
-}
-
-
 var BuisinessPartnerForm = (function(){
   klass = function(form_id_list){
     this.id_list = form_id_list;
