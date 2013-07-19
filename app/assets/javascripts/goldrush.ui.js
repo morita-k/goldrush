@@ -1,3 +1,25 @@
+// ポップオーバー属性の追加(見出しあり)
+$(function() {
+    $('[rel=popover]').popover();
+});
+
+// ポップオーバー属性の追加(見出しなし)
+$(function() {
+    $('[rel=popover-without-title]').popover({
+      template: '<div class="popover"><div class="arrow"></div><div class="popover-inner"><div class="popover-content"><p></p></div></div></div>'
+    });
+});
+
+// 引数に指定した文字列の長さを計算する
+function getTextWidth(text, style){
+  key = "calc_text_length_" + Date.now();
+  $("body").append("<span id='" + key + "' style='display:none !important;" + style + "'>" + text + "</span>");
+  var width = $("#" + key).width();
+  $("#" + key).remove();
+  return width;
+}
+
+
 var BuisinessPartnerForm = (function(){
   klass = function(form_id_list){
     this.id_list = form_id_list;

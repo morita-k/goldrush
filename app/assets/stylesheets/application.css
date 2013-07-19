@@ -178,3 +178,26 @@ td.flag_container {
   padding: 0px;
   white-space: nowrap;
 }
+
+.popover-container {
+  overflow: visible !important;
+  position: relative;
+}
+
+.popover-content{
+  top: -1em;
+  background-color: white;
+  border: 0.5px solid silver;
+  padding: 3px 5px;
+  position: absolute;
+  -webkit-border-radius: 3px;
+     -moz-border-radius: 3px;
+          border-radius: 3px;
+  -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+     -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  -webkit-background-clip: padding-box;
+     -moz-background-clip: padding;
+          background-clip: padding-box;
+}
+
