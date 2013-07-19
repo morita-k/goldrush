@@ -138,8 +138,8 @@ $(function(){
   $("[rel=station_name]").hover(
     function(){
       if($(this).width() == 1000){
-        test_text = $(this).text() + "＠".repeat(Math.ceil($(this).text().length / 10.0))
-        $(this).width( getTextWidth(test_text) );
+        var text_size = $(this).text().length + Math.ceil($(this).text().length / 10.0)
+        $(this).width( text_size + "em");
       }
       $(this).addClass("popover-content");
       $(this).parent().addClass("popover-container");
