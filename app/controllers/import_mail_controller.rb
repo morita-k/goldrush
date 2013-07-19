@@ -237,17 +237,20 @@ class ImportMailController < ApplicationController
     mails = ImportMail.find(:all, :limit => max)
     
     text = "";
-    
+    delta = []
     mails.each do |mail|
       body = mail.preprocbody
-      
       nearest_st = mail.detect_nearest_station
-      nearest_st_short = ImportMail.extract_station_name(nearest_st) if nearest_st
-      
-      text += "#{mail.id} [#{nearest_st}] => #{nearest_st_short.to_s}<br/>"
+      before = Time.now
+      nearest_st_short = ImportMail.extract_station_name_from(nearest_st) if nearest_st
+      after = Time.now
+      d = ((after - before) * 1000).floor 
+      delta.push d
+      text += "[ #{sprintf('%05d',d)} ms ] #{mail.id} [#{nearest_st}] => #{nearest_st_short.to_s}<br/>"
       
     end
-    
+    avg = delta.inject(0.0){ |avg, num| avg += num.to_f / delta.size }
+    text = "平均 #{sprintf('%3d',avg.floor)} ms <br/><br/>" + text
     render :text => text
   end
   
