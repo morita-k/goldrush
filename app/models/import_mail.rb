@@ -99,14 +99,15 @@ class ImportMail < ActiveRecord::Base
       import_mail.save!
       
       # JIETの案件・人材メールだった場合、案件照会・人材所属を作成
-      if import_mail.jiet_mail?
-        info = import_mail.mail_subject.scan(/JIETメール配信サービス\[(..)情報\]/).shift.shift
-        
-        case info
+      if import_mail.jiet_ses_mail?
+      # if import_mail.mail_from == "test+office_jiet.or.jp@i.applicative.jp"
+      # if import_mail.mail_from == "office@jiet.or.jp" && import_mail.mail_subject =~ /^JIETメール配信サービス/
+        mail_content = import_mail.mail_subject.scan(/JIETメール配信サービス\[(..)情報\]/).shift.shift
+        case mail_content
         when "案件"
-          analyze_jiet_offer(import_mail.mail_body, received_at, message_id)
+          ImportMailJIET.analyze_jiet_offer(import_mail)
         when "人財"
-          analyze_jiet_human(import_mail.mail_body, received_at, message_id)
+          ImportMailJIET.analyze_jiet_human(import_mail)
         end
       end
       
@@ -376,10 +377,10 @@ class ImportMail < ActiveRecord::Base
     }
   end
   
-  def analyze_jiet_offer(body, received_at, message_id)
-  end
-  
-  def analyze_jiet_human(body, received_at, message_id)
+  def jiet_ses_mail?
+    jiet_mail_address = "test+office_jiet.or.jp@i.applicative.jp"
+    # jiet_mail_address = "office@jiet.or.jp"
+    self.mail_from == jiet_mail_address && self.mail_subject =~ /^JIETメール配信サービス/
   end
   
 private
@@ -412,8 +413,5 @@ def ext( mail )
   CTYPE_TO_EXT[mail.content_type] || 'txt'
 end
 
-  def jiet_mail?
-    self.mail_from == "office@jiet.or.jp" && self.mail_subject ~= /^JIETメール配信サービス/
-  end
 
 end
