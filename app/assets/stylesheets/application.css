@@ -179,6 +179,10 @@ td.flag_container {
   white-space: nowrap;
 }
 
+tr.warn {
+  background-color: #ffd900; /* yellow */
+}
+
 .popover-container {
   overflow: visible !important;
   position: relative;
