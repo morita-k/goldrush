@@ -75,7 +75,11 @@
   <% unless @bp_pic %>
   <tr>
     <th><%= f.label :planned_setting_at, getLongName('delivery_mails', 'planned_setting_at') %></th>
-    <td><%= date_field('delivery_mail', 'planned_setting_at_date') %><%= select "delivery_mail", "planned_setting_at_time", (0..23).to_a, {:include_blank => true} %></td>
+    <td>
+      <%= date_field('delivery_mail', 'planned_setting_at_date') %>
+      <%= select :delivery_mail, :planned_setting_at_hour, options_for_select( (0..23).to_a, :selected => Time.now.hour) %>時
+      <%= select :delivery_mail, :planned_setting_at_minute, options_for_select( ["00","10","20","30","40", "50"], :selected => (Time.now.min / 10 * 10).to_s) %>分
+    </td>
   </tr>
   <% end %>
 </table>
@@ -99,6 +103,12 @@ function setMailTemplate(t) {
   $('#delivery_mail_mail_bcc')[0].value = t.mail_bcc;
   $('#delivery_mail_subject')[0].value = t.subject;
   $('#delivery_mail_content')[0].value = t.content;
+}
+
+function updateHidden(){
+  var hour = $('#planned_hour').val();
+  var min = $('#planned_min').val();
+  $('#planned_setting_at_time').val(  )
 }
 // -->
 </script>

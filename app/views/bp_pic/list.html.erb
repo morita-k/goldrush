@@ -27,17 +27,16 @@
 <br />
 <% end %>
 
-<%= paginate(@bp_pics) %>
 
 <%= form_tag url_for(controller: :bp_pic, action: :add_bp_pic_into_selected_group), method: :post do %>
   <%= hidden_field_tag 'back_to', request_url %>
   
-  <p>追加先グループ:
+  <p style="margin:0">追加先グループ:
     <%= select_tag 'group_id', options_for_select(BpPicGroup.available_group_list), include_blank: true %>
     <%= submit_tag '選択した取引先担当をグループに追加', :onclick => "if($('#group_id').val()==''){alert('グループを選択してください。');return false;}else if($('[name=\"ids[]\"]:checked').length <= 0){alert('取引先担当者を選択してください。');return false}else{if(!confirm('選択した担当者をグループに追加します。よろしいですか？')){return false;}}" %>
   </p>
-
-  <table class="list_table">
+  <%= paginate(@bp_pics) %>
+  <table class="list_table" style="margin-top:0px">
     <tr>
       <th></th>
       <th><%=getShortName('bp_pics', 'business_partner_id') %></th>

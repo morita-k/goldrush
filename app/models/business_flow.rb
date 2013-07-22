@@ -32,9 +32,9 @@ module BusinessFlow
   def do_action(action, status_type = detect_default_status_type)
     if a = @actions_map[status_type].detect{|a| a.action == action}
       if a.event
-        return a.event.call(a)
+        send("#{status_type}=", a.event.call(a))
       else
-        return a.to
+        send("#{status_type}=", a.to)
       end
     end
   end
@@ -44,9 +44,9 @@ module BusinessFlow
     attributes["#{status_type}"] = next_status.to_s
   end
 
-  def next_actions(from_status, status_type = detect_default_status_type)
+  def next_actions(status_type = detect_default_status_type)
      @actions_map[status_type].reject do |action|
-       action.from != from_status
+       action.from != send(status_type).to_sym
      end
   end
 

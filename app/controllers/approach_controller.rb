@@ -29,19 +29,16 @@ class ApproachController < ApplicationController
     @attachment_files = AttachmentFile.find(:all, :conditions => ["deleted = 0 and parent_table_name = 'approaches' and parent_id = ?", @approach.id])
 
     if params[:approach_success]
-      puts"=================================>>>>>>>>>>>>>(approach_success)"
       @approach.approach_status_type = 'result_waiting'
       set_user_column @approach
       @approach.save!
       redirect_to :controller => 'interview', :action => 'new', :newly => true, :approach => @approach
     elsif params[:approach_adjustment]
-      puts"=================================>>>>>>>>>>>>>(approach_adjustment)"
       @approach.approach_status_type = 'adjust'
       set_user_column @approach
       @approach.save!
       redirect_to :controller => 'approach', :action => 'edit', :id => @approach
     elsif params[:approach_reject]
-      puts"=================================>>>>>>>>>>>>>(approach_reject)"
       Approach.transaction do
         @approach.approach_status_type = 'approach_failure'
         set_user_column @approach
@@ -61,28 +58,23 @@ class ApproachController < ApplicationController
       
       
     elsif params[:create_contract]
-      puts"=================================>>>>>>>>>>>>>(create_contract)"
       redirect_to :controller => 'contract', :action => 'new', :approach => @approach
       
     elsif params[:result_wait]
-      puts"=================================>>>>>>>>>>>>>(result_wait)"
       interview = @approach.last_interview
       interview.interview_status_type = 'result_waiting'
       set_user_column interview
       interview.save!
       redirect_to :controller => 'approach', :action => 'show', :approach => @approach
     elsif params[:create_interview]
-      puts"=================================>>>>>>>>>>>>>(create_interview)"
       redirect_to :controller => 'interview', :action => 'new', :newly => true, :approach => @approach
     elsif params[:interview_finish]
-      puts"=================================>>>>>>>>>>>>>(interview_finish)"
       interview = @approach.last_interview
       interview.interview_status_type = 'finished'
       set_user_column interview
       interview.save!
       redirect_to :controller => 'interview', :action => 'new', :approach => @approach
     elsif params[:interview_reject]
-      puts"=================================>>>>>>>>>>>>>(interview_reject)"
       Approach.transaction do
         interview = @approach.last_interview
         interview.interview_status_type = 'interview_failure'
@@ -107,13 +99,12 @@ class ApproachController < ApplicationController
       redirect_to :action => 'show', :approach => @approach
     end
     
-    
   end
 
   def new
-    @calendar = true
     @biz_offer = BizOffer.find(params[:biz_offer_id])
     @approach = Approach.new
+    @approach.biz_offer = @biz_offer
     @approach.approached_at = Date.today
     @approached_at_hour = Time.new.hour
     @approached_at_min = (Time.new.min / 10) * 10
@@ -124,7 +115,6 @@ class ApproachController < ApplicationController
   end
 
   def create
-    @calendar = true
     Approach.transaction do
       @approach = Approach.new(params[:approach])
       @approach.approach_status_type = 'approaching'
@@ -160,7 +150,6 @@ class ApproachController < ApplicationController
   end
 
   def edit
-    @calendar = true
     @approach = Approach.find(params[:id])
     @approached_at_hour = @approach.approached_at.hour
     @approached_at_min = (@approach.approached_at.min / 10) * 10
@@ -171,7 +160,6 @@ class ApproachController < ApplicationController
   end
 
   def update
-    @calendar = true
     Approach.transaction do
       @approach = Approach.find(params[:id], :conditions =>["deleted = 0"])
       @approach.approach_upper_contract_term = ContractTerm.find(@approach.approach_upper_contract_term, :conditions =>["deleted = 0"])
@@ -192,7 +180,7 @@ class ApproachController < ApplicationController
       @approach.approach_down_contract_term.save!
     end
     flash[:notice] = 'Approach was successfully updated.'
-    redirect_to :action => 'show', :id => @approach
+    redirect_to(back_to || {:action => 'show', :id => @approach})
   rescue ActiveRecord::RecordInvalid
     render :action => 'edit'
   end

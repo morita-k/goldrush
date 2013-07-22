@@ -1,30 +1,29 @@
-<h1><%= @business.business_title %> ＆ <%= @human_resource.human_resource_name.blank? ? @human_resource.initial : @human_resource.human_resource_name %> 提案詳細</h1>
+<h1><%= @business.business_title %> [<%= @human_resource.human_resource_name.blank? ? @human_resource.initial : @human_resource.human_resource_name %>] </h1>
 
 <h2><%=getLongName('table_name','approaches')%>情報</h2>
 <table class="show_table">
 <tr>
-  <th colspan=2><%= getLongName('approaches', 'approach_status_type') %></th><td colspan=2><%=h @approach.approach_status_type_name %></td>
+  <th><%= getLongName('approaches', 'approach_status_type') %></th><td colspan=2><%=h @approach.approach_status_type_name %></td>
 </tr>
 <tr>
-  <th colspan=2><%= getLongName('approaches', 'approached_at') %></th><td colspan=2><%=h @approach.approached_at %></td>
+  <th><%= getLongName('approaches', 'approached_at') %></th><td colspan=2><%=h @approach.approached_at %></td>
 </tr>
 <tr>
-  <th colspan=2>提案担当者名</th><td colspan=2><%=h @approach.approach_employee_name %></td>
+  <th>提案担当者名</th><td colspan=2><%=h @approach.approach_employee_name %></td>
 </tr>
 <tr>
-  <th colspan=2><%= getLongName('approaches', 'approach_start_date') %></th><td colspan=2><%=h @approach.approach_start_date %></td>
+  <th><%= getLongName('approaches', 'approach_start_date') %></th><td colspan=2><%=h @approach.approach_start_date %></td>
 </tr>
 <tr>
-  <th colspan=2><%= getLongName('approaches', 'can_interview_date') %></th><td colspan=2><%=h @approach.can_interview_date %></td>
+  <th><%= getLongName('approaches', 'can_interview_date') %></th><td colspan=2><%=h @approach.can_interview_date %></td>
 </tr>
 <tr>
-  <th colspan=2>単価差額</th><td colspan=2><%=h (@approach_upper_contract_term.payment_view - @approach_down_contract_term.payment_view) %>万円</td>
+  <th>単価差額</th><td colspan=2><%=h (@approach_upper_contract_term.payment_view - @approach_down_contract_term.payment_view) %>万円</td>
 </tr>
 <tr>
-  <th rowspan=20>提案上下流契約条件</th>
-  <th></th>
-  <th>提案上流契約条件</th>
-  <th>提案下流契約条件</th>
+  <th>提案契約条件</th>
+  <th>上流</th>
+  <th>下流</th>
 </tr>
 <tr>
   <th><%= getLongName('contract_terms', 'term_type') %></th>
@@ -112,7 +111,7 @@
   <td><%=h @approach_down_contract_term.contract_renewal_terms %></td>
 </tr>
 <tr>
-  <th><%= getLongName('contract_terms', 'other_terms') %></th>
+  <th>ペナルティーなど</th>
   <td><%=h @approach_upper_contract_term.other_terms %></td>
   <td><%=h @approach_down_contract_term.other_terms %></td>
 </tr>
@@ -123,32 +122,28 @@
 </tr>
 
 <tr>
-  <th colspan=2><%= getLongName('approaches', 'memo') %></th><td colspan=2><%=simple_format @approach.memo %></td>
+  <th><%= getLongName('approaches', 'memo') %></th><td colspan=2><%=simple_format @approach.memo %></td>
 </tr>
 </table>
-<%= link_to '編集', :action => 'edit', :id => @approach, :biz_offer_id => @biz_offer %> |
-<%= link_to '一覧', :controller => 'biz_offer', :action => 'show', :id => @biz_offer %>
-<p></p>
+<%= back_to_link '提案情報編集', :action => 'edit', :id => @approach %>
 
 <!-- 案件詳細 -->
 <h2><%=getLongName('table_name','businesses')%>情報</h2>
 <%= render :partial => 'business/show' %>
-<p></p>
 
 <!-- 照会詳細 -->
 <h2><%=getLongName('table_name','biz_offers')%>情報</h2>
 <%= render :partial => 'biz_offer/show' %>
-<p></p>
+<%= back_to_link '案件照会情報編集', :controller => :biz_offer, :action => 'edit', :id => @approach.biz_offer %>
 
 <!-- 人材詳細 -->
 <h2><%=getLongName('table_name','human_resources')%>情報</h2>
 <%= render :partial => 'human_resource/show' %>
-<p></p>
 
 <!-- 所属詳細 -->
 <h2><%=getLongName('table_name','bp_members')%>情報</h2>
 <%= render :partial => 'bp_member/show' %>
-<p></p>
+<%= back_to_link '人材所属情報編集', :controller => :bp_member, :action => 'edit', :id => @approach.bp_member %>
 
 
 <%= form_tag do %>
@@ -165,12 +160,31 @@
   <p></p>
 <% end %>
 
+
+<!-- 契約詳細 -->
+<h2><%=getLongName('table_name','contracts')%>情報</h2>
+<% @approach.contracts.each do |contract| %>
+  <%= render :partial => 'contract/show', :locals => {:contract => contract} %>
+  <%= back_to_link '契約情報編集', :controller => 'contract', :action => 'edit', :id => contract %>
+
+  <div style="margin-top:1em">
+  <% x = contract.next_actions(:upper_contract_status_type).map do |action|
+        back_to_link(getLongType('action_type', action.action), :controller => :contract, :action => :do_action, :id => contract, :a => action.action, :type => :upper_contract_status_type)
+      end.join(",") %>
+  <p>上流アクション: <%= raw x %></p>
+  <% x = contract.next_actions(:down_contract_status_type).map do |action|
+        back_to_link(getLongType('action_type', action.action), :controller => :contract, :action => :do_action, :id => contract, :a => action.action, :type => :down_contract_status_type)
+      end.join(",") %>
+  <p>下流アクション: <%= raw x %></p>
+  </div>
+<% end %>
+<% if false %>
 <%= form_tag do %>
   <% if @contract %>
     <!-- 契約詳細 -->
     <h2><%=getLongName('table_name','contracts')%>情報</h2>
     <%= render :partial => 'contract/show' %>
-    <%= link_to '編集', :controller => 'contract', :action => 'edit', :id => @contract %>
+    <%= back_to_link '契約情報編集', :controller => 'contract', :action => 'edit', :id => @contract %>
   <% elsif @approach.approach_status_type_active %>
     <% if !@approach.last_interview.blank? && @approach.last_interview.interview_status_type != 'finished' %>
       <%= submit_tag '　　契約作成　　', :name => 'create_contract', :onclick=>"return #{confirm_javascript_function("まだ面談が完了していませんがよろしいですか？")}"  %>
@@ -179,9 +193,9 @@
     <% end %>
   <% end %>
 <% end %>
-<p></p>
+<% end %><%# if false %>
 
-
+<% if false %>
 <% if @approach.approach_status_type == 'result_waiting' %>
   <%= form_tag do %>
   <% if @contract.blank? %>
@@ -221,6 +235,7 @@
 <% end %>
 <p></p>
 
+<% end %><%# if false %>
 
 <h2>スキルシート一覧</h2>
 
@@ -229,7 +244,7 @@
 <% end %>
 
 <%= form_tag({:controller => 'attachment_file', :action => 'create', :parent_table => 'approaches', :parent_id => @approach, :back_to => request.env['REQUEST_URI']}, :multipart => true) do %>
-  <div align=right>
+  <div>
   <table>
     <tr>
       <td rowspan=2>スキルシートのアップロード </td>
@@ -242,4 +257,5 @@
   </div>
 <% end %>
 
+<p><%= link_or_back '戻る', :action => :list %></p>
 

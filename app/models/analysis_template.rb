@@ -2,7 +2,7 @@
 class AnalysisTemplate < ActiveRecord::Base
   include AutoTypeName
 
-  validates_presence_of :analysis_template_name, :bp_pic_id
+  validates_presence_of :analysis_template_name
   
   belongs_to :business_partner
   belongs_to :bp_pic

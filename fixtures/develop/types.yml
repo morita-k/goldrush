@@ -4378,3 +4378,623 @@ types_219:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
+types_220:
+  id: 220
+  owner_id: 
+  type_section: "action_type"
+  type_key: "get_job"
+  long_name: "面談OK"
+  short_name: "面談OK"
+  other_name: "面談OK"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 1
+  display_order2: 1
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_221:
+  id: 221
+  owner_id: 
+  type_section: "action_type"
+  type_key: "choice_other"
+  long_name: "他社決定"
+  short_name: "他社決定"
+  other_name: "他社決定"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 2
+  display_order2: 2
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_222:
+  id: 222
+  owner_id: 
+  type_section: "action_type"
+  type_key: "lost"
+  long_name: "案件消滅"
+  short_name: "案件消滅"
+  other_name: "案件消滅"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 3
+  display_order2: 3
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_223:
+  id: 223
+  owner_id: 
+  type_section: "action_type"
+  type_key: "pass_away"
+  long_name: "時間経過"
+  short_name: "時間経過"
+  other_name: "時間経過"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 4
+  display_order2: 4
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_224:
+  id: 224
+  owner_id: 
+  type_section: "action_type"
+  type_key: "finish"
+  long_name: "終了"
+  short_name: "終了"
+  other_name: "終了"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 5
+  display_order2: 5
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_225:
+  id: 225
+  owner_id: 
+  type_section: "action_type"
+  type_key: "revert"
+  long_name: "復活"
+  short_name: "復活"
+  other_name: "復活"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 6
+  display_order2: 6
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_226:
+  id: 226
+  owner_id: 
+  type_section: "action_type"
+  type_key: "approach"
+  long_name: "提案"
+  short_name: "提案"
+  other_name: "提案"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 7
+  display_order2: 7
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_227:
+  id: 227
+  owner_id: 
+  type_section: "action_type"
+  type_key: "other_success"
+  long_name: "自社他決"
+  short_name: "自社他決"
+  other_name: "自社他決"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 8
+  display_order2: 8
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_228:
+  id: 228
+  owner_id: 
+  type_section: "action_type"
+  type_key: "reject_approach"
+  long_name: "提案失敗"
+  short_name: "提案失敗"
+  other_name: "提案失敗"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 9
+  display_order2: 9
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_229:
+  id: 229
+  owner_id: 
+  type_section: "action_type"
+  type_key: "want"
+  long_name: "要求あり"
+  short_name: "要求あり"
+  other_name: "要求あり"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 10
+  display_order2: 10
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_230:
+  id: 230
+  owner_id: 
+  type_section: "action_type"
+  type_key: "success_approach"
+  long_name: "提案成功"
+  short_name: "提案成功"
+  other_name: "提案成功"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 11
+  display_order2: 11
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_231:
+  id: 231
+  owner_id: 
+  type_section: "action_type"
+  type_key: "reapproach"
+  long_name: "再提案"
+  short_name: "再提案"
+  other_name: "再提案"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 12
+  display_order2: 12
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_232:
+  id: 232
+  owner_id: 
+  type_section: "action_type"
+  type_key: "interview"
+  long_name: "面談"
+  short_name: "面談"
+  other_name: "面談"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 13
+  display_order2: 13
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_233:
+  id: 233
+  owner_id: 
+  type_section: "action_type"
+  type_key: "reject_interview"
+  long_name: "面談失敗"
+  short_name: "面談失敗"
+  other_name: "面談失敗"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 14
+  display_order2: 14
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_234:
+  id: 234
+  owner_id: 
+  type_section: "action_type"
+  type_key: "start_work"
+  long_name: "入場"
+  short_name: "入場"
+  other_name: "入場"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 15
+  display_order2: 15
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_235:
+  id: 235
+  owner_id: 
+  type_section: "action_type"
+  type_key: "exit"
+  long_name: "退場"
+  short_name: "退場"
+  other_name: "退場"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 16
+  display_order2: 16
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_236:
+  id: 236
+  owner_id: 
+  type_section: "action_type"
+  type_key: "check_status"
+  long_name: "状況確認"
+  short_name: "状況確認"
+  other_name: "状況確認"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 17
+  display_order2: 17
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_237:
+  id: 237
+  owner_id: 
+  type_section: "action_type"
+  type_key: "conclusion"
+  long_name: "契約締結"
+  short_name: "契約締結"
+  other_name: "契約締結"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 18
+  display_order2: 18
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_238:
+  id: 238
+  owner_id: 
+  type_section: "action_type"
+  type_key: "finish_contract"
+  long_name: "契約完了"
+  short_name: "契約完了"
+  other_name: "契約完了"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 19
+  display_order2: 19
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_239:
+  id: 239
+  owner_id: 
+  type_section: "action_type"
+  type_key: "accept_order"
+  long_name: "注文書受取"
+  short_name: "注文書受取"
+  other_name: "注文書受取"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 20
+  display_order2: 20
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_240:
+  id: 240
+  owner_id: 
+  type_section: "action_type"
+  type_key: "send_accept"
+  long_name: "請書発送"
+  short_name: "請書発送"
+  other_name: "請書発送"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 21
+  display_order2: 21
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_241:
+  id: 241
+  owner_id: 
+  type_section: "action_type"
+  type_key: "finish_term"
+  long_name: "期間終了"
+  short_name: "期間終了"
+  other_name: "期間終了"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 22
+  display_order2: 22
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_242:
+  id: 242
+  owner_id: 
+  type_section: "action_type"
+  type_key: "abort_term"
+  long_name: "途中終了"
+  short_name: "途中終了"
+  other_name: "途中終了"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 23
+  display_order2: 23
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_243:
+  id: 243
+  owner_id: 
+  type_section: "action_type"
+  type_key: "make_next"
+  long_name: "(通知期限前)"
+  short_name: "(通知期限前)"
+  other_name: "(通知期限前)"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 24
+  display_order2: 24
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_244:
+  id: 244
+  owner_id: 
+  type_section: "action_type"
+  type_key: "accept_reorder"
+  long_name: "更新通知受取"
+  short_name: "更新通知受取"
+  other_name: "更新通知受取"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 25
+  display_order2: 25
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_245:
+  id: 245
+  owner_id: 
+  type_section: "action_type"
+  type_key: "accept_close"
+  long_name: "終了通知受取"
+  short_name: "終了通知受取"
+  other_name: "終了通知受取"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 26
+  display_order2: 26
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_246:
+  id: 246
+  owner_id: 
+  type_section: "action_type"
+  type_key: "send_offer"
+  long_name: "採用通知"
+  short_name: "採用通知"
+  other_name: "採用通知"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 27
+  display_order2: 27
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_247:
+  id: 247
+  owner_id: 
+  type_section: "action_type"
+  type_key: "send_order"
+  long_name: "注文書発送"
+  short_name: "注文書発送"
+  other_name: "注文書発送"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 28
+  display_order2: 28
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_248:
+  id: 248
+  owner_id: 
+  type_section: "action_type"
+  type_key: "accept_accept"
+  long_name: "請書受取"
+  short_name: "請書受取"
+  other_name: "請書受取"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 29
+  display_order2: 29
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_249:
+  id: 249
+  owner_id: 
+  type_section: "action_type"
+  type_key: "send_reorder"
+  long_name: "更新通知"
+  short_name: "更新通知"
+  other_name: "更新通知"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 30
+  display_order2: 30
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_250:
+  id: 250
+  owner_id: 
+  type_section: "action_type"
+  type_key: "send_close"
+  long_name: "終了通知"
+  short_name: "終了通知"
+  other_name: "終了通知"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 31
+  display_order2: 31
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0

@@ -1,6 +1,7 @@
 # -*- encoding: utf-8 -*-
 require 'nkf'
 require 'string_util'
+require 'zen2han'
 class ImportMail < ActiveRecord::Base
 
   belongs_to :business_partner
@@ -169,10 +170,23 @@ class ImportMail < ActiveRecord::Base
     StringUtil.detect_regex(body, /[0-9]+[万]/).sort.reverse.first
   end
 
-  def make_tags
-    body = preprocbody
+  def detect_nearest_station
+    detect_nearest_station_in(preprocbody)
+  end
+
+  def detect_nearest_station_in(body)
+    StringUtil.detect_regex(body, /^.*(最寄|駅).*$/).sort.reverse.first
+  end
+  
+  def analyze(body = self.preprocbody)
     self.age_text = detect_ages_in(body)
     self.payment_text = detect_payments_in(body)
+    self.nearest_station = detect_nearest_station_in(body)
+  end
+  
+  def make_tags
+    body = preprocbody
+    self.analyze(body)
     words = StringUtil.detect_words(body).inject([]) do |r,item|
       arr = item.split(" ")
       arr.each do |w| # スペースで分割
@@ -200,21 +214,12 @@ class ImportMail < ActiveRecord::Base
   
   STATION_NAME_SEPARATOR = '/:】'
   
-  def detect_nearest_station
-    str = self.preprocbody
-    result = nil
-    
-    str.lines do |line|
-      if line =~ /(最寄|駅)/
-        result = line
-        break
-      end
-    end
-    
-    return result
+  def nearest_station_short
+    ImportMail.extract_station_name_from(self.nearest_station)
   end
   
-  def ImportMail.extract_station_name(str)
+  
+  def ImportMail.extract_station_name_from(str)
     
     # 001：「～線～駅」にマッチする場合
     result = Zen2Han.toHan(str).strip
@@ -265,21 +270,22 @@ class ImportMail < ActiveRecord::Base
     # リストサイズが0の場合、区切り文字に空白を使用している可能性がある
     result_list = result_list[0].split(" ") if (result_list.size == 1)
     result_list.flatten!
+    # ※項目と内容の区切り文字として空白を使用していない場合、
+    # 　路線名と駅名の区切り文字に使っているなどのバリエーションがある為、
+    #   最初の区切り文字判定に空白を含めると解析精度が落ちてしまう。
     
     # リストの各要素を最適化
     result_list.map! { |item| 
       item.strip!
       item.gsub!(/\(.*?\)/, "")   # 括弧に囲まれた部分除去
       item.gsub!(/[\(\)]/, "")    # 括弧の除去 
-      item = nil if "" == item
+      item = nil if item.empty?   # 空文字列ならnilに(compact!で除去される)
       item
     }
     result_list.compact!
     
     if(result_list.size > 1)
-      # 
       result_list = result_list[-1].split(" ")
-      
       
       if(result_list.size > 1)
         temp_list = []
@@ -295,35 +301,40 @@ class ImportMail < ActiveRecord::Base
       
       result_list.compact!
       
-      # ここまででリストサイズは１になっている想定
+      # ここまでの処理でリストサイズは１になっている想定
       result = result_list[0]
       
+      # 「～線 ◯◯」と書いてあり、「駅」がつかないケース
       if result =~ /線/
         result = result.split("線")[1]
       end
       
+      # 文中に「◯◯駅」とだけ書いてあるケース
       if result =~ /駅/
         result = result.split("駅")[0]
       end
       
+      # 複数の駅名が「or」で連結して書かれているケース
       if result =~ /or/
         result = result.split("or").sort.reverse.first
       end
       
+      # 「最寄り駅」「最寄駅」「最寄」などにマッチする場合はnilを返す
       if result =~ /最寄(り|)(駅|)/
         return nil
       end
       
+      # ここまで何かしら結果が得られていれば"ゴミ取り"を行う
       if result
         result.gsub!(/[:0-9a-zA-Z]/,"")
         
-        # 空文字列ならnilを返す
+        # "ゴミ取り"の結果、最終的に空文字列ならnilを返す
         return nil if result.empty? 
       else
         return nil
       end
       
-      # 結果を返す
+      # 全角に戻して結果を返す
       return ImportMail.add_station_sufix( Zen2Han.toZen(result) )
     end
     
@@ -341,7 +352,8 @@ class ImportMail < ActiveRecord::Base
   
   def ImportMail.analyze_tags
     where(:deleted => 0).each do |mail|
-      mail.make_tags!
+      mail.
+      make_tags!
       mail.save!
     end
   end
@@ -349,8 +361,7 @@ class ImportMail < ActiveRecord::Base
   def ImportMail.analyze_others
     where(:deleted => 0).each do |mail|
       body = mail.preprocbody
-      mail.age_text = mail.detect_ages_in(body)
-      mail.payment_text = mail.detect_payments_in(body)
+      mail.analyze(body)
       mail.save!
     end
   end
