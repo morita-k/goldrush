@@ -8,15 +8,12 @@ class ImportMailJIET < ImportMail
   #   解析結果から案件照会人材所属を作成
   #=====
   def ImportMailJIET.analyze_jiet_offer(mail)
-    puts "
-    //////////////////////////////////
-       start analyze_jiet_offer
-    //////////////////////////////////
-    "
+    logger.info "start analyze_jiet_offer method. message_id: #{mail.message_id}"
     
     # ハッシュ化して署名部分を取り除き、案件照会を作成する
     offers = ImportMailJIET.jiet_mail_parse(mail.mail_body)
     offers.each{|offer| 
+      offer["会社名"] = ImportMailJIET.trimming_name(offer["会社名"])
       exist_bp = BusinessPartner.where(business_partner_name: offer["会社名"], deleted: 0).shift
       
       if exist_bp.nil?
@@ -26,32 +23,24 @@ class ImportMailJIET < ImportMail
         target_pic = ImportMailJIET.create_bp_pic(exist_bp.id, offer["URL"])
       else
         target_bp = exist_bp
+        
         # とりあえず一番最初に登録されている担当者を紐付ける
-        # todo: "担当者"がいたら、"担当者"を紐付ける処理
         target_pic = exist_bp.bp_pics.shift
       end
       
       ImportMailJIET.create_business_and_biz_offer(mail.received_at, offer, target_bp.id, target_pic.id)
     }
     
-    puts "
-    //////////////////////////////////
-       finish analyze_jiet_offer
-    //////////////////////////////////
-    "
+    logger.info "finish analyze_jiet_offer method. message_id: #{mail.message_id}"
   end
   
   def ImportMailJIET.analyze_jiet_human(mail)
-    puts "
-    //////////////////////////////////
-       start analyze_jiet_human
-    //////////////////////////////////
-    "    
+    logger.info "start analyze_jiet_human method. message_id: #{mail.message_id}"
+    
     # ハッシュ化して署名部分を取り除き、人材所属を作成する
     humans = ImportMailJIET.jiet_mail_parse(mail.mail_body)
     humans.each{|human|
-      puts human["会社名"]
-    puts human["業種"]
+      human["会社名"] = ImportMailJIET.trimming_name(human["会社名"])
       exist_bp = BusinessPartner.where(business_partner_name: human["会社名"], deleted: 0).shift
       
       if exist_bp.nil?  
@@ -61,43 +50,26 @@ class ImportMailJIET < ImportMail
         target_pic = ImportMailJIET.create_bp_pic(exist_bp.id, human["URL"])
       else
         target_bp = exist_bp
+        
         # とりあえず一番最初に登録されている担当者を紐付ける
-        # todo: "担当者"がいたら、"担当者"を紐付ける処理
         target_pic = exist_bp.bp_pics.shift
       end
       
       # 人材所属限定の加工処理
       human["性別"], human["年齢"] = human["性別（年齢）"].scan(/(.*)\((.*)\)/).shift unless human["性別（年齢）"].nil?
       
-      case human["社員区分"]
-      when /正社員/
-        human["社員区分"] = "permanent"
-      when /契約社員/
-        human["社員区分"] = "temporary"
-      else
-	      human["社員区分"] = "unknown"
-	    end
-      
-      case human["性別"]
-      when /男性/
-        human["性別"] = "man"
-      when /女性/
-        human["性別"] = "woman"
-      else
-        human["性別"] = "unknown"
-      end
+      # 気持ち悪いけど、自身に再代入する
+      human["社員区分"] = ImportMailJIET.to_employment_type(human["社員区分"])
+      human["性別"] = ImportMailJIET.to_sex_type(human["性別"])
       
       ImportMailJIET.create_human_resource_and_bp_member(human, target_bp.id, target_pic.id)
     }
-    puts "
-    //////////////////////////////////
-       finish analyze_jiet_human
-    //////////////////////////////////
-    "
+    
+    logger.info "finish analyze_jiet_human method. message_id: #{mail.message_id}"
   end
   
   #=====
-  # JIETメール解析用ヘルパー達
+  # JIETメール解析用ヘルパー
   #=====
   def ImportMailJIET.jiet_mail_parse(mail_body)
     # todo: sysconfigから取得出来るようにする
@@ -111,18 +83,19 @@ class ImportMailJIET < ImportMail
       ImportMailJIET.group_by_indent(item.split("\n")).reject{|s| s == ""}.flat_map{|s|
         s.scan(/(.*?)[\s　]*?：[\s　]*?([\s\S]*)/)
       }.each{|arr|
-        jiet_mail_item[arr[0]] = arr[1]
+        jiet_mail_item[arr[0]] = arr[1].chop
       }
       jiet_mail_item_list.push(jiet_mail_item)
     }
     
     # 署名部分をparseした結果の空ハッシュを削除
     jiet_mail_item_list.reject{|item| item == {}}
+    # Valueの末尾改行を削除
   end
   
   def ImportMailJIET.create_bp_and_bp_pic(message_id, mail)
     bp = BusinessPartner.new
-    puts mail["会社名"]
+    mail["会社名"] = ImportMailJIET.trimming_name(mail["会社名"])
     bp.attributes = {
       business_partner_name: mail["会社名"],
       business_partner_short_name: mail["会社名"],
@@ -134,9 +107,10 @@ class ImportMailJIET < ImportMail
       category: mail["業種"],
       import_mail_id: message_id
     }.reject{|k, v| v.blank?}
+    
     bp.save!
     
-    # pic = ImportMailJIET.create_bp_pic(bp.id, "unknown@#{ImportMailJIET.domain_name(mail["URL"])}")
+    # 取引先担当者も同時に作成する
     pic = ImportMailJIET.create_bp_pic(bp.id)
     
     [bp, pic]
@@ -150,9 +124,9 @@ class ImportMailJIET < ImportMail
       bp_pic_name: "ご担当者",
       bp_pic_short_name: "ご担当者",
       bp_pic_name_kana: "ご担当者",
-      # email1: "unknown@#{ImportMailJIET.domain_name(bp_url)}"
       email1: "unknown+#{bp_id}@unknown.applicative.jp"
-    }.reject{|k, v| v.blank?}    
+    }.reject{|k, v| v.blank?}
+     
     pic.save!
     
     pic
@@ -169,15 +143,17 @@ class ImportMailJIET < ImportMail
       place: ImportMailJIET.linefeed_join(offer["作業地域"], offer["作業場所"]),
       period: offer["参入時期"],
       skill_title: offer["職務"],
-      skill_must: ImportMailJIET.comma_join(offer["ＯＳ"],offer["ＤＢ"],offer["言語"],offer["ハードウェア"],offer["ネットワーク"],offer["ツール"],offer["フレームワーク"]),
+      skill_must: ImportMailJIET.linefeed_join(offer["ＯＳ"],offer["ＤＢ"],offer["言語"],offer["ハードウェア"],offer["ネットワーク"],offer["ツール"],offer["フレームワーク"]),
       career_years: offer["経験年数"],
       age_limit: offer["年齢範囲"],
       nationality_limit: offer["国籍"],
       link: offer["リンク"],
       memo: ImportMailJIET.linefeed_join(offer["作業形態"],offer["コメント"])
     }.reject{|k, v| v.blank?}
-    business.save!
+    
+    business.save! if business.new_record? # 新規だった場合、スキルタグ生成の為に一時保存
     business.make_skill_tags!
+    business.save!
     
     biz_offer = BizOffer.new
     biz_offer.attributes = {
@@ -189,6 +165,7 @@ class ImportMailJIET < ImportMail
       payment_text: offer["予算"],
       sales_route_limit: offer["社員区分"]
     }.reject{|k, v| v.blank?}
+    
     biz_offer.save!
   end
   
@@ -202,14 +179,16 @@ class ImportMailJIET < ImportMail
       near_station: human["最寄駅"],
       experience: human["経験年数"],
       skill_title: human["職務"],
-      skill: ImportMailJIET.comma_join(human["ＯＳ"],human["ＤＢ"],human["言語"],human["ハードウェア"],human["ネットワーク"],human["ツール"],human["フレームワーク"]),
+      skill: ImportMailJIET.linefeed_join(human["ＯＳ"],human["ＤＢ"],human["言語"],human["ハードウェア"],human["ネットワーク"],human["ツール"],human["フレームワーク"]),
       communication_type: "unknown",
       human_resource_status_type: "sales",
       link: human["リンク"],
       memo: ImportMailJIET.linefeed_join(human["希望作業場所"],human["コメント"])
     }.reject{|k, v| v.blank?}
-    hr.save!
+    
+    hr.save! if hr.new_record? # 新規だった場合、スキルタグ生成の為に一時保存
     hr.make_skill_tags!
+    hr.save!
     
     bp_member = BpMember.new
     bp_member.attributes = {
@@ -221,30 +200,19 @@ class ImportMailJIET < ImportMail
       payment_memo: human["単価"],
       memo: ImportMailJIET.linefeed_join(human["人財概要"], human["作業希望形態"])
     }.reject{|k, v| v.blank?}
+    
     bp_member.save!
   end
   
-  
-  #== private methods ==#
-  
-  def ImportMailJIET.create_email(bp_pic_id)
-    "unknown+#{bp_pic_id}@unknown.applicative.jp"
-  end
-  
-  def ImportMailJIET.comma_join(*str)
-    # 表示崩れるから、とりあえず改行でjoinすることにしようそうしよう
-    # str.reject{|s| s == ""}.join(", ")
-    # str.reject{|s| s == ""}.join("\n")
-    str.reject{|s| s == ""}.join("")
-  end
-  
-  def ImportMailJIET.linefeed_join(*str)
-    # str.reject{|s| s == ""}.join("\n")
-    str.reject{|s| s == ""}.join("")
+  #
+  # Helper's Helper
+  #
+    
+  def ImportMailJIET.linefeed_join(*items)
+    items.reject{|s| s == ""}.join("\n")
   end
  
   def ImportMailJIET.group_by_indent(list)
-  # def group_by_indent(list)
     item = ""
     grouped_items = []
     
@@ -253,20 +221,43 @@ class ImportMailJIET < ImportMail
       list_head = str[0]
       if list_head =~ /[\t\s　]/
         item += str.strip + "\n"
-      else
+      else 
         grouped_items.push(item)
-        unless str =~ /\n$/
-          str += "\n"
-        end
-        item = str
+        item = str + "\n"
       end
     }
     grouped_items.push(item) # ループで漏れる末端要素の追加
-    # grouped_items.reject{ |c| c == "" }
   end
   
-  # private :domain_name, :delimiter_with_comma, :delimiter_with_new_line
+  def ImportMailJIET.trimming_name(str)
+    str.gsub(/[\s　\n]/, "")
+  end
   
+  def self.to_employment_type(mail_employment_type)
+    case mail_employment_type
+    when /正社員/
+      "permanent"
+    when /契約社員/
+      "temporary"
+    when /個人/ # メール内容として存在するか不明 13.07.23現在
+      "freelance"
+    else
+      "unknown"
+    end
+  end
+  
+  def self.to_sex_type(mail_sex_type)
+    # 「その他」の判定が難しいので不明と同一視する。
+    case mail_sex_type
+      when /男性/
+        "man"
+      when /女性/
+        "woman"
+      else
+        "unknown"
+      end
+  end
+    
 =begin
   BUSINESS_TAG = [
     "会社名",

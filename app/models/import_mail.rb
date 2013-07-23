@@ -100,8 +100,6 @@ class ImportMail < ActiveRecord::Base
       
       # JIETの案件・人材メールだった場合、案件照会・人材所属を作成
       if import_mail.jiet_ses_mail?
-      # if import_mail.mail_from == "test+office_jiet.or.jp@i.applicative.jp"
-      # if import_mail.mail_from == "office@jiet.or.jp" && import_mail.mail_subject =~ /^JIETメール配信サービス/
         mail_content = import_mail.mail_subject.scan(/JIETメール配信サービス\[(..)情報\]/).shift.shift
         case mail_content
         when "案件"
@@ -378,8 +376,8 @@ class ImportMail < ActiveRecord::Base
   end
   
   def jiet_ses_mail?
-    jiet_mail_address = "test+office_jiet.or.jp@i.applicative.jp"
-    # jiet_mail_address = "office@jiet.or.jp"
+    jiet_mail_address = SysConfig.email_prodmode? ? 
+      "office@jiet.or.jp" : "test+office_jiet.or.jp@i.applicative.jp"
     self.mail_from == jiet_mail_address && self.mail_subject =~ /^JIETメール配信サービス/
   end
   
