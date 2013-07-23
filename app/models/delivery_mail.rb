@@ -5,11 +5,11 @@ require 'date_time_util'
 class DeliveryMail < ActiveRecord::Base
   include AutoTypeName
 
-  attr_accessor :planned_setting_at_time, :planned_setting_at_date
+  attr_accessor :planned_setting_at_hour, :planned_setting_at_minute, :planned_setting_at_date
 
   has_many :delivery_mail_targets, :conditions => "delivery_mail_targets.deleted = 0"
   belongs_to :bp_pic_group
-  attr_accessible :bp_pic_group_id, :content, :id, :mail_bcc, :mail_cc, :mail_from, :mail_from_name, :mail_send_status_type, :mail_status_type, :owner_id, :planned_setting_at, :send_end_at, :subject, :lock_version, :planned_setting_at_time, :planned_setting_at_date
+  attr_accessible :bp_pic_group_id, :content, :id, :mail_bcc, :mail_cc, :mail_from, :mail_from_name, :mail_send_status_type, :mail_status_type, :owner_id, :planned_setting_at, :send_end_at, :subject, :lock_version, :planned_setting_at_hour, :planned_setting_at_minute, :planned_setting_at_date
 
   validates_presence_of :subject, :content, :mail_from_name, :mail_from, :planned_setting_at
 
@@ -39,17 +39,27 @@ class DeliveryMail < ActiveRecord::Base
     self.mail_send_status_type ||= 'ready'
   end
   
+  def planned_setting_at_time
+    if planned_setting_at_hour && planned_setting_at_minute
+      if !planned_setting_at_hour.blank? && !planned_setting_at_minute.blank?
+        return [planned_setting_at_hour, planned_setting_at_minute, "00"].join(":")
+      end
+    end
+    return ""
+  end
+  
   def perse_planned_setting_at(user)
     unless planned_setting_at_time.blank? || planned_setting_at_date.blank?
-      self.planned_setting_at = user.zone_parse(planned_setting_at_date.to_s + " " + planned_setting_at_time + ":00:00")
+      self.planned_setting_at = user.zone_parse(planned_setting_at_date.to_s + " " + planned_setting_at_time)
     end
   end
 
   def setup_planned_setting_at(zone_now)
     self.planned_setting_at = zone_now
-    date, hour = DateTimeUtil.split_date_time(zone_now)
+    date, hour, minute = DateTimeUtil.split_date_hour_minute(zone_now)
     self.planned_setting_at_date = date
-    self.planned_setting_at_time = hour
+    self.planned_setting_at_hour = hour
+    self.planned_setting_at_minute = minute
   end
 
   def attachment_files
@@ -106,7 +116,7 @@ class DeliveryMail < ActiveRecord::Base
         target.message_id = current_mail.header['Message-ID'].to_s
         target.save!
       rescue => e
-        DeliveryError.send_error(target.bp_pic, e).save!
+        DeliveryError.send_error(mail.id, target.bp_pic, e).save!
         
         error_str = "Delivery Mail Send Error: " + e.message + "\n" + e.backtrace.join("\n")
         SystemLog.error('delivery mail', 'mail send error',  error_str, 'delivery mail')
@@ -126,7 +136,7 @@ class DeliveryMail < ActiveRecord::Base
     DeliveryMail.where(:created_user => fetch_key).each {|mail|
       self.send_mail_to_each_targets(mail)
     }
-
+    
     DeliveryMail.
       where(:created_user => fetch_key).
       update_all(:mail_status_type => 'send',:mail_send_status_type => 'finished',:send_end_at => Time.now)
@@ -161,5 +171,24 @@ class DeliveryMail < ActiveRecord::Base
         logger.warn '"Return-Path"が設定されていません。'
       end
     end
+  end
+  
+  # 送信処理でエラーが発生したか調べる
+  def include_error?
+    self.delivery_mail_targets.each do |tgt|
+      return true if tgt.error?
+    end
+    return false;
+  end
+  
+  # 送信処理エラーの件数をカウントする
+  def count_error
+    cnt = 0
+    if self.mail_status_type == 'send'
+      self.delivery_mail_targets.each do |tgt|
+        cnt += 1 if tgt.error?
+      end
+    end
+    return cnt
   end
 end

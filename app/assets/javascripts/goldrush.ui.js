@@ -1,3 +1,15 @@
+// ポップオーバー属性の追加(見出しあり)
+$(function() {
+    $('[rel=popover]').popover();
+});
+
+// ポップオーバー属性の追加(見出しなし)
+$(function() {
+    $('[rel=popover-without-title]').popover({
+      template: '<div class="popover"><div class="arrow"></div><div class="popover-inner"><div class="popover-content"><p></p></div></div></div>'
+    });
+});
+
 var BuisinessPartnerForm = (function(){
   klass = function(form_id_list){
     this.id_list = form_id_list;

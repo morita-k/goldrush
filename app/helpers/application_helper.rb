@@ -448,4 +448,25 @@ EOS
     option[:onclick] = "disp_wide('#{url}');return false"
     link_to text, "#", option
   end
+  
+  def popover(tag_name, text, content, option = {})
+    if !option[:rel]
+      option[:rel] = ( option[:title] ? "popover" : "popover-without-title" )
+    end
+    
+    # data-xxxx属性の設定
+    option[:data] ||= {}
+    data = option[:data]
+    data[:html] = (data[:html] || "false")
+    data[:trigger] = (data[:trigger] || "hover")
+    data[:animation] = (data[:animation] || "false")
+    data[:content] = content
+    
+    if text
+      content_tag(tag_name, text, option)
+    else
+      tag(tag_name, option)
+    end
+  end
+  
 end

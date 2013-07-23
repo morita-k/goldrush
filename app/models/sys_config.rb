@@ -93,7 +93,8 @@ class SysConfig < ActiveRecord::Base
   end
 
   def self.get_vacation_half_year(half_year)
-    SysConfig.find(:first, :conditions => ["deleted = 0 and config_section = ? and config_key <= ?", 'vacation_half_year', half_year], :order => 'config_key desc').value1
+    x = SysConfig.find(:first, :conditions => ["deleted = 0 and config_section = ? and config_key <= ?", 'vacation_half_year', half_year], :order => 'config_key desc')
+    x && x.value1 || 0
   end
 
   def self.get_vacation_month(month)

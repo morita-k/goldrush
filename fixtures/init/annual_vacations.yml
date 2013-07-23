@@ -1,0 +1,400 @@
+annual_vacations_1:
+  id: 1
+  owner_id: 
+  user_id: 5
+  year: 2011
+  start_date: <%="2011-4-1"%>
+  end_date: <%="2012-3-31"%>
+  day_total: 3
+  used_total: 3
+  previous_year_day_total: 0
+  life_plan_flg: 0
+  life_plan_day_total: 0
+  life_plan_used_total: 0
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+annual_vacations_2:
+  id: 2
+  owner_id: 
+  user_id: 6
+  year: 2011
+  start_date: <%="2011-4-1"%>
+  end_date: <%="2012-3-31"%>
+  day_total: 3
+  used_total: 3
+  previous_year_day_total: 0
+  life_plan_flg: 0
+  life_plan_day_total: 0
+  life_plan_used_total: 0
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+annual_vacations_3:
+  id: 3
+  owner_id: 
+  user_id: 7
+  year: 2011
+  start_date: <%="2011-4-1"%>
+  end_date: <%="2012-3-31"%>
+  day_total: 3
+  used_total: 3
+  previous_year_day_total: 0
+  life_plan_flg: 0
+  life_plan_day_total: 0
+  life_plan_used_total: 0
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+annual_vacations_4:
+  id: 4
+  owner_id: 
+  user_id: 8
+  year: 2011
+  start_date: <%="2011-4-1"%>
+  end_date: <%="2012-3-31"%>
+  day_total: 3
+  used_total: 3
+  previous_year_day_total: 0
+  life_plan_flg: 0
+  life_plan_day_total: 0
+  life_plan_used_total: 0
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+annual_vacations_5:
+  id: 5
+  owner_id: 
+  user_id: 5
+  year: 2012
+  start_date: <%="2012-4-1"%>
+  end_date: <%="2013-3-31"%>
+  day_total: 10
+  used_total: 10
+  previous_year_day_total: 0
+  life_plan_flg: 0
+  life_plan_day_total: 0
+  life_plan_used_total: 0
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+annual_vacations_6:
+  id: 6
+  owner_id: 
+  user_id: 6
+  year: 2012
+  start_date: <%="2012-4-1"%>
+  end_date: <%="2013-3-31"%>
+  day_total: 10
+  used_total: 10
+  previous_year_day_total: 0
+  life_plan_flg: 0
+  life_plan_day_total: 0
+  life_plan_used_total: 0
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+annual_vacations_7:
+  id: 7
+  owner_id: 
+  user_id: 7
+  year: 2012
+  start_date: <%="2012-4-1"%>
+  end_date: <%="2013-3-31"%>
+  day_total: 10
+  used_total: 4
+  previous_year_day_total: 0
+  life_plan_flg: 0
+  life_plan_day_total: 0
+  life_plan_used_total: 0
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+annual_vacations_8:
+  id: 8
+  owner_id: 
+  user_id: 8
+  year: 2012
+  start_date: <%="2012-4-1"%>
+  end_date: <%="2013-3-31"%>
+  day_total: 10
+  used_total: 1
+  previous_year_day_total: 0
+  life_plan_flg: 0
+  life_plan_day_total: 0
+  life_plan_used_total: 0
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+annual_vacations_9:
+  id: 9
+  owner_id: 
+  user_id: 9
+  year: 2012
+  start_date: <%="2012-4-1"%>
+  end_date: <%="2013-3-31"%>
+  day_total: 10
+  used_total: 7
+  previous_year_day_total: 0
+  life_plan_flg: 0
+  life_plan_day_total: 0
+  life_plan_used_total: 0
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+annual_vacations_10:
+  id: 10
+  owner_id: 
+  user_id: 10
+  year: 2012
+  start_date: <%="2012-4-1"%>
+  end_date: <%="2013-3-31"%>
+  day_total: 10
+  used_total: 5.5
+  previous_year_day_total: 0
+  life_plan_flg: 0
+  life_plan_day_total: 0
+  life_plan_used_total: 0
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+annual_vacations_11:
+  id: 11
+  owner_id: 
+  user_id: 11
+  year: 2012
+  start_date: <%="2012-4-1"%>
+  end_date: <%="2013-3-31"%>
+  day_total: 10
+  used_total: 0
+  previous_year_day_total: 0
+  life_plan_flg: 0
+  life_plan_day_total: 0
+  life_plan_used_total: 0
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+annual_vacations_12:
+  id: 12
+  owner_id: 
+  user_id: 5
+  year: 2013
+  start_date: <%="2013-4-1"%>
+  end_date: <%="2014-3-31"%>
+  day_total: 11
+  used_total: 0
+  previous_year_day_total: 0
+  life_plan_flg: 0
+  life_plan_day_total: 0
+  life_plan_used_total: 0
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+annual_vacations_13:
+  id: 13
+  owner_id: 
+  user_id: 6
+  year: 2013
+  start_date: <%="2013-4-1"%>
+  end_date: <%="2014-3-31"%>
+  day_total: 11
+  used_total: 0
+  previous_year_day_total: 0
+  life_plan_flg: 0
+  life_plan_day_total: 0
+  life_plan_used_total: 0
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+annual_vacations_14:
+  id: 14
+  owner_id: 
+  user_id: 7
+  year: 2013
+  start_date: <%="2013-4-1"%>
+  end_date: <%="2014-3-31"%>
+  day_total: 11
+  used_total: 0
+  previous_year_day_total: 0
+  life_plan_flg: 0
+  life_plan_day_total: 0
+  life_plan_used_total: 0
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+annual_vacations_15:
+  id: 15
+  owner_id: 
+  user_id: 8
+  year: 2013
+  start_date: <%="2013-4-1"%>
+  end_date: <%="2014-3-31"%>
+  day_total: 11
+  used_total: 0
+  previous_year_day_total: 0
+  life_plan_flg: 0
+  life_plan_day_total: 0
+  life_plan_used_total: 0
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+annual_vacations_16:
+  id: 16
+  owner_id: 
+  user_id: 9
+  year: 2013
+  start_date: <%="2013-4-1"%>
+  end_date: <%="2014-3-31"%>
+  day_total: 11
+  used_total: 0
+  previous_year_day_total: 0
+  life_plan_flg: 0
+  life_plan_day_total: 0
+  life_plan_used_total: 0
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+annual_vacations_17:
+  id: 17
+  owner_id: 
+  user_id: 10
+  year: 2013
+  start_date: <%="2013-4-1"%>
+  end_date: <%="2014-3-31"%>
+  day_total: 11
+  used_total: 0
+  previous_year_day_total: 0
+  life_plan_flg: 0
+  life_plan_day_total: 0
+  life_plan_used_total: 0
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+annual_vacations_18:
+  id: 18
+  owner_id: 
+  user_id: 11
+  year: 2013
+  start_date: <%="2013-4-1"%>
+  end_date: <%="2014-3-31"%>
+  day_total: 11
+  used_total: 0
+  previous_year_day_total: 0
+  life_plan_flg: 0
+  life_plan_day_total: 0
+  life_plan_used_total: 0
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+annual_vacations_19:
+  id: 19
+  owner_id: 
+  user_id: 13
+  year: 2013
+  start_date: <%="2013-4-1"%>
+  end_date: <%="2014-3-31"%>
+  day_total: 10
+  used_total: 0
+  previous_year_day_total: 0
+  life_plan_flg: 0
+  life_plan_day_total: 0
+  life_plan_used_total: 0
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+annual_vacations_20:
+  id: 20
+  owner_id: 
+  user_id: 14
+  year: 2013
+  start_date: <%="2013-4-1"%>
+  end_date: <%="2014-3-31"%>
+  day_total: 10
+  used_total: 0
+  previous_year_day_total: 0
+  life_plan_flg: 0
+  life_plan_day_total: 0
+  life_plan_used_total: 0
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
