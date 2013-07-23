@@ -387,8 +387,7 @@ class ImportMail < ActiveRecord::Base
   end
   
   def jiet_ses_mail?
-    jiet_mail_address = SysConfig.email_prodmode? ? 
-      "office@jiet.or.jp" : "test+office_jiet.or.jp@i.applicative.jp"
+    jiet_mail_address = "office@jiet.or.jp"
     self.mail_from == jiet_mail_address && self.mail_subject =~ /^JIETメール配信サービス/
   end
   
