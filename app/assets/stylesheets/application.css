@@ -179,6 +179,22 @@ td.flag_container {
   white-space: nowrap;
 }
 
+tr.warn {
+  background-color: #ffd900; /* yellow */
+}
+
+tr.canceled {
+  background-color: silver;
+}
+
+tr.unsend {
+  background-color: white;
+}
+
+tr.send {
+  background-color: skyblue;
+}
+
 .popover-container {
   overflow: visible !important;
   position: relative;

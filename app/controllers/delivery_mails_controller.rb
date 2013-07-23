@@ -195,6 +195,11 @@ EOS
     
     if delivery_mail.planned_setting_at < Time.now.to_s
       DeliveryMail.send_mails
+      
+      error_count = DeliveryError.where(:delivery_mail_id => delivery_mail.id).size
+      if error_count > 0
+        flash.now[:warn] = "送信に失敗した宛先が存在します。<br>送信に失敗した宛先は配信メール詳細画面から確認できます。"
+      end
     end
       
     respond_to do |format|

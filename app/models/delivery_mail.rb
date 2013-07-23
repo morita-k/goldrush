@@ -116,7 +116,7 @@ class DeliveryMail < ActiveRecord::Base
         target.message_id = current_mail.header['Message-ID'].to_s
         target.save!
       rescue => e
-        DeliveryError.send_error(target.bp_pic, e).save!
+        DeliveryError.send_error(mail.id, target.bp_pic, e).save!
         
         error_str = "Delivery Mail Send Error: " + e.message + "\n" + e.backtrace.join("\n")
         SystemLog.error('delivery mail', 'mail send error',  error_str, 'delivery mail')
@@ -136,7 +136,7 @@ class DeliveryMail < ActiveRecord::Base
     DeliveryMail.where(:created_user => fetch_key).each {|mail|
       self.send_mail_to_each_targets(mail)
     }
-
+    
     DeliveryMail.
       where(:created_user => fetch_key).
       update_all(:mail_status_type => 'send',:mail_send_status_type => 'finished',:send_end_at => Time.now)
@@ -171,5 +171,24 @@ class DeliveryMail < ActiveRecord::Base
         logger.warn '"Return-Path"が設定されていません。'
       end
     end
+  end
+  
+  # 送信処理でエラーが発生したか調べる
+  def include_error?
+    self.delivery_mail_targets.each do |tgt|
+      return true if tgt.error?
+    end
+    return false;
+  end
+  
+  # 送信処理エラーの件数をカウントする
+  def count_error
+    cnt = 0
+    if self.mail_status_type == 'send'
+      self.delivery_mail_targets.each do |tgt|
+        cnt += 1 if tgt.error?
+      end
+    end
+    return cnt
   end
 end
