@@ -9,4 +9,7 @@ class DeliveryMailTarget < ActiveRecord::Base
     DeliveryError.where(:delivery_mail_id => delivery_mail_id, :bp_pic_id => bp_pic_id)
   end
   
+  def error?
+    !self.delivery_error.empty?
+  end
 end

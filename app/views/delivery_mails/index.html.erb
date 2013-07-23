@@ -11,13 +11,14 @@
     <th><%= getLongName('delivery_mails', 'mail_from') %></th>
     <th>添付</th>
     <th>対象数</th>
+    <th>ｴﾗｰ件数</th>
     <th><%= getLongName('delivery_mails', 'planned_setting_at') %></th>
     <th><%= getLongName('delivery_mails', 'send_end_at') %></th>
     <th>取り消し/コピー</th>
   </tr>
 
 <% @delivery_mails.each do |delivery_mail| %>
-  <tr style="background-color: <%= delivery_mail.canceled? ? 'silver' : (delivery_mail.unsend? ? 'white' : 'skyblue') %>" id="tr_<%= delivery_mail.id %>">
+  <tr class="<%= row_style(delivery_mail) %>" id="tr_<%= delivery_mail.id %>">
     <td style="text-align:center">
       <%= delivery_mail.mail_status_type_name %>
     </td>
@@ -25,6 +26,7 @@
     <td><%= delivery_mail.formated_mail_from %></td>
     <td style="text-align:center"><%= delivery_mail.attachment_files.first ? "あり" : "なし" %></td>
     <td style="text-align:center"><%= delivery_mail.delivery_mail_targets.count %></td>
+    <td style="text-align:center"><%= delivery_mail.count_error %></td>
     <td><%= _time(delivery_mail.planned_setting_at) %></td>
     <td><%= _time(delivery_mail.send_end_at) %></td>
     <td>

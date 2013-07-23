@@ -172,4 +172,23 @@ class DeliveryMail < ActiveRecord::Base
       end
     end
   end
+  
+  # 送信処理でエラーが発生したか調べる
+  def include_error?
+    self.delivery_mail_targets.each do |tgt|
+      return true if tgt.error?
+    end
+    return false;
+  end
+  
+  # 送信処理エラーの件数をカウントする
+  def count_error
+    cnt = 0
+    if self.mail_status_type == 'send'
+      self.delivery_mail_targets.each do |tgt|
+        cnt += 1 if tgt.error?
+      end
+    end
+    return cnt
+  end
 end
