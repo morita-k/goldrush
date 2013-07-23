@@ -35,7 +35,7 @@ module BpPicGroupsHelper
       res << hidden_field_tag(:back_to, request_url)
     else
       res << submit_tag("選択した担当者を削除", :confirm => "選択した担当者をリストから削除します。\nよろしいですか？")
-      res << hidden_field_tag('back_to', back_to)
+      res << hidden_field_tag('back_to', request_url)
     end
     raw res.join("\n")
   end
