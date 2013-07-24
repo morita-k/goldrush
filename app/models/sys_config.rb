@@ -231,7 +231,10 @@ class SysConfig < ActiveRecord::Base
     {
       0 => 'silver',
       1 => 'yellow',
-      2 => 'black',
+      2 => 'orange',
+      3 => 'black',
+      4 => 'grey'
     }
   end
+  
 end
