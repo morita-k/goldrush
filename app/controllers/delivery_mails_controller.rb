@@ -18,8 +18,6 @@ class DeliveryMailsController < ApplicationController
     @delivery_mail = DeliveryMail.find(params[:id])
     @attachment_files = AttachmentFile.attachment_files("delivery_mails", @delivery_mail.id)
     
-    @error_bppic_id = []
-    @delivery_mail.delivery_errors.each{ |error| @error_bppic_id.push error.bp_pic_id }
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @delivery_mail }
