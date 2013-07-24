@@ -64,9 +64,10 @@ class HomeController < ApplicationController
     model.starred = (model.starred + 1) % star_colors.size
     set_user_column model
     model.save!
+    
+    # javascriptの返送
     color = star_colors[model.starred]
     attr_class = StarUtil.attr_class(model)
-    "Star.update('#{ attr_class }', '#{ color }')"
     respond_to do |format|
       format.js { render :text => "Star.update('#{ attr_class }', '#{ color }')" }
     end
