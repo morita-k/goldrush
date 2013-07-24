@@ -933,6 +933,7 @@ ActiveRecord::Schema.define(:version => 0) do
     t.text     "tag_text"
     t.string   "payment_text"
     t.string   "age_text"
+    t.text     "nearest_station",     :limit => 2147483647
     t.datetime "created_at",                                               :null => false
     t.datetime "updated_at",                                               :null => false
     t.integer  "lock_version",        :limit => 8,          :default => 0

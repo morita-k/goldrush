@@ -101,7 +101,7 @@ class ImportMail < ActiveRecord::Base
       
       # JIETの案件・人材メールだった場合、案件照会・人材所属を作成
       if import_mail.jiet_ses_mail?
-        mail_content = import_mail.mail_subject.scan(/JIETメール配信サービス\[(..)情報\]/).shift.shift
+        mail_content = import_mail.mail_subject.scan(/JIETメール配信サービス\[(..)情報\]/).first.first
         case mail_content
         when "案件"
           ImportMailJIET.analyze_jiet_offer(import_mail)
@@ -387,8 +387,13 @@ class ImportMail < ActiveRecord::Base
   end
   
   def jiet_ses_mail?
-    jiet_mail_address = SysConfig.get_jiet_analysis_target_address
-    self.mail_from == jiet_mail_address && self.mail_subject =~ /^JIETメール配信サービス/
+    if SysConfig.email_prodmode?
+      jiet_mail_address = SysConfig.get_jiet_analysis_target_address
+    else
+      jiet_mail_address = StringUtil.to_test_address(SysConfig.get_jiet_analysis_target_address)
+    end
+       
+    (self.mail_from == jiet_mail_address) && (self.mail_subject =~ /^JIETメール配信サービス/)
   end
   
 private
