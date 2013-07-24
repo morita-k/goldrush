@@ -17,10 +17,10 @@ class ImportMailJIET < ImportMail
       exist_bp = BusinessPartner.where(business_partner_name: offer["会社名"], deleted: 0).shift
       
       if exist_bp.nil?
-        target_bp, target_pic = ImportMailJIET.create_bp_and_bp_pic(mail.message_id, offer)
+        target_bp, target_pic = ImportMailJIET.create_bp_and_bp_pic(mail.id, offer)
       elsif exist_bp.bp_pics.blank?
         target_bp = exist_bp
-        target_pic = ImportMailJIET.create_bp_pic(exist_bp.id, offer["URL"])
+        target_pic = ImportMailJIET.create_bp_pic(mail.id, exist_bp.id)
       else
         target_bp = exist_bp
         
@@ -28,7 +28,7 @@ class ImportMailJIET < ImportMail
         target_pic = exist_bp.bp_pics.shift
       end
       
-      ImportMailJIET.create_business_and_biz_offer(mail.received_at, offer, target_bp.id, target_pic.id)
+      ImportMailJIET.create_business_and_biz_offer(mail.received_at, offer, target_bp.id, target_pic.id, mail.id)
     }
     
     logger.info "finish analyze_jiet_offer method. message_id: #{mail.message_id}"
@@ -44,10 +44,10 @@ class ImportMailJIET < ImportMail
       exist_bp = BusinessPartner.where(business_partner_name: human["会社名"], deleted: 0).shift
       
       if exist_bp.nil?  
-        target_bp, target_pic = ImportMailJIET.create_bp_and_bp_pic(mail.message_id, human)
+        target_bp, target_pic = ImportMailJIET.create_bp_and_bp_pic(mail.id, human)
       elsif exist_bp.bp_pics.blank?
         target_bp = exist_bp
-        target_pic = ImportMailJIET.create_bp_pic(exist_bp.id, human["URL"])
+        target_pic = ImportMailJIET.create_bp_pic(mail.id, exist_bp.id)
       else
         target_bp = exist_bp
         
@@ -62,7 +62,7 @@ class ImportMailJIET < ImportMail
       human["社員区分"] = ImportMailJIET.to_employment_type(human["社員区分"])
       human["性別"] = ImportMailJIET.to_sex_type(human["性別"])
       
-      ImportMailJIET.create_human_resource_and_bp_member(human, target_bp.id, target_pic.id)
+      ImportMailJIET.create_human_resource_and_bp_member(human, target_bp.id, target_pic.id, mail.id)
     }
     
     logger.info "finish analyze_jiet_human method. message_id: #{mail.message_id}"
@@ -93,7 +93,7 @@ class ImportMailJIET < ImportMail
     # Valueの末尾改行を削除
   end
   
-  def ImportMailJIET.create_bp_and_bp_pic(message_id, mail)
+  def ImportMailJIET.create_bp_and_bp_pic(import_mail_id, mail)
     bp = BusinessPartner.new
     mail["会社名"] = ImportMailJIET.trimming_name(mail["会社名"])
     bp.attributes = {
@@ -105,26 +105,27 @@ class ImportMailJIET < ImportMail
       nda_status_type: "none",
       url: mail["URL"],
       category: mail["業種"],
-      import_mail_id: message_id
+      import_mail_id: import_mail_id
     }.reject{|k, v| v.blank?}
     
     bp.save!
     
     # 取引先担当者も同時に作成する
-    pic = ImportMailJIET.create_bp_pic(bp.id)
+    pic = ImportMailJIET.create_bp_pic(import_mail_id, bp.id)
     
     [bp, pic]
   end
   
   # def ImportMailJIET.create_bp_pic(bp_id, bp_url, message_id)
-  def ImportMailJIET.create_bp_pic(bp_id)
+  def ImportMailJIET.create_bp_pic(import_mail_id, bp_id)
     pic = BpPic.new
     pic.attributes = {
       business_partner_id: bp_id,
       bp_pic_name: "ご担当者",
       bp_pic_short_name: "ご担当者",
       bp_pic_name_kana: "ご担当者",
-      email1: "unknown+#{bp_id}@unknown.applicative.jp"
+      email1: "unknown+#{bp_id}@unknown.applicative.jp",
+      import_mail_id: import_mail_id
     }.reject{|k, v| v.blank?}
      
     pic.save!
@@ -132,7 +133,7 @@ class ImportMailJIET < ImportMail
     pic
   end
   
-  def ImportMailJIET.create_business_and_biz_offer(received_at, offer, business_partner_id, bp_pic_id)
+  def ImportMailJIET.create_business_and_biz_offer(received_at, offer, business_partner_id, bp_pic_id, import_mail_id)
     business = Business.new
     business.attributes = {
       business_status_type: "offered",
@@ -163,13 +164,14 @@ class ImportMailJIET < ImportMail
       biz_offer_status_type: "open",
       biz_offered_at: received_at,
       payment_text: offer["予算"],
-      sales_route_limit: offer["社員区分"]
+      sales_route_limit: offer["社員区分"],
+      import_mail_id: import_mail_id
     }.reject{|k, v| v.blank?}
     
     biz_offer.save!
   end
   
-  def ImportMailJIET.create_human_resource_and_bp_member(human, business_partner_id, bp_pic_id)
+  def ImportMailJIET.create_human_resource_and_bp_member(human, business_partner_id, bp_pic_id, import_mail_id)
     hr = HumanResource.new
     hr.attributes = {
       initial: "XX",
@@ -198,6 +200,7 @@ class ImportMailJIET < ImportMail
       employment_type: human["社員区分"],
       can_start_date: human["稼動可能日"],
       payment_memo: human["単価"],
+      import_mail_id: import_mail_id,
       memo: ImportMailJIET.linefeed_join(human["人財概要"], human["作業希望形態"])
     }.reject{|k, v| v.blank?}
     
