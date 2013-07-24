@@ -14,7 +14,7 @@ class ImportMailJIET < ImportMail
     offers = ImportMailJIET.jiet_mail_parse(mail.mail_body)
     offers.each{|offer| 
       offer["会社名"] = ImportMailJIET.trimming_name(offer["会社名"])
-      exist_bp = BusinessPartner.where(business_partner_name: offer["会社名"], deleted: 0).shift
+      exist_bp = BusinessPartner.where(business_partner_name: offer["会社名"], deleted: 0).first
       
       if exist_bp.nil?
         target_bp, target_pic = ImportMailJIET.create_bp_and_bp_pic(mail.id, offer)
@@ -25,7 +25,7 @@ class ImportMailJIET < ImportMail
         target_bp = exist_bp
         
         # とりあえず一番最初に登録されている担当者を紐付ける
-        target_pic = exist_bp.bp_pics.shift
+        target_pic = exist_bp.bp_pics.first
       end
       
       ImportMailJIET.create_business_and_biz_offer(mail.received_at, offer, target_bp.id, target_pic.id, mail.id)
@@ -41,7 +41,7 @@ class ImportMailJIET < ImportMail
     humans = ImportMailJIET.jiet_mail_parse(mail.mail_body)
     humans.each{|human|
       human["会社名"] = ImportMailJIET.trimming_name(human["会社名"])
-      exist_bp = BusinessPartner.where(business_partner_name: human["会社名"], deleted: 0).shift
+      exist_bp = BusinessPartner.where(business_partner_name: human["会社名"], deleted: 0).first
       
       if exist_bp.nil?  
         target_bp, target_pic = ImportMailJIET.create_bp_and_bp_pic(mail.id, human)
@@ -52,11 +52,11 @@ class ImportMailJIET < ImportMail
         target_bp = exist_bp
         
         # とりあえず一番最初に登録されている担当者を紐付ける
-        target_pic = exist_bp.bp_pics.shift
+        target_pic = exist_bp.bp_pics.first
       end
       
       # 人材所属限定の加工処理
-      human["性別"], human["年齢"] = human["性別（年齢）"].scan(/(.*)\((.*)\)/).shift unless human["性別（年齢）"].nil?
+      human["性別"], human["年齢"] = human["性別（年齢）"].scan(/(.*)\((.*)\)/).first unless human["性別（年齢）"].nil?
       
       # 気持ち悪いけど、自身に再代入する
       human["社員区分"] = ImportMailJIET.to_employment_type(human["社員区分"])
