@@ -8,6 +8,7 @@ class DeliveryMail < ActiveRecord::Base
   attr_accessor :planned_setting_at_hour, :planned_setting_at_minute, :planned_setting_at_date
 
   has_many :delivery_mail_targets, :conditions => "delivery_mail_targets.deleted = 0"
+  has_many :delivery_errors, :conditions => "delivery_errors.deleted = 0"
   belongs_to :bp_pic_group
   attr_accessible :bp_pic_group_id, :content, :id, :mail_bcc, :mail_cc, :mail_from, :mail_from_name, :mail_send_status_type, :mail_status_type, :owner_id, :planned_setting_at, :send_end_at, :subject, :lock_version, :planned_setting_at_hour, :planned_setting_at_minute, :planned_setting_at_date
 
@@ -171,24 +172,5 @@ class DeliveryMail < ActiveRecord::Base
         logger.warn '"Return-Path"が設定されていません。'
       end
     end
-  end
-  
-  # 送信処理でエラーが発生したか調べる
-  def include_error?
-    self.delivery_mail_targets.each do |tgt|
-      return true if tgt.error?
-    end
-    return false;
-  end
-  
-  # 送信処理エラーの件数をカウントする
-  def count_error
-    cnt = 0
-    if self.mail_status_type == 'send'
-      self.delivery_mail_targets.each do |tgt|
-        cnt += 1 if tgt.error?
-      end
-    end
-    return cnt
   end
 end

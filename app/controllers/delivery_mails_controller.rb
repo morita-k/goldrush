@@ -5,7 +5,7 @@ class DeliveryMailsController < ApplicationController
   def index
     @bp_pic_group = BpPicGroup.find(params[:id])
     @delivery_mails = DeliveryMail.where("bp_pic_group_id = ?", @bp_pic_group).order("id desc").page().per(50)
-
+    
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @delivery_mails }
@@ -17,6 +17,7 @@ class DeliveryMailsController < ApplicationController
   def show
     @delivery_mail = DeliveryMail.find(params[:id])
     @attachment_files = AttachmentFile.attachment_files("delivery_mails", @delivery_mail.id)
+    
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @delivery_mail }

@@ -1,4 +1,6 @@
 class DeliveryError < ActiveRecord::Base
+  belongs_to :delivery_mail
+  belongs_to :bp_pic
   
   def DeliveryError.build(delivery_mail_id, bp_pic, error_type, error_text)
     error = DeliveryError.new()
@@ -17,4 +19,5 @@ class DeliveryError < ActiveRecord::Base
     
     return self.build(delivery_mail_id, bp_pic, error_type, error_text)
   end
+  
 end

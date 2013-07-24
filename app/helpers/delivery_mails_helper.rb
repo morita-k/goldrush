@@ -6,7 +6,7 @@ module DeliveryMailsHelper
       return 'canceled'
     elsif delivery_mail.unsend?
       return 'unsend'
-    elsif delivery_mail.include_error?
+    elsif delivery_mail.delivery_errors.count > 0
       return 'warn'
     else
       return 'send'

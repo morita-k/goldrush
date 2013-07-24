@@ -2,15 +2,32 @@
 
 <%= render 'show' %>
 
+<!-- 配信エラー一覧  -->
+<% if !@delivery_mail.delivery_errors.empty? %>
+<h2><%= getLongName('table_name','delivery_errors')%> 一覧</h2>
+<table class="show_table" id="delivery_error">
+  <tr>
+    <th><%= getLongName('business_partners', 'business_partner_name') %></th>
+    <th><%= getLongName('bp_pics', 'bp_pic_name') %></th>
+  </tr>
+  <% @delivery_mail.delivery_errors.each do |error| %>
+    <td><%= back_to_link error.bp_pic.business_partner.business_partner_name,
+                         :controller => :business_partner,
+                         :action => :show,
+                         :id => error.bp_pic.business_partner_id
+    %></td>
+    <td><%= back_to_link error.bp_pic.usefulname,
+                         :controller => :bp_pic,
+                         :action => :show,
+                         :id => error.bp_pic_id
+    %></td>
+  <% end %>
+</table>
+<% end %>
+
 <!-- 配信メール対象一覧  -->
 <h2><%= getLongName('table_name','delivery_mail_targets')%> 一覧</h2>
 
-<div>表示：<select id="filter" onchange="switchDisplayItems();">
-<option value="">全て</option>
-<option value=".warn">エラーのみ</option>
-</select>
-<!--<input type="button" id="switch_display" value="エラーのみ" onclick="switchDisplayItems();" title="表示の切り替え">-->
-</div>
 <table class="show_table" id="delivery_mail_target">
   <tr>
     <th><%= getLongName('business_partners', 'business_partner_name') %></th>
@@ -21,8 +38,7 @@
   </tr>
   <tr>
     <% @delivery_mail.delivery_mail_targets.each do |delivery_mail_target| %>
-      <% err = !delivery_mail_target.delivery_error.empty? %>
-      <tr class="<%= err ? 'warn' : 'successful' %>" id="table_header">
+      <tr id="table_header">
         <td><%=
           back_to_link delivery_mail_target.bp_pic.business_partner.business_partner_name,
             :controller => :business_partner,
@@ -55,17 +71,3 @@
 <% end %>
 <%= link_or_back '戻る', {:action => :index, :id => @delivery_mail.bp_pic_group_id} %>
 
-<script><!--
-var BUTTON_TEXT=['エラーのみ', 'すべて']
-function switchDisplayItems(){
-  $('tr.successful').toggle();
-}
-
-var filter_target = "table#delivery_mail_target tr:gt(0)";
-$('#filter').change(function(){
-  var filter = $('#filter option:selected')[0].value;
-  if(filter != "") { $(filter_target).css('display', 'none'); }
-  $(filter_target + filter).css('display', 'table-row');
-});
-
-//--></script>
