@@ -387,7 +387,7 @@ class ImportMail < ActiveRecord::Base
   end
   
   def jiet_ses_mail?
-    if email_prodmode?
+    if SysConfig.email_prodmode?
       jiet_mail_address = SysConfig.get_jiet_analysis_target_address
     else
       jiet_mail_address = StringUtil.to_test_address(SysConfig.get_jiet_analysis_target_address)
