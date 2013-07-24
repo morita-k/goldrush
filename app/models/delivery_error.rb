@@ -17,4 +17,5 @@ class DeliveryError < ActiveRecord::Base
     
     return self.build(delivery_mail_id, bp_pic, error_type, error_text)
   end
+  
 end

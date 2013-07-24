@@ -26,7 +26,7 @@
     <td><%= delivery_mail.formated_mail_from %></td>
     <td style="text-align:center"><%= delivery_mail.attachment_files.first ? "あり" : "なし" %></td>
     <td style="text-align:center"><%= delivery_mail.delivery_mail_targets.count %></td>
-    <td style="text-align:center"><%= delivery_mail.count_error %></td>
+    <td style="text-align:center"><%= delivery_mail.delivery_errors.count %></td>
     <td><%= _time(delivery_mail.planned_setting_at) %></td>
     <td><%= _time(delivery_mail.send_end_at) %></td>
     <td>
