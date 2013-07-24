@@ -66,14 +66,9 @@ class HomeController < ApplicationController
     model.save!
     color = star_colors[model.starred]
     attr_class = StarUtil.attr_class(model)
+    "Star.update('#{ attr_class }', '#{ color }')"
     respond_to do |format|
-      format.js {render :text => <<EOS
-var l = $('.#{ attr_class }');
-for(var i = 0; i < l.length + 1; i++){
-  l[i].style.color = '#{ color }';
-}
-EOS
-}
+      format.js { render :text => "Star.update('#{ attr_class }', '#{ color }')" }
     end
   end
 end

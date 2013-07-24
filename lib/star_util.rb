@@ -13,7 +13,7 @@ module StarUtil
   end
   
   def StarUtil.attr_style(star_value)
-    "color: #{SysConfig.star_color[star_value]}; text-shadow: 1px 1px 1px blue;"
+    "color: #{SysConfig.star_color[star_value]}; text-shadow: 1px 1px 1px gainsboro;"
   end
   
 end
