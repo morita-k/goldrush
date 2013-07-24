@@ -41,6 +41,9 @@
   <%= paginate(@bp_pics) %>
   <table class="list_table" style="margin-top:0px">
     <tr>
+      <% unless popup? %>
+        <th></th>
+      <% end %>
       <th><%=getShortName('bp_pics', 'business_partner_id') %></th>
       <th <%= !popup? && "colspan=2"%>><%=getShortName('bp_pics', 'bp_pic_name') %></th>
       <th><%=getShortName('bp_pics', 'tel_mobile') %></th>
