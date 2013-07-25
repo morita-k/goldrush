@@ -178,7 +178,7 @@ class ImportMailJIET < ImportMail
       age: human["年齢"],
       sex_type: human["性別"],
       nationality: human["国籍"],
-      near_station: human["最寄駅"],
+      near_station: human["最寄り駅"],
       experience: human["経験年数"],
       skill_title: human["職務"],
       skill: ImportMailJIET.linefeed_join(human["ＯＳ"],human["ＤＢ"],human["言語"],human["ハードウェア"],human["ネットワーク"],human["ツール"],human["フレームワーク"]),
