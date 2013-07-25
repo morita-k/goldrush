@@ -198,7 +198,7 @@ class ImportMailJIET < ImportMail
       business_partner_id: business_partner_id,
       bp_pic_id: bp_pic_id,
       employment_type: human["社員区分"],
-      can_start_date: human["稼動可能日"],
+      can_start_date_memo: human["稼動可能日"],
       payment_memo: human["単価"],
       import_mail_id: import_mail_id,
       memo: ImportMailJIET.linefeed_join(human["人財概要"], human["作業希望形態"])
