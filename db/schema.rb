@@ -275,6 +275,7 @@ ActiveRecord::Schema.define(:version => 0) do
     t.string   "employment_type",     :limit => 40,                                                 :null => false
     t.integer  "reprint_flg",                                                      :default => 0
     t.date     "can_start_date"
+    t.text     "can_start_date_memo"
     t.date     "can_interview_date"
     t.string   "race_condition"
     t.string   "payment_memo"
@@ -442,6 +443,7 @@ ActiveRecord::Schema.define(:version => 0) do
     t.string   "period"
     t.string   "phase"
     t.integer  "need_count",           :limit => 8
+    t.string   "skill_title"
     t.string   "skill_must"
     t.string   "skill_want"
     t.string   "skill_tag"
@@ -454,6 +456,7 @@ ActiveRecord::Schema.define(:version => 0) do
     t.string   "communication"
     t.integer  "starred",                            :default => 0
     t.float    "rating",                             :default => 0.0
+    t.text     "link",                  :limit => 1000
     t.text     "memo"
     t.datetime "created_at",                                          :null => false
     t.datetime "updated_at",                                          :null => false
@@ -600,6 +603,7 @@ ActiveRecord::Schema.define(:version => 0) do
 
   create_table "delivery_errors", :force => true do |t|
     t.integer  "owner_id",            :limit => 8
+    t.integer  "delivery_mail_id"
     t.integer  "business_partner_id", :limit => 8
     t.integer  "bp_pic_id",           :limit => 8
     t.string   "email"
@@ -885,6 +889,9 @@ ActiveRecord::Schema.define(:version => 0) do
     t.string   "railroad"
     t.string   "near_station"
     t.string   "max_move_time"
+    t.string   "experience"
+    t.string   "skill_title"
+    t.text     "business_skill"
     t.text     "skill"
     t.string   "skill_tag"
     t.text     "qualification"
@@ -893,6 +900,7 @@ ActiveRecord::Schema.define(:version => 0) do
     t.string   "human_resource_status_type", :limit => 40
     t.integer  "starred",                                  :default => 0
     t.float    "rating",                                   :default => 0.0
+    t.string   "link",                         :limit => 1000
     t.text     "memo"
     t.datetime "created_at",                                                :null => false
     t.datetime "updated_at",                                                :null => false
@@ -927,6 +935,7 @@ ActiveRecord::Schema.define(:version => 0) do
     t.text     "tag_text"
     t.string   "payment_text"
     t.string   "age_text"
+    t.text     "nearest_station",     :limit => 2147483647
     t.datetime "created_at",                                               :null => false
     t.datetime "updated_at",                                               :null => false
     t.integer  "lock_version",        :limit => 8,          :default => 0
@@ -1309,6 +1318,7 @@ ActiveRecord::Schema.define(:version => 0) do
     t.integer  "owner_id",     :limit => 8
     t.integer  "tag_id",       :limit => 8,                 :null => false
     t.integer  "parent_id",    :limit => 8,                 :null => false
+    t.string   "tag_key",                                    :null => false
     t.string   "tag_text",                                  :null => false
     t.integer  "opened",                     :default => 0
     t.datetime "created_at",                                :null => false

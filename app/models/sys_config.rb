@@ -237,4 +237,8 @@ class SysConfig < ActiveRecord::Base
     }
   end
   
+  def self.get_jiet_analysis_target_address
+    get_configuration("import_mail", "jiet").value1
+  end
+
 end
