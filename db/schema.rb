@@ -275,6 +275,7 @@ ActiveRecord::Schema.define(:version => 0) do
     t.string   "employment_type",     :limit => 40,                                                 :null => false
     t.integer  "reprint_flg",                                                      :default => 0
     t.date     "can_start_date"
+    t.text     "can_start_date_memo"
     t.date     "can_interview_date"
     t.string   "race_condition"
     t.string   "payment_memo"
@@ -602,6 +603,7 @@ ActiveRecord::Schema.define(:version => 0) do
 
   create_table "delivery_errors", :force => true do |t|
     t.integer  "owner_id",            :limit => 8
+    t.integer  "delivery_mail_id"
     t.integer  "business_partner_id", :limit => 8
     t.integer  "bp_pic_id",           :limit => 8
     t.string   "email"
