@@ -10,6 +10,19 @@ $(function() {
     });
 });
 
+var Star = (function(){
+  klass = function(){}
+  
+  klass.update = function(attr_class, color){
+    var l = $('.' + attr_class);
+    for(var i = 0; i < l.length + 1; i++){
+      l[i].style.color = color;
+    }
+  }
+  
+  return klass;
+})()
+
 var BuisinessPartnerForm = (function(){
   klass = function(form_id_list){
     this.id_list = form_id_list;

@@ -2,6 +2,7 @@
 require 'string_util'
 require 'name_util'
 require 'type_util'
+require 'star_util'
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
   include NameUtil
@@ -428,11 +429,20 @@ EOS
   end
   
   def star_links(target)
-    raw "<span class=linked_star>" + link_to(raw("<span id='starred_icon_#{target.id}' class='starred_icon_#{target.id}' name='starred_icon_name_#{target.id}' style='#{_starstyle(target.starred)}'>★</span>"), {:controller => :home, :action => :change_star, :id => target.id, :model => target.class.name, :authenticity_token => form_authenticity_token}, :remote => true, :method => :put) + "</span>"
-  end
-  
-  def _starstyle(flg)
-    "color: #{SysConfig.star_color[flg]}"
+    icon_opt = { id: StarUtil.attr_id(target),
+                 class: StarUtil.attr_class(target),
+                 name: StarUtil.attr_name(target),
+                 style: StarUtil.attr_style( target.starred ) }
+    
+    link_opt = { controller: :home,
+                 action: :change_star,
+                 id: target.id, 
+                 model: target.class.name,
+                 authenticity_token: form_authenticity_token }
+    
+    content_tag(:span, class: "linked_star") do
+      link_to( content_tag(:span, "★", icon_opt), link_opt, :remote => true, :method => :put )
+    end
   end
   
   def popup_hidden_field

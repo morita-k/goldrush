@@ -230,8 +230,11 @@ class SysConfig < ActiveRecord::Base
   def self.star_color
     {
       0 => 'silver',
-      1 => 'yellow',
-      2 => 'black',
+      1 => '#ffea00',  # yellow
+      2 => '#ee7800', # orange
+      3 => 'black',
+      4 => 'gray'
     }
   end
+  
 end

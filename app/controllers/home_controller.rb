@@ -1,4 +1,5 @@
 # -*- encoding: utf-8 -*-
+require 'star_util'
 class HomeController < ApplicationController
 
   def index
@@ -58,19 +59,17 @@ class HomeController < ApplicationController
   
   def change_star
     model = params[:model].constantize.find(params[:id])
-    # 0 -> 1 -> 2 -> 0と遷移
-    model.starred = (model.starred + 1) % 3
+    star_colors = SysConfig.star_color
+    # star_colorsの配列サイズで値がローテートする
+    model.starred = (model.starred + 1) % star_colors.size
     set_user_column model
     model.save!
-    color = SysConfig.star_color[model.starred]
+    
+    # javascriptの返送
+    color = star_colors[model.starred]
+    attr_class = StarUtil.attr_class(model)
     respond_to do |format|
-      format.js {render :text => <<EOS
-var l = $('.starred_icon_#{model.id}');
-for(var i = 0; i < l.length + 1; i++){
-  l[i].style.color = '#{color}';
-}
-EOS
-}
+      format.js { render :text => "Star.update('#{ attr_class }', '#{ color }')" }
     end
   end
 end
