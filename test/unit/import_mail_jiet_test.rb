@@ -2,7 +2,8 @@
 require 'test_helper'
 
 class ImportMailJIETTest < ActiveSupport::TestCase
-  
+# テスト用メールソースを上げられないので、一時的にコメントアウト
+=begin
   setup do
     @file_name_offer = "test_jiet_offer.txt"
     @file_name_human = "test_jiet_human.txt"
@@ -40,7 +41,7 @@ class ImportMailJIETTest < ActiveSupport::TestCase
       ImportMail.import_mail(Mail.new(file_human), file_human.to_s)
     end
   end
-  
+=end  
   
   
 end
