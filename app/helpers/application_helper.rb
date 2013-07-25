@@ -429,12 +429,20 @@ EOS
   end
   
   def star_links(target)
-    id = StarUtil.attr_id(target)
-    clazz = StarUtil.attr_class(target)
-    name = StarUtil.attr_name(target)
-    style = StarUtil.attr_style( target.starred )
+    icon_opt = { id: StarUtil.attr_id(target),
+                 class: StarUtil.attr_class(target),
+                 name: StarUtil.attr_name(target),
+                 style: StarUtil.attr_style( target.starred ) }
     
-    raw "<span class=linked_star>" + link_to(raw("<span id='#{ id }' class='#{ clazz }' name='#{ name }' style='#{ style }'>★</span>"), {:controller => :home, :action => :change_star, :id => target.id, :model => target.class.name, :authenticity_token => form_authenticity_token}, :remote => true, :method => :put) + "</span>"
+    link_opt = { controller: :home,
+                 action: :change_star,
+                 id: target.id, 
+                 model: target.class.name,
+                 authenticity_token: form_authenticity_token }
+    
+    content_tag(:span, class: "linked_star") do
+      link_to( content_tag(:span, "★", icon_opt), link_opt, :remote => true, :method => :put )
+    end
   end
   
   def popup_hidden_field
