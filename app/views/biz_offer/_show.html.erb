@@ -1,9 +1,6 @@
 <table class="show_table">
 <tr>
-  <th>上流<%= getLongName('business_partners', 'sales_code') %></th><td><%=h @biz_offer.business_partner.sales_code %></td>
-</tr>
-<tr>
-  <th>上流<%= getLongName('business_partners', 'business_partner_name') %></th><td><%=h @biz_offer.business_partner.business_partner_name %></td>
+  <th>上流<%= getLongName('business_partners', 'business_partner_name') %></th><td><%=h @biz_offer.business_partner.sales_code %> <%=h @biz_offer.business_partner.business_partner_name %></td>
 </tr>
 <tr>
   <th>上流<%= getLongName('bp_pics', 'bp_pic_name') %></th><td><%=h @biz_offer.bp_pic.blank? ? "" : @biz_offer.bp_pic.bp_pic_name %></td>
