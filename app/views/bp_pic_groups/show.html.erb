@@ -80,18 +80,21 @@
 
 function changeStatus(id, status){
   target_row = $('#tr_' + id);
-  target_link = $('.status_' + id + ' a')
+  target_link = $('.status_' + id + ' a');
+  target_checkbox = $('#tr_' + id + " td:first-child input");
   switch(status){
     case 'on' : 
-      target_row.css('background-color', enable_color);
+      target_row.css('background-color', '<%=suspended_colors[0]%>');
+      target_checkbox.prop('checked', true);
       break;
     case 'off' : 
-      target_row.css('background-color', disable_color);
+      target_row.css('background-color', '<%=suspended_colors[1]%>');
+      target_checkbox.prop('checked', false);
       break;
     default :
       return;
   }
-  target_link.attr('class', 'status_toggle ' + status)
+  target_link.attr('class', 'status_toggle ' + status);
 }
 
 document.setBpPic = function(bp_pic){
@@ -112,8 +115,6 @@ function clearBpPic(){
     $("#submit_bp_pic_group_detail").attr("disabled", "disabled");
 }
 
-var enable_color =  '<%=suspended_colors[0]%>';
-var disable_color = '<%=suspended_colors[1]%>';
 // -->
 </script>
 
