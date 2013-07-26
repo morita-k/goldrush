@@ -1,9 +1,6 @@
 <table class="show_table">
 <tr>
-  <th>EU<%= getLongName('business_partners', 'sales_code') %></th><td><%=h @business.eubp.blank? ? "" : @business.eubp.sales_code %></td>
-</tr>
-<tr>
-  <th>EU<%= getLongName('business_partners', 'business_partner_name') %></th><td><%=h @business.eubp.blank? ? "" : @business.eubp.business_partner_name %></td>
+  <th>EU<%= getLongName('business_partners', 'business_partner_name') %></th><td><%=h @business.eubp.blank? ? "" : @business.eubp.sales_code %> <%=h @business.eubp.blank? ? "" : @business.eubp.business_partner_name %></td>
 </tr>
 <tr>
   <th>EU<%= getLongName('bp_pics', 'bp_pic_name') %></th><td><%=h @business.eubp_pic.blank? ? "" : @business.eubp_pic.bp_pic_name %></td>
