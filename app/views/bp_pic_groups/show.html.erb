@@ -85,11 +85,11 @@ function changeStatus(id, status){
   switch(status){
     case 'on' : 
       target_row.css('background-color', '<%=suspended_colors[0]%>');
-      target_checkbox.prop('checked', true);
+      target_checkbox.prop('checked', <%= @delivery_mail ? 'true' : 'false' %>);
       break;
     case 'off' : 
       target_row.css('background-color', '<%=suspended_colors[1]%>');
-      target_checkbox.prop('checked', false);
+      target_checkbox.prop('checked', <%= @delivery_mail ? 'false' : 'true' %>);
       break;
     default :
       return;
