@@ -22,11 +22,18 @@
     <th style="text-align: right">Eメール:</td>
     <td><%= text_field_tag 'email', search_value(:email), :size => 60 %></td>
   </tr>
+  <tr>
+    <th style="text-align: right">含まれるグループ:</td>
+    <td><%= select_tag 'included_group_id', options_for_select(BpPicGroup.available_group_list, search_value(:included_group_id)), include_blank: true %></td>
+  </tr>
+  <tr>
+    <th style="text-align: right"></td>
+    <td>配信停止:<%= check_box_tag 'suspended', 'suspended', !search_value(:suspended).blank? %></td>
+  </tr>
 </table>
 <p><%= submit_tag '　　検索　　', :name => 'search_button' %> <%= submit_tag '　　クリア　　', :name => 'clear_button' %></p>
 <br />
 <% end %>
-
 
 <%= form_tag url_for(controller: :bp_pic, action: :add_bp_pic_into_selected_group), method: :post do %>
   <%= hidden_field_tag 'back_to', request_url %>
@@ -38,7 +45,9 @@
   <%= paginate(@bp_pics) %>
   <table class="list_table" style="margin-top:0px">
     <tr>
+      <% if !popup? %>
       <th></th>
+      <% end %>
       <th><%=getShortName('bp_pics', 'business_partner_id') %></th>
       <th <%= !popup? && "colspan=2"%>><%=getShortName('bp_pics', 'bp_pic_name') %></th>
       <th><%=getShortName('bp_pics', 'tel_mobile') %></th>
