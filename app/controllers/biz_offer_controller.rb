@@ -11,7 +11,7 @@ class BizOfferController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    @biz_offer_pages, @biz_offers = paginate :biz_offers, :conditions =>["deleted = 0"], :per_page => current_user.per_page
+    @biz_offer_pages, @biz_offers = paginate :biz_offers, :conditions =>["deleted = 0"], :order => "biz_offers.updated_at desc", :per_page => current_user.per_page
   end
 
   def show

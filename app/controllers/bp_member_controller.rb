@@ -78,7 +78,7 @@ class BpMemberController < ApplicationController
       param << (payment_min.to_i * 10000)
     end
     
-    order_by = "bp_members.human_resource_id"
+    order_by = "bp_members.updated_at desc"
 
     return {:conditions => param.unshift(sql), :include => include, :order => order_by, :per_page => current_user.per_page}
   end
