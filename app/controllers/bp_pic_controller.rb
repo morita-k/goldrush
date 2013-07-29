@@ -8,6 +8,8 @@ class BpPicController < ApplicationController
       :bp_pic_name => params[:bp_pic_name],
       :tel => params[:tel],
       :email => params[:email],
+      :included_group_id => params[:included_group_id],
+      :suspended => params[:suspended]
     }
   end
 
@@ -16,7 +18,7 @@ class BpPicController < ApplicationController
     incl = [:business_partner]
     sql = "business_partners.deleted = 0 and bp_pics.deleted = 0"
     order_by = ""
-
+    
     if !(x = session[:bp_pic_search][:sales_code]).blank?
       sql += " and (business_partner_code = ? or sales_code = ?)"
       param << x << x
@@ -43,6 +45,16 @@ class BpPicController < ApplicationController
       param << "%#{x}%" << "%#{x}%"
     end
     
+    if !(x = session[:bp_pic_search][:included_group_id]).blank?
+      incl << :bp_pic_group_detail
+      sql += " and bp_pic_group_details.deleted = 0"
+      sql += " and bp_pic_group_details.bp_pic_group_id = ?"
+      param << x
+      if !(x = session[:bp_pic_search][:suspended]).blank?
+        sql += " and bp_pic_group_details.suspended = 1";
+      end
+    end
+    
     if params[:id]
       sql += " and business_partner_id = ?"
       param << params[:id]
@@ -63,7 +75,9 @@ class BpPicController < ApplicationController
 
     # 検索条件を処理
     cond, incl = make_conditions
+    
     @bp_pics = BpPic.includes(incl).where(cond).order("bp_pics.updated_at desc").page(params[:page]).per(current_user.per_page)
+    
     if params[:popup] && params[:callback].blank?
       flash[:warning] = 'ポップアップのパラメータが不正です'
     end

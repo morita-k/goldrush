@@ -48,23 +48,24 @@
     <%= send_buttons %>
     <table class="show_table" style="margin-top:2px;">
       <tr>
-        <th style="width:30px"></th>
+        <th style="width:1%"></th>
         <th><%= getLongName('business_partners', 'business_partner_name') %></th>
         <th><%= getLongName('bp_pics', 'bp_pic_name') %></th>
         <th><%= getLongName('bp_pics', 'memo') %></th>
-        <th style="width:30px">状態</th>
       </tr>
       <% @bp_pic_group.bp_pic_group_details.each do | detail | %>
         <tr id="<%= "tr_#{detail.id}"%>" style="background-color:<%= suspended_color(detail) %>">
-          <% if @delivery_mail %>
-            <td><%= check_box_tag 'bp_pic_ids[]', detail.bp_pic_id, !(detail.suspended? || detail.nondelivery?), class: 'mail_status_check_box' %></td>
-          <% else %>
-            <td><%= check_box_tag 'ids[]', detail.id, false %></td>
-          <% end %>
+          <td style="white-space: nowrap;">
+            <% if @delivery_mail %>
+              <%= check_box_tag 'bp_pic_ids[]', detail.bp_pic_id, !(detail.suspended? || detail.nondelivery?), { class: 'mail_status_check_box', style: 'margin-top: 0;margin-left: 5px;margin-right: 16px;' } %>
+            <% else %>
+              <%= check_box_tag 'ids[]', detail.id, false, style: 'margin-top: 0;margin-left: 5px;margin-right: 16px;' %>
+            <% end %>
+            <span class='<%= "status_#{detail.id}" %>'><%= link_to "", {:controller => :bp_pic_group_details, :action => :suspend, :id => detail, :authenticity_token => form_authenticity_token}, :remote => true, :method => :put, :class => (detail.suspended? ? "status_toggle off" : "status_toggle on") %></span>
+          </td>
           <td><%= star_links(detail.bp_pic.business_partner) %> <%= back_to_link detail.bp_pic.business_partner.business_partner_name, :controller => :business_partner, :action => :show, :id => detail.bp_pic.business_partner_id %></td>
           <td><%= star_links(detail.bp_pic) %> <%= back_to_link "#{detail.bp_pic.usefulname} <#{detail.bp_pic.email1}>", :controller => :bp_pic, :action => :show, :id => detail.bp_pic_id %></td>
           <td><%= detail.bp_pic.memo%></td>
-          <td><span class="<%= "status_#{detail.id}"%>"><%= link_to (detail.suspended? ? "OFF" : "ON"), {:controller => :bp_pic_group_details, :action => :suspend, :id => detail, :authenticity_token => form_authenticity_token}, :remote => true, :method => :put %></span></td>
         </tr>
       <% end %>
     </table>
@@ -76,6 +77,25 @@
 
 <script type="text/javascript">
 <!--
+
+function changeStatus(id, status){
+  target_row = $('#tr_' + id);
+  target_link = $('.status_' + id + ' a');
+  target_checkbox = $('#tr_' + id + " td:first-child input");
+  switch(status){
+    case 'on' : 
+      target_row.css('background-color', '<%=suspended_colors[0]%>');
+      target_checkbox.prop('checked', true);
+      break;
+    case 'off' : 
+      target_row.css('background-color', '<%=suspended_colors[1]%>');
+      target_checkbox.prop('checked', false);
+      break;
+    default :
+      return;
+  }
+  target_link.attr('class', 'status_toggle ' + status);
+}
 
 document.setBpPic = function(bp_pic){
     document.getElementById("business_partner_name").value = bp_pic.business_partner_name;
@@ -95,8 +115,6 @@ function clearBpPic(){
     $("#submit_bp_pic_group_detail").attr("disabled", "disabled");
 }
 
-var enable_color =  '<%=suspended_colors[0]%>';
-var disable_color = '<%=suspended_colors[1]%>';
 // -->
 </script>
 

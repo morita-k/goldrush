@@ -195,6 +195,41 @@ tr.send {
   background-color: skyblue;
 }
 
+.status_toggle{
+  display: inline-block;
+  padding-left: 16px;
+  padding-right: 16px;
+  font-weight: bold;
+  width: 3em;
+  vertical-align: middle;
+  text-align: center;
+  -webkit-border-radius: 5px;
+     -moz-border-radius: 5px;
+          border-radius: 5px;
+}
+
+.status_toggle.on {
+  background-color: #1e50a2;
+}
+
+.status_toggle.on:hover {
+  background-color: #1e50a2;
+}
+
+.status_toggle.on:before {
+  content: "O N";
+  color: white;
+}
+
+.status_toggle.off{
+  background-color: dimgray;
+}
+
+.status_toggle.off:before{
+  content: "OFF";
+  color: white;
+}
+
 .popover-container {
   overflow: visible !important;
   position: relative;

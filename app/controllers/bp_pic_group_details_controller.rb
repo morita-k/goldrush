@@ -107,10 +107,10 @@ class BpPicGroupDetailsController < ApplicationController
     @bp_pic_group_detail.suspended = (@bp_pic_group_detail.suspended.to_i + 1) % 2
     set_user_column @bp_pic_group_detail
     @bp_pic_group_detail.save!
-    color = @bp_pic_group_detail.suspended? ? "disable_color" : "enable_color"
-    s = @bp_pic_group_detail.suspended? ? "OFF" : "ON"
+    
+    status = @bp_pic_group_detail.suspended? ? "off" : "on"
     respond_to do |format|
-      format.js {render :text => "$('#tr_#{@bp_pic_group_detail.id}')[0].style.backgroundColor = #{color};$('.status_#{@bp_pic_group_detail.id} a')[0].innerHTML = '#{s}'"}
+      format.js {render :text => "changeStatus('#{@bp_pic_group_detail.id}', '#{status}');"}
     end
   end
   
