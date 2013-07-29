@@ -4998,3 +4998,123 @@ types_250:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
+types_251:
+  id: 251
+  owner_id: 
+  type_section: "basic_contract_status_type"
+  type_key: "non_correspondence"
+  long_name: "未対応"
+  short_name: "未対応"
+  other_name: "未対応"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 32
+  display_order2: 32
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_252:
+  id: 252
+  owner_id: 
+  type_section: "basic_contract_status_type"
+  type_key: "in_progress"
+  long_name: "対応中"
+  short_name: "対応中"
+  other_name: "対応中"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 33
+  display_order2: 33
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_253:
+  id: 253
+  owner_id: 
+  type_section: "basic_contract_status_type"
+  type_key: "concluded"
+  long_name: "締結済み"
+  short_name: "締結済み"
+  other_name: "締結済み"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 34
+  display_order2: 34
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_254:
+  id: 254
+  owner_id: 
+  type_section: "nda_status_type"
+  type_key: "non_correspondence"
+  long_name: "未対応"
+  short_name: "未対応"
+  other_name: "未対応"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 35
+  display_order2: 35
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_255:
+  id: 255
+  owner_id: 
+  type_section: "nda_status_type"
+  type_key: "in_progress"
+  long_name: "対応中"
+  short_name: "対応中"
+  other_name: "対応中"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 36
+  display_order2: 36
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_256:
+  id: 256
+  owner_id: 
+  type_section: "nda_status_type"
+  type_key: "concluded"
+  long_name: "締結済み"
+  short_name: "締結済み"
+  other_name: "締結済み"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 37
+  display_order2: 37
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
