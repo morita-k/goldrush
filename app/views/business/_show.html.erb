@@ -67,6 +67,9 @@
   <th><%= getLongName('businesses', 'communication') %></th><td><%=h @business.communication %></td>
 </tr>
 <tr>
+  <th><%= getLongName('businesses', 'link') %></th><td><%=link_to h(@business.link),  @business.link, target: '_blank' %></td>
+</tr>
+<tr>
   <th><%= getLongName('businesses', 'memo') %></th><td><%=simple_format h(@business.memo) %></td>
 </tr>
 </table>
