@@ -60,6 +60,9 @@
   <th><%= getLongName('human_resources', 'human_resource_status_type') %></th><td><%=h @human_resource.human_resource_status_type_name %></td>
 </tr>
 <tr>
+  <th><%= getLongName('human_resources', 'link') %></th><td><%=link_to h(@human_resource.link),  @human_resource.link, target: '_blank' %></td>
+</tr>
+<tr>
   <th><%= getLongName('human_resources', 'memo') %></th><td><%=simple_format h(@human_resource.memo) %></td>
 </tr>
 </table>
