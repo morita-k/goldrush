@@ -36,6 +36,8 @@
     <th><%=getShortName('business_partners', 'sales_code') %></th>
     <th><%=getShortName('business_partners', 'business_partner_code') %></th>
     <th><%=getShortName('business_partners', 'business_partner_name') %></th>
+    <th><%=getShortName('business_partners', 'basic_contract_status_type') %></th>
+    <th><%=getShortName('business_partners', 'nda_status_type') %></th>
     <th><%=getShortName('business_partners', 'self_flg') %></th>
     <th><%=getShortName('business_partners', 'eu_flg') %></th>
     <th>案件</th>
@@ -57,6 +59,8 @@
 <% else %>
     <td><%= star_links(business_partner) %> <%=back_to_link h(business_partner.business_partner_short_name), :action => :show, :id => business_partner %></td>
 <% end %>
+    <td style="text-align:center;"><%= get_basic_contract_status_type_text(business_partner) %></td>
+    <td style="text-align:center;"><%= get_nda_status_type_text(business_partner) %></td>
     <td><%=h business_partner.self_flg %></td>
     <td><%=h business_partner.eu_flg %></td>
     <td><%=h business_partner.down_flg %></td>
