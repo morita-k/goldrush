@@ -12,11 +12,11 @@
 <% for biz_offer in biz_offers %>
   <tr>
     <td><%=back_to_link h(biz_offer.business.business_title), :controller => :biz_offer, :action => :show, :id => biz_offer %></td>
-    <td><%=h biz_offer.business.issue_datetime %></td>
+    <td><%=h _time(biz_offer.business.issue_datetime) %></td>
     <td><%=h biz_offer.business.skill_tag %></td>
     <td><%=h biz_offer.business.eubp.blank? ? "" : biz_offer.business.eubp.business_partner_code_name %></td>
     <td><%=h biz_offer.business.eubp_pic.blank? ? "" : biz_offer.business.eubp_pic.bp_pic_name %></td>
-    <td><%=h biz_offer.business.business_status_type %></td>
+    <td><%=h biz_offer.business.business_status_type_name %></td>
     <td><%=h biz_offer.biz_offer_status_type_name %></td>
     <td><%=h biz_offer.payment_text %></td>
   </tr>

@@ -2,16 +2,16 @@
   <tr>
     <th><%=getShortName('bp_pics', 'bp_pic_name') %></th>
     <th><%=getShortName('bp_pics', 'bp_pic_name_kana') %></th>
-    <th><%=getShortName('bp_pics', 'depertment') %></th>
-    <th><%=getShortName('bp_pics', 'position') %></th>
+    <th><%=getShortName('bp_pics', 'email1') %></th>
+    <th><%=getShortName('bp_pics', 'memo') %></th>
   </tr>
   
 <% for bp_pic in @bp_pics %>
   <tr>
     <td><%= star_links(bp_pic) %> <%=back_to_link h(bp_pic.bp_pic_name), :controller => :bp_pic, :action => :show, :id => bp_pic %></td>
     <td><%=h bp_pic.bp_pic_name_kana %></td>
-    <td><%=h bp_pic.depertment %></td>
-    <td><%=h bp_pic.position %></td>
+    <td><%=h bp_pic.email1 %></td>
+    <td><%=h bp_pic.memo %></td>
   </tr>
 <% end %>
 </table>
