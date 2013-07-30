@@ -8,7 +8,7 @@ class BpPicController < ApplicationController
       :bp_pic_name => params[:bp_pic_name],
       :tel => params[:tel],
       :email => params[:email],
-      :included_group_id => params[:included_group_id],
+      :bp_pic_group_id => params[:bp_pic_group_id],
       :suspended => params[:suspended]
     }
   end
@@ -45,12 +45,24 @@ class BpPicController < ApplicationController
       param << "%#{x}%" << "%#{x}%"
     end
     
-    if !(x = session[:bp_pic_search][:included_group_id]).blank?
+    bp_pic_group_id = session[:bp_pic_search][:bp_pic_group_id]
+    suspended = session[:bp_pic_search][:suspended]
+    # 「配信停止」だけが指定されていた場合、「取引先グループ」には「全て」が選択された事にする
+    if !suspended.blank? && bp_pic_group_id.blank?
+      bp_pic_group_id = 'all'
+      session[:bp_pic_search][:bp_pic_group_id] = 'all'
+    end
+    
+    if !bp_pic_group_id.blank? || !suspended.blank?
       incl << :bp_pic_group_detail
       sql += " and bp_pic_group_details.deleted = 0"
-      sql += " and bp_pic_group_details.bp_pic_group_id = ?"
-      param << x
-      if !(x = session[:bp_pic_search][:suspended]).blank?
+      
+      if bp_pic_group_id != 'all'
+        sql += " and bp_pic_group_details.bp_pic_group_id = ?"
+        param << bp_pic_group_id
+      end
+      
+      if !suspended.blank?
         sql += " and bp_pic_group_details.suspended = 1";
       end
     end
