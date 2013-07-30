@@ -23,8 +23,8 @@
     <td><%= text_field_tag 'email', search_value(:email), :size => 60 %></td>
   </tr>
   <tr>
-    <th style="text-align: right">含まれるグループ:</td>
-    <td><%= select_tag 'included_group_id', options_for_select(BpPicGroup.available_group_list, search_value(:included_group_id)), include_blank: true %></td>
+    <th style="text-align: right">取引先グループ:</td>
+    <td><%= select_tag 'bp_pic_group_id', options_for_select( [ ['〈 全て 〉', 'all'] ] + BpPicGroup.available_group_list, search_value(:bp_pic_group_id)), include_blank: true %></td>
   </tr>
   <tr>
     <th style="text-align: right"></td>
@@ -123,3 +123,4 @@ function setBpPicToParentWindow(bp_pic_id, bp_pic_name, business_partner_name) {
 // -->
 </script>
 <% end # if popup? %>
+
