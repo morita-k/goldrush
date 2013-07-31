@@ -30,10 +30,13 @@ class HumanResource < ActiveRecord::Base
     
   end
   
+  # ƒ^ƒO¶¬‚Ì–{‘Ì
+  def make_tags(body)
+    Tag.analyze_skill_tags(Tag.pre_proc_body(body))
+  end
+
   def make_skill_tags!
-    require 'string_util'
-    words = StringUtil.detect_words(skill)
-    Tag.update_tags!("human_resources", id, words.join(","))
-    self.skill_tag = words.join(",")
+    self.skill_tag = make_tags(skill)
+    Tag.update_tags!("human_resources", id, skill_tag)
   end
 end

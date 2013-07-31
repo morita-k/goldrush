@@ -47,7 +47,7 @@ class ApiController < ApplicationController
   end
 
   def analyze_tags
-    ImportMail.analyze_tags
+    ImportMail.analyze_all
 
     if params[:back_to]
       redirect_to params[:back_to], :notice => "Analyze tags successfully finished."
