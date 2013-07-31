@@ -101,15 +101,15 @@ class ImportMail < ActiveRecord::Base
       
       # JIETの案件・人材メールだった場合、案件照会・人材所属を作成
       if import_mail.jiet_ses_mail?
-        mail_content = import_mail.mail_subject.scan(/JIETメール配信サービス\[(..)情報\]/).first.first
-        case mail_content
-        when "案件"
-          ImportMailJIET.analyze_jiet_offer(import_mail)
-        when "人財"
-          ImportMailJIET.analyze_jiet_human(import_mail)
+        if import_mail.mail_subject =~ /JIETメール配信サービス\[(..)情報\]/
+          case $1
+            when "案件"
+              ImportMailJIET.analyze_jiet_offer(import_mail)
+            when "人財"
+              ImportMailJIET.analyze_jiet_human(import_mail)
+          end
         end
       end
-      
     end # transaction
   end
   
