@@ -33,10 +33,8 @@ class BpMember < ActiveRecord::Base
   # 内部での値の変換処理
   def convert!
     # [単価メモ]を[単価下限]に変換
-    v = StringUtil.detect_payments_value(self.payment_memo).min
-    if v
-      self.payment_max = v.to_f * 10000
-    end
+    v = StringUtil.detect_payments_value(self.payment_memo).map{ |i| i.to_f }.min
+    self.payment_min = v * 10000
   end
   
   def payment_min_view=(x)
