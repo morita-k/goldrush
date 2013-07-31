@@ -171,7 +171,11 @@ class ImportMail < ActiveRecord::Base
   end
 
   def detect_ages_in(body)
-    StringUtil.detect_regex(body, /[0-9]+[才歳]/).sort.reverse.first.to_s.gsub("才","歳")
+    pattern = /((:?[1-9]|[１-９])(:?[0-9]|[０-９]))[才歳]/
+    StringUtil.detect_regex(body, pattern) {|match_str|
+      pattern.match(match_str)
+      $1.blank? ? $1 : NKF::nkf('-wm0Z1', $1)
+    }.sort.reverse.first
   end
 
   def detect_payments
