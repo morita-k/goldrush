@@ -38,4 +38,18 @@ class StringUtilTest < ActiveSupport::TestCase
      res = StringUtil.splitplus("mysql+VC+++")
      assert_equal ["mysql","VC+++"], res
    end
+   
+  test "detect_payments" do
+    res = StringUtil.detect_payments("")
+    assert_equal [], res
+    res = StringUtil.detect_payments("50万 50万 e90万円 60e万 800万")
+    assert_equal ["50万","800万","90万"], res
+  end
+  
+  test "detect_payments_value" do
+    res = StringUtil.detect_payments("")
+    assert_equal [], res
+    res = StringUtil.detect_payments_value("50万 50万 e90万円 60e万 800万 00万")
+    assert_equal ["00", "50","800","90"], res
+  end
 end
