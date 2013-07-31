@@ -375,11 +375,12 @@ class ImportMail < ActiveRecord::Base
   def jiet_ses_mail?
     if SysConfig.email_prodmode?
       jiet_mail_address = SysConfig.get_jiet_analysis_target_address
+      (self.mail_from == jiet_mail_address) && (self.mail_subject =~ /^JIETメール配信サービス/)
     else
-      jiet_mail_address = StringUtil.to_test_address(SysConfig.get_jiet_analysis_target_address)
+      #jiet_mail_address = StringUtil.to_test_address(SysConfig.get_jiet_analysis_target_address)
+      # テストモードなら常にtrue
+      true
     end
-       
-    (self.mail_from == jiet_mail_address) && (self.mail_subject =~ /^JIETメール配信サービス/)
   end
   
 private
