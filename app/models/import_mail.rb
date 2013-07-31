@@ -172,10 +172,8 @@ class ImportMail < ActiveRecord::Base
 
   def detect_ages_in(body)
     search_pattern = /((:?[1-9]|[１-９])(:?[0-9]|[０-９]))[才歳]/
-    extraction_pattern = /([1-9][0-9])[歳才]/
     StringUtil.detect_regex(body, search_pattern) {|match_str|
-      extraction_pattern.match(Zen2Han.toHan(match_str))
-      $1
+      HumanResource.normalize_age(match_str)
     }.sort.reverse.first
   end
 
@@ -399,6 +397,14 @@ class ImportMail < ActiveRecord::Base
     end
        
     (self.mail_from == jiet_mail_address) && (self.mail_subject =~ /^JIETメール配信サービス/)
+  end
+
+  # DBにある既存データ全ての年齢を正規化する。
+  def ImportMail.to_normalize_age_all!
+    ImportMail.where("age_text is not null").reject{|mail| mail.age_text.blank?}.map{|mail|
+      mail.age_text = HumanResource.normalize_age(mail.age_text)
+      mail.save!
+    }
   end
   
 private
