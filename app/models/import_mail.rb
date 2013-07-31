@@ -96,7 +96,7 @@ class ImportMail < ActiveRecord::Base
       import_mail.created_user = 'import_mail'
       import_mail.updated_user = 'import_mail'
       import_mail.save!
-      import_mail.make_tags!
+      import_mail.analyze!
       import_mail.save!
       
       # JIETの案件・人材メールだった場合、案件照会・人材所属を作成
@@ -161,13 +161,12 @@ class ImportMail < ActiveRecord::Base
     end
   end
 
-  def preprocbody
-    require 'zen2han'
-    Zen2Han.toHan(mail_subject+mail_body).gsub(/[\_\-\+\.\w]+@[\-a-z0-9]+(\.[\-a-z0-9]+)*\.[a-z]{2,6}/i, "").gsub(/https?:\/\/\w[\w\.\-\/]+/i,"")
+  def pre_body
+    mail_subject + "\n" + mail_body
   end
 
   def detect_ages
-    detect_ages_in(preprocbody)
+    detect_ages_in(Tag.pre_proc_body(pre_body))
   end
 
   def detect_ages_in(body)
@@ -175,7 +174,7 @@ class ImportMail < ActiveRecord::Base
   end
 
   def detect_payments
-    detect_payments_in(preprocbody)
+    detect_payments_in(Tag.pre_proc_body(pre_body))
   end
 
   def detect_payments_in(body)
@@ -183,47 +182,39 @@ class ImportMail < ActiveRecord::Base
   end
 
   def detect_nearest_station
-    detect_nearest_station_in(preprocbody)
+    detect_nearest_station_in(Tag.pre_proc_body(pre_body))
   end
 
   def detect_nearest_station_in(body)
     StringUtil.detect_regex(body, /^.*(最寄|駅).*$/).sort.reverse.first
   end
   
-  def analyze(body = self.preprocbody)
+  #
+  # 以下の項目に関して、メールの解析を行う
+  # 年齢解析
+  # 単価解析
+  # 最寄駅解析
+  # タグ解析
+  #
+  def analyze(body = Tag.pre_proc_body(pre_body))
     self.age_text = detect_ages_in(body)
     self.payment_text = detect_payments_in(body)
     self.nearest_station = detect_nearest_station_in(body)
-  end
-  
-  def make_tags
-    body = preprocbody
-    self.analyze(body)
-    words = StringUtil.detect_words(body).inject([]) do |r,item|
-      arr = item.split(" ")
-      arr.each do |w| # スペースで分割
-        StringUtil.splitplus(w).each do |ww| # +で分割
-          StringUtil.breaknum(ww).each do |www| # 数字の前後で分割(数字のみは排除)
-            r << www
-          end
-        end
-      end
-      r << arr.join("")
-    end
-    words = words.uniq.reject{|w|
-      ignores.include?(w.downcase) || w =~ /^\d/ || w.length == 1 # 辞書に存在するか、数字で始まる単語、1文字
-    }
-    if body =~ /(^|[^a-zA-Z])(C)([^a-zA-Z#\+]|$)/
-      words << $2
-    end
-    self.tag_text = words.join(",")
+    self.tag_text = make_tags(body)
   end
 
-  def make_tags!
-    make_tags
+  # 解析とともに保存を行う
+  def analyze!(body = Tag.pre_proc_body(pre_body))
+    analyze(body)
     Tag.update_tags!("import_mails", id, tag_text)
+    save!
   end
   
+  # タグ生成の本体
+  def make_tags(body)
+    Tag.analyze_skill_tags(body)
+  end
+
   STATION_NAME_SEPARATOR = '/:】'
   
   def nearest_station_short
@@ -362,46 +353,37 @@ class ImportMail < ActiveRecord::Base
     end
   end
   
-  def ImportMail.analyze_tags
+  def ImportMail.analyze_all
     where(:deleted => 0).each do |mail|
-      mail.
-      make_tags!
-      mail.save!
+      mail.analyze!
     end
   end
 
-  def ImportMail.analyze_others
-    where(:deleted => 0).each do |mail|
-      body = mail.preprocbody
-      mail.analyze(body)
-      mail.save!
+  def ImportMail.analyze_all_dry(file_name="analyze.txt")
+    File.open(file_name,"w") do |f|
+      where(:deleted => 0).each do |mail|
+         mail.analyze
+         f.puts "age: #{mail.age_text}"
+         f.puts "pay: #{mail.payment_text}"
+         f.puts "ner: #{mail.nearest_station}"
+         f.puts "tag: #{mail.tag_text}"
+      end
+      nil
     end
   end
 
-  def ImportMail.analyze_tags_dry
-    File.open("tagtest.txt","w"){|f|
-    where(:deleted => 0).each do |mail|
-      f.write(mail.id.to_s + ": " + mail.make_tags + "\n")
-    end
-    }
-  end
-  
   def jiet_ses_mail?
     if SysConfig.email_prodmode?
       jiet_mail_address = SysConfig.get_jiet_analysis_target_address
+      (self.mail_from == jiet_mail_address) && (self.mail_subject =~ /^JIETメール配信サービス/)
     else
-      jiet_mail_address = StringUtil.to_test_address(SysConfig.get_jiet_analysis_target_address)
+      #jiet_mail_address = StringUtil.to_test_address(SysConfig.get_jiet_analysis_target_address)
+      # テストモードなら常にtrue
+      true
     end
-       
-    (self.mail_from == jiet_mail_address) && (self.mail_subject =~ /^JIETメール配信サービス/)
   end
   
 private
-  def ignores
-    ["e-mail", "email", "fax", "jp", "mail", "mailto", "new", "ng", "or", "or2", "or3", "or4",
-     "os", "pc", "pg", "phone", "phs", "pj", "pmi", "popteen", "pr", "pro", "se", "service", "ses", "tel", "url", "zip"]
-  end
-
   def ImportMail.get_encode_body(mail, body)
     if mail.content_transfer_encoding == 'ISO-2022-JP'
       return NKF.nkf('-w -J', body)
