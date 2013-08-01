@@ -147,4 +147,12 @@ module StringUtil
   def StringUtil.remove_ascii_symbols(str)
     return str.gsub(ASCII_SYMBOLS_REGEXP, "")
   end
+  
+  def StringUtil.detect_payments(body)
+    StringUtil.detect_regex(body, /[0-9]+[万]/)
+  end
+  
+  def StringUtil.detect_payments_value(body)
+    StringUtil.detect_payments(body).map{ |item| item.split("万")[0] }
+  end
 end

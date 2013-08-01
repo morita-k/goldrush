@@ -60,6 +60,7 @@ class BizOfferController < ApplicationController
             [@biz_offer, @business]
           )
         end
+        @biz_offer.convert!
       end
     end
   end

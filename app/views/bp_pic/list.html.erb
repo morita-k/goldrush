@@ -23,12 +23,12 @@
     <td><%= text_field_tag 'email', search_value(:email), :size => 60 %></td>
   </tr>
   <tr>
-    <th style="text-align: right">取引先グループ:</td>
-    <td><%= select_tag 'bp_pic_group_id', options_for_select( [ ['〈 全て 〉', 'all'] ] + BpPicGroup.available_group_list, search_value(:bp_pic_group_id)), include_blank: true %></td>
+    <th style="text-align: right">送信停止:</td>
+    <td><%= check_box_tag 'nondelivery_score', BpPic::NONDELIVERY_LIMIT, !search_value(:nondelivery_score).blank? %></td>
   </tr>
   <tr>
-    <th style="text-align: right"></td>
-    <td>配信停止:<%= check_box_tag 'suspended', 'suspended', !search_value(:suspended).blank? %></td>
+    <th style="text-align: right">取引先グループ:</td>
+    <td><%= select_tag 'bp_pic_group_id', options_for_select( [ ['〈 全て 〉', 'all'] ] + BpPicGroup.available_group_list, search_value(:bp_pic_group_id)), include_blank: true %></td>
   </tr>
 </table>
 <p><%= submit_tag '　　検索　　', :name => 'search_button' %> <%= submit_tag '　　クリア　　', :name => 'clear_button' %></p>
