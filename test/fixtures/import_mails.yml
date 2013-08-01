@@ -28,3 +28,153 @@ import_mails_1:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
+import_mails_2:
+  id: 2
+  owner_id: 
+  business_partner_id: 1
+  bp_pic_id: 1
+  in_reply_to: ""
+  received_at: <%= Time.now.to_s(:db) %>
+  mail_subject: "subject2"
+  mail_body: "body2"
+  mail_from: "from2"
+  mail_sender_name: "sender2"
+  mail_to: ""
+  mail_cc: ""
+  mail_bcc: ""
+  message_source: "source2"
+  message_id: ""
+  biz_offer_flg: 
+  bp_member_flg: 
+  registed: 
+  unwanted: 
+  tag_text: ""
+  payment_text: ""
+  age_text: "20才"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+import_mails_3:
+  id: 3
+  owner_id: 
+  business_partner_id: 1
+  bp_pic_id: 1
+  in_reply_to: ""
+  received_at: <%= Time.now.to_s(:db) %>
+  mail_subject: "subject3"
+  mail_body: "body3"
+  mail_from: "from3"
+  mail_sender_name: "sender3"
+  mail_to: ""
+  mail_cc: ""
+  mail_bcc: ""
+  message_source: "source3"
+  message_id: ""
+  biz_offer_flg: 
+  bp_member_flg: 
+  registed: 
+  unwanted: 
+  tag_text: ""
+  payment_text: ""
+  age_text: "３0才"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+import_mails_4:
+  id: 4
+  owner_id: 
+  business_partner_id: 1
+  bp_pic_id: 1
+  in_reply_to: ""
+  received_at: <%= Time.now.to_s(:db) %>
+  mail_subject: "subject4"
+  mail_body: "body4"
+  mail_from: "from4"
+  mail_sender_name: "sender4"
+  mail_to: ""
+  mail_cc: ""
+  mail_bcc: ""
+  message_source: "source4"
+  message_id: ""
+  biz_offer_flg: 
+  bp_member_flg: 
+  registed: 
+  unwanted: 
+  tag_text: ""
+  payment_text: ""
+  age_text: "4０歳"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+import_mails_5:
+  id: 5
+  owner_id: 
+  business_partner_id: 1
+  bp_pic_id: 1
+  in_reply_to: ""
+  received_at: <%= Time.now.to_s(:db) %>
+  mail_subject: "subject5"
+  mail_body: "body5"
+  mail_from: "from5"
+  mail_sender_name: "sender5"
+  mail_to: ""
+  mail_cc: ""
+  mail_bcc: ""
+  message_source: "source5"
+  message_id: ""
+  biz_offer_flg: 
+  bp_member_flg: 
+  registed: 
+  unwanted: 
+  tag_text: ""
+  payment_text: ""
+  age_text: "５０歳"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+import_mails_6:
+  id: 6
+  owner_id: 
+  business_partner_id: 1
+  bp_pic_id: 1
+  in_reply_to: ""
+  received_at: <%= Time.now.to_s(:db) %>
+  mail_subject: "subject6"
+  mail_body: "body6"
+  mail_from: "from6"
+  mail_sender_name: "sender6"
+  mail_to: ""
+  mail_cc: ""
+  mail_bcc: ""
+  message_source: "source6"
+  message_id: ""
+  biz_offer_flg: 
+  bp_member_flg: 
+  registed: 
+  unwanted: 
+  tag_text: ""
+  payment_text: ""
+  age_text: "その他"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
