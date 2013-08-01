@@ -26,23 +26,19 @@
 <%end%>
 <tr>
   <th><%= getLongName('contracts', 'contract_start_date') %></th>
-  <td><%=h contract.contract_start_date %></td>
-  <td><%=h contract.contract_start_date %></td>
+  <td colspan=2><%=h contract.contract_start_date %></td>
 </tr>
 <tr>
   <th><%= getLongName('contracts', 'contract_end_date') %></th>
-  <td><%=h contract.contract_end_date %></td>
-  <td><%=h contract.contract_end_date %></td>
+  <td colspan=2><%=h contract.contract_end_date %></td>
 </tr>
 <tr>
   <th><%= getLongName('contracts', 'contract_renewal_unit') %></th>
-  <td><%=h contract.contract_renewal_unit %></td>
-  <td><%=h contract.contract_renewal_unit %></td>
+  <td colspan=2><%=h contract.contract_renewal_unit %></td>
 </tr>
 <tr>
   <th><%= getLongName('contracts', 'contract_renewal_terms') %></th>
-  <td><%=simple_format h(h contract.contract_renewal_terms) %></td>
-  <td><%=simple_format h(h contract.contract_renewal_terms) %></td>
+  <td colspan=2><%=simple_format h(h contract.contract_renewal_terms) %></td>
 </tr>
 <tr>
   <th>粗利</th><td colspan=2><%=h contract.payment_diff_veiw %>万円</td>
