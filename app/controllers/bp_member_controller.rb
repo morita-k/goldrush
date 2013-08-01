@@ -128,6 +128,7 @@ class BpMemberController < ApplicationController
           [@bp_member, @human_resource]
         )
       end
+      @bp_member.convert!
     end
   end
 

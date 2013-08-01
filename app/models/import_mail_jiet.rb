@@ -168,6 +168,7 @@ class ImportMailJIET < ImportMail
       import_mail_id: import_mail_id
     }.reject{|k, v| v.blank?}
     
+    biz_offer.convert!
     biz_offer.save!
   end
   
@@ -204,6 +205,7 @@ class ImportMailJIET < ImportMail
       memo: ImportMailJIET.linefeed_join(human["人財概要"], human["作業希望形態"])
     }.reject{|k, v| v.blank?}
     
+    bp_member.convert!
     bp_member.save!
   end
   

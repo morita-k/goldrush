@@ -178,7 +178,7 @@ class ImportMail < ActiveRecord::Base
   end
 
   def detect_payments_in(body)
-    StringUtil.detect_regex(body, /[0-9]+[万]/).sort.reverse.first
+    StringUtil.detect_payments(body).sort.reverse.first
   end
 
   def detect_nearest_station
@@ -220,7 +220,6 @@ class ImportMail < ActiveRecord::Base
   def nearest_station_short
     ImportMail.extract_station_name_from(self.nearest_station)
   end
-  
   
   def ImportMail.extract_station_name_from(str)
     

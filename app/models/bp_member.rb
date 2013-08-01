@@ -30,6 +30,14 @@ class BpMember < ActiveRecord::Base
     AttachmentFile.count(:conditions => ["deleted = 0 and parent_table_name = 'bp_members' and parent_id = ?", self]) > 0
   end
   
+  # 内部での値の変換処理
+  def convert!
+    # [単価メモ]を[単価下限]に変換
+    v = StringUtil.detect_payments_value(self.payment_memo).map{ |i| i.to_f }.min
+    v *= 10000 if v
+    self.payment_min = v
+  end
+  
   def payment_min_view=(x)
     self.payment_min = x.to_f * 10000
   end

@@ -64,6 +64,14 @@ class BizOffer < ActiveRecord::Base
     
   end
   
+  # 内部での値の変換処理
+  def convert!
+    # [単価TEXT]を[単価MAX]に変換
+    v = StringUtil.detect_payments_value(self.payment_text).map{ |i| i.to_f }.max
+    v *= 10000 if v
+    self.payment_max = v
+  end
+  
   def payment_max_view=(x)
     self.payment_max = x.to_f * 10000
   end
