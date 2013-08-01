@@ -30,6 +30,12 @@
 <th><label for="business_partner_sales_status_type"><%=getLongName('business_partners','sales_status_type')%></label></th><td><%= select 'business_partner', 'sales_status_type', getTypes('sales_status_type') %></td>
 </tr>
 <tr>
+<th><label for="business_partner_basic_contract_status_type"><%=getLongName('business_partners','basic_contract_status_type')%></label></th><td><%= select 'business_partner', 'basic_contract_status_type', getTypes('basic_contract_status_type') %></td>
+</tr>
+<tr>
+<th><label for="business_partner_nda_status_type"><%=getLongName('business_partners','nda_status_type')%></label></th><td><%= select 'business_partner', 'nda_status_type', getTypes('nda_status_type') %></td>
+</tr>
+<tr>
 <th><label for="business_partner_ceo_name"><%=getLongName('business_partners','ceo_name')%></label></th><td><%= text_field 'business_partner', 'ceo_name'  %></td>
 </tr>
 <tr>

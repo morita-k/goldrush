@@ -8,8 +8,8 @@ class BpPicController < ApplicationController
       :bp_pic_name => params[:bp_pic_name],
       :tel => params[:tel],
       :email => params[:email],
-      :included_group_id => params[:included_group_id],
-      :suspended => params[:suspended]
+      :bp_pic_group_id => params[:bp_pic_group_id],
+      :nondelivery_score => params[:nondelivery_score]
     }
   end
 
@@ -23,7 +23,7 @@ class BpPicController < ApplicationController
       sql += " and (business_partner_code = ? or sales_code = ?)"
       param << x << x
     end
-
+    
     if !(x = session[:bp_pic_search][:business_partner_name]).blank?
       sql += " and (business_partner_name like ? or business_partner_name_kana like ?)"
       param << "%#{x}%" << "%#{x}%"
@@ -45,13 +45,20 @@ class BpPicController < ApplicationController
       param << "%#{x}%" << "%#{x}%"
     end
     
-    if !(x = session[:bp_pic_search][:included_group_id]).blank?
+    # 不達スコア
+    if !(x = session[:bp_pic_search][:nondelivery_score]).blank?
+      sql += " and nondelivery_score >= ?"
+      param << x
+    end
+    
+    # 取引先グループ
+    if !(x = session[:bp_pic_search][:bp_pic_group_id]).blank?
       incl << :bp_pic_group_detail
       sql += " and bp_pic_group_details.deleted = 0"
-      sql += " and bp_pic_group_details.bp_pic_group_id = ?"
-      param << x
-      if !(x = session[:bp_pic_search][:suspended]).blank?
-        sql += " and bp_pic_group_details.suspended = 1";
+      
+      if x != 'all'
+        sql += " and bp_pic_group_details.bp_pic_group_id = ?"
+        param << x
       end
     end
     

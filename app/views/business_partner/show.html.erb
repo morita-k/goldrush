@@ -21,6 +21,12 @@
   <th><%= getLongName('business_partners', 'sales_status_type') %></th><td><%=h @business_partner.sales_status_type_name %></td>
 </tr>
 <tr>
+  <th><%= getLongName('business_partners', 'basic_contract_status_type') %></th><td><%= get_basic_contract_status_type_text(@business_partner) %></td>
+</tr>
+<tr>
+  <th><%= getLongName('business_partners', 'nda_status_type') %></th><td><%= get_nda_status_type_text(@business_partner) %></td>
+</tr>
+<tr>
   <th><%= getLongName('business_partners', 'ceo_name') %></th><td><%=h @business_partner.ceo_name %></td>
 </tr>
 <tr>
