@@ -68,5 +68,41 @@ class Tag < ActiveRecord::Base
   def Tag.starred_tags(star)
     where(deleted: 0, tag_key: "import_mails", starred: star).map{|x| x.tag_text}
   end
+  
+  # strに対して、全角半角変換を行い、不要な文字列(メアド、URL)を削除する
+  def Tag.pre_proc_body(str)
+    require 'zen2han'
+    Zen2Han.toHan(str).gsub(/[\_\-\+\.\w]+@[\-a-z0-9]+(\.[\-a-z0-9]+)*\.[a-z]{2,6}/i, "").gsub(/https?:\/\/\w[\w\.\-\/]+/i,"")
+  end
+
+  def Tag.analyze_skill_tags(body)
+    require 'string_util'
+    words = StringUtil.detect_words(body).inject([]) do |r,item|
+      arr = item.split(" ")
+      arr.each do |w| # スペースで分割
+        # C++用スペシャルロジック
+        StringUtil.splitplus(w).each do |ww| # +で分割
+          StringUtil.breaknum(ww).each do |www| # 数字の前後で分割(数字のみは排除)
+            r << www
+          end
+        end
+      end
+      r << arr.join("")
+    end
+    words = words.uniq.reject{|w|
+      Tag.ignores.include?(w.downcase) || w =~ /^\d/ || w.length == 1 # 辞書に存在するか、数字で始まる単語、1文字
+    }
+    # C言語用スペシャルロジック
+    if body =~ /(^|[^a-zA-Z])(C)([^a-zA-Z#\+]|$)/
+      words << $2
+    end
+    words.join(",")
+  end
+
+  def Tag.ignores
+    ["e-mail", "email", "fax", "jp", "mail", "mailto", "new", "ng", "or", "or2", "or3", "or4",
+     "os", "pc", "pg", "phone", "phs", "pj", "pmi", "popteen", "pr", "pro", "se", "service", "ses", "tel", "url", "zip"]
+  end
+
 end
 

@@ -195,12 +195,16 @@ tr.send {
   background-color: skyblue;
 }
 
+tr.is_send_target{
+  background-color: white !important;
+}
+
 .status_toggle{
   display: inline-block;
   padding-left: 16px;
   padding-right: 16px;
   font-weight: bold;
-  width: 3em;
+  width: 2em;
   vertical-align: middle;
   text-align: center;
   -webkit-border-radius: 5px;

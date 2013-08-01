@@ -22,11 +22,14 @@ class Business < ActiveRecord::Base
     end
   end
 
+  # ƒ^ƒO¶¬‚Ì–{‘Ì
+  def make_tags(body)
+    Tag.analyze_skill_tags(Tag.pre_proc_body(body))
+  end
+
   def make_skill_tags!
-    require 'string_util'
-    words = StringUtil.detect_words([skill_must, skill_want].join(" "))
-    Tag.update_tags!("businesses", id, words.join(","))
-    self.skill_tag = words.join(",")
+    self.skill_tag = make_tags([skill_must, skill_want].join(" "))
+    Tag.update_tags!("businesses", id, skill_tag)
   end
 
   def after_initialize 
