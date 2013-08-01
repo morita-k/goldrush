@@ -3,7 +3,8 @@ class Contract < ActiveRecord::Base
   include AutoTypeName
   include BusinessFlow
   
-  attr_accessor :closed_at_date, :closed_at_hour, :closed_at_minute, :contracted_at_date, :contracted_at_hour, :contracted_at_minute
+#  attr_accessor :closed_at_date, :closed_at_hour, :closed_at_minute, :contracted_at_date, :contracted_at_hour, :contracted_at_minute
+  attr_accessor :contracted_at_date, :contracted_at_hour, :contracted_at_minute
   after_initialize :after_initialize
 
   has_many :interviews, :conditions => ["interviews.deleted = 0"]
@@ -12,7 +13,8 @@ class Contract < ActiveRecord::Base
   belongs_to :contract_pic, :class_name => 'User'
   belongs_to :approach
 
-  validates_presence_of     :closed_at, :contract_pic_id, :start_date
+#  validates_presence_of     :closed_at, :contract_pic_id, :start_date
+  validates_presence_of     :contract_pic_id
 
   # 契約条件が、上流も下流も「契約済み」であれば「契約中」にアップデートする
   def make_contract_proc(str)
@@ -71,18 +73,18 @@ class Contract < ActiveRecord::Base
     ], :down_contract_status_type)
   end
 
-  def setup_closed_at(zone_now)
-    date, hour, min = DateTimeUtil.split_date_hour_minute(zone_now)
-    self.closed_at_date = date
-    self.closed_at_hour = hour
-    self.closed_at_minute = min
-  end
-
-  def perse_closed_at(user)
-    unless closed_at_date.blank? || closed_at_hour.blank? || closed_at_minute.blank?
-      self.closed_at = user.zone_parse("#{closed_at_date} #{closed_at_hour}:#{closed_at_minute}:00")
-    end
-  end
+#  def setup_closed_at(zone_now)
+#    date, hour, min = DateTimeUtil.split_date_hour_minute(zone_now)
+#    self.closed_at_date = date
+#    self.closed_at_hour = hour
+#    self.closed_at_minute = min
+#  end
+#
+#  def perse_closed_at(user)
+#    unless closed_at_date.blank? || closed_at_hour.blank? || closed_at_minute.blank?
+#      self.closed_at = user.zone_parse("#{closed_at_date} #{closed_at_hour}:#{closed_at_minute}:00")
+#    end
+#  end
 
   def setup_contracted_at(zone_now)
     if zone_now
@@ -115,7 +117,7 @@ class Contract < ActiveRecord::Base
     change_status(action, :down_contract_status_type)
   end
 
-  def contract_employee_name
+  def contract_pic_name
     contract_pic && contract_pic.employee.employee_name
   end
   
@@ -131,6 +133,14 @@ class Contract < ActiveRecord::Base
     (100.0 * payment_diff / upper_contract_term.payment).round(1)
   end
   
+  def term_term
+    "#{contract_start_date} ～ #{contract_end_date}"
+  end
+
+  def contract_renewal
+    "#{contract_renewal_unit}(#{contract_renewal_terms})"
+  end
+
   # 契約をクローズする
   # 継続する契約があれば、提案などはそのままキープ
   # 継続する契約が[更新なし]であれば、提案->照会->案件をクローズし、人材のステータスも[営業中]にする
@@ -138,11 +148,11 @@ class Contract < ActiveRecord::Base
     ActiveRecord::Base.transaction do
       Contract.where(:deleted => 0, :contract_status_type => :contract).each do |c|
         changed = false
-        if c.upper_contract_status_type == 'contracted' && c.upper_contract_term.contract_end_date < date
+        if c.upper_contract_status_type == 'contracted' && c.contract_end_date < date
           c.change_status(:finish_term, :upper_contract_status_type)
           changed = true
         end 
-        if c.down_contract_status_type == 'contracted' && c.down_contract_term.contract_end_date < date
+        if c.down_contract_status_type == 'contracted' && c.contract_end_date < date
           c.change_status(:finish_term, :down_contract_status_type)
           changed = true
         end 
@@ -155,7 +165,7 @@ class Contract < ActiveRecord::Base
   def Contract.make_next(date)
     ActiveRecord::Base.transaction do
       Contract.where(:deleted => 0, :contract_status_type => :contract).each do |c|
-#        if c.upper_contract_term.contract_end_date - 1.month
+#        if c.contract_end_date - 1.month
       end
     end
   end

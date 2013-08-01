@@ -24,7 +24,7 @@ class ContractController < ApplicationController
     contract_objects_new
     init_values(@contract)
     init_copies(@contract)
-    @contract.setup_closed_at(current_user.zone_now)
+#    @contract.setup_closed_at(current_user.zone_now)
   end
 
   def quick_create
@@ -44,15 +44,15 @@ class ContractController < ApplicationController
 
   def new
     @contract = Contract.new
-    @contract.closed_at = Date.today
-    @closed_at_hour = Time.new.hour
-    @closed_at_min = (Time.new.min / 10) * 10
+#    @contract.closed_at = Date.today
+#    @closed_at_hour = Time.new.hour
+#    @closed_at_min = (Time.new.min / 10) * 10
     @contract.contracted_at = Date.today
     @contracted_at_hour = Time.new.hour
     @contracted_at_min = (Time.new.min / 10) * 10
     @contract.upper_contract_term = ContractTerm.new
     @contract.down_contract_term = ContractTerm.new
-    @contract.setup_closed_at(current_user.zone_now)
+#    @contract.setup_closed_at(current_user.zone_now)
   end
 
   def create
@@ -64,13 +64,13 @@ class ContractController < ApplicationController
       set_user_column @contract.upper_contract_term
       set_user_column @contract.down_contract_term
       
-      if closed_at_date = DateTimeUtil.str_to_date(params[:contract][:closed_at])
-        @contract.closed_at = Time.local(closed_at_date.year, closed_at_date.month, closed_at_date.day, params[:closed_at_hour].to_i, params[:closed_at_minute].to_i)
-      end
+#      if closed_at_date = DateTimeUtil.str_to_date(params[:contract][:closed_at])
+#        @contract.closed_at = Time.local(closed_at_date.year, closed_at_date.month, closed_at_date.day, params[:closed_at_hour].to_i, params[:closed_at_minute].to_i)
+#      end
       if contracted_at_date = DateTimeUtil.str_to_date(params[:contract][:contracted_at])
         @contract.contracted_at = Time.local(contracted_at_date.year, contracted_at_date.month, contracted_at_date.day, params[:contracted_at_hour].to_i, params[:contracted_at_minute].to_i)
       end
-      @contract.perse_closed_at(current_user)
+#      @contract.perse_closed_at(current_user)
       @contract.save!
       @contract.upper_contract_term.save!
       @contract.down_contract_term.save!
@@ -83,7 +83,7 @@ class ContractController < ApplicationController
 
   def edit
     @contract = Contract.find(params[:id])
-    @contract.setup_closed_at(@contract.closed_at)
+#    @contract.setup_closed_at(@contract.closed_at)
     @contract.setup_contracted_at(@contract.contracted_at)
   end
 
@@ -91,7 +91,7 @@ class ContractController < ApplicationController
     Contract.transaction do
       @contract = Contract.find(params[:id], :conditions =>["deleted = 0"])
       @contract.attributes = params[:contract]
-      @contract.perse_closed_at(current_user)
+#      @contract.perse_closed_at(current_user)
       @contract.perse_contracted_at(current_user)
       @contract.upper_contract_term.attributes = params[:upper_contract_term]
       @contract.down_contract_term.attributes = params[:down_contract_term]
@@ -99,9 +99,9 @@ class ContractController < ApplicationController
       set_user_column @contract.upper_contract_term
       set_user_column @contract.down_contract_term
       
-      if closed_at_date = DateTimeUtil.str_to_date(params[:contract][:closed_at])
-        @contract.closed_at = Time.local(closed_at_date.year, closed_at_date.month, closed_at_date.day, params[:closed_at_hour].to_i, params[:closed_at_minute].to_i)
-      end
+#      if closed_at_date = DateTimeUtil.str_to_date(params[:contract][:closed_at])
+#        @contract.closed_at = Time.local(closed_at_date.year, closed_at_date.month, closed_at_date.day, params[:closed_at_hour].to_i, params[:closed_at_minute].to_i)
+#      end
       if contracted_at_date = DateTimeUtil.str_to_date(params[:contract][:contracted_at])
         @contract.contracted_at = Time.local(contracted_at_date.year, contracted_at_date.month, contracted_at_date.day, params[:contracted_at_hour].to_i, params[:contracted_at_minute].to_i)
       end
@@ -160,7 +160,7 @@ private
 
   def init_values(contract)
     contract.contract_status_type = 'open'
-    contract.closed_at = Time.now
+#    contract.closed_at = Time.now
     contract.upper_contract_status_type = 'waiting_order'
     contract.down_contract_status_type = 'waiting_offer'
 
@@ -171,8 +171,10 @@ private
     contract.upper_contract_term.time_adjust_time = 60
     contract.upper_contract_term.cutoff_date_type = 'suspense'
     contract.upper_contract_term.payment_sight_type = 'suspense'
-    contract.upper_contract_term.contract_renewal_unit = 3
-    contract.upper_contract_term.contract_renewal_terms = 1
+#    contract.upper_contract_term.contract_renewal_unit = 3
+#    contract.upper_contract_term.contract_renewal_terms = 1
+    contract.contract_renewal_unit = 3
+    contract.contract_renewal_terms = 1
 
     contract.approach.approach_status_type = 'working'
 
@@ -196,13 +198,17 @@ private
     contract.down_contract_term.time_adjust_time = contract.upper_contract_term.time_adjust_time
     contract.down_contract_term.cutoff_date_type = contract.upper_contract_term.cutoff_date_type
     contract.down_contract_term.payment_sight_type = contract.upper_contract_term.payment_sight_type
-    contract.down_contract_term.contract_start_date = contract.upper_contract_term.contract_start_date
-    contract.down_contract_term.contract_end_date = contract.upper_contract_term.contract_end_date
-    contract.down_contract_term.contract_renewal_unit = contract.upper_contract_term.contract_renewal_unit
-    contract.down_contract_term.contract_renewal_terms = contract.upper_contract_term.contract_renewal_terms
+#    contract.down_contract_term.contract_start_date = contract.upper_contract_term.contract_start_date
+#    contract.down_contract_term.contract_end_date = contract.upper_contract_term.contract_end_date
+#    contract.down_contract_term.contract_renewal_unit = contract.upper_contract_term.contract_renewal_unit
+#    contract.down_contract_term.contract_renewal_terms = contract.upper_contract_term.contract_renewal_terms
     contract.down_contract_term.other_terms = contract.upper_contract_term.other_terms
 
-    contract.approach.approached_at = contract.closed_at
+#    contract.approach.approached_at = contract.closed_at
+    now = Time.now
+    contract.approach.approached_at = now
+    contract.approach.closed_at = now
+    contract.approach.start_date = contract.contract_start_date
     contract.approach.approach_pic_id = contract.contract_pic_id
 
     contract.approach.approach_upper_contract_term.term_type = contract.upper_contract_term.term_type
@@ -218,10 +224,10 @@ private
     contract.approach.approach_upper_contract_term.time_adjust_time = contract.upper_contract_term.time_adjust_time
     contract.approach.approach_upper_contract_term.cutoff_date_type = contract.upper_contract_term.cutoff_date_type
     contract.approach.approach_upper_contract_term.payment_sight_type = contract.upper_contract_term.payment_sight_type
-    contract.approach.approach_upper_contract_term.contract_start_date = contract.upper_contract_term.contract_start_date
-    contract.approach.approach_upper_contract_term.contract_end_date = contract.upper_contract_term.contract_end_date
-    contract.approach.approach_upper_contract_term.contract_renewal_unit = contract.upper_contract_term.contract_renewal_unit
-    contract.approach.approach_upper_contract_term.contract_renewal_terms = contract.upper_contract_term.contract_renewal_terms
+#    contract.approach.approach_upper_contract_term.contract_start_date = contract.upper_contract_term.contract_start_date
+#    contract.approach.approach_upper_contract_term.contract_end_date = contract.upper_contract_term.contract_end_date
+#    contract.approach.approach_upper_contract_term.contract_renewal_unit = contract.upper_contract_term.contract_renewal_unit
+#    contract.approach.approach_upper_contract_term.contract_renewal_terms = contract.upper_contract_term.contract_renewal_terms
     contract.approach.approach_upper_contract_term.other_terms = contract.upper_contract_term.other_terms
 
     contract.approach.approach_down_contract_term.term_type = contract.upper_contract_term.term_type
@@ -237,17 +243,17 @@ private
     contract.approach.approach_down_contract_term.time_adjust_time = contract.upper_contract_term.time_adjust_time
     contract.approach.approach_down_contract_term.cutoff_date_type = contract.upper_contract_term.cutoff_date_type
     contract.approach.approach_down_contract_term.payment_sight_type = contract.upper_contract_term.payment_sight_type
-    contract.approach.approach_down_contract_term.contract_start_date = contract.upper_contract_term.contract_start_date
-    contract.approach.approach_down_contract_term.contract_end_date = contract.upper_contract_term.contract_end_date
-    contract.approach.approach_down_contract_term.contract_renewal_unit = contract.upper_contract_term.contract_renewal_unit
-    contract.approach.approach_down_contract_term.contract_renewal_terms = contract.upper_contract_term.contract_renewal_terms
+#    contract.approach.approach_down_contract_term.contract_start_date = contract.upper_contract_term.contract_start_date
+#    contract.approach.approach_down_contract_term.contract_end_date = contract.upper_contract_term.contract_end_date
+#    contract.approach.approach_down_contract_term.contract_renewal_unit = contract.upper_contract_term.contract_renewal_unit
+#    contract.approach.approach_down_contract_term.contract_renewal_terms = contract.upper_contract_term.contract_renewal_terms
     contract.approach.approach_down_contract_term.other_terms = contract.upper_contract_term.other_terms
 
-    contract.approach.biz_offer.biz_offered_at = contract.closed_at
+    contract.approach.biz_offer.biz_offered_at = now#contract.closed_at
     contract.approach.biz_offer.contact_pic_id = contract.contract_pic_id
     contract.approach.biz_offer.sales_pic_id = contract.contract_pic_id
 
-    contract.approach.biz_offer.business.issue_datetime = contract.closed_at
+    contract.approach.biz_offer.business.issue_datetime = now#contract.closed_at
     contract.approach.biz_offer.business.term_type = contract.upper_contract_term.term_type
   end
 
@@ -269,7 +275,7 @@ private
     contract.attributes = params[:contract]
     contract.upper_contract_term.attributes = params[:upper_contract_term]
     contract.down_contract_term.attributes = params[:down_contract_term]
-    contract.perse_closed_at(current_user)
+#    contract.perse_closed_at(current_user)
     set_user_column contract
     set_user_column contract.upper_contract_term
     set_user_column contract.down_contract_term

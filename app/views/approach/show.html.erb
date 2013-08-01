@@ -9,7 +9,7 @@
   <th><%= getLongName('approaches', 'approached_at') %></th><td colspan=2><%=h @approach.approached_at %></td>
 </tr>
 <tr>
-  <th>提案担当者名</th><td colspan=2><%=h @approach.approach_employee_name %></td>
+  <th>提案担当者名</th><td colspan=2><%=h @approach.approach_pic_name %></td>
 </tr>
 <tr>
   <th><%= getLongName('approaches', 'approach_start_date') %></th><td colspan=2><%=h @approach.approach_start_date %></td>
@@ -17,6 +17,17 @@
 <tr>
   <th><%= getLongName('approaches', 'can_interview_date') %></th><td colspan=2><%=h @approach.can_interview_date %></td>
 </tr>
+
+<tr>
+  <th><%= getLongName('approaches', 'closed_at') %></th><td colspan=2><%=h @approach.closed_at %></td>
+</tr>
+<tr>
+  <th><%= getLongName('approaches', 'start_date') %></th><td colspan=2><%=h @approach.start_date %></td>
+</tr>
+<tr>
+  <th><%= getLongName('approaches', 'end_date') %></th><td colspan=2><%=h @approach.end_date %></td>
+</tr>
+
 <tr>
   <th>単価差額</th><td colspan=2><%=h (@approach_upper_contract_term.payment_view - @approach_down_contract_term.payment_view) %>万円</td>
 </tr>
@@ -90,6 +101,7 @@
   <td><%=h @approach_upper_contract_term.payment_sight_type_name%></td>
   <td><%=h @approach_down_contract_term.payment_sight_type_name%></td>
 </tr>
+<%if false%>
 <tr>
   <th><%= getLongName('contract_terms', 'contract_start_date') %></th>
   <td><%=h @approach_upper_contract_term.contract_start_date %></td>
@@ -110,6 +122,7 @@
   <td><%=h @approach_upper_contract_term.contract_renewal_terms %></td>
   <td><%=h @approach_down_contract_term.contract_renewal_terms %></td>
 </tr>
+<%end%>
 <tr>
   <th>ペナルティーなど</th>
   <td><%=h @approach_upper_contract_term.other_terms %></td>
