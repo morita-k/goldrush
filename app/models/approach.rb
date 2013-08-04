@@ -47,11 +47,8 @@ class Approach < ActiveRecord::Base
     ])
   end
 
-  def approach_employee_name
-   if self.approach_pic_id
-     employee = Employee.find(self.approach_pic_id)
-     employee ? employee.employee_name : ""
-   end
+  def approach_pic_name
+   approach_pic.employee.employee_name
   end
   
   def process_interview

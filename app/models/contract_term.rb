@@ -4,18 +4,11 @@ class ContractTerm < ActiveRecord::Base
 
   has_many :approaches, :conditions => ["approaches.deleted = 0"]
   
-  validates_presence_of     :payment, :contract_start_date, :contract_end_date
+#  validates_presence_of     :payment, :contract_start_date, :contract_end_date
+  validates_presence_of     :payment
 
   def cutoff_and_sight
     "#{cutoff_date_type_name}締め#{payment_sight_type_name}払い"
-  end
-
-  def term_term
-    "#{contract_start_date} ～ #{contract_end_date}"
-  end
-
-  def contract_renewal
-    "#{contract_renewal_unit}(#{contract_renewal_terms})"
   end
 
   def payment_view=(x)

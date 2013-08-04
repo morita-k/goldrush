@@ -46,18 +46,12 @@ class BizOffer < ActiveRecord::Base
     ])
   end
 
-  def contact_employee_name
-   if self.contact_pic_id
-     employee = Employee.find(self.contact_pic_id)
-     employee ? employee.employee_name : ""
-   end
+  def contact_pic_name
+    contact_pic && contact_pic.employee.employee_name
   end
   
-  def sales_employee_name
-   if self.sales_pic_id
-     employee = Employee.find(self.sales_pic_id)
-     employee ? employee.employee_name : ""
-   end
+  def sales_pic_name
+    sales_pic && sales_pic.employee.employee_name
   end
   
   def change_status_type

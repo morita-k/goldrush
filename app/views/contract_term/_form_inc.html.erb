@@ -54,6 +54,7 @@
 <th><label for="<%=model_name%>_payment_sight_type"><%=getLongName('contract_terms','payment_sight_type')%></label></th>
 <td><%= select model_name, 'payment_sight_type', getTypes('payment_sight_type')  %></td>
 </tr>
+<%if false %>
 <tr>
 <th><label for="<%=model_name%>_contract_start_date"><%=getLongName('contract_terms','contract_start_date')%>(*)</label></th>
 <td><%= date_field model_name, 'contract_start_date'  %></td>
@@ -70,6 +71,7 @@
 <th><label for="<%=model_name%>_contract_renewal_terms"><%=getLongName('contract_terms','contract_renewal_terms')%>(*)</label></th>
 <td><%= text_field model_name, 'contract_renewal_terms'  %></td>
 </tr>
+<%end%>
 <tr>
 <th><label for="<%=model_name%>_other_terms"><%=getLongName('contract_terms','other_terms')%></label></th>
 <td><%= resizable_area model_name, 'other_terms'  %></td>
