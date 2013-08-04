@@ -12,6 +12,10 @@
 
     <th rowspan=2><%=getShortName('contracts', 'contract_status_type') %></th>
 
+    <th rowspan=2>契約期間</th>
+
+    <th rowspan=2 title="契約更新単位月数(事前通達月数)">更新</th>
+
     <th>稼働開始</th>
 
     <th>上流取引先</th>
@@ -21,10 +25,6 @@
     <th>単価</th>
 
     <th>支払い</th>
-
-    <th>契約期間</th>
-
-    <th title="契約更新単位月数(事前通達月数)">更新</th>
 
     <th>粗利</th>
   </tr>
@@ -39,10 +39,6 @@
 
     <th>支払い</th>
 
-    <th>契約期間</th>
-
-    <th title="契約更新単位月数(事前通達月数)">更新</th>
-
     <th>粗利率</th>
   </tr>
 <% for contract in @contracts %>
@@ -55,7 +51,11 @@
 
     <td rowspan=2><%=h contract.contract_status_type_name %></td>
 
-    <td><%=h contract.start_date %></td>
+    <td rowspan=2><%=h contract.term_term %></td>
+
+    <td rowspan=2><%=h contract.contract_renewal %></td>
+
+    <td><%=h contract.approach.start_date %></td>
 
     <td><%=h contract.approach.biz_offer.business_partner.business_partner_name %></td>
 
@@ -65,14 +65,10 @@
 
     <td><%=h contract.upper_contract_term.cutoff_and_sight %></td>
 
-    <td><%=h contract.upper_contract_term.term_term %></td>
-
-    <td><%=h contract.upper_contract_term.contract_renewal %></td>
-
     <td><%=h contract.payment_diff_veiw %>万円</td>
   </tr>
   <tr>
-    <td><%=h contract.end_date %></td>
+    <td><%=h contract.approach.end_date %></td>
 
     <td><%=h contract.approach.bp_member.business_partner.business_partner_name %></td>
 
@@ -81,10 +77,6 @@
     <td><%=h contract.down_contract_term.payment_view %>万円</td>
 
     <td><%=h contract.down_contract_term.cutoff_and_sight %></td>
-
-    <td><%=h contract.down_contract_term.term_term %></td>
-
-    <td><%=h contract.down_contract_term.contract_renewal %></td>
 
     <td><%=h contract.payment_redio %>%</td>
   </tr>

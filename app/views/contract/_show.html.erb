@@ -5,20 +5,40 @@
 <tr>
   <th><%= getLongName('contracts', 'contract_status_type') %></th><td colspan=2><%=h contract.contract_status_type_name%></td>
 </tr>
+<%if false %>
 <tr>
   <th><%= getLongName('contracts', 'closed_at') %></th><td colspan=2><%=h contract.closed_at %></td>
 </tr>
+<% end %>
 <tr>
   <th><%= getLongName('contracts', 'contracted_at') %></th><td colspan=2><%=h contract.contracted_at %></td>
 </tr>
 <tr>
-  <th>契約担当者名</th><td colspan=2><%=h contract.contract_employee_name %></td>
+  <th>契約担当者名</th><td colspan=2><%=h contract.contract_pic_name %></td>
 </tr>
+<%if false %>
 <tr>
   <th><%= getLongName('contracts', 'start_date') %></th><td colspan=2><%=h contract.start_date %></td>
 </tr>
 <tr>
   <th><%= getLongName('contracts', 'end_date') %></th><td colspan=2><%=h contract.end_date %></td>
+</tr>
+<%end%>
+<tr>
+  <th><%= getLongName('contracts', 'contract_start_date') %></th>
+  <td colspan=2><%=h contract.contract_start_date %></td>
+</tr>
+<tr>
+  <th><%= getLongName('contracts', 'contract_end_date') %></th>
+  <td colspan=2><%=h contract.contract_end_date %></td>
+</tr>
+<tr>
+  <th><%= getLongName('contracts', 'contract_renewal_unit') %></th>
+  <td colspan=2><%=h contract.contract_renewal_unit %></td>
+</tr>
+<tr>
+  <th><%= getLongName('contracts', 'contract_renewal_terms') %></th>
+  <td colspan=2><%=simple_format h(h contract.contract_renewal_terms) %></td>
 </tr>
 <tr>
   <th>粗利</th><td colspan=2><%=h contract.payment_diff_veiw %>万円</td>
@@ -101,6 +121,7 @@
   <td><%=h upper_contract_term.payment_sight_type_name%></td>
   <td><%=h down_contract_term.payment_sight_type_name%></td>
 </tr>
+<%if false %>
 <tr>
   <th><%= getLongName('contract_terms', 'contract_start_date') %></th>
   <td><%=h upper_contract_term.contract_start_date %></td>
@@ -121,6 +142,7 @@
   <td><%=simple_format h(h upper_contract_term.contract_renewal_terms) %></td>
   <td><%=simple_format h(h down_contract_term.contract_renewal_terms) %></td>
 </tr>
+<% end %>
 <tr>
   <th>ペナルティーなど</th>
   <td><%=simple_format h(h upper_contract_term.other_terms) %></td>

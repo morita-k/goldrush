@@ -31,13 +31,13 @@
 <p><label for="contract_term_time_adjust_type"><%=getLongName('contract_terms','payment_sight_type')%></label><br />
 <%= select model_name, 'payment_sight_type', getTypes('payment_sight_type')  %>
 </p>
-
+<%if false %>
 <p><label for="contract_term_contract_start_date"><%=getLongName('contract_terms','contract_start_date')%></label><br /><%= date_field 'contract_term', 'contract_startdate'  %></p>
 
 <p><label for="contract_term_contract_renewal_unit"><%=getLongName('contract_terms','contract_renewal_unit')%></label><br /><%= text_field 'contract_term', 'contract_renewal_unit'  %></p>
 
 <p><label for="contract_term_contract_renewal_terms"><%=getLongName('contract_terms','contract_renewal_terms')%></label><br /><%= resizable_area 'contract_term', 'contract_renewal_terms'  %></p>
-
+<%end%>
 <p><label for="contract_term_other_terms"><%=getLongName('contract_terms','other_terms')%></label><br /><%= resizable_area 'contract_term', 'other_terms'  %></p>
 
 <p><label for="contract_term_memo"><%=getLongName('contract_terms','memo')%></label><br /><%= resizable_area 'contract_term', 'memo'  %></p>
