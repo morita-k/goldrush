@@ -107,7 +107,7 @@
   <%= form_tag({:controller => :business_partner, :action => 'upload_google_csv'} , {:multipart => true}) do %>
     <%= hidden_field_tag 'back_to', request_url %>
     <p>Googleアカウントより担当者のリストをインポート</p>  
-    <%= file_field_tag 'google_csv_upload_file' %><%= submit_tag 'インポート', :onclick => "if($('#google_csv_upload_file').val()==''){alert('ファイルを選択してください');return false;}else if($('#parson_in_charge').val()==''){alert('担当者を選択してください');return false;}else{if(!confirm('リストをインポートします。よろしいですか？')){return false;}}" %>
+    <%= file_field_tag 'google_csv_upload_file', :disabled => true %><%= submit_tag 'インポート', {:disabled => true, :onclick => "if($('#google_csv_upload_file').val()==''){alert('ファイルを選択してください');return false;}else if($('#parson_in_charge').val()==''){alert('担当者を選択してください');return false;}else{if(!confirm('リストをインポートします。よろしいですか？')){return false;}}"} %>
   <% end %>
 <% else %>
 <script type="text/javascript">
