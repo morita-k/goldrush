@@ -8,6 +8,16 @@
 <% else %>
 <% end %>
 
+<% if !@biz_offers.blank? %>
+  <h2><%=getLongName('table_name','biz_offers')%>一覧</h2>
+  <%= render :partial => 'biz_offer/list', :locals => {:biz_offers => @biz_offers} %>
+<% end %>
+
+<% if !@bp_members.blank? %>
+  <h2><%=getLongName('table_name','bp_members')%>一覧</h2>
+  <%= render :partial => 'bp_member/list', :locals => {:bp_members => @bp_members} %>
+<% end %>
+
 <table class="show_table">
 <% if @import_mail.business_partner %>
   <tr>
@@ -50,18 +60,6 @@
   <p></p>
   <h2>添付ファイル一覧</h2>
   <%= render :partial => 'attachment_file/list' %>
-<% end %>
-
-<% if !@biz_offers.blank? %>
-  <p></p>
-  <h2><%=getLongName('table_name','biz_offers')%>一覧</h2>
-  <%= render :partial => 'biz_offer/list', :locals => {:biz_offers => @biz_offers} %>
-<% end %>
-
-<% if !@bp_members.blank? %>
-  <p></p>
-  <h2><%=getLongName('table_name','bp_members')%>一覧</h2>
-  <%= render :partial => 'bp_member/list', :locals => {:bp_members => @bp_members} %>
 <% end %>
 
   <p></p>
