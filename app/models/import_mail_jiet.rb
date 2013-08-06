@@ -125,7 +125,8 @@ class ImportMailJIET < ImportMail
       bp_pic_short_name: "ご担当者",
       bp_pic_name_kana: "ご担当者",
       email1: "unknown+#{bp_id}@unknown.applicative.jp",
-      import_mail_id: import_mail_id
+      import_mail_id: import_mail_id,
+      jiet: "1".to_i
     }.reject{|k, v| v.blank?}
      
     pic.save!
@@ -185,6 +186,7 @@ class ImportMailJIET < ImportMail
       skill: ImportMailJIET.linefeed_join(human["ＯＳ"],human["ＤＢ"],human["言語"],human["ハードウェア"],human["ネットワーク"],human["ツール"],human["フレームワーク"]),
       communication_type: "unknown",
       human_resource_status_type: "sales",
+      jiet: "1".to_i,
       link: human["リンク"],
       memo: ImportMailJIET.linefeed_join(human["希望作業場所"],human["コメント"])
     }.reject{|k, v| v.blank?}
