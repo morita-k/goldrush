@@ -79,7 +79,7 @@ class BpPic < ActiveRecord::Base
   end
   
   def into_group(group_id)
-    if BpPicGroupDetail.where(bp_pic_group_id: group_id, bp_pic_id: self.id).blank?
+    if BpPicGroupDetail.where(bp_pic_group_id: group_id, bp_pic_id: self.id, deleted: 0).blank?
       group = BpPicGroupDetail.new(bp_pic_group_id: group_id, bp_pic_id: self.id)
       group.save!
     end
