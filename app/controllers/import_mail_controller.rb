@@ -17,6 +17,7 @@ class ImportMailController < ApplicationController
       :bp_member_flg => params[:bp_member_flg],
       :unwanted => params[:unwanted],
       :registed => params[:registed],
+      :proper_flg => params[:proper_flg],
       :tag => params[:tag]
     }
   end
@@ -76,7 +77,10 @@ class ImportMailController < ApplicationController
       sql += " and registed = 1"
     end
     
-
+    if !(proper_flg = session[:import_mail_search][:proper_flg]).blank?
+      sql += " and proper_flg = 1"
+    end
+    
     unless session[:import_mail_search][:tag].blank?
       s, p, j = make_conditions_for_tag(session[:import_mail_search][:tag])
       sql += s

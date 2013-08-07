@@ -8,6 +8,7 @@
         <%= check_box_tag 'bp_member_flg', 1, session[:import_mail_search][:bp_member_flg].to_i == 1 %> 人材
         <%= check_box_tag 'unwanted', 1, session[:import_mail_search][:unwanted].to_i == 1 %> 不要
         <%= check_box_tag 'registed', 1, session[:import_mail_search][:registed].to_i == 1 %> 登録済み
+        <%= check_box_tag 'proper_flg', 1, session[:import_mail_search][:proper_flg].to_i == 1 %> プロパー
       </td>
     </tr>
     </tr>
@@ -38,15 +39,15 @@
 <% for import_mail in @import_mails %>
   <tr <%= "bgcolor=lightgray" unless import_mail.wanted? %> id="tr_<%= import_mail.id %>">
     <td style="overflow: hidden">
-      <div style="overflow: hidden;height:1.5em;width:20em">
+      <div style="overflow: hidden;height:1.5em;width:20em;word-wrap: break-word">
         <div style="width:1000px;"><%= import_mail.bp_pic_id.blank? ? "" : star_links(import_mail.bp_pic) %> <%= import_mail.bp_pic_id.blank? ? import_mail.mail_sender_name : link_to_bp_detail(import_mail) %></div>
       </div>
     </td>
     <td>
-      <div style="overflow: hidden;height:1.5em;"><%= link_to_detail(import_mail, request_url) %></div>
+      <div style="overflow: hidden;height:1.5em"><%= link_to_detail(import_mail, request_url) %></div>
     </td>
     <td>
-      <div style="overflow: hidden;height:1.4em;"><span style="line-height: 90%;"><%= raw format_only_major_tags(import_mail.tag_text, @major_words) %></span></div>
+      <div style="overflow: hidden;height:1.4em"><span style="line-height: 90%;"><%= raw format_only_major_tags(import_mail.tag_text, @major_words) %></span></div>
     </td>
     <td><div style="width:2.5em"><%=import_mail.payment_text %></div></td>
     <td><div style="width:2.5em"><%=import_mail.age_text %></div></td>
