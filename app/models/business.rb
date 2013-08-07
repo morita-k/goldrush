@@ -22,7 +22,7 @@ class Business < ActiveRecord::Base
     end
   end
 
-  # ƒ^ƒO¶¬‚Ì–{‘Ì
+  # ã‚¿ã‚°ç”Ÿæˆã®æœ¬ä½“
   def make_tags(body)
     Tag.analyze_skill_tags(Tag.pre_proc_body(body))
   end
