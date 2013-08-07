@@ -9,7 +9,7 @@
   <th><%= getLongName('approaches', 'approached_at') %></th><td colspan=2><%=h @approach.approached_at %></td>
 </tr>
 <tr>
-  <th>提案担当者名</th><td colspan=2><%=h @approach.approach_employee_name %></td>
+  <th>提案担当者名</th><td colspan=2><%=h @approach.approach_pic_name %></td>
 </tr>
 <tr>
   <th><%= getLongName('approaches', 'approach_start_date') %></th><td colspan=2><%=h @approach.approach_start_date %></td>
@@ -17,6 +17,17 @@
 <tr>
   <th><%= getLongName('approaches', 'can_interview_date') %></th><td colspan=2><%=h @approach.can_interview_date %></td>
 </tr>
+
+<tr>
+  <th><%= getLongName('approaches', 'closed_at') %></th><td colspan=2><%=h @approach.closed_at %></td>
+</tr>
+<tr>
+  <th><%= getLongName('approaches', 'start_date') %></th><td colspan=2><%=h @approach.start_date %></td>
+</tr>
+<tr>
+  <th><%= getLongName('approaches', 'end_date') %></th><td colspan=2><%=h @approach.end_date %></td>
+</tr>
+
 <tr>
   <th>単価差額</th><td colspan=2><%=h (@approach_upper_contract_term.payment_view - @approach_down_contract_term.payment_view) %>万円</td>
 </tr>
@@ -90,6 +101,7 @@
   <td><%=h @approach_upper_contract_term.payment_sight_type_name%></td>
   <td><%=h @approach_down_contract_term.payment_sight_type_name%></td>
 </tr>
+<%if false%>
 <tr>
   <th><%= getLongName('contract_terms', 'contract_start_date') %></th>
   <td><%=h @approach_upper_contract_term.contract_start_date %></td>
@@ -110,6 +122,7 @@
   <td><%=h @approach_upper_contract_term.contract_renewal_terms %></td>
   <td><%=h @approach_down_contract_term.contract_renewal_terms %></td>
 </tr>
+<%end%>
 <tr>
   <th>ペナルティーなど</th>
   <td><%=h @approach_upper_contract_term.other_terms %></td>
@@ -178,64 +191,6 @@
   <p>下流アクション: <%= raw x %></p>
   </div>
 <% end %>
-<% if false %>
-<%= form_tag do %>
-  <% if @contract %>
-    <!-- 契約詳細 -->
-    <h2><%=getLongName('table_name','contracts')%>情報</h2>
-    <%= render :partial => 'contract/show' %>
-    <%= back_to_link '契約情報編集', :controller => 'contract', :action => 'edit', :id => @contract %>
-  <% elsif @approach.approach_status_type_active %>
-    <% if !@approach.last_interview.blank? && @approach.last_interview.interview_status_type != 'finished' %>
-      <%= submit_tag '　　契約作成　　', :name => 'create_contract', :onclick=>"return #{confirm_javascript_function("まだ面談が完了していませんがよろしいですか？")}"  %>
-    <% else %>
-      <%= submit_tag '　　契約作成　　', :name => 'create_contract' %>
-    <% end %>
-  <% end %>
-<% end %>
-<% end %><%# if false %>
-
-<% if false %>
-<% if @approach.approach_status_type == 'result_waiting' %>
-  <%= form_tag do %>
-  <% if @contract.blank? %>
-    <h3>面談ステータス変更ボタン(対象は最新の面談)</h3>
-    <% if @approach.last_interview.blank? || @approach.last_interview.interview_status_type == 'finished' %>
-      <%= submit_tag '　　面談作成　　', :name => 'create_interview' %> 
-    <% end %>
-    <% if @approach.last_interview %>
-      <% if @approach.last_interview.interview_status_type == 'interview_waiting' %>
-        <%= submit_tag '　　面談結果待ち　　', :name => 'result_wait', :confirm => "面談ステータスを面談結果待ちに変更します。よろしいですか？" %> 
-        <% #面談ステータスを「面談結果待ち」にする %>
-      <% elsif @approach.last_interview.interview_status_type == 'result_waiting' %>
-        <%= submit_tag '　　面談ＯＫ　　', :name => 'interview_finish', :onclick=>"return #{confirm_javascript_function("面談結果をＯＫとして更新します。よろしいですか？")}" %> 
-        <% #面談ステータスを「面談完了」にして面談作成画面へ %>
-        <%= submit_tag '　　面談ＮＧ　　', :name => 'interview_reject', :onclick=>"return #{confirm_javascript_function("面談失敗とし、提案も失敗となります。よろしいですか？")}" %> 
-        <%= submit_tag '　　調整要求有　　', :name => 'interview_adjustment' %> 
-        <% #面談ステータスを「面談後調整中」にして提案編集画面へ %>
-      <% elsif @approach.last_interview.interview_status_type == 'adjusting' %>
-        <%= submit_tag '　　面談ＮＧ　　', :name => 'interview_reject', :onclick=>"return #{confirm_javascript_function("面談失敗とし、提案も失敗となります。よろしいですか？")}" %> 
-        <%= submit_tag '　　再提案　　', :name => 'interview_retry' %> 
-        <% #面談ステータスを「面談結果待ち」にする %>
-        <%= submit_tag '　　調整失敗　　', :name => 'interview_adjustment_reject', :onclick=>"return #{confirm_javascript_function("調整失敗とし、提案も失敗となります。よろしいですか？")}" %>
-      <% end %>
-    <% end %>
-  <p></p>
-    <% end %>
-  <% end %>
-<% end %>
-
-
-<% if !@interviews.blank? %>
-<!-- 面談情報 -->
-  <h2><%=getLongName('table_name','interviews')%>情報</h2>
-  <%= render :partial => 'interview/list' %>
-<% else %>
-  <%= link_to (getLongName('table_name','interviews')+'の新規作成'), :controller => :interview, :action => 'new', :approach => @approach %>
-<% end %>
-<p></p>
-
-<% end %><%# if false %>
 
 <h2>スキルシート一覧</h2>
 

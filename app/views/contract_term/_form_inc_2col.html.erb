@@ -77,6 +77,7 @@
   <td><%= select upper_model_name, 'payment_sight_type', getTypes('payment_sight_type')  %></td>
   <td><%= select down_model_name, 'payment_sight_type', getTypes('payment_sight_type')  %></td>
 </tr>
+<%if false%>
 <tr>
   <th><label for="<%=upper_model_name%>_contract_start_date"><%=getLongName('contract_terms','contract_start_date')%>(*)</label></th>
   <td><%= date_field upper_model_name, 'contract_start_date'  %></td>
@@ -97,6 +98,7 @@
   <td><%= text_field upper_model_name, 'contract_renewal_terms'  %></td>
   <td><%= text_field down_model_name, 'contract_renewal_terms'  %></td>
 </tr>
+<%end%>
 <tr>
   <th><label for="<%=upper_model_name%>_other_terms">ペナルティーなど</label></th>
   <td><%= resizable_area upper_model_name, 'other_terms'  %></td>

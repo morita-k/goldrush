@@ -47,6 +47,7 @@
   <th><%= getLongName('contract_terms', 'payment_sight_type') %></th><td><%=h @contract_term.payment_sight_type %></td>
 </tr>
 
+<%if false%>
 <tr>
   <th><%= getLongName('contract_terms', 'contract_start_date') %></th><td><%=h @contract_term.contract_start_date %></td>
 </tr>
@@ -62,7 +63,7 @@
 <tr>
   <th><%= getLongName('contract_terms', 'contract_renewal_terms') %></th><td><%=h @contract_term.contract_renewal_terms %></td>
 </tr>
-
+<%end%>
 <tr>
   <th><%= getLongName('contract_terms', 'other_terms') %></th><td><%=h @contract_term.other_terms %></td>
 </tr>

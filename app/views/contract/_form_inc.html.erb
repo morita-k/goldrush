@@ -13,6 +13,7 @@
   <th><label for="contract_down_contract_status_type"><%=getLongName('contracts','down_contract_status_type')%></label></th>
   <td><%= @contract.down_contract_status_type_name  %></td>
 </tr>
+<%if false%>
 <tr>
   <th><label for="contract_closed_at"><%=getLongName('contracts','closed_at')%>(*)</label></th>
   <td>
@@ -21,6 +22,7 @@
     <%= select 'contract', 'closed_at_minute', (0..5).to_a.map{|x| x.to_s + "0"} %>
   </td>
 </tr>
+<%end%>
 <% unless @contract.new_record? %>
 <tr>
   <th><label for="contract_contracted_at"><%=getLongName('contracts','contracted_at')%></label></th>
@@ -38,6 +40,7 @@
     <input type=button value='クリア' onClick="clearContractUser();return false;" />
     <%= hidden_field 'contract', 'contract_pic_id' %></td>
 </tr>
+<%if false %>
 <tr>
   <th><label for="contract_start_date"><%=getLongName('contracts','start_date')%>(*)</label></th>
   <td><%= date_field 'contract', 'start_date' %></td>
@@ -45,6 +48,23 @@
 <tr>
   <th><label for="contract_end_date"><%=getLongName('contracts','end_date')%></label></th>
   <td><%= date_field 'contract', 'end_date' %></td>
+</tr>
+<%end%>
+<tr>
+  <th><label for="contract_contract_start_date"><%=getLongName('contracts','contract_start_date')%>(*)</label></th>
+  <td><%= date_field 'contract', 'contract_start_date'  %></td>
+</tr>
+<tr>
+  <th><label for="contract_contract_end_date"><%=getLongName('contracts','contract_end_date')%>(*)</label></th>
+  <td><%= date_field 'contract', 'contract_end_date'  %></td>
+</tr>
+<tr>
+  <th><label for="contract_contract_renewal_unit"><%=getLongName('contracts','contract_renewal_unit')%>(*)</label></th>
+  <td><%= text_field 'contract', 'contract_renewal_unit'  %></td>
+</tr>
+<tr>
+  <th><label for="contract_contract_renewal_terms"><%=getLongName('contracts','contract_renewal_terms')%>(*)</label></th>
+  <td><%= text_field 'contract', 'contract_renewal_terms'  %></td>
 </tr>
 <tr>
   <th><label for="contract_memo"><%=getLongName('contracts','memo')%></label></th>
