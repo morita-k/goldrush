@@ -196,6 +196,40 @@ class ImportMail < ActiveRecord::Base
     StringUtil.detect_regex(body, /^.*(最寄|駅).*$/).sort.reverse.first
   end
   
+  def detect_proper
+    detect_proper_in(Tag.pre_proc_body(pre_body))
+  end
+  
+  # ImportMail.all.each do |x| x.proper_flg = x.detect_proper ? 1 : 0
+  #   x.save!
+  # end && nil
+  # ImportMail.all.reject{|x| !x.detect_proper}.map{|y| y.id}
+  def detect_proper_in(body)
+    return false if bp_member_flg != 1
+    StringUtil.detect_lines(body, /社員/) do |line|
+      return true unless bad_words_for_proper.detect{|x| line.include?(x)}
+    end
+    StringUtil.detect_lines(body, /ﾌﾟﾛﾊﾟｰ/) do |line|
+      return true unless bad_words_for_proper.detect{|x| line.include?(x)}
+    end
+    return false
+  end 
+
+  def bad_words_for_proper
+"契約社員
+社下
+社先
+BP
+ﾊﾟｰﾄﾅｰ
+ｸﾞﾙｰﾌﾟ
+貴社
+御社
+参画中
+ﾌﾟﾛﾊﾟｰ出身
+と一緒
+社員研修".split
+  end
+
   #
   # 以下の項目に関して、メールの解析を行う
   # 年齢解析
@@ -208,6 +242,7 @@ class ImportMail < ActiveRecord::Base
     self.payment_text = detect_payments_in(body)
     self.nearest_station = detect_nearest_station_in(body)
     self.tag_text = make_tags(body)
+    self.proper_flg = detect_proper_in(body) ? 1 : 0
   end
 
   # 解析とともに保存を行う

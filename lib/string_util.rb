@@ -90,6 +90,14 @@ module StringUtil
     words.map{|x| x.strip}.uniq.sort
   end
   
+  def StringUtil.detect_lines(str, r, &block)
+    str.lines do |line|
+      if line =~ r
+        block.call line
+      end
+    end
+  end
+  
   def StringUtil.constructs(arr)
     return [] if arr.empty?
     res = []
