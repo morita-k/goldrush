@@ -108,6 +108,11 @@ class ApproachController < ApplicationController
     @approach.approached_at = Date.today
     @approached_at_hour = Time.new.hour
     @approached_at_min = (Time.new.min / 10) * 10
+    
+    @approach.closed_at = Date.today
+    @closed_at_hour = Time.new.hour
+    @closed_at_min = (Time.new.min / 10) * 10
+    
     @approach.approach_upper_contract_term = ContractTerm.new
     @approach.approach_down_contract_term = ContractTerm.new
 #    @business = Business.find(params[:business])
@@ -128,6 +133,10 @@ class ApproachController < ApplicationController
         @approach.approached_at = Time.local(date.year, date.month, date.day, params[:approached_at_hour].to_i, params[:approached_at_minute].to_i)
       end
       
+      if date = DateTimeUtil.str_to_date(params[:approach][:closed_at])
+        @approach.closed_at = Time.local(date.year, date.month, date.day, params[:closed_at_hour].to_i, params[:closed_at_minute].to_i)
+      end
+
       @approach.save!
       @approach.approach_upper_contract_term.save!
       @approach.approach_down_contract_term.save!
@@ -153,6 +162,8 @@ class ApproachController < ApplicationController
     @approach = Approach.find(params[:id])
     @approached_at_hour = @approach.approached_at.hour
     @approached_at_min = (@approach.approached_at.min / 10) * 10
+    @closed_at_hour = @approach.closed_at.hour
+    @closed_at_min = (@approach.closed_at.min / 10) * 10
     @approach.approach_upper_contract_term = ContractTerm.find(@approach.approach_upper_contract_term)
     @approach.approach_down_contract_term = ContractTerm.find(@approach.approach_down_contract_term)
     @business = Business.find(@approach.biz_offer.business)
@@ -175,6 +186,10 @@ class ApproachController < ApplicationController
         @approach.approached_at = Time.local(date.year, date.month, date.day, params[:approached_at_hour].to_i, params[:approached_at_minute].to_i)
       end
       
+      if date = DateTimeUtil.str_to_date(params[:approach][:closed_at])
+        @approach.closed_at = Time.local(date.year, date.month, date.day, params[:closed_at_hour].to_i, params[:closed_at_minute].to_i)
+      end
+
       @approach.save!
       @approach.approach_upper_contract_term.save!
       @approach.approach_down_contract_term.save!

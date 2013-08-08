@@ -46,22 +46,24 @@ class BizOffer < ActiveRecord::Base
     ])
   end
 
-  def contact_employee_name
-   if self.contact_pic_id
-     employee = Employee.find(self.contact_pic_id)
-     employee ? employee.employee_name : ""
-   end
+  def contact_pic_name
+    contact_pic && contact_pic.employee.employee_name
   end
   
-  def sales_employee_name
-   if self.sales_pic_id
-     employee = Employee.find(self.sales_pic_id)
-     employee ? employee.employee_name : ""
-   end
+  def sales_pic_name
+    sales_pic && sales_pic.employee.employee_name
   end
   
   def change_status_type
     
+  end
+  
+  # 内部での値の変換処理
+  def convert!
+    # [単価TEXT]を[単価MAX]に変換
+    v = StringUtil.detect_payments_value(self.payment_text).map{ |i| i.to_f }.max
+    v *= 10000 if v
+    self.payment_max = v
   end
   
   def payment_max_view=(x)

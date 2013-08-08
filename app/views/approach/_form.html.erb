@@ -66,6 +66,22 @@
 <tr>
 <th><label for="approach_can_interview_date"><%=getLongName('approaches','can_interview_date')%></label></th><td><%= date_field 'approach', 'can_interview_date'  %></td>
 </tr>
+
+<tr>
+  <th><label for="approach_closed_at"><%=getLongName('approaches','closed_at')%></label></th><td><%= date_field 'approach', 'closed_at' %>
+   <%= select_tag 'closed_at_hour', options_for_select((0..23).to_a.map{|x| sprintf("%0.2d", x)}, sprintf("%0.2d", @closed_at_hour.to_i)) %> : 
+   <%= select_tag 'closed_at_minute', options_for_select((0..5).to_a.map{|x| sprintf("%0.2d", x * 10)}, sprintf("%0.2d", @closed_at_min.to_i)) %>
+  </td>
+</tr>
+<tr>
+  <th><label for="approach_start_date"><%=getLongName('approaches','start_date')%>(*)</label></th>
+  <td><%= date_field 'approach', 'start_date' %></td>
+</tr>
+<tr>
+  <th><label for="approach_end_date"><%=getLongName('approaches','end_date')%></label></th>
+  <td><%= date_field 'approach', 'end_date' %></td>
+</tr>
+
 <tr>
 <th><label for="approach_memo"><%=getLongName('approaches','memo')%></label></th><td><%= resizable_area 'approach', 'memo'  %></td>
 </tr>

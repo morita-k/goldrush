@@ -932,6 +932,7 @@ ActiveRecord::Schema.define(:version => 0) do
     t.integer  "bp_member_flg",                             :default => 0
     t.integer  "registed",                                  :default => 0
     t.integer  "unwanted",                                  :default => 0
+    t.integer  "proper_flg",                                :default => 0
     t.text     "tag_text"
     t.string   "payment_text"
     t.string   "age_text"

@@ -22,7 +22,7 @@
   <th><%= getLongName('bp_members', 'payment_memo') %></th><td><%=h @bp_member.payment_memo %></td>
 </tr>
 <tr>
-  <th><%= getLongName('bp_members', 'payment_min') %></th><td><%=h @bp_member.payment_min %></td>
+  <th><%= getLongName('bp_members', 'payment_min') %></th><td><%=h((@bp_member.payment_min.blank? || @bp_member.payment_min == 0) ? "" : "#{@bp_member.payment_min_view}万円") %></td>
 </tr>
 <tr>
   <th><%= getLongName('bp_members', 'time_adjust_term') %></th><td><%=h @bp_member.time_adjust_term %></td>
