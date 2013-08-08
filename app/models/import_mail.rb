@@ -27,11 +27,12 @@ class ImportMail < ActiveRecord::Base
   #  m   : 取り込むMailオブジェクト
   #  src : 取り込むメールのソーステキスト
   def ImportMail.import_mail(m, src)
+    now = Time.now
     ActiveRecord::Base::transaction do
       import_mail = ImportMail.new
       
       import_mail.in_reply_to = m.in_reply_to if m.in_reply_to
-      import_mail.received_at = m.date.blank? ? Time.now : m.date
+      import_mail.received_at = m.date.blank? ? now : m.date
       subject = tryConv(m, 'Subject') { m.subject }
       import_mail.mail_subject = subject.blank? ? 'unknown subject' : subject
       import_mail.mail_from = m.from != nil ? m.from[0].to_s : "unknown"
@@ -45,6 +46,12 @@ class ImportMail < ActiveRecord::Base
       import_mail.mail_bcc = tryConv(m,'Bcc')
       import_mail.message_source = src
       import_mail.message_id = m.message_id
+     
+      if ImportMail.where(message_id: import_mail.message_id, deleted: 0).first || ImportMail.where(mail_from: import_mail.mail_from, mail_subject: import_mail.mail_subject,received_at: ((now - 1.day) .. now), deleted: 0).first
+        puts "mail duplicated: see system_logs"
+        SystemLog.warn('import mail', 'mail duplicated', import_mail.inspect , 'import mail')
+        return
+      end
       
       # attempt_fileのため(import_mail_idが必要)に一旦登録
       import_mail.save!
@@ -170,7 +177,10 @@ class ImportMail < ActiveRecord::Base
   end
 
   def detect_ages_in(body)
-    StringUtil.detect_regex(body, /[0-9]+[才歳]/).sort.reverse.first.to_s.gsub("才","歳")
+    search_pattern = /(([1-9]|[１-９])([0-9]|[０-９]))[才歳]/
+    StringUtil.detect_regex(body, search_pattern) {|match_str|
+      HumanResource.normalize_age(match_str)
+    }.sort.reverse.first
   end
 
   def detect_payments
@@ -189,6 +199,40 @@ class ImportMail < ActiveRecord::Base
     StringUtil.detect_regex(body, /^.*(最寄|駅).*$/).sort.reverse.first
   end
   
+  def detect_proper
+    detect_proper_in(Tag.pre_proc_body(pre_body))
+  end
+  
+  # ImportMail.all.each do |x| x.proper_flg = x.detect_proper ? 1 : 0
+  #   x.save!
+  # end && nil
+  # ImportMail.all.reject{|x| !x.detect_proper}.map{|y| y.id}
+  def detect_proper_in(body)
+    return false if bp_member_flg != 1
+    StringUtil.detect_lines(body, /社員/) do |line|
+      return true unless bad_words_for_proper.detect{|x| line.include?(x)}
+    end
+    StringUtil.detect_lines(body, /ﾌﾟﾛﾊﾟｰ/) do |line|
+      return true unless bad_words_for_proper.detect{|x| line.include?(x)}
+    end
+    return false
+  end 
+
+  def bad_words_for_proper
+"契約社員
+社下
+社先
+BP
+ﾊﾟｰﾄﾅｰ
+ｸﾞﾙｰﾌﾟ
+貴社
+御社
+参画中
+ﾌﾟﾛﾊﾟｰ出身
+と一緒
+社員研修".split
+  end
+
   #
   # 以下の項目に関して、メールの解析を行う
   # 年齢解析
@@ -201,6 +245,7 @@ class ImportMail < ActiveRecord::Base
     self.payment_text = detect_payments_in(body)
     self.nearest_station = detect_nearest_station_in(body)
     self.tag_text = make_tags(body)
+    self.proper_flg = detect_proper_in(body) ? 1 : 0
   end
 
   # 解析とともに保存を行う
@@ -380,6 +425,14 @@ class ImportMail < ActiveRecord::Base
       # テストモードなら常にtrue
       true
     end
+  end
+
+  # DBにある既存データ全ての年齢を正規化する。
+  def ImportMail.to_normalize_age_all!
+    ImportMail.where("age_text is not null").reject{|mail| mail.age_text.blank?}.map{|mail|
+      mail.age_text = HumanResource.normalize_age(mail.age_text)
+      mail.save!
+    }
   end
   
 private

@@ -39,4 +39,22 @@ class HumanResource < ActiveRecord::Base
     self.skill_tag = make_tags(skill)
     Tag.update_tags!("human_resources", id, skill_tag)
   end
+
+  # 年齢はDBに入れる前に半角数字(String)のみにする
+  def HumanResource.normalize_age(str)
+    require 'zen2han'
+    unless str.blank?
+      Zen2Han.toHan(str).gsub(/[歳才]/, "")
+    else
+      str
+    end
+  end
+
+  def HumanResource.to_normalize_age_all!
+    HumanResource.where("age is not null").reject{|hr| hr.age.blank?}.map{|hr|
+      hr.age = HumanResource.normalize_age(hr.age)
+      hr.save!
+    }
+  end
+
 end

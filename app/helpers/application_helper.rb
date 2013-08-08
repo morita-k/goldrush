@@ -53,6 +53,12 @@ module ApplicationHelper
     end
   end
 
+  def _age(age)
+    # 「歳」が二重に表示された場合、DBに入ってるデータがおかしい
+    # DBに入れる段階で数値（String）のみにしておくこと
+    age.blank? ? age : age + "歳"
+  end
+
   def logged_in?
     auth_signed_in?
   end

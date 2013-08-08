@@ -58,9 +58,9 @@ class ImportMailJIET < ImportMail
       # 人材所属限定の加工処理
       human["性別"], human["年齢"] = human["性別（年齢）"].scan(/(.*)\((.*)\)/).first unless human["性別（年齢）"].nil?
       
-      # 気持ち悪いけど、自身に再代入する
       human["社員区分"] = ImportMailJIET.to_employment_type(human["社員区分"])
       human["性別"] = ImportMailJIET.to_sex_type(human["性別"])
+      human["年齢"] = HumanResource.normalize_age(human["年齢"])
       
       ImportMailJIET.create_human_resource_and_bp_member(human, target_bp.id, target_pic.id, mail.id)
     }

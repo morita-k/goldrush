@@ -174,6 +174,9 @@ class BpPicController < ApplicationController
     @bp_pic.deleted_at = Time.now
     set_user_column @bp_pic
     @bp_pic.save!
+
+    # 取引先担当者に紐付くグループ詳細も削除する
+    @bp_pic.out_of_group!
     
     redirect_to(back_to || {:action => 'list'})
   end
