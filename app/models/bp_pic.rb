@@ -85,4 +85,13 @@ class BpPic < ActiveRecord::Base
     end
   end
   
+  def out_of_group!
+    now = Time.now
+    group_details = BpPicGroupDetail.where(bp_pic_id: self.id, deleted: 0)
+    group_details.each{|detail|
+      detail.deleted = 9
+      detail.deleted_at = now
+      detail.save!
+    }
+  end
 end
