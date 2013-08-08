@@ -62,10 +62,11 @@
     <th><%=getShortName('human_resources', 'near_station') %></th>
     <th><%=getShortName('bp_members', 'employment_type') %></th>
     <th><%=getShortName('bp_members', 'payment_min') %></th>
-    <th>添付ファイル</th>
+    <th>添付</th>
     <th><%=getShortName('bp_members', 'can_start_date') %></th>
     <th><%=getShortName('human_resources', 'human_resource_status_type') %></th>
     <th><%=getShortName('human_resources', 'created_at') %></th>
+    <th>JIET</th>
   </tr>
 
 
@@ -88,6 +89,7 @@
     <td><%=h bp_member.can_start_date_memo %></td>
     <td><%=h bp_member.human_resource.human_resource_status_type_name %></td>
     <td><%=h _time(bp_member.human_resource.created_at) %></td>
+    <td/>
   </tr>
 <% end %>
 </table>
