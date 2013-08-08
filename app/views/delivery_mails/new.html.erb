@@ -2,4 +2,10 @@
 
 <%= render 'form' %>
 
+<%# コピー機能でメールをnewした場合で、コピー元に添付ファイルがある場合の対応 %>
+<% if !@attachment_files.blank? %>
+  <h2>添付ファイル一覧</h2>
+  <%= render :partial => 'attachment_file/list' %>
+<% end %>
+
 <%= link_or_back '戻る' %>
