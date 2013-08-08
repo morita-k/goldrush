@@ -50,7 +50,8 @@
       <div style="overflow: hidden;height:1.4em"><span style="line-height: 90%;"><%= raw format_only_major_tags(import_mail.tag_text, @major_words) %></span></div>
     </td>
     <td><div style="width:2.5em"><%=import_mail.payment_text %></div></td>
-    <td><div style="width:2.5em"><%=import_mail.age_text %></div></td>
+    <td><div style="width:2.5em"><%=_age(import_mail.age_text) %></div></td>
+    <% st_short = import_mail.nearest_station_short %>
     <td style="overflow: hidden;"><div style="overflow: hidden;width:3em"><div rel="station_name" style="width:1000px;"><%= import_mail.nearest_station_short %></div><div></td>
     <td><%=h _time(import_mail.received_at) %></td>
     <td align=center><%=raw '<span title="添付ファイルあり">○</span>' if import_mail.attachment? %></td>

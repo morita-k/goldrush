@@ -177,7 +177,10 @@ class ImportMail < ActiveRecord::Base
   end
 
   def detect_ages_in(body)
-    StringUtil.detect_regex(body, /[0-9]+[才歳]/).sort.reverse.first.to_s.gsub("才","歳")
+    search_pattern = /((:?[1-9]|[１-９])(:?[0-9]|[０-９]))[才歳]/
+    StringUtil.detect_regex(body, search_pattern) {|match_str|
+      HumanResource.normalize_age(match_str)
+    }.sort.reverse.first
   end
 
   def detect_payments
@@ -422,6 +425,14 @@ BP
       # テストモードなら常にtrue
       true
     end
+  end
+
+  # DBにある既存データ全ての年齢を正規化する。
+  def ImportMail.to_normalize_age_all!
+    ImportMail.where("age_text is not null").reject{|mail| mail.age_text.blank?}.map{|mail|
+      mail.age_text = HumanResource.normalize_age(mail.age_text)
+      mail.save!
+    }
   end
   
 private
