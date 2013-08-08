@@ -177,7 +177,7 @@ class ImportMail < ActiveRecord::Base
   end
 
   def detect_ages_in(body)
-    search_pattern = /((:?[1-9]|[１-９])(:?[0-9]|[０-９]))[才歳]/
+    search_pattern = /(([1-9]|[１-９])([0-9]|[０-９]))[才歳]/
     StringUtil.detect_regex(body, search_pattern) {|match_str|
       HumanResource.normalize_age(match_str)
     }.sort.reverse.first
