@@ -6,7 +6,7 @@
   <th><%= getLongName('bp_pics', 'bp_pic_name') %></th><td><%=h @bp_pic.bp_pic_name %></td>
 </tr>
 <tr>
-  <th><%= getLongName('bp_pics', 'bp_pic_short_name') %></th><td><%=h @bp_pic.bp_pic_name %></td>
+  <th><%= getLongName('bp_pics', 'bp_pic_short_name') %></th><td><%=h @bp_pic.bp_pic_short_name %></td>
 </tr>
 <tr>
   <th><%= getLongName('bp_pics', 'bp_pic_name_kana') %></th><td><%=h @bp_pic.bp_pic_name_kana %></td>
@@ -40,6 +40,9 @@
 </tr>
 <tr>
   <th><%= getLongName('bp_pics', 'nondelivery_score') %></th><td><%=@bp_pic.nondelivery_score %><%= @bp_pic.nondelivery? ? '(メール停止)' : '' %></td>
+</tr>
+<tr>
+  <th><%= getLongName('bp_pics', 'jiet') %></th><td><%=@bp_pic.jiet? ? 'JIET' : '' %></td>
 </tr>
 <tr>
   <th><%= getLongName('bp_pics', 'memo') %></th><td><%=simple_format(h @bp_pic.memo) %></td>

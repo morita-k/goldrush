@@ -70,6 +70,12 @@
   <%= check_box 'business_partner', 'down_flg'  %> 下位会社(案件メール対象)
 </td>
 </tr>
+<th><label for="business_partner_category"><%=getLongName('business_partners','establishment_year')%></label></th><td><%= text_field 'business_partner', 'establishment_year'  %></td>
+</tr>
+<th><label for="business_partner_category"><%=getLongName('business_partners','employee_number')%></label></th><td><%= text_field 'business_partner', 'employee_number'  %></td>
+</tr>
+<th><label for="business_partner_category"><%=getLongName('business_partners','share_capital')%></label></th><td><%= text_field 'business_partner', 'share_capital'  %></td>
+</tr>
 <tr>
 <th><label for="business_partner_memo"><%=getLongName('business_partners','memo')%></label></th><td><%= resizable_area 'business_partner', 'memo'  %></td>
 </tr>
@@ -114,6 +120,9 @@ document.setBpFull = function(bp) {
     document.getElementById("business_partner_fax").value = bp.fax
     document.getElementById("business_partner_email").value = bp.email
     document.getElementById("business_partner_category").value = bp.category
+    document.getElementById("business_partner_establishment_year").value = bp.establishment_year
+    document.getElementById("business_partner_employee_number").value = bp.employee_number
+    document.getElementById("business_partner_share_capital").value = bp.share_capital
     document.getElementById("business_partner_self_flg").checked = (bp.self_flg==1)
     document.getElementById("business_partner_eu_flg").checked = (bp.eu_flg==1)
     document.getElementById("business_partner_upper_flg").checked = (bp.upper_flg==1)
@@ -139,6 +148,9 @@ function clearBp(){
     document.getElementById("business_partner_fax").value = "";
     document.getElementById("business_partner_email").value = "";
     document.getElementById("business_partner_category").value = "";
+    document.getElementById("business_partner_establishment_year").value = "";
+    document.getElementById("business_partner_employee_number").value = "";
+    document.getElementById("business_partner_share_capital").value = "";
     document.getElementById("business_partner_self_flg").checked = false;
     document.getElementById("business_partner_eu_flg").checked = false;
     document.getElementById("business_partner_upper_flg").checked = false;
