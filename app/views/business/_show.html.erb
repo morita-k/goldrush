@@ -1,9 +1,9 @@
 <table class="show_table">
 <tr>
-  <th>EU<%= getLongName('business_partners', 'business_partner_name') %></th><td><%=h @business.eubp.blank? ? "" : @business.eubp.sales_code %> <%=h @business.eubp.blank? ? "" : @business.eubp.business_partner_name %></td>
+  <th>EU<%= getLongName('business_partners', 'business_partner_name') %></th><td><%=h @business.eubp.blank? ? "" : back_to_link(@business.eubp.business_partner_code_name, controller: :business_partner, action: :show, id: @business.eubp.id ) %></td>
 </tr>
 <tr>
-  <th>EU<%= getLongName('bp_pics', 'bp_pic_name') %></th><td><%=h @business.eubp_pic.blank? ? "" : @business.eubp_pic.bp_pic_name %></td>
+  <th>EU<%= getLongName('bp_pics', 'bp_pic_name') %></th><td><%=h @business.eubp_pic.blank? ? "" : back_to_link(@business.eubp_pic.bp_pic_name, controller: :bp_pic, action: :show, id: @business.eubp_pic.id ) %></td>
 </tr>
 <tr>
   <th><%= getLongName('businesses', 'business_status_type') %></th><td><%=h @business.business_status_type_name %></td>
