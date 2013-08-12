@@ -16,6 +16,10 @@ module ApplicationHelper
     back_to_link(image_tag((bp_pic.memo.blank? ? 'icon-edit.png' : 'icon-comment.png')), {:action => :edit, :id => bp_pic}, :title => bp_pic.memo)
   end
 
+  def business_edit_icon(business)
+    back_to_link(image_tag((business.memo.blank? ? 'icon-edit.png' : 'icon-comment.png')), {:action => :edit, :id => business}, :title => business.memo)
+  end
+
   def _date(date)
     if date.blank?
       ""
