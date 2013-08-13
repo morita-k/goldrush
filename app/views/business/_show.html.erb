@@ -46,6 +46,9 @@
   <th><%= getLongName('businesses', 'skill_want') %></th><td><%=simple_format h(@business.skill_want) %></td>
 </tr>
 <tr>
+  <th><%= getLongName('businesses', 'skill_tag') %></th><td><div style="overflow: hidden;height:1.4em"><span style="line-height: 90%;"><%= raw format_only_major_tags(@business.skill_tag, @major_words) %></span></div></td>
+</tr>
+<tr>
   <th><%= getLongName('businesses', 'business_hours') %></th><td><%=h @business.business_hours %></td>
 </tr>
 <tr>
