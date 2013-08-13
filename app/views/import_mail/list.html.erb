@@ -11,7 +11,7 @@
         <%= check_box_tag 'proper_flg', 1, session[:import_mail_search][:proper_flg].to_i == 1 %> プロパー
       </td>
     </tr>
-    </tr>
+    <tr>
       <td style="text-align: right">タグ:</td>
       <td><%= text_field_tag 'tag', session[:import_mail_search][:tag]%></td>
     </tr>
@@ -32,6 +32,7 @@
  </p>
 </div>
 <% end %>
+
 <table class="list_table">
   <tr>
     <th colspan="9">取り込みメール一覧</th>
@@ -43,16 +44,21 @@
         <div style="width:1000px;"><%= import_mail.bp_pic_id.blank? ? "" : star_links(import_mail.bp_pic) %> <%= import_mail.bp_pic_id.blank? ? import_mail.mail_sender_name : link_to_bp_detail(import_mail) %></div>
       </div>
     </td>
-    <td>
-      <div style="overflow: hidden;height:1.5em"><%= link_to_detail(import_mail, request_url) %></div>
+    <td style="overflow: hidden">
+      <div style="overflow: hidden;height:1.5em">
+        <%= link_to_detail(import_mail, request_url) %>
+      </div>
     </td>
     <td>
       <div style="overflow: hidden;height:1.4em"><span style="line-height: 90%;"><%= raw format_only_major_tags(import_mail.tag_text, @major_words) %></span></div>
     </td>
     <td><div style="width:2.5em"><%=import_mail.payment_text %></div></td>
     <td><div style="width:2.5em"><%=_age(import_mail.age_text) %></div></td>
-    <% st_short = import_mail.nearest_station_short %>
-    <td style="overflow: hidden;"><div style="overflow: hidden;width:3em"><div rel="station_name" style="width:1000px;"><%= import_mail.nearest_station %></div></div></td>
+    <td style="overflow: hidden;">
+      <div style="overflow: hidden;width:3em">
+        <div rel="station_name" style="width:1000px;"><%= import_mail.nearest_station %></div>
+      </div>
+    </td>
     <td><%=h _time(import_mail.received_at) %></td>
     <td align=center><%=raw '<span title="添付ファイルあり">○</span>' if import_mail.attachment? %></td>
     <td class='flag_container'>
