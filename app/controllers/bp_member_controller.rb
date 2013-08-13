@@ -13,7 +13,8 @@ class BpMemberController < ApplicationController
     session[:bp_member_search] = {
       :hr_name => params[:hr_name],
       :skill_tag => params[:skill_tag],
-      :payment_min => params[:payment_min],
+      :payment_from => params[:payment_from],
+      :payment_to => params[:payment_to],
       :age_from => params[:age_from],
       :age_to => params[:age_to],
       :business_partner_id => params[:bp_id],
@@ -45,9 +46,14 @@ class BpMemberController < ApplicationController
       param << "%#{skill_tag}%"
     end
 
-    if !(payment_min = session[:bp_member_search][:payment_min]).blank?
+    if !(payment_from = session[:bp_member_search][:payment_from]).blank?
       sql += " and bp_members.payment_min >= ?"
-      param << (payment_min.to_i * 10000)
+      param << (payment_from.to_i * 10000)
+    end
+
+    if !(payment_to = session[:bp_member_search][:payment_to]).blank?
+      sql += " and bp_members.payment_min <= ?"
+      param << (payment_to.to_i * 10000)
     end
 
     if !(age_from = session[:bp_member_search][:age_from]).blank?

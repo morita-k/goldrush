@@ -8,29 +8,33 @@
   </tr>
   <tr>
     <th style="text-align: right">スキル：</th>
-    <td><%= text_field_tag 'skill_tag', search_value_bp_member(:skill_tag), size: 60 %></td>
+    <td><%= text_field_tag 'skill_tag', search_value_bp_member(:skill_tag) %></td>
   </tr>
   <tr>
     <th style="text-align: right">単価下限：</th>
-    <td><%= text_field_tag 'payment_min', search_value_bp_member(:payment_min), size: 60 %>万円 ～</td>
+    <td>
+      <%= text_field_tag 'payment_from', search_value_bp_member(:payment_from) %>万円以上
+      <%= text_field_tag 'payment_to', search_value_bp_member(:payment_to) %>万円以下
+    </td>
   </tr>
   <tr>
     <th style="text-align: right">年齢：</th>
-    <td><%= text_field_tag 'age_from', search_value_bp_member(:age_from), size: 3 %> ～ <%= text_field_tag 'age_to', search_value_bp_member(:age_to), :size => 3 %></td>
+    <td>
+      <%= text_field_tag 'age_from', search_value_bp_member(:age_from) %>以上
+      <%= text_field_tag 'age_to', search_value_bp_member(:age_to) %>以下
+    </td>
   </tr>
   <tr>
     <th style="text-align: right">下流取引先：</th>
-    <td>
-      <%= text_field_tag 'business_partner_name', search_value_bp_member(:business_partner_name), size: 20 %>
+    <td><%= text_field_tag 'business_partner_name', search_value_bp_member(:business_partner_name) %></td>
   </tr>
   <tr>
     <th style="text-align: right">下流担当者：</th>
-    <td>
-      <%= text_field_tag 'bp_pic_name', search_value_bp_member(:bp_pic_name), size: 20  %>
+    <td><%= text_field_tag 'bp_pic_name', search_value_bp_member(:bp_pic_name) %></td>
   </tr>
   <tr>
     <th style="text-align: right">ステータス：</th>
-    <td><%= select_tag 'human_resource_status_type', options_for_select([[]] + getTypes('human_resource_status_type'), search_value_bp_member(:human_resource_status_type)) %><%= hidden_field_tag 'bp_id', session[:bp_member_search][:business_partner_id] %></td>
+    <td><%= select_tag 'human_resource_status_type', options_for_select([[]] + getTypes('human_resource_status_type'), search_value_bp_member(:human_resource_status_type)) %></td>
   </tr>
   <!-- <tr>
     <th style="text-align: right">雇用形態：</th>
