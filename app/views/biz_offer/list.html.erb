@@ -1,5 +1,40 @@
 <h1><%=getLongName('table_name','biz_offers')%>一覧</h1>
 
+<%= form_tag_popup_mode do %>
+<table>
+  <tr>
+    <th style="text-align: right">上流取引先：</th>
+    <td><%= text_field_tag 'business_partner_name', search_value_biz_offer(:business_partner_name), size: 20 %></td>
+  </tr>
+  <tr>
+    <th style="text-align: right">上流担当者：</th>
+    <td><%= text_field_tag 'bp_pic_name', search_value_biz_offer(:bp_pic_name), size: 20 %></td>
+  </tr>
+  <tr>
+    <th style="text-align: right">スキル：</th>
+    <td><%= text_field_tag 'skill_tag', search_value_biz_offer(:skill_tag), size: 60 %></td>
+  </tr>
+  <tr>
+    <th style="text-align: right">単価上限：</th>
+    <td><%= text_field_tag 'payment_max', search_value_biz_offer(:payment_max), size: 60 %>万円以下</td>
+  </tr>
+  <tr>
+    <th style="text-align: right">案件ステータス：</th>
+    <td><%= select_tag 'business_status_type', options_for_select([[]] + getTypes('business_status_type'), search_value_biz_offer(:business_status_type)) %></td>
+  </tr>
+  <tr>
+    <th style="text-align: right">照会ステータス：</th>
+    <td><%= select_tag 'biz_offer_status_type', options_for_select([[]] + getTypes('biz_offer_status_type'), search_value_biz_offer(:biz_offer_status_type)) %></td>
+  </tr>
+  <tr>
+    <th style="text-align: right">JIET：</th>
+    <td><%= check_box_tag 'jiet', ImportMailJIET::JIET_FLG, !search_value_biz_offer(:jiet).blank? %></td>
+  </tr>
+</table>
+<p><%= submit_tag '　　検索　　', :name => 'search_button' %> <%= submit_tag '　　クリア　　', :name => 'clear_button' %></p>
+<br />
+<% end %>
+
 <%= paginate(@biz_offers) %>
 
 <table class="list_table">
