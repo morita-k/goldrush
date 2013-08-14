@@ -96,11 +96,16 @@ class Tag < ActiveRecord::Base
     if body =~ /(^|[^a-zA-Z])(C)([^a-zA-Z#\+]|$)/
       words << $2
     end
+    # AS/400用スペシャルロジック
+    if body =~ /(^|[^a-zA-Z])((:?AS|as)\/400)([^a-zA-Z#\+]|$)/
+      words << $2
+    end
+
     words.join(",")
   end
 
   def Tag.ignores
-    ["e-mail", "email", "fax", "jp", "mail", "mailto", "new", "ng", "or", "or2", "or3", "or4",
+    ["as", "e-mail", "email", "fax", "jp", "mail", "mailto", "new", "ng", "or", "or2", "or3", "or4",
      "os", "pc", "pg", "phone", "phs", "pj", "pmi", "popteen", "pr", "pro", "se", "service", "ses", "tel", "url", "zip"]
   end
 
