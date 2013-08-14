@@ -97,8 +97,8 @@ class Tag < ActiveRecord::Base
       words << $2
     end
     # AS/400用スペシャルロジック
-    if body =~ /((:?AS|as)\/400)/
-      words << $1
+    if body =~ /((:?as|AS)\/400)/ 
+      words << "AS400" # as/400, AS/400 -> AS400
     end
 
     words.join(",")
