@@ -14,7 +14,7 @@
   <% for biz_offer in business.biz_offers %>
     <tr>
       <td><%=back_to_link h(business.business_title), :controller => :biz_offer, :action => :show, :id => biz_offer %></td>
-      <td><%=h business.issue_datetime %></td>
+      <td><%=h _time(business.issue_datetime) %></td>
       <td><%=h business.skill_tag %></td>
       <td><%=h biz_offer.business_partner.business_partner_code_name %></td>
       <td><%=h biz_offer.bp_pic.blank? ? "" : biz_offer.bp_pic.bp_pic_name %></td>
