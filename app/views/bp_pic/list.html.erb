@@ -89,7 +89,7 @@
         <% unless popup? %>
           <td><%= bp_pic.jiet == ImportMailJIET::JIET_FLG ? 'JIET' : ''%></td>
           <td><%=h _date(bp_pic.contact_date) %></td>
-          <td style="text-align:center;"><%= back_to_link(image_tag(bp_pic.contact_mail? ? 'icon-check.png' : 'icon-emailforward.png'), conatct_mail_new_delivery_mail_path(bp_pic)) %></td>
+          <td style="text-align:center;"><%= back_to_link(image_tag(bp_pic.contact_mail? ? 'icon-check.png' : 'icon-emailforward.png'), contact_mail_new_delivery_mail_path(bp_pic)) %></td>
           <td><%=h _time(bp_pic.updated_at) %></td>
         <% end %>
       </tr>
