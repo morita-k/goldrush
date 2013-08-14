@@ -17,7 +17,7 @@ module ApplicationHelper
   end
 
   def biz_offer_edit_icon(biz_offer)
-    back_to_link(image_tag((biz_offer.memo.blank? ? 'icon-edit.png' : 'icon-comment.png')), {:action => :edit, :id => biz_offer}, :title => biz_offer.memo)
+    back_to_link(image_tag((biz_offer.business.memo.blank? ? 'icon-edit.png' : 'icon-comment.png')), {:action => :edit, :id => biz_offer}, :title => biz_offer.business.memo)
   end
 
   def _date(date)
