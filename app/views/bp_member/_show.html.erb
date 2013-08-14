@@ -3,10 +3,10 @@
   <th>下流<%= getLongName('business_partners', 'sales_code') %></th><td><%=h @bp_member.business_partner.sales_code %></td>
 </tr>
 <tr>
-  <th>下流<%= getLongName('business_partners', 'business_partner_name') %></th><td><%=h @bp_member.business_partner.business_partner_short_name %></td>
+  <th>下流<%= getLongName('business_partners', 'business_partner_name') %></th><td><%=h back_to_link(@bp_member.business_partner.business_partner_short_name, controller: :business_partner, action: :show, id: @bp_member.business_partner.id) %></td>
 </tr>
 <tr>
-  <th>下流<%= getLongName('bp_pics', 'bp_pic_name') %></th><td><%=h @bp_member.bp_pic.blank? ? "" : @bp_member.bp_pic.bp_pic_name %></td>
+  <th>下流<%= getLongName('bp_pics', 'bp_pic_name') %></th><td><%=h @bp_member.bp_pic.blank? ? "" : back_to_link(@bp_member.bp_pic.bp_pic_name, controller: :bp_pic, action: :show, id: @bp_member.bp_pic.id) %></td>
 </tr>
 <tr>
   <th><%= getLongName('bp_members', 'employment_type') %></th><td><%=h @bp_member.employment_type_name %></td>

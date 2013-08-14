@@ -72,8 +72,8 @@
 
 <% for bp_member in @bp_members %>
   <tr>
-    <td><%=h bp_member.business_partner.blank? ? "" : bp_member.business_partner.business_partner_name %></td>
-    <td><%=h bp_member.bp_pic.blank? ? "" : bp_member.bp_pic.bp_pic_name %></td>
+    <td><%=h bp_member.business_partner.blank? ? "" : back_to_link(bp_member.business_partner.business_partner_name,controller: :business_partner, action: :show, id: bp_member.business_partner.id) %></td>
+    <td><%=h bp_member.bp_pic.blank? ? "" : back_to_link(bp_member.bp_pic.bp_pic_name, controller: :bp_pic, action: :show, id: bp_member.bp_pic.id) %></td>
 <% if popup? %>
     <td><%= star_links(bp_member.human_resource) %> <%=link_to h(bp_member.human_resource.useful_name), '#', :onClick => "setBpMember(#{bp_member.id},'#{bp_member.business_partner.business_partner_name}','#{bp_member.human_resource.initial}');return false;" %></td>
 <% else %>
