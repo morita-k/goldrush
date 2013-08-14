@@ -97,8 +97,8 @@ class Tag < ActiveRecord::Base
       words << $2
     end
     # AS/400用スペシャルロジック
-    if body =~ /(^|[^a-zA-Z])((:?AS|as)\/400)([^a-zA-Z#\+]|$)/
-      words << $2
+    if body =~ /((:?AS|as)\/400)/
+      words << $1
     end
 
     words.join(",")
