@@ -44,7 +44,7 @@
     <th><%=getShortName('businesses', 'business_title') %></th>
     <th><%=getShortName('businesses', 'skill_tag') %></th>
     <th><%=getShortName('businesses', 'age_limit') %></th>
-    <th><%=getShortName('biz_offers', 'payment_text') %></th>
+    <th><%=getShortName('biz_offers', 'payment_max') %></th>
     <th><%=getShortName('businesses', 'place') %></th>
     <th><%=getShortName('businesses', 'issue_datetime') %></th>
     <th><%=getShortName('businesses', 'business_status_type') %></th>
@@ -60,7 +60,7 @@
     <td><%= star_links(biz_offer.business) %> <%=back_to_link h(biz_offer.business.business_title), :action => :show, :id => biz_offer %></td>
     <td><div style="overflow: hidden;height:1.4em"><span style="line-height: 90%;"><%= raw format_only_major_tags(biz_offer.business.skill_tag, @major_words) %></span></div></td>
     <td><%=h biz_offer.business.age_limit %></td>
-    <td><%=h biz_offer.payment_text %></td>
+    <td align=right><%=h((biz_offer.payment_max.blank? || biz_offer.payment_max == 0) ? "" : "#{biz_offer.payment_max_view}万円") %></td>
     <td><%=h biz_offer.business.place %></td>
     <td><%=h _time(biz_offer.business.issue_datetime) %></td>
     <td><%=h biz_offer.business.business_status_type_name %></td>
