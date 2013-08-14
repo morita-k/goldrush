@@ -3,46 +3,46 @@
 <%= form_tag_popup_mode do %>
 <table>
   <tr>
-    <td style="text-align: right">人材氏名：</td>
+    <th style="text-align: right">人材氏名：</th>
+    <td><%= text_field_tag 'hr_name', session[:bp_member_search] && session[:bp_member_search][:hr_name], size: 60 %></td>
+  </tr>
+  <tr>
+    <th style="text-align: right">スキル：</th>
+    <td><%= text_field_tag 'skill_tag', search_value_bp_member(:skill_tag) %></td>
+  </tr>
+  <tr>
+    <th style="text-align: right">単価下限：</th>
     <td>
-      <%= text_field_tag 'hr_name', session[:bp_member_search] && session[:bp_member_search][:hr_name] %>
-    </td>
-    <td style="text-align: right">年齢：</td>
-    <td>
-      <%= text_field_tag 'age_from', session[:bp_member_search] && session[:bp_member_search][:age_from], :size => 3 %>
-        ～ <%= text_field_tag 'age_to', session[:bp_member_search] && session[:bp_member_search][:age_to], :size => 3 %>
-    </td>
-    <td style="text-align: right">性別：</td>
-    <td>
-      <%=select_tag 'sex_type', options_for_select([[]] + getTypes('sex_type'), session[:bp_member_search] && session[:bp_member_search][:sex_type]) %>
+      <%= text_field_tag 'payment_from', search_value_bp_member(:payment_from) %>万円以上
+      <%= text_field_tag 'payment_to', search_value_bp_member(:payment_to) %>万円以下
     </td>
   </tr>
   <tr>
-    <td style="text-align: right">スキル：</td>
+    <th style="text-align: right">年齢：</th>
     <td>
-      <%= text_field_tag 'skill_tag', session[:bp_member_search] && session[:bp_member_search][:skill_tag] %>
-    </td>
-    <td style="text-align: right">ステータス：</td>
-    <td>
-      <%= select_tag 'human_resource_status_type', options_for_select([[]] + getTypes('human_resource_status_type'), session[:bp_member_search] && session[:bp_member_search][:human_resource_status_type]) %>
-    </td>
-    <td style="text-align: right">下流取引先：</td>
-    <td>
-      <%= text_field_tag 'bp_name', session[:bp_member_search] && session[:bp_member_search][:business_partner_name], :readOnly => true, :style => "background-color: silver;", :size => 20  %>
-      <input type=button value='...' onClick="disp_wide('<%=url_for :controller => 'business_partner', :action => 'popup_list', :flg => 'down' %>');return false;" />
-      <input type=button value='クリア' onClick="clearBp();return false;" />
-      <%= hidden_field_tag 'bp_id', session[:bp_member_search][:business_partner_id] %>
+      <%= text_field_tag 'age_from', search_value_bp_member(:age_from) %>以上
+      <%= text_field_tag 'age_to', search_value_bp_member(:age_to) %>以下
     </td>
   </tr>
   <tr>
-    <td style="text-align: right">雇用形態：</td>
-    <td>
-      <%=select_tag 'employment_type', options_for_select([[]] + getTypes('employment_type'), session[:bp_member_search] && session[:bp_member_search][:employment_type]) %>
-    </td>
-    <td style="text-align: right">単価下限：</td>
-    <td>
-      <%= text_field_tag 'payment_min', session[:bp_member_search] && session[:bp_member_search][:payment_min], :size => 5 %>万円 ～
-    </td>
+    <th style="text-align: right">下流取引先：</th>
+    <td><%= text_field_tag 'business_partner_name', search_value_bp_member(:business_partner_name) %></td>
+  </tr>
+  <tr>
+    <th style="text-align: right">下流担当者：</th>
+    <td><%= text_field_tag 'bp_pic_name', search_value_bp_member(:bp_pic_name) %></td>
+  </tr>
+  <tr>
+    <th style="text-align: right">ステータス：</th>
+    <td><%= select_tag 'human_resource_status_type', options_for_select([[]] + getTypes('human_resource_status_type'), search_value_bp_member(:human_resource_status_type)) %></td>
+  </tr>
+  <!-- <tr>
+    <th style="text-align: right">雇用形態：</th>
+    <td><%=select_tag 'employment_type', options_for_select([[]] + getTypes('employment_type'), search_value_bp_member(:employment_type)) %></td>
+  </tr> -->
+  <tr>
+    <th style="text-align: right">JIET：</th>
+    <td><%= check_box_tag 'jiet', ImportMailJIET::JIET_FLG, !search_value_bp_member(:jiet).blank? %></td>
   </tr>
 </table>
 <p><%= submit_tag '　　検索　　', :name => 'search_button' %> <%= submit_tag '　　クリア　　', :name => 'clear_button' %></p>
@@ -53,35 +53,43 @@
 
 <table class="list_table">
   <tr>
-    <th><%=getShortName('human_resources', 'human_resource_name') %></th>
-    <th><%=getShortName('human_resources', 'age') %></th>
-    <th><%=getShortName('human_resources', 'sex_type') %></th>
-    <th><%=getShortName('human_resources', 'skill_tag') %></th>
-    <th><%=getShortName('human_resources', 'human_resource_status_type') %></th>
     <th>下流取引先</th>
     <th>下流<%=getShortName('bp_pics', 'bp_pic_name') %></th>
+    <th><%=getShortName('human_resources', 'human_resource_name') %></th>
+    <th><%=getShortName('human_resources', 'skill_tag') %></th>
+    <th><%=getShortName('human_resources', 'age') %></th>
+    <th><%=getShortName('human_resources', 'sex_type') %></th>
+    <th><%=getShortName('human_resources', 'near_station') %></th>
     <th><%=getShortName('bp_members', 'employment_type') %></th>
     <th><%=getShortName('bp_members', 'payment_min') %></th>
-    <th>添付ファイル</th>
+    <th>添付</th>
+    <th><%=getShortName('bp_members', 'can_start_date') %></th>
+    <th><%=getShortName('human_resources', 'human_resource_status_type') %></th>
+    <th><%=getShortName('human_resources', 'created_at') %></th>
+    <th>JIET</th>
   </tr>
 
 
 <% for bp_member in @bp_members %>
   <tr>
+    <td><%=h bp_member.business_partner.blank? ? "" : back_to_link(bp_member.business_partner.business_partner_name,controller: :business_partner, action: :show, id: bp_member.business_partner.id) %></td>
+    <td><%=h bp_member.bp_pic.blank? ? "" : back_to_link(bp_member.bp_pic.bp_pic_name, controller: :bp_pic, action: :show, id: bp_member.bp_pic.id) %></td>
 <% if popup? %>
     <td><%= star_links(bp_member.human_resource) %> <%=link_to h(bp_member.human_resource.useful_name), '#', :onClick => "setBpMember(#{bp_member.id},'#{bp_member.business_partner.business_partner_name}','#{bp_member.human_resource.initial}');return false;" %></td>
 <% else %>
     <td><%= star_links(bp_member.human_resource) %> <%=back_to_link h(bp_member.human_resource.useful_name), :action => :show, :id => bp_member %></td>
 <% end %>
+    <td><div style="overflow: hidden;height:1.4em"><span style="line-height: 90%;"><%= raw format_only_major_tags(bp_member.human_resource.skill_tag, @major_words) %></span></div></td>
     <td><%=h bp_member.human_resource.age %></td>
     <td><%=h bp_member.human_resource.sex_type_short_name %></td>
-    <td><%=h bp_member.human_resource.skill_tag %></td>
-    <td><%=h bp_member.human_resource.human_resource_status_type_name %></td>
-    <td><%=h bp_member.business_partner.business_partner_code_name %></td>
-    <td><%=h bp_member.bp_pic.blank? ? "" : bp_member.bp_pic.bp_pic_name %></td>
+    <td><%=h bp_member.human_resource.near_station %></td>
     <td><%=h bp_member.employment_type_name %></td>
     <td align=right><%=h((bp_member.payment_min.blank? || bp_member.payment_min == 0) ? "" : "#{bp_member.payment_min_view}万円") %></td>
     <td align=center><%=h bp_member.attachment? ? "○" : "" %></td>
+    <td><%=h bp_member.can_start_date_memo %></td>
+    <td><%=h bp_member.human_resource.human_resource_status_type_name %></td>
+    <td><%=h _time(bp_member.human_resource.created_at) %></td>
+    <td><%=h bp_member.human_resource.jiet? ? "JIET" : "" %></td>
   </tr>
 <% end %>
 </table>

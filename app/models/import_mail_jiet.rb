@@ -1,6 +1,9 @@
 # -*- encoding: utf-8 -*-
 
 class ImportMailJIET < ImportMail
+
+  JIET_FLG=1
+
   #=====
   # JIETメール解析処理のメイン
   # 考え方:
@@ -58,9 +61,9 @@ class ImportMailJIET < ImportMail
       # 人材所属限定の加工処理
       human["性別"], human["年齢"] = human["性別（年齢）"].scan(/(.*)\((.*)\)/).first unless human["性別（年齢）"].nil?
       
-      # 気持ち悪いけど、自身に再代入する
       human["社員区分"] = ImportMailJIET.to_employment_type(human["社員区分"])
       human["性別"] = ImportMailJIET.to_sex_type(human["性別"])
+      human["年齢"] = HumanResource.normalize_age(human["年齢"])
       
       ImportMailJIET.create_human_resource_and_bp_member(human, target_bp.id, target_pic.id, mail.id)
     }
@@ -126,7 +129,7 @@ class ImportMailJIET < ImportMail
       bp_pic_name_kana: "ご担当者",
       email1: "unknown+#{bp_id}@unknown.applicative.jp",
       import_mail_id: import_mail_id,
-      jiet: "1".to_i
+      jiet: JIET_FLG
     }.reject{|k, v| v.blank?}
      
     pic.save!
@@ -176,7 +179,7 @@ class ImportMailJIET < ImportMail
   def ImportMailJIET.create_human_resource_and_bp_member(human, business_partner_id, bp_pic_id, import_mail_id)
     hr = HumanResource.new
     hr.attributes = {
-      initial: "XX",
+      initial: "JIET",
       age: human["年齢"],
       sex_type: human["性別"],
       nationality: human["国籍"],
@@ -186,7 +189,7 @@ class ImportMailJIET < ImportMail
       skill: ImportMailJIET.linefeed_join(human["ＯＳ"],human["ＤＢ"],human["言語"],human["ハードウェア"],human["ネットワーク"],human["ツール"],human["フレームワーク"]),
       communication_type: "unknown",
       human_resource_status_type: "sales",
-      jiet: "1".to_i,
+      jiet: JIET_FLG,
       link: human["リンク"],
       memo: ImportMailJIET.linefeed_join(human["希望作業場所"],human["コメント"])
     }.reject{|k, v| v.blank?}

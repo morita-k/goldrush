@@ -16,6 +16,10 @@ module ApplicationHelper
     back_to_link(image_tag((bp_pic.memo.blank? ? 'icon-edit.png' : 'icon-comment.png')), {:action => :edit, :id => bp_pic}, :title => bp_pic.memo)
   end
 
+  def biz_offer_edit_icon(biz_offer)
+    back_to_link(image_tag((biz_offer.business.memo.blank? ? 'icon-edit.png' : 'icon-comment.png')), {:action => :edit, :id => biz_offer}, :title => biz_offer.business.memo)
+  end
+
   def _date(date)
     if date.blank?
       ""
@@ -51,6 +55,12 @@ module ApplicationHelper
     else
       time
     end
+  end
+
+  def _age(age)
+    # 「歳」が二重に表示された場合、DBに入ってるデータがおかしい
+    # DBに入れる段階で数値（String）のみにしておくこと
+    age.blank? ? age : age + "歳"
   end
 
   def logged_in?
