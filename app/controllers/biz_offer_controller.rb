@@ -15,7 +15,8 @@ class BizOfferController < ApplicationController
       :business_partner_name => params[:business_partner_name],
       :bp_pic_name => params[:bp_pic_name],
       :skill_tag => params[:skill_tag],
-      :payment_max => params[:payment_max],
+      :payment_from => params[:payment_from],
+      :payment_to => params[:payment_to],
       :business_status_type => params[:business_status_type],
       :biz_offer_status_type => params[:biz_offer_status_type],
       :jiet => params[:jiet]
@@ -45,9 +46,14 @@ class BizOfferController < ApplicationController
       param << "%#{skill_tag}%"
     end
 
-    if !(payment_max = session[:biz_offer_search][:payment_max]).blank?
+    if !(payment_from = session[:biz_offer_search][:payment_from]).blank?
+      sql += " and payment_max >= ?"
+      param << (payment_from.to_i * 10000)
+    end
+
+    if !(payment_to = session[:biz_offer_search][:payment_to]).blank?
       sql += " and payment_max <= ?"
-      param << (payment_max.to_i * 10000)
+      param << (payment_to.to_i * 10000)
     end
 
     if !(business_status_type = session[:biz_offer_search][:business_status_type]).blank?

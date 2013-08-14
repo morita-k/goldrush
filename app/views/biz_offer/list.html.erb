@@ -4,19 +4,19 @@
 <table>
   <tr>
     <th style="text-align: right">上流取引先：</th>
-    <td><%= text_field_tag 'business_partner_name', search_value_biz_offer(:business_partner_name), size: 20 %></td>
+    <td><%= text_field_tag 'business_partner_name', search_value_biz_offer(:business_partner_name), size: 60 %></td>
   </tr>
   <tr>
     <th style="text-align: right">上流担当者：</th>
-    <td><%= text_field_tag 'bp_pic_name', search_value_biz_offer(:bp_pic_name), size: 20 %></td>
+    <td><%= text_field_tag 'bp_pic_name', search_value_biz_offer(:bp_pic_name) %></td>
   </tr>
   <tr>
     <th style="text-align: right">スキル：</th>
-    <td><%= text_field_tag 'skill_tag', search_value_biz_offer(:skill_tag), size: 60 %></td>
+    <td><%= text_field_tag 'skill_tag', search_value_biz_offer(:skill_tag) %></td>
   </tr>
   <tr>
     <th style="text-align: right">単価上限：</th>
-    <td><%= text_field_tag 'payment_max', search_value_biz_offer(:payment_max), size: 60 %>万円以下</td>
+    <td><%= text_field_tag 'payment_from', search_value_biz_offer(:payment_from) %>万円以上<%= text_field_tag 'payment_to', search_value_biz_offer(:payment_to) %>万円以下</td>
   </tr>
   <tr>
     <th style="text-align: right">案件ステータス：</th>
