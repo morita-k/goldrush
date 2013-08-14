@@ -17,7 +17,8 @@ class BpPic < ActiveRecord::Base
   NONDELIVERY_LIMIT=3
   BOUNCE_MAIL_REASON_ERROR = [:hostunknown, :userunknown]
   BOUNCE_MAIL_REASON_WARN = [:hasmoved, :rejected, :filtered, :mailboxfull, :exceedlimit, :systemfull, :notaccept, :suspend, :mailererror, :systemerror, :mesgtoobig, :securityerr, :contenterr, :expired, :onhold]
-  
+  WORKING_STATUS_WORKING = "working"
+
   def business_partner_name
     business_partner && business_partner.business_partner_name
   end
@@ -53,6 +54,10 @@ class BpPic < ActiveRecord::Base
   def increse_nondelivery_score(reason)
     score = self.nondelivery_score + BpPic.score_nondelivery(reason)
     self.nondelivery_score = [score, NONDELIVERY_LIMIT].min
+  end
+
+  def working?
+    self.working_status = WORKING_STATUS_WORKING
   end
   
   def BpPic.score_nondelivery(reason)

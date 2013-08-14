@@ -10,6 +10,7 @@ class BpPicController < ApplicationController
       :email => params[:email],
       :bp_pic_group_id => params[:bp_pic_group_id],
       :nondelivery_score => params[:nondelivery_score],
+      :working_status => params[:working_status],
       :jiet => params[:jiet]
     }
   end
@@ -52,6 +53,12 @@ class BpPicController < ApplicationController
       param << x
     end
     
+    # 在職者以外
+    if !(x = session[:bp_pic_search][:working_status]).blank?
+      sql += " and working_status <> ?"
+      param << x
+    end
+
     # JIET_FLG
     if !(x = session[:bp_pic_search][:jiet]).blank?
       sql += " and jiet = ?"
@@ -75,7 +82,15 @@ class BpPicController < ApplicationController
       @business_partner = BusinessPartner.find(params[:id])
     end
     
-    return [param.unshift(sql), incl]
+    # order by
+    if (x = session[:bp_pic_search][:working_status]).blank?
+      order_by = "bp_pics.updated_at desc"
+    else
+      #在職者以外を検索した場合は、後任者・転職先が登録されていないものを先頭に
+      order_by = "substitute_bp_pic_id is null, change_to_bp_pic_id is null"
+    end
+
+    return [param.unshift(sql), incl, order_by]
   end
 
   def list
@@ -88,9 +103,9 @@ class BpPicController < ApplicationController
     end
 
     # 検索条件を処理
-    cond, incl = make_conditions
+    cond, incl, order_by = make_conditions
     
-    @bp_pics = BpPic.includes(incl).where(cond).order("bp_pics.updated_at desc").page(params[:page]).per(current_user.per_page)
+    @bp_pics = BpPic.includes(incl).where(cond).order(order_by).page(params[:page]).per(current_user.per_page)
     
     if params[:popup] && params[:callback].blank?
       flash[:warning] = 'ポップアップのパラメータが不正です'
