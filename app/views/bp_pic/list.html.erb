@@ -3,31 +3,35 @@
 <%= form_tag_popup_mode do %>
 <table>
   <tr>
-    <th style="text-align: right">コード(営業|取引|販管):</td>
+    <th style="text-align: right">コード(営業|取引|販管):</th>
     <td><%= text_field_tag 'sales_code', search_value(:sales_code), :size => 60 %>　</td>
   </tr>
   <tr>
-    <th style="text-align: right">取引先名（カナ）:</td>
+    <th style="text-align: right">取引先名（カナ）:</th>
     <td><%= text_field_tag 'business_partner_name', search_value(:business_partner_name), :size => 60 %></td>
   </tr>
   <tr>
-    <th style="text-align: right">担当者名（カナ）:</td>
+    <th style="text-align: right">担当者名（カナ）:</th>
     <td><%= text_field_tag 'bp_pic_name', search_value(:bp_pic_name), :size => 60 %></td>
   </tr>
   <tr>
-    <th style="text-align: right">電話番号(担当者|会社):</td>
+    <th style="text-align: right">電話番号(担当者|会社):</th>
     <td><%= text_field_tag 'tel', search_value(:tel), :size => 60 %></td>
   </tr>
   <tr>
-    <th style="text-align: right">Eメール:</td>
+    <th style="text-align: right">Eメール:</th>
     <td><%= text_field_tag 'email', search_value(:email), :size => 60 %></td>
   </tr>
   <tr>
-    <th style="text-align: right">送信停止:</td>
+    <th style="text-align: right">送信停止:</th>
     <td><%= check_box_tag 'nondelivery_score', BpPic::NONDELIVERY_LIMIT, !search_value(:nondelivery_score).blank? %></td>
   </tr>
   <tr>
-    <th style="text-align: right">取引先グループ:</td>
+    <th style="text-align: right">JIET:</th>
+    <td><%= check_box_tag 'jiet', ImportMailJIET::JIET_FLG, !search_value(:jiet).blank? %></td>
+  </tr>
+  <tr>
+    <th style="text-align: right">取引先グループ:</th>
     <td><%= select_tag 'bp_pic_group_id', options_for_select( [ ['〈 全て 〉', 'all'] ] + BpPicGroup.available_group_list, search_value(:bp_pic_group_id)), include_blank: true %></td>
   </tr>
 </table>
@@ -60,6 +64,7 @@
       <th><%=getShortName('bp_pics', 'tel_mobile') %></th>
       <th><%=getShortName('bp_pics', 'email1') %></th>  
       <% unless popup? %>
+        <th>JIET</th>
         <th>初会</th>
         <th>あ</th>
         <th>更新</th>
@@ -82,6 +87,7 @@
         <td><%=h bp_pic.tel_mobile %></td>
         <td><%=h bp_pic.email1 %></td>
         <% unless popup? %>
+          <td><%= bp_pic.jiet == ImportMailJIET::JIET_FLG ? 'JIET' : ''%></td>
           <td><%=h _date(bp_pic.contact_date) %></td>
           <td style="text-align:center;"><%= back_to_link(image_tag(bp_pic.contact_mail? ? 'icon-check.png' : 'icon-emailforward.png'), conatct_mail_new_delivery_mail_path(bp_pic)) %></td>
           <td><%=h _time(bp_pic.updated_at) %></td>
