@@ -235,7 +235,7 @@ EOS
     end
   end
 
-  def conatct_mail_new
+  def contact_mail_new
     @bp_pic = BpPic.find(params[:id])
     @delivery_mail = DeliveryMail.new
     #@delivery_mail.bp_pic_group_id = params[:id]

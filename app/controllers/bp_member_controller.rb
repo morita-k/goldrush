@@ -12,30 +12,48 @@ class BpMemberController < ApplicationController
   def set_conditions
     session[:bp_member_search] = {
       :hr_name => params[:hr_name],
+      :skill_tag => params[:skill_tag],
+      :payment_from => params[:payment_from],
+      :payment_to => params[:payment_to],
       :age_from => params[:age_from],
       :age_to => params[:age_to],
-      :sex_type => params[:sex_type],
-      :skill_tag => params[:skill_tag],
-      :human_resource_status_type => params[:human_resource_status_type],
-      :business_partner_name => params[:bp_name],
       :business_partner_id => params[:bp_id],
-      :employment_type => params[:employment_type],
-      :payment_min => params[:payment_min],
-      :attachment_file => params[:attachment_file]
+      :business_partner_name => params[:business_partner_name],
+      :bp_pic_id => params[:pic_id],
+      :bp_pic_name => params[:bp_pic_name],
+      :human_resource_status_type => params[:human_resource_status_type],
+      # :employment_type => params[:employment_type],
+      :jiet => params[:jiet]
       }
   end
 
   def make_conditions
     param = []
-    include = [:human_resource]
+    include = [:human_resource, :business_partner, :bp_pic]
 ## TODO 所属と添付ファイルがparent_idでひもづいているのでincludeではなくjoinで結合
 #    join = "LEFT OUTER JOIN attachment_files ON attachment_files.parent_table_name = 'bp_member' AND attachment_files.parent_id = bp_members.id"
     sql = "bp_members.deleted = 0"
-    order_by = ""
+    order_by = "bp_members.updated_at desc"
+    bp_condition = " and (bp_members.business_partner_id = business_partners.id) and (human_resource_id = human_resources.id)"
 
     if !(hr_name = session[:bp_member_search][:hr_name]).blank?
-      sql += " and human_resources.human_resource_name like ?"
-      param << "%#{hr_name}%"
+      sql += " and human_resources.human_resource_name like ? or human_resources.initial like ?"
+      param << "%#{hr_name}%" << "%#{hr_name}"
+    end
+
+    if !(skill_tag = session[:bp_member_search][:skill_tag]).blank?
+      sql += " and human_resources.skill_tag like ?"
+      param << "%#{skill_tag}%"
+    end
+
+    if !(payment_from = session[:bp_member_search][:payment_from]).blank?
+      sql += " and bp_members.payment_min >= ?"
+      param << (payment_from.to_i * 10000)
+    end
+
+    if !(payment_to = session[:bp_member_search][:payment_to]).blank?
+      sql += " and bp_members.payment_min <= ?"
+      param << (payment_to.to_i * 10000)
     end
 
     if !(age_from = session[:bp_member_search][:age_from]).blank?
@@ -48,14 +66,14 @@ class BpMemberController < ApplicationController
       param << age_to
     end
 
-    if !(sex_type = session[:bp_member_search][:sex_type]).blank?
-      sql += " and human_resources.sex_type = ?"
-      param << sex_type
+    if !(business_partner_name = session[:bp_member_search][:business_partner_name]).blank?
+      sql += (bp_condition + " and (business_partner_name like ? or business_partner_name_kana like ?)")
+      param << "%#{business_partner_name}%" << "%#{business_partner_name}%"
     end
 
-    if !(skill_tag = session[:bp_member_search][:skill_tag]).blank?
-      sql += " and human_resources.skill_tag like ?"
-      param << "%#{skill_tag}%"
+    if !(bp_pic_name = session[:bp_member_search][:bp_pic_name]).blank?
+      sql += (bp_condition + " and (bp_pic_name like ? or bp_pic_name_kana like ? or bp_pic_short_name like ?)")
+      param << "%#{bp_pic_name}%" << "%#{bp_pic_name}%" << "%#{bp_pic_name}%"
     end
 
     if !(human_resource_status_type = session[:bp_member_search][:human_resource_status_type]).blank?
@@ -63,22 +81,15 @@ class BpMemberController < ApplicationController
       param << human_resource_status_type
     end
 
-    if !(business_partner_id = session[:bp_member_search][:business_partner_id]).blank?
-      sql += " and bp_members.business_partner_id = ?"
-      param << business_partner_id
-    end
+    # if !(employment_type = session[:bp_member_search][:employment_type]).blank?
+    #   sql += " and bp_members.employment_type = ?"
+    #   param << employment_type
+    # end
 
-    if !(employment_type = session[:bp_member_search][:employment_type]).blank?
-      sql += " and bp_members.employment_type = ?"
-      param << employment_type
+    if !(x = session[:bp_member_search][:jiet]).blank?
+      sql += " and human_resources.jiet = ?"
+      param << x
     end
-
-    if !(payment_min = session[:bp_member_search][:payment_min]).blank?
-      sql += " and bp_members.payment_min >= ?"
-      param << (payment_min.to_i * 10000)
-    end
-    
-    order_by = "bp_members.updated_at desc"
 
     return {:conditions => param.unshift(sql), :include => include, :order => order_by, :per_page => current_user.per_page}
   end
