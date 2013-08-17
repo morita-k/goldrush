@@ -190,7 +190,11 @@ class BpPicController < ApplicationController
   
   def add_bp_pic_into_selected_group
     selected_group = []
-    params[:group_id].each do |groupId|
+    addGroup = {:groupIds => []}.merge(params[:addGroup] || {})
+    p addGroup
+    @addGroups = OpenStruct.new(addGroup)
+    @addGroups.groupIds.delete("-1")
+    @addGroups.groupIds.each do |groupId|
       selected_group.push(BpPicGroup.find(groupId))
     end
 
