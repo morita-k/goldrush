@@ -39,14 +39,54 @@
 <br />
 <% end %>
 
-<%= form_tag url_for(controller: :bp_pic, action: :add_bp_pic_into_selected_group), method: :post do %>
+<%= form_for :addGroup, :url => {:controller => :bp_pic, :action => :add_bp_pic_into_selected_group, :method => :post} do |f| %>
   <%= hidden_field_tag 'back_to', request_url %>
   
   <% unless popup? %>
-    <p style="margin:0">追加先グループ:
-      <%= select_tag 'group_id', options_for_select(BpPicGroup.available_group_list), include_blank: true %>
-      <%= submit_tag '選択した取引先担当をグループに追加', :onclick => "if($('#group_id').val()==''){alert('グループを選択してください。');return false;}else if($('[name=\"ids[]\"]:checked').length <= 0){alert('取引先担当者を選択してください。');return false}else{if(!confirm('選択した担当者をグループに追加します。よろしいですか？')){return false;}}" %>
+    <p>
+      <%= link_to "<button>選択した取引先担当をグループに追加</button>".html_safe, "#addGroupModal", {:rel => "leanModal"} %>
     </p>
+    <script type="text/javascript">
+      <!--
+      $(function() {
+        $('a[rel*=leanModal]').click(function(event){
+          if($('[name=\"ids[]\"]:checked').length <= 0){
+            alert('取引先担当者を選択してください。');
+            event.stopImmediatePropagation();
+            return false;
+          }
+        }).leanModal({ top : 150, overlay : 0.4, closeButton: ".modal_close"});
+      });
+
+      function groupSelectedCheck(){
+        return $('#groupTable input[type=\"checkbox\"]:checked').size() != 0;
+      };
+    //-->
+    </script>
+    <div id="addGroupModal" style="display: none;background: #eeeeee;border-radius: 5px;-webkit-border-radius: 5px;padding:5px;">
+      <p>追加先グループ:
+        <table id="groupTable">
+          <tr>
+            <% groupcount = 0 %>
+            <% BpPicGroup.available_group_list.each do |groupId| %>
+              <td style="padding: 5px">
+                <label><%= f.check_box :groupIds, {:name => "addGroup[groupIds][]", :title => groupId[0]}, groupId[1], -1 %><%= groupId[0] %></label>
+              </td>
+              <% groupcount += 1 %>
+              <% if(groupcount == 4) %>
+                <% groupcount = 0 %>
+                </tr>
+                <tr>
+              <% end %>
+            <% end %>
+          </tr>
+        </table>
+        <div style="float: right">
+          <%= submit_tag 'キャンセル', :onclick => "return false;", :class => "modal_close" %>
+          <%= submit_tag '　　追加　　', :onclick => "if(!groupSelectedCheck()){alert('グループを選択してください。');return false;}else{if(!confirm('選択した担当者をグループに追加します。よろしいですか？')){return false;}}" %>
+        </div>
+      </p>
+    </div>
   <% end %>
   
   <%= paginate(@bp_pics) %>

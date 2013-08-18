@@ -189,26 +189,40 @@ class BpPicController < ApplicationController
   end
   
   def add_bp_pic_into_selected_group
-    selected_group = BpPicGroup.find(params[:group_id])
+    selected_group = []
+    addGroup = {:groupIds => []}.merge(params[:addGroup] || {})
+    p addGroup
+    @addGroups = OpenStruct.new(addGroup)
+    @addGroups.groupIds.delete("-1")
+    @addGroups.groupIds.each do |groupId|
+      selected_group.push(BpPicGroup.find(groupId))
+    end
+
     bp_pic_id_list = params[:ids]
     
     if bp_pic_id_list && !selected_group.nil?
-      
-      bp_pic_id_list.each do |id|
-        target = BpPic.find(id)
-        target.into_group(selected_group.id)
+
+      selected_group.each do |groupId|
+        bp_pic_id_list.each do |id|
+          target = BpPic.find(id)
+          target.into_group(groupId.id)
+        end
       end
-      
-      group_str = selected_group.bp_pic_group_name =~ /グループ$/ ? "" : "グループ"
+
       respond_to do |format|
-        flash[:notice] = "#{bp_pic_id_list.length}人の取引先担当者が「#{selected_group.bp_pic_group_name}」#{group_str}に追加されました。"
+        flash[:notice] = "#{bp_pic_id_list.length}人の取引先担当者が"
+        selected_group.each do |groupId|
+          group_str = groupId.bp_pic_group_name =~ /グループ$/ ? "" : "グループ"
+          flash[:notice] += "「#{groupId.bp_pic_group_name}」#{group_str} "
+        end
+        flash[:notice] += "に追加されました。"
         format.html {redirect_to back_to}
       end
     elsif selected_group.nil?
       # グループが選択されていなければエラー
       # View側でチェックしてるので、現状到達不可処理
       respond_to do |format|
-        flash[:warning] = '追加先グループが選択されていません。'        
+        flash[:warning] = '追加先グループが選択されていません。'
         format.html {redirect_to back_to}
       end
     else
