@@ -2,6 +2,8 @@
 class BpPic < ActiveRecord::Base
   belongs_to :business_partner
   belongs_to :sales_pic, :class_name => 'User'
+  belongs_to :substitute_bp_pic, :class_name => 'BpPic'
+  belongs_to :change_to_bp_pic, :class_name => 'BpPic'
   has_one :delivery_mail_target
   has_many :businesses
   has_many :bp_members
@@ -17,7 +19,7 @@ class BpPic < ActiveRecord::Base
   NONDELIVERY_LIMIT=3
   BOUNCE_MAIL_REASON_ERROR = [:hostunknown, :userunknown]
   BOUNCE_MAIL_REASON_WARN = [:hasmoved, :rejected, :filtered, :mailboxfull, :exceedlimit, :systemfull, :notaccept, :suspend, :mailererror, :systemerror, :mesgtoobig, :securityerr, :contenterr, :expired, :onhold]
-  
+
   def business_partner_name
     business_partner && business_partner.business_partner_name
   end
@@ -29,7 +31,7 @@ class BpPic < ActiveRecord::Base
   def sales_pic_name
     sales_pic && sales_pic.employee.employee_short_name
   end
-  
+
   def BpPic.select_content_list
     Employee.where(deleted: 0).map{|e| [e.employee_short_name, e.user_id]}
   end
@@ -54,6 +56,10 @@ class BpPic < ActiveRecord::Base
     score = self.nondelivery_score + BpPic.score_nondelivery(reason)
     self.nondelivery_score = [score, NONDELIVERY_LIMIT].min
   end
+
+  def working?
+    self.working_status == "working"
+  end
   
   def BpPic.score_nondelivery(reason)
     reason = reason.to_sym
@@ -64,7 +70,25 @@ class BpPic < ActiveRecord::Base
     end
     return 0
   end
-  
+
+  #転職元を検索
+  def former_bp_pic
+    BpPic.where(:change_to_bp_pic_id => id, :deleted => 0).first
+  end
+
+  def BpPic.update_changed(new_id, old_id)
+    former_bp_pic = BpPic.find(old_id)
+    former_bp_pic.change_to_bp_pic_id = new_id
+    former_bp_pic.working_status = "changed"
+    former_bp_pic.save!
+  end
+
+  def BpPic.update_retired(new_id, old_id)
+    retired_bp_pic = BpPic.find(old_id)
+    retired_bp_pic.substitute_bp_pic_id = new_id
+    retired_bp_pic.save!
+  end
+
   def to_test
     self.email1 = StringUtil.to_test_address(email1)
   end

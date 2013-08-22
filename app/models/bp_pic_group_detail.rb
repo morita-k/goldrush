@@ -9,5 +9,9 @@ class BpPicGroupDetail < ActiveRecord::Base
   def nondelivery?
     bp_pic.nondelivery?
   end
+
+  def working?
+    bp_pic.working?
+  end
   
 end

@@ -1,6 +1,6 @@
 <h1><%= @business_partner.blank? ? getLongName('table_name','business_partners') : "#{@business_partner.business_partner_name}担当" %>一覧</h1>
 
-<%= form_tag_popup_mode do %>
+<%= form_tag_popup_mode(params[:callback].blank? ? {} : {:callback => params[:callback]}) do %>
 <table>
   <tr>
     <th style="text-align: right">コード(営業|取引|販管):</th>
@@ -25,6 +25,10 @@
   <tr>
     <th style="text-align: right">送信停止:</th>
     <td><%= check_box_tag 'nondelivery_score', BpPic::NONDELIVERY_LIMIT, !search_value(:nondelivery_score).blank? %></td>
+  </tr>
+  <tr>
+    <th style="text-align: right">在職者以外:</th>
+    <td><%= check_box_tag 'working_status', 'working', !search_value(:working_status).blank? %></td>
   </tr>
   <tr>
     <th style="text-align: right">JIET:</th>
@@ -121,7 +125,11 @@
           <td><%= star_links(bp_pic.business_partner) %> <%=back_to_link bp_pic.business_partner.business_partner_name, {:controller => :business_partner, :action => :show, :id => bp_pic.business_partner} %></td>
           <td><%= get_basic_contract_status_type_text(bp_pic.business_partner) %></td>
           <td><%= get_nda_status_type_text(bp_pic.business_partner) %></td>
-          <td style="border-right-color: silver;"><%= star_links(bp_pic) %> <%=back_to_link bp_pic.usefulname, {:action => :show, :id => bp_pic} %></td>
+          <td style="border-right-color: silver;"><%= star_links(bp_pic) %> <%=back_to_link bp_pic.usefulname, {:action => :show, :id => bp_pic} %>
+            <% unless bp_pic.working? %>
+              <% links = working_status_links_list(bp_pic) %>(<%= links[0] %>|<%= links[1] %>)
+            <% end %>
+          </td>
           <td style="text-align:center;"><%= bp_pic_edit_icon(bp_pic) %></td>
         <% end %>
         <td><%=h bp_pic.tel_mobile %></td>

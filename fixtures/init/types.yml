@@ -5118,3 +5118,63 @@ types_256:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
+types_257:
+  id: 257
+  owner_id: 
+  type_section: "working_status"
+  type_key: "working"
+  long_name: "在職"
+  short_name: "在"
+  other_name: "在職"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 1
+  display_order2: 1
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_258:
+  id: 258
+  owner_id: 
+  type_section: "working_status"
+  type_key: "changed"
+  long_name: "転職"
+  short_name: "転"
+  other_name: "転職"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 2
+  display_order2: 2
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_259:
+  id: 259
+  owner_id: 
+  type_section: "working_status"
+  type_key: "retired"
+  long_name: "退職"
+  short_name: "退"
+  other_name: "退職"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 3
+  display_order2: 3
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
