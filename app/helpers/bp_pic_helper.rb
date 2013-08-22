@@ -5,24 +5,41 @@ module BpPicHelper
     session[:bp_pic_search] && session[:bp_pic_search][code]
   end
 
-  def working_status_retired_link(bp_pic)
-  	build_working_status_link(bp_pic.substitute_bp_pic_id.blnak? ? "後任者登録" : "後任者", bp_pic.id, bp_pic.substitute_bp_pic_id)
+  def working_status_links_list(bp_pic)
+  	[working_status_link_retired(getShortType("working_status","retired"), bp_pic, bp_pic.substitute_bp_pic_id),
+     working_status_link_changed(getShortType("working_status","changed"), bp_pic, bp_pic.change_to_bp_pic_id)]
   end
 
-  def working_status_changed_link(bp_pic)
-  	build_working_status_link(bp_pic.change_to_bp_pic_id.blank? ? "転職先登録" : "転職先", bp_pic.id, bp_pic.change_to_bp_pic_id)
+  def working_status_links_show(bp_pic)
+    if bp_pic.working?
+      [working_status_update_link(bp_pic.id, "retired"), working_status_update_link(bp_pic.id, "changed")]
+    else
+      [working_status_link_retired(bp_pic.substitute_bp_pic_id.blank? ? "後任者登録" : "後任者", bp_pic, bp_pic.substitute_bp_pic_id),
+        working_status_link_changed(bp_pic.change_to_bp_pic_id.blank? ? "転職先登録" : "転職先", bp_pic, bp_pic.change_to_bp_pic_id)]
+    end
   end
 
-  def working_status_retired_link_short(bp_pic)
-  	build_working_status_link(getShortType("working_status","retired"), bp_pic.id, bp_pic.substitute_bp_pic_id)
+  private
+  def working_status_link_retired(name, bp_pic, new_bp_pic_id)
+    if new_bp_pic_id.blank?
+      back_to_link(name,{:controller => :bp_pic, :action => :new, :retired_bp_pic_id => bp_pic.id, :business_partner_id => bp_pic.business_partner.id})
+    else
+      back_to_link(name,{:controller => :bp_pic, :action => :show, :id => new_bp_pic_id})
+    end
   end
 
-  def working_status_changed_link_short(bp_pic)
-  	build_working_status_link(getShortType("working_status","changed"), bp_pic.id, bp_pic.change_to_bp_pic_id)
+  private
+  def working_status_link_changed(name, bp_pic, new_bp_pic_id)
+    if new_bp_pic_id.blank?
+      back_to_link(name,{:controller => :business_partner, :action => :new, :former_bp_pic_id => bp_pic.id})
+    else
+      back_to_link(name,{:controller => :bp_pic, :action => :show, :id => new_bp_pic_id})
+    end
   end
 
-  def build_working_status_link(name, old_id, new_id)
-    back_to_link(name,{:controller => :bp_pic, :action => :show, :id => new_id.blank? ? old_id : new_id})
+  private
+  def working_status_update_link(id, status)
+    link_to(getLongType("working_status",status), {:controller => :bp_pic, :action => :update_working_status, :id => id, :working_status => status})
   end
 
 end

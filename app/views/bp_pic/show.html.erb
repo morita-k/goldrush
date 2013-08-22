@@ -42,6 +42,17 @@
   <th><%= getLongName('bp_pics', 'nondelivery_score') %></th><td><%=@bp_pic.nondelivery_score %><%= @bp_pic.nondelivery? ? '(メール停止)' : '' %></td>
 </tr>
 <tr>
+  <th><%= getLongName('bp_pics', 'working_status') %></th><td><%= getLongType('working_status', @bp_pic.working_status) %>(<% links = working_status_links_show(@bp_pic) %><%= links[0] %>|<%= links[1] %>)</td>
+</tr>
+<% unless @former_bp_pic.blank? %>
+<tr>
+  <th>前職取引先名</th><td><%=link_to @former_bp_pic.business_partner_name, :controller => :business_partner, :action => :show, :id => @former_bp_pic.business_partner_id %></td>
+</tr>
+<tr>
+  <th>前職取引先担当名</th><td><%=link_to @former_bp_pic.bp_pic_name, :controller => :bp_pic, :action => :show, :id => @former_bp_pic.id %></td>
+</tr>
+<% end %>
+<tr>
   <th><%= getLongName('bp_pics', 'jiet') %></th><td><%=@bp_pic.jiet? ? 'JIET' : '' %></td>
 </tr>
 <tr>

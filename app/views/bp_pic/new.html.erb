@@ -1,4 +1,4 @@
-<h1><%=@bp_pic.business_partner.business_partner_short_name%>担当新規作成</h1>
+<h1><%=@bp_pic.business_partner.business_partner_short_name%> <%= params[:retired_bp_pic_id].blank? ? "" : "後任" %>担当新規作成</h1>
 
 <%= form_tag :action => 'create' do %>
   <%= render :partial => 'form' %>

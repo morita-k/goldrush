@@ -87,7 +87,7 @@ class BpPicController < ApplicationController
       order_by = "bp_pics.updated_at desc"
     else
       #在職者以外を検索した場合は、後任者・転職先が登録されていないものを先頭に
-      order_by = "substitute_bp_pic_id is null, change_to_bp_pic_id is null"
+      order_by = "substitute_bp_pic_id, change_to_bp_pic_id"
     end
 
     return [param.unshift(sql), incl, order_by]
@@ -134,28 +134,30 @@ class BpPicController < ApplicationController
   def show
     @bp_pic = BpPic.find(params[:id])
     @remarks = Remark.find(:all, :conditions => ["deleted = 0 and remark_key = ? and remark_target_id = ?", 'bp_pics', params[:id]])
+    @former_bp_pic = params[:former_bp_pic_id] ? BpPic.find(params[:former_bp_pic_id]) : @bp_pic.former_bp_pic
   end
 
   def new
     @bp_pic = BpPic.new
     business_partner = BusinessPartner.find(params[:business_partner_id])
     @bp_pic.business_partner = business_partner
-    
   end
 
   def create
-    @bp_pic = BpPic.new(params[:bp_pic])
-    set_user_column @bp_pic
-    @bp_pic.save!
-    
-    if params[:import_mail_id]
-      ActiveRecord::Base.transaction do 
+    ActiveRecord::Base.transaction do 
+      @bp_pic = BpPic.new(params[:bp_pic])
+      set_user_column @bp_pic
+      @bp_pic.save!
+      
+      BpPic.update_retired(@bp_pic.id, params[:retired_bp_pic_id]) unless params[:retired_bp_pic_id].blank? #退職登録
+      BpPic.update_changed(@bp_pic.id, params[:former_bp_pic_id]) unless params[:former_bp_pic_id].blank? #転職登録
+
+      if params[:import_mail_id]
         @import_mail = ImportMail.find(params[:import_mail_id])
         @import_mail.bp_pic_id = @bp_pic.id
         @import_mail.save!
       end
-    end
-    
+    end #transaction
     flash[:notice] = 'BpPic was successfully created.'
     redirect_to(back_to || {:action => 'list'})
   rescue ActiveRecord::RecordInvalid
@@ -164,14 +166,18 @@ class BpPicController < ApplicationController
 
   def edit
     @bp_pic = BpPic.find(params[:id])
+    @former_bp_pic = params[:former_bp_pic_id] ? BpPic.find(params[:former_bp_pic_id]) : @bp_pic.former_bp_pic
   end
 
   def update
-    @bp_pic = BpPic.find(params[:id], :conditions =>["deleted = 0"])
-    @bp_pic.attributes = params[:bp_pic]
-    @bp_pic.bp_pic_name = params[:bp_pic][:bp_pic_name].gsub(/　/," ")
-    set_user_column @bp_pic
-    @bp_pic.save!
+    ActiveRecord::Base.transaction do 
+      @bp_pic = BpPic.find(params[:id], :conditions =>["deleted = 0"])
+      @bp_pic.attributes = params[:bp_pic]
+      @bp_pic.bp_pic_name = params[:bp_pic][:bp_pic_name].gsub(/　/," ")
+      set_user_column @bp_pic
+      @bp_pic.save!
+      BpPic.update_changed(@bp_pic.id, params[:former_bp_pic_id]) unless params[:former_bp_pic_id].blank? #転職登録
+    end #transaction
     flash[:notice] = 'BpPic was successfully updated.'
     redirect_to(back_to || {:action => 'show', :id => @bp_pic})
   rescue ActiveRecord::RecordInvalid
@@ -185,9 +191,20 @@ class BpPicController < ApplicationController
     else
       bp_pic.starred = 1
     end
-      set_user_column bp_pic
-      bp_pic.save!
+    set_user_column bp_pic
+    bp_pic.save!
     render :text => bp_pic.starred
+  end
+
+  def update_working_status
+    @bp_pic = BpPic.find(params[:id])
+    @bp_pic.working_status = params[:working_status]
+    set_user_column @bp_pic
+    @bp_pic.save!
+    flash[:notice] = 'BpPic was successfully updated.'
+    redirect_to(back_to || {:action => 'show', :id => @bp_pic})
+  rescue ActiveRecord::RecordInvalid
+    render :action => 'show'
   end
 
   def destroy

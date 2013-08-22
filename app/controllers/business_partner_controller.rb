@@ -138,6 +138,12 @@ class BusinessPartnerController < ApplicationController
       @business_partner.import_mail_id = params[:import_mail_id]
       @bp_pic.import_mail_id = params[:import_mail_id]
     end
+    @former_bp_pic = params[:former_bp_pic_id] ? BpPic.find(params[:former_bp_pic_id]) : @bp_pic.former_bp_pic
+    unless @former_bp_pic.blank? #転職の場合
+      @bp_pic.bp_pic_name = @former_bp_pic.bp_pic_name
+      @bp_pic.bp_pic_short_name = @former_bp_pic.bp_pic_short_name
+      @bp_pic.bp_pic_name_kana = @former_bp_pic.bp_pic_name_kana
+    end
   end
 
   def create
@@ -168,7 +174,9 @@ class BusinessPartnerController < ApplicationController
       @bp_pic.bp_pic_name = space_trim(params[:bp_pic][:bp_pic_name]).gsub(/　/," ")
       set_user_column @bp_pic
       @bp_pic.save!
-      
+
+      BpPic.update_changed(@bp_pic.id, params[:former_bp_pic_id]) unless params[:former_bp_pic_id].blank? # 転職の登録
+
       if !@business_partner.import_mail_id.blank?
         import_mail = ImportMail.find(@business_partner.import_mail_id)
         import_mail.business_partner_id = @business_partner.id
@@ -177,7 +185,7 @@ class BusinessPartnerController < ApplicationController
         import_mail.save!
       end
       
-    end
+    end # transaction
     
     flash_notice = 'BusinessPartner was successfully created.'
     
