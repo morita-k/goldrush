@@ -886,7 +886,7 @@ sys_configs_56:
   value1: "1"
   value2: ""
   value3: ""
-  config_description_text$: |-
+  config_description_text: |-
     本番環境では1。それ以外はレコードなし。
     データ取り込み時にメールアドレスをテスト用に変換するロジックをOFFにする
   created_at: <%= Time.now.to_s(:db) %>
@@ -904,7 +904,7 @@ sys_configs_57:
   value1: ""
   value2: ""
   value3: ""
-  config_description_text$: |-
+  config_description_text: |-
     Access
     AccessVBA
     ActiveDirectory
@@ -1001,7 +1001,7 @@ sys_configs_58:
   value1: "※"
   value2: ""
   value3: ""
-  config_description_text$: |-
+  config_description_text: |-
     カンマ区切りで指定
     全半角空白は無視される
     正規表現でない
