@@ -25,6 +25,7 @@ def around_http_client(&block)
   # HTTP Clientの準備
 #  api_logfile = File.open(File.join('log',"cloud_api_call.#{Process.pid}.log"), "a")
   agent = HTTPClient.new
+  agent.ssl_config.verify_mode = OpenSSL::SSL::VERIFY_NONE
   agent.receive_timeout = 300
 #  agent.debug_dev = STDOUT
 #  agent.debug_dev = api_logfile

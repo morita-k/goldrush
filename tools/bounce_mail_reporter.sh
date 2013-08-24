@@ -13,7 +13,7 @@ umask 002
 
 cd ${RAILS_ROOT}
 
-BOUNCE_DATA=`tee -a /tmp/bounce.log | ${MAILBOX_PARSER} | ${RUBY} tools/yaml_reader.rb -k 0,recipient -k 0,reason`
+BOUNCE_DATA=`tee -a /tmp/bounce.log | ${MAILBOX_PARSER} |tee -a /tmp/bounce_yaml.log | ${RUBY} tools/yaml_reader.rb -k 0,recipient -k 0,reason`
 BOUNCE_RECIPENT=`echo ${BOUNCE_DATA} | cut -f1 -d' '`
 BOUNCE_REASON=`echo ${BOUNCE_DATA} | cut -f2 -d' '`
 
