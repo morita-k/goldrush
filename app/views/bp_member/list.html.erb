@@ -28,7 +28,7 @@
     </td>
     <td style="text-align: right">下流取引先：</td>
     <td>
-      <%= text_field_tag 'bp_name', session[:bp_member_search] && session[:bp_member_search][:business_partner_name], :readOnly => true, :style => "background-color: silver;", :size => 20  %>
+      <%= text_field_tag 'bp_name', session[:bp_member_search] && session[:bp_member_search][:business_partner_name], :readonly => true, :style => "background-color: silver;", :size => 20  %>
       <input type=button value='...' onClick="disp_wide('<%=url_for :controller => 'business_partner', :action => 'popup_list', :flg => 'down' %>');return false;" />
       <input type=button value='クリア' onClick="clearBp();return false;" />
       <%= hidden_field_tag 'bp_id', session[:bp_member_search][:business_partner_id] %>

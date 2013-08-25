@@ -79,19 +79,19 @@ function ctlForms()
     <th><%=getLongName('daily_workings','in_time')%></th>
     <td>
       <% ro = false #TODO: (!current_user.power_user? and @daily_working.delayed_canceled?) or @daily_working.regular_working? %>
-      <%= text_field 'daily_working', 'in_time', :value => @daily_working.in_time_format, :readOnly => ro  %>
+      <%= text_field 'daily_working', 'in_time', :value => @daily_working.in_time_format, :readonly => ro  %>
     </td>
   </tr>
   <tr>
     <th><%=getLongName('daily_workings','out_time')%></th>
     <td>
-      <%= text_field 'daily_working', 'out_time', :value => @daily_working.out_time_format, :readOnly => !@daily_working.regular_working? %>
+      <%= text_field 'daily_working', 'out_time', :value => @daily_working.out_time_format, :readonly => !@daily_working.regular_working? %>
     </td>
   </tr>
   <tr>
     <th><%=getLongName('daily_workings','rest_hour')%></th>
     <td>
-      <%= text_field 'daily_working', 'rest_hour', :value => @daily_working.rest_hour_format, :readOnly => !@daily_working.regular_working? %>
+      <%= text_field 'daily_working', 'rest_hour', :value => @daily_working.rest_hour_format, :readonly => !@daily_working.regular_working? %>
     </td>
   </tr>
   <tr>
