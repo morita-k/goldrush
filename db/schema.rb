@@ -342,6 +342,7 @@ ActiveRecord::Schema.define(:version => 0) do
     t.integer  "sales_pic_id",        :limit => 8
     t.integer  "contact_mail_flg"
     t.integer  "nondelivery_score",                 :default => 0
+    t.integer  "jiet",                              :default => 0
     t.integer  "starred",                           :default => 0
     t.float    "rating",                            :default => 0.0
     t.integer  "import_mail_id",      :limit => 8
@@ -379,6 +380,9 @@ ActiveRecord::Schema.define(:version => 0) do
     t.string   "fax",                         :limit => 40
     t.string   "email"
     t.string   "category"
+    t.string   "establishment_year"
+    t.string   "employee_number"
+    t.string   "share_capital"
     t.integer  "self_flg",                                  :default => 0
     t.integer  "eu_flg",                                    :default => 0
     t.integer  "upper_flg",                                 :default => 0
@@ -898,6 +902,7 @@ ActiveRecord::Schema.define(:version => 0) do
     t.string   "communication_type",         :limit => 40,                  :null => false
     t.string   "attendance"
     t.string   "human_resource_status_type", :limit => 40
+    t.integer  "jiet",                                     :default => 0
     t.integer  "starred",                                  :default => 0
     t.float    "rating",                                   :default => 0.0
     t.string   "link",                         :limit => 1000

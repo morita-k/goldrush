@@ -9,7 +9,8 @@ class BpPicController < ApplicationController
       :tel => params[:tel],
       :email => params[:email],
       :bp_pic_group_id => params[:bp_pic_group_id],
-      :nondelivery_score => params[:nondelivery_score]
+      :nondelivery_score => params[:nondelivery_score],
+      :jiet => params[:jiet]
     }
   end
 
@@ -48,6 +49,12 @@ class BpPicController < ApplicationController
     # 不達スコア
     if !(x = session[:bp_pic_search][:nondelivery_score]).blank?
       sql += " and nondelivery_score >= ?"
+      param << x
+    end
+    
+    # JIET_FLG
+    if !(x = session[:bp_pic_search][:jiet]).blank?
+      sql += " and jiet = ?"
       param << x
     end
     

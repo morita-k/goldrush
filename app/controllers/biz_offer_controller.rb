@@ -10,8 +10,82 @@ class BizOfferController < ApplicationController
   verify :method => :post, :only => [ :destroy, :create, :update ],
          :redirect_to => { :action => :list }
 
+   def set_conditions
+    session[:biz_offer_search] = {
+      :business_partner_name => params[:business_partner_name],
+      :bp_pic_name => params[:bp_pic_name],
+      :skill_tag => params[:skill_tag],
+      :payment_from => params[:payment_from],
+      :payment_to => params[:payment_to],
+      :business_status_type => params[:business_status_type],
+      :biz_offer_status_type => params[:biz_offer_status_type],
+      :jiet => params[:jiet]
+      }
+  end
+
+  def make_conditions
+    param = []
+    include = [:business, :business_partner, :bp_pic]
+
+    sql = "biz_offers.deleted = 0"
+    order_by = "biz_offers.updated_at desc"
+    bp_condition = " and (biz_offers.business_partner_id = business_partners.id) and (business_id = businesses.id)"
+
+    if !(business_partner_name = session[:biz_offer_search][:business_partner_name]).blank?
+      sql += (bp_condition + " and (business_partner_name like ? or business_partner_name_kana like ?)")
+      param << "%#{business_partner_name}%" << "%#{business_partner_name}%"
+    end
+
+    if !(bp_pic_name = session[:biz_offer_search][:bp_pic_name]).blank?
+      sql += (bp_condition + " and (bp_pic_name like ? or bp_pic_name_kana like ?)")
+      param << "%#{bp_pic_name}%" << "%#{bp_pic_name}%"
+    end
+
+    if !(skill_tag = session[:biz_offer_search][:skill_tag]).blank?
+      sql += " and businesses.skill_tag like ?"
+      param << "%#{skill_tag}%"
+    end
+
+    if !(payment_from = session[:biz_offer_search][:payment_from]).blank?
+      sql += " and payment_max >= ?"
+      param << (payment_from.to_i * 10000)
+    end
+
+    if !(payment_to = session[:biz_offer_search][:payment_to]).blank?
+      sql += " and payment_max <= ?"
+      param << (payment_to.to_i * 10000)
+    end
+
+    if !(business_status_type = session[:biz_offer_search][:business_status_type]).blank?
+      sql += " and businesses.business_status_type = ?"
+      param << business_status_type
+    end
+
+    if !(biz_offer_status_type = session[:biz_offer_search][:biz_offer_status_type]).blank?
+      sql += " and biz_offer_status_type = ?"
+      param << biz_offer_status_type
+    end
+
+    if !(x = session[:biz_offer_search][:jiet]).blank?
+      sql += " and bp_pics.jiet = ?"
+      param << x
+    end
+
+    return {:conditions => param.unshift(sql), :include => include, :order => order_by, :per_page => current_user.per_page}
+  end
+
   def list
-    @biz_offer_pages, @biz_offers = paginate :biz_offers, :conditions =>["deleted = 0"], :order => "biz_offers.updated_at desc", :per_page => current_user.per_page
+    session[:biz_offer_search] ||= {}
+    if request.post?
+      if params[:search_button]
+        set_conditions
+      elsif params[:clear_button]
+        session[:biz_offer_search] = {}
+      end
+    end
+
+    conditions = make_conditions
+    @biz_offer_pages, @biz_offers = paginate :biz_offers, conditions
   end
 
   def show

@@ -57,4 +57,8 @@ class HumanResource < ActiveRecord::Base
     }
   end
 
+  def jiet?
+    self.jiet == ImportMailJIET::JIET_FLG
+  end
+
 end
