@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
   <% envname = ActiveRecord::Base.configurations[RAILS_ENV]['envname'] %>
-  <title><%=$APPLICATION_NAME%> <%=@page_title%><%= envname ? ' ' + envname + '環境' : '' %></title>
+  <title><%=$APPLICATION_NAME%> <%=@page_title%> <%=Rails.env%>環境</title>
 </head>
 <body>
     <%- if flash[:notice] || flash[:err] || flash[:warning] -%>
