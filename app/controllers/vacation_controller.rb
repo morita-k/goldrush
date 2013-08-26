@@ -88,7 +88,7 @@ src_used_total = @vacation.used_total
     @vacation.life_plan_day_total = @vacation.life_plan_day_total.to_f
     @vacation.life_plan_used_total = @vacation.life_plan_used_total.to_f
 
-RAILS_DEFAULT_LOGGER.info("[VACATION USED TOTAL] action: vacation/update, at: #{Time.now}, used_total: #{@vacation.used_total}, effect: #{@vacation.used_total - src_used_total}, user: #{@vacation.user_id}, date: xxxx type: xxxx")
+Rails.logger.info("[VACATION USED TOTAL] action: vacation/update, at: #{Time.now}, used_total: #{@vacation.used_total}, effect: #{@vacation.used_total - src_used_total}, user: #{@vacation.user_id}, date: xxxx type: xxxx")
 
     set_user_column @vacation
     @vacation.save!

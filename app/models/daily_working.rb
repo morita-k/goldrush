@@ -119,19 +119,19 @@ class DailyWorking < ActiveRecord::Base
       when 'vacation_dayoff'
         self.hour_total = ((self.user.employee.regular_working_hour * 60 * 60).to_i * x0)
         effect = (1 * x1)
-RAILS_DEFAULT_LOGGER.info("[VACATION USED TOTAL] action: calc_holiday_hour_date!, at: #{Time.now}, used_total: #{self.user.vacation.used_total}, effect: #{effect}, user: #{self.user_id}, date: #{self.working_date} type: #{self.working_type}")
+Rails.logger.info("[VACATION USED TOTAL] action: calc_holiday_hour_date!, at: #{Time.now}, used_total: #{self.user.vacation.used_total}, effect: #{effect}, user: #{self.user_id}, date: #{self.working_date} type: #{self.working_type}")
         self.user.vacation.used_total += effect
 #        self.user.vacation.cutoff_day_total -= (1 * x1)
       when 'only_AM_working'
         self.hour_total += ((self.user.employee.regular_working_hour * 60 * 60 / 2).to_i * x1)
         effect = (0.5 * x1)
-RAILS_DEFAULT_LOGGER.info("[VACATION USED TOTAL] action: calc_holiday_hour_date!, at: #{Time.now}, used_total: #{self.user.vacation.used_total}, effect: #{effect}, user: #{self.user_id}, date: #{self.working_date} type: #{self.working_type}")
+Rails.logger.info("[VACATION USED TOTAL] action: calc_holiday_hour_date!, at: #{Time.now}, used_total: #{self.user.vacation.used_total}, effect: #{effect}, user: #{self.user_id}, date: #{self.working_date} type: #{self.working_type}")
         self.user.vacation.used_total += effect
 #        self.user.vacation.cutoff_day_total -= (0.5 * x1)
       when 'only_PM_working'
         self.hour_total += ((self.user.employee.regular_working_hour * 60 * 60 / 2).to_i * x1)
         effect = (0.5 * x1)
-RAILS_DEFAULT_LOGGER.info("[VACATION USED TOTAL] action: calc_holiday_hour_date!, at: #{Time.now}, used_total: #{self.user.vacation.used_total}, effect: #{effect}, user: #{self.user_id}, date: #{self.working_date} type: #{self.working_type}")
+Rails.logger.info("[VACATION USED TOTAL] action: calc_holiday_hour_date!, at: #{Time.now}, used_total: #{self.user.vacation.used_total}, effect: #{effect}, user: #{self.user_id}, date: #{self.working_date} type: #{self.working_type}")
         self.user.vacation.used_total += effect
 #        self.user.vacation.cutoff_day_total -= (0.5 * x1)
       when 'compensatory_dayoff'
