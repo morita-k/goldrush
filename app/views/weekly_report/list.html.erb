@@ -49,7 +49,7 @@
       <td align="center" style="width: 6%;"><%=h daily_working.working_type_short_name %></td>
       <% business_trip_application = daily_working.get_business_trip_application %>
       <td align="center" style="width: 6%;"><%= business_trip_application && link_to(business_trip_application.base_application.approval_status_type_short_name, :controller => 'business_trip_application', :action => 'show', :id => business_trip_application, :back_to => request.env['REQUEST_URI']) %></td>
-      <td align="center" style="width: 7%; color: <%=h daily_working.get_color_come_lately %>;"><%=h daily_working.in_time_format %></td>
+      <td align="center" style="width: 7%; color: <%=h get_color_come_lately %>;"><%=h daily_working.in_time_format %></td>
       <td align="center" style="width: 7%; color: <%=h daily_working.get_color_out_time %>;"><%=h daily_working.out_time_format %></td>
       <% links = [] %>
       <% daily_working.get_other_applications.each do |other_application| %>

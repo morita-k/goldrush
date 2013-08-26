@@ -177,5 +177,13 @@ class ApplicationController < ActionController::Base
   def popup?
     @popup_mode
   end
-  
+
+  def set_target_user
+    if target_user_id = params[:user_id]
+      @target_user = User.find(target_user_id, :conditions => "deleted = 0")
+    else
+      @target_user = current_user
+    end
+    @target_employee = @target_user.employee
+  end
 end

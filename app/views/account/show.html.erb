@@ -64,9 +64,66 @@
   <th><%=getLongName('employees','resignation_reason')%></th>
   <td><%=h @user.employee.resignation_reason %></td>
 </tr>
+
+
 <tr>
-  <th>日労働時間</th>
-  <td><%=h @user.employee.regular_working_hour %>時</td>
+  <th><%=getLongName('employees','regular_in_time')%></th>
+  <td><%=h @user.employee.regular_in_time %></td>
+</tr>
+
+<tr>
+  <th><%=getLongName('employees','regular_out_time')%></th>
+  <td><%=h @user.employee.regular_out_time %></td>
+</tr>
+
+<tr>
+  <th><%=getLongName('employees','regular_rest_hour')%></th>
+  <td><%=h @user.employee.regular_rest_hour %></td>
+</tr>
+
+<tr>
+  <th><%=getLongName('employees','regular_in_time_defact')%></th>
+  <td><%=h @user.employee.regular_in_time_defact %></td>
+</tr>
+
+<tr>
+  <th><%=getLongName('employees','regular_in_time_pm')%></th>
+  <td><%=h @user.employee.regular_in_time_pm %></td>
+</tr>
+
+<tr>
+  <th><%=getLongName('employees','regular_out_time_early_am')%></th>
+  <td><%=h @user.employee.regular_out_time_early_am %></td>
+</tr>
+
+<tr>
+  <th><%=getLongName('employees','regular_out_time_early_full')%></th>
+  <td><%=h @user.employee.regular_out_time_early_full %></td>
+</tr>
+
+<tr>
+  <th><%=getLongName('employees','max_out_time')%></th>
+  <td><%=h @user.employee.max_out_time %></td>
+</tr>
+
+<tr>
+  <th><%=getLongName('employees','regular_rest_hour_half')%></th>
+  <td><%=h @user.employee.regular_rest_hour_half %></td>
+</tr>
+
+<tr>
+  <th><%=getLongName('employees','regular_over_time_meel')%></th>
+  <td><%=h @user.employee.regular_over_time_meel %></td>
+</tr>
+
+<tr>
+  <th><%=getLongName('employees','regular_over_time_taxi')%></th>
+  <td><%=h @user.employee.regular_over_time_taxi %></td>
+</tr>
+
+<tr>
+  <th>日労働時間(自動計算)</th>
+  <td><%=h @user.employee.regular_working_hour %>時間</td>
 </tr>
 <tr>
   <th>休職日数合計</th>
@@ -314,3 +371,5 @@
 <%= link_to (getLongName('table_name','employee_families')+'の新規作成'), :controller => 'employee_family', :action => 'new', :id => @user %>
 <br/>
 <% end # if fasle %>
+
+<%= link_to '戻る', (params[:back_to] || {action: :list}) %>
