@@ -39,7 +39,10 @@
     <td><%= select_tag 'bp_pic_group_id', options_for_select( [ ['〈 全て 〉', 'all'] ] + BpPicGroup.available_group_list, search_value(:bp_pic_group_id)), include_blank: true %></td>
   </tr>
 </table>
-<p><%= submit_tag '　　検索　　', :name => 'search_button' %> <%= submit_tag '　　クリア　　', :name => 'clear_button' %></p>
+  <p><%= submit_tag '　　検索　　', :name => 'search_button' %> <%= submit_tag '　　クリア　　', :name => 'clear_button' %></p>
+  <% unless popup? %>
+    <p><input type=button value='詳細情報入力支援機能起動っ！！！' onClick="disp_wide('<%=url_for_input_popup%>');return false;" /></p>
+  <% end %>
 <br />
 <% end %>
 
