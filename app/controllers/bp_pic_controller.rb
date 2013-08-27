@@ -268,9 +268,8 @@ class BpPicController < ApplicationController
   end
 
   def quick_input
-    if params[:page].nil?
-      params[:page] = "1"
-    end
+    params[:popup] ||= "1"
+    params[:page] ||= "1"
     
     if params[:current_bp_id].nil?
       @current_business_partner = get_current_page_uniquely_bps.first
@@ -300,7 +299,7 @@ class BpPicController < ApplicationController
 
     # @current_business_partner = next_bp
 
-    redirect_to action: 'quick_input', page: page, current_bp_id: next_bp_id
+    redirect_to action: 'quick_input', page: page, current_bp_id: next_bp_id, popup: 1
   end
 
 private
