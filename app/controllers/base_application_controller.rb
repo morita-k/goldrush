@@ -91,13 +91,8 @@ class BaseApplicationController < ApplicationController
   end
 
   def set_data
-    if params[:user_id]
-      # TODO: 承認者じゃなければエラーとする処理
-
-      @target_user = User.find(params[:user_id], :conditions => "deleted = 0")
-    else
-      @target_user = current_user
-    end
+    # TODO: 承認者じゃなければエラーとする処理
+    set_target_user
     @filter_types = getTypes('approval_status_type').dup.unshift([])
     @calendar = true
     if params[:mode]

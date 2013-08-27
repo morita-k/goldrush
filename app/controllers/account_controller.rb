@@ -85,6 +85,7 @@ class AccountController < ApplicationController
     end
   end
 
+  # TODO : furukawa : 使ってない？更新はemployee/route_expence_detailごと？
   def update
     @calendar = true
     @page_title = '[アカウント情報変更]'
@@ -161,12 +162,17 @@ class AccountController < ApplicationController
     @user.email = @user.login
 
     @employee = Employee.new
-    conf_hour_total = SysConfig.get_hour_total_full
-    @employee.regular_working_hour = conf_hour_total.value1.split(':')[0]
+
+    @employee.init_default_working_times
+
     @calendar = true
-    @departments = Department.find(:all, :order => "display_order") 
-    
-    return unless request.post?
+    @departments = Department.find(:all, :order => "display_order")     
+  end
+
+  def create
+    @user = User.new(params[:user])
+    @user.email = @user.login
+
     ActiveRecord::Base.transaction do
       #@user.access_level_type = 'normal'
       @user.per_page = 50
@@ -177,9 +183,8 @@ class AccountController < ApplicationController
 
       parseTimes(params)
       @employee = Employee.new(params[:employee])
+      @employee.set_regular_working_hour
       @user.save!
-
-#      @employee.employee_code = @employee.insurance_code.to_i + 9800
 
       @employee.user_id = @user.id
       @employee.save!
@@ -210,9 +215,13 @@ class AccountController < ApplicationController
       flash[:notice] = _("Thanks for signing up!")
     end
   rescue ValidationAbort
+    @calendar = true
+    @departments = Department.find(:all, :order => "display_order") 
     flash[:err] = $!.to_s
     render :action => 'signup'
   rescue ActiveRecord::RecordInvalid
+    @calendar = true
+    @departments = Department.find(:all, :order => "display_order") 
     render :action => 'signup'
   end
   

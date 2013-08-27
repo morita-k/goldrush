@@ -1,7 +1,7 @@
 #require 'tlsmail'
 namespace :app do
   def logger
-    RAILS_DEFAULT_LOGGER
+    Rails.logger
   end
   
   desc "Mail pop to files. if DEL=1 then remove server mail."
