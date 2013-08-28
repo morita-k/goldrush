@@ -309,6 +309,11 @@ class BusinessPartnerController < ApplicationController
     ActiveRecord::Base.transaction do
       @business_partner = BusinessPartner.find(params[:business_partner][:id])
       @business_partner.attributes = params[:business_partner]
+
+      if @business_partner.sales_status_type == 'listup'
+        @business_partner.sales_status_type = 'prospect'
+      end
+
       set_user_column @business_partner
       @business_partner.save!
     end
