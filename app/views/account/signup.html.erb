@@ -1,8 +1,9 @@
-<h1>社員情報の新規登録</h1>
+<h1>社員情報の新規登録!</h1>
 
 <%
   opt = Hash.new
-  opt[:action] = 'signup'
+  # opt[:action] = 'signup'
+  opt[:action] = 'create'
   opt[:only_path] = false
   opt[:protocol] = 'https://' if ENV['HTTPS_ENABLED'] %>
 <%= form_for :user, :url => opt, :html => { :ENCTYPE => 'multipart/form-data' } do |f| 

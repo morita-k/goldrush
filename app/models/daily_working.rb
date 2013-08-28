@@ -79,7 +79,7 @@ class DailyWorking < ActiveRecord::Base
     calHourMinuteFormat self.hour_total.to_i if self.hour_total
   end
 
-  def calc_working_hour
+  def calc_working_hour(target_employee)
     return nil unless (self.out_time && self.in_time && self.rest_hour)
     self.hour_total = self.out_time - self.in_time - self.rest_hour
     # 既に休暇申請がfixされている場合、その分を足す必要がある
@@ -93,9 +93,9 @@ class DailyWorking < ActiveRecord::Base
           self.hour_total += ((self.user.employee.regular_working_hour * 60 * 60 / 2).to_i)
       end
     end
-    x = self.out_time - hourminstr_to_sec(SysConfig.get_regular_over_time_taxi.value1)
+    x = self.out_time - hourminstr_to_sec(target_employee.regular_over_time_taxi)
     self.over_time = (x < 0 ? 0 : x)
-    self.over_time_meel_flg = (self.out_time > hourminstr_to_sec(SysConfig.get_regular_over_time_meel.value1) ? 1 : 0)
+    self.over_time_meel_flg = (self.out_time > hourminstr_to_sec(target_employee.regular_over_time_meel) ? 1 : 0)
   end
 
   def clear_working_hour
@@ -119,19 +119,19 @@ class DailyWorking < ActiveRecord::Base
       when 'vacation_dayoff'
         self.hour_total = ((self.user.employee.regular_working_hour * 60 * 60).to_i * x0)
         effect = (1 * x1)
-RAILS_DEFAULT_LOGGER.info("[VACATION USED TOTAL] action: calc_holiday_hour_date!, at: #{Time.now}, used_total: #{self.user.vacation.used_total}, effect: #{effect}, user: #{self.user_id}, date: #{self.working_date} type: #{self.working_type}")
+Rails.logger.info("[VACATION USED TOTAL] action: calc_holiday_hour_date!, at: #{Time.now}, used_total: #{self.user.vacation.used_total}, effect: #{effect}, user: #{self.user_id}, date: #{self.working_date} type: #{self.working_type}")
         self.user.vacation.used_total += effect
 #        self.user.vacation.cutoff_day_total -= (1 * x1)
       when 'only_AM_working'
         self.hour_total += ((self.user.employee.regular_working_hour * 60 * 60 / 2).to_i * x1)
         effect = (0.5 * x1)
-RAILS_DEFAULT_LOGGER.info("[VACATION USED TOTAL] action: calc_holiday_hour_date!, at: #{Time.now}, used_total: #{self.user.vacation.used_total}, effect: #{effect}, user: #{self.user_id}, date: #{self.working_date} type: #{self.working_type}")
+Rails.logger.info("[VACATION USED TOTAL] action: calc_holiday_hour_date!, at: #{Time.now}, used_total: #{self.user.vacation.used_total}, effect: #{effect}, user: #{self.user_id}, date: #{self.working_date} type: #{self.working_type}")
         self.user.vacation.used_total += effect
 #        self.user.vacation.cutoff_day_total -= (0.5 * x1)
       when 'only_PM_working'
         self.hour_total += ((self.user.employee.regular_working_hour * 60 * 60 / 2).to_i * x1)
         effect = (0.5 * x1)
-RAILS_DEFAULT_LOGGER.info("[VACATION USED TOTAL] action: calc_holiday_hour_date!, at: #{Time.now}, used_total: #{self.user.vacation.used_total}, effect: #{effect}, user: #{self.user_id}, date: #{self.working_date} type: #{self.working_type}")
+Rails.logger.info("[VACATION USED TOTAL] action: calc_holiday_hour_date!, at: #{Time.now}, used_total: #{self.user.vacation.used_total}, effect: #{effect}, user: #{self.user_id}, date: #{self.working_date} type: #{self.working_type}")
         self.user.vacation.used_total += effect
 #        self.user.vacation.cutoff_day_total -= (0.5 * x1)
       when 'compensatory_dayoff'
@@ -189,22 +189,6 @@ RAILS_DEFAULT_LOGGER.info("[VACATION USED TOTAL] action: calc_holiday_hour_date!
     app = BusinessTripApplication.get_business_trip_applications(self.user_id, self.working_date, self.working_date)
     app.each{|x| return x}
     return nil
-  end
-
-  def get_color_come_lately
-   calc_come_lately? ? '#FF0000' : '#000000'
-  end
-
-  def get_color_out_time
-    if calc_leave_early?
-      '#FF0000'
-    elsif self.over_time_taxi_flg == 1
-      '#FF0000'
-    elsif self.over_time_meel_flg == 1
-      'blue'
-    else
-      'black'
-    end
   end
 
   def DailyWorking.regular_working_type
@@ -265,17 +249,17 @@ RAILS_DEFAULT_LOGGER.info("[VACATION USED TOTAL] action: calc_holiday_hour_date!
 
   # 現在のDaily workingの状態を判断して、フラグの状態を変更する
   # 保存時にこれらのフラグを立てるが、実際に有効となるのはaction_typeが'fixed'の時
-  def calc_flags
-    self.come_lately_flg = calc_come_lately? ? 1 : 0
-    self.leave_early_flg = calc_leave_early? ? 1 : 0
-    self.over_time_taxi_flg = calc_over_time_taxi? ? 1 : 0
-    self.over_time_meel_flg = calc_over_time_meel? ? 1 : 0
+  def calc_flags(target_employee)
+    self.come_lately_flg = calc_come_lately?(target_employee) ? 1 : 0
+    self.leave_early_flg = calc_leave_early?(target_employee) ? 1 : 0
+    self.over_time_taxi_flg = calc_over_time_taxi?(target_employee) ? 1 : 0
+    self.over_time_meel_flg = calc_over_time_meel?(target_employee) ? 1 : 0
   end
 
   # 最大退勤時間を越えているか?
-  def over_time?
+  def over_time?(target_employee)
     return false unless self.out_time
-    self.out_time > hourminstr_to_sec(SysConfig.get_configuration('max_out_time','regular').value1)
+    self.out_time > hourminstr_to_sec(target_employee.max_out_time)
   end
 
   # 遅刻かどうか判定
@@ -299,10 +283,11 @@ RAILS_DEFAULT_LOGGER.info("[VACATION USED TOTAL] action: calc_holiday_hour_date!
   end
 
   # 遅刻かどうか計算
-  def calc_come_lately?
+  def calc_come_lately?(target_employee)
     return false unless self.in_time
-    defact = hourminstr_to_sec(SysConfig.get_regular_in_time_defact.value1)
-    pm = hourminstr_to_sec(SysConfig.get_regular_in_time_pm.value1)
+    defact = hourminstr_to_sec(target_employee.regular_in_time_defact)
+    pm = hourminstr_to_sec(target_employee.regular_in_time_pm)
+    # TODO : furukawa : ベタ書き？
     ele_time = hourminstr_to_sec("11:00")
     atype = self.working_type
     #(self.delayed_cancel_flg == 0) and ((atype == 'all_day_working' and self.in_time > defact) or (atype == 'only_AM_working' and self.in_time > defact) or (atype == 'only_PM_working' and self.in_time > pm))
@@ -310,38 +295,41 @@ RAILS_DEFAULT_LOGGER.info("[VACATION USED TOTAL] action: calc_holiday_hour_date!
   end
   
   def calc_come_lately_over_ele_time?
+    # TODO : furukawa : ベタ書き？
     ele_time = hourminstr_to_sec("11:00")
     atype = self.working_type
     ((atype == 'all_day_working' and self.in_time > ele_time) or (atype == 'only_AM_working' and self.in_time > ele_time))
   end
 
   # 早退かどうか計算
-  def calc_leave_early?
+  def calc_leave_early?(target_employee)
     return false unless self.out_time
-    early_am = hourminstr_to_sec(SysConfig.get_regular_out_time_early_am.value1)
-    early_full = hourminstr_to_sec(SysConfig.get_regular_out_time_early_full.value1)
+    early_am = hourminstr_to_sec(target_employee.regular_out_time_early_am)
+    early_full = hourminstr_to_sec(target_employee.regular_out_time_early_full)
+    # TODO : furukawa : ベタ書き？
     ele_time = hourminstr_to_sec("15:00")
     atype = self.working_type
     (atype == 'all_day_working' and self.out_time < early_full) or (atype == 'only_AM_working' and self.out_time < early_am) or (atype == 'only_PM_working' and self.out_time < early_full)
   end
 
   def calc_come_early_over_ele_time?
+    # TODO : furukawa : ベタ書き？
     ele_time = hourminstr_to_sec("15:00")
     atype = self.working_type
     ((atype == 'all_day_working' and self.out_time < ele_time) or (atype == 'only_AM_working' and self.out_time < ele_time))
   end
 
   # TAXI可の残業かどうか計算
-  def calc_over_time_taxi?
+  def calc_over_time_taxi?(target_employee)
     return false unless self.out_time
-    taxi = hourminstr_to_sec(SysConfig.get_regular_over_time_taxi.value1)
+    taxi = hourminstr_to_sec(target_employee.regular_over_time_taxi)
     (self.can_over_time? and self.out_time > taxi)
   end
 
   # 残業食事代可の残業かどうか計算
-  def calc_over_time_meel?
+  def calc_over_time_meel?(target_employee)
     return false unless self.out_time
-    meel = hourminstr_to_sec(SysConfig.get_regular_over_time_meel.value1)
+    meel = hourminstr_to_sec(target_employee.regular_over_time_meel)
     (self.can_over_time? and self.out_time > meel)
   end
 
@@ -358,20 +346,35 @@ RAILS_DEFAULT_LOGGER.info("[VACATION USED TOTAL] action: calc_holiday_hour_date!
     end
   end
 
-  def init_default_value
-    if self.action_type == 'blank'
-      conf_regular_in_time_regular = SysConfig.get_regular_in_time_regular
-      conf_regular_out_time_regular = SysConfig.get_regular_out_time_regular
-      conf_rest_hour = SysConfig.get_rest_hour_regular
-
+  def init_default_value(target_employee, holiday_application = nil)
+    if holiday_application
+      self.working_type = holiday_application.working_type
+    else
       self.working_type = (self.holiday? ? 'on_holiday_working' : 'all_day_working')
-      self.in_time = hourminstr_to_sec(conf_regular_in_time_regular.value1)
-      self.rest_hour = hourminstr_to_sec(conf_rest_hour.value1)
-      self.out_time = hourminstr_to_sec(conf_regular_out_time_regular.value1)
-      self.application_date = Time.now
     end
+
+    self.in_time   = case self.working_type
+                     when 'all_day_working', 'on_holiday_working', 'only_AM_working'
+                       hourminstr_to_sec(target_employee.regular_in_time)
+                     when 'only_PM_working'
+                       hourminstr_to_sec(target_employee.regular_in_time_pm)
+                     end
+    self.out_time  = case self.working_type
+                     when 'all_day_working', 'on_holiday_working', 'only_PM_working'
+                       hourminstr_to_sec(target_employee.regular_out_time)
+                     when 'only_AM_working'
+                       hourminstr_to_sec(target_employee.regular_out_time_early_am)
+                     end
+    self.rest_hour = case self.working_type
+                     when 'all_day_working', 'on_holiday_working'
+                       hourminstr_to_sec(target_employee.regular_rest_hour)
+                     when 'only_AM_working', 'only_PM_working'
+                       hourminstr_to_sec(target_employee.regular_rest_hour_half)
+                     end
+
+    self.application_date = Time.now
   end
-  
+
   def set_time_str(param)
     self.in_time = hourminstr_to_sec(param.delete(:in_time)) if !param[:in_time].blank?
     self.out_time = hourminstr_to_sec(param.delete(:out_time)) if !param[:out_time].blank?

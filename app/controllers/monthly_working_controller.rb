@@ -16,11 +16,7 @@ class MonthlyWorkingController < ApplicationController
   end
 
   def list
-    if params[:user_id]
-      @target_user = User.find(params[:user_id], :conditions => "deleted = 0")
-    else
-      @target_user = current_user
-    end
+    set_target_user
     set_list_info(params[:id], @target_user)
   end
   

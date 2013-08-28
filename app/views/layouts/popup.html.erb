@@ -4,8 +4,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta http-equiv="Content-Script-Type" content="text/javascript">
   <meta http-equiv="Content-Style-Type" content="text/css">
-  <% envname = ActiveRecord::Base.configurations[RAILS_ENV]['envname'] %>
-  <title>THE GoldRush Project<%=envname.blank? ? '' : " #{envname}環境"%></title>
+  <title>THE GoldRush Project <%=Rails.env%>環境</title>
   <link rel="icon" href="<%=image_path 'favicon.png'%>" type="image/vnd.microsoft.icon">
   <%= stylesheet_link_tag 'application', :media => 'screen,aural' %>
   <%#= stylesheet_link_tag 'print', :media => 'print' %>
@@ -27,7 +26,7 @@
 <div style="clear:both;"/>
 </div>
 <hr />
-<div style="float: left;padding-left: 1em;"><%= envname ? envname + '環境' : '' %></div>
+<div style="float: left;padding-left: 1em;"><%=Rails.env%>環境</div>
 <div style="text-align:right;padding-right: 1em;color: #AAAAAA">c <%=Date.today.year%> GoldRush Project. All Rights Reserved.</div>
 </body>
 </html>

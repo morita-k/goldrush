@@ -103,45 +103,47 @@ class EmployeeController < ApplicationController
     end
   end
 
-  def new
-    @page_title = '[アカウント新規作成]'
-    @user = User.find(params[:id])
-    if @user.employee
-      raise Exception.new("Employee is exists.")
-    end
+  # TODO : furukawa : 使ってない？
+  # def new
+  #   @page_title = '[アカウント新規作成]'
+  #   @user = User.find(params[:id])
+  #   if @user.employee
+  #     raise Exception.new("Employee is exists.")
+  #   end
 
-    @employee = Employee.new
-    conf_hour_total = SysConfig.get_hour_total_full
-    @employee.regular_working_hour = conf_hour_total.value1.split(':')[0]
-    @calendar = true
-    @departments = Department.find(:all, :order => "display_order") 
+  #   @employee = Employee.new
+  #   conf_hour_total = SysConfig.get_hour_total_full
+  #   @employee.regular_working_hour = conf_hour_total.value1.split(':')[0]
+
+  #   @calendar = true
+  #   @departments = Department.find(:all, :order => "display_order") 
     
-    return unless request.post?
-    ActiveRecord::Base.transaction do
-      parseTimes(params)
-      @employee = Employee.new(params[:employee])
+  #   return unless request.post?
+  #   ActiveRecord::Base.transaction do
+  #     parseTimes(params)
+  #     @employee = Employee.new(params[:employee])
 
-      @employee.employee_code = @employee.insurance_code.to_i + 9800
+  #     @employee.employee_code = @employee.insurance_code.to_i + 9800
 
-      @employee.user_id = @user.id
-      @employee.save!
+  #     @employee.user_id = @user.id
+  #     @employee.save!
 
-      # アップロードファイルの保存
-      store_upload_file
+  #     # アップロードファイルの保存
+  #     store_upload_file
 
-      # 初期有給休暇を作成
-      Vacation.create_init_vacation(@user, @employee.entry_date.to_date)
-    end
+  #     # 初期有給休暇を作成
+  #     Vacation.create_init_vacation(@user, @employee.entry_date.to_date)
+  #   end
 
-    #交通費登録へ
-    redirect_to(:controller => 'route_expense_detail', :action => 'new', :id => @user, :back_to => back_to)
-    flash[:notice] = _("Thanks for signing up!")
-  rescue ValidationAbort
-    flash[:err] = $!.to_s
-    render :action => 'new'
-  rescue ActiveRecord::RecordInvalid
-    render :action => 'new'
-  end
+  #   #交通費登録へ
+  #   redirect_to(:controller => 'route_expense_detail', :action => 'new', :id => @user, :back_to => back_to)
+  #   flash[:notice] = _("Thanks for signing up!")
+  # rescue ValidationAbort
+  #   flash[:err] = $!.to_s
+  #   render :action => 'new'
+  # rescue ActiveRecord::RecordInvalid
+  #   render :action => 'new'
+  # end
 
   def edit
     @calendar = true
@@ -149,15 +151,20 @@ class EmployeeController < ApplicationController
     @user = User.find(params[:id], :conditions => "deleted = 0 ")
     unless @employee = @user.employee
       @employee = Employee.new(:user_id => @user.id)
-      conf_hour_total = SysConfig.get_hour_total_full
-      @employee.regular_working_hour = conf_hour_total.value1.split(':')[0]
+      # conf_hour_total = SysConfig.get_hour_total_full
+      # @employee.regular_working_hour = conf_hour_total.value1.split(':')[0]
     end
 
+    # TODO : furukawa : 基本勤務時間などが未登録の人がいた場合、下のコメントアウトを外すとデフォルトの値がformに現れる。
+    # ただし、登録済のデータも上書きされてしまうので注意。
+    # ・・・というか、SQLで直接入れた方がいいかもねー。
+    # @employee.init_default_working_times
     @departments = Department.find(:all, :order => "display_order") 
     
     if request.post?
       parseTimes(params)
       @employee.attributes = params[:employee]
+      @employee.set_regular_working_hour
 
       # アップロードファイルの保存
       store_upload_file
@@ -175,6 +182,31 @@ class EmployeeController < ApplicationController
       end
       flash[:notice] = _("Update your infomation.")
     end
+  rescue ValidationAbort
+    flash[:warning] = $!
+  rescue ActiveRecord::RecordInvalid
+  end
+
+  def update
+    parseTimes(params)
+    @employee.attributes = params[:employee]
+    @employee.set_regular_working_hour
+
+    # アップロードファイルの保存
+    store_upload_file
+
+#      @employee.employee_code = @employee.insurance_code.to_i + 9800
+#      old_employee = Employee.find(@user.employee.id)
+
+    @employee.save!
+
+    request.env['HTTPS'] = nil unless params[:https]
+    if params[:back_to].blank?
+      redirect_to(:controller => 'employee', :action => 'list')
+    else
+      redirect_to params[:back_to]
+    end
+    flash[:notice] = _("Update your infomation.")
   rescue ValidationAbort
     flash[:warning] = $!
   rescue ActiveRecord::RecordInvalid

@@ -91,7 +91,7 @@
 
 <% unless session[:msgids].to_s.split(",").include?("keiyaku1") %>
 <div class="alert alert-block">
- <button type="button" class="close" data-dismiss="alert" onclick="fixmessage('<%=url_for(:controller => :users, :action => :fixmessage, :id => '123', :authenticity_token => form_authenticity_token)%>')">&times;</button>
+ <button type="button" class="close" data-dismiss="alert" onclick="fixmessage('<%=url_for(:controller => :users, :action => :fixmessage, :id => 'keiyaku1', :authenticity_token => form_authenticity_token)%>')">&times;</button>
  <h4>注意!</h4>
  <p>
    ※契約を登録する前に、人材所属を前もって登録しておく必要があります。<br/>

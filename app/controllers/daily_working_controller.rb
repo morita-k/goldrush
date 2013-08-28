@@ -37,11 +37,7 @@ class DailyWorkingController < ApplicationController
   end
 
   def edit
-    if target_user_id = params[:user_id]
-      @target_user = User.find(target_user_id, :conditions => "deleted = 0")
-    else
-      @target_user = current_user
-    end
+    set_target_user
 
     @check_errors = []
     #@calendar = true
@@ -51,11 +47,10 @@ class DailyWorkingController < ApplicationController
       @daily_working = DailyWorking.find(params[:id], :conditions => "deleted = 0 ")
     end
     if @daily_working
-      @daily_working.init_default_value
       if holiday_application = @daily_working.get_holiday_application
-        @daily_working.working_type = holiday_application.working_type
-        flash[:notice] = @daily_working.working_type_name + "申請が提出されています"
+        flash[:notice] = holiday_application.working_type_name + "申請が提出されています"
       end
+      @daily_working.init_default_value(@target_employee, holiday_application) if @daily_working.action_type == 'blank'
     else
       flash[:notice] = "先に作業日報を作成してください。"
       redirect_to params[:back_to]
@@ -64,6 +59,7 @@ class DailyWorkingController < ApplicationController
   end
 
   def update
+    set_target_user
 #    parseTimes(params)
     @daily_working = DailyWorking.find(params[:id], :conditions => "deleted = 0 ")
     # もしFixした休日出勤を変更するときは代休時間の計算をしなければならない
@@ -110,8 +106,8 @@ class DailyWorkingController < ApplicationController
       return render(:action => 'edit')
     end
     # 最大退勤時間のチェック
-    if @daily_working.over_time?
-      flash[:notice] = "最大退勤時間を越えています。#{SysConfig.get_configuration('max_out_time','regular').value1}以降は翌日の登録にしてください"
+    if @daily_working.over_time?(@target_employee)
+      flash[:notice] = "最大退勤時間を越えています。#{@target_employee.max_out_time}以降は翌日の登録にしてください"
       return render(:action => 'edit')
     end
 
@@ -131,7 +127,7 @@ class DailyWorkingController < ApplicationController
     end
 
     #@daily_working.convert10minutes
-    if @daily_working.calc_come_lately? and !@daily_working.get_other_application('come_lately_app')
+    if @daily_working.calc_come_lately?(@target_employee) and !@daily_working.get_other_application('come_lately_app')
       if @daily_working.calc_come_lately_over_ele_time?
         flash[:notice] += "午前休申請が出ていませんので、登録ができません。午前休申請、もしくは午後休が重なる場合は休暇系の申請を作成して下さい。<br/>"
         @check_errors << 'only_PM_working'
@@ -140,8 +136,9 @@ class DailyWorkingController < ApplicationController
         @check_errors << 'come_lately_app'
       end
     end
-    if @daily_working.calc_leave_early? && !@daily_working.get_other_application('leave_early_app')
+    if @daily_working.calc_leave_early?(@target_employee) && !@daily_working.get_other_application('leave_early_app')
       if @daily_working.calc_come_early_over_ele_time?
+        # TODO : furukawa : たぶんここ違う。ifとelse逆？
         flash[:notice] += "午後休申請が出ていませんので、登録ができません。午後休申請、もしくは午前休が重なる場合は休暇系の申請を作成して下さい。<br/>"
         @check_errors << 'only_AM_working'
       else
@@ -149,7 +146,7 @@ class DailyWorkingController < ApplicationController
         @check_errors << 'leave_early_app'
       end
     end
-    if @daily_working.calc_over_time_taxi? && !@daily_working.get_other_application('over_time_app')
+    if @daily_working.calc_over_time_taxi?(@target_employee) && !@daily_working.get_other_application('over_time_app')
       flash[:notice] += '残業申請が出ていませんので、登録ができません。残業申請を作成して下さい。<br/>'
       @check_errors << "over_time_app"
     end
@@ -160,7 +157,7 @@ class DailyWorkingController < ApplicationController
 
 
     if @daily_working.need_calc_total_hour?
-      @daily_working.calc_working_hour
+      @daily_working.calc_working_hour(@target_employee)
     else
       @daily_working.clear_working_hour # 時間が関係しない区分(欠勤など)の場合は、0クリア
     end
@@ -168,7 +165,7 @@ class DailyWorkingController < ApplicationController
       @daily_working.hour_total = 60 * 60 * @daily_working.user.employee.regular_working_hour
     end
 
-    @daily_working.calc_flags # 遅刻早退などのフラグを計算する
+    @daily_working.calc_flags(@target_employee) # 遅刻早退などのフラグを計算する
     # とりあえず、updatedにする 2011/3/9 全日出勤から各休暇届けに変更したときはfixedからupdatedにする
     if @daily_working.action_type != 'fixed' || (old_working_type == 'all_day_working' && @daily_working.working_type != 'all_day_working')
       @daily_working.action_type = 'updated'
@@ -200,6 +197,21 @@ class DailyWorkingController < ApplicationController
     render :action => 'edit', :id => params[:id]
   end
 
+  # 申請が出てる時はこここないから、単純に登録でいい。
+  def registr_all_day_working
+    set_target_user
+    @daily_working = DailyWorking.find(params[:daily_working_id], :conditions => "deleted = 0 ")
+    @daily_working.init_default_value(@target_employee)
+    @daily_working.calc_working_hour(@target_employee)
+    @daily_working.action_type = 'fixed'
+    set_user_column @daily_working
+    ActiveRecord::Base.transaction do
+      @daily_working.save!
+    end
+    flash[:notice] = "日報を全出で登録しました。"
+    redirect_to(params[:back_to] || {:controller => 'monthly_working', :action => 'list'})
+  end
+
   def destroy
     #DailyWorking.find(params[:id]).destroy
     daily_working = DailyWorking.find(params[:id], :conditions => "deleted = 0 ")
@@ -225,5 +237,4 @@ class DailyWorkingController < ApplicationController
     end
     redirect_to(params[:back_to] || {:controller => '/'})
   end
-
 end
