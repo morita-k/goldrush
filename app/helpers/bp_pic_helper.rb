@@ -39,7 +39,7 @@ module BpPicHelper
 
   private
   def working_status_update_link(id, status)
-    link_to(getLongType("working_status",status), {:controller => :bp_pic, :action => :update_working_status, :id => id, :working_status => status})
+    link_to(getLongType("working_status",status), {:controller => :bp_pic, :action => :update_working_status, :id => id, :working_status => status}, :confirm => "勤務ステータスを「#{getLongType("working_status",status)}」に変更します。よろしいですか?")
   end
 
 end
