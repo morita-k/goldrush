@@ -23,10 +23,21 @@ class ImportMail < ActiveRecord::Base
     end
   end
   
+  def ImportMail.import_mail(m, src)
+    open(File.join(Dir.tmpdir, 'goldrush_import_mail.lock'), 'w') do |f|
+      begin
+        f.flock(File::LOCK_EX)
+        ImportMail.import_mail_in(m, src)
+      ensure
+        f.flock(File::LOCK_UN)
+      end
+    end
+  end
+  
   # メールを取り込む
   #  m   : 取り込むMailオブジェクト
   #  src : 取り込むメールのソーステキスト
-  def ImportMail.import_mail(m, src)
+  def ImportMail.import_mail_in(m, src)
     now = Time.now
     ActiveRecord::Base::transaction do
       import_mail = ImportMail.new
@@ -48,7 +59,7 @@ class ImportMail < ActiveRecord::Base
       import_mail.message_id = m.message_id
 
       # プロセス間で同期をとるために何でもいいから存在するレコードをロック(users#1 => systemユーザー)
-      User.find(1, :lock => true)
+      #User.find(1, :lock => true)
       
       if ImportMail.where(message_id: import_mail.message_id, deleted: 0).first || ImportMail.where(mail_from: import_mail.mail_from, mail_subject: import_mail.mail_subject,received_at: ((import_mail.received_at - 1.day) .. import_mail.received_at + 1.day), deleted: 0).first
         puts "mail duplicated: see system_logs"
