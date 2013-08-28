@@ -289,7 +289,7 @@ class BusinessPartnerController < ApplicationController
     else
       flash[:notice] = "全#{cnt}件のインポートが完了しました"
     end
-    redirect_to(back_to || {:action => :list})
+    redirect_to(back_to || {controller: 'bp_pic', action: 'index'})
   end
   
   def change_star
@@ -302,5 +302,18 @@ class BusinessPartnerController < ApplicationController
       set_user_column business_partner
       business_partner.save!
     render :text => business_partner.starred
+  end
+
+  # 入力支援機能の更新用メソッド
+  def update_quick_input
+    ActiveRecord::Base.transaction do
+      @business_partner = BusinessPartner.find(params[:business_partner][:id])
+      @business_partner.attributes = params[:business_partner]
+      set_user_column @business_partner
+      @business_partner.save!
+    end
+    
+    flash[:notice] = 'BusinessPartner was successfully updated.'
+    redirect_to( params[:back_to] || {controller: 'bp_pic', action: 'index'})
   end
 end

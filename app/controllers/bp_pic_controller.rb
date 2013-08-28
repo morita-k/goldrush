@@ -267,39 +267,38 @@ class BpPicController < ApplicationController
     end
   end
 
+  # 入力支援機能に表示する取引先データを生成する
   def quick_input
-    params[:popup] ||= "1"
+    params[:business_partner_id] ||= get_current_uniquely_bp_ids.first
     params[:page] ||= "1"
-    
-    if params[:current_bp_id].nil?
-      @current_business_partner = get_current_page_uniquely_bps.first
-    else
-      @current_business_partner = BusinessPartner.where(id: params[:current_bp_id].to_i).first
-    end
-  end
 
+    # idがnilだった場合、@business_partnerをnilにしたいのでwhere
+    @business_partner ||= BusinessPartner.where(id: params[:business_partner_id]).first
+
+    render template: 'business_partner/quick_input', layout: 'blank'
+  end
+  
+  # 入力支援機能の次の取引先IDを生成し、最読み込みさせる
   def next_bp
-    current_bp_id = params[:current_bp_id]
+    current_bp_id = params[:business_partner_id].to_i
     page = params[:page].to_i
-    current_page_bps = get_current_page_uniquely_bps
-    index = current_page_bps.map(&:id).index(current_bp_id.to_i)
+    current_page_bp_ids = get_current_uniquely_bp_ids
+    index = current_page_bp_ids.index(current_bp_id)
 
     if current_bp_id.nil?
       # 支援機能起動時の処理
-      next_bp_id = current_page_bps.first.id
+      next_bp_id = current_page_bp_ids.first
     else
       # 次の取引先が存在したらその取引先を、いなければ次のページの最初の取引先を返す
-      if !index.nil? && next_bp = current_page_bps[index + 1]
-        next_bp_id = next_bp.id
+      if !index.nil? && next_bp = current_page_bp_ids[index.succ]
+        next_bp_id = next_bp
       else
         page += 1
         next_bp_id = nil
       end
     end
 
-    # @current_business_partner = next_bp
-
-    redirect_to action: 'quick_input', page: page, current_bp_id: next_bp_id, popup: 1
+    redirect_to action: 'quick_input', callback: :setBpPic, popup: 1, page: page, business_partner_id: next_bp_id, back_to: params[:back_to]
   end
 
 private
@@ -318,7 +317,7 @@ private
     trimed_bp_name
   end
 
-  def get_current_page_uniquely_bps
+  def get_current_uniquely_bp_ids
     session[:bp_pic_search] ||= {}
     incl = []
     if params[:search_button]
@@ -329,13 +328,13 @@ private
 
     # 検索条件を処理
     cond, incl, order_by = make_conditions
-    
     bp_pics = BpPic.includes(incl).where(cond).order(order_by).page(params[:page]).per(current_user.per_page)
-
-    bp_pics.map(&:business_partner).uniq
+    
+    bp_pics.map(&:business_partner).map(&:id).uniq
   end
 
-  def next_page(current_page)
-    redirect_to action: "index", page: (current_page + 1).to_s
-  end
+  # def next_page
+  #   params[:page] ||= "1"
+  #   redirect_to action: "index", page: params[:page].to_i.succ
+  # end
 end
