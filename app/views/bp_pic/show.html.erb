@@ -1,3 +1,14 @@
+<% unless @bp_pic.working? || session[:msgids].to_s.split(",").include?("taishoku") %>
+<div class="alert alert-block">
+  <button type="button" class="close" data-dismiss="alert" onclick="fixmessage('<%=url_for(:controller => :users, :action => :fixmessage, :id => 'taishoku', :authenticity_token => form_authenticity_token)%>')">&times;</button>
+  <h4>注意!</h4>
+  <p>
+    ※「後任者登録」リンクをクリックすると、後任者を新規登録します。<br/>
+    　既に登録済みの担当者を後任に指定したい場合は、「編集」リンクをクリックして編集画面から指定してください。<br/>
+  </p>
+</div>
+<% end %>
+
 <table class="show_table">
 <tr>
   <th><%= getLongName('business_partners', 'business_partner_name') %></th><td><%=link_to @bp_pic.business_partner.business_partner_name, :controller => :business_partner, :action => :show, :id => @bp_pic.business_partner_id %></td>
