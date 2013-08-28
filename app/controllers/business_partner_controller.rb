@@ -289,7 +289,7 @@ class BusinessPartnerController < ApplicationController
     else
       flash[:notice] = "全#{cnt}件のインポートが完了しました"
     end
-    redirect_to(back_to || {controller: 'bp_pic', action: 'index'})
+    redirect_to(back_to || {:action => :list})
   end
   
   def change_star

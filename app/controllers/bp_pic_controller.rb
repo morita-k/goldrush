@@ -278,7 +278,7 @@ class BpPicController < ApplicationController
     render template: 'business_partner/quick_input', layout: 'blank'
   end
   
-  # 入力支援機能の次の取引先IDを生成し、最読み込みさせる
+  # 入力支援機能の次の取引先IDを生成し、再読み込みさせる
   def next_bp
     current_bp_id = params[:business_partner_id].to_i
     page = params[:page].to_i
