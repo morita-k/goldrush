@@ -103,7 +103,7 @@ class ImportMailJIET < ImportMail
       business_partner_name: mail["会社名"],
       business_partner_short_name: mail["会社名"],
       business_partner_name_kana: mail["会社名"],
-      sales_status_type: "prospect",
+      sales_status_type: "listup",
       basic_contract_status_type: "none",
       nda_status_type: "none",
       url: mail["URL"],
