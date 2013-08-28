@@ -43,7 +43,7 @@ class BusinessPartner < ActiveRecord::Base
         bp.business_partner_name = company_name
         bp.business_partner_short_name = company_name
         bp.business_partner_name_kana = company_name
-        bp.sales_status_type = 'prospect'
+        bp.sales_status_type = 'listup'
         bp.basic_contract_status_type ||= 'none'
         bp.nda_status_type ||= 'none'
         bp.upper_flg = upper_flg
