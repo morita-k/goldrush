@@ -30,7 +30,7 @@
   <th><%= getLongName('business_partners', 'ceo_name') %></th><td><%=h @business_partner.ceo_name %></td>
 </tr>
 <tr>
-  <th><%= getLongName('business_partners', 'url') %></th><td><%=link_to h(@business_partner.url), @business_partner.url, target: 'blank' %></td>
+  <th><%= getLongName('business_partners', 'url') %></th><td><%=link_to h(@business_partner.url), @business_partner.url, target: '_blank' %></td>
 </tr>
 <tr>
   <th><%= getLongName('business_partners', 'zip') %></th><td><%=h @business_partner.zip %></td>
