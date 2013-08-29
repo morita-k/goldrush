@@ -1,0 +1,83 @@
+<% if @business_partner.nil? %>
+  <script type=text/javascript>
+    alert('次の取引先データがありません。\n入力支援機能を終了します。');
+    window.close()
+  </script>
+<% else %>
+  <div class="container-fluid">
+  <div class="row-fluid" id='input_form'>
+    
+    <div class="span12">
+      <%= content_tag :h2, @business_partner.business_partner_name %>
+      <button class="btn btn-success" type="button" onclick='getNextBP(<%= @business_partner.id %>, <%= params[:page] %>)'>次の企業</button>
+      <button class="btn btn-danger" type="button" onclick='finishConfirm()'>入力終了</button>
+    <!-- </div> -->
+    
+      <%= form_tag({controller: 'business_partner', action: 'update_quick_input'}, class: "form-inline") do %>
+        <fieldset>
+          <legend>企業情報入力</legend>
+          <%= hidden_field 'business_partner', 'id' %>
+          <label><%=getLongName('business_partners','establishment_year') + ': '%></label>
+          <%= text_field 'business_partner', 'establishment_year', placeholder: getLongName('business_partners','establishment_year') %>
+          <label><%=getLongName('business_partners','employee_number') + ': '%></label>
+          <%= text_field 'business_partner', 'employee_number', placeholder: getLongName('business_partners','employee_number') %>
+          <label><%=getLongName('business_partners','share_capital') + ': '%></label>
+          <%= text_field 'business_partner', 'share_capital', placeholder: getLongName('business_partners','share_capital') %>
+          <label><%=getLongName('business_partners','email') + ': '%></label>
+          <%= text_field 'business_partner', 'email', placeholder: getLongName('business_partners','email') %>
+          <%= hidden_field_tag 'back_to', request_url %>
+          <br/>
+          <%= submit_tag '更新', class: "btn btn-success", confirm: @business_partner.business_partner_name + 'の情報を更新します。よろしいですか？' %>
+        </fieldset>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="row-fluid">
+    <div class="span12">
+      <% if @business_partner.url.blank? %>
+          <!-- <script type="text/javascript">alert('取引先URLが入力されていません。')</script> -->
+      <% end %>
+      <iframe id='iframe_bp' src="<%= @business_partner.url %>" width=100% %>このブラウザは対応していません。</iframe>
+    </div>
+  </div>
+
+  </div>
+
+  <script type="text/javascript">
+    function heightResize() {
+      // 現在の画面の高さと、フォームの高さを取得
+      var mainBoxHeight  = window.innerHeight;
+      var formHeight = document.getElementById('input_form').offsetHeight;
+
+      // 画面内に収まるようiframeの高さを調節。-20はパディング。
+      window.parent.document.getElementById('iframe_bp').style.height = (mainBoxHeight - formHeight - 20) + 'px';
+    }
+    window.onload = heightResize();
+
+    // resizeイベントが完了したときにiframeの高さをリサイズする。
+    function dynamicResize() {
+      var timer = false;
+      $(window).resize(function() {
+        if (timer !== false) {
+          clearTimeout(timer);
+        }
+        timer = setTimeout(function() {
+          heightResize();
+        }, 200);
+      })
+    }
+    window.onresize = dynamicResize();
+
+    function getNextBP(id, page, url) {
+      // 新しい取引先を取得して再描画
+      location.href = 'next_bp?popup=1&page=' + page + '&business_partner_id=' + id
+    }
+
+    function finishConfirm() {
+      if(window.confirm('入力支援機能を終了します。\nよろしいですか？')) {
+        window.close()
+      }
+    }
+  </script>
+<% end %>

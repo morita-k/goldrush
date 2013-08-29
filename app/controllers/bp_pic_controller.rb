@@ -266,7 +266,41 @@ class BpPicController < ApplicationController
       end
     end
   end
+
+  # 入力支援機能に表示する取引先データを生成する
+  def quick_input
+    params[:business_partner_id] ||= get_current_uniquely_bp_ids.first
+    params[:page] ||= "1"
+
+    # idがnilだった場合、@business_partnerをnilにしたいのでwhere
+    @business_partner ||= BusinessPartner.where(id: params[:business_partner_id]).first
+
+    render template: 'business_partner/quick_input', layout: 'blank'
+  end
   
+  # 入力支援機能の次の取引先IDを生成し、再読み込みさせる
+  def next_bp
+    current_bp_id = params[:business_partner_id].to_i
+    page = params[:page].to_i
+    current_page_bp_ids = get_current_uniquely_bp_ids
+    index = current_page_bp_ids.index(current_bp_id)
+
+    if current_bp_id.nil?
+      # 支援機能起動時の処理
+      next_bp_id = current_page_bp_ids.first
+    else
+      # 次の取引先が存在したらその取引先を、いなければ次のページの最初の取引先を返す
+      if !index.nil? && next_bp = current_page_bp_ids[index.succ]
+        next_bp_id = next_bp
+      else
+        page += 1
+        next_bp_id = nil
+      end
+    end
+
+    redirect_to action: 'quick_input', popup: params[:popup], page: page, back_to: params[:back_to], business_partner_id: next_bp_id
+  end
+
 private
   def valid_of_business_partner_id
     if params[:business_partner_id].blank?
@@ -283,4 +317,24 @@ private
     trimed_bp_name
   end
 
+  def get_current_uniquely_bp_ids
+    session[:bp_pic_search] ||= {}
+    incl = []
+    if params[:search_button]
+      set_conditions
+    elsif params[:clear_button]
+      session[:bp_pic_search] = {}
+    end
+
+    # 検索条件を処理
+    cond, incl, order_by = make_conditions
+    bp_pics = BpPic.includes(incl).where(cond).order(order_by).page(params[:page]).per(current_user.per_page)
+    
+    bp_pics.map(&:business_partner).map(&:id).uniq
+  end
+
+  # def next_page
+  #   params[:page] ||= "1"
+  #   redirect_to action: "index", page: params[:page].to_i.succ
+  # end
 end

@@ -303,4 +303,26 @@ class BusinessPartnerController < ApplicationController
       business_partner.save!
     render :text => business_partner.starred
   end
+
+  # 入力支援機能の更新用メソッド
+  def update_quick_input
+    begin
+      ActiveRecord::Base.transaction do
+        @business_partner = BusinessPartner.find(params[:business_partner][:id])
+        @business_partner.attributes = params[:business_partner]
+
+        if @business_partner.sales_status_type == 'listup'
+          @business_partner.sales_status_type = 'prospect'
+        end
+        set_user_column @business_partner
+        @business_partner.save!
+      end
+      flash[:notice] = 'BusinessPartner was successfully updated.'
+    
+    rescue ActiveRecord::RecordInvalid
+      flash[:err] = '更新に失敗しました'
+    end
+    
+    redirect_to( params[:back_to] || {controller: 'bp_pic', action: 'index'})
+  end
 end
