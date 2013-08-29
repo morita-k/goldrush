@@ -298,7 +298,7 @@ class BpPicController < ApplicationController
       end
     end
 
-    redirect_to action: 'quick_input', callback: :setBpPic, popup: 1, page: page, business_partner_id: next_bp_id, back_to: params[:back_to]
+    redirect_to action: 'quick_input', popup: params[:popup], page: page, back_to: params[:back_to], business_partner_id: next_bp_id
   end
 
 private

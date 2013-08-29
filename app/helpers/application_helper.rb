@@ -12,8 +12,9 @@ module ApplicationHelper
     url_for :controller => :bp_pic, :action => :list, :popup =>1, :callback => callback
   end
 
-  def url_for_bp_pic_input_popup(callback = :setBpPic)
-    url_for :controller => :bp_pic, :action => :quick_input, :popup =>1, :callback => callback
+  def url_for_bp_pic_input_popup()
+    params[:page] ||= "1"
+    url_for :controller => :bp_pic, :action => :quick_input, :popup =>1, :page => params[:page]
   end
 
   def bp_pic_edit_icon(bp_pic)
