@@ -49,12 +49,13 @@
 <br />
 <% end %>
 
-<%= form_for :addGroup, :url => {:controller => :bp_pic, :action => :add_bp_pic_into_selected_group, :method => :post} do |f| %>
+<%= form_for :addGroup, :url => {:controller => :bp_pic, :action => :proc_bp_pic_ids} do |f| %>
   <%= hidden_field_tag 'back_to', request_url %>
   
   <% unless popup? %>
     <p>
       <%= link_to "<button>選択した取引先担当をグループに追加</button>".html_safe, "#addGroupModal", {:rel => "leanModal"} %>
+      <%= submit_tag 'あいさつメール作成', :name => "contact_mail_new_button" ,:onclick => "if(!checkTest()){return false;}"%>
     </p>
     <script type="text/javascript">
       <!--
@@ -71,6 +72,33 @@
       function groupSelectedCheck(){
         return $('#groupTable input[type=\"checkbox\"]:checked').size() != 0;
       };
+
+      function checkTest(){
+        var ids = $('[name=\"ids[]\"]:checked');
+        if(ids.length <= 0){
+          alert('取引先担当者を選択してください。');
+          return false;
+        }
+        var errors = [];
+        var sales = [];
+        $.each(ids, function(i, obj) {
+          var sales_pic = $(obj).closest("tr").find("a.sales_pic")[0].name;
+          if(sales_pic.length == 0){
+            errors.push(">" + $(obj).closest("tr").find("a.bp_name").html() + " " + $(obj).closest("tr").find("a.bp_pic_name").html());
+          };
+          sales.push(sales_pic);
+        });
+        if(errors.length > 0){
+          alert("担当営業が設定されていません。\n" + errors.join("\n"));
+          return false;
+        }
+        if($.unique(sales).length > 1){
+          alert("複数の取引先担当者にメールを送信する場合は、担当営業が同一である必要があります。\n担当営業を変更するか、担当営業毎に分けてメールを送信してください。")
+          return false;
+        }
+        return true;
+      };
+
     //-->
     </script>
     <div id="addGroupModal" style="display: none;background: #eeeeee;border-radius: 5px;-webkit-border-radius: 5px;padding:5px;">
@@ -93,7 +121,7 @@
         </table>
         <div style="float: right">
           <%= submit_tag 'キャンセル', :onclick => "return false;", :class => "modal_close" %>
-          <%= submit_tag '　　追加　　', :onclick => "if(!groupSelectedCheck()){alert('グループを選択してください。');return false;}else{if(!confirm('選択した担当者をグループに追加します。よろしいですか？')){return false;}}" %>
+          <%= submit_tag '　　追加　　', :onclick => "if(!groupSelectedCheck()){alert('グループを選択してください。');return false;}else{if(!confirm('選択した担当者をグループに追加します。よろしいですか？')){return false;}}", :name => "add_group_button" %>
         </div>
       </p>
     </div>
@@ -108,7 +136,7 @@
       <th><%=getShortName('bp_pics', 'business_partner_id') %></th>
       <% if !popup? %>
       <th><%=getShortName('business_partners', 'basic_contract_status_type') %></th>
-      <th><%=getShortName('business_partners', 'nda_status_type') %></th>
+      <th>NDA</th>
       <% end %>
       <th <%= !popup? && "colspan=2"%>><%=getShortName('bp_pics', 'bp_pic_name') %></th>
       <th><%=getShortName('bp_pics', 'tel_mobile') %></th>
@@ -128,22 +156,24 @@
           <td><%= star_links(bp_pic) %> <%=link_to h(bp_pic.usefulname), '#', :onClick => "setBpPicToParentWindow(#{bp_pic.id},'#{bp_pic.usefulname}', '#{bp_pic.business_partner_name}');return false;" %></td>
         <% else %>
           <td><%= check_box_tag 'ids[]', bp_pic.id, false %></td>
-          <td><%= star_links(bp_pic.business_partner) %> <%=back_to_link bp_pic.business_partner.business_partner_name, {:controller => :business_partner, :action => :show, :id => bp_pic.business_partner} %></td>
+          <td><%= star_links(bp_pic.business_partner) %> <%=back_to_link bp_pic.business_partner.business_partner_name, {:controller => :business_partner, :action => :show, :id => bp_pic.business_partner}, {:class => 'bp_name'} %></td>
           <td><%= get_basic_contract_status_type_text(bp_pic.business_partner) %></td>
           <td><%= get_nda_status_type_text(bp_pic.business_partner) %></td>
-          <td style="border-right-color: silver;"><%= star_links(bp_pic) %> <%=back_to_link bp_pic.usefulname, {:action => :show, :id => bp_pic} %>
+          <td style="border-right-color: silver;"><%= star_links(bp_pic) %> <%=back_to_link bp_pic.usefulname, {:action => :show, :id => bp_pic}, {:class => 'bp_pic_name'} %>
             <% unless bp_pic.working? %>
               <% links = working_status_links_list(bp_pic) %>(<%= links[0] %>|<%= links[1] %>)
             <% end %>
           </td>
-          <td style="text-align:center;"><%= bp_pic_edit_icon(bp_pic) %></td>
+          <td style="text-align:center;width:16px"><%= bp_pic_edit_icon(bp_pic) %></td>
         <% end %>
         <td><%=h bp_pic.tel_mobile %></td>
-        <td><%=h bp_pic.email1 %></td>
+        <td><div class="overflow_hidden"><%=h bp_pic.email1 %></div></td>
         <% unless popup? %>
           <td><%= bp_pic.jiet == ImportMailJIET::JIET_FLG ? 'JIET' : ''%></td>
           <td><%=h _date(bp_pic.contact_date) %></td>
-          <td style="text-align:center;"><%= back_to_link(image_tag(bp_pic.contact_mail? ? 'icon-check.png' : 'icon-emailforward.png'), contact_mail_new_delivery_mail_path(bp_pic)) %></td>
+          <td style="text-align:center;">
+            <%= back_to_link(image_tag(bp_pic.contact_mail? ? 'icon-check.png' : 'icon-emailforward.png'), {:controller => :delivery_mails, :action => :contact_mail_new, :bp_pic_ids => [bp_pic.id]},{:class => 'sales_pic', :name => (bp_pic.sales_pic.blank? ? "" : bp_pic.sales_pic.id.to_s), :title => "担当営業：" + (bp_pic.sales_pic.blank? ? "未設定" : bp_pic.sales_pic_name), :onclick => "if(this.name == ''){alert('担当営業が設定されていません');return false;}"}) %>
+          </td>
           <td><%=h _time(bp_pic.updated_at) %></td>
         <% end %>
       </tr>
@@ -185,7 +215,7 @@ function setBpPicToParentWindow(bp_pic_id, bp_pic_name, business_partner_name) {
   bp_pic.bp_pic_name = bp_pic_name;
   window.opener.document.<%=params[:callback]%>(bp_pic);
   window.close();
-}
+};
 // -->
 </script>
 <% end # if popup? %>

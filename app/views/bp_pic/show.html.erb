@@ -47,7 +47,7 @@
   <th><%= getLongName('bp_pics', 'sales_pic_id') %></th><td><%=@bp_pic.sales_pic_name %></td>
 </tr>
 <tr>
-  <th><%= getLongName('bp_pics', 'contact_mail_flg') %></th><td><%=@bp_pic.contact_mail_status %><% if @bp_pic.sales_pic %> (<%= back_to_link "あいさつメールを送る", contact_mail_new_delivery_mail_path(@bp_pic)%>)<% end %></td>
+  <th><%= getLongName('bp_pics', 'contact_mail_flg') %></th><td><%=@bp_pic.contact_mail_status %><% if @bp_pic.sales_pic %> (<%= back_to_link @bp_pic.contact_mail_flg == 1 ? "即席メールを送る " : "あいさつメールを送る", :controller => :delivery_mails, :action => :contact_mail_new, :bp_pic_ids => [@bp_pic.id] %>)<% end %></td>
 </tr>
 <tr>
   <th><%= getLongName('bp_pics', 'nondelivery_score') %></th><td><%=@bp_pic.nondelivery_score %><%= @bp_pic.nondelivery? ? '(メール停止)' : '' %></td>
@@ -75,3 +75,5 @@
 <%= link_or_back '戻る', :action => 'list' %>
 
 <%= render :partial => 'remarks/list', :locals => {:remark_key => "bp_pics", :remark_target_id => @bp_pic} %>
+<h3>送信メール一覧</h3>
+<%= render :partial => 'delivery_mails/list' %>

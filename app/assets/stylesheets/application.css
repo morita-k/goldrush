@@ -266,3 +266,10 @@ tr.is_send_target{
     background: #000;
     display: none;
 }
+
+div.overflow_hidden {
+  overflow: hidden;
+  height:1.5em;
+  word-wrap: break-word;
+  word-break: break-all;
+}

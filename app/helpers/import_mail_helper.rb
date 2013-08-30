@@ -72,7 +72,7 @@ module ImportMailHelper
   end
   
   def link_to_detail(import_mail, back_to_url)
-    link_to h(import_mail.mail_subject), :action => :show, :id => import_mail, :back_to => back_to_url
+    link_to h(import_mail.mail_subject), {:action => :show, :id => import_mail, :back_to => back_to_url}, :title => import_mail.mail_subject
   end
   
   def link_to_bp_detail(import_mail)
