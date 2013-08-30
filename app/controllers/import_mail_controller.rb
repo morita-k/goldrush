@@ -18,7 +18,8 @@ class ImportMailController < ApplicationController
       :unwanted => params[:unwanted],
       :registed => params[:registed],
       :proper_flg => params[:proper_flg],
-      :tag => params[:tag]
+      :tag => params[:tag],
+      :starred => params[:starred]
     }
   end
 
@@ -86,6 +87,10 @@ class ImportMailController < ApplicationController
       sql += s
       sql_params += p
       joins += j
+    end
+
+    if !(starred = session[:import_mail_search][:starred]).blank?
+      sql += " and starred > 0"
     end
 
     return [sql_params.unshift(sql), incl, joins]
