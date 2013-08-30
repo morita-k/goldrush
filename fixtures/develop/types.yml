@@ -3650,7 +3650,7 @@ types_183:
   type_description_text: ""
   display_order1: 2
   display_order2: 2
-  logic_bind_type: "bind"
+  logic_bind_type: "unbind"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -3670,7 +3670,7 @@ types_184:
   type_description_text: ""
   display_order1: 3
   display_order2: 3
-  logic_bind_type: "bind"
+  logic_bind_type: "unbind"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -3690,7 +3690,7 @@ types_185:
   type_description_text: ""
   display_order1: 4
   display_order2: 4
-  logic_bind_type: "bind"
+  logic_bind_type: "unbind"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -3710,7 +3710,7 @@ types_186:
   type_description_text: ""
   display_order1: 5
   display_order2: 5
-  logic_bind_type: "bind"
+  logic_bind_type: "unbind"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -3730,7 +3730,7 @@ types_187:
   type_description_text: ""
   display_order1: 6
   display_order2: 6
-  logic_bind_type: "bind"
+  logic_bind_type: "unbind"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -3750,7 +3750,7 @@ types_188:
   type_description_text: ""
   display_order1: 7
   display_order2: 7
-  logic_bind_type: "bind"
+  logic_bind_type: "unbind"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -3770,7 +3770,7 @@ types_189:
   type_description_text: ""
   display_order1: 1
   display_order2: 1
-  logic_bind_type: "bind"
+  logic_bind_type: "unbind"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -3790,7 +3790,7 @@ types_190:
   type_description_text: ""
   display_order1: 2
   display_order2: 2
-  logic_bind_type: "bind"
+  logic_bind_type: "unbind"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -3810,7 +3810,7 @@ types_191:
   type_description_text: ""
   display_order1: 3
   display_order2: 3
-  logic_bind_type: "bind"
+  logic_bind_type: "unbind"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -3830,7 +3830,7 @@ types_192:
   type_description_text: ""
   display_order1: 4
   display_order2: 4
-  logic_bind_type: "bind"
+  logic_bind_type: "unbind"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -3850,7 +3850,7 @@ types_193:
   type_description_text: ""
   display_order1: 5
   display_order2: 5
-  logic_bind_type: "bind"
+  logic_bind_type: "unbind"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -3870,7 +3870,7 @@ types_194:
   type_description_text: ""
   display_order1: 6
   display_order2: 6
-  logic_bind_type: "bind"
+  logic_bind_type: "unbind"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -3890,7 +3890,7 @@ types_195:
   type_description_text: ""
   display_order1: 7
   display_order2: 7
-  logic_bind_type: "bind"
+  logic_bind_type: "unbind"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -3910,7 +3910,7 @@ types_196:
   type_description_text: ""
   display_order1: 8
   display_order2: 8
-  logic_bind_type: "bind"
+  logic_bind_type: "unbind"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -3930,7 +3930,7 @@ types_197:
   type_description_text: ""
   display_order1: 9
   display_order2: 9
-  logic_bind_type: "bind"
+  logic_bind_type: "unbind"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -3950,7 +3950,7 @@ types_198:
   type_description_text: ""
   display_order1: 10
   display_order2: 10
-  logic_bind_type: "bind"
+  logic_bind_type: "unbind"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -3970,7 +3970,7 @@ types_199:
   type_description_text: ""
   display_order1: 11
   display_order2: 11
-  logic_bind_type: "bind"
+  logic_bind_type: "unbind"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -3990,7 +3990,7 @@ types_200:
   type_description_text: ""
   display_order1: 12
   display_order2: 12
-  logic_bind_type: "bind"
+  logic_bind_type: "unbind"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -4010,7 +4010,7 @@ types_201:
   type_description_text: ""
   display_order1: 13
   display_order2: 13
-  logic_bind_type: "bind"
+  logic_bind_type: "unbind"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -4030,7 +4030,7 @@ types_202:
   type_description_text: ""
   display_order1: 14
   display_order2: 14
-  logic_bind_type: "bind"
+  logic_bind_type: "unbind"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -5044,12 +5044,12 @@ types_253:
   type_section: "basic_contract_status_type"
   type_key: "non_correspondence"
   long_name: "未対応"
-  short_name: "未対応"
+  short_name: "未"
   other_name: "未対応"
   type_description: ""
   type_description_text: ""
-  display_order1: 32
-  display_order2: 32
+  display_order1: 1
+  display_order2: 1
   logic_bind_type: "bind"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
@@ -5064,12 +5064,12 @@ types_254:
   type_section: "basic_contract_status_type"
   type_key: "in_progress"
   long_name: "対応中"
-  short_name: "対応中"
+  short_name: "中"
   other_name: "対応中"
   type_description: ""
   type_description_text: ""
-  display_order1: 33
-  display_order2: 33
+  display_order1: 2
+  display_order2: 2
   logic_bind_type: "bind"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
@@ -5084,12 +5084,12 @@ types_255:
   type_section: "basic_contract_status_type"
   type_key: "concluded"
   long_name: "締結済み"
-  short_name: "締結済み"
+  short_name: "済"
   other_name: "締結済み"
   type_description: ""
   type_description_text: ""
-  display_order1: 34
-  display_order2: 34
+  display_order1: 3
+  display_order2: 3
   logic_bind_type: "bind"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
@@ -5104,12 +5104,12 @@ types_256:
   type_section: "nda_status_type"
   type_key: "non_correspondence"
   long_name: "未対応"
-  short_name: "未対応"
+  short_name: "未"
   other_name: "未対応"
   type_description: ""
   type_description_text: ""
-  display_order1: 35
-  display_order2: 35
+  display_order1: 1
+  display_order2: 1
   logic_bind_type: "bind"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
@@ -5124,12 +5124,12 @@ types_257:
   type_section: "nda_status_type"
   type_key: "in_progress"
   long_name: "対応中"
-  short_name: "対応中"
+  short_name: "中"
   other_name: "対応中"
   type_description: ""
   type_description_text: ""
-  display_order1: 36
-  display_order2: 36
+  display_order1: 2
+  display_order2: 2
   logic_bind_type: "bind"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
@@ -5144,12 +5144,12 @@ types_258:
   type_section: "nda_status_type"
   type_key: "concluded"
   long_name: "締結済み"
-  short_name: "締結済み"
+  short_name: "済"
   other_name: "締結済み"
   type_description: ""
   type_description_text: ""
-  display_order1: 37
-  display_order2: 37
+  display_order1: 3
+  display_order2: 3
   logic_bind_type: "bind"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
@@ -5250,6 +5250,86 @@ types_263:
   type_description_text: ""
   display_order1: 2
   display_order2: 2
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_264:
+  id: 264
+  owner_id: 
+  type_section: "outflow_mail_status_type"
+  type_key: "non_correspondence"
+  long_name: "未対応"
+  short_name: "未対応"
+  other_name: "未対応"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 1
+  display_order2: 1
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_265:
+  id: 265
+  owner_id: 
+  type_section: "outflow_mail_status_type"
+  type_key: "bad"
+  long_name: "不要"
+  short_name: "不要"
+  other_name: "不要"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 2
+  display_order2: 2
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_266:
+  id: 266
+  owner_id: 
+  type_section: "outflow_mail_status_type"
+  type_key: "good"
+  long_name: "有用"
+  short_name: "有用"
+  other_name: "有用"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 3
+  display_order2: 3
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_267:
+  id: 267
+  owner_id: 
+  type_section: "outflow_mail_status_type"
+  type_key: "unwanted"
+  long_name: "重複"
+  short_name: "重複"
+  other_name: "重複"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 4
+  display_order2: 4
   logic_bind_type: "bind"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>

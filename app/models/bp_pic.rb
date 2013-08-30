@@ -89,6 +89,10 @@ class BpPic < ActiveRecord::Base
     retired_bp_pic.save!
   end
 
+  def delivery_mail_ids
+    DeliveryMailTarget.where(:bp_pic_id => id, :deleted => 0).select(:delivery_mail_id).uniq
+  end
+
   def to_test
     self.email1 = StringUtil.to_test_address(email1)
   end

@@ -34,7 +34,7 @@
   </tr>
   <tr>
     <th><%= getLongName('delivery_mails', 'send_end_at') %></th>
-    <td><%= @delivery_mail.send_end_at %></td>
+    <td><%= _time_long(@delivery_mail.send_end_at) %></td>
   </tr>
   <tr>
     <td colspan=2><pre><%= @delivery_mail.content %></pre></td>

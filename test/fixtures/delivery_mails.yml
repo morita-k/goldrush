@@ -1,6 +1,7 @@
 delivery_mails_1:
   id: 1
   owner_id: 
+  delivery_mail_type: "group"
   bp_pic_group_id: 1
   mail_status_type: "unsend"
   subject: "どうも"
@@ -22,6 +23,7 @@ delivery_mails_1:
 delivery_mails_2:
   id: 2
   owner_id: 
+  delivery_mail_type: "group"
   bp_pic_group_id: 2
   mail_status_type: "unsend"
   subject: "テスト"

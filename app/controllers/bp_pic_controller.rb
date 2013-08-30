@@ -134,6 +134,7 @@ class BpPicController < ApplicationController
   def show
     @bp_pic = BpPic.find(params[:id])
     @remarks = Remark.find(:all, :conditions => ["deleted = 0 and remark_key = ? and remark_target_id = ?", 'bp_pics', params[:id]])
+    @delivery_mails = DeliveryMail.where(:deleted => 0 , :id => @bp_pic.delivery_mail_ids).order("id desc").page(params[:page]).per(20)
     @former_bp_pic = params[:former_bp_pic_id] ? BpPic.find(params[:former_bp_pic_id]) : @bp_pic.former_bp_pic
   end
 
@@ -220,6 +221,14 @@ class BpPicController < ApplicationController
     redirect_to(back_to || {:action => 'list'})
   end
   
+  def proc_bp_pic_ids
+    if params[:add_group_button]
+      add_bp_pic_into_selected_group
+    else params[:contact_mail_new_button]
+      redirect_to({:controller => 'delivery_mails', :action => 'contact_mail_new',:bp_pic_ids => params[:ids]})
+    end 
+  end
+
   def add_bp_pic_into_selected_group
     selected_group = []
     addGroup = {:groupIds => []}.merge(params[:addGroup] || {})
