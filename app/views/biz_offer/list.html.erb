@@ -37,39 +37,7 @@
 
 <%= paginate(@biz_offers) %>
 
-<table class="list_table">
-  <tr>
-    <th>上流取引先</th>
-    <th>上流担当者</th>
-    <th><%=getShortName('businesses', 'business_title') %></th>
-    <th><%=getShortName('businesses', 'skill_tag') %></th>
-    <th><%=getShortName('businesses', 'age_limit') %></th>
-    <th><%=getShortName('biz_offers', 'payment_max') %></th>
-    <th><%=getShortName('businesses', 'place') %></th>
-    <th><%=getShortName('businesses', 'issue_datetime') %></th>
-    <th><%=getShortName('businesses', 'business_status_type') %></th>
-    <th><%=getShortName('biz_offers', 'biz_offer_status_type') %></th>
-    <th><%=getShortName('bp_pics', 'jiet') %></th>
-    <th style="width:16px;"></th>
-  </tr>
-  
-<% for biz_offer in @biz_offers %>
-  <tr>
-    <td><%=h biz_offer.business_partner.blank? ? "" : back_to_link(biz_offer.business_partner.business_partner_code_name,controller: :business_partner, action: :show, id: biz_offer.business_partner.id) %></td>
-    <td><%=h biz_offer.bp_pic.blank? ? "" : back_to_link(biz_offer.bp_pic.bp_pic_name, controller: :bp_pic, action: :show, id: biz_offer.bp_pic.id) %></td>
-    <td><%= star_links(biz_offer.business) %> <%=back_to_link h(biz_offer.business.business_title), :action => :show, :id => biz_offer %></td>
-    <td><div style="overflow: hidden;height:1.4em"><span style="line-height: 90%;"><%= raw format_only_major_tags(biz_offer.business.skill_tag, @major_words) %></span></div></td>
-    <td><%=h biz_offer.business.age_limit %></td>
-    <td align=right><%=h((biz_offer.payment_max.blank? || biz_offer.payment_max == 0) ? "" : "#{biz_offer.payment_max_view}万円") %></td>
-    <td><%=h biz_offer.business.place %></td>
-    <td><%=h _time(biz_offer.business.issue_datetime) %></td>
-    <td><%=h biz_offer.business.business_status_type_name %></td>
-    <td><%=h biz_offer.biz_offer_status_type_name %></td>
-    <td><%= biz_offer.bp_pic.jiet == ImportMailJIET::JIET_FLG ? 'JIET' : ''%></td>
-    <td style="text-align:center;"><%= biz_offer_edit_icon(biz_offer) %></td>
-  </tr>
-<% end %>
-</table>
+<%= render :partial => 'list', :locals => {:biz_offers => @biz_offers} %>
 
 <%= paginate(@biz_offers) %>
 
