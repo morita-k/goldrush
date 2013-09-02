@@ -24,7 +24,7 @@
     <td style="text-align:center; white-space:nowrap">
       <%= delivery_mail.mail_status_type_name %>
     </td>
-    <td style="overflow: hidden"><div class="overflow_hidden"><%= back_to_link (delivery_mail.subject.blank? ? '(件名なし)' : delivery_mail.subject) , {:action => :show, :id => delivery_mail.id }, :title => delivery_mail.subject %></div></td>
+    <td style="overflow: hidden"><div class="overflow_hidden"><%= back_to_link (delivery_mail.subject.blank? ? '(件名なし)' : delivery_mail.subject) , {:controller => :delivery_mails, :action => :show, :id => delivery_mail.id }, :title => delivery_mail.subject %></div></td>
     <td style="overflow: hidden"><div class="overflow_hidden"><%= delivery_mail.formated_mail_from %></div></td>
     <% unless group? %>
       <td style="overflow: hidden"><%= mail_to(delivery_mail) %></td>
@@ -39,9 +39,9 @@
     <% if group? %>
       <td style="white-space:nowrap">
         <% if delivery_mail.unsend? %>
-          <%= back_to_link 'キャンセル', { :action => :cancel, :id => delivery_mail.id, :authenticity_token => form_authenticity_token }, :method => :put, data: { :confirm => 'キャンセルします。よろしいですか?'} %>
+          <%= back_to_link 'キャンセル', {:controller => :delivery_mails,  :action => :cancel, :id => delivery_mail.id, :authenticity_token => form_authenticity_token }, :method => :put, data: { :confirm => 'キャンセルします。よろしいですか?'} %>
         <% else %>
-          <%= back_to_link 'コピー', { :action => :copynew, :id => delivery_mail.id}, data: { :confirm => 'このメールを元に再作成します。よろしいですか?' } %>
+          <%= back_to_link 'コピー', {:controller => :delivery_mails,  :action => :copynew, :id => delivery_mail.id}, data: { :confirm => 'このメールを元に再作成します。よろしいですか?' } %>
         <% end %>
       </td>
     <% end %>
