@@ -30,7 +30,7 @@
   <th><%= getLongName('business_partners', 'ceo_name') %></th><td><%=h @business_partner.ceo_name %></td>
 </tr>
 <tr>
-  <th><%= getLongName('business_partners', 'url') %></th><td><%=link_to h(@business_partner.url), @business_partner.url, target: 'blank' %></td>
+  <th><%= getLongName('business_partners', 'url') %></th><td><%=link_to h(@business_partner.url), @business_partner.url, target: '_blank' %></td>
 </tr>
 <tr>
   <th><%= getLongName('business_partners', 'zip') %></th><td><%=h @business_partner.zip %></td>
@@ -52,6 +52,15 @@
 </tr>
 <tr>
   <th><%= getLongName('business_partners', 'category') %></th><td><%=h @business_partner.category %></td>
+</tr>
+<tr>
+  <th><%= getLongName('business_partners', 'establishment_year') %></th><td><%=h @business_partner.establishment_year %></td>
+</tr>
+<tr>
+  <th><%= getLongName('business_partners', 'employee_number') %></th><td><%=h @business_partner.employee_number %></td>
+</tr>
+<tr>
+  <th><%= getLongName('business_partners', 'share_capital') %></th><td><%=h @business_partner.share_capital %></td>
 </tr>
 <tr>
   <th><%= getLongName('business_partners', 'self_flg') %></th><td><%=h @business_partner.self_flg %></td>

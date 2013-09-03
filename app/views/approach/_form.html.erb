@@ -30,12 +30,12 @@
 <h2><%=getLongName('table_name','bp_members')%>選択</h2>
 <table class="show_table">
 <tr>
-<th><label for="human_resource_name"><%=getLongName('human_resources','human_resource_name')%></label></th><td><%= text_field_tag 'human_resource_name', @approach.bp_member.blank? ? "" : (@approach.bp_member.human_resource.human_resource_name.blank? ? @approach.bp_member.human_resource.initial : @approach.bp_member.human_resource.human_resource_name), :readOnly => true, :style => "background-color: silver;", :size => 30 %>
+<th><label for="human_resource_name"><%=getLongName('human_resources','human_resource_name')%></label></th><td><%= text_field_tag 'human_resource_name', @approach.bp_member.blank? ? "" : (@approach.bp_member.human_resource.human_resource_name.blank? ? @approach.bp_member.human_resource.initial : @approach.bp_member.human_resource.human_resource_name), :readonly => true, :style => "background-color: silver;", :size => 30 %>
   <input type=button value='...' onClick="disp_wide('<%=url_for :controller => 'bp_member', :action => 'list', :popup =>1 %>');return false;" />
   <input type=button value='クリア' onClick="clearBpMember();return false;" /></td>
 </tr>
 <tr>
-<th><label for="business_partner_name">下流<%=getLongName('business_partners','business_partner_name')%></label></th><td><%= text_field_tag 'business_partner_name', @approach.bp_member.blank? ? "" : @approach.bp_member.business_partner.business_partner_name, :readOnly => true, :style => "background-color: silver;", :size => 30 %>
+<th><label for="business_partner_name">下流<%=getLongName('business_partners','business_partner_name')%></label></th><td><%= text_field_tag 'business_partner_name', @approach.bp_member.blank? ? "" : @approach.bp_member.business_partner.business_partner_name, :readonly => true, :style => "background-color: silver;", :size => 30 %>
 </td>
 </tr>
 </table>
@@ -51,7 +51,7 @@
 </td>
 </tr>
 <tr>
-<th><label for="approach_approach_pic_name">提案担当</label></th><td><%= text_field_tag 'approach_pic_name', @approach.approach_pic.blank? ? "" : @approach.approach_pic.employee.employee_name, :readOnly => true, :style => "background-color: silver;", :size => 30 %>
+<th><label for="approach_approach_pic_name">提案担当</label></th><td><%= text_field_tag 'approach_pic_name', @approach.approach_pic.blank? ? "" : @approach.approach_pic.employee.employee_name, :readonly => true, :style => "background-color: silver;", :size => 30 %>
     <input type=button value='...' onClick="disp_wide('<%=url_for :controller => 'employee', :action => 'list', :popup =>1, :mode => 'Approach' %>');return false;" />
     <input type=button value='クリア' onClick="clearApproachUser();return false;" />
     <%= hidden_field 'approach', 'approach_pic_id' %>

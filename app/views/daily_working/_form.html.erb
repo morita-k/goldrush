@@ -10,19 +10,19 @@ function ctlForms()
   switch(working_type.value) {
     case "all_day_working":
     case "on_holiday_working":
-      inTime.value = "<%=SysConfig.get_regular_in_time_regular.value1%>";
-      outTime.value = "<%=SysConfig.get_regular_out_time_regular.value1%>";
-      restHour.value = "<%=SysConfig.get_rest_hour_regular.value1%>";
+      inTime.value = "<%=@target_employee.regular_in_time%>";
+      outTime.value = "<%=@target_employee.regular_out_time%>";
+      restHour.value = "<%=@target_employee.regular_rest_hour%>";
       break;
     case "only_PM_working":
-      inTime.value = "<%=SysConfig.get_regular_in_time_pm.value1%>";
-      outTime.value = "<%=SysConfig.get_regular_out_time_regular.value1%>";
-      restHour.value = "<%=SysConfig.get_rest_hour_half.value1%>";
+      inTime.value = "<%=@target_employee.regular_in_time_pm%>";
+      outTime.value = "<%=@target_employee.regular_out_time%>";
+      restHour.value = "<%=@target_employee.regular_rest_hour_half%>";
       break;
     case "only_AM_working":
-      inTime.value = "<%=SysConfig.get_regular_in_time_regular.value1%>";
-      outTime.value = "<%=SysConfig.get_regular_out_time_early_am.value1%>";
-      restHour.value = "<%=SysConfig.get_rest_hour_half.value1%>";
+      inTime.value = "<%=@target_employee.regular_in_time%>";
+      outTime.value = "<%=@target_employee.regular_out_time_early_am%>";
+      restHour.value = "<%=@target_employee.regular_rest_hour_half%>";
       break;
   }
 
@@ -78,20 +78,19 @@ function ctlForms()
   <tr>
     <th><%=getLongName('daily_workings','in_time')%></th>
     <td>
-      <% ro = false #TODO: (!current_user.power_user? and @daily_working.delayed_canceled?) or @daily_working.regular_working? %>
-      <%= text_field 'daily_working', 'in_time', :value => @daily_working.in_time_format, :readOnly => ro  %>
+      <%= text_field 'daily_working', 'in_time', :value => @daily_working.in_time_format, :readonly => !@daily_working.regular_working?  %>
     </td>
   </tr>
   <tr>
     <th><%=getLongName('daily_workings','out_time')%></th>
     <td>
-      <%= text_field 'daily_working', 'out_time', :value => @daily_working.out_time_format, :readOnly => !@daily_working.regular_working? %>
+      <%= text_field 'daily_working', 'out_time', :value => @daily_working.out_time_format, :readonly => !@daily_working.regular_working? %>
     </td>
   </tr>
   <tr>
     <th><%=getLongName('daily_workings','rest_hour')%></th>
     <td>
-      <%= text_field 'daily_working', 'rest_hour', :value => @daily_working.rest_hour_format, :readOnly => !@daily_working.regular_working? %>
+      <%= text_field 'daily_working', 'rest_hour', :value => @daily_working.rest_hour_format, :readonly => !@daily_working.regular_working? %>
     </td>
   </tr>
   <tr>

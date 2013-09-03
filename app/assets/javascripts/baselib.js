@@ -88,6 +88,16 @@ function disp_wide(url){
 }
 
 /*
+ * ポップアップ表示(画面解像度ぴったり)
+ */
+function disp_full(url){
+  var width  = window.parent.screen.width;
+  var height = window.parent.screen.height;
+
+  window.open(url, url.replace(/[^a-zA-Z]/g, ""), "width=" + width + ",height=" + height + ",resizable=yes,scrollbars=yes");
+}
+
+/*
  * 日付フォーマットチェック
  */
 function validateDate(objText)

@@ -29,7 +29,7 @@ class ApplicationApproval < ActiveRecord::Base
       'holiday_applications' => 'working_xxx',
       'other_applications' => 'working_xxx',
       'business_trip_applications' => 'business_trip_xxx'}
-    tname = application_model.class.class_name.tableize
+    tname = application_model.class.name.tableize
     ApprovalAuthority.find(:first, :conditions => ["deleted = 0 and approver_type = '#{approver_type_map[tname]}' and user_id = ? and approver_id = ?", application_model.user_id, approver_id])
   end
 

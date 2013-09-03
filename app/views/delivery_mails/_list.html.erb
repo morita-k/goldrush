@@ -1,0 +1,51 @@
+<%= paginate(@delivery_mails) %>
+<table class="list_table">
+  <tr>
+    <th>ステータス</th>
+    <th><%= getLongName('delivery_mails', 'subject') %></th>
+    <th><%= getLongName('delivery_mails', 'mail_from') %></th>
+    <% unless group? %>
+      <th>メール送信対象</th>
+    <% end %>
+    <th>対象数</th>
+    <th>ｴﾗｰ件数</th>
+    <th>添付</th>
+    <% if group? %>
+    　　<th><%= getLongName('delivery_mails', 'planned_setting_at') %></th>
+    <% end %>
+    <th><%= getLongName('delivery_mails', 'send_end_at') %></th>
+    <% if group? %>
+      <th>取り消し/コピー</th>
+    <% end %>
+  </tr>
+
+<% @delivery_mails.each do |delivery_mail| %>
+  <tr class="<%= row_style(delivery_mail) %>" id="tr_<%= delivery_mail.id %>">
+    <td style="text-align:center; white-space:nowrap">
+      <%= delivery_mail.mail_status_type_name %>
+    </td>
+    <td style="overflow: hidden"><div class="overflow_hidden"><%= back_to_link (delivery_mail.subject.blank? ? '(件名なし)' : delivery_mail.subject) , {:controller => :delivery_mails, :action => :show, :id => delivery_mail.id }, :title => delivery_mail.subject %></div></td>
+    <td style="overflow: hidden"><div class="overflow_hidden"><%= delivery_mail.formated_mail_from %></div></td>
+    <% unless group? %>
+      <td style="overflow: hidden"><%= mail_to(delivery_mail) %></td>
+    <% end %>
+    <td style="text-align:center"><%= delivery_mail.delivery_mail_targets.count %></td>
+    <td style="text-align:center"><%= delivery_mail.delivery_errors.count %></td>
+    <td style="text-align:center"><%= delivery_mail.attachment_files.first ? "○" : "-" %></td>
+    <% if group? %>
+      <td><%= _time(delivery_mail.planned_setting_at) %></td>
+    <% end %>
+    <td><%= _time(delivery_mail.send_end_at) %></td>
+    <% if group? %>
+      <td style="white-space:nowrap">
+        <% if delivery_mail.unsend? %>
+          <%= back_to_link 'キャンセル', {:controller => :delivery_mails,  :action => :cancel, :id => delivery_mail.id, :authenticity_token => form_authenticity_token }, :method => :put, data: { :confirm => 'キャンセルします。よろしいですか?'} %>
+        <% else %>
+          <%= back_to_link 'コピー', {:controller => :delivery_mails,  :action => :copynew, :id => delivery_mail.id}, data: { :confirm => 'このメールを元に再作成します。よろしいですか?' } %>
+        <% end %>
+      </td>
+    <% end %>
+  </tr>
+<% end %>
+</table>
+<%= paginate(@delivery_mails) %>

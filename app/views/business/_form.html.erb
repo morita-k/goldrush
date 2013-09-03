@@ -4,10 +4,10 @@
 <table class="show_table">
 <tr>
   <th><label for="eubp_name">エンド取引先</label></th>
-  <td><%= text_field_tag 'eubp_name', @business.eubp.blank? ? "" : @business.eubp.business_partner_name, :readOnly => true, :style => "background-color: silver;", :size => 30 %></td>
+  <td><%= text_field_tag 'eubp_name', @business.eubp.blank? ? "" : @business.eubp.business_partner_name, :readonly => true, :style => "background-color: silver;", :size => 30 %></td>
 </tr>
 <tr>
-<th><label for="eubp_pic_name">エンド取引先担当</label></th><td><%= text_field_tag 'eubp_pic_name', @business.eubp_pic.blank? ? "" : @business.eubp_pic.bp_pic_name, :readOnly => true, :style => "background-color: silver;", :size => 30 %>
+<th><label for="eubp_pic_name">エンド取引先担当</label></th><td><%= text_field_tag 'eubp_pic_name', @business.eubp_pic.blank? ? "" : @business.eubp_pic.bp_pic_name, :readonly => true, :style => "background-color: silver;", :size => 30 %>
   <input type=button value='...' onClick="disp_wide('<%=url_for_bp_pic_popup :setEuBpPic%>');return false;" />
   <input type=button value='クリア' onClick="clearEuBpPic();return false;" />
   <%= hidden_field 'business', 'eubp_pic_id' %></td>

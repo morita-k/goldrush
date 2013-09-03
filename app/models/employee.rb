@@ -1,12 +1,23 @@
 # -*- encoding: utf-8 -*-
 class Employee < ActiveRecord::Base
   include AutoTypeName
+  include DateTimeUtil
 
   belongs_to :user
   belongs_to :department
   
   validates_presence_of     :insurance_code, :employee_code, :employee_name, :employee_kana_name, :employee_short_name, :birthday_date, :entry_date
-  validates_uniqueness_of   :insurance_code, :employee_code
+  validates_presence_of     :regular_in_time, 
+                            :regular_in_time_defact, 
+                            :regular_in_time_pm, 
+                            :regular_out_time, 
+                            :regular_out_time_early_am, 
+                            :regular_out_time_early_full, 
+                            :max_out_time, 
+                            :regular_rest_hour, 
+                            :regular_rest_hour_half, 
+                            :regular_over_time_meel, 
+                            :regular_over_time_taxi
   validates_numericality_of :insurance_code, :employee_code, :on => :create
   
   validates_length_of :insurance_code, :is => 3
@@ -122,5 +133,31 @@ class Employee < ActiveRecord::Base
       res[emp.employee_short_name] = emp.user_id
     end
     res
+  end
+
+  def init_default_working_times
+    self.regular_in_time             = SysConfig.get_regular_in_time_regular.value1
+    self.regular_in_time_defact      = SysConfig.get_regular_in_time_defact.value1
+    self.regular_in_time_pm          = SysConfig.get_regular_in_time_pm.value1
+    self.regular_out_time            = SysConfig.get_regular_out_time_regular.value1
+    self.regular_out_time_early_am   = SysConfig.get_regular_out_time_early_am.value1
+    self.regular_out_time_early_full = SysConfig.get_regular_out_time_early_full.value1
+    self.max_out_time                = SysConfig.get_max_out_time.value1
+    self.regular_rest_hour           = SysConfig.get_rest_hour_regular.value1
+    self.regular_rest_hour_half      = SysConfig.get_rest_hour_half.value1
+    self.regular_over_time_meel      = SysConfig.get_regular_over_time_meel.value1
+    self.regular_over_time_taxi      = SysConfig.get_regular_over_time_taxi.value1
+  end
+
+  def calc_regular_working_hour
+    calc_sec = hourminstr_to_sec(self.regular_out_time) - hourminstr_to_sec(self.regular_in_time) - hourminstr_to_sec(self.regular_rest_hour)
+    hour = (calc_sec / 60 / 60).to_s
+    min = ((calc_sec / 60 % 60) / 6).to_s
+    # TODO : furukawa : 30分間隔じゃない場合の対処
+    min.to_i > 0 ? (hour + '.' + min).to_f : hour.to_i
+  end
+
+  def set_regular_working_hour
+    self.regular_working_hour = calc_regular_working_hour
   end
 end

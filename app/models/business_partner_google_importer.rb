@@ -90,7 +90,7 @@ class BusinessPartnerGoogleImporter < BusinessPartner
           :address1 => get_first(r["Address 1 - Region"]),
           :tel => colon_2_comma(phone_number['Work']),
           :fax => colon_2_comma(phone_number['Work Fax']),
-          :sales_status_type => 'prospect'
+          :sales_status_type => 'listup'
         }.reject{|k,v| v.blank?}
 
         if tags.include?("SES")

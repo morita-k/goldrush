@@ -133,6 +133,10 @@ class SysConfig < ActiveRecord::Base
     get_configuration('regular_out_time', 'early_full')
   end
   
+  def self.get_max_out_time
+    get_configuration('max_out_time', 'regular')
+  end
+  
   def self.get_regular_over_time_meel
     get_configuration('regular_over_time', 'meel')
   end

@@ -24,9 +24,9 @@ GoldRush::Application.routes.draw do
   resources :bp_pic_groups
 
   resources :delivery_mails do
-    member do
-      get 'conatct_mail_new'
-      post 'conatct_mail_create'
+    collection do
+      get 'contact_mail_new'
+      post 'contact_mail_create'
     end
   end
 

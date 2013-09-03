@@ -538,15 +538,19 @@ class ExpenseDetailController < ApplicationController
     tmp_filename = filename + "." + xxx
     sep = ENV["OS"] ? ";" : ":" # Windows or UNIX??
     class_path = ["#{java_dir}","#{java_dir}/lib/poi-2.5.1-final-20040804.jar","#{java_dir}/lib/ojdbc14.jar"].join(sep)
+    # TODO : furukawa : たぶんRAILS_ENVは使えない
     host = ActiveRecord::Base.configurations[RAILS_ENV]['host']
     if host[0] == '/'[0] # hostの一文字目が'/'だったらUNIX SOCKETと判断
       host = 'localhost'
     end
+    # TODO : furukawa : たぶんRAILS_ENVは使えない
     username = ActiveRecord::Base.configurations[RAILS_ENV]['username']
+    # TODO : furukawa : たぶんRAILS_ENVは使えない
     password = ActiveRecord::Base.configurations[RAILS_ENV]['password']
     if password.blank?
       password = '\"\"'
     end
+    # TODO : furukawa : たぶんRAILS_ENVは使えない
     database = ActiveRecord::Base.configurations[RAILS_ENV]['database']
     command = "java -classpath #{class_path} gd/Main #{mode} jdbc:oracle:thin:@#{host}:1521:#{database} #{username} #{password} #{id} #{java_dir}/template_expense_detail1.xls #{tmp_dir}/#{tmp_filename}"
     logger.debug(command)

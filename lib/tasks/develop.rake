@@ -1,6 +1,6 @@
 namespace :dev do
   def logger
-    RAILS_DEFAULT_LOGGER
+    Rails.logger
   end
   
   desc "Put log task"

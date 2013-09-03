@@ -1,7 +1,7 @@
 namespace :app do
   
   def logger
-    RAILS_DEFAULT_LOGGER
+    Rails.logger
   end
 
   desc "The batch of calculation of days total of vacation."
