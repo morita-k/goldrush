@@ -119,6 +119,7 @@ class BpPicController < ApplicationController
     if params[:popup] && params[:callback].blank?
       flash[:warning] = 'ポップアップのパラメータが不正です'
     end
+    return true
   end
 
   def index
