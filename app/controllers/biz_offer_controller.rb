@@ -41,11 +41,14 @@ class BizOfferController < ApplicationController
       param << "%#{bp_pic_name}%" << "%#{bp_pic_name}%"
     end
 
-    if !(skill_tag = session[:biz_offer_search][:skill_tag]).blank?
-      sql += " and businesses.skill_tag like ?"
-      param << "%#{skill_tag}%"
+    unless session[:biz_offer_search][:skill_tag].blank?
+      pids = Tag.make_conditions_for_tag(session[:biz_offer_search][:skill_tag], "businesses")
+      unless pids.empty?
+        sql += " and businesses.id in (?) "
+        param << pids
+     end
     end
-
+    
     if !(payment_from = session[:biz_offer_search][:payment_from]).blank?
       sql += " and payment_max >= ?"
       param << (payment_from.to_i * 10000)

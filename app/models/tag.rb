@@ -9,6 +9,24 @@ class Tag < ActiveRecord::Base
     Tag.clear_tag_cache
   end
 
+  def Tag.combine_tags?(tags)
+    tags && tags.split(",").size > 1
+  end
+
+  def Tag.make_conditions_for_tag(tags, tag_key)
+    sqls = []
+    sql_params = [tag_key]
+    tags.split(",").each do |tag|
+      sqls << "tag_details.tag_text = ?"
+      sql_params << tag.strip.downcase
+    end
+
+    my_sql = "select parent_id, count(parent_id) as cnt from tag_details where tag_key = ? and (#{sqls.join(' or ')}) group by parent_id having count(parent_id) > ?"
+    sql_params << (sqls.size - 1)
+    parent_ids = TagDetail.find_by_sql(sql_params.unshift(my_sql)).map{|x| x.parent_id}
+    return parent_ids
+  end
+
   # タグの文字列を受け取って正規化する
   # 正規化=>小文字化、",",半角スペース、全角スペースで区切り、文字列の配列として戻す
   def Tag.normalize_tag(tag_string)
