@@ -107,7 +107,8 @@ class BpPicController < ApplicationController
       set_conditions
     elsif params[:clear_button]
       session[:bp_pic_search] = {}
-      return redirect_to
+      redirect_to
+      return false
     end
 
     # 検索条件を処理
@@ -121,8 +122,9 @@ class BpPicController < ApplicationController
   end
 
   def index
-    list
-    render :action => 'list'
+    if list
+      render :action => 'list'
+    end
   end
 
   # GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)
