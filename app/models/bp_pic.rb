@@ -20,6 +20,10 @@ class BpPic < ActiveRecord::Base
   BOUNCE_MAIL_REASON_ERROR = [:hostunknown, :userunknown]
   BOUNCE_MAIL_REASON_WARN = [:hasmoved, :rejected, :filtered, :mailboxfull, :exceedlimit, :systemfull, :notaccept, :suspend, :mailererror, :systemerror, :mesgtoobig, :securityerr, :contenterr, :expired, :onhold]
 
+  def jiet?
+    self.jiet == 1
+  end
+
   def business_partner_name
     business_partner && business_partner.business_partner_name
   end
@@ -87,6 +91,10 @@ class BpPic < ActiveRecord::Base
     retired_bp_pic = BpPic.find(old_id)
     retired_bp_pic.substitute_bp_pic_id = new_id
     retired_bp_pic.save!
+  end
+
+  def delivery_mail_ids
+    DeliveryMailTarget.where(:bp_pic_id => id, :deleted => 0).select(:delivery_mail_id).uniq
   end
 
   def to_test

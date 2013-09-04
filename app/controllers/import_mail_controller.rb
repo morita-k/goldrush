@@ -3,8 +3,9 @@
 class ImportMailController < ApplicationController
 
   def index
-    list
-    render :action => 'list'
+    if list
+      render :action => 'list'
+    end
   end
 
   # GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)
@@ -18,34 +19,17 @@ class ImportMailController < ApplicationController
       :unwanted => params[:unwanted],
       :registed => params[:registed],
       :proper_flg => params[:proper_flg],
-      :tag => params[:tag]
+      :tag => params[:tag],
+      :starred => params[:starred],
+      :payment_from => params[:payment_from],
+      :payment_to => params[:payment_to],
+      :age_from => params[:age_from],
+      :age_to => params[:age_to],
     }
   end
 
-  def combine_tags?(tags)
-    tags && tags.split(",").size > 1
-  end
-
   def make_conditions_for_tag(tags)
-    joins = []
-    sqls = []
-    sql_params = []
-   tags.split(",").each do |tag|
-      sqls << "tag_details.tag_text = ?"
-      sql_params << tag.strip.downcase
-    end
-    if combine_tags?(tags)
-      my_sql = "select parent_id, count(parent_id) as cnt from tag_details where (#{sqls.join(' or ')}) group by parent_id having count(parent_id) > ?"
-      sql_params << (sqls.size - 1)
-      parent_ids = TagDetail.find_by_sql(sql_params.unshift(my_sql)).map{|x| x.parent_id}
-      sql = " and import_mails.id in (?)"
-      sql_params << parent_ids
-      return [" and import_mails.id in (?)", [parent_ids], []]
-    else
-      return [" and (#{sqls.first})", sql_params, [:tag_details]]
-      #こんな感じ
-      #ImportMail.joins(:tag_details).where(:id => 240,"tag_details.tag_text" => "java")
-    end
+    Tag.make_conditions_for_tag(tags, "import_mails")
   end
 
   def make_conditions
@@ -53,39 +37,62 @@ class ImportMailController < ApplicationController
     incl = []
     joins = []
     sql = "import_mails.deleted = 0"
-    # TODO デフォルトで不要フラグ立ってないもの？
-    order_by = ""
 
     if params[:id]
       sql += " and business_partner_id = ?"
       sql_params << params[:id]
     end
 
-    if !(self_flg = session[:import_mail_search][:biz_offer_flg]).blank?
+    if !(session[:import_mail_search][:biz_offer_flg]).blank?
       sql += " and biz_offer_flg = 1"
     end
 
-    if !(eu_flg = session[:import_mail_search][:bp_member_flg]).blank?
+    if !(session[:import_mail_search][:bp_member_flg]).blank?
       sql += " and bp_member_flg = 1"
     end
 
-    if !(upper_flg = session[:import_mail_search][:unwanted]).blank?
+    if !(session[:import_mail_search][:unwanted]).blank?
       sql += " and unwanted = 1"
     end
 
-    if !(down_flg = session[:import_mail_search][:registed]).blank?
+    if !(session[:import_mail_search][:registed]).blank?
       sql += " and registed = 1"
     end
     
-    if !(proper_flg = session[:import_mail_search][:proper_flg]).blank?
+    if !(session[:import_mail_search][:proper_flg]).blank?
       sql += " and proper_flg = 1"
     end
     
     unless session[:import_mail_search][:tag].blank?
-      s, p, j = make_conditions_for_tag(session[:import_mail_search][:tag])
-      sql += s
-      sql_params += p
-      joins += j
+      pids = make_conditions_for_tag(session[:import_mail_search][:tag])
+      unless pids.empty?
+        sql += " and import_mails.id in (?) "
+        sql_params += [pids]
+      end
+    end
+    
+    unless (payment_from = session[:import_mail_search][:payment_from]).blank?
+      sql += " and payment_text >= ? "
+      sql_params << payment_from
+    end
+
+    unless (payment_to = session[:import_mail_search][:payment_to]).blank?
+      sql += " and payment_text <= ? "
+      sql_params << payment_to
+    end
+
+    unless (age_from = session[:import_mail_search][:age_from]).blank?
+      sql += " and age_text >= ? "
+      sql_params << age_from
+    end
+
+    unless (age_to = session[:import_mail_search][:age_to]).blank?
+      sql += " and age_text <= ? "
+      sql_params << age_to
+    end
+
+    if !(session[:import_mail_search][:starred]).blank?
+      sql += " and starred > 0"
     end
 
     return [sql_params.unshift(sql), incl, joins]
@@ -98,6 +105,8 @@ class ImportMailController < ApplicationController
         set_conditions
       elsif params[:clear_button]
         session[:import_mail_search] = {}
+        redirect_to
+        return false
       end
     end
     cond, incl, joins = make_conditions
@@ -108,17 +117,6 @@ class ImportMailController < ApplicationController
                               .page(params[:page])
                               .per(current_user.per_page)
                               .order("id desc")
-=begin    
-    @mail_registered_to = {}
-    @import_mails.each do |mail|
-      bpm = BpMember.where(:import_mail_id => mail.id).first
-      bof = BizOffer.where(:import_mail_id => mail.id).first
-      @mail_registered_to[mail.id] = Object.new
-      @mail_registered_to[mail.id].define_method(:bp_member, lambda{bpm})
-    end
-=end    
-    
-    
   end
 
   def set_order

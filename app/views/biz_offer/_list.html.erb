@@ -1,24 +1,60 @@
+
+
 <table class="list_table">
   <tr>
-    <th><%=getShortName('businesses', 'business_title') %></th>
+    <th>取引先</th>
+    <th>担当者</th>
+    <th colspan=2><%=getShortName('businesses', 'business_title') %></th>
+    <th>スキル</th>
+    <th>年齢</th>
+    <th>単価</th>
+    <th>場所</th>
     <th><%=getShortName('businesses', 'issue_datetime') %></th>
-    <th><%=getShortName('businesses', 'skill_tag') %></th>
-    <th>EU取引先</th>
-    <th>EU<%=getShortName('bp_pics', 'bp_pic_name') %></th>
-    <th><%=getShortName('businesses', 'business_status_type') %></th>
-    <th><%=getShortName('biz_offers', 'biz_offer_status_type') %></th>
-    <th><%=getShortName('biz_offers', 'payment_text') %></th>
+    <th>照会ST</th>
   </tr>
-<% for biz_offer in biz_offers %>
-  <tr>
-    <td><%=back_to_link h(biz_offer.business.business_title), :controller => :biz_offer, :action => :show, :id => biz_offer %></td>
-    <td><%=h _time(biz_offer.business.issue_datetime) %></td>
-    <td><%=h biz_offer.business.skill_tag %></td>
-    <td><%=h biz_offer.business.eubp.blank? ? "" : biz_offer.business.eubp.business_partner_code_name %></td>
-    <td><%=h biz_offer.business.eubp_pic.blank? ? "" : biz_offer.business.eubp_pic.bp_pic_name %></td>
-    <td><%=h biz_offer.business.business_status_type_name %></td>
-    <td><%=h biz_offer.biz_offer_status_type_name %></td>
-    <td><%=h biz_offer.payment_text %></td>
-  </tr>
-<% end %>
+
+  <% for biz_offer in @biz_offers %>
+    <tr>
+      <td><%= star_links(biz_offer.business_partner) %> <%=h biz_offer.business_partner.blank? ? "" : back_to_link(biz_offer.business_partner.business_partner_name,controller: :business_partner, action: :show, id: biz_offer.business_partner.id) %></td>
+      <td>
+        <%= star_links(biz_offer.bp_pic) %> <%=h biz_offer.bp_pic.blank? ? "" : back_to_link(biz_offer.bp_pic.bp_pic_name, controller: :bp_pic, action: :show, id: biz_offer.bp_pic.id) %>
+        <%= biz_offer.bp_pic.jiet? ? raw('[<span title="JIET取り込み" style="font-weight:bold">J</span>]') : ''%>
+      </td>
+      <td>
+        <%= star_links(biz_offer.business) %> <%=back_to_link h(biz_offer.business.business_title), :action => :show, :id => biz_offer %>
+      </td>
+      <td style="text-align:center;"><%= biz_offer_edit_icon(biz_offer) %></td>
+      <td><div style="overflow: hidden;height:1.4em"><span style="line-height: 90%;"><%= raw format_only_major_tags(biz_offer.business.skill_tag, @major_words) %></span></div></td>
+      <td><%=h biz_offer.business.age_limit %></td>
+      <td align=right><%=h((biz_offer.payment_max.blank? || biz_offer.payment_max == 0) ? "" : "#{biz_offer.payment_max_view}万円") %></td>
+      <td><%=h biz_offer.business.place %></td>
+      <td><%=h _time(biz_offer.business.issue_datetime) %></td>
+      <td><%=h biz_offer.biz_offer_status_type_short_name %></td>
+    </tr>
+  <% end %>
 </table>
+<script type="text/javascript">
+<!--
+function isInclude(src, word){
+  return (src.toUpperCase().split(",").indexOf(word) > -1);
+}
+
+$(function(){
+  $('.tag').click(function(){
+    var v = document.forms[0].skill_tag.value;
+    if (v){
+      var w = this.innerHTML;
+      if(!isInclude(v, w.toUpperCase())){
+        var x = v.split(",")
+        x.push(this.innerHTML);
+        document.forms[0].skill_tag.value = x.join(",");
+      }
+    }else{
+      document.forms[0].skill_tag.value = this.innerHTML;
+    }
+  });
+});
+
+// -->
+</script>
+

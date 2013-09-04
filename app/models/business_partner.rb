@@ -24,6 +24,10 @@ class BusinessPartner < ActiveRecord::Base
     self.sales_code + " " + business_partner_name
   end
 
+  def basic_contract_concluded?
+    basic_contract_status_type == 'concluded'
+  end
+
   def BusinessPartner.export_to_csv
     csv_data = []
     csv_data << "e-mail,Name,ZipCode,Prefecture,Address,Tel,Birthday,Occupation,案件,人材, bp_id, bp_pic_id,グループ"

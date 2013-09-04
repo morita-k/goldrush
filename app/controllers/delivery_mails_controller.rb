@@ -3,8 +3,16 @@ class DeliveryMailsController < ApplicationController
   # GET /delivery_mails
   # GET /delivery_mails.json
   def index
-    @bp_pic_group = BpPicGroup.find(params[:id])
-    @delivery_mails = DeliveryMail.where("bp_pic_group_id = ?", @bp_pic_group).order("id desc").page().per(50)
+
+    if params[:bp_pic_group_id]
+      #グループメール
+      @bp_pic_group = BpPicGroup.find(params[:bp_pic_group_id])
+      cond  = ["bp_pic_group_id = ? and deleted = 0",  @bp_pic_group]
+    else
+      #即席メール
+      cond  = ["delivery_mail_type = ? and deleted = 0",  "instant"]
+    end
+    @delivery_mails = DeliveryMail.where(cond).order("id desc").page(params[:page]).per(50)
     
     respond_to do |format|
       format.html # index.html.erb
@@ -43,7 +51,7 @@ class DeliveryMailsController < ApplicationController
   # GET /delivery_mails/new.json
   def new
     @delivery_mail = DeliveryMail.new
-    @delivery_mail.bp_pic_group_id = params[:id]
+    @delivery_mail.bp_pic_group_id = params[:bp_pic_group_id]
     @delivery_mail.content = <<EOS
 %%business_partner_name%%
 %%bp_pic_name%%　様
@@ -79,11 +87,13 @@ EOS
   # POST /delivery_mails
   # POST /delivery_mails.json
   def create
-    unless params[:bp_pic_id].blank?
-      return contact_mail_create(params[:bp_pic_id])
+    unless params[:bp_pic_ids].blank?
+      return contact_mail_create(params[:bp_pic_ids].split.uniq)
     end
     @delivery_mail = DeliveryMail.new(params[:delivery_mail])
+    @delivery_mail.delivery_mail_type = "group"
     @delivery_mail.perse_planned_setting_at(current_user) # zone
+    set_user_column @delivery_mail
     respond_to do |format|
       begin
         set_user_column(@delivery_mail)
@@ -184,14 +194,7 @@ EOS
       delivery_mail.mail_status_type = 'unsend'
       set_user_column delivery_mail
       delivery_mail.save!
-      params[:bp_pic_ids].each do |bp_pic_id|
-        next if DeliveryMailTarget.where(:delivery_mail_id => delivery_mail.id, :bp_pic_id => bp_pic_id.to_i, :deleted => 0).first
-        delivery_mail_target = DeliveryMailTarget.new
-        delivery_mail_target.delivery_mail_id = delivery_mail.id
-        delivery_mail_target.bp_pic_id = bp_pic_id.to_i
-        set_user_column(delivery_mail_target)
-        delivery_mail_target.save!
-      end
+      add_targets(params[:delivery_mail_id], params[:bp_pic_ids])
     end
     
     if delivery_mail.planned_setting_at < Time.now.to_s
@@ -204,11 +207,22 @@ EOS
     end
       
     respond_to do |format|
-      format.html { redirect_to url_for(:action => :index, :id => params[:bp_pic_group_id]), notice: 'Delivery mail targets were successfully created.' }
+      format.html { redirect_to url_for(:action => :index, :bp_pic_group_id => params[:bp_pic_group_id]), notice: 'Delivery mail targets were successfully created.' }
 #        format.json { render json: @delivery_mail_target, status: :created, location: @delivery_mail_target }
     end
   end
-   
+  
+  def add_targets(delivery_mail_id, bp_pic_ids)
+    bp_pic_ids.each do |bp_pic_id|
+      next if DeliveryMailTarget.where(:delivery_mail_id => delivery_mail_id, :bp_pic_id => bp_pic_id.to_i, :deleted => 0).first
+      delivery_mail_target = DeliveryMailTarget.new
+      delivery_mail_target.delivery_mail_id = delivery_mail_id
+      delivery_mail_target.bp_pic_id = bp_pic_id.to_i
+      set_user_column(delivery_mail_target)
+      delivery_mail_target.save!
+    end
+  end
+
   # PUT /delivery_mails/cancel/1
   # PUT /delivery_mails/cancel/1.json
   def cancel
@@ -236,10 +250,10 @@ EOS
   end
 
   def contact_mail_new
-    @bp_pic = BpPic.find(params[:id])
+    @bp_pics = BpPic.find(params[:bp_pic_ids])
     @delivery_mail = DeliveryMail.new
     #@delivery_mail.bp_pic_group_id = params[:id]
-    unless sales_pic = @bp_pic.sales_pic
+    unless sales_pic = BpPic.find(params[:bp_pic_ids][0]).sales_pic
       raise ValidationAbort.new("Contact mail method is wants sales_pic id.")
     end
     @delivery_mail.content = ""
@@ -273,27 +287,48 @@ EOS
     end
   end
 
-  def contact_mail_create(bp_pic_id)
-    @bp_pic = BpPic.find(bp_pic_id)
+  def contact_mail_create(bp_pic_ids)
+    @bp_pics = BpPic.find(bp_pic_ids)
     @delivery_mail = DeliveryMail.new(params[:delivery_mail])
-    @delivery_mail.setup_planned_setting_at(@bp_pic.sales_pic.zone_now)
+    @delivery_mail.delivery_mail_type = "instant"
+    @delivery_mail.setup_planned_setting_at(@bp_pics[0].sales_pic.zone_now)
+    @delivery_mail.mail_status_type = 'unsend'
+    set_user_column @delivery_mail
     respond_to do |format|
-      begin
-        set_user_column(@delivery_mail)
-         
+      begin         
         ActiveRecord::Base.transaction do
           @delivery_mail.save!
-          @bp_pic.contact_mail_flg = 1
-          set_user_column @bp_pic
-          @bp_pic.save!
+
+          #あいさつメールフラグの更新
+          @bp_pics.each do |bp_pic|
+            bp_pic.contact_mail_flg = 1
+            set_user_column bp_pic
+            bp_pic.save!
+          end
+
           # 添付ファイルの保存
           store_upload_files(@delivery_mail.id)
-          # メール送信
-          DeliveryMail.send_contact_mail(@delivery_mail, @bp_pic)
+
+          #配信メール対象作成
+          add_targets(@delivery_mail.id, bp_pic_ids)
+        end #transaction
+
+        # メール送信
+        DeliveryMail.send_mails          
+        error_count = DeliveryError.where(:delivery_mail_id => @delivery_mail.id).size
+        if error_count > 0
+          flash.now[:warn] = "送信に失敗した宛先が存在します。<br>送信に失敗した宛先は配信メール詳細画面から確認できます。"
         end
         
         format.html {
-          redirect_to(back_to , notice: 'Delivery mail was successfully created.')
+          redirect_to url_for(
+            :controller => 'delivery_mails',
+            :action => 'show',
+            :id => @delivery_mail.id,
+            :back_to => back_to
+          ),
+          notice: 'Delivery mail was successfully sent.'
+#          redirect_to(back_to , notice: 'Delivery mail was successfully created.')
         }
       rescue ActiveRecord::RecordInvalid
         format.html { render action: "new" }

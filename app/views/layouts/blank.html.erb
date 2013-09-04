@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="Content-Script-Type" content="text/javascript">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <% envname = ActiveRecord::Base.configurations[Rails.env]['envname'] %>
+  <title>The GoldRush Project <%=envname.blank? ? '' : " #{envname}環境"%></title>
+  <link rel="icon" href="<%=image_path 'favicon.png'%>" type="image/vnd.microsoft.icon">
+  <%= stylesheet_link_tag 'application', :media => 'screen,aural' %>
+  <%#= stylesheet_link_tag 'print', :media => 'print' %>
+  <%= javascript_include_tag "application" %>
+</head>
+
+<body>
+  <div id="popup_main_box" style="margin-left: 2em; min-height: 440;">
+    <div id="flashmsg">
+	  <%- if flash[:notice] || flash[:err] || flash[:warning] -%>
+        <div style="color: green"><%= flash[:notice] %></div>
+        <div style="color: red"><%= flash[:err] %></div>
+        <div style="color: red"><%= flash[:warning] %></div>
+      <%- end -%>
+    </div>
+    <div id="contents_box">
+      <%= yield %>
+    </div>
+  </div>
+</body>
+
+</html>
