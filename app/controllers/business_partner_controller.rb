@@ -148,28 +148,24 @@ class BusinessPartnerController < ApplicationController
 
   def create
     @bp_pic = BpPic.new(params[:bp_pic])
-    mail_flg = false
     ActiveRecord::Base.transaction do
       
-      if !(params[:business_partner][:id]).blank?
-        # 取り込みメールからのBP・BP担当登録で、BPを登録済のものから選択した場合
-        @business_partner = BusinessPartner.find(params[:business_partner][:id])
-        mail_flg = true
-      else
+      if new_flg = params[:business_partner][:id].blank?
         @business_partner = BusinessPartner.new(params[:business_partner])
         @business_partner.basic_contract_status_type ||= 'none'
         @business_partner.nda_status_type ||= 'none'
         @business_partner.tag_text = Tag.normalize_tag(@business_partner.tag_text).join(" ")
+      else
+        # 取り込みメールからのBP・BP担当登録で、BPを登録済のものから選択した場合
+        @business_partner = BusinessPartner.find(params[:business_partner][:id])
       end
 
       @business_partner.business_partner_name = space_trim(params[:business_partner][:business_partner_name])
       set_user_column @business_partner
       @business_partner.save!
 
-      unless mail_flg
-        Tag.create_tags!('business_partners', @business_partner.id, @business_partner.tag_text)
-      end
-      
+      Tag.update_tags!('business_partners', @business_partner.id, @business_partner.tag_text)
+
       @bp_pic.business_partner_id = @business_partner.id
       @bp_pic.bp_pic_name = space_trim(params[:bp_pic][:bp_pic_name]).gsub(/　/," ")
       set_user_column @bp_pic
@@ -196,11 +192,7 @@ class BusinessPartnerController < ApplicationController
     else
       # ポップアップウィンドウでなければ通常の画面遷移
       flash[:notice] = flash_notice
-      if mail_flg
-        redirect_to :controller => :business_partner, :action => :show, :id => @business_partner.id
-      else
-        redirect_to(params[:back_to] || {:action => 'list'})
-      end
+      redirect_to :controller => :business_partner, :action => :show, :id => @business_partner.id
     end
   rescue ActiveRecord::RecordInvalid
     render :action => 'new'

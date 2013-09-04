@@ -8,6 +8,13 @@ module ApplicationHelper
   include NameUtil
   include TypeUtil
 
+  def around_b(str)
+    raw "<span style='font-weight:bold'>#{str}</span>"
+  end
+
+  def around_b_if(cond, str)
+    cond ? around_b(str) : str
+  end
   def url_for_bp_pic_popup(callback = :setBpPic)
     url_for :controller => :bp_pic, :action => :list, :popup =>1, :callback => callback
   end
@@ -18,11 +25,15 @@ module ApplicationHelper
   end
 
   def bp_pic_edit_icon(bp_pic)
-    back_to_link(image_tag((bp_pic.memo.blank? ? 'icon-edit.png' : 'icon-comment.png')), {:action => :edit, :id => bp_pic}, :title => bp_pic.memo)
+    back_to_link(image_tag((bp_pic.memo.blank? ? 'icon-edit.png' : 'icon-comment.png')), {:controller => :bp_pic, :action => :edit, :id => bp_pic}, :title => (bp_pic.memo.blank? ? "担当者を編集する" : bp_pic.memo))
   end
 
   def biz_offer_edit_icon(biz_offer)
-    back_to_link(image_tag((biz_offer.business.memo.blank? ? 'icon-edit.png' : 'icon-comment.png')), {:action => :edit, :id => biz_offer}, :title => biz_offer.business.memo)
+    back_to_link(image_tag((biz_offer.business.memo.blank? ? 'icon-edit.png' : 'icon-comment.png')), {:controller => :biz_offer, :action => :edit, :id => biz_offer}, :title => biz_offer.business.memo)
+  end
+
+  def bp_member_edit_icon(bp_member)
+    back_to_link(image_tag((bp_member.human_resource.memo.blank? ? 'icon-edit.png' : 'icon-comment.png')), {:controller => :bp_member, :action => :edit, :id => bp_member}, :title => bp_member.human_resource.memo)
   end
 
   def _date(date)

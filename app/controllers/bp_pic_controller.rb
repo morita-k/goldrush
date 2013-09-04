@@ -61,8 +61,15 @@ class BpPicController < ApplicationController
 
     # JIET_FLG
     if !(x = session[:bp_pic_search][:jiet]).blank?
-      sql += " and jiet = ?"
-      param << x
+      case x 
+      when "1"
+        sql += " and jiet = ?"
+        param << 0
+      when "2"
+        sql += " and jiet = ?"
+        param << 1
+      else
+      end
     end
     
     # 取引先グループ
@@ -100,6 +107,7 @@ class BpPicController < ApplicationController
       set_conditions
     elsif params[:clear_button]
       session[:bp_pic_search] = {}
+      return redirect_to
     end
 
     # 検索条件を処理

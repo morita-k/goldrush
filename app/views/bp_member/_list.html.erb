@@ -2,43 +2,50 @@
 
 <table class="list_table">
   <tr>
-    <th>下流取引先</th>
-    <th>下流<%=getShortName('bp_pics', 'bp_pic_name') %></th>
-    <th><%=getShortName('human_resources', 'human_resource_name') %></th>
+    <th>取引先</th>
+    <th><%=getShortName('bp_pics', 'bp_pic_name') %></th>
+    <th <%=popup? ? "" : "colspan=2"%>><%=getShortName('human_resources', 'human_resource_name') %></th>
     <th><%=getShortName('human_resources', 'skill_tag') %></th>
     <th><%=getShortName('human_resources', 'age') %></th>
     <th><%=getShortName('human_resources', 'sex_type') %></th>
-    <th><%=getShortName('human_resources', 'near_station') %></th>
-    <th><%=getShortName('bp_members', 'employment_type') %></th>
-    <th><%=getShortName('bp_members', 'payment_min') %></th>
+    <th>最寄</th>
+    <th>雇用</th>
+    <th>単価</th>
     <th>添付</th>
-    <th><%=getShortName('bp_members', 'can_start_date') %></th>
-    <th><%=getShortName('human_resources', 'human_resource_status_type') %></th>
-    <th><%=getShortName('human_resources', 'created_at') %></th>
-    <th>JIET</th>
+    <th>開始</th>
+    <th>人材ST</th>
+    <th>登録日時</th>
   </tr>
 
 
   <% for bp_member in @bp_members %>
     <tr>
-      <td><%=h bp_member.business_partner.blank? ? "" : back_to_link(bp_member.business_partner.business_partner_name,controller: :business_partner, action: :show, id: bp_member.business_partner.id) %></td>
-      <td><%=h bp_member.bp_pic.blank? ? "" : back_to_link(bp_member.bp_pic.bp_pic_name, controller: :bp_pic, action: :show, id: bp_member.bp_pic.id) %></td>
+      <td><%= star_links(bp_member.business_partner) %> <%=h bp_member.business_partner.blank? ? "" : back_to_link(bp_member.business_partner.business_partner_name,controller: :business_partner, action: :show, id: bp_member.business_partner.id) %></td>
+      <td><%= star_links(bp_member.bp_pic) %> <%=h bp_member.bp_pic.blank? ? "" : back_to_link(bp_member.bp_pic.bp_pic_name, controller: :bp_pic, action: :show, id: bp_member.bp_pic.id) %></td>
       <% if popup? %>
         <td><%= star_links(bp_member.human_resource) %> <%=link_to h(bp_member.human_resource.useful_name), '#', :onClick => "setBpMember(#{bp_member.id},'#{bp_member.business_partner.business_partner_name}','#{bp_member.human_resource.initial}');return false;" %></td>
       <% else %>
-        <td><%= star_links(bp_member.human_resource) %> <%=back_to_link h(bp_member.human_resource.useful_name), :action => :show, :id => bp_member %></td>
+        <td>
+          <%= star_links(bp_member.human_resource) %> <%=back_to_link h(bp_member.human_resource.useful_name), :action => :show, :id => bp_member %>
+          <%= bp_member.human_resource.jiet? ? raw('[<span title="JIET取り込み" style="font-weight:bold">J</span>]') : ''%>
+        </td>
+        <td style="text-align:center;"><%= bp_member_edit_icon(bp_member) %></td>
       <% end %>
-      <td><div style="overflow: hidden;height:1.4em"><span style="line-height: 90%;"><%= raw format_only_major_tags(bp_member.human_resource.skill_tag, @major_words) %></span></div></td>
+      <td style="overflow: hidden; width:10em">
+        <div style="overflow: hidden;height:1.4em"><span style="line-height: 90%;"><%= raw format_only_major_tags(bp_member.human_resource.skill_tag, @major_words) %></span></div></td>
       <td><%=h bp_member.human_resource.age %></td>
       <td><%=h bp_member.human_resource.sex_type_short_name %></td>
-      <td><%=h bp_member.human_resource.near_station %></td>
-      <td><%=h bp_member.employment_type_name %></td>
+      <td style="overflow: hidden;">
+        <div style="overflow: hidden;width:3em">
+          <div rel="station_name" style="width:1000px;" title="<%= bp_member.human_resource.near_station%>"><%= bp_member.human_resource.nearest_station_short %></div>
+        </div>
+      </td>
+      <td><%=h bp_member.employment_type_short_name %></td>
       <td align=right><%=h((bp_member.payment_min.blank? || bp_member.payment_min == 0) ? "" : "#{bp_member.payment_min_view}万円") %></td>
       <td align=center><%=h bp_member.attachment? ? "○" : "" %></td>
       <td><%=h bp_member.can_start_date_memo %></td>
       <td><%=h bp_member.human_resource.human_resource_status_type_name %></td>
       <td><%=h _time(bp_member.human_resource.created_at) %></td>
-      <td><%=h bp_member.human_resource.jiet? ? "JIET" : "" %></td>
     </tr>
   <% end %>
 </table>

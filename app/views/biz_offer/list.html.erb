@@ -16,19 +16,19 @@
   </tr>
   <tr>
     <th style="text-align: right">単価上限：</th>
-    <td><%= text_field_tag 'payment_from', search_value_biz_offer(:payment_from) %>万円以上<%= text_field_tag 'payment_to', search_value_biz_offer(:payment_to) %>万円以下</td>
-  </tr>
-  <tr>
-    <th style="text-align: right">案件ステータス：</th>
-    <td><%= select_tag 'business_status_type', options_for_select([[]] + getTypes('business_status_type'), search_value_biz_offer(:business_status_type)) %></td>
+    <td class="bounds_input"><%= text_field_tag 'payment_from', search_value_biz_offer(:payment_from) %>万 ～ <%= text_field_tag 'payment_to', search_value_biz_offer(:payment_to) %>万</td>
   </tr>
   <tr>
     <th style="text-align: right">照会ステータス：</th>
     <td><%= select_tag 'biz_offer_status_type', options_for_select([[]] + getTypes('biz_offer_status_type'), search_value_biz_offer(:biz_offer_status_type)) %></td>
   </tr>
   <tr>
-    <th style="text-align: right">JIET：</th>
-    <td><%= check_box_tag 'jiet', ImportMailJIET::JIET_FLG, !search_value_biz_offer(:jiet).blank? %></td>
+    <th style="text-align: right">JIET:</th>
+    <td class="jiet_radio">
+      <%= radio_button_tag 'jiet', "0", search_value_biz_offer(:jiet) == "0" %> どちらも
+      <%= radio_button_tag 'jiet', "1", search_value_biz_offer(:jiet) == "1" %> JIET以外
+      <%= radio_button_tag 'jiet', "2", search_value_biz_offer(:jiet) == "2" %> JIETのみ
+    </td>
   </tr>
 </table>
 <p><%= submit_tag '　　検索　　', :name => 'search_button' %> <%= submit_tag '　　クリア　　', :name => 'clear_button' %></p>

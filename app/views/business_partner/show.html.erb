@@ -84,7 +84,7 @@
 </table>
 <%= back_to_link '編集', :action => 'edit', :id => @business_partner %> |
 <%= delete_to '削除', @business_partner %> |
-<%= link_or_back '戻る', :action => 'list' %>
+<%= link_or_back '戻る', :controller => :bp_pic, :action => 'list' %>
 
   <p></p>
   <h2><%=getLongName('table_name','bp_pics')%>一覧</h2>

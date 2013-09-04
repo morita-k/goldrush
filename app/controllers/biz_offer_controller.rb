@@ -66,11 +66,19 @@ class BizOfferController < ApplicationController
       param << biz_offer_status_type
     end
 
+    # JIET_FLG
     if !(x = session[:biz_offer_search][:jiet]).blank?
-      sql += " and bp_pics.jiet = ?"
-      param << x
+      case x 
+      when "1"
+        sql += " and bp_pics.jiet = ?"
+        param << 0
+      when "2"
+        sql += " and bp_pics.jiet = ?"
+        param << 1
+      else
+      end
     end
-
+    
     return {:conditions => param.unshift(sql), :include => include, :order => order_by, :per_page => current_user.per_page}
   end
 

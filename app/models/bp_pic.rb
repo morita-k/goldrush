@@ -20,6 +20,10 @@ class BpPic < ActiveRecord::Base
   BOUNCE_MAIL_REASON_ERROR = [:hostunknown, :userunknown]
   BOUNCE_MAIL_REASON_WARN = [:hasmoved, :rejected, :filtered, :mailboxfull, :exceedlimit, :systemfull, :notaccept, :suspend, :mailererror, :systemerror, :mesgtoobig, :securityerr, :contenterr, :expired, :onhold]
 
+  def jiet?
+    self.jiet == 1
+  end
+
   def business_partner_name
     business_partner && business_partner.business_partner_name
   end
