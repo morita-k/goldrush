@@ -28,28 +28,8 @@ class ImportMailController < ApplicationController
     }
   end
 
-  def combine_tags?(tags)
-    tags && tags.split(",").size > 1
-  end
-
   def make_conditions_for_tag(tags)
-    sqls = []
-    sql_params = []
-   tags.split(",").each do |tag|
-      sqls << "tag_details.tag_text = ?"
-      sql_params << tag.strip.downcase
-    end
-    if combine_tags?(tags)
-      my_sql = "select parent_id, count(parent_id) as cnt from tag_details where (#{sqls.join(' or ')}) group by parent_id having count(parent_id) > ?"
-      sql_params << (sqls.size - 1)
-      parent_ids = TagDetail.find_by_sql(sql_params.unshift(my_sql)).map{|x| x.parent_id}
-      sql_params << parent_ids
-      return [" and import_mails.id in (?)", [parent_ids], []]
-    else
-      return [" and (#{sqls.first})", sql_params, [:tag_details]]
-      #こんな感じ
-      #ImportMail.joins(:tag_details).where(:id => 240,"tag_details.tag_text" => "java")
-    end
+    Tag.make_conditions_for_tag(tags, "import_mails")
   end
 
   def make_conditions
@@ -84,10 +64,11 @@ class ImportMailController < ApplicationController
     end
     
     unless session[:import_mail_search][:tag].blank?
-      s, p, j = make_conditions_for_tag(session[:import_mail_search][:tag])
-      sql += s
-      sql_params += p
-      joins += j
+      pids = make_conditions_for_tag(session[:import_mail_search][:tag])
+      unless pids.empty?
+        sql += " and import_mails.id in (?) "
+        sql_params += [pids]
+      end
     end
     
     unless (payment_from = session[:import_mail_search][:payment_from]).blank?

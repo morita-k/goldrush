@@ -41,6 +41,14 @@ class BpMemberController < ApplicationController
       param << "%#{hr_name}%" << "%#{hr_name}"
     end
 
+    unless session[:bp_member_search][:skill_tag].blank?
+      pids = Tag.make_conditions_for_tag(session[:bp_member_search][:skill_tag], "human_resources")
+      unless pids.empty?
+        sql += " and human_resources.id in (?) "
+        param << pids
+      end
+    end
+    
     if !(skill_tag = session[:bp_member_search][:skill_tag]).blank?
       sql += " and human_resources.skill_tag like ?"
       param << "%#{skill_tag}%"
