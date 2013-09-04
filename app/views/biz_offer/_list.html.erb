@@ -33,3 +33,28 @@
     </tr>
   <% end %>
 </table>
+<script type="text/javascript">
+<!--
+function isInclude(src, word){
+  return (src.toUpperCase().split(",").indexOf(word) > -1);
+}
+
+$(function(){
+  $('.tag').click(function(){
+    var v = document.forms[0].skill_tag.value;
+    if (v){
+      var w = this.innerHTML;
+      if(!isInclude(v, w.toUpperCase())){
+        var x = v.split(",")
+        x.push(this.innerHTML);
+        document.forms[0].skill_tag.value = x.join(",");
+      }
+    }else{
+      document.forms[0].skill_tag.value = this.innerHTML;
+    }
+  });
+});
+
+// -->
+</script>
+
