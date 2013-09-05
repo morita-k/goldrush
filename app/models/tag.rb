@@ -80,7 +80,7 @@ class Tag < ActiveRecord::Base
   end
 
   def Tag.bad_tags
-    @@bad_tags || (@@bad_tags = starred_tags(2))
+    @@bad_tags || (@@bad_tags = starred_tags(3))
   end
 
   def Tag.starred_tags(star)
