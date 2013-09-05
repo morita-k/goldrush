@@ -9,6 +9,7 @@
     <% end %>
     <th>対象数</th>
     <th>ｴﾗｰ件数</th>
+    <th>返信件数</th>
     <th>添付</th>
     <% if group? %>
     　　<th><%= getLongName('delivery_mails', 'planned_setting_at') %></th>
@@ -31,11 +32,12 @@
     <% end %>
     <td style="text-align:center"><%= delivery_mail.delivery_mail_targets.count %></td>
     <td style="text-align:center"><%= delivery_mail.delivery_errors.count %></td>
+    <td style="text-align:center"><%= delivery_mail.import_mails.count %></td>
     <td style="text-align:center"><%= delivery_mail.attachment_files.first ? "○" : "-" %></td>
     <% if group? %>
-      <td><%= _time(delivery_mail.planned_setting_at) %></td>
+      <td style="white-space: nowrap"><%= _timetoddmmhhmm(delivery_mail.planned_setting_at) %></td>
     <% end %>
-    <td><%= _time(delivery_mail.send_end_at) %></td>
+    <td style="white-space: nowrap"><%= _timetoddmmhhmm(delivery_mail.send_end_at) %></td>
     <% if group? %>
       <td style="white-space:nowrap">
         <% if delivery_mail.unsend? %>
