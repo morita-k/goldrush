@@ -70,6 +70,7 @@ class HolidayApplicationController < ApplicationController
   def new
     @calendar = true
     @holiday_application = HolidayApplication.new
+    @holiday_application.user_id = params[:id] || current_user.id
     
     @holiday_application.working_type = params[:working_type] || 'vacation_dayoff'
     #condition
@@ -78,7 +79,7 @@ class HolidayApplicationController < ApplicationController
       unless daily_working.need_application?
         flash[:worning] = "休暇(休出)申請が必要ない区分のデータです"
       end
-      @holiday_application.user_id = current_user.id
+#      @holiday_application.user_id = current_user.id
       @holiday_application.application_date = Time.now
       @holiday_application.start_date = daily_working.working_date
       @holiday_application.end_date = daily_working.working_date
@@ -227,7 +228,7 @@ class HolidayApplicationController < ApplicationController
     @holiday_application = HolidayApplication.new
     @holiday_application.set_time_str(params[:holiday_application])
     @holiday_application.attributes = params[:holiday_application]
-    @holiday_application.user_id = current_user.id
+    #@holiday_application.user_id = current_user.id
     
     if @holiday_application.start_date.blank?
       if @holiday_application.working_type == 'on_holiday_working'
@@ -240,14 +241,14 @@ class HolidayApplicationController < ApplicationController
     valid_holiday_application(@holiday_application)
 
     #休暇申請での全て承認者を取る。
-    approval_authorities = ApprovalAuthority.find(:all, :conditions => ["user_id = ? and approver_type = ? and active_flg = 1 and deleted = 0", current_user.id, 'working_xxx'])
+    approval_authorities = ApprovalAuthority.find(:all, :conditions => ["user_id = ? and approver_type = ? and active_flg = 1 and deleted = 0", @holiday_application.user_id, 'working_xxx'])
     if approval_authorities.empty?
       raise ValidationAbort.new('承認者が一人も登録されていません。承認権限設定をしてください')
     end
     
     ActiveRecord::Base.transaction do
       base_application = BaseApplication.new
-      base_application.user_id = current_user.id
+      base_application.user_id = @holiday_application.user_id
       base_application.application_type = 'holiday_app'
       base_application.approval_status_type = 'entry'
       base_application.application_date = @holiday_application.application_date

@@ -88,13 +88,13 @@
   <% @hide_edit = true %>
   <%= render :partial => 'base_application/application_mw', :locals => {:application => @monthly_working} %>
   <% if @monthly_working.base_application.approval_status_type != 'fixed' %>
-    <%= link_to '勤務表報告の取消', { :action => 'cancel_monthly_working', :id => @monthly_working, :back_to => request.env['REQUEST_URI']}, :confirm => 'この勤務表報告を取り消します。よろしいですか?', :method => :post %>
+    <%= link_to '勤務表報告の取消', { :action => 'cancel_monthly_working', :id => @monthly_working, :back_to => request.env['REQUEST_URI'], :authenticity_token => form_authenticity_token}, :confirm => 'この勤務表報告を取り消します。よろしいですか?', :method => :post %>
   <% end %>
 <% elsif @monthly_working.start_date <= '2011/04/21'.to_date %>
 <% else %>
   <br/>
 <!-- # TODO : furukawa : 何やら申請できない。:method => :post を外すと出来る。玉置さんに確認 -->
-  <%= link_to '承認者に報告', { :action => 'send_monthly_working', :id => @monthly_working, :back_to => request.env['REQUEST_URI']}, :confirm => '承認者にこの勤務表を送ります。よろしいですか?', :method => :post %>
+  <%= link_to '承認者に報告', { :action => 'send_monthly_working', :id => @monthly_working, :back_to => request.env['REQUEST_URI'], :authenticity_token => form_authenticity_token}, :confirm => '承認者にこの勤務表を送ります。よろしいですか?', :method => :post %>
 <% end %>
 
 <table class="list_table">
@@ -122,7 +122,7 @@
     </td>
     <td style="width: 6%;">
       <% unless (!daily_working.action_type_blank? || daily_working.holiday? || holiday_application || other_applications.present?) %>
-        <%= link_to('全出登録', controller: 'daily_working', action: 'registr_all_day_working', daily_working_id: daily_working.id, back_to: request.env['REQUEST_URI']) %>
+        <%= link_to('全出登録', controller: 'daily_working', action: 'registr_all_day_working', user_id: @monthly_working.user_id, daily_working_id: daily_working.id, back_to: request.env['REQUEST_URI']) %>
       <% else %>
         <%=h daily_working.working_type_short_name %>
       <% end %>
