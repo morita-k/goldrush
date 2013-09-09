@@ -1535,4 +1535,19 @@ ActiveRecord::Schema.define(:version => 0) do
 
   add_index "working_logs", ["id"], :name => "id", :unique => true
 
+
+  create_table "special_words", :force => true do |t|
+    t.integer  "owner_id",         :limit => 8
+    t.string   "special_word_type",:limit => 40,                :null => false
+    t.string   "target_word",                                   :null => false
+    t.string   "convert_to_word"
+    t.text     "memo"
+    t.datetime "created_at",                                    :null => false
+    t.datetime "updated_at",                                    :null => false
+    t.integer  "lock_version",     :limit => 8,  :default => 0
+    t.string   "created_user",     :limit => 80
+    t.string   "updated_user",     :limit => 80
+    t.datetime "deleted_at"
+    t.integer  "deleted",                        :default => 0
+  end
 end
