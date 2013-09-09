@@ -7,7 +7,7 @@ gem 'rails', '3.2.13'
 
 gem 'mysql2', '0.3.11'
 
-gem 'json'
+gem 'json', '1.8.0'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -23,11 +23,11 @@ end
 
 group :test, :development do
 #  gem "rspec-rails", "~> 2.0"
-  gem 'simplecov', :require => false
-  gem 'simplecov-rcov', :require => false
+  gem 'simplecov', '0.7.1', :require => false
+  gem 'simplecov-rcov', '0.2.3', :require => false
 end
 
-gem 'jquery-rails'
+gem 'jquery-rails', '3.0.4'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
@@ -44,17 +44,17 @@ gem 'jquery-rails'
 # To use debugger
 # gem 'ruby-debug'
 #
-gem 'devise'
+gem 'devise', '3.0.3'
 
-gem 'dynamic_form', :git => 'git://github.com/rails/dynamic_form.git'
+gem 'dynamic_form', '1.0.0', :git => 'git://github.com/rails/dynamic_form.git'
 
 #gem 'tlsmail'
 
-gem 'gettext_i18n_rails'
+gem 'gettext_i18n_rails', '0.10.1'
 gem 'gettext', '>=1.9.3', :require => false, :group => :development
-gem 'ruby_parser', :require => false, :group => :development
+gem 'ruby_parser', '3.2.2',  :require => false, :group => :development
 
-gem 'kaminari'
+gem 'kaminari', '0.14.1'
 
 gem 'mail', '2.5.3'
 
