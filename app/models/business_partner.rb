@@ -24,8 +24,12 @@ class BusinessPartner < ActiveRecord::Base
     self.sales_code + " " + business_partner_name
   end
 
-  def basic_contract_concluded?
-    basic_contract_first_party_status_type == 'concluded'
+  def basic_contract_concluded
+    resultConclude = ""
+    resultConclude += "甲" if basic_contract_first_party_status_type == 'concluded'
+    resultConclude += "乙" if basic_contract_second_party_status_type == 'concluded'
+
+    return resultConclude
   end
 
   def BusinessPartner.export_to_csv

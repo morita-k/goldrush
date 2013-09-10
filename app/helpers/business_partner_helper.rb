@@ -2,7 +2,7 @@
 module BusinessPartnerHelper
   
   def basic_contract_concluded_text(bp)
-    raw(bp.basic_contract_concluded? ? " [<span style='font-weight:bold' title='基本契約締結済み'>基</span>]" : "")
+    raw(bp.basic_contract_concluded != "" ? " [<span style='font-weight:bold' title='基本契約締結済み'>" + bp.basic_contract_concluded + "</span>]" : "")
   end
 
   def get_basic_contract_first_party_status_type_text(bp)
