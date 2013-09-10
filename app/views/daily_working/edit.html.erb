@@ -5,7 +5,7 @@
 	  <% url = url_for(:controller => :other_application, :action => :popup_new, :popup => 1, :working_option_type => check_err, :daily_working_id => @daily_working.id, :in_time => @daily_working.in_time, :out_time => @daily_working.out_time, :back_to => request.env['REQUEST_URI']) %>
     <%= link_to "#{getLongType('working_option_type', check_err)}作成", "#", :onclick=> "disp('#{url}');return false;" %>
   <% else %>
-	  <% url = url_for(:controller => :holiday_application, :action => :popup_new, :popup => 1, :working_type => check_err, :daily_working_id => @daily_working.id, :in_time => @daily_working.in_time, :out_time => @daily_working.out_time, :back_to => request.env['REQUEST_URI']) %>
+	  <% url = url_for(:controller => :holiday_application, :action => :popup_new, :id => @daily_working.user_id, :popup => 1, :working_type => check_err, :daily_working_id => @daily_working.id, :in_time => @daily_working.in_time, :out_time => @daily_working.out_time, :back_to => request.env['REQUEST_URI']) %>
     <%= link_to "#{getLongType('working_type', check_err)}申請作成", "#", :onclick=> "disp('#{url}');return false;" %>
   <% end %>
 <% end %>

@@ -436,9 +436,9 @@ EOS
     change_to_statuses.each{|change_to_status|
       str = ApplicationApproval.approval_action_str(change_to_status)
       if change_to_status == 'reject'
-        result << link_to(str, { :controller => 'application_approval', :action => 'reject', :id => application_approval, :application_type => application_approval.application_type, :approval_status_type => change_to_status, :back_to => request.env['REQUEST_URI'] })
+        result << link_to(str, { :controller => 'application_approval', :action => 'reject', :id => application_approval, :application_type => application_approval.application_type, :approval_status_type => change_to_status, :back_to => request.env['REQUEST_URI'] , :authenticity_token => form_authenticity_token})
       else
-        result << link_to(str, { :controller => 'application_approval', :action => 'change_approval_status', :id => application_approval, :application_type => application_approval.application_type, :approval_status_type => change_to_status, :back_to => request.env['REQUEST_URI'] }, :confirm => "この申請を#{str}します。よろしいですか?", :method => :post)
+        result << link_to(str, { :controller => 'application_approval', :action => 'change_approval_status', :id => application_approval, :application_type => application_approval.application_type, :approval_status_type => change_to_status, :back_to => request.env['REQUEST_URI'], :authenticity_token => form_authenticity_token }, :confirm => "この申請を#{str}します。よろしいですか?", :method => :post)
       end
     }
     result 

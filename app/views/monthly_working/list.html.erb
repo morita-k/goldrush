@@ -121,7 +121,7 @@
     </td>
     <td style="width: 6%;">
       <% unless (!daily_working.action_type_blank? || daily_working.holiday? || holiday_application || other_applications.present?) %>
-        <%= link_to('全出登録', controller: 'daily_working', action: 'registr_all_day_working', daily_working_id: daily_working.id, back_to: request.env['REQUEST_URI']) %>
+        <%= link_to('全出登録', controller: 'daily_working', action: 'registr_all_day_working', user_id: @monthly_working.user_id, daily_working_id: daily_working.id, back_to: request.env['REQUEST_URI']) %>
       <% else %>
         <%=h daily_working.working_type_short_name %>
       <% end %>

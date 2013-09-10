@@ -61,7 +61,7 @@ class HolidayApplication < ActiveRecord::Base
       last_date = self.start_date.to_date - 1.month
       last_month = MonthlyWorking.find(:first, :conditions => ["deleted = 0 and user_id = ? and start_date <= ?", self.user, last_date], :order => "start_date desc")
 #puts"******* target_monthly_working : #{last_month.id}"
-      if last_month.fixed?
+      if last_month && last_month.fixed?
         cutoff_compensatory = 0
       else
         cutoff_compensatory = (vacation.cutoff_compensatory_hour_total < 0 ? 0 : vacation.cutoff_compensatory_hour_total)

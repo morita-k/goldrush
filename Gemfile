@@ -44,7 +44,7 @@ gem 'jquery-rails'
 # To use debugger
 # gem 'ruby-debug'
 #
-gem 'devise'
+gem 'devise', '3.0.3'
 
 gem 'dynamic_form', :git => 'git://github.com/rails/dynamic_form.git'
 
