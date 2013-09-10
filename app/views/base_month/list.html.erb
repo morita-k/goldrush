@@ -1,6 +1,6 @@
 <h1>勤怠の基準月一覧</h1>
 
-<%= link_to '基準月データ初期', { :controller => :monthly_working, :action => 'init_base_month', :back_to => request.env['REQUEST_URI']}, :confirm => '基準月データを初期化します。よろしいですか?', :method => :post %>
+<%= link_to '基準月データ初期', { :controller => :monthly_working, :action => 'init_base_month', :back_to => request.env['REQUEST_URI'], :authenticity_token => form_authenticity_token}, :confirm => '基準月データを初期化します。よろしいですか?', :method => :post %>
 <br/>
 <br/>
 <%= paginate(@base_months) %>
@@ -32,7 +32,7 @@
     <td>
       <%= link_to '表示', :action => 'show', :id => base_month %>, 
       <%= link_to '変更', :action => 'edit', :id => base_month %>, 
-      <%= link_to '削除', { :action => 'destroy', :id => base_month }, :confirm => 'この情報を削除します。よろしいですか?', :method => :post %>
+      <%= link_to '削除', { :action => 'destroy', :id => base_month, :authenticity_token => form_authenticity_token }, :confirm => 'この情報を削除します。よろしいですか?', :method => :post %>
     </td>
   <tr>
   <% end %>

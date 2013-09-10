@@ -53,7 +53,7 @@
   <% #@hide_edit = true %>
   <% if @payment_per_case && @payment_per_case.base_application %>
     <br/>
-    <%= link_to('取消', {:controller => :base_application, :action => 'cancel', :id => @payment_per_case.base_application.id, :back_to => url_for(:id => @base_month.id, :action => :list, :user_id => params[:user_id])}, {:confirm => "この申請をキャンセルします。よろしいですか？", :method => :post}) if @payment_per_case.base_application.can_cancel? && current_user.accounting? %>
+    <%= link_to('取消', {:controller => :base_application, :action => 'cancel', :id => @payment_per_case.base_application.id, :back_to => url_for(:id => @base_month.id, :action => :list, :user_id => params[:user_id], :authenticity_token => form_authenticity_token)}, {:confirm => "この申請をキャンセルします。よろしいですか？", :method => :post}) if @payment_per_case.base_application.can_cancel? && current_user.accounting? %>
     <% if current_user.accounting? %>
       <%= form_tag({:action => 'cutoff_case', :id => @payment_per_case, :back_to => request.env['REQUEST_URI']}, :id => 'form2') do %>
       <% if @payment_per_case.cutoff? %>
@@ -65,7 +65,7 @@
     <% end %>
   <% elsif @payment_per_month.base_application %>
     <br/>
-    <%= link_to('取消', {:controller => :base_application, :action => 'cancel', :id => @payment_per_month.base_application.id, :back_to => request.env['REQUEST_URI']}, {:confirm => "この申請をキャンセルします。よろしいですか？", :method => :post}) if @payment_per_month.base_application.can_cancel? && current_user.accounting? %>
+    <%= link_to('取消', {:controller => :base_application, :action => 'cancel', :id => @payment_per_month.base_application.id, :back_to => request.env['REQUEST_URI'], :authenticity_token => form_authenticity_token}, {:confirm => "この申請をキャンセルします。よろしいですか？", :method => :post}) if @payment_per_month.base_application.can_cancel? && current_user.accounting? %>
     <% if current_user.accounting? %>
       <%= form_tag({:action => 'cutoff_month', :id => @payment_per_month, :back_to => request.env['REQUEST_URI']}, :id => 'form2') do %>
       <% if @payment_per_month.cutoff? %>

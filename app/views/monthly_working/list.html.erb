@@ -93,7 +93,6 @@
 <% elsif @monthly_working.start_date <= '2011/04/21'.to_date %>
 <% else %>
   <br/>
-<!-- # TODO : furukawa : 何やら申請できない。:method => :post を外すと出来る。玉置さんに確認 -->
   <%= link_to '承認者に報告', { :action => 'send_monthly_working', :id => @monthly_working, :back_to => request.env['REQUEST_URI'], :authenticity_token => form_authenticity_token}, :confirm => '承認者にこの勤務表を送ります。よろしいですか?', :method => :post %>
 <% end %>
 
