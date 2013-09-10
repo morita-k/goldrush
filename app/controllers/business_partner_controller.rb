@@ -152,8 +152,8 @@ class BusinessPartnerController < ApplicationController
       
       if new_flg = params[:business_partner][:id].blank?
         @business_partner = BusinessPartner.new(params[:business_partner])
-        @business_partner.basic_contract_status_type ||= 'none'
-        @business_partner.nda_status_type ||= 'none'
+        @business_partner.basic_contract_first_party_status_type ||= 'none'
+        @business_partner.basic_contract_second_party_status_type ||= 'none'
         @business_partner.tag_text = Tag.normalize_tag(@business_partner.tag_text).join(" ")
       else
         # 取り込みメールからのBP・BP担当登録で、BPを登録済のものから選択した場合

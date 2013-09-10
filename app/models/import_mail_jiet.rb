@@ -102,8 +102,8 @@ class ImportMailJIET < ImportMail
       business_partner_short_name: mail["会社名"],
       business_partner_name_kana: mail["会社名"],
       sales_status_type: "listup",
-      basic_contract_status_type: "none",
-      nda_status_type: "none",
+      basic_contract_first_party_status_type: "none",
+      basic_contract_second_party_status_type: "none",
       url: mail["URL"],
       category: mail["業種"],
       import_mail_id: import_mail_id

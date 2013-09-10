@@ -25,7 +25,7 @@ class BusinessPartner < ActiveRecord::Base
   end
 
   def basic_contract_concluded?
-    basic_contract_status_type == 'concluded'
+    basic_contract_first_party_status_type == 'concluded'
   end
 
   def BusinessPartner.export_to_csv
@@ -48,8 +48,8 @@ class BusinessPartner < ActiveRecord::Base
         bp.business_partner_short_name = company_name
         bp.business_partner_name_kana = company_name
         bp.sales_status_type = 'listup'
-        bp.basic_contract_status_type ||= 'none'
-        bp.nda_status_type ||= 'none'
+        bp.basic_contract_first_party_status_type ||= 'none'
+        bp.basic_contract_second_party_status_type ||= 'none'
         bp.upper_flg = upper_flg
         bp.down_flg = down_flg
         if pic_name.include?('担当者')
