@@ -5041,7 +5041,7 @@ types_252:
 types_253:
   id: 253
   owner_id: 
-  type_section: "basic_contract_status_type"
+  type_section: "basic_contract_first_party_status_type"
   type_key: "non_correspondence"
   long_name: "未対応"
   short_name: "未"
@@ -5061,7 +5061,7 @@ types_253:
 types_254:
   id: 254
   owner_id: 
-  type_section: "basic_contract_status_type"
+  type_section: "basic_contract_first_party_status_type"
   type_key: "in_progress"
   long_name: "対応中"
   short_name: "中"
@@ -5081,7 +5081,7 @@ types_254:
 types_255:
   id: 255
   owner_id: 
-  type_section: "basic_contract_status_type"
+  type_section: "basic_contract_first_party_status_type"
   type_key: "concluded"
   long_name: "締結済み"
   short_name: "済"
@@ -5101,7 +5101,7 @@ types_255:
 types_256:
   id: 256
   owner_id: 
-  type_section: "nda_status_type"
+  type_section: "basic_contract_second_party_status_type"
   type_key: "non_correspondence"
   long_name: "未対応"
   short_name: "未"
@@ -5121,7 +5121,7 @@ types_256:
 types_257:
   id: 257
   owner_id: 
-  type_section: "nda_status_type"
+  type_section: "basic_contract_second_party_status_type"
   type_key: "in_progress"
   long_name: "対応中"
   short_name: "中"
@@ -5141,7 +5141,7 @@ types_257:
 types_258:
   id: 258
   owner_id: 
-  type_section: "nda_status_type"
+  type_section: "basic_contract_second_party_status_type"
   type_key: "concluded"
   long_name: "締結済み"
   short_name: "済"

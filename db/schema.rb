@@ -372,8 +372,8 @@ ActiveRecord::Schema.define(:version => 0) do
     t.string   "business_partner_name_kana"
     t.string   "business_partner_name_en"
     t.string   "sales_status_type",           :limit => 40,                  :null => false
-    t.string   "basic_contract_status_type", :limit => 40,                  :null => false
-    t.string   "nda_status_type",             :limit => 40,                  :null => false
+    t.string   "basic_contract_first_party_status_type", :limit => 40,                  :null => false
+    t.string   "basic_contract_second_party_status_type", :limit => 40,                  :null => false
     t.string   "ceo_name"
     t.string   "url"
     t.string   "zip",                         :limit => 40
