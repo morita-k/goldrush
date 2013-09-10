@@ -49,7 +49,7 @@
     <td>
       <%= link_to '表示' ,:controller => 'route_expense_detail', :action => 'show', :id => route_expense_detail %>, 
       <%= link_to '変更' ,:controller => 'route_expense_detail', :action => 'edit', :id => route_expense_detail %>, 
-      <%= link_to '削除', {:controller => 'route_expense_detail', :action => 'destroy', :id => route_expense_detail }, :confirm => 'この情報を削除します。よろしいですか?', :method => :post %>
+      <%= link_to '削除', {:controller => 'route_expense_detail', :action => 'destroy', :id => route_expense_detail, :authenticity_token => form_authenticity_token }, :confirm => 'この情報を削除します。よろしいですか?', :method => :post %>
     </td>
   </tr>
 <% end %>

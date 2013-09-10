@@ -101,60 +101,60 @@
       <% if application_approval.application_type == 'holiday_app' %>
         <%= link_to '表示', :controller => 'holiday_application', :action => 'show_by_user', :id => application_approval.holiday_application, :app_approval_id => application_approval, :back_to => request.env['REQUEST_URI'] %>
         <% if application_approval.approval_status_type == 'entry' %> 
-          <%= link_to '承認', { :action => 'approve_holiday_app', :id => application_approval, :back_to => request.env['REQUEST_URI'] }, :confirm => 'この申請を承認します。よろしいですか?', :method => :post %>
-          <%= link_to '却下', { :action => 'reject_holiday_app', :id => application_approval, :back_to => request.env['REQUEST_URI'] }, :confirm => 'この申請を却下します。よろしいですか?', :method => :post %>
+          <%= link_to '承認', { :action => 'approve_holiday_app', :id => application_approval, :back_to => request.env['REQUEST_URI'], :authenticity_token => form_authenticity_token }, :confirm => 'この申請を承認します。よろしいですか?', :method => :post %>
+          <%= link_to '却下', { :action => 'reject_holiday_app', :id => application_approval, :back_to => request.env['REQUEST_URI'], :authenticity_token => form_authenticity_token }, :confirm => 'この申請を却下します。よろしいですか?', :method => :post %>
         <% elsif application_approval.approval_status_type == 'approved' %> 
-          <%= link_to '解除', { :action => 'entry_holiday_app', :id => application_approval, :back_to => request.env['REQUEST_URI'] }, :confirm => 'この申請が申請中になります。よろしいですか?', :method => :post %>
+          <%= link_to '解除', { :action => 'entry_holiday_app', :id => application_approval, :back_to => request.env['REQUEST_URI'], :authenticity_token => form_authenticity_token }, :confirm => 'この申請が申請中になります。よろしいですか?', :method => :post %>
         <% elsif application_approval.approval_status_type == 'reject' %> 
-          <%= link_to '解除', { :action => 'entry_holiday_app', :id => application_approval, :back_to => request.env['REQUEST_URI'] }, :confirm => 'この申請が申請中になります。よろしいですか?', :method => :post %>
+          <%= link_to '解除', { :action => 'entry_holiday_app', :id => application_approval, :back_to => request.env['REQUEST_URI'], :authenticity_token => form_authenticity_token }, :confirm => 'この申請が申請中になります。よろしいですか?', :method => :post %>
         <% end %>
       <% elsif application_approval.application_type == 'business_trip_app' %>
         <%= link_to '表示', :controller => 'business_trip_application', :action => 'show_by_user', :id => application_approval.business_trip_application, :app_approval_id => application_approval, :back_to => request.env['REQUEST_URI'] %>
         <% if application_approval.approval_status_type == 'entry' %> 
-          <%= link_to '承認', { :action => 'approve_business_trip_app', :id => application_approval, :back_to => request.env['REQUEST_URI'] }, :confirm => 'この申請を承認します。よろしいですか?', :method => :post %>
-          <%= link_to '却下', { :action => 'reject_business_trip_app', :id => application_approval, :back_to => request.env['REQUEST_URI'] }, :confirm => 'この申請を却下します。よろしいですか?', :method => :post %>
+          <%= link_to '承認', { :action => 'approve_business_trip_app', :id => application_approval, :back_to => request.env['REQUEST_URI'], :authenticity_token => form_authenticity_token }, :confirm => 'この申請を承認します。よろしいですか?', :method => :post %>
+          <%= link_to '却下', { :action => 'reject_business_trip_app', :id => application_approval, :back_to => request.env['REQUEST_URI'], :authenticity_token => form_authenticity_token }, :confirm => 'この申請を却下します。よろしいですか?', :method => :post %>
         <% elsif application_approval.approval_status_type == 'approved' %> 
-          <%= link_to '解除', { :action => 'entry_business_trip_app', :id => application_approval, :back_to => request.env['REQUEST_URI'] }, :confirm => 'この申請が申請中になります。よろしいですか?', :method => :post %>
+          <%= link_to '解除', { :action => 'entry_business_trip_app', :id => application_approval, :back_to => request.env['REQUEST_URI'], :authenticity_token => form_authenticity_token }, :confirm => 'この申請が申請中になります。よろしいですか?', :method => :post %>
         <% elsif application_approval.approval_status_type == 'reject' %> 
-          <%= link_to '解除', { :action => 'entry_business_trip_app', :id => application_approval, :back_to => request.env['REQUEST_URI'] }, :confirm => 'この申請が申請中になります。よろしいですか?', :method => :post %>
+          <%= link_to '解除', { :action => 'entry_business_trip_app', :id => application_approval, :back_to => request.env['REQUEST_URI'], :authenticity_token => form_authenticity_token }, :confirm => 'この申請が申請中になります。よろしいですか?', :method => :post %>
         <% end %>
       <% elsif application_approval.application_type == 'other_app' %>
         <%= link_to '表示', :controller => 'other_application', :action => 'show_by_user', :id => application_approval.other_application, :app_approval_id => application_approval, :back_to => request.env['REQUEST_URI'] %>
         <% if application_approval.approval_status_type == 'entry' %> 
-          <%= link_to '承認', { :action => 'approve_other_app', :id => application_approval, :back_to => request.env['REQUEST_URI'] }, :confirm => 'この申請を承認します。よろしいですか?', :method => :post %>
-          <%= link_to '却下', { :action => 'reject_other_app', :id => application_approval, :back_to => request.env['REQUEST_URI'] }, :confirm => 'この申請を却下します。よろしいですか?', :method => :post %>
+          <%= link_to '承認', { :action => 'approve_other_app', :id => application_approval, :back_to => request.env['REQUEST_URI'], :authenticity_token => form_authenticity_token }, :confirm => 'この申請を承認します。よろしいですか?', :method => :post %>
+          <%= link_to '却下', { :action => 'reject_other_app', :id => application_approval, :back_to => request.env['REQUEST_URI'], :authenticity_token => form_authenticity_token }, :confirm => 'この申請を却下します。よろしいですか?', :method => :post %>
         <% elsif application_approval.approval_status_type == 'approved' %> 
-          <%= link_to '解除', { :action => 'entry_other_app', :id => application_approval, :back_to => request.env['REQUEST_URI'] }, :confirm => 'この申請が申請中になります。よろしいですか?', :method => :post %>
+          <%= link_to '解除', { :action => 'entry_other_app', :id => application_approval, :back_to => request.env['REQUEST_URI'], :authenticity_token => form_authenticity_token }, :confirm => 'この申請が申請中になります。よろしいですか?', :method => :post %>
         <% elsif application_approval.approval_status_type == 'reject' %> 
-          <%= link_to '解除', { :action => 'entry_other_app', :id => application_approval, :back_to => request.env['REQUEST_URI'] }, :confirm => 'この申請が申請中になります。よろしいですか?', :method => :post %>
+          <%= link_to '解除', { :action => 'entry_other_app', :id => application_approval, :back_to => request.env['REQUEST_URI'], :authenticity_token => form_authenticity_token }, :confirm => 'この申請が申請中になります。よろしいですか?', :method => :post %>
         <% end %>
       <% elsif application_approval.application_type == 'monthly_working_app' %>
         <% if application_approval.approval_status_type == 'entry' %> 
-          <%= link_to '承認', { :action => 'approve_monthly_working', :id => application_approval, :back_to => request.env['REQUEST_URI'] }, :confirm => 'この申請を承認します。よろしいですか?', :method => :post %>
-          <%= link_to '却下', { :action => 'reject_monthly_working', :id => application_approval, :back_to => request.env['REQUEST_URI'] }, :confirm => 'この申請を却下します。よろしいですか?', :method => :post %>
+          <%= link_to '承認', { :action => 'approve_monthly_working', :id => application_approval, :back_to => request.env['REQUEST_URI'], :authenticity_token => form_authenticity_token }, :confirm => 'この申請を承認します。よろしいですか?', :method => :post %>
+          <%= link_to '却下', { :action => 'reject_monthly_working', :id => application_approval, :back_to => request.env['REQUEST_URI'], :authenticity_token => form_authenticity_token }, :confirm => 'この申請を却下します。よろしいですか?', :method => :post %>
         <% elsif application_approval.approval_status_type == 'approved' %> 
-          <%= link_to '解除', { :action => 'entry_monthly_working', :id => application_approval, :back_to => request.env['REQUEST_URI'] }, :confirm => 'この申請が申請中になります。よろしいですか?', :method => :post %>
+          <%= link_to '解除', { :action => 'entry_monthly_working', :id => application_approval, :back_to => request.env['REQUEST_URI'], :authenticity_token => form_authenticity_token }, :confirm => 'この申請が申請中になります。よろしいですか?', :method => :post %>
         <% elsif application_approval.approval_status_type == 'reject' %> 
-          <%= link_to '解除', { :action => 'entry_monthly_working', :id => application_approval, :back_to => request.env['REQUEST_URI'] }, :confirm => 'この申請が申請中になります。よろしいですか?', :method => :post %>
+          <%= link_to '解除', { :action => 'entry_monthly_working', :id => application_approval, :back_to => request.env['REQUEST_URI'], :authenticity_token => form_authenticity_token }, :confirm => 'この申請が申請中になります。よろしいですか?', :method => :post %>
         <% end %>
       <% elsif application_approval.application_type == 'weekly_report_app' %>
         <% if application_approval.approval_status_type == 'entry' %> 
-          <%= link_to '承認', { :action => 'approve_weekly_report', :id => application_approval, :back_to => request.env['REQUEST_URI'] }, :confirm => 'この申請を承認します。よろしいですか?', :method => :post %>
-          <%= link_to '却下', { :action => 'reject_weekly_report', :id => application_approval, :back_to => request.env['REQUEST_URI'] }, :confirm => 'この申請を却下します。よろしいですか?', :method => :post %>
+          <%= link_to '承認', { :action => 'approve_weekly_report', :id => application_approval, :back_to => request.env['REQUEST_URI'], :authenticity_token => form_authenticity_token }, :confirm => 'この申請を承認します。よろしいですか?', :method => :post %>
+          <%= link_to '却下', { :action => 'reject_weekly_report', :id => application_approval, :back_to => request.env['REQUEST_URI'], :authenticity_token => form_authenticity_token }, :confirm => 'この申請を却下します。よろしいですか?', :method => :post %>
         <% elsif application_approval.approval_status_type == 'approved' %> 
-          <%= link_to '解除', { :action => 'entry_weekly_report', :id => application_approval, :back_to => request.env['REQUEST_URI'] }, :confirm => 'この申請が申請中になります。よろしいですか?', :method => :post %>
+          <%= link_to '解除', { :action => 'entry_weekly_report', :id => application_approval, :back_to => request.env['REQUEST_URI'], :authenticity_token => form_authenticity_token }, :confirm => 'この申請が申請中になります。よろしいですか?', :method => :post %>
         <% elsif application_approval.approval_status_type == 'reject' %> 
-          <%= link_to '解除', { :action => 'entry_weekly_report', :id => application_approval, :back_to => request.env['REQUEST_URI'] }, :confirm => 'この申請が申請中になります。よろしいですか?', :method => :post %>
+          <%= link_to '解除', { :action => 'entry_weekly_report', :id => application_approval, :back_to => request.env['REQUEST_URI'], :authenticity_token => form_authenticity_token }, :confirm => 'この申請が申請中になります。よろしいですか?', :method => :post %>
         <% end %>
       <% elsif application_approval.application_type == 'expense_app' %>
         <%= link_to '表示', :controller => 'expense_application', :action => 'show', :id => application_approval.expense_application, :app_approval_id => application_approval, :back_to => request.env['REQUEST_URI'] %>
         <% if application_approval.approval_status_type == 'entry' %> 
-          <%= link_to '承認', { :action => 'approve_expense_app', :id => application_approval, :back_to => request.env['REQUEST_URI'] }, :confirm => 'この申請を承認します。よろしいですか?', :method => :post %>
-          <%= link_to '却下', { :action => 'reject_expense_app', :id => application_approval, :back_to => request.env['REQUEST_URI'] }, :confirm => 'この申請を却下します。よろしいですか?', :method => :post %>
+          <%= link_to '承認', { :action => 'approve_expense_app', :id => application_approval, :back_to => request.env['REQUEST_URI'], :authenticity_token => form_authenticity_token }, :confirm => 'この申請を承認します。よろしいですか?', :method => :post %>
+          <%= link_to '却下', { :action => 'reject_expense_app', :id => application_approval, :back_to => request.env['REQUEST_URI'], :authenticity_token => form_authenticity_token }, :confirm => 'この申請を却下します。よろしいですか?', :method => :post %>
         <% elsif application_approval.approval_status_type == 'approved' %> 
-          <%= link_to '解除', { :action => 'entry_expense_app', :id => application_approval, :back_to => request.env['REQUEST_URI'] }, :confirm => 'この申請が申請中になります。よろしいですか?', :method => :post %>
+          <%= link_to '解除', { :action => 'entry_expense_app', :id => application_approval, :back_to => request.env['REQUEST_URI'], :authenticity_token => form_authenticity_token }, :confirm => 'この申請が申請中になります。よろしいですか?', :method => :post %>
         <% elsif application_approval.approval_status_type == 'reject' %> 
-          <%= link_to '解除', { :action => 'entry_expense_app', :id => application_approval, :back_to => request.env['REQUEST_URI'] }, :confirm => 'この申請が申請中になります。よろしいですか?', :method => :post %>
+          <%= link_to '解除', { :action => 'entry_expense_app', :id => application_approval, :back_to => request.env['REQUEST_URI'], :authenticity_token => form_authenticity_token }, :confirm => 'この申請が申請中になります。よろしいですか?', :method => :post %>
         <% end %>
       <% end %>
       
