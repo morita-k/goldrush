@@ -63,6 +63,17 @@ module ApplicationHelper
     end
   end
 
+  def _timetoddmmhhmm(time)
+    if time.blank?
+      ""
+    elsif [ActiveSupport::TimeWithZone, Time, Date].include?(time.class)
+      t = time.to_time.getlocal
+      t.strftime("%m/%d %H:%M")
+    else
+      time
+    end
+  end
+
   def _time_long(time)
     if time.blank?
       ""

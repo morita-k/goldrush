@@ -372,8 +372,8 @@ ActiveRecord::Schema.define(:version => 0) do
     t.string   "business_partner_name_kana"
     t.string   "business_partner_name_en"
     t.string   "sales_status_type",           :limit => 40,                  :null => false
-    t.string   "basic_contract_status_type", :limit => 40,                  :null => false
-    t.string   "nda_status_type",             :limit => 40,                  :null => false
+    t.string   "basic_contract_first_party_status_type", :limit => 40,                  :null => false
+    t.string   "basic_contract_second_party_status_type", :limit => 40,                  :null => false
     t.string   "ceo_name"
     t.string   "url"
     t.string   "zip",                         :limit => 40
@@ -1535,4 +1535,19 @@ ActiveRecord::Schema.define(:version => 0) do
 
   add_index "working_logs", ["id"], :name => "id", :unique => true
 
+
+  create_table "special_words", :force => true do |t|
+    t.integer  "owner_id",         :limit => 8
+    t.string   "special_word_type",:limit => 40,                :null => false
+    t.string   "target_word",                                   :null => false
+    t.string   "convert_to_word"
+    t.text     "memo"
+    t.datetime "created_at",                                    :null => false
+    t.datetime "updated_at",                                    :null => false
+    t.integer  "lock_version",     :limit => 8,  :default => 0
+    t.string   "created_user",     :limit => 80
+    t.string   "updated_user",     :limit => 80
+    t.datetime "deleted_at"
+    t.integer  "deleted",                        :default => 0
+  end
 end

@@ -16,8 +16,8 @@
     <%= submit_tag '更新', :onclick => "return validateTime($('daily_working_in_time').val()) && validateTime($('daily_working_out_time').val()) && validateTime($('daily_working_rest_hour').val());" %>
   <% end %>
 <% end %>
-<%= @daily_working.self_data?(current_user.id) ? '' : link_to('遅延証明を受理する', {:action => :delayed_cancel, :id => @daily_working, :back_to => request.env['REQUEST_URI']}, :confirm => '遅延証明を受理します。よろしいですか？', :method => :post) %>
+<%= @daily_working.self_data?(current_user.id) ? '' : link_to('遅延証明を受理する', {:action => :delayed_cancel, :id => @daily_working, :back_to => request.env['REQUEST_URI'], :authenticity_token => form_authenticity_token}, :confirm => '遅延証明を受理します。よろしいですか？', :method => :post) %>
 <%= link_to '戻る', params[:back_to] %>
 <% unless @daily_working.monthly_working_applicated? %>
- | <%= link_to '入力・申請のクリア', {:action => :clear, :id => @daily_working, :back_to => params[:back_to]},  :confirm => '作業日の情報を初期化します。よろしいですか？', :method => :post %>
+ | <%= link_to '入力・申請のクリア', {:action => :clear, :id => @daily_working, :back_to => params[:back_to], :authenticity_token => form_authenticity_token},  :confirm => '作業日の情報を初期化します。よろしいですか？', :method => :post %>
 <% end %>

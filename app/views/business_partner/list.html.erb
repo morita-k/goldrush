@@ -3,11 +3,11 @@
 <%= form_tag_popup_mode do %>
 <table>
   <tr>
-    <th style="text-align: right">コード(営業|取引|販管):</td>
+    <th style="text-align: right">コード(営業|取引|販管):</th>
     <td><%= text_field_tag 'sales_code', session[:business_partner_search] && session[:business_partner_search][:sales_code], :size => 60 %>　</td>
   </tr>
   <tr>
-    <th style="text-align: right">取引先名（カナ）:</td>
+    <th style="text-align: right">取引先名（カナ）:</th>
     <td><%= text_field_tag 'business_partner_name', session[:business_partner_search] && session[:business_partner_search][:business_partner_name], :size => 60 %></td>
   </tr>
   <% if !popup? %>
@@ -36,8 +36,8 @@
     <th><%=getShortName('business_partners', 'sales_code') %></th>
     <th><%=getShortName('business_partners', 'business_partner_code') %></th>
     <th><%=getShortName('business_partners', 'business_partner_name') %></th>
-    <th><%=getShortName('business_partners', 'basic_contract_status_type') %></th>
-    <th><%=getShortName('business_partners', 'nda_status_type') %></th>
+    <th><%=getShortName('business_partners', 'basic_contract_first_party_status_type') %></th>
+    <th><%=getShortName('business_partners', 'basic_contract_second_party_status_type') %></th>
     <th><%=getShortName('business_partners', 'self_flg') %></th>
     <th><%=getShortName('business_partners', 'eu_flg') %></th>
     <th>案件</th>
@@ -59,8 +59,8 @@
 <% else %>
     <td><%= star_links(business_partner) %> <%=back_to_link h(business_partner.business_partner_short_name), :action => :show, :id => business_partner %></td>
 <% end %>
-    <td style="text-align:center;"><%= get_basic_contract_status_type_text(business_partner) %></td>
-    <td style="text-align:center;"><%= get_nda_status_type_text(business_partner) %></td>
+    <td style="text-align:center;"><%= get_basic_contract_first_party_status_type_text(business_partner) %></td>
+    <td style="text-align:center;"><%= get_basic_contract_second_party_status_type_text(business_partner) %></td>
     <td><%=h business_partner.self_flg %></td>
     <td><%=h business_partner.eu_flg %></td>
     <td><%=h business_partner.down_flg %></td>

@@ -80,7 +80,7 @@ class Tag < ActiveRecord::Base
   end
 
   def Tag.bad_tags
-    @@bad_tags || (@@bad_tags = starred_tags(2))
+    @@bad_tags || (@@bad_tags = starred_tags(3))
   end
 
   def Tag.starred_tags(star)
@@ -95,6 +95,7 @@ class Tag < ActiveRecord::Base
 
   def Tag.analyze_skill_tags(body)
     require 'string_util'
+    require 'special_word'
     words = StringUtil.detect_words(body).inject([]) do |r,item|
       arr = item.split(" ")
       arr.each do |w| # スペースで分割
@@ -107,24 +108,18 @@ class Tag < ActiveRecord::Base
       end
       r << arr.join("")
     end
+
     words = words.uniq.reject{|w|
-      Tag.ignores.include?(w.downcase) || w =~ /^\d/ || w.length == 1 # 辞書に存在するか、数字で始まる単語、1文字
+      SpecialWord.ignore_words.include?(w.downcase) || w =~ /^\d/ || w.length == 1 # 辞書に存在するか、数字で始まる単語、1文字
     }
-    # C言語用スペシャルロジック
-    if body =~ /(^|[^a-zA-Z])(C)([^a-zA-Z#\+]|$)/
-      words << $2
-    end
-    # AS/400用スペシャルロジック
-    if body =~ /((:?as|AS)\/400)/ 
-      words << "AS400" # as/400, AS/400 -> AS400
+
+    SpecialWord.special_words.each do |word|
+      if body =~ Regexp.new(word.target_word)
+        words << word.convert_to_word
+      end
     end
 
     words.join(",")
-  end
-
-  def Tag.ignores
-    ["as", "e-mail", "email", "fax", "jp", "mail", "mailto", "new", "ng", "or", "or2", "or3", "or4",
-     "os", "pc", "pg", "phone", "phs", "pj", "pmi", "popteen", "pr", "pro", "se", "service", "ses", "tel", "url", "zip"]
   end
 
 end

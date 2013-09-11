@@ -68,7 +68,7 @@
     <td>
       <%= link_to '詳細', :action => 'show', :id => analysis_template_item %>, 
       <%= link_to '変更', :action => 'edit', :id => analysis_template_item %>, 
-      <%= link_to '削除', { :action => 'destroy', :id => analysis_template_item }, :confirm => 'この情報を削除します。よろしいですか?', :method => :post %>
+      <%= link_to '削除', { :action => 'destroy', :id => analysis_template_item, :authenticity_token => form_authenticity_token }, :confirm => 'この情報を削除します。よろしいですか?', :method => :post %>
     </td>
   </tr>
 <% end %>

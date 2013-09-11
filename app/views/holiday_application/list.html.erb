@@ -75,7 +75,7 @@
     <td>
       <%= link_to '表示', :action => 'show', :id => holiday_application, :back_to => request.env['REQUEST_URI'] %>
       <%= link_to '変更', :action => 'edit', :id => holiday_application, :back_to => request.env['REQUEST_URI'] %>, 
-      <%= link_to '削除', { :action => 'destroy', :id => holiday_application }, :confirm => 'この情報を削除します。よろしいですか?', :method => :post %>
+      <%= link_to '削除', { :action => 'destroy', :id => holiday_application, :authenticity_token => form_authenticity_token }, :confirm => 'この情報を削除します。よろしいですか?', :method => :post %>
       
     </td>
   </tr>

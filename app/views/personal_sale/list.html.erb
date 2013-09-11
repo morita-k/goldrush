@@ -52,7 +52,7 @@
     <td>
       <%= link_to '表示', :action => 'show', :id => personal_sale %>, 
       <%= link_to '変更', :action => 'edit', :id => personal_sale %>, 
-      <%= link_to '削除', { :action => 'destroy', :id => personal_sale }, :confirm => 'この情報を削除します。よろしいですか?', :method => :post %>
+      <%= link_to '削除', { :action => 'destroy', :id => personal_sale, :authenticity_token => form_authenticity_token }, :confirm => 'この情報を削除します。よろしいですか?', :method => :post %>
     </td>
   </tr>
 <% end %>

@@ -42,12 +42,12 @@
       <%= link_to '表示', :action => 'show', :id => holiday_application, :back_to => request.env['REQUEST_URI'] %>
       
       <% if application_approval.approval_status_type == 'entry' %> 
-        <%= link_to '承認', { :controller => 'application_approval', :action => 'approve_holiday_app', :id => application_approval }, :confirm => 'この申請を承認します。よろしいですか?', :method => :post %>
-        <%= link_to '却下', { :controller => 'application_approval', :action => 'reject_holiday_app', :id => application_approval }, :confirm => 'この申請を却下します。よろしいですか?', :method => :post %>
+        <%= link_to '承認', { :controller => 'application_approval', :action => 'approve_holiday_app', :id => application_approval, :authenticity_token => form_authenticity_token }, :confirm => 'この申請を承認します。よろしいですか?', :method => :post %>
+        <%= link_to '却下', { :controller => 'application_approval', :action => 'reject_holiday_app', :id => application_approval, :authenticity_token => form_authenticity_token }, :confirm => 'この申請を却下します。よろしいですか?', :method => :post %>
       <% elsif application_approval.approval_status_type == 'approved' %> 
-        <%= link_to '申請中', { :controller => 'application_approval', :action => 'entry_holiday_app', :id => application_approval }, :confirm => 'この申請が申請中になります。よろしいですか?', :method => :post %>
+        <%= link_to '申請中', { :controller => 'application_approval', :action => 'entry_holiday_app', :id => application_approval , :authenticity_token => form_authenticity_token}, :confirm => 'この申請が申請中になります。よろしいですか?', :method => :post %>
       <% elsif application_approval.approval_status_type == 'reject' %> 
-        <%= link_to '申請中', { :controller => 'application_approval', :action => 'entry_holiday_app', :id => application_approval }, :confirm => 'この申請が申請中になります。よろしいですか?', :method => :post %>
+        <%= link_to '申請中', { :controller => 'application_approval', :action => 'entry_holiday_app', :id => application_approval, :authenticity_token => form_authenticity_token }, :confirm => 'この申請が申請中になります。よろしいですか?', :method => :post %>
       <% end %>
     </td>
   </tr>

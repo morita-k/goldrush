@@ -2,7 +2,7 @@
   links = []
   base_application = application.base_application 
   if base_application.self_data?(current_user.id) && !@hide_edit 
-    links << link_to('編集', :action => 'edit', :id => aplication, :back_to => request.env['REQUEST_URI'], :authenticity_token => form_authenticity_token) if base_application.can_edit?
+    links << link_to('編集', :action => 'edit', :id => application, :back_to => request.env['REQUEST_URI'], :authenticity_token => form_authenticity_token) if base_application.can_edit?
     links << link_to('取消', {:controller => :base_application, :action => 'cancel', :id => base_application.id, :back_to => request.env['REQUEST_URI'], :authenticity_token => form_authenticity_token}, {:confirm => "この申請をキャンセルします。よろしいですか？", :method => :post}) if base_application.can_cancel? && (!base_application.payment_app? || (base_application.payment_app? && current_user.accounting?)) # キャンセル可能な区分で、経費締め系じゃないか、経費締め系だけど経理ユーザなら取り消し可能
     links << link_to('再申請', {:controller => :base_application, :action => 'retry', :id => base_application.id, :redirect_id => application.id, :redirect_controller => controller.controller_name ,:back_to => params[:back_to], :authenticity_token => form_authenticity_token}, {:confirm => "再申請します。よろしいですか？", :method => :post}) if base_application.can_retry? 
   elsif  !base_application.self_data?(current_user.id) && !@hide_edit 

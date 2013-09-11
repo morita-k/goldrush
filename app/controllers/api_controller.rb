@@ -25,6 +25,10 @@ class ApiController < ApplicationController
   # API Start
   #-----------------------------------------------------------------------------
 
+  def jsontest
+    render :json => {"a" => 123, "b" => 222}
+  end
+
   def import_mail_pop3
     ImportMail.import
     if params[:back_to]

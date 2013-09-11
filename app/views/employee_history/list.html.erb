@@ -26,7 +26,7 @@
     <td>
       <%= link_to '表示', :action => 'show', :id => employee_history, :employee_id => @employee %>, 
       <%= link_to '変更', :action => 'edit', :id => employee_history, :employee_id => @employee %>, 
-      <%= link_to '削除', { :action => 'destroy', :id => employee_history, :employee_id => @employee }, :confirm => 'この情報を削除します。よろしいですか?', :method => :post %>
+      <%= link_to '削除', { :action => 'destroy', :id => employee_history, :employee_id => @employee, :authenticity_token => form_authenticity_token }, :confirm => 'この情報を削除します。よろしいですか?', :method => :post %>
     </td>
   </tr>
 <% end %>

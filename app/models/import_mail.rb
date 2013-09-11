@@ -41,8 +41,15 @@ class ImportMail < ActiveRecord::Base
     now = Time.now
     ActiveRecord::Base::transaction do
       import_mail = ImportMail.new
-      
-      import_mail.in_reply_to = m.in_reply_to if m.in_reply_to
+
+      if m.in_reply_to
+        import_mail.in_reply_to = m.in_reply_to
+        dmt = DeliveryMailTarget.where(message_id: import_mail.in_reply_to).first
+        if(dmt != nil && dmt.delivery_mail_id != nil)
+          import_mail.delivery_mail_id = dmt.delivery_mail_id
+        end
+      end
+
       import_mail.received_at = m.date.blank? ? now : m.date
       subject = tryConv(m, 'Subject') { m.subject }
       import_mail.mail_subject = subject.blank? ? 'unknown subject' : subject
@@ -224,27 +231,12 @@ class ImportMail < ActiveRecord::Base
   def detect_proper_in(body)
     return false if bp_member_flg != 1
     StringUtil.detect_lines(body, /社員/) do |line|
-      return true unless bad_words_for_proper.detect{|x| line.include?(x)}
+      return true unless SpecialWord.bad_proper_words.detect{|x| line.include?(x)}
     end
     StringUtil.detect_lines(body, /ﾌﾟﾛﾊﾟｰ/) do |line|
-      return true unless bad_words_for_proper.detect{|x| line.include?(x)}
+      return true unless SpecialWord.bad_proper_words.detect{|x| line.include?(x)}
     end
     return false
-  end 
-
-  def bad_words_for_proper
-"契約社員
-社下
-社先
-BP
-ﾊﾟｰﾄﾅｰ
-ｸﾞﾙｰﾌﾟ
-貴社
-御社
-参画中
-ﾌﾟﾛﾊﾟｰ出身
-と一緒
-社員研修".split
   end
 
   #

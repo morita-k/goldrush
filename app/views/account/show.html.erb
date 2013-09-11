@@ -284,7 +284,7 @@
     <td>
       <%= link_to '表示' ,:controller => 'route_expense_detail', :action => 'show', :id => route_expense_detail, :back_to => request.env['REQUEST_URI'] %>, 
       <%= link_to '変更' ,:controller => 'route_expense_detail', :action => 'edit', :id => route_expense_detail, :back_to => request.env['REQUEST_URI'] %>, 
-      <%= link_to '削除', {:controller => 'route_expense_detail', :action => 'destroy', :id => route_expense_detail, :back_to => request.env['REQUEST_URI'] }, :confirm => 'この情報を削除します。よろしいですか?', :method => :post %>
+      <%= link_to '削除', {:controller => 'route_expense_detail', :action => 'destroy', :id => route_expense_detail, :back_to => request.env['REQUEST_URI'], :authenticity_token => form_authenticity_token }, :confirm => 'この情報を削除します。よろしいですか?', :method => :post %>
     </td>
   </tr>
 <% end %>
@@ -362,7 +362,7 @@
     <td>
       <%= link_to '表示', :controller => 'employee_family', :action => 'show', :id => employee_family %>, 
       <%= link_to '変更', :controller => 'employee_family', :action => 'edit', :id => employee_family %>, 
-      <%= link_to '削除', { :controller => 'employee_family', :action => 'destroy', :id => employee_family }, :confirm => 'この情報を削除します。よろしいですか?', :method => :post %>
+      <%= link_to '削除', { :controller => 'employee_family', :action => 'destroy', :id => employee_family, :authenticity_token => form_authenticity_token }, :confirm => 'この情報を削除します。よろしいですか?', :method => :post %>
     </td>
   </tr>
 <% end %>
