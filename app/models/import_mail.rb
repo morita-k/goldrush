@@ -441,13 +441,6 @@ BP
     end
   end
 
-  def outflow_mail?
-    criterion = SysConfig.get_outflow_criterion
-    self.mail_to ||= ""
-    self.mail_cc ||= ""
-    (self.mail_to.split(",").length >= criterion) || (self.mail_cc.split(",").length >= criterion)
-  end
-
   # DBにある既存データ全ての年齢を正規化する。
   def ImportMail.to_normalize_age_all!
     ImportMail.where("age_text is not null").reject{|mail| mail.age_text.blank?}.map{|mail|
