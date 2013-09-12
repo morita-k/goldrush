@@ -317,4 +317,10 @@ class BusinessPartnerController < ApplicationController
     
     redirect_to( params[:back_to] || {controller: 'bp_pic', action: 'index'})
   end
+
+  def update_outflow_check
+
+    redirect_to( params[:back_to] || {controller: 'outflow_mail', action: 'index'})
+  end
+
 end

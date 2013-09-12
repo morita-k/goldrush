@@ -21,7 +21,12 @@ module ApplicationHelper
 
   def url_for_bp_pic_input_popup()
     params[:page] ||= "1"
-    url_for :controller => :bp_pic, :action => :quick_input, :popup =>1, :page => params[:page]
+    url_for :controller => :outflow_mail, :action => :quick_input, :popup =>1, :page => params[:page]
+  end
+
+  def url_for_outflow_input_popup()
+    params[:page] ||= "1"
+    url_for :controller => :bp_pic, :action => :quick_input, :popup => 1, :page => params[:page]
   end
 
   def url_for_outflow_mail_input_popup()
