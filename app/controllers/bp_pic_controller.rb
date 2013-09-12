@@ -61,8 +61,15 @@ class BpPicController < ApplicationController
 
     # JIET_FLG
     if !(x = session[:bp_pic_search][:jiet]).blank?
-      sql += " and jiet = ?"
-      param << x
+      case x 
+      when "1"
+        sql += " and jiet = ?"
+        param << 0
+      when "2"
+        sql += " and jiet = ?"
+        param << 1
+      else
+      end
     end
     
     # 取引先グループ
@@ -100,6 +107,8 @@ class BpPicController < ApplicationController
       set_conditions
     elsif params[:clear_button]
       session[:bp_pic_search] = {}
+      redirect_to
+      return false
     end
 
     # 検索条件を処理
@@ -110,11 +119,13 @@ class BpPicController < ApplicationController
     if params[:popup] && params[:callback].blank?
       flash[:warning] = 'ポップアップのパラメータが不正です'
     end
+    return true
   end
 
   def index
-    list
-    render :action => 'list'
+    if list
+      render :action => 'list'
+    end
   end
 
   # GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)
@@ -283,6 +294,14 @@ class BpPicController < ApplicationController
 
     # idがnilだった場合、@business_partnerをnilにしたいのでwhere
     @business_partner ||= BusinessPartner.where(id: params[:business_partner_id]).first
+
+    @target_data = {:emptyFlag => true, :targetName => ''}
+    if @business_partner.nil?
+      @target_data[:emptyFlag] = true
+    else
+      @target_data[:emptyFlag] = false
+      @target_data[:targetName] = :business_partner
+    end
 
     render template: 'business_partner/quick_input', layout: 'blank'
   end

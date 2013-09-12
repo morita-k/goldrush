@@ -5041,7 +5041,7 @@ types_252:
 types_253:
   id: 253
   owner_id: 
-  type_section: "basic_contract_status_type"
+  type_section: "basic_contract_first_party_status_type"
   type_key: "non_correspondence"
   long_name: "未対応"
   short_name: "未"
@@ -5061,7 +5061,7 @@ types_253:
 types_254:
   id: 254
   owner_id: 
-  type_section: "basic_contract_status_type"
+  type_section: "basic_contract_first_party_status_type"
   type_key: "in_progress"
   long_name: "対応中"
   short_name: "中"
@@ -5081,7 +5081,7 @@ types_254:
 types_255:
   id: 255
   owner_id: 
-  type_section: "basic_contract_status_type"
+  type_section: "basic_contract_first_party_status_type"
   type_key: "concluded"
   long_name: "締結済み"
   short_name: "済"
@@ -5101,7 +5101,7 @@ types_255:
 types_256:
   id: 256
   owner_id: 
-  type_section: "nda_status_type"
+  type_section: "basic_contract_second_party_status_type"
   type_key: "non_correspondence"
   long_name: "未対応"
   short_name: "未"
@@ -5121,7 +5121,7 @@ types_256:
 types_257:
   id: 257
   owner_id: 
-  type_section: "nda_status_type"
+  type_section: "basic_contract_second_party_status_type"
   type_key: "in_progress"
   long_name: "対応中"
   short_name: "中"
@@ -5141,7 +5141,7 @@ types_257:
 types_258:
   id: 258
   owner_id: 
-  type_section: "nda_status_type"
+  type_section: "basic_contract_second_party_status_type"
   type_key: "concluded"
   long_name: "締結済み"
   short_name: "済"
@@ -5330,6 +5330,66 @@ types_267:
   type_description_text: ""
   display_order1: 4
   display_order2: 4
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_268:
+  id: 268
+  owner_id: 
+  type_section: "special_word_type"
+  type_key: "special_word"
+  long_name: "特別単語"
+  short_name: "特別"
+  other_name: "特別単語"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 1
+  display_order2: 1
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_269:
+  id: 269
+  owner_id: 
+  type_section: "special_word_type"
+  type_key: "ignore_word"
+  long_name: "無視単語"
+  short_name: "無視"
+  other_name: "無視単語"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 2
+  display_order2: 2
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_270:
+  id: 270
+  owner_id: 
+  type_section: "special_word_type"
+  type_key: "ignore_word_proper"
+  long_name: "社員用無視"
+  short_name: "社無"
+  other_name: "社員用無視"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 3
+  display_order2: 3
   logic_bind_type: "bind"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>

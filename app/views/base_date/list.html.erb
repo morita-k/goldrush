@@ -19,7 +19,7 @@
     <td>
       <%= link_to '表示', :action => 'show', :id => base_date %>, 
       <%= link_to '変更', :action => 'edit', :id => base_date %>, 
-      <%= link_to '削除', { :action => 'destroy_holiday', :id => base_date }, :confirm => 'この祝日を平日にします。よろしいですか?', :method => :post %>
+      <%= link_to '削除', { :action => 'destroy_holiday', :id => base_date, :authenticity_token => form_authenticity_token }, :confirm => 'この祝日を平日にします。よろしいですか?', :method => :post %>
     </td>
   </tr>
 <% end %>

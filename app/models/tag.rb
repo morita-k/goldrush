@@ -9,6 +9,24 @@ class Tag < ActiveRecord::Base
     Tag.clear_tag_cache
   end
 
+  def Tag.combine_tags?(tags)
+    tags && tags.split(",").size > 1
+  end
+
+  def Tag.make_conditions_for_tag(tags, tag_key)
+    sqls = []
+    sql_params = [tag_key]
+    tags.split(",").each do |tag|
+      sqls << "tag_details.tag_text = ?"
+      sql_params << tag.strip.downcase
+    end
+
+    my_sql = "select parent_id, count(parent_id) as cnt from tag_details where tag_key = ? and (#{sqls.join(' or ')}) group by parent_id having count(parent_id) > ?"
+    sql_params << (sqls.size - 1)
+    parent_ids = TagDetail.find_by_sql(sql_params.unshift(my_sql)).map{|x| x.parent_id}
+    return parent_ids
+  end
+
   # タグの文字列を受け取って正規化する
   # 正規化=>小文字化、",",半角スペース、全角スペースで区切り、文字列の配列として戻す
   def Tag.normalize_tag(tag_string)
@@ -62,7 +80,7 @@ class Tag < ActiveRecord::Base
   end
 
   def Tag.bad_tags
-    @@bad_tags || (@@bad_tags = starred_tags(2))
+    @@bad_tags || (@@bad_tags = starred_tags(3))
   end
 
   def Tag.starred_tags(star)
@@ -77,6 +95,7 @@ class Tag < ActiveRecord::Base
 
   def Tag.analyze_skill_tags(body)
     require 'string_util'
+    require 'special_word'
     words = StringUtil.detect_words(body).inject([]) do |r,item|
       arr = item.split(" ")
       arr.each do |w| # スペースで分割
@@ -89,24 +108,18 @@ class Tag < ActiveRecord::Base
       end
       r << arr.join("")
     end
+
     words = words.uniq.reject{|w|
-      Tag.ignores.include?(w.downcase) || w =~ /^\d/ || w.length == 1 # 辞書に存在するか、数字で始まる単語、1文字
+      SpecialWord.ignore_words.include?(w.downcase) || w =~ /^\d/ || w.length == 1 # 辞書に存在するか、数字で始まる単語、1文字
     }
-    # C言語用スペシャルロジック
-    if body =~ /(^|[^a-zA-Z])(C)([^a-zA-Z#\+]|$)/
-      words << $2
-    end
-    # AS/400用スペシャルロジック
-    if body =~ /((:?as|AS)\/400)/ 
-      words << "AS400" # as/400, AS/400 -> AS400
+
+    SpecialWord.special_words.each do |word|
+      if body =~ Regexp.new(word.target_word)
+        words << word.convert_to_word
+      end
     end
 
     words.join(",")
-  end
-
-  def Tag.ignores
-    ["as", "e-mail", "email", "fax", "jp", "mail", "mailto", "new", "ng", "or", "or2", "or3", "or4",
-     "os", "pc", "pg", "phone", "phs", "pj", "pmi", "popteen", "pr", "pro", "se", "service", "ses", "tel", "url", "zip"]
   end
 
 end

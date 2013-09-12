@@ -32,7 +32,11 @@
   </tr>
   <tr>
     <th style="text-align: right">JIET:</th>
-    <td><%= check_box_tag 'jiet', ImportMailJIET::JIET_FLG, !search_value(:jiet).blank? %></td>
+    <td class="jiet_radio">
+      <%= radio_button_tag 'jiet', "0", search_value(:jiet) == "0" %> どちらも
+      <%= radio_button_tag 'jiet', "1", search_value(:jiet) == "1" %> JIET以外
+      <%= radio_button_tag 'jiet', "2", search_value(:jiet) == "2" %> JIETのみ
+    </td>
   </tr>
   <tr>
     <th style="text-align: right">取引先グループ:</th>
@@ -134,16 +138,10 @@
       <th></th>
       <% end %>
       <th><%=getShortName('bp_pics', 'business_partner_id') %></th>
-      <% if !popup? %>
-      <th><%=getShortName('business_partners', 'basic_contract_status_type') %></th>
-      <th>NDA</th>
-      <% end %>
       <th <%= !popup? && "colspan=2"%>><%=getShortName('bp_pics', 'bp_pic_name') %></th>
-      <th><%=getShortName('bp_pics', 'tel_mobile') %></th>
       <th><%=getShortName('bp_pics', 'email1') %></th>  
       <% unless popup? %>
-        <th>JIET</th>
-        <th>初会</th>
+        <th>営業</th>
         <th>あ</th>
         <th>更新</th>
       <% end %>
@@ -152,25 +150,22 @@
     <% for bp_pic in @bp_pics %>
       <tr>
         <% if popup? %>
-          <td><%= star_links(bp_pic.business_partner) %> <%= bp_pic.business_partner.business_partner_name %></td>
+          <td><%= star_links(bp_pic.business_partner) %> <%= bp_pic.business_partner.business_partner_name %><%= basic_contract_concluded_text(bp_pic.business_partner) %></td>
           <td><%= star_links(bp_pic) %> <%=link_to h(bp_pic.usefulname), '#', :onClick => "setBpPicToParentWindow(#{bp_pic.id},'#{bp_pic.usefulname}', '#{bp_pic.business_partner_name}');return false;" %></td>
         <% else %>
           <td><%= check_box_tag 'ids[]', bp_pic.id, false %></td>
-          <td><%= star_links(bp_pic.business_partner) %> <%=back_to_link bp_pic.business_partner.business_partner_name, {:controller => :business_partner, :action => :show, :id => bp_pic.business_partner}, {:class => 'bp_name'} %></td>
-          <td><%= get_basic_contract_status_type_text(bp_pic.business_partner) %></td>
-          <td><%= get_nda_status_type_text(bp_pic.business_partner) %></td>
+          <td><%= star_links(bp_pic.business_partner) %> <%=back_to_link bp_pic.business_partner.business_partner_name, {:controller => :business_partner, :action => :show, :id => bp_pic.business_partner}, {:class => 'bp_name'} %><%= basic_contract_concluded_text(bp_pic.business_partner) %></td>
           <td style="border-right-color: silver;"><%= star_links(bp_pic) %> <%=back_to_link bp_pic.usefulname, {:action => :show, :id => bp_pic}, {:class => 'bp_pic_name'} %>
             <% unless bp_pic.working? %>
-              <% links = working_status_links_list(bp_pic) %>(<%= links[0] %>|<%= links[1] %>)
+              <% links = working_status_links_list(bp_pic) %>[<%= links[0] %>|<%= links[1] %>]
             <% end %>
+            <%= bp_pic.jiet? ? raw('[<span title="JIET取り込み" style="font-weight:bold">J</span>]') : ''%>
           </td>
           <td style="text-align:center;width:16px"><%= bp_pic_edit_icon(bp_pic) %></td>
         <% end %>
-        <td><%=h bp_pic.tel_mobile %></td>
         <td><div class="overflow_hidden"><%=h bp_pic.email1 %></div></td>
         <% unless popup? %>
-          <td><%= bp_pic.jiet == ImportMailJIET::JIET_FLG ? 'JIET' : ''%></td>
-          <td><%=h _date(bp_pic.contact_date) %></td>
+          <td><%= bp_pic.sales_pic_name %></td>
           <td style="text-align:center;">
             <%= back_to_link(image_tag(bp_pic.contact_mail? ? 'icon-check.png' : 'icon-emailforward.png'), {:controller => :delivery_mails, :action => :contact_mail_new, :bp_pic_ids => [bp_pic.id]},{:class => 'sales_pic', :name => (bp_pic.sales_pic.blank? ? "" : bp_pic.sales_pic.id.to_s), :title => "担当営業：" + (bp_pic.sales_pic.blank? ? "未設定" : bp_pic.sales_pic_name), :onclick => "if(this.name == ''){alert('担当営業が設定されていません');return false;}"}) %>
           </td>

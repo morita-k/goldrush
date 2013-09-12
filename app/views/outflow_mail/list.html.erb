@@ -1,3 +1,25 @@
 <%= content_tag :h1, getLongName('table_name', 'outflow_mails') + " 一覧" %>
-
-<%= @outflow_mails %>
+<p>
+  <br/>
+    <input type=button value='会社チェック' onClick="disp_full('<%=url_for_outflow_mail_input_popup%>');return false;" />
+  <br/>
+</p>
+<table class="list_table" style="margin-top:0px">
+  <tr>
+    <th><%=getLongName('outflow_mails', 'email_text') %></th>
+    <th><%=getLongName('outflow_mails', 'outflow_mail_status_type') %></th>
+    <th><%=getLongName('outflow_mails', 'url') %></th>
+    <th><%=getLongName('outflow_mails', 'business_partner_id') %></th>
+    <th><%=getLongName('outflow_mails', 'bp_pic_id') %></th>
+  </tr>
+  <% @outflow_mails.each do |outflow_mail| %>
+  <tr>
+    <td><%= outflow_mail.email_text %></td>
+    <td><%= getmailstatustypename(outflow_mail) %></td>
+    <td><%= outflow_mail.url %></td>
+    <td><%=back_to_link getbusinesspartnername(outflow_mail.business_partner_id), {:controller => :business_partner ,:action => :show, :id => outflow_mail.business_partner_id}, {:class => 'business_partner_name'} %>
+    <td><%=back_to_link getbppicname(outflow_mail.bp_pic_id), {:controller => :bp_pic ,:action => :show, :id => outflow_mail.bp_pic_id}, {:class => 'bp_pic_name'} %>
+    </td>
+  </tr>
+  <% end %>
+</table>

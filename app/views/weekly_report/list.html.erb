@@ -24,7 +24,7 @@
 <hr>
 <h2><a name="<%=h idx+1 %>"><%=h weekly_report.start_date.to_date %> ～ <%=h weekly_report.end_date.to_date %></a>作業 
 <% if weekly_report.want_application? %>
-  <%= link_to '承認者に報告', { :action => 'send_weekly_report', :id => weekly_report, :back_to => request.env['REQUEST_URI']}, :confirm => '承認者にこの週報報告を送ります。よろしいですか?', :method => :post %>
+  <%= link_to '承認者に報告', { :action => 'send_weekly_report', :id => weekly_report, :back_to => request.env['REQUEST_URI'], :authenticity_token => form_authenticity_token}, :confirm => '承認者にこの週報報告を送ります。よろしいですか?', :method => :post %>
 <% end %>
 </h2>
 
@@ -90,8 +90,8 @@
   links = []
   base_application = application.base_application 
   if base_application.self_data?(current_user.id)
-    links << link_to('取消', {:controller => :base_application, :action => 'cancel', :id => base_application.id, :back_to => request.env['REQUEST_URI']}, {:confirm => "この申請をキャンセルします。よろしいですか？", :method => :post}) if base_application.can_cancel?
-    links << link_to('再申請', {:controller => :base_application, :action => 'retry', :id => base_application.id, :redirect_id => application.id, :redirect_controller => controller.controller_name ,:back_to => request.env['REQUEST_URI']}, {:confirm => "再申請します。よろしいですか？", :method => :post}) if base_application.can_retry? 
+    links << link_to('取消', {:controller => :base_application, :action => 'cancel', :id => base_application.id, :back_to => request.env['REQUEST_URI'], :authenticity_token => form_authenticity_token}, {:confirm => "この申請をキャンセルします。よろしいですか？", :method => :post}) if base_application.can_cancel?
+    links << link_to('再申請', {:controller => :base_application, :action => 'retry', :id => base_application.id, :redirect_id => application.id, :redirect_controller => controller.controller_name ,:back_to => request.env['REQUEST_URI'], :authenticity_token => form_authenticity_token}, {:confirm => "再申請します。よろしいですか？", :method => :post}) if base_application.can_retry? 
   end 
   if base_application.application_approver?(current_user.id) 
     links << link_to_change_approval_status(ApplicationApproval.application_approval(application, current_user.id)) 
@@ -160,10 +160,10 @@
 <% end %><%# end of weekly_report.base_application %>
 <% if false %>
   <% if @application_approval.approval_status_type == 'entry' %> 
-    <%= link_to '承認', { :controller => 'application_approval', :action => 'approve_weekly_report', :id => @application_approval, :back_to => request.env['REQUEST_URI'] }, :confirm => 'この週間報告を承認します。よろしいですか?', :method => :post %> | 
-    <%= link_to '却下', { :controller => 'application_approval', :action => 'reject_weekly_report', :id => @application_approval, :back_to => request.env['REQUEST_URI'] }, :confirm => 'この週間報告を却下します。よろしいですか?', :method => :post %> | 
+    <%= link_to '承認', { :controller => 'application_approval', :action => 'approve_weekly_report', :id => @application_approval, :back_to => request.env['REQUEST_URI'], :authenticity_token => form_authenticity_token }, :confirm => 'この週間報告を承認します。よろしいですか?', :method => :post %> | 
+    <%= link_to '却下', { :controller => 'application_approval', :action => 'reject_weekly_report', :id => @application_approval, :back_to => request.env['REQUEST_URI'], :authenticity_token => form_authenticity_token }, :confirm => 'この週間報告を却下します。よろしいですか?', :method => :post %> | 
   <% elsif @application_approval.approval_status_type == 'approved' or @application_approval.approval_status_type == 'reject' %>   
-    <%= link_to '解除', { :controller => 'application_approval', :action => 'entry_weekly_report', :id => @application_approval, :back_to => request.env['REQUEST_URI'] }, :confirm => 'この週間報告を解除します。よろしいですか?', :method => :post %> | 
+    <%= link_to '解除', { :controller => 'application_approval', :action => 'entry_weekly_report', :id => @application_approval, :back_to => request.env['REQUEST_URI'], :authenticity_token => form_authenticity_token }, :confirm => 'この週間報告を解除します。よろしいですか?', :method => :post %> | 
   <% end %>
 <% end %>
 <% end # if false %>

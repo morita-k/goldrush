@@ -41,6 +41,14 @@ class BpMemberController < ApplicationController
       param << "%#{hr_name}%" << "%#{hr_name}"
     end
 
+    unless session[:bp_member_search][:skill_tag].blank?
+      pids = Tag.make_conditions_for_tag(session[:bp_member_search][:skill_tag], "human_resources")
+      unless pids.empty?
+        sql += " and human_resources.id in (?) "
+        param << pids
+      end
+    end
+    
     if !(skill_tag = session[:bp_member_search][:skill_tag]).blank?
       sql += " and human_resources.skill_tag like ?"
       param << "%#{skill_tag}%"
@@ -86,11 +94,19 @@ class BpMemberController < ApplicationController
     #   param << employment_type
     # end
 
+    # JIET_FLG
     if !(x = session[:bp_member_search][:jiet]).blank?
-      sql += " and human_resources.jiet = ?"
-      param << x
+      case x 
+      when "1"
+        sql += " and human_resources.jiet = ?"
+        param << 0
+      when "2"
+        sql += " and human_resources.jiet = ?"
+        param << 1
+      else
+      end
     end
-
+    
     return {:conditions => param.unshift(sql), :include => include, :order => order_by, :per_page => current_user.per_page}
   end
 

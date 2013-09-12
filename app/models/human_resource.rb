@@ -58,7 +58,11 @@ class HumanResource < ActiveRecord::Base
   end
 
   def jiet?
-    self.jiet == ImportMailJIET::JIET_FLG
+    self.jiet == 1
   end
 
+  def nearest_station_short
+    StringUtil.strip_with_full_size_space(ImportMail.extract_station_name_from(near_station).to_s)
+  end
+  
 end

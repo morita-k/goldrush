@@ -16,6 +16,20 @@
       <td style="text-align: right">タグ:</td>
       <td><%= text_field_tag 'tag', session[:import_mail_search][:tag]%></td>
     </tr>
+    <tr>
+      <td style="text-align: right">単価:</td>
+      <td class="bounds_input">
+        <%= text_field_tag 'payment_from', session[:import_mail_search][:payment_from]%>万 ～
+        <%= text_field_tag 'payment_to', session[:import_mail_search][:payment_to]%>万
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align: right">年齢:</td>
+      <td class="bounds_input">
+        <%= text_field_tag 'age_from', session[:import_mail_search][:age_from]%>歳 ～
+        <%= text_field_tag 'age_to', session[:import_mail_search][:age_to]%>歳
+      </td>
+    </tr>
 </table>
 <br/>
 <%= submit_tag '　　検索　　', :name => 'search_button' %> <%= submit_tag '　　クリア　　', :name => 'clear_button' %>
@@ -57,7 +71,7 @@
     <td><div style="width:2.5em"><%=_age(import_mail.age_text) %></div></td>
     <td style="overflow: hidden;">
       <div style="overflow: hidden;width:3em">
-        <div rel="station_name" style="width:1000px;"><%= import_mail.nearest_station_short %></div>
+        <div rel="station_name" style="width:1000px;" title="<%=import_mail.nearest_station%>"><%= import_mail.nearest_station_short %></div>
       </div>
     </td>
     <td><%=h _time(import_mail.received_at) %></td>
@@ -141,30 +155,6 @@ $(function(){
     }
   });
 });
-
-$(function(){
-  $("[rel=station_name]").hover(
-    function(){
-      if($(this).width() == 1000){
-        var text_size = $(this).text().length + Math.ceil($(this).text().length / 10.0)
-        $(this).width( text_size + "em");
-      }
-      $(this).addClass("popover-content");
-      $(this).parent().addClass("popover-container");
-      $(this).parent().parent().addClass("popover-container");
-    },function(){
-      $(this).removeClass("popover-content");
-      $(this).parent().removeClass("popover-container");
-      $(this).parent().parent().removeClass("popover-container");
-    }
-  );
-});
-
-function toggleStationNamePopup(target){
-  $("[rel=station_name]").delay(500).toggleClass("popover-content")
-  $("[rel=station_name]").parent().delay(500).toggleClass("popover-container")
-  $("[rel=station_name]").parent().parent().delay(500).toggleClass("popover-container");
-}
 
 // -->
 </script>

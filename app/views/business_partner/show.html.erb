@@ -21,10 +21,10 @@
   <th><%= getLongName('business_partners', 'sales_status_type') %></th><td><%=h @business_partner.sales_status_type_name %></td>
 </tr>
 <tr>
-  <th><%= getLongName('business_partners', 'basic_contract_status_type') %></th><td><%= get_basic_contract_status_type_text(@business_partner) %></td>
+  <th><%= getLongName('business_partners', 'basic_contract_first_party_status_type') %></th><td><%= get_basic_contract_first_party_status_type_text(@business_partner) %></td>
 </tr>
 <tr>
-  <th><%= getLongName('business_partners', 'nda_status_type') %></th><td><%= get_nda_status_type_text(@business_partner) %></td>
+  <th><%= getLongName('business_partners', 'basic_contract_second_party_status_type') %></th><td><%= get_basic_contract_second_party_status_type_text(@business_partner) %></td>
 </tr>
 <tr>
   <th><%= getLongName('business_partners', 'ceo_name') %></th><td><%=h @business_partner.ceo_name %></td>
@@ -84,7 +84,7 @@
 </table>
 <%= back_to_link '編集', :action => 'edit', :id => @business_partner %> |
 <%= delete_to '削除', @business_partner %> |
-<%= link_or_back '戻る', :action => 'list' %>
+<%= link_or_back '戻る', :controller => :bp_pic, :action => 'list' %>
 
   <p></p>
   <h2><%=getLongName('table_name','bp_pics')%>一覧</h2>

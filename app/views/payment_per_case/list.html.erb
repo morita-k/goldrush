@@ -20,7 +20,7 @@
     <td>
       <%= link_to '表示', :action => 'show', :id => payment_per_case %>, 
       <%= link_to '変更', :action => 'edit', :id => payment_per_case %>, 
-      <%= link_to '削除', { :action => 'destroy', :id => payment_per_case }, :confirm => 'この情報を削除します。よろしいですか?', :method => :post %>
+      <%= link_to '削除', { :action => 'destroy', :id => payment_per_case, :authenticity_token => form_authenticity_token }, :confirm => 'この情報を削除します。よろしいですか?', :method => :post %>
     </td>
   </tr>
 <% end %>
