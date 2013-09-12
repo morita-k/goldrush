@@ -52,17 +52,25 @@ class DeliveryMailsController < ApplicationController
   def new
     @delivery_mail = DeliveryMail.new
     @delivery_mail.bp_pic_group_id = params[:bp_pic_group_id]
-    @delivery_mail.content = <<EOS
+    if (target_mail_template = get_target_mail_template)
+      p target_mail_template
+      @delivery_mail.content = target_mail_template.content
+      @delivery_mail.subject = target_mail_template.subject
+      @delivery_mail.mail_cc = target_mail_template.mail_cc
+      @delivery_mail.mail_bcc = target_mail_template.mail_bcc
+    else
+      @delivery_mail.content = <<EOS
 %%business_partner_name%%
 %%bp_pic_name%%　様
 EOS
-    unless current_user.mail_signature.blank?
-    @delivery_mail.content += <<EOS
+      unless current_user.mail_signature.blank?
+        @delivery_mail.content += <<EOS
 
 
--- 
+--
 #{current_user.mail_signature}
 EOS
+      end
     end
 
     new_proc
@@ -365,6 +373,12 @@ private
          set_user_column af
          af.save!
        end
+    end
+  end
+
+  def get_target_mail_template
+    if @delivery_mail.bp_pic_group != nil && @delivery_mail.bp_pic_group.mail_template_id
+      MailTemplate.find(@delivery_mail.bp_pic_group.mail_template_id)
     end
   end
 end

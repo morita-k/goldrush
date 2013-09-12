@@ -18,7 +18,7 @@
     <td><%= mail_template.mail_template_category %></td>
 
 <% if popup? %>
-    <td><%= link_to mail_template.mail_template_name, "#", :onclick => "setMailTemplateToParentWindow('#{j mail_template.mail_cc}', '#{j mail_template.mail_bcc}', '#{j mail_template.subject}', '#{j with_signature(mail_template.content)}');return false;" %></td>
+    <td><%= link_to mail_template.mail_template_name, "#", :onclick => "setMailTemplateToParentWindow('#{j mail_template.mail_cc}', '#{j mail_template.mail_bcc}', '#{j mail_template.subject}', '#{j with_signature(mail_template.content)}', '#{mail_template.id}', '#{j mail_template.mail_template_name}');return false;" %></td>
 <% else %>
     <td><%= back_to_link mail_template.mail_template_name, mail_template %></td>
 <% end %>
@@ -39,16 +39,18 @@
 <script type="text/javascript">
 <!--
 
-function MailTemplate(mail_cc, mail_bcc, subject, content){
+function MailTemplate(mail_cc, mail_bcc, subject, content, id, mail_template_name){
   this.mail_cc = mail_cc;
   this.mail_bcc = mail_bcc;
   this.subject = subject;
   this.content = content;
+  this.id = id;
+  this.mail_template_name = mail_template_name;
 }
 
-function setMailTemplateToParentWindow(a,b,c,d) {
+function setMailTemplateToParentWindow(a,b,c,d,e,f) {
   if(window.opener.setMailTemplate){
-    window.opener.setMailTemplate(new MailTemplate(a,b,c,d));
+    window.opener.setMailTemplate(new MailTemplate(a,b,c,d,e,f));
     window.close();
   }else{
     alert("Dont defined setMailTemplate at parent window.");
