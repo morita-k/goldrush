@@ -9,15 +9,15 @@ class SpecialWordsTest < ActiveSupport::TestCase
   end
 
   test "特別単語が取得できていること" do
-    assert_not_nil SpecialWord.special_words
+    assert_not_equal(SpecialWord.special_words.size, 0)
   end
 
   test "無視単語が取得できていること" do
-    assert_not_nil SpecialWord.ignore_words
+    assert_not_equal(SpecialWord.ignore_words.size, 0)
   end
 
   test "社員用無視が取得できていること" do
-    assert_not_nil SpecialWord.ignore_word_propers
+    assert_not_equal(SpecialWord.ignore_word_propers.size, 0)
   end
 
   test "タイプが違う場合取得できないこと" do
