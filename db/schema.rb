@@ -315,6 +315,7 @@ ActiveRecord::Schema.define(:version => 0) do
     t.integer  "owner_id",          :limit => 8
     t.string   "bp_pic_group_name",                              :null => false
     t.text     "memo"
+    t.integer  "mail_template_id", :limit => 8
     t.datetime "created_at",                                     :null => false
     t.datetime "updated_at",                                     :null => false
     t.integer  "lock_version",      :limit => 8,  :default => 0
