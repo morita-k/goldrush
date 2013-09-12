@@ -231,10 +231,10 @@ class ImportMail < ActiveRecord::Base
   def detect_proper_in(body)
     return false if bp_member_flg != 1
     StringUtil.detect_lines(body, /社員/) do |line|
-      return true unless SpecialWord.bad_proper_words.detect{|x| line.include?(x)}
+      return true unless SpecialWord.ignore_word_propers.detect{|x| line.include?(x)}
     end
     StringUtil.detect_lines(body, /ﾌﾟﾛﾊﾟｰ/) do |line|
-      return true unless SpecialWord.bad_proper_words.detect{|x| line.include?(x)}
+      return true unless SpecialWord.ignore_word_propers.detect{|x| line.include?(x)}
     end
     return false
   end
