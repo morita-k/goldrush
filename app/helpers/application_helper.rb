@@ -24,6 +24,11 @@ module ApplicationHelper
     url_for :controller => :bp_pic, :action => :quick_input, :popup =>1, :page => params[:page]
   end
 
+  def url_for_outflow_mail_input_popup()
+    params[:page] ||= "1"
+    url_for :controller => :outflow_mail, :action => :quick_input, :popup =>1, :page => params[:page]
+  end
+
   def bp_pic_edit_icon(bp_pic)
     back_to_link(image_tag((bp_pic.memo.blank? ? 'icon-edit.png' : 'icon-comment.png')), {:controller => :bp_pic, :action => :edit, :id => bp_pic}, :title => (bp_pic.memo.blank? ? "担当者を編集する" : bp_pic.memo))
   end

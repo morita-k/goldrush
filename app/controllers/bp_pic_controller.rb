@@ -295,6 +295,14 @@ class BpPicController < ApplicationController
     # idがnilだった場合、@business_partnerをnilにしたいのでwhere
     @business_partner ||= BusinessPartner.where(id: params[:business_partner_id]).first
 
+    @target_data = {:emptyFlag => true, :targetName => ''}
+    if @business_partner.nil?
+      @target_data[:emptyFlag] = true
+    else
+      @target_data[:emptyFlag] = false
+      @target_data[:targetName] = :business_partner
+    end
+
     render template: 'business_partner/quick_input', layout: 'blank'
   end
   

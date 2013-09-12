@@ -1,0 +1,49 @@
+
+<div class="row-fluid" id='input_form'>
+
+  <div class="span12">
+    <%= content_tag :h2, @outflow_mail.email_text %>
+    <button class="btn btn-success" type="button" onclick='getNextOutflowMail(<%= @outflow_mail.id %>, <%= params[:page] %>)'>次の企業</button>
+    <button class="btn btn-danger" type="button" onclick='finishConfirm()'>入力終了</button>
+    <!-- </div> -->
+
+    <%= form_tag({controller: 'outflow_mail', action: 'update_quick_input'}, class: "form-inline") do %>
+      <fieldset>
+        <legend>メール情報入力</legend>
+        <label><%=getLongName('business_partners','business_partner_name') + ': '%></label>
+        <%= text_field 'business_partner', 'business_partner_name', placeholder: getLongName('business_partners','business_partner_name') %>
+        <label><%=getLongName('business_partners','email') + ': '%></label>
+        <%= text_field 'business_partner', 'email', placeholder: getLongName('business_partners','email') %>
+        <label><%=getLongName('business_partners','establishment_year') + ': '%></label>
+        <%= text_field 'business_partner', 'establishment_year', placeholder: getLongName('business_partners','establishment_year') %>
+        <br/>
+        <label><%=getLongName('business_partners','share_capital') + ': '%></label>
+        <%= text_field 'business_partner', 'share_capital', placeholder: getLongName('business_partners','share_capital') %>
+        <label><%=getLongName('business_partners','employee_number') + ': '%></label>
+        <%= text_field 'business_partner', 'employee_number', placeholder: getLongName('business_partners','employee_number') %>
+        <label><%=getLongName('bp_pics','bp_pic_name') + ': '%></label>
+        <%= text_field 'bp_pics', 'bp_pic_name', placeholder: getLongName('bp_pics','bp_pic_name') %>
+
+        <%= hidden_field_tag 'back_to', request_url %>
+        <br/>
+        <%= submit_tag '更新', class: "btn btn-success", confirm: @outflow_mail.email_text + 'の情報を更新します。よろしいですか？' %>
+      </fieldset>
+    <% end %>
+  </div>
+</div>
+
+<div class="row-fluid">
+  <div class="span12">
+    <% if @outflow_mail.url.blank? %>
+      <!-- <script type="text/javascript">alert('流出メールURLが入力されていません。')</script> -->
+    <% end %>
+    <iframe id='iframe_bp' src="<%= @outflow_mail.url %>" width=100% >このブラウザは対応していません。</iframe>
+  </div>
+</div>
+
+<script type="text/javascript">
+  function getNextOutflowMail(id, page, url) {
+    // 新しい取引先を取得して再描画
+    location.href = 'nextOFM?popup=1&page=' + page + '&business_partner_id=' + id
+  }
+</script>
