@@ -8,6 +8,13 @@ module ApplicationHelper
   include NameUtil
   include TypeUtil
 
+  def around_b(str)
+    raw "<span style='font-weight:bold'>#{str}</span>"
+  end
+
+  def around_b_if(cond, str)
+    cond ? around_b(str) : str
+  end
   def url_for_bp_pic_popup(callback = :setBpPic)
     url_for :controller => :bp_pic, :action => :list, :popup =>1, :callback => callback
   end
@@ -17,12 +24,21 @@ module ApplicationHelper
     url_for :controller => :bp_pic, :action => :quick_input, :popup =>1, :page => params[:page]
   end
 
+  def url_for_outflow_mail_input_popup()
+    params[:page] ||= "1"
+    url_for :controller => :outflow_mail, :action => :quick_input, :popup =>1, :page => params[:page]
+  end
+
   def bp_pic_edit_icon(bp_pic)
-    back_to_link(image_tag((bp_pic.memo.blank? ? 'icon-edit.png' : 'icon-comment.png')), {:action => :edit, :id => bp_pic}, :title => bp_pic.memo)
+    back_to_link(image_tag((bp_pic.memo.blank? ? 'icon-edit.png' : 'icon-comment.png')), {:controller => :bp_pic, :action => :edit, :id => bp_pic}, :title => (bp_pic.memo.blank? ? "担当者を編集する" : bp_pic.memo))
   end
 
   def biz_offer_edit_icon(biz_offer)
-    back_to_link(image_tag((biz_offer.business.memo.blank? ? 'icon-edit.png' : 'icon-comment.png')), {:action => :edit, :id => biz_offer}, :title => biz_offer.business.memo)
+    back_to_link(image_tag((biz_offer.business.memo.blank? ? 'icon-edit.png' : 'icon-comment.png')), {:controller => :biz_offer, :action => :edit, :id => biz_offer}, :title => biz_offer.business.memo)
+  end
+
+  def bp_member_edit_icon(bp_member)
+    back_to_link(image_tag((bp_member.human_resource.memo.blank? ? 'icon-edit.png' : 'icon-comment.png')), {:controller => :bp_member, :action => :edit, :id => bp_member}, :title => bp_member.human_resource.memo)
   end
 
   def _date(date)
@@ -47,6 +63,17 @@ module ApplicationHelper
       else
         t.strftime("%Y/%m/%d")
       end
+    else
+      time
+    end
+  end
+
+  def _timetoddmmhhmm(time)
+    if time.blank?
+      ""
+    elsif [ActiveSupport::TimeWithZone, Time, Date].include?(time.class)
+      t = time.to_time.getlocal
+      t.strftime("%m/%d %H:%M")
     else
       time
     end
@@ -414,9 +441,9 @@ EOS
     change_to_statuses.each{|change_to_status|
       str = ApplicationApproval.approval_action_str(change_to_status)
       if change_to_status == 'reject'
-        result << link_to(str, { :controller => 'application_approval', :action => 'reject', :id => application_approval, :application_type => application_approval.application_type, :approval_status_type => change_to_status, :back_to => request.env['REQUEST_URI'] })
+        result << link_to(str, { :controller => 'application_approval', :action => 'reject', :id => application_approval, :application_type => application_approval.application_type, :approval_status_type => change_to_status, :back_to => request.env['REQUEST_URI'] , :authenticity_token => form_authenticity_token})
       else
-        result << link_to(str, { :controller => 'application_approval', :action => 'change_approval_status', :id => application_approval, :application_type => application_approval.application_type, :approval_status_type => change_to_status, :back_to => request.env['REQUEST_URI'] }, :confirm => "この申請を#{str}します。よろしいですか?", :method => :post)
+        result << link_to(str, { :controller => 'application_approval', :action => 'change_approval_status', :id => application_approval, :application_type => application_approval.application_type, :approval_status_type => change_to_status, :back_to => request.env['REQUEST_URI'], :authenticity_token => form_authenticity_token }, :confirm => "この申請を#{str}します。よろしいですか?", :method => :post)
       end
     }
     result 

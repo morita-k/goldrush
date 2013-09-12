@@ -12,7 +12,7 @@
   <tr>
     <td><%=h project_member.user.employee.employee_name %></td>
     <td>
-      <%= link_to '削除', { :action => 'destroy', :id => project_member, :back_to => request.env['REQUEST_URI'] }, :confirm => 'この情報を削除します。よろしいですか?', :method => :post %>
+      <%= link_to '削除', { :action => 'destroy', :id => project_member, :back_to => request.env['REQUEST_URI'], :authenticity_token => form_authenticity_token }, :confirm => 'この情報を削除します。よろしいですか?', :method => :post %>
     </td>
   </tr>
 <% end %>

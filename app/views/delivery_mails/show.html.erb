@@ -34,6 +34,8 @@
     <th><%= getLongName('bp_pics', 'bp_pic_name') %></th>
     <% if @delivery_mail.mail_status_type == 'unsend' %>
       <th>削除</th>
+    <% else %>
+      <th>返信メール</th>
     <% end %>
   </tr>
   <tr>
@@ -60,6 +62,20 @@
                 :authenticity_token => form_authenticity_token},
                 :method => :delete, :confirm => "このレコードを削除します。よろしいですか？"
           %></td>
+        <% else %>
+          <td>
+            <% dmt = delivery_mail_target.get_reply_import_mail %>
+            <% if dmt != nil %>
+              <%=
+                back_to_link "詳細",
+                :controller => :import_mail,
+                :action => :show,
+                :id => dmt.id
+              %>
+            <% else %>
+              &nbsp;
+            <% end %>
+          </td>
         <% end %>
       </tr>
     <% end %>

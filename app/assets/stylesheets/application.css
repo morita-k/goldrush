@@ -12,12 +12,23 @@
  *= require_self
  */
 
+td.jiet_radio input {
+  position:relative;
+  top:-5px;
+}
+
 .field_with_errors input {
   background-color:pink;
 }
 
 table td input[type="text"] {
   width:80%;
+  margin: 0 0 0 0;
+  padding: 0 0 0 0;
+}
+
+table td.bounds_input input[type="text"] {
+  width:20%;
   margin: 0 0 0 0;
   padding: 0 0 0 0;
 }

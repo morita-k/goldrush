@@ -27,14 +27,14 @@
       <%= link_to '表示', :action => 'show', :id => other_application %>, 
 <%# TODO: approval_status_typeをbase_applicationに移動する %>
       <% if other_application.approval_status_type == 'entry' %> 
-        <%= link_to '承認', { :action => 'approve_other_app', :id => other_application }, :confirm => 'この申請を承認します。よろしいですか?', :method => :post %>
-        <%= link_to '却下', { :action => 'reject_other_app', :id => other_application }, :confirm => 'この申請を却下します。よろしいですか?', :method => :post %>
+        <%= link_to '承認', { :action => 'approve_other_app', :id => other_application, :authenticity_token => form_authenticity_token }, :confirm => 'この申請を承認します。よろしいですか?', :method => :post %>
+        <%= link_to '却下', { :action => 'reject_other_app', :id => other_application, :authenticity_token => form_authenticity_token }, :confirm => 'この申請を却下します。よろしいですか?', :method => :post %>
       <% elsif other_application.approval_status_type == 'approved' %> 
-        <%= link_to '申請中', { :action => 'entry_other_app', :id => other_application }, :confirm => 'この申請が申請中になります。よろしいですか?', :method => :post %>
-        <%= link_to '却下', { :action => 'reject_other_app', :id => other_application }, :confirm => 'この申請を却下します。よろしいですか?', :method => :post %>
+        <%= link_to '申請中', { :action => 'entry_other_app', :id => other_application, :authenticity_token => form_authenticity_token }, :confirm => 'この申請が申請中になります。よろしいですか?', :method => :post %>
+        <%= link_to '却下', { :action => 'reject_other_app', :id => other_application, :authenticity_token => form_authenticity_token }, :confirm => 'この申請を却下します。よろしいですか?', :method => :post %>
       <% elsif other_application.approval_status_type == 'reject' %> 
-        <%= link_to '申請中', { :action => 'entry_other_app', :id => other_application }, :confirm => 'この申請が申請中になります。よろしいですか?', :method => :post %>
-        <%= link_to '承認', { :action => 'approve_other_app', :id => other_application }, :confirm => 'この申請を承認します。よろしいですか?', :method => :post %>
+        <%= link_to '申請中', { :action => 'entry_other_app', :id => other_application, :authenticity_token => form_authenticity_token }, :confirm => 'この申請が申請中になります。よろしいですか?', :method => :post %>
+        <%= link_to '承認', { :action => 'approve_other_app', :id => other_application, :authenticity_token => form_authenticity_token }, :confirm => 'この申請を承認します。よろしいですか?', :method => :post %>
       <% end %>
     </td>
   </tr>
