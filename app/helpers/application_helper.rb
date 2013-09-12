@@ -15,8 +15,13 @@ module ApplicationHelper
   def around_b_if(cond, str)
     cond ? around_b(str) : str
   end
+
   def url_for_bp_pic_popup(callback = :setBpPic)
     url_for :controller => :bp_pic, :action => :list, :popup =>1, :callback => callback
+  end
+
+  def url_for_mail_template_popup(callback = :setMailTemplate)
+    url_for :controller => :mail_templates, :action => :index, :popup =>1, :callback => callback
   end
 
   def url_for_bp_pic_input_popup()
