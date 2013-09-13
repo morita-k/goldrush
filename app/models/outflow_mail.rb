@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
 class OutflowMail < ActiveRecord::Base
+  include AutoTypeName
 
   def self.create_outflow_mails(import_mail)
-    # nilチェックしたくない
     import_mail.mail_to ||= ""
     import_mail.mail_cc ||= ""
 
@@ -12,18 +12,14 @@ class OutflowMail < ActiveRecord::Base
       outflow_mail.import_mail_id = import_mail.id
       outflow_mail.email          = address
       outflow_mail.email_text     = text
-      # outflow_mail.url            = OutflowMail.inference_url(address)
-      outflow_mail.url            = OutflowMail.search_active_url(address)
-      # OutflowMail.search_active_url(address).each{|a| puts a}
 
-      # 既存のアドレス -> "重複", WebスクレイピングしてHPが存在しない -> "不要"、その他 -> "未対応"
-      # "重複"及び"不要"のメールは、会社チェック機能起動時に対象として含まない
-      if BpPic.where(email2: address, deleted: 0).first
+      if OutflowMail.check_duplication_domain(address)
         outflow_mail.outflow_mail_status_type = "unwanted"
-      elsif OutflowMail.search_active_url(address).blank?
-        outflow_mail.outflow_mail_status_type = "bad"
-      else
+      elsif active_url = OutflowMail.search_active_url(address)
         outflow_mail.outflow_mail_status_type = "non_correspondence"
+        outflow_mail.url                      = active_url
+      else
+        outflow_mail.outflow_mail_status_type = "bad"
       end
 
       outflow_mail.save!
@@ -55,6 +51,7 @@ class OutflowMail < ActiveRecord::Base
     self.save!
   end
 
+  # 不要ボタン用ステータス変更メソッド
   def unnecessary_mail!
     self.outflow_mail_status_type = "bad"
     self.save!
@@ -66,8 +63,6 @@ private #===============================================
     "unknown+" + id.to_s + "@unknown.applicative.jp"
   end
 
-  # 成功ならそのURL、失敗ならnilを返す
-  # TODO: 適切なエラー処理諸々
   def self.check_active_url(url)
     require 'net/http'
     
@@ -79,20 +74,31 @@ private #===============================================
     end
   end
 
+  # メールのドメインから予想されるURLのパターン
+  # 増やすとヒット率は上がるけど、流出メール発生時の処理が重くなる
+  def self.common_url_table(domain)
+    [
+      "#{domain}",
+      "www.#{domain}",
+      "#{domain}".gsub(".co", "")
+    ]
+  end
+
   # アドレスから推測されるURLを叩いて、有効なURLを返す
   def self.search_active_url(email_address)
   	if email_address =~ /.*?@(.*)/
-      url = OutflowMail.common_url_table($1).map{|url| OutflowMail.check_active_url(url)}.reject{|url| url.first != "200"}.first
+      url = OutflowMail.common_url_table($1).map{|url|
+        OutflowMail.check_active_url(url)}.select{|url|
+          (url.first == "200") || (url.first == "301")}.first
     end
-    url.nil? ? "" : url.second
+    url.nil? ? nil : "http://" + url.second　# trueの時、本当は[]を返したい.......
   end
 
-  # 名前とか色々くっついた、カンマ区切りのアドレス共をHashにする
   def self.mail_address_parser(email_str)
     address_hash = {}
     unless email_str.nil?
       email_str.split(",").map do |address|
-        if address =~ /.*?<(.*)>/
+        if address =~ /.*<(.*?)>.*?/
           address_hash[address] = $1
         elsif address =~ /.*?@.*?/
           address_hash[address] = address.strip
@@ -102,7 +108,14 @@ private #===============================================
     address_hash
   end
 
-  # 取引先担当者作るヘルパー
+  def self.check_duplication_domain(mail_address)
+    new_domain = mail_address.split("@").second
+    exist_pic_domain = BpPic.where(deleted: 0).map{|pic| pic.email1.split("@").second}.select{|dom| dom == new_domain}.first
+    exist_outflow_domain = OutflowMail.where(deleted: 0).map{|outflow| outflow.email.split("@").second}.select{|dom| dom == new_domain}.first
+    
+    exist_pic_domain || exist_outflow_domain
+  end
+
   def create_bp_pic_from_outflow(bp_id, email)
     pic = BpPic.new
 
@@ -116,14 +129,6 @@ private #===============================================
 
     pic.save!
     pic
-  end
-
-  def self.common_url_table(domain)
-    [
-      "#{domain}",
-      "www.#{domain}",
-      "#{domain}".gsub(".co", "")
-    ]
   end
 
 end
