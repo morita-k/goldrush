@@ -32,7 +32,7 @@
     </tr>
 </table>
 <br/>
-<%= submit_tag '　　検索　　', :name => 'search_button' %> <%= submit_tag '　　クリア　　', :name => 'clear_button' %>
+<%= submit_tag '　　検索　　', :name => 'search_button' %> <%= submit_tag '　　クリア　　', :name => 'clear_button' %> <%= button_to_function "流出メールチェック", "location.href = 'outflow_mail';"%>
 <% end %>
 
 <%= paginate(@import_mails) %>
