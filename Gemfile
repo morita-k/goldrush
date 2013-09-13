@@ -61,3 +61,7 @@ gem 'mail', '2.5.3'
 # you must install ImageMagick native library before "bundle install"
 gem 'rmagick'
 
+group :development do
+  gem 'better_errors'
+  gem 'binding_of_caller'
+end
