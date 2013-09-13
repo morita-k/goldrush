@@ -170,7 +170,7 @@ class Contract < ActiveRecord::Base
   # この条件に合致した契約がある場合、後続契約ありとみなす。
   def Contract.close_contracts(today=Date.today)
     ActiveRecord::Base.transaction do
-      Contract.where("deleted = 0 and contract_status_type = 'contract' and contract_end_date < ?", today).each do |c|
+      Contract.where("deleted = 0 and contract_status_type = 'contract' and contract_end_date < ?", today).order("contract_end_date desc").each do |c|
         next if c.next_term
 
         # 契約
@@ -191,7 +191,7 @@ class Contract < ActiveRecord::Base
         # 案件
         c.approach.biz_offer.business.business_status_type = 'finished'
 
-        # 更新
+       # 更新
         for i in [c.approach.biz_offer.business, c.approach.biz_offer, c.approach.bp_member.human_resource, c.approach, c]
           i.updated_user = 'make_next'
           i.save!
@@ -232,7 +232,7 @@ class Contract < ActiveRecord::Base
         n.approach_id = c.approach_id
         n.contract_pic_id = c.contract_pic_id
         n.contract_start_date = c.contract_end_date + 1
-        n.contract_end_date = (n.contract_start_date + c.contract_renewal_unit.to_i.month).at_end_of_month # 契約単位月経過後の月末
+        n.contract_end_date = (n.contract_start_date + c.contract_renewal_unit.to_i.month) - 1 # 契約単位月経過後の月末
         n.contract_renewal_unit = c.contract_renewal_unit
         n.contract_renewal_terms = c.contract_renewal_terms
         n.upper_contract_term_id = upper.id
