@@ -178,6 +178,7 @@ ActiveRecord::Schema.define(:version => 0) do
   end
 
   add_index "attachment_files", ["id"], :name => "id", :unique => true
+  add_index "attachment_files", ["parent_table_name", "parent_id"], :name => "idx_attachment_files_15"
 
   create_table "base_applications", :force => true do |t|
     t.integer  "owner_id",                :limit => 8
@@ -269,6 +270,7 @@ ActiveRecord::Schema.define(:version => 0) do
   end
 
   add_index "biz_offers", ["id"], :name => "id", :unique => true
+  add_index "biz_offers", ["import_mail_id"], :name => "idx_biz_offers_13"
 
   create_table "bp_members", :force => true do |t|
     t.integer  "owner_id",            :limit => 8
@@ -296,6 +298,7 @@ ActiveRecord::Schema.define(:version => 0) do
   end
 
   add_index "bp_members", ["id"], :name => "id", :unique => true
+  add_index "bp_members", ["import_mail_id"], :name => "idx_bp_members_14"
 
   create_table "bp_pic_group_details", :force => true do |t|
     t.integer  "owner_id",        :limit => 8
@@ -312,11 +315,13 @@ ActiveRecord::Schema.define(:version => 0) do
     t.integer  "deleted",                       :default => 0
   end
 
+  add_index "bp_pic_group_details", ["bp_pic_group_id"], :name => "idx_bp_pic_group_details_16"
   add_index "bp_pic_group_details", ["id"], :name => "id", :unique => true
 
   create_table "bp_pic_groups", :force => true do |t|
     t.integer  "owner_id",          :limit => 8
     t.string   "bp_pic_group_name",                              :null => false
+    t.integer  "mail_template_id",  :limit => 8
     t.text     "memo"
     t.datetime "created_at",                                     :null => false
     t.datetime "updated_at",                                     :null => false
@@ -366,45 +371,45 @@ ActiveRecord::Schema.define(:version => 0) do
   add_index "bp_pics", ["id"], :name => "id", :unique => true
 
   create_table "business_partners", :force => true do |t|
-    t.integer  "owner_id",                    :limit => 8
-    t.string   "sales_code",                  :limit => 80
-    t.string   "business_partner_code",       :limit => 80
-    t.string   "sales_management_code",       :limit => 80
-    t.string   "business_partner_name",                                      :null => false
-    t.string   "business_partner_short_name",                                :null => false
+    t.integer  "owner_id",                                :limit => 8
+    t.string   "sales_code",                              :limit => 80
+    t.string   "business_partner_code",                   :limit => 80
+    t.string   "sales_management_code",                   :limit => 80
+    t.string   "business_partner_name",                                                  :null => false
+    t.string   "business_partner_short_name",                                            :null => false
     t.string   "business_partner_name_kana"
     t.string   "business_partner_name_en"
-    t.string   "sales_status_type",           :limit => 40,                  :null => false
-    t.string   "basic_contract_status_type",  :limit => 40,                  :null => false
-    t.string   "nda_status_type",             :limit => 40,                  :null => false
+    t.string   "sales_status_type",                       :limit => 40,                  :null => false
+    t.string   "basic_contract_first_party_status_type",  :limit => 40,                  :null => false
+    t.string   "basic_contract_second_party_status_type", :limit => 40,                  :null => false
     t.string   "ceo_name"
     t.string   "url"
-    t.string   "zip",                         :limit => 40
+    t.string   "zip",                                     :limit => 40
     t.string   "address1"
     t.string   "address2"
-    t.string   "tel",                         :limit => 40
-    t.string   "fax",                         :limit => 40
+    t.string   "tel",                                     :limit => 40
+    t.string   "fax",                                     :limit => 40
     t.string   "email"
     t.string   "category"
     t.string   "establishment_year"
     t.string   "employee_number"
     t.string   "share_capital"
-    t.integer  "self_flg",                                  :default => 0
-    t.integer  "eu_flg",                                    :default => 0
-    t.integer  "upper_flg",                                 :default => 0
-    t.integer  "down_flg",                                  :default => 0
-    t.integer  "starred",                                   :default => 0
-    t.float    "rating",                                    :default => 0.0
-    t.integer  "import_mail_id",              :limit => 8
+    t.integer  "self_flg",                                              :default => 0
+    t.integer  "eu_flg",                                                :default => 0
+    t.integer  "upper_flg",                                             :default => 0
+    t.integer  "down_flg",                                              :default => 0
+    t.integer  "starred",                                               :default => 0
+    t.float    "rating",                                                :default => 0.0
+    t.integer  "import_mail_id",                          :limit => 8
     t.string   "tag_text"
     t.text     "memo"
-    t.datetime "created_at",                                                 :null => false
-    t.datetime "updated_at",                                                 :null => false
-    t.integer  "lock_version",                :limit => 8,  :default => 0
-    t.string   "created_user",                :limit => 80
-    t.string   "updated_user",                :limit => 80
+    t.datetime "created_at",                                                             :null => false
+    t.datetime "updated_at",                                                             :null => false
+    t.integer  "lock_version",                            :limit => 8,  :default => 0
+    t.string   "created_user",                            :limit => 80
+    t.string   "updated_user",                            :limit => 80
     t.datetime "deleted_at"
-    t.integer  "deleted",                                   :default => 0
+    t.integer  "deleted",                                               :default => 0
   end
 
   add_index "business_partners", ["id"], :name => "id", :unique => true
@@ -630,6 +635,7 @@ ActiveRecord::Schema.define(:version => 0) do
     t.integer  "deleted",                           :default => 0
   end
 
+  add_index "delivery_errors", ["delivery_mail_id"], :name => "idx_delivery_errors_17"
   add_index "delivery_errors", ["id"], :name => "id", :unique => true
 
   create_table "delivery_mail_targets", :force => true do |t|
@@ -646,10 +652,14 @@ ActiveRecord::Schema.define(:version => 0) do
     t.integer  "deleted",                        :default => 0
   end
 
+  add_index "delivery_mail_targets", ["bp_pic_id"], :name => "idx_delivery_mail_targets_20"
+  add_index "delivery_mail_targets", ["delivery_mail_id"], :name => "idx_delivery_mail_targets_18"
   add_index "delivery_mail_targets", ["id"], :name => "id", :unique => true
+  add_index "delivery_mail_targets", ["message_id"], :name => "idx_delivery_mail_targets_19"
 
   create_table "delivery_mails", :force => true do |t|
     t.integer  "owner_id",              :limit => 8
+    t.string   "delivery_mail_type",    :limit => 40,                        :null => false
     t.integer  "bp_pic_group_id",       :limit => 8
     t.string   "mail_status_type",      :limit => 40,                        :null => false
     t.string   "subject",                                                    :null => false
@@ -691,68 +701,79 @@ ActiveRecord::Schema.define(:version => 0) do
   add_index "departments", ["id"], :name => "id", :unique => true
 
   create_table "employees", :force => true do |t|
-    t.integer  "owner_id",             :limit => 8
-    t.integer  "user_id",              :limit => 8
-    t.integer  "department_id",        :limit => 8
-    t.string   "employee_type",        :limit => 40,                   :null => false
-    t.string   "position",             :limit => 100
-    t.string   "employee_code",        :limit => 40,                   :null => false
-    t.string   "insurance_code",       :limit => 40
-    t.string   "employee_name",        :limit => 100,                  :null => false
-    t.string   "employee_kana_name",   :limit => 100,                  :null => false
-    t.string   "employee_short_name",  :limit => 100,                  :null => false
-    t.date     "birthday_date",                                        :null => false
-    t.string   "sex_type",             :limit => 40,                   :null => false
-    t.string   "email",                :limit => 40
-    t.string   "zip1",                 :limit => 40
+    t.integer  "owner_id",                    :limit => 8
+    t.integer  "user_id",                     :limit => 8
+    t.integer  "department_id",               :limit => 8
+    t.string   "employee_type",               :limit => 40,                   :null => false
+    t.string   "position",                    :limit => 100
+    t.string   "employee_code",               :limit => 40,                   :null => false
+    t.string   "insurance_code",              :limit => 40
+    t.string   "employee_name",               :limit => 100,                  :null => false
+    t.string   "employee_kana_name",          :limit => 100,                  :null => false
+    t.string   "employee_short_name",         :limit => 100,                  :null => false
+    t.date     "birthday_date",                                               :null => false
+    t.string   "sex_type",                    :limit => 40,                   :null => false
+    t.string   "email",                       :limit => 40
+    t.string   "zip1",                        :limit => 40
     t.string   "address1_1"
     t.string   "address1_2"
     t.string   "address1_3"
     t.string   "address1_4"
-    t.string   "tel1",                 :limit => 40
-    t.string   "fax",                  :limit => 40
-    t.string   "mobile",               :limit => 40
-    t.string   "mobile_email",         :limit => 40
-    t.string   "name2",                :limit => 100
-    t.string   "zip2",                 :limit => 40
+    t.string   "tel1",                        :limit => 40
+    t.string   "fax",                         :limit => 40
+    t.string   "mobile",                      :limit => 40
+    t.string   "mobile_email",                :limit => 40
+    t.string   "name2",                       :limit => 100
+    t.string   "zip2",                        :limit => 40
     t.string   "address2_1"
     t.string   "address2_2"
     t.string   "address2_3"
     t.string   "address2_4"
-    t.string   "tel2",                 :limit => 40
-    t.string   "zip3",                 :limit => 40
+    t.string   "tel2",                        :limit => 40
+    t.string   "zip3",                        :limit => 40
     t.string   "address3_1"
     t.string   "address3_2"
     t.string   "address3_3"
     t.string   "address3_4"
-    t.string   "tel3",                 :limit => 40
-    t.date     "entry_date",                                           :null => false
+    t.string   "tel3",                        :limit => 40
+    t.date     "entry_date",                                                  :null => false
     t.date     "resignation_date"
     t.string   "resignation_reason"
     t.string   "attached_file1"
     t.string   "attached_file2"
     t.string   "attached_file3"
     t.string   "attached_file4"
-    t.string   "bank_name",            :limit => 100
-    t.string   "branch_name",          :limit => 100
-    t.string   "account_type",         :limit => 40
-    t.string   "account_number",       :limit => 40
+    t.string   "bank_name",                   :limit => 100
+    t.string   "branch_name",                 :limit => 100
+    t.string   "account_type",                :limit => 40
+    t.string   "account_number",              :limit => 40
     t.string   "account_name"
     t.date     "active_date"
     t.date     "inactive_date"
-    t.integer  "leave_day",            :limit => 8,   :default => 0
-    t.integer  "active_flg",                          :default => 0
-    t.integer  "approver_flg",                        :default => 0
-    t.integer  "credit_card_flg",                     :default => 0
-    t.float    "regular_working_hour",                :default => 0.0
+    t.integer  "leave_day",                   :limit => 8,   :default => 0
+    t.integer  "active_flg",                                 :default => 0
+    t.integer  "approver_flg",                               :default => 0
+    t.integer  "credit_card_flg",                            :default => 0
+    t.string   "regular_in_time",             :limit => 40,                   :null => false
+    t.string   "regular_in_time_defact",      :limit => 40,                   :null => false
+    t.string   "regular_in_time_pm",          :limit => 40,                   :null => false
+    t.string   "regular_out_time",            :limit => 40,                   :null => false
+    t.string   "regular_out_time_early_am",   :limit => 40,                   :null => false
+    t.string   "regular_out_time_early_full", :limit => 40,                   :null => false
+    t.string   "max_out_time",                :limit => 40,                   :null => false
+    t.string   "regular_rest_hour",           :limit => 40,                   :null => false
+    t.string   "regular_rest_hour_half",      :limit => 40,                   :null => false
+    t.string   "regular_over_time_meel",      :limit => 40,                   :null => false
+    t.string   "regular_over_time_taxi",      :limit => 40,                   :null => false
+    t.float    "regular_working_hour",                       :default => 0.0
     t.text     "memo"
-    t.datetime "created_at",                                           :null => false
-    t.datetime "updated_at",                                           :null => false
-    t.integer  "lock_version",         :limit => 8,   :default => 0
-    t.string   "created_user",         :limit => 80
-    t.string   "updated_user",         :limit => 80
+    t.datetime "created_at",                                                  :null => false
+    t.datetime "updated_at",                                                  :null => false
+    t.integer  "lock_version",                :limit => 8,   :default => 0
+    t.string   "created_user",                :limit => 80
+    t.string   "updated_user",                :limit => 80
     t.datetime "deleted_at"
-    t.integer  "deleted",                             :default => 0
+    t.integer  "deleted",                                    :default => 0
   end
 
   add_index "employees", ["id"], :name => "id", :unique => true
@@ -931,6 +952,7 @@ ActiveRecord::Schema.define(:version => 0) do
     t.integer  "business_partner_id", :limit => 8
     t.integer  "bp_pic_id",           :limit => 8
     t.string   "in_reply_to"
+    t.integer  "delivery_mail_id",    :limit => 8
     t.datetime "received_at",                                              :null => false
     t.string   "mail_subject",        :limit => 1024,                      :null => false
     t.text     "mail_body",                                                :null => false
@@ -946,6 +968,8 @@ ActiveRecord::Schema.define(:version => 0) do
     t.integer  "registed",                                  :default => 0
     t.integer  "unwanted",                                  :default => 0
     t.integer  "proper_flg",                                :default => 0
+    t.integer  "outflow_mail_flg",                          :default => 0
+    t.integer  "starred",                                   :default => 0
     t.text     "tag_text"
     t.string   "payment_text"
     t.string   "age_text"
@@ -959,7 +983,11 @@ ActiveRecord::Schema.define(:version => 0) do
     t.integer  "deleted",                                   :default => 0
   end
 
+  add_index "import_mails", ["delivery_mail_id"], :name => "idx_import_mails_21"
   add_index "import_mails", ["id"], :name => "id", :unique => true
+  add_index "import_mails", ["mail_from", "received_at"], :name => "idx_import_mails_12"
+  add_index "import_mails", ["message_id"], :name => "idx_import_mails_11"
+  add_index "import_mails", ["starred"], :name => "idx_import_mails_22"
 
   create_table "interviews", :force => true do |t|
     t.integer  "owner_id",              :limit => 8
@@ -1088,6 +1116,26 @@ ActiveRecord::Schema.define(:version => 0) do
 
   add_index "other_applications", ["id"], :name => "id", :unique => true
 
+  create_table "outflow_mails", :force => true do |t|
+    t.integer  "owner_id",                 :limit => 8
+    t.integer  "import_mail_id",           :limit => 8,                 :null => false
+    t.string   "email",                                                 :null => false
+    t.string   "email_text"
+    t.string   "outflow_mail_status_type", :limit => 40,                :null => false
+    t.string   "url"
+    t.string   "business_partner_id"
+    t.string   "bp_pic_id"
+    t.datetime "created_at",                                            :null => false
+    t.datetime "updated_at",                                            :null => false
+    t.integer  "lock_version",             :limit => 8,  :default => 0
+    t.string   "created_user",             :limit => 80
+    t.string   "updated_user",             :limit => 80
+    t.datetime "deleted_at"
+    t.integer  "deleted",                                :default => 0
+  end
+
+  add_index "outflow_mails", ["id"], :name => "id", :unique => true
+
   create_table "owners", :force => true do |t|
     t.integer  "union_user_id",        :limit => 8,                 :null => false
     t.string   "union_user_login",     :limit => 80,                :null => false
@@ -1176,6 +1224,26 @@ ActiveRecord::Schema.define(:version => 0) do
   end
 
   add_index "personal_sales", ["id"], :name => "id", :unique => true
+
+  create_table "photos", :force => true do |t|
+    t.integer  "owner_id",          :limit => 8
+    t.string   "parent_table_name",                              :null => false
+    t.integer  "parent_id",         :limit => 8
+    t.string   "file_name",                                      :null => false
+    t.string   "extention",                                      :null => false
+    t.string   "file_path",                                      :null => false
+    t.string   "thumbnail_path",                                 :null => false
+    t.string   "photo_status_type", :limit => 40,                :null => false
+    t.datetime "created_at",                                     :null => false
+    t.datetime "updated_at",                                     :null => false
+    t.integer  "lock_version",      :limit => 8,  :default => 0
+    t.string   "created_user",      :limit => 80
+    t.string   "updated_user",      :limit => 80
+    t.datetime "deleted_at"
+    t.integer  "deleted",                         :default => 0
+  end
+
+  add_index "photos", ["id"], :name => "id", :unique => true
 
   create_table "project_members", :force => true do |t|
     t.integer  "owner_id",     :limit => 8
@@ -1287,6 +1355,23 @@ ActiveRecord::Schema.define(:version => 0) do
 
   add_index "sessions", ["id"], :name => "id", :unique => true
 
+  create_table "special_words", :force => true do |t|
+    t.integer  "owner_id",          :limit => 8
+    t.string   "special_word_type", :limit => 40,                :null => false
+    t.string   "target_word",                                    :null => false
+    t.string   "convert_to_word"
+    t.text     "memo"
+    t.datetime "created_at",                                     :null => false
+    t.datetime "updated_at",                                     :null => false
+    t.integer  "lock_version",      :limit => 8,  :default => 0
+    t.string   "created_user",      :limit => 80
+    t.string   "updated_user",      :limit => 80
+    t.datetime "deleted_at"
+    t.integer  "deleted",                         :default => 0
+  end
+
+  add_index "special_words", ["id"], :name => "id", :unique => true
+
   create_table "sys_configs", :force => true do |t|
     t.integer  "owner_id",                :limit => 8
     t.string   "config_section",          :limit => 40,                :null => false
@@ -1345,6 +1430,8 @@ ActiveRecord::Schema.define(:version => 0) do
   end
 
   add_index "tag_details", ["id"], :name => "id", :unique => true
+  add_index "tag_details", ["parent_id", "tag_id"], :name => "idx_tag_details_10"
+  add_index "tag_details", ["tag_id", "parent_id"], :name => "idx_tag_details_9"
 
   create_table "tag_journals", :force => true do |t|
     t.integer  "owner_id",            :limit => 8
@@ -1384,6 +1471,7 @@ ActiveRecord::Schema.define(:version => 0) do
   end
 
   add_index "tags", ["id"], :name => "id", :unique => true
+  add_index "tags", ["tag_key", "tag_text"], :name => "idx_tags_8"
 
   create_table "types", :force => true do |t|
     t.integer  "owner_id",              :limit => 8
