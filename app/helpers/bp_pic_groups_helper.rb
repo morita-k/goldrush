@@ -39,5 +39,8 @@ module BpPicGroupsHelper
     end
     raw res.join("\n")
   end
-  
+
+  def get_mail_template_name
+    MailTemplate.find(@bp_pic_group.mail_template_id)
+  end
 end

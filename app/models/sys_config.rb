@@ -245,4 +245,8 @@ class SysConfig < ActiveRecord::Base
     get_configuration("import_mail", "jiet").value1
   end
 
+  def self.get_outflow_criterion
+    get_configuration("outflow_mail", "outflow_criterion")
+  end
+
 end
