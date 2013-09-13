@@ -58,3 +58,6 @@ gem 'kaminari'
 
 gem 'mail', '2.5.3'
 
+# you must install ImageMagick native library before "bundle install"
+gem 'rmagick'
+
