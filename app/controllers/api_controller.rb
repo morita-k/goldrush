@@ -90,7 +90,7 @@ class ApiController < ApplicationController
     render :json => BaseMonth.where("deleted = 0 and start_date = ?", params[:start_date]).first.monthly_workings.map{|m|
       {
         :employee_name => m.user.employee.employee_name,
-        :workwheets => m.daily_workings.map{|w|
+        :working_list => m.daily_workings.map{|w|
           {
             :working_date => w.working_date,
             :working_type => w.working_type_short_name,
