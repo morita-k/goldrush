@@ -8,6 +8,10 @@ module ApplicationHelper
   include NameUtil
   include TypeUtil
 
+  def man(amount)
+    "#{amount.to_i}万"
+  end
+
   def around_b(str)
     raw "<span style='font-weight:bold'>#{str}</span>"
   end
