@@ -13,7 +13,7 @@ class ContractController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    @contract_pages, @contracts = paginate :contracts, :conditions =>["deleted = 0"], :per_page => current_user.per_page
+    @contract_pages, @contracts = paginate :contracts, :conditions =>["deleted = 0"], :per_page => current_user.per_page, :order => "contract_end_date desc"
   end
 
   def show

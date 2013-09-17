@@ -133,8 +133,16 @@ class Contract < ActiveRecord::Base
     (100.0 * payment_diff / upper_contract_term.payment).round(1)
   end
   
+  def contract_start_date_view
+    contract_start_date && contract_start_date.strftime("%y/%m/%d")
+  end
+
+  def contract_end_date_view
+    contract_end_date && contract_end_date.strftime("%y/%m/%d")
+  end
+
   def term_term
-    "#{contract_start_date} ～ #{contract_end_date}"
+    "#{contract_start_date_view} ～ #{contract_end_date_view}"
   end
 
   def contract_renewal
@@ -217,9 +225,10 @@ class Contract < ActiveRecord::Base
       end
     end
   end
+
   def Contract.make_next_in(c)
-    next if (today + c.contract_renewal_terms.to_i.month).strftime("%Y%m") < c.contract_end_date.strftime("%Y%m")
-    next if c.next_term
+    return if (today + c.contract_renewal_terms.to_i.month).strftime("%Y%m") < c.contract_end_date.strftime("%Y%m")
+    return if c.next_term
     
     upper = ContractTerm.new(c.upper_contract_term.attributes)
     upper.created_user = 'make_next'

@@ -8,7 +8,7 @@ class ContractTerm < ActiveRecord::Base
   validates_presence_of     :payment
 
   def cutoff_and_sight
-    "#{cutoff_date_type_name}締め#{payment_sight_type_name}払い"
+    "#{cutoff_date_type_name}締 #{payment_sight_type_name}払"
   end
 
   def payment_view=(x)
