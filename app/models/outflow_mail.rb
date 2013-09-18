@@ -2,7 +2,13 @@
 class OutflowMail < ActiveRecord::Base
   include AutoTypeName
 
-  def self.create_outflow_mails(import_mail)
+  validates_presence_of :import_mail_id, :email, :outflow_mail_status_type
+
+  belongs_to :business_partner
+  belongs_to :bp_pic
+  belongs_to :import_mail
+
+  def create_outflow_mails(import_mail)
     import_mail.mail_to ||= ""
     import_mail.mail_cc ||= ""
 
@@ -27,22 +33,20 @@ class OutflowMail < ActiveRecord::Base
   end
 
   def create_bp_and_pic(bp_name, info_email, establishment_year, employee_number, share_capital)
-    unless bp = BusinessPartner.where(business_partner_name: bp_name, deleted: 0).first
-      bp = BusinessPartner.new
+    bp = BusinessPartner.new
 
-      bp.business_partner_name       = bp_name
-      bp.business_partner_short_name = bp_name
-      bp.business_partner_name_kana  = bp_name
-      bp.sales_status_type           = "prospect"
-      bp.basic_contract_status_type  = "non_correspondence"
-      bp.nda_status_type             = "non_correspondence"
-      bp.url                         = self.url
-      bp.establishment_year          = establishment_year
-      bp.employee_number             = employee_number
-      bp.share_capital               = share_capital
+    bp.business_partner_name       = bp_name
+    bp.business_partner_short_name = bp_name
+    bp.business_partner_name_kana  = bp_name
+    bp.sales_status_type           = "prospect"
+    bp.basic_contract_first_party_status_type  = "non_correspondence"
+    bp.basic_contract_second_party_status_type = "non_correspondence"
+    bp.url                         = self.url
+    bp.establishment_year          = establishment_year
+    bp.employee_number             = employee_number
+    bp.share_capital               = share_capital
 
-      bp.save!
-    end
+    bp.save!
 
     self.outflow_mail_status_type = "good"
     self.business_partner_id      = bp.id
@@ -51,15 +55,21 @@ class OutflowMail < ActiveRecord::Base
     self.save!
   end
 
+  # def update_bp_and_pic(bp_name, info_email, establishment_year, employee_number, share_capital)
+  #   bp = self.business_partner
+
+  #   bp.business_partner_name
+  # end
+
   # 不要ボタン用ステータス変更メソッド
   def unnecessary_mail!
     self.outflow_mail_status_type = "bad"
     self.save!
   end
 
-private #===============================================
+#private #===============================================
 
-  def self.create_unknown_address(id)
+  def create_unknown_address(id)
     "unknown+" + id.to_s + "@unknown.applicative.jp"
   end
 
@@ -91,7 +101,7 @@ private #===============================================
         OutflowMail.check_active_url(url)}.select{|url|
           (url.first == "200") || (url.first == "301")}.first
     end
-    url.nil? ? nil : "http://" + url.second　# trueの時、本当は[]を返したい.......
+    url.nil? ? nil : "http://" + url.second　# trueの時、本当は[]を返したい...
   end
 
   def self.mail_address_parser(email_str)
@@ -122,13 +132,36 @@ private #===============================================
     pic.business_partner_id = bp_id
     pic.bp_pic_name         = "ご担当者"
     pic.bp_pic_short_name   = "ご担当者"
-    pic.bp_pic_kana         = "ご担当者"
+    pic.bp_pic_name_kana    = "ご担当者"
     pic.email1              = email.blank? ? create_unknown_address(bp_id) : email
     pic.email2              = self.email
-    pic.workign_status      = "working"
+    pic.working_status      = "working"
 
     pic.save!
     pic
+  end
+
+  def update_bp_pic_from_outflow(email)
+    pic = self.bp_pic
+    pic.email1 = email
+    pic.save!
+  end
+
+end
+
+
+# outflow_mail/quick_inputのformから受け取る値をwrapするクラス
+class OutflowMail::FormParameters
+  attr_reader :business_partner_name, :email, :establishment_year, :employee_number, :share_capital
+
+
+
+  def initialize(attrs = {})
+    @business_partner_name = attrs[:business_partner_name]
+    @email                 = attrs[:email]
+    @establishment_year    = attrs[:stablishment_year]
+    @employee_number       = attrs[:employee_number] 
+    @share_capital         = attrs[:share_capital]
   end
 
 end

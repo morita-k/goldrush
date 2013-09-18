@@ -1,9 +1,20 @@
 <%= content_tag :h1, getLongName('table_name', 'outflow_mails') + " 一覧" %>
-<p>
+<%= form_tag do %>
+  <table>
+    <tr>
+      <td style="text-align: right">フラグ:</td>
+      <td>
+        <%= check_box_tag 'non_correspondence', 1, session[:outflow_mail_search][:non_correspondence].to_i == 1 %> 未対応
+        <%= check_box_tag 'good', 1, session[:outflow_mail_search][:good].to_i == 1 %> 有用
+        <%= check_box_tag 'bad', 1, session[:outflow_mail_search][:bad].to_i == 1 %> 不要
+        <%= check_box_tag 'unwanted', 1, session[:outflow_mail_search][:unwanted].to_i == 1 %> 重複
+      </td>
+    </tr>
+  </table>
   <br/>
-    <input type=button value='会社チェック' onClick="disp_full('<%=url_for_outflow_mail_input_popup%>');return false;" />
-  <br/>
-</p>
+  <%= submit_tag '　　検索　　', :name => 'search_button' %> <%= submit_tag '　　クリア　　', :name => 'clear_button' %>
+  <input type=button value='会社チェック' onClick="disp_full('<%=url_for_outflow_mail_input_popup%>');return false;" />
+<% end %>
 
 <table class="list_table" style="margin-top:0px">
   <tr>
@@ -12,7 +23,7 @@
 
   <% @outflow_mails.each do |outflow_mail| %>
   <tr>
-    <td><%= outflow_mail.email_text %></td>
+    <td><%= back_to_link outflow_mail.email_text, {controller: :import_mail, action: :show, id: outflow_mail.import_mail_id} %></td>
     <td><%= outflow_mail.outflow_mail_status_type_name %></td>
     <td><%= link_to h(outflow_mail.url), outflow_mail.url, target: '_blank' %></td>
     <td><%= back_to_link getbusinesspartnername(outflow_mail.business_partner_id), {:controller => :business_partner ,:action => :show, :id => outflow_mail.business_partner_id}, {:class => 'business_partner_name'} %></td>
