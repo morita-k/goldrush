@@ -35,4 +35,11 @@ module DeliveryMailsHelper
     return ""
   end
 
+  def get_biz_offer_name
+    BizOffer.find(@delivery_mail.biz_offer_id)
+  end
+
+  def get_bp_member_name
+    BpMember.find(@delivery_mail.bp_member_id)
+  end
 end
