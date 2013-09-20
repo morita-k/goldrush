@@ -13,7 +13,7 @@ class ContractController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    @contract_pages, @contracts = paginate :contracts, :conditions =>["deleted = 0"], :per_page => current_user.per_page
+    @contract_pages, @contracts = paginate :contracts, :conditions =>["deleted = 0"], :per_page => current_user.per_page, :order => "contract_end_date desc"
   end
 
   def show
@@ -39,6 +39,8 @@ class ContractController < ApplicationController
       redirect_to :controller => :contract, :action => :list
     end # transaction
   rescue ActiveRecord::RecordInvalid
+    puts ">>>>" + @contract.approach.inspect
+    puts ">>>>" + $!.inspect
     render :action => 'quick_new'
   end
 
@@ -293,7 +295,7 @@ private
     contract.approach.approach_down_contract_term.save!
     contract.approach.save!
     # 契約
-    contract.approach_id = contract.approach.id
+    #contract.approach_id = contract.approach.id
     contract.upper_contract_term.save!
     contract.down_contract_term.save!
     contract.save!

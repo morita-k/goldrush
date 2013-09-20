@@ -3,33 +3,13 @@ class OutflowMailController < ApplicationController
 
   def set_conditions
     session[:outflow_mail_search] = {
-      non_correspondence: params[:non_correspondence],
-      bad: params[:bad],
-      good: params[:good],
-      unwanted: params[:unwanted]
+      outflow_mail_status: params[:outflow_mail_status]
     }
   end
 
   def make_conditons
-    sql = "outflow_mails.deleted = 0"
-
-    if !(session[:outflow_mail_search][:non_correspondence]).blank?
-      sql += " and outflow_mail_status_type = 'non_correspondence'"
-    end
-
-    if !(session[:outflow_mail_search][:bad]).blank?
-      sql += " and outflow_mail_status_type = 'bad'"
-    end
-
-    if !(session[:outflow_mail_search][:good]).blank?
-      sql += " and outflow_mail_status_type = 'good'"
-    end
-
-    if !(session[:outflow_mail_search][:unwanted]).blank?
-      sql += " and outflow_mail_status_type = 'unwanted'"
-    end
-
-    sql
+    status = session[:outflow_mail_search][:outflow_mail_status]
+    "outflow_mails.deleted = 0" + (status.blank? ? "" : " and outflow_mail_status_type = '#{status}'")
   end
 
   def index
@@ -47,73 +27,57 @@ class OutflowMailController < ApplicationController
 
     cond = make_conditons
 
-    @outflow_mails = OutflowMail.where(cond, "")
+    @outflow_mails = OutflowMail.where(cond)
   end
 
   def quick_input
-    # params[:outflow_mail_id] ||= OutflowMail.where(deleted: 0).first.id
-    params[:page] ||= "1"
-
     if params[:outflow_mail_id].nil?
       @outflow_mail = OutflowMail.where(outflow_mail_status_type: "non_correspondence", deleted: 0).first
     else
       @outflow_mail = OutflowMail.where(id: params[:outflow_mail_id], deleted: 0).first
     end
 
-    @target_data = {:emptyFlag => true, :targetName => ''}
-    if @outflow_mail.nil?
-      @target_data[:emptyFlag] = true
-    else
-      @target_data[:emptyFlag] = false
-      @target_data[:targetName] = :outflow_mail
-    end
-
-    render template: 'business_partner/quick_input', layout: 'blank'
+    render layout: 'blank'
   end
 
   def next_address
-    current_outflow_mail_id = params[:outflow_mail_id].to_i
-    
     outflow_mail_ids = OutflowMail.where(outflow_mail_status_type: "non_correspondence", deleted: 0).map(&:id)
-    current_index = outflow_mail_ids.index(current_outflow_mail_id)
+    # idが"要素が一意かつ昇順に整列された配列"であることを利用してnext_idを算出
+    next_id = outflow_mail_ids.reject{|id| id < params[:outflow_mail_id].to_i}.first
 
-    next_id = outflow_mail_ids[current_index.succ]
-
-    # pagenate機能をつける時の為に、params[:page]の引き回し処理は持たせておく
-    redirect_to action: 'quick_input', page: params[:page], popup: params[:popup], outflow_mail_id: next_id
+    redirect_to action: 'quick_input', popup: params[:popup], outflow_mail_id: next_id
   end
 
   def update_quick_input
-    begin
-      outflow_mail = OutflowMail.find(params[:outflow_mail_id].to_i)
-      form_params = OutflowMail::FormParameters.new(params[:outflow_mail_form])
+    outflow_mail = OutflowMail.find(params[:outflow_mail_id].to_i)
+    
+    if params[:status_update_button] == "作成"
+      begin
+        form_params = OutflowMail::FormParameters.new(params[:outflow_mail_form])
 
-      if BusinessPartner.where(business_partner_name: form_params.business_partner_name, deleted: 0).first
-        outflow_mail.update_bp_and_pic(form_params.business_partner_name, form_params.email, "", "", "")
-        flash[:notice] = "successful update!"
-      else
-        outflow_mail.create_bp_and_pic(form_params.business_partner_name, form_params.email, "", "", "")
-        flash[:notice] = "successful create!"
+        if BusinessPartner.where(business_partner_name: form_params.business_partner_name, deleted: 0).first
+          outflow_mail.update_bp_and_pic(form_params)
+          flash[:notice] = "Business Partner and BP Pic was successfully updated."
+        else
+          outflow_mail.create_bp_and_pic(form_params)
+          flash[:notice] = "Business Partner and BP Pic was successfully created."
+        end
+      rescue
+        flash[:err] = "作成及び更新に失敗しました。"
       end
-    # rescue
-    #   flash[:err] = "error"
+    else
+      # params[:status_update_button] == "不要"
+      outflow_mail.unnecessary_mail!
+      flash[:notice] = "ステータスを不要に設定しました。"
     end
 
     redirect_to( params[:back_to] || {controller: 'outflow_mail', action: 'index'})
   end
 
-  # 混在コンテンツによるブロック回避の為、Formのみhttpsでiframe内から呼ぶ
+  # 混在コンテンツによるブロック回避の為、Formのみiframeで呼ぶ
   def quick_input_form
-  end
-
-private #=========================
-
-  def get_outflow_mail_id(id)
-    unless id.nil?
-
-    else
-      OutflowMail.where(deleted: 0).first.id
-    end
+    @outflow_mail = OutflowMail.find(params[:outflow_mail_id])
+    render layout: 'blank'
   end
 
 end

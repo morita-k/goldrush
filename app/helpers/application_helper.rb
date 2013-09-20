@@ -8,6 +8,10 @@ module ApplicationHelper
   include NameUtil
   include TypeUtil
 
+  def man(amount)
+    "#{amount.to_i}万"
+  end
+
   def around_b(str)
     raw "<span style='font-weight:bold'>#{str}</span>"
   end
@@ -15,8 +19,13 @@ module ApplicationHelper
   def around_b_if(cond, str)
     cond ? around_b(str) : str
   end
+
   def url_for_bp_pic_popup(callback = :setBpPic)
     url_for :controller => :bp_pic, :action => :list, :popup =>1, :callback => callback
+  end
+
+  def url_for_mail_template_popup(callback = :setMailTemplate)
+    url_for :controller => :mail_templates, :action => :index, :popup =>1, :callback => callback
   end
 
   def url_for_bp_pic_input_popup()
@@ -25,8 +34,7 @@ module ApplicationHelper
   end
 
   def url_for_outflow_mail_input_popup()
-    params[:page] ||= "1"
-    url_for :controller => :outflow_mail, :action => :quick_input, :popup =>1, :page => params[:page]
+    url_for :controller => :outflow_mail, :action => :quick_input, :popup =>1
   end
 
   def bp_pic_edit_icon(bp_pic)

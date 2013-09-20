@@ -8,7 +8,7 @@ class OutflowMail < ActiveRecord::Base
   belongs_to :bp_pic
   belongs_to :import_mail
 
-  def create_outflow_mails(import_mail)
+  def self.create_outflow_mails(import_mail)
     import_mail.mail_to ||= ""
     import_mail.mail_cc ||= ""
 
@@ -32,34 +32,36 @@ class OutflowMail < ActiveRecord::Base
     end
   end
 
-  def create_bp_and_pic(bp_name, info_email, establishment_year, employee_number, share_capital)
+  def create_bp_and_pic(form_params)
     bp = BusinessPartner.new
-
-    bp.business_partner_name       = bp_name
-    bp.business_partner_short_name = bp_name
-    bp.business_partner_name_kana  = bp_name
+    bp.business_partner_name       = form_params.business_partner_name
+    bp.business_partner_short_name = form_params.business_partner_name
+    bp.business_partner_name_kana  = form_params.business_partner_name
     bp.sales_status_type           = "prospect"
     bp.basic_contract_first_party_status_type  = "non_correspondence"
     bp.basic_contract_second_party_status_type = "non_correspondence"
     bp.url                         = self.url
-    bp.establishment_year          = establishment_year
-    bp.employee_number             = employee_number
-    bp.share_capital               = share_capital
-
+    bp.establishment_year          = form_params.establishment_year
+    bp.employee_number             = form_params.employee_number
+    bp.share_capital               = form_params.share_capital
     bp.save!
+
+    pic = BpPic.new
+    pic.business_partner_id = bp.id
+    pic.bp_pic_name         = "ご担当者"
+    pic.bp_pic_short_name   = "ご担当者"
+    pic.bp_pic_name_kana    = "ご担当者"
+    pic.email1              = form_params.email.blank? ? create_unknown_address(bp.id) : form_params.email
+    pic.email2              = self.email
+    pic.sales_pic_id        = form_params.sales_pic_id
+    pic.working_status      = "working"
+    pic.save!
 
     self.outflow_mail_status_type = "good"
     self.business_partner_id      = bp.id
-    self.bp_pic_id                = self.create_bp_pic_from_outflow(bp.id, info_email).id
-
+    self.bp_pic_id                = pic.id
     self.save!
   end
-
-  # def update_bp_and_pic(bp_name, info_email, establishment_year, employee_number, share_capital)
-  #   bp = self.business_partner
-
-  #   bp.business_partner_name
-  # end
 
   # 不要ボタン用ステータス変更メソッド
   def unnecessary_mail!
@@ -101,7 +103,7 @@ class OutflowMail < ActiveRecord::Base
         OutflowMail.check_active_url(url)}.select{|url|
           (url.first == "200") || (url.first == "301")}.first
     end
-    url.nil? ? nil : "http://" + url.second　# trueの時、本当は[]を返したい...
+    url.nil? ? nil : "http://" + url.second # trueの時、本当は[]を返したい...
   end
 
   def self.mail_address_parser(email_str)
@@ -120,25 +122,10 @@ class OutflowMail < ActiveRecord::Base
 
   def self.check_duplication_domain(mail_address)
     new_domain = mail_address.split("@").second
-    exist_pic_domain = BpPic.where(deleted: 0).map{|pic| pic.email1.split("@").second}.select{|dom| dom == new_domain}.first
-    exist_outflow_domain = OutflowMail.where(deleted: 0).map{|outflow| outflow.email.split("@").second}.select{|dom| dom == new_domain}.first
+    exist_pic_mail_domain = BpPic.where(deleted: 0).map{|pic| pic.email1.split("@").second}.select{|dom| dom == new_domain}.first
+    exist_outflow_mail_domain = OutflowMail.where(deleted: 0).map{|outflow| outflow.email.split("@").second}.select{|dom| dom == new_domain}.first
     
-    exist_pic_domain || exist_outflow_domain
-  end
-
-  def create_bp_pic_from_outflow(bp_id, email)
-    pic = BpPic.new
-
-    pic.business_partner_id = bp_id
-    pic.bp_pic_name         = "ご担当者"
-    pic.bp_pic_short_name   = "ご担当者"
-    pic.bp_pic_name_kana    = "ご担当者"
-    pic.email1              = email.blank? ? create_unknown_address(bp_id) : email
-    pic.email2              = self.email
-    pic.working_status      = "working"
-
-    pic.save!
-    pic
+    exist_pic_mail_domain || exist_outflow_mail_domain
   end
 
   def update_bp_pic_from_outflow(email)
@@ -150,11 +137,10 @@ class OutflowMail < ActiveRecord::Base
 end
 
 
-# outflow_mail/quick_inputのformから受け取る値をwrapするクラス
+# outflow_mail/quick_inputのformから受け取る値をまとめるクラス
 class OutflowMail::FormParameters
-  attr_reader :business_partner_name, :email, :establishment_year, :employee_number, :share_capital
-
-
+  attr_reader :business_partner_name, :email, :establishment_year, :employee_number, :share_capital, :sales_pic_id
+  # attrs.assert_valid_keys :business_partner_name
 
   def initialize(attrs = {})
     @business_partner_name = attrs[:business_partner_name]
@@ -162,6 +148,7 @@ class OutflowMail::FormParameters
     @establishment_year    = attrs[:stablishment_year]
     @employee_number       = attrs[:employee_number] 
     @share_capital         = attrs[:share_capital]
+    @sales_pic_id          = attrs[:sales_pic_id]
   end
 
 end
