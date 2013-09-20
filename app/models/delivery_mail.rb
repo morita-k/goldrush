@@ -178,4 +178,70 @@ class DeliveryMail < ActiveRecord::Base
       end
     end
   end
+
+  def get_informations
+    self.subject = get_information(self.subject)
+    self.content = get_information(self.content)
+
+    self
+  end
+
+  def get_information(target_content)
+    biz_offer = BizOffer.find(self.biz_offer_id) if self.biz_offer_id
+    bp_member = BpMember.find(self.bp_member_id) if self.bp_member_id
+
+    replace_word_list = {}
+    (target_content.scan(/%.*?%/) - ["%%"]).each do |replace_word|
+      replace_words = replace_word.delete("%").split(".")
+
+      unless replace_words.nil?
+        p replace_words
+        case replace_words[0]
+          when 'biz_offers'
+            if biz_offer
+              if replace_words[1].end_with?("_type")
+                replace_word_list.store(replace_word, biz_offer[replace_words[1]].nil? ? "" : biz_offer.type_name(replace_words[1]))
+              else
+                replace_word_list.store(replace_word, biz_offer[replace_words[1]].nil? ? "" : biz_offer[replace_words[1]])
+              end
+            else
+              replace_word_list.store(replace_word, "")
+            end
+          when 'businesses'
+            if biz_offer
+              if replace_words[1].end_with?("_type")
+                replace_word_list.store(replace_word, biz_offer.business[replace_words[1]].nil? ? "" : biz_offer.business.type_name(replace_words[1]))
+              else
+                replace_word_list.store(replace_word, biz_offer.business[replace_words[1]].nil? ? "" : biz_offer.business[replace_words[1]])
+              end
+            else
+              replace_word_list.store(replace_word, "")
+            end
+          when 'bp_members'
+            if bp_member
+              if replace_words[1].end_with?("_type")
+                replace_word_list.store(replace_word, bp_member[replace_words[1]].nil? ? "" : bp_member.type_name(replace_words[1]))
+              else
+                replace_word_list.store(replace_word, bp_member[replace_words[1]].nil? ? "" : bp_member[replace_words[1]])
+              end
+            else
+              replace_word_list.store(replace_word, "")
+            end
+          when 'human_resources'
+            if bp_member
+              if replace_words[1].end_with?("_type")
+                replace_word_list.store(replace_word, bp_member.human_resource[replace_words[1]].nil? ? "" : bp_member.human_resource.type_name(replace_words[1]))
+              else
+                replace_word_list.store(replace_word, bp_member.human_resource[replace_words[1]].nil? ? "" : bp_member.human_resource[replace_words[1]])
+              end
+            else
+              replace_word_list.store(replace_word, "")
+            end
+          else
+        end
+      end
+    end
+
+    replace_word_list.inject(target_content){|str, k| str.gsub(k[0].to_s, k[1].to_s)}
+  end
 end

@@ -661,6 +661,8 @@ ActiveRecord::Schema.define(:version => 0) do
     t.integer  "owner_id",              :limit => 8
     t.string   "delivery_mail_type",    :limit => 40,                        :null => false
     t.integer  "bp_pic_group_id",       :limit => 8
+    t.integer  "biz_offer_id",          :limit => 8
+    t.integer  "bp_member_id",          :limit => 8
     t.string   "mail_status_type",      :limit => 40,                        :null => false
     t.string   "subject",                                                    :null => false
     t.text     "content",               :limit => 2147483647,                :null => false
