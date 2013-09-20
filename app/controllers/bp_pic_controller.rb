@@ -295,14 +295,6 @@ class BpPicController < ApplicationController
     # idがnilだった場合、@business_partnerをnilにしたいのでwhere
     @business_partner ||= BusinessPartner.where(id: params[:business_partner_id]).first
 
-    @target_data = {:emptyFlag => true, :targetName => ''}
-    if @business_partner.nil?
-      @target_data[:emptyFlag] = true
-    else
-      @target_data[:emptyFlag] = false
-      @target_data[:targetName] = :business_partner
-    end
-
     render template: 'business_partner/quick_input', layout: 'blank'
   end
   
@@ -327,6 +319,12 @@ class BpPicController < ApplicationController
     end
 
     redirect_to action: 'quick_input', popup: params[:popup], page: page, back_to: params[:back_to], business_partner_id: next_bp_id
+  end
+
+  # 混在コンテンツによるブロック回避の為、Formのみiframeで呼ぶ
+  def quick_input_form
+    @business_partner = BusinessPartner.find(params[:business_partner_id])
+    render template: 'business_partner/quick_input_form', layout: 'blank'
   end
 
 private
@@ -361,8 +359,4 @@ private
     bp_pics.map(&:business_partner).map(&:id).uniq
   end
 
-  # def next_page
-  #   params[:page] ||= "1"
-  #   redirect_to action: "index", page: params[:page].to_i.succ
-  # end
 end
