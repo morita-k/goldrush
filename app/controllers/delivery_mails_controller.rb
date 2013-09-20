@@ -23,7 +23,7 @@ class DeliveryMailsController < ApplicationController
   # GET /delivery_mails/1
   # GET /delivery_mails/1.json
   def show
-    @delivery_mail = DeliveryMail.find(params[:id])
+    @delivery_mail = DeliveryMail.find(params[:id]).get_informations
     @attachment_files = AttachmentFile.attachment_files("delivery_mails", @delivery_mail.id)
     
     respond_to do |format|
@@ -115,7 +115,7 @@ EOS
         end
         
         if params[:testmail]
-          DeliveryMail.send_test_mail(@delivery_mail)
+          DeliveryMail.send_test_mail(@delivery_mail.get_informations)
           format.html {
             redirect_to({
               :controller => 'delivery_mails',
@@ -162,7 +162,7 @@ EOS
        end
 
         if params[:testmail]
-          DeliveryMail.send_test_mail(@delivery_mail)
+          DeliveryMail.send_test_mail(@delivery_mail.get_informations)
           format.html {
             redirect_to({
               :controller => 'delivery_mails',
@@ -197,7 +197,7 @@ EOS
       redirect_to back_to, notice: 'メール対象者が0人でなので、登録できません。'
       return
     end
-    delivery_mail = DeliveryMail.find(params[:delivery_mail_id])
+    delivery_mail = DeliveryMail.find(params[:delivery_mail_id]).get_informations
     ActiveRecord::Base.transaction do
       delivery_mail.mail_status_type = 'unsend'
       set_user_column delivery_mail

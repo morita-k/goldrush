@@ -28,6 +28,14 @@ module ApplicationHelper
     url_for :controller => :mail_templates, :action => :index, :popup =>1, :callback => callback
   end
 
+  def url_for_biz_offer_popup(callback = :setBizOffer)
+    url_for :controller => :biz_offer, :action => :index, :popup =>1, :callback => callback
+  end
+
+  def url_for_bp_member_popup(callback = :setBpMember)
+    url_for :controller => :bp_member, :action => :index, :popup =>1, :callback => callback
+  end
+
   def url_for_bp_pic_input_popup()
     params[:page] ||= "1"
     url_for :controller => :bp_pic, :action => :quick_input, :popup =>1, :page => params[:page]
@@ -38,7 +46,12 @@ module ApplicationHelper
   end
 
   def biz_offer_edit_icon(biz_offer)
-    back_to_link(image_tag((biz_offer.business.memo.blank? ? 'icon-edit.png' : 'icon-comment.png')), {:controller => :biz_offer, :action => :edit, :id => biz_offer}, :title => biz_offer.business.memo)
+    if popup?
+      image_tag(biz_offer.business.memo.blank? ? 'icon-edit.png' : 'icon-comment.png', :title => biz_offer.business.memo)
+    else
+      back_to_link(image_tag((biz_offer.business.memo.blank? ? 'icon-edit.png' : 'icon-comment.png')), {:controller => :biz_offer, :action => :edit, :id => biz_offer}, :title => biz_offer.business.memo)
+    end
+
   end
 
   def bp_member_edit_icon(bp_member)
