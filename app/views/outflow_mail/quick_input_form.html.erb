@@ -13,7 +13,7 @@
     <label><%=getLongName('business_partners','employee_number') + ': '%></label>
     <%= text_field_tag 'outflow_mail_form[employee_number]' %>
     <label><%=getLongName('bp_pics','sales_pic_id') + ': '%></label>
-    <%= select_tag 'outflow_mail_form[sales_pic_id]', options_for_select(BpPic.select_content_list, @outflow_mail.bp_pic.sales_pic_id), :include_blank => true %>
+    <%= select_tag 'outflow_mail_form[sales_pic_id]', options_for_select(BpPic.select_content_list, get_sales_pic_id(@outflow_mail.bp_pic)), :include_blank => true %>
 
     <%= hidden_field_tag 'outflow_mail_id', @outflow_mail.id %>
     <%= hidden_field_tag 'back_to', request_url %>

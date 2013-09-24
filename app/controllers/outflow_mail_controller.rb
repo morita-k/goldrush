@@ -43,7 +43,7 @@ class OutflowMailController < ApplicationController
   def next_address
     outflow_mail_ids = OutflowMail.where(outflow_mail_status_type: "non_correspondence", deleted: 0).map(&:id)
     # idが"要素が一意かつ昇順に整列された配列"であることを利用してnext_idを算出
-    next_id = outflow_mail_ids.reject{|id| id < params[:outflow_mail_id].to_i}.first
+    next_id = outflow_mail_ids.reject{|id| id <= params[:outflow_mail_id].to_i}.first
 
     redirect_to action: 'quick_input', popup: params[:popup], outflow_mail_id: next_id
   end
@@ -55,14 +55,13 @@ class OutflowMailController < ApplicationController
       begin
         form_params = OutflowMail::FormParameters.new(params[:outflow_mail_form])
 
-        if BusinessPartner.where(business_partner_name: form_params.business_partner_name, deleted: 0).first
-          outflow_mail.update_bp_and_pic(form_params)
+        if !BusinessPartner.where(business_partner_name: form_params.business_partner_name, deleted: 0).first && outflow_mail.business_partner.nil?
+          outflow_mail.create_bp_and_pic(form_params)
           flash[:notice] = "Business Partner and BP Pic was successfully updated."
         else
-          outflow_mail.create_bp_and_pic(form_params)
-          flash[:notice] = "Business Partner and BP Pic was successfully created."
+          flash[:err] = "Business partner name has already been taken"
         end
-      rescue
+      rescue RecordInvalid
         flash[:err] = "作成及び更新に失敗しました。"
       end
     else

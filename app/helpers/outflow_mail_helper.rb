@@ -9,6 +9,10 @@ module OutflowMailHelper
     bp_pic_id.nil? ? "" : BpPic.find(bp_pic_id).bp_pic_name
   end
 
+  def get_sales_pic_id(bp_pic)
+  	bp_pic.nil? ? nil : bp_pic.sales_pic_id
+  end
+
   def search_value(code)
     session[:outflow_mail_search] && session[:outflow_mail_search][code]
   end

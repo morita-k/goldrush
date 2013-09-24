@@ -3,6 +3,7 @@ class OutflowMail < ActiveRecord::Base
   include AutoTypeName
 
   validates_presence_of :import_mail_id, :email, :outflow_mail_status_type
+  # accepts_nested_attributes_for :business_partner, :bp_pic
 
   belongs_to :business_partner
   belongs_to :bp_pic
