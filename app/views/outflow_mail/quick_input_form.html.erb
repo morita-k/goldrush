@@ -1,4 +1,4 @@
-<%= form_for @outflow_mail, url: {action: 'update_quick_input'}, html: {class: "form-inline"} do |f| %>
+<%= form_for @outflow_mail, url: {action: 'create_quick_input'}, html: {class: "form-inline"} do |f| %>
   <fieldset>
       <legend>メール情報入力</legend>
       <%= f.fields_for :business_partner do |f_bp| %>

@@ -48,7 +48,7 @@ class OutflowMailController < ApplicationController
     redirect_to action: 'quick_input', popup: params[:popup], outflow_mail_id: next_id
   end
 
-  def update_quick_input
+  def create_quick_input
     outflow_mail = OutflowMail.find(params[:outflow_mail_id].to_i)
     
     case params[:status_update_button]
