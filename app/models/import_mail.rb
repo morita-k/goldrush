@@ -49,7 +49,7 @@ class ImportMail < ActiveRecord::Base
           import_mail.delivery_mail_id = dmt.delivery_mail_id
         end
       end
-
+      
       import_mail.received_at = m.date.blank? ? now : m.date
       subject = tryConv(m, 'Subject') { m.subject }
       import_mail.mail_subject = subject.blank? ? 'unknown subject' : subject
