@@ -318,7 +318,7 @@ class BpPicController < ApplicationController
       end
     end
 
-    redirect_to action: 'quick_input', popup: params[:popup], page: page, back_to: params[:back_to], business_partner_id: next_bp_id
+    redirect_to action: 'quick_input', popup: params[:popup], page: page, back_to: params[:back_to], business_partner_id: next_bp_id, only_path: false, protocol: "http://"
   end
 
   # 混在コンテンツによるブロック回避の為、Formのみiframeで呼ぶ

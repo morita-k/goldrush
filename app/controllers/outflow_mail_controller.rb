@@ -45,7 +45,7 @@ class OutflowMailController < ApplicationController
     # idが"要素が一意かつ昇順に整列された配列"であることを利用してnext_idを算出
     next_id = outflow_mail_ids.reject{|id| id <= params[:outflow_mail_id].to_i}.first
 
-    redirect_to action: 'quick_input', popup: params[:popup], outflow_mail_id: next_id
+    redirect_to action: 'quick_input', popup: params[:popup], outflow_mail_id: next_id, only_path: false, protocol: "http://"
   end
 
   def create_quick_input
