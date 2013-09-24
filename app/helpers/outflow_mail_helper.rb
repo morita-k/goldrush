@@ -13,7 +13,7 @@ module OutflowMailHelper
   	bp_pic.nil? ? nil : bp_pic.sales_pic_id
   end
 
-  def search_value(code)
+  def search_value_outflow_mail(code)
     session[:outflow_mail_search] && session[:outflow_mail_search][code]
   end
 

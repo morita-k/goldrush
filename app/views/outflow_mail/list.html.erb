@@ -4,10 +4,10 @@
     <tr>
       <td style="text-align: right">ステータス:</td>
       <td class="outflow_radio">
-        <%= radio_button_tag 'outflow_mail_status', "non_correspondence", search_value(:outflow_mail_status) == "non_correspondence" %> 未対応
-        <%= radio_button_tag 'outflow_mail_status', "good", search_value(:outflow_mail_status) == "good" %> 有用
-        <%= radio_button_tag 'outflow_mail_status', "bad", search_value(:outflow_mail_status) == "bad" %> 不要
-        <%= radio_button_tag 'outflow_mail_status', "unwanted", search_value(:outflow_mail_status) == "unwanted" %> 重複
+        <%= radio_button_tag 'outflow_mail_status', "non_correspondence", search_value_outflow_mail(:outflow_mail_status) == "non_correspondence" %> 未対応
+        <%= radio_button_tag 'outflow_mail_status', "good", search_value_outflow_mail(:outflow_mail_status) == "good" %> 有用
+        <%= radio_button_tag 'outflow_mail_status', "bad", search_value_outflow_mail(:outflow_mail_status) == "bad" %> 不要
+        <%= radio_button_tag 'outflow_mail_status', "unwanted", search_value_outflow_mail(:outflow_mail_status) == "unwanted" %> 重複
       </td>
     </tr>
   </table>
