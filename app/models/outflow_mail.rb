@@ -3,11 +3,12 @@ class OutflowMail < ActiveRecord::Base
   include AutoTypeName
 
   validates_presence_of :import_mail_id, :email, :outflow_mail_status_type
-  # accepts_nested_attributes_for :business_partner, :bp_pic
 
   belongs_to :business_partner
   belongs_to :bp_pic
   belongs_to :import_mail
+
+  accepts_nested_attributes_for :business_partner, :bp_pic
 
   def self.create_outflow_mails(import_mail)
     import_mail.mail_to ||= ""
@@ -33,28 +34,25 @@ class OutflowMail < ActiveRecord::Base
     end
   end
 
-  def create_bp_and_pic(form_params)
-    bp = BusinessPartner.new
-    bp.business_partner_name       = form_params.business_partner_name
-    bp.business_partner_short_name = form_params.business_partner_name
-    bp.business_partner_name_kana  = form_params.business_partner_name
+  def create_bp_and_pic(outflow_mail_form)
+    form_bp = outflow_mail_form[:business_partner_attributes]
+    bp = BusinessPartner.new(form_bp)
+    bp.business_partner_short_name = form_bp[:business_partner_name]
+    bp.business_partner_name_kana  = form_bp[:business_partner_name]
     bp.sales_status_type           = "prospect"
     bp.basic_contract_first_party_status_type  = "non_correspondence"
     bp.basic_contract_second_party_status_type = "non_correspondence"
     bp.url                         = self.url
-    bp.establishment_year          = form_params.establishment_year
-    bp.employee_number             = form_params.employee_number
-    bp.share_capital               = form_params.share_capital
     bp.save!
 
-    pic = BpPic.new
+    form_pic = outflow_mail_form[:bp_pic_attributes]
+    pic = BpPic.new(form_pic)
     pic.business_partner_id = bp.id
     pic.bp_pic_name         = "ご担当者"
     pic.bp_pic_short_name   = "ご担当者"
     pic.bp_pic_name_kana    = "ご担当者"
-    pic.email1              = form_params.email.blank? ? create_unknown_address(bp.id) : form_params.email
+    pic.email1              = form_pic[:email1].blank? ? create_unknown_address(bp.id) : form_pic[:email1]
     pic.email2              = self.email
-    pic.sales_pic_id        = form_params.sales_pic_id
     pic.working_status      = "working"
     pic.save!
 

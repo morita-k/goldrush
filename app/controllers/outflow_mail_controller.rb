@@ -51,23 +51,27 @@ class OutflowMailController < ApplicationController
   def update_quick_input
     outflow_mail = OutflowMail.find(params[:outflow_mail_id].to_i)
     
-    if params[:status_update_button] == "作成"
+    case params[:status_update_button]
+    when "作成"
       begin
-        form_params = OutflowMail::FormParameters.new(params[:outflow_mail_form])
+        bp_name = params[:outflow_mail][:business_partner_attributes][:business_partner_name]
 
-        if !BusinessPartner.where(business_partner_name: form_params.business_partner_name, deleted: 0).first && outflow_mail.business_partner.nil?
-          outflow_mail.create_bp_and_pic(form_params)
-          flash[:notice] = "Business Partner and BP Pic was successfully updated."
+        if outflow_mail.business_partner_id.nil? && BusinessPartner.where(business_partner_name: bp_name, deleted: 0).first.nil?
+          outflow_mail.create_bp_and_pic(params[:outflow_mail])
+          flash[:notice] = "Business Partner and BP Pic was successfully created."
         else
-          flash[:err] = "Business partner name has already been taken"
+          flash[:err] = "既に取引先及び取引先担当者が登録されています。"
         end
-      rescue RecordInvalid
-        flash[:err] = "作成及び更新に失敗しました。"
+      rescue
+        flash[:err] = "作成に失敗しました。"
       end
-    else
-      # params[:status_update_button] == "不要"
-      outflow_mail.unnecessary_mail!
-      flash[:notice] = "ステータスを不要に設定しました。"
+    when "不要"
+      unless outflow_mail.business_partner_id.nil?
+        outflow_mail.unnecessary_mail!
+        flash[:notice] = "ステータスを不要に設定しました。"
+      else
+        flash[:err] = "既に取引先及び取引先担当者が登録されています。"
+      end
     end
 
     redirect_to( params[:back_to] || {controller: 'outflow_mail', action: 'index'})
@@ -76,6 +80,12 @@ class OutflowMailController < ApplicationController
   # 混在コンテンツによるブロック回避の為、Formのみiframeで呼ぶ
   def quick_input_form
     @outflow_mail = OutflowMail.find(params[:outflow_mail_id])
+
+    if @outflow_mail.business_partner_id.nil?
+      @outflow_mail.build_business_partner
+      @outflow_mail.build_bp_pic
+    end
+
     render layout: 'blank'
   end
 
