@@ -195,53 +195,74 @@ class DeliveryMail < ActiveRecord::Base
       replace_words = replace_word.delete("%").split(".")
 
       unless replace_words.nil?
-        p replace_words
+        target_word = ""
         case replace_words[0]
           when 'biz_offers'
             if biz_offer
               if replace_words[1].end_with?("_type")
-                replace_word_list.store(replace_word, biz_offer[replace_words[1]].nil? ? "" : biz_offer.type_name(replace_words[1]))
+                target_word = biz_offer[replace_words[1]].nil? ? "" : biz_offer.type_name(replace_words[1])
+              elsif replace_words[1].end_with?("_flg")
+                target_word = biz_offer[replace_words[1]].nil? ? "" : get_flg(biz_offer[replace_words[1]])
+              elsif replace_words[1] == 'payment_max'
+                target_word = biz_offer[replace_words[1]].nil? ? "" : biz_offer.payment_max_view
               else
-                replace_word_list.store(replace_word, biz_offer[replace_words[1]].nil? ? "" : biz_offer[replace_words[1]])
+                target_word = biz_offer[replace_words[1]].nil? ? "" : biz_offer[replace_words[1]]
               end
-            else
-              replace_word_list.store(replace_word, "")
             end
           when 'businesses'
             if biz_offer
               if replace_words[1].end_with?("_type")
-                replace_word_list.store(replace_word, biz_offer.business[replace_words[1]].nil? ? "" : biz_offer.business.type_name(replace_words[1]))
+                target_word = biz_offer.business[replace_words[1]].nil? ? "" : biz_offer.business.type_name(replace_words[1])
+              elsif replace_words[1].end_with?("_flg")
+                target_word = biz_offer.business[replace_words[1]].nil? ? "" : get_flg(biz_offer.business[replace_words[1]])
               else
-                replace_word_list.store(replace_word, biz_offer.business[replace_words[1]].nil? ? "" : biz_offer.business[replace_words[1]])
+                target_word = biz_offer.business[replace_words[1]].nil? ? "" : biz_offer.business[replace_words[1]]
               end
-            else
-              replace_word_list.store(replace_word, "")
             end
           when 'bp_members'
             if bp_member
-              if replace_words[1].end_with?("_type")
-                replace_word_list.store(replace_word, bp_member[replace_words[1]].nil? ? "" : bp_member.type_name(replace_words[1]))
+              if replace_words[1] == 'payment_min'
+                target_word = bp_member[replace_words[1]].nil? ? "" : bp_member.payment_min_view
+              elsif replace_words[1] == 'employment_type'
+              target_word = bp_member[replace_words[1]].nil? ? "" : get_employment_type(bp_member)
+              elsif replace_words[1].end_with?("_type")
+                target_word = bp_member[replace_words[1]].nil? ? "" : bp_member.type_name(replace_words[1])
+              elsif replace_words[1].end_with?("_flg")
+                target_word = bp_member[replace_words[1]].nil? ? "" : get_flg(bp_member[replace_words[1]])
               else
-                replace_word_list.store(replace_word, bp_member[replace_words[1]].nil? ? "" : bp_member[replace_words[1]])
+                target_word = bp_member[replace_words[1]].nil? ? "" : bp_member[replace_words[1]]
               end
-            else
-              replace_word_list.store(replace_word, "")
             end
           when 'human_resources'
             if bp_member
               if replace_words[1].end_with?("_type")
-                replace_word_list.store(replace_word, bp_member.human_resource[replace_words[1]].nil? ? "" : bp_member.human_resource.type_name(replace_words[1]))
+                target_word = bp_member.human_resource[replace_words[1]].nil? ? "" : bp_member.human_resource.type_name(replace_words[1])
+              elsif replace_words[1].end_with?("_flg")
+                target_word = bp_member.human_resource[replace_words[1]].nil? ? "" : get_flg(bp_member.human_resource[replace_words[1]])
               else
-                replace_word_list.store(replace_word, bp_member.human_resource[replace_words[1]].nil? ? "" : bp_member.human_resource[replace_words[1]])
+                target_word = bp_member.human_resource[replace_words[1]].nil? ? "" : bp_member.human_resource[replace_words[1]]
               end
-            else
-              replace_word_list.store(replace_word, "")
             end
           else
         end
+        replace_word_list.store(replace_word, target_word)
       end
     end
 
     replace_word_list.inject(target_content){|str, k| str.gsub(k[0].to_s, k[1].to_s)}
+  end
+
+  def get_flg(target_flg)
+    target_flg == 1 ? "有" : "無"
+  end
+
+  def get_employment_type(bp_member)
+    if bp_member.business_partner.self_flg == 1
+      "弊社所属 " + bp_member.employment_type_name
+    elsif bp_member.employment_type_name == '正社員'
+      "BP一社下 " + bp_member.employment_type_name
+    else
+      "弊社ビジネスパートナー " + bp_member.employment_type_name
+    end
   end
 end
