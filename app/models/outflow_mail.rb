@@ -134,20 +134,3 @@ class OutflowMail < ActiveRecord::Base
   end
 
 end
-
-
-# outflow_mail/quick_inputのformから受け取る値をまとめるクラス
-class OutflowMail::FormParameters
-  attr_reader :business_partner_name, :email, :establishment_year, :employee_number, :share_capital, :sales_pic_id
-  # attrs.assert_valid_keys :business_partner_name
-
-  def initialize(attrs = {})
-    @business_partner_name = attrs[:business_partner_name]
-    @email                 = attrs[:email]
-    @establishment_year    = attrs[:stablishment_year]
-    @employee_number       = attrs[:employee_number] 
-    @share_capital         = attrs[:share_capital]
-    @sales_pic_id          = attrs[:sales_pic_id]
-  end
-
-end

@@ -317,5 +317,4 @@ class BusinessPartnerController < ApplicationController
     
     redirect_to( params[:back_to] || {controller: 'bp_pic', action: 'index'})
   end
-
 end
