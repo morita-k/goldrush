@@ -1,3 +1,40 @@
 <%= content_tag :h1, getLongName('table_name', 'outflow_mails') + " 一覧" %>
+<%= form_tag do %>
+  <table>
+    <tr>
+      <td style="text-align: right">ステータス:</td>
+      <td class="outflow_radio">
+        <%= radio_button_tag 'outflow_mail_status', "non_correspondence", search_value_outflow_mail(:outflow_mail_status) == "non_correspondence" %> 未対応
+        <%= radio_button_tag 'outflow_mail_status', "good", search_value_outflow_mail(:outflow_mail_status) == "good" %> 有用
+        <%= radio_button_tag 'outflow_mail_status', "bad", search_value_outflow_mail(:outflow_mail_status) == "bad" %> 不要
+        <%= radio_button_tag 'outflow_mail_status', "unwanted", search_value_outflow_mail(:outflow_mail_status) == "unwanted" %> 重複
+      </td>
+    </tr>
+  </table>
+  <br/>
+  <%= submit_tag '　　検索　　', :name => 'search_button' %> <%= submit_tag '　　クリア　　', :name => 'clear_button' %>
+  <input type=button value='会社チェック' onClick="disp_full('<%=url_for_outflow_mail_input_popup%>');return false;" />
+<% end %>
 
-<%= @outflow_mails %>
+<table class="list_table" style="margin-top:0px">
+  <tr>
+    <!-- <th colspan="5">流出メールアドレス一覧</th> -->
+    <th><%= getLongName('outflow_mails', 'email_text') %></th>
+    <th>状態</th>
+    <th><%= getLongName('outflow_mails', 'url') %></th>
+    <th><%= getLongName('business_partners', 'business_partner_name')%></th>
+    <th><%= getLongName('bp_pics', 'bp_pic_name') %></th>
+  </tr>
+
+  <% @outflow_mails.each do |outflow_mail| %>
+  <tr>
+    <td><%= back_to_link outflow_mail.email_text, {controller: :import_mail, action: :show, id: outflow_mail.import_mail_id} %></td>
+    <td><%= outflow_mail.outflow_mail_status_type_name %></td>
+    <td><%= link_to h(outflow_mail.url), outflow_mail.url, target: '_blank' %></td>
+    <td><%= back_to_link get_bp_name(outflow_mail.business_partner_id), {:controller => :business_partner ,:action => :show, :id => outflow_mail.business_partner_id}, {:class => 'business_partner_name'} %></td>
+    <td><%=back_to_link get_bp_pic_name(outflow_mail.bp_pic_id), {:controller => :bp_pic ,:action => :show, :id => outflow_mail.bp_pic_id}, {:class => 'bp_pic_name'} %></td>
+    </td>
+  </tr>
+  <% end %>
+
+</table>

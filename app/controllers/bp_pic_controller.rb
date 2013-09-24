@@ -318,7 +318,13 @@ class BpPicController < ApplicationController
       end
     end
 
-    redirect_to action: 'quick_input', popup: params[:popup], page: page, back_to: params[:back_to], business_partner_id: next_bp_id
+    redirect_to action: 'quick_input', popup: params[:popup], page: page, back_to: params[:back_to], business_partner_id: next_bp_id, only_path: false, protocol: "http://"
+  end
+
+  # 混在コンテンツによるブロック回避の為、Formのみiframeで呼ぶ
+  def quick_input_form
+    @business_partner = BusinessPartner.find(params[:business_partner_id])
+    render template: 'business_partner/quick_input_form', layout: 'blank'
   end
 
 private
@@ -353,8 +359,4 @@ private
     bp_pics.map(&:business_partner).map(&:id).uniq
   end
 
-  # def next_page
-  #   params[:page] ||= "1"
-  #   redirect_to action: "index", page: params[:page].to_i.succ
-  # end
 end
