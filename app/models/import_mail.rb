@@ -49,7 +49,7 @@ class ImportMail < ActiveRecord::Base
           import_mail.delivery_mail_id = dmt.delivery_mail_id
         end
       end
-      
+
       import_mail.received_at = m.date.blank? ? now : m.date
       subject = tryConv(m, 'Subject') { m.subject }
       import_mail.mail_subject = subject.blank? ? 'unknown subject' : subject
@@ -67,7 +67,7 @@ class ImportMail < ActiveRecord::Base
 
       # プロセス間で同期をとるために何でもいいから存在するレコードをロック(users#1 => systemユーザー)
       #User.find(1, :lock => true)
-
+      
       if ImportMail.where(message_id: import_mail.message_id, deleted: 0).first || ImportMail.where(mail_from: import_mail.mail_from, mail_subject: import_mail.mail_subject,received_at: ((import_mail.received_at - 1.day) .. import_mail.received_at + 1.day), deleted: 0).first
         puts "mail duplicated: see system_logs"
         SystemLog.warn('import mail', 'mail duplicated', import_mail.inspect , 'import mail')
