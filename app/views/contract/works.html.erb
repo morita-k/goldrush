@@ -8,10 +8,10 @@
   </tr>
 <% @works.each do |hr, contracts| %>
   <tr>
-    <th rowspan=2><%= hr.useful_name %></th>
+    <th rowspan=2><%= back_to_link hr.useful_name, :controller => :bp_member, :action => :show, :id => contracts.first.approach.bp_member_id %></th>
     <%= each_month(@target_start, @target_end) do |month| %>
       <% if contract = include_term?(month.beginning_of_month, month.end_of_month, contracts) %>
-        <td><%= contract.upper_contract_status_type_name %></td>
+        <td class="black_link" style="background-color: <%=color(contract, contract.upper_contract_status_type)%>"><%= back_to_link contract.upper_contract_status_type_short_name, :controller => :approach, :action => :show, :id => contract.approach_id %></td>
       <% else %>
         <td></td>
       <% end %>
@@ -20,7 +20,7 @@
   <tr>
     <%= each_month(@target_start, @target_end) do |month| %>
       <% if contract = include_term?(month.beginning_of_month, month.end_of_month, contracts) %>
-        <td><%= contract.down_contract_status_type_name %></td>
+        <td class="black_link" style="background-color: <%=color(contract, contract.down_contract_status_type)%>"><%= back_to_link contract.down_contract_status_type_short_name, :controller => :approach, :action => :show, :id => contract.approach_id %></td>
       <% else %>
         <td></td>
       <% end %>

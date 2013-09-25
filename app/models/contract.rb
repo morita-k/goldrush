@@ -86,6 +86,11 @@ class Contract < ActiveRecord::Base
 #    end
 #  end
 
+  def confirm_warning?(date=Date.today)
+    puts ">>>>>>>>>" + date.to_s + ": " + (contract_start_date - contract_renewal_terms.to_i.month).to_s
+    (contract_start_date - contract_renewal_terms.to_i.month) <= date
+  end
+
   def setup_contracted_at(zone_now)
     if zone_now
       date, hour, min = DateTimeUtil.split_date_hour_minute(zone_now)

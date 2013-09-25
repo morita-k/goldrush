@@ -21,4 +21,19 @@ module ContractHelper
     end
     return nil
   end
+
+  def color(contract, type)
+    {
+      "abort" => "gray",
+      "closed" => "gray",
+      "confirming" => (contract.confirm_warning? ? "red" : "yellow"),
+      "contracted" => "seagreen",
+      "finished" => "gray",
+      "proc_acceptance" => "greenyellow",
+      "proc_order" => "greenyellow",
+      "waiting_acceptance" => "greenyellow",
+      "waiting_offer" => "greenyellow",
+      "waiting_order" => "greenyellow",
+    }[type]
+  end
 end

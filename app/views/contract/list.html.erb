@@ -1,4 +1,5 @@
 <h1><%=getLongName('table_name','contracts')%>一覧</h1>
+<%= back_to_link "稼働状況表", :action => :works %>
 
 <%= paginate(@contracts) %>
 
@@ -59,7 +60,7 @@
 
     <td><%=h contract.approach.biz_offer.business_partner.business_partner_short_name %></td>
 
-    <td><%=h contract.upper_contract_status_type_name %></td>
+    <td style="background-color: <%=color(contract, contract.upper_contract_status_type)%>"><%=h contract.upper_contract_status_type_name %></td>
 
     <td><%=man contract.upper_contract_term.payment_view %></td>
 
@@ -72,7 +73,7 @@
 
     <td><%=h contract.approach.bp_member.business_partner.business_partner_short_name %></td>
 
-    <td><%=h contract.down_contract_status_type_name %></td>
+    <td style="background-color: <%=color(contract, contract.down_contract_status_type)%>"><%=h contract.down_contract_status_type_name %></td>
 
     <td><%=man contract.down_contract_term.payment_view %></td>
 
