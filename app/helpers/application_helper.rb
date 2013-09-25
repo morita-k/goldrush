@@ -285,6 +285,11 @@ EOS
     text_field(object_name, method, options)
   end
 
+  def paginate_far(scope, options = {}, &block)
+    paginator = Kaminari::Helpers::Paginator.new self, options.reverse_merge(:current_page => scope.current_page, :total_pages => scope.current_page + 100, :per_page => scope.limit_value, :param_name => Kaminari.config.param_name, :remote => false)
+    paginator.to_s
+  end
+
   # put_paginatesで使う関数
   def each_pages(pages, &block)
     st = (pages.current.to_i - 4)
