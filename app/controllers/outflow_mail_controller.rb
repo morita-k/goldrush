@@ -66,11 +66,11 @@ class OutflowMailController < ApplicationController
         flash[:err] = "作成に失敗しました。"
       end
     when "不要"
-      unless outflow_mail.business_partner_id.nil?
+      if outflow_mail.business_partner_id.nil?
         outflow_mail.unnecessary_mail!
-        flash[:notice] = "ステータスを不要に設定しました。"
+        flash[:notice] = "ステータスを「不要」に設定しました。"
       else
-        flash[:err] = "既に取引先及び取引先担当者が登録されています。"
+        flash[:err] = "取引先及び取引先担当者が登録されている為「不要」に出来ません。"
       end
     end
 
