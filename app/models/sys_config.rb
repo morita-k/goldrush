@@ -246,7 +246,7 @@ class SysConfig < ActiveRecord::Base
   end
 
   def self.get_outflow_criterion
-    get_configuration("outflow_mail", "outflow_criterion")
+    get_configuration("outflow_mail", "outflow_criterion").value1
   end
 
 end
