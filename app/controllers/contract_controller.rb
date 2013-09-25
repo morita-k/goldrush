@@ -16,6 +16,18 @@ class ContractController < ApplicationController
     @contract_pages, @contracts = paginate :contracts, :conditions =>["deleted = 0"], :per_page => current_user.per_page, :order => "contract_end_date desc"
   end
 
+  def works
+    date = params[:target_date] && params[:target_date].to_date || Date.today
+    @target_start = (date - 2.month).beginning_of_month
+    @target_end = (date + 9.month).end_of_month
+    @contracts = Contract.where("contract_end_date >= ? and contract_start_date <= ? and deleted = 0", @target_start, @target_end).order("(upper_contract_status_type = 'closed' or upper_contract_status_type = 'abort'), approach_id, contract_start_date")
+    @works = Hash.new
+    @contracts.each do |c|
+      @works[c.approach.bp_member.human_resource] ||= []
+      @works[c.approach.bp_member.human_resource] << c
+    end
+  end
+
   def show
     @contract = Contract.find(params[:id])
   end

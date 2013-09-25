@@ -1,0 +1,31 @@
+<h1>稼働状況表</h1>
+
+<table class="list_table">
+  <tr><th>人材</th>
+    <%= each_month(@target_start, @target_end) do |month| %>
+      <th><%=month.strftime("%Y/%m")%></th>
+    <% end %>
+  </tr>
+<% @works.each do |hr, contracts| %>
+  <tr>
+    <th rowspan=2><%= hr.useful_name %></th>
+    <%= each_month(@target_start, @target_end) do |month| %>
+      <% if contract = include_term?(month.beginning_of_month, month.end_of_month, contracts) %>
+        <td><%= contract.upper_contract_status_type_name %></td>
+      <% else %>
+        <td></td>
+      <% end %>
+    <% end %>
+  </tr>
+  <tr>
+    <%= each_month(@target_start, @target_end) do |month| %>
+      <% if contract = include_term?(month.beginning_of_month, month.end_of_month, contracts) %>
+        <td><%= contract.down_contract_status_type_name %></td>
+      <% else %>
+        <td></td>
+      <% end %>
+    <% end %>
+  </tr>
+<% end %>
+</table>
+
