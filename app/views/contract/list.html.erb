@@ -42,7 +42,7 @@
     <th>粗利率</th>
   </tr>
 <% for contract in @contracts %>
-  <tr>
+  <tr <%=raw(contract.contract_status_type == 'finished' ? 'style="background-color: lightgray"' : "")%>>
     <td rowspan=2><%=h contract.id %></td>
 
     <td rowspan=2><%=back_to_link contract.approach.bp_member.human_resource.useful_name, :controller => :approach, :action => :show, :id => contract.approach %></td>
@@ -55,7 +55,7 @@
 
     <td rowspan=2><%=h contract.contract_renewal %></td>
 
-    <td><%=h contract.approach.start_date %></td>
+    <td><%=_date2 contract.approach.start_date %></td>
 
     <td><%=h contract.approach.biz_offer.business_partner.business_partner_short_name %></td>
 
@@ -67,8 +67,8 @@
 
     <td><%=man contract.payment_diff_veiw %></td>
   </tr>
-  <tr>
-    <td><%=h contract.approach.end_date %></td>
+  <tr <%=raw(contract.contract_status_type == 'finished' ? 'style="background-color: lightgray"' : "")%>>
+    <td><%=_date2 contract.approach.end_date %></td>
 
     <td><%=h contract.approach.bp_member.business_partner.business_partner_short_name %></td>
 

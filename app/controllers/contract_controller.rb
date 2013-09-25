@@ -161,10 +161,13 @@ private
   end
 
   def init_values(contract)
-    contract.contract_status_type = 'open'
+#    contract.contract_status_type = 'open'
+    contract.contract_status_type = 'contract'
 #    contract.closed_at = Time.now
-    contract.upper_contract_status_type = 'waiting_order'
-    contract.down_contract_status_type = 'waiting_offer'
+#    contract.upper_contract_status_type = 'waiting_order'
+#    contract.down_contract_status_type = 'waiting_offer'
+    contract.upper_contract_status_type = 'contracted'
+    contract.down_contract_status_type = 'contracted'
 
     contract.upper_contract_term.term_type = 'suspense'
     contract.upper_contract_term.tax_type = 'exclude'

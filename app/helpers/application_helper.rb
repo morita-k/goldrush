@@ -55,6 +55,10 @@ module ApplicationHelper
     end
   end
 
+  def _date2(date)
+    date && date.strftime("%y/%m/%d")
+  end
+
   def _time(time)
     if time.blank?
       ""
