@@ -13,7 +13,19 @@ class ContractController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    @contract_pages, @contracts = paginate :contracts, :conditions =>["deleted = 0"], :per_page => current_user.per_page
+    @contract_pages, @contracts = paginate :contracts, :conditions =>["deleted = 0"], :per_page => current_user.per_page, :order => "contract_start_date desc"
+  end
+
+  def works
+    date = params[:target_date] && params[:target_date].to_date || Date.today
+    @target_start = (date - 2.month).beginning_of_month
+    @target_end = (date + 9.month).end_of_month
+    @contracts = Contract.where("contract_end_date >= ? and contract_start_date <= ? and deleted = 0", @target_start, @target_end).order("(upper_contract_status_type = 'closed' or upper_contract_status_type = 'abort'), approach_id, contract_start_date")
+    @works = Hash.new
+    @contracts.each do |c|
+      @works[c.approach.bp_member.human_resource] ||= []
+      @works[c.approach.bp_member.human_resource] << c
+    end
   end
 
   def show
@@ -39,6 +51,8 @@ class ContractController < ApplicationController
       redirect_to :controller => :contract, :action => :list
     end # transaction
   rescue ActiveRecord::RecordInvalid
+    puts ">>>>" + @contract.approach.inspect
+    puts ">>>>" + $!.inspect
     render :action => 'quick_new'
   end
 
@@ -159,10 +173,13 @@ private
   end
 
   def init_values(contract)
-    contract.contract_status_type = 'open'
+#    contract.contract_status_type = 'open'
+    contract.contract_status_type = 'contract'
 #    contract.closed_at = Time.now
-    contract.upper_contract_status_type = 'waiting_order'
-    contract.down_contract_status_type = 'waiting_offer'
+#    contract.upper_contract_status_type = 'waiting_order'
+#    contract.down_contract_status_type = 'waiting_offer'
+    contract.upper_contract_status_type = 'contracted'
+    contract.down_contract_status_type = 'contracted'
 
     contract.upper_contract_term.term_type = 'suspense'
     contract.upper_contract_term.tax_type = 'exclude'
@@ -293,7 +310,7 @@ private
     contract.approach.approach_down_contract_term.save!
     contract.approach.save!
     # 契約
-    contract.approach_id = contract.approach.id
+    #contract.approach_id = contract.approach.id
     contract.upper_contract_term.save!
     contract.down_contract_term.save!
     contract.save!

@@ -113,13 +113,12 @@ class ImportMailController < ApplicationController
 
     limit_count = 1000 + params[:page].to_i * current_user.per_page
 
-    @import_mails = Kaminari.paginate_array(ImportMail.includes(incl)
-                                                 .joins(joins)
-                                                 .where(cond)
-                                                 .order("id desc")
-                                                 .limit(limit_count))
-                                            .page(params[:page])
-                                            .per(current_user.per_page)
+    @import_mails = ImportMail.includes(incl).joins(joins)
+                                             .where(cond)
+                                             .order("id desc")
+                                             .limit(limit_count)
+                                             .page(params[:page])
+                                             .per(current_user.per_page)
   end
 
   def set_order

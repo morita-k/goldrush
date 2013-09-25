@@ -20,11 +20,13 @@
 
   <% for bp_member in @bp_members %>
     <tr>
-      <td><%= star_links(bp_member.business_partner) %> <%=h bp_member.business_partner.blank? ? "" : back_to_link(bp_member.business_partner.business_partner_name,controller: :business_partner, action: :show, id: bp_member.business_partner.id) %></td>
-      <td><%= star_links(bp_member.bp_pic) %> <%=h bp_member.bp_pic.blank? ? "" : back_to_link(bp_member.bp_pic.bp_pic_name, controller: :bp_pic, action: :show, id: bp_member.bp_pic.id) %></td>
       <% if popup? %>
-        <td><%= star_links(bp_member.human_resource) %> <%=link_to h(bp_member.human_resource.useful_name), '#', :onClick => "setBpMember(#{bp_member.id},'#{bp_member.business_partner.business_partner_name}','#{bp_member.human_resource.initial}');return false;" %></td>
+        <td><%= star_links(bp_member.business_partner) %><%=bp_member.business_partner.business_partner_name%></td>
+        <td><%= star_links(bp_member.bp_pic) %><%=bp_member.bp_pic.bp_pic_name%></td>
+        <td><%= star_links(bp_member.human_resource) %> <%=link_to h(bp_member.human_resource.useful_name), '#', :onClick => "setBpMember(#{bp_member.id},'#{bp_member.business_partner.business_partner_name}','#{bp_member.human_resource_name}');return false;" %></td>
       <% else %>
+        <td><%= star_links(bp_member.business_partner) %> <%=h bp_member.business_partner.blank? ? "" : back_to_link(bp_member.business_partner.business_partner_name,controller: :business_partner, action: :show, id: bp_member.business_partner.id) %></td>
+        <td><%= star_links(bp_member.bp_pic) %> <%=h bp_member.bp_pic.blank? ? "" : back_to_link(bp_member.bp_pic.bp_pic_name, controller: :bp_pic, action: :show, id: bp_member.bp_pic.id) %></td>
         <td>
           <%= star_links(bp_member.human_resource) %> <%=back_to_link h(bp_member.human_resource.useful_name), :action => :show, :id => bp_member %>
           <%= bp_member.human_resource.jiet? ? raw('[<span title="JIET取り込み" style="font-weight:bold">J</span>]') : ''%>

@@ -3044,7 +3044,7 @@ types_153:
   type_section: "upper_contract_status_type"
   type_key: "waiting_order"
   long_name: "注文書待ち"
-  short_name: "注文書待"
+  short_name: "注文待"
   other_name: "注文書待ち"
   type_description: ""
   type_description_text: ""
@@ -3064,7 +3064,7 @@ types_154:
   type_section: "upper_contract_status_type"
   type_key: "proc_acceptance"
   long_name: "注文請書処理中"
-  short_name: "請書処理中"
+  short_name: "請書処"
   other_name: "注文請書処理中"
   type_description: ""
   type_description_text: ""
@@ -3144,7 +3144,7 @@ types_158:
   type_section: "upper_contract_status_type"
   type_key: "confirming"
   long_name: "更新確認待ち"
-  short_name: "更新確認"
+  short_name: "更確認"
   other_name: "更新確認待ち"
   type_description: ""
   type_description_text: ""
@@ -3164,7 +3164,7 @@ types_159:
   type_section: "upper_contract_status_type"
   type_key: "closed"
   long_name: "更新なし"
-  short_name: "更新なし"
+  short_name: "更なし"
   other_name: "更新なし"
   type_description: ""
   type_description_text: ""
@@ -3184,7 +3184,7 @@ types_160:
   type_section: "down_contract_status_type"
   type_key: "waiting_offer"
   long_name: "採用通知待ち"
-  short_name: "採用通知待ち"
+  short_name: "採用待"
   other_name: "採用通知待ち"
   type_description: ""
   type_description_text: ""
@@ -3204,12 +3204,12 @@ types_161:
   type_section: "down_contract_status_type"
   type_key: "proc_order"
   long_name: "注文書処理中"
-  short_name: "注文書処理中"
+  short_name: "注文処"
   other_name: "注文書処理中"
   type_description: ""
   type_description_text: ""
-  display_order1: 1
-  display_order2: 1
+  display_order1: 2
+  display_order2: 2
   logic_bind_type: "bind"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
@@ -3224,12 +3224,12 @@ types_162:
   type_section: "down_contract_status_type"
   type_key: "waiting_acceptance"
   long_name: "注文請書待ち"
-  short_name: "注文請書待ち"
+  short_name: "請書待"
   other_name: "注文請書待ち"
   type_description: ""
   type_description_text: ""
-  display_order1: 1
-  display_order2: 1
+  display_order1: 3
+  display_order2: 3
   logic_bind_type: "bind"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
@@ -3244,12 +3244,12 @@ types_163:
   type_section: "down_contract_status_type"
   type_key: "contracted"
   long_name: "契約済み"
-  short_name: "契約済み"
+  short_name: "契約済"
   other_name: "契約済み"
   type_description: ""
   type_description_text: ""
-  display_order1: 1
-  display_order2: 1
+  display_order1: 4
+  display_order2: 4
   logic_bind_type: "bind"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
@@ -3264,12 +3264,12 @@ types_164:
   type_section: "down_contract_status_type"
   type_key: "finished"
   long_name: "契約満了"
-  short_name: "契約満了"
+  short_name: "満了"
   other_name: "契約満了"
   type_description: ""
   type_description_text: ""
-  display_order1: 1
-  display_order2: 1
+  display_order1: 5
+  display_order2: 5
   logic_bind_type: "bind"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
@@ -3284,12 +3284,12 @@ types_165:
   type_section: "down_contract_status_type"
   type_key: "abort"
   long_name: "途中解約"
-  short_name: "途中解約"
+  short_name: "解約"
   other_name: "途中解約"
   type_description: ""
   type_description_text: ""
-  display_order1: 1
-  display_order2: 1
+  display_order1: 6
+  display_order2: 6
   logic_bind_type: "bind"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
@@ -3304,12 +3304,12 @@ types_166:
   type_section: "down_contract_status_type"
   type_key: "confirming"
   long_name: "更新通知待ち"
-  short_name: "更新通知待ち"
+  short_name: "更通知"
   other_name: "更新通知待ち"
   type_description: ""
   type_description_text: ""
-  display_order1: 1
-  display_order2: 1
+  display_order1: 7
+  display_order2: 7
   logic_bind_type: "bind"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
@@ -3324,12 +3324,12 @@ types_167:
   type_section: "down_contract_status_type"
   type_key: "closed"
   long_name: "更新なし"
-  short_name: "更新なし"
+  short_name: "更なし"
   other_name: "更新なし"
   type_description: ""
   type_description_text: ""
-  display_order1: 1
-  display_order2: 1
+  display_order1: 8
+  display_order2: 8
   logic_bind_type: "bind"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>

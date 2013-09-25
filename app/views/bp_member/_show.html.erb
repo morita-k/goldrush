@@ -16,6 +16,12 @@
   <td><%=h (@bp_member.reprint_flg == 1 ? "可" : "不可" ) %></td>
 </tr>
 <tr>
+  <th><%= getLongName('bp_members', 'can_start_date') %></th><td><%=h @bp_member.can_start_date %></td>
+</tr>
+<tr>
+  <th><%= getLongName('bp_members', 'can_start_date_memo') %></th><td><%=h @bp_member.can_start_date_memo %></td>
+</tr>
+<tr>
   <th><%= getLongName('bp_members', 'race_condition') %></th><td><%=h @bp_member.race_condition %></td>
 </tr>
 <tr>

@@ -15,16 +15,25 @@
 
   <% for biz_offer in @biz_offers %>
     <tr>
-      <td><%= star_links(biz_offer.business_partner) %> <%=h biz_offer.business_partner.blank? ? "" : back_to_link(biz_offer.business_partner.business_partner_name,controller: :business_partner, action: :show, id: biz_offer.business_partner.id) %></td>
-      <td>
-        <%= star_links(biz_offer.bp_pic) %> <%=h biz_offer.bp_pic.blank? ? "" : back_to_link(biz_offer.bp_pic.bp_pic_name, controller: :bp_pic, action: :show, id: biz_offer.bp_pic.id) %>
-        <%= biz_offer.bp_pic.jiet? ? raw('[<span title="JIET取り込み" style="font-weight:bold">J</span>]') : ''%>
-      </td>
-      <td>
-        <%= star_links(biz_offer.business) %> <%=back_to_link h(biz_offer.business.business_title), :action => :show, :id => biz_offer %>
-      </td>
-      <td style="text-align:center;"><%= biz_offer_edit_icon(biz_offer) %></td>
-      <td><div style="overflow: hidden;height:1.4em"><span style="line-height: 90%;"><%= raw format_only_major_tags(biz_offer.business.skill_tag, @major_words) %></span></div></td>
+      <% if popup? %>
+        <td><%= star_links(biz_offer.business_partner) %> <%= biz_offer.business_partner.business_partner_name %></td>
+        <td>
+          <%= star_links(biz_offer.bp_pic) %> <%= biz_offer.bp_pic.bp_pic_name %>
+          <%= biz_offer.bp_pic.jiet? ? raw('[<span title="JIET取り込み" style="font-weight:bold">J</span>]') : ''%>
+        </td>
+        <td><%= star_links(biz_offer.business) %> <%=link_to h(biz_offer.business.business_title), '#', :onClick => "setBizOffer(#{biz_offer.id},'#{biz_offer.business.business_title}');return false;" %></td>
+        <td style="text-align:center;"><%= biz_offer_edit_icon(biz_offer) %></td>
+      <% else %>
+        <td><%= star_links(biz_offer.business_partner) %> <%=h biz_offer.business_partner.blank? ? "" : back_to_link(biz_offer.business_partner.business_partner_name,controller: :business_partner, action: :show, id: biz_offer.business_partner.id) %></td>
+        <td>
+          <%= star_links(biz_offer.bp_pic) %> <%=h biz_offer.bp_pic.blank? ? "" : back_to_link(biz_offer.bp_pic.bp_pic_name, controller: :bp_pic, action: :show, id: biz_offer.bp_pic.id) %>
+          <%= biz_offer.bp_pic.jiet? ? raw('[<span title="JIET取り込み" style="font-weight:bold">J</span>]') : ''%>
+        </td>
+        <td>
+          <%= star_links(biz_offer.business) %> <%=back_to_link h(biz_offer.business.business_title), :action => :show, :id => biz_offer %>
+        </td>
+        <td style="text-align:center;"><%= biz_offer_edit_icon(biz_offer) %></td>
+    <% end%><td><div style="overflow: hidden;height:1.4em"><span style="line-height: 90%;"><%= raw format_only_major_tags(biz_offer.business.skill_tag, @major_words) %></span></div></td>
       <td><%=h biz_offer.business.age_limit %></td>
       <td align=right><%=h((biz_offer.payment_max.blank? || biz_offer.payment_max == 0) ? "" : "#{biz_offer.payment_max_view}万円") %></td>
       <td><%=h biz_offer.business.place %></td>

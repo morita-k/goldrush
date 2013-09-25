@@ -8,6 +8,10 @@ module ApplicationHelper
   include NameUtil
   include TypeUtil
 
+  def man(amount)
+    "#{amount.to_i}万"
+  end
+
   def around_b(str)
     raw "<span style='font-weight:bold'>#{str}</span>"
   end
@@ -15,13 +19,30 @@ module ApplicationHelper
   def around_b_if(cond, str)
     cond ? around_b(str) : str
   end
+
   def url_for_bp_pic_popup(callback = :setBpPic)
     url_for :controller => :bp_pic, :action => :list, :popup =>1, :callback => callback
   end
 
+  def url_for_mail_template_popup(callback = :setMailTemplate)
+    url_for :controller => :mail_templates, :action => :index, :popup =>1, :callback => callback
+  end
+
+  def url_for_biz_offer_popup(callback = :setBizOffer)
+    url_for :controller => :biz_offer, :action => :index, :popup =>1, :callback => callback
+  end
+
+  def url_for_bp_member_popup(callback = :setBpMember)
+    url_for :controller => :bp_member, :action => :index, :popup =>1, :callback => callback
+  end
+
   def url_for_bp_pic_input_popup()
     params[:page] ||= "1"
-    url_for :controller => :bp_pic, :action => :quick_input, :popup =>1, :page => params[:page]
+    url_for controller: :bp_pic, action: :quick_input, popup: 1, page: params[:page], only_path: false, protocol: "http://"
+  end
+
+  def url_for_outflow_mail_input_popup()
+    url_for controller: :outflow_mail, action: :quick_input, popup: 1, only_path: false, protocol: "http://"
   end
 
   def bp_pic_edit_icon(bp_pic)
@@ -29,7 +50,12 @@ module ApplicationHelper
   end
 
   def biz_offer_edit_icon(biz_offer)
-    back_to_link(image_tag((biz_offer.business.memo.blank? ? 'icon-edit.png' : 'icon-comment.png')), {:controller => :biz_offer, :action => :edit, :id => biz_offer}, :title => biz_offer.business.memo)
+    if popup?
+      image_tag(biz_offer.business.memo.blank? ? 'icon-edit.png' : 'icon-comment.png', :title => biz_offer.business.memo)
+    else
+      back_to_link(image_tag((biz_offer.business.memo.blank? ? 'icon-edit.png' : 'icon-comment.png')), {:controller => :biz_offer, :action => :edit, :id => biz_offer}, :title => biz_offer.business.memo)
+    end
+
   end
 
   def bp_member_edit_icon(bp_member)
@@ -44,6 +70,10 @@ module ApplicationHelper
     else
       date.strftime("%Y/%m/%d")
     end
+  end
+
+  def _date2(date)
+    date && date.strftime("%y/%m/%d")
   end
 
   def _time(time)
@@ -257,6 +287,11 @@ EOS
       v.send(method + '=', tmp) if tmp.class == Time
     end
     text_field(object_name, method, options)
+  end
+
+  def paginate_far(scope, options = {}, &block)
+    paginator = Kaminari::Helpers::Paginator.new self, options.reverse_merge(:current_page => scope.current_page, :total_pages => scope.current_page + 100, :per_page => scope.limit_value, :param_name => Kaminari.config.param_name, :remote => false)
+    paginator.to_s
   end
 
   # put_paginatesで使う関数

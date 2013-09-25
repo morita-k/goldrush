@@ -17,7 +17,11 @@
 <%- unless @menu_hide -%>
 <div class="navbar navbar-fixed-top">
   <div class="navbar-inner">
-      <%=link_to "Gold Rush", "/", :class => :brand %>
+      <% if popup? %>
+        <span class="brand">Gold Rush</span>
+      <% else %>
+        <%=link_to "Gold Rush", "/", :class => :brand %>
+      <% end %>
         <ul class="nav">
         <% if logged_in? && !popup? %>
           <li class="dropdown">

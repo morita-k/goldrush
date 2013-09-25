@@ -190,9 +190,9 @@ class BpMemberController < ApplicationController
     flash_notice = 'BpMember was successfully created.'
     
     if popup?
-      # ポップアップウィンドウの場合、共通リザルト画面を表示する
-      flash.now[:notice] = flash_notice
-      render 'shared/popup/result'
+      # ポップアップウィンドウの場合、ポップアップ状態のまま通常の画面遷移
+      flash[:notice] = flash_notice
+      redirect_to back_to || {:action => 'list', :popup => 1}
     else
       # ポップアップウィンドウでなければ通常の画面遷移
       flash[:notice] = flash_notice

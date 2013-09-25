@@ -53,8 +53,20 @@
 </tr>
 <tr>
   <th>契約条件ステータス</th>
-  <td><%=h contract.upper_contract_status_type_name %></td>
-  <td><%=h contract.down_contract_status_type_name %></td>
+  <td>
+    <%=h contract.upper_contract_status_type_name %>
+    <% x = contract.next_actions(:upper_contract_status_type).map do |action|
+    back_to_link(getLongType('action_type', action.action), {:controller => :contract, :action => :do_action, :id => contract, :a => action.action, :type => :upper_contract_status_type}, :class => 'btn btn-primary btn-small')
+      end.join(" ") %>
+    <%if !x.empty? %><%= raw x %><%end%>
+  </td>
+  <td>
+    <%=h contract.down_contract_status_type_name %>
+    <% x = contract.next_actions(:down_contract_status_type).map do |action|
+    back_to_link(getLongType('action_type', action.action), {:controller => :contract, :action => :do_action, :id => contract, :a => action.action, :type => :down_contract_status_type}, :class => "btn btn-primary btn-small")
+      end.join(" ") %>
+    <%if !x.empty?%><%= raw x %><%end%>
+  </td>
 </tr>
 <tr>
   <th><%= getLongName('contract_terms', 'term_type') %></th>

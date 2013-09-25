@@ -86,4 +86,24 @@ class ApiController < ApplicationController
     render :text => 'REQUEST OK!'
   end
   
+  def worksheets
+    render :json => BaseMonth.where("deleted = 0 and start_date = ?", params[:start_date]).first.monthly_workings.map{|m|
+      {
+        :employee_name => m.user.employee.employee_name,
+        :total_hour => m.real_working_hour_count,
+        :working_list => m.daily_workings.map{|w|
+          {
+            :working_date => w.working_date,
+            :working_type => w.working_type_short_name,
+            :in_time => w.in_time_format,
+            :out_time => w.out_time_format,
+            :summary => w.summary,
+            :hour_total => w.hour_total_format,
+            :rest_hour => w.rest_hour_format
+          }
+        }
+      }
+    }
+  end
+
 end

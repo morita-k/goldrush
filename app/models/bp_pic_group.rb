@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 class BpPicGroup < ActiveRecord::Base
   has_many :bp_pic_group_details, :conditions => "bp_pic_group_details.deleted = 0"
-  attr_accessible :bp_pic_group_name, :memo, :lock_version
+  attr_accessible :bp_pic_group_name, :memo, :lock_version, :mail_template_id
   
   validates_presence_of :bp_pic_group_name
   validates_uniqueness_of :bp_pic_group_name, :case_sensitive => false, :scope => [:deleted, :deleted_at]

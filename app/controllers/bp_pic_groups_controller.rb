@@ -15,7 +15,7 @@ class BpPicGroupsController < ApplicationController
   # GET /bp_pic_groups/1.json
   def show
     unless params[:delivery_mail_id].blank?
-      @delivery_mail = DeliveryMail.find(params[:delivery_mail_id])
+      @delivery_mail = DeliveryMail.find(params[:delivery_mail_id]).get_informations
       @attachment_files = AttachmentFile.attachment_files("delivery_mails", @delivery_mail.id)
     end
     

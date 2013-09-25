@@ -53,6 +53,17 @@ employees_1:
   active_flg: 0
   approver_flg: 0
   credit_card_flg: 0
+  regular_in_time: "9:30"
+  regular_in_time_defact: "10:30"
+  regular_in_time_pm: "13:30"
+  regular_out_time: "17:30"
+  regular_out_time_early_am: "12:30"
+  regular_out_time_early_full: "15:30"
+  max_out_time: "29:00"
+  regular_rest_hour: "1:00"
+  regular_rest_hour_half: "0:00"
+  regular_over_time_meel: "20:00"
+  regular_over_time_taxi: "22:00"
   regular_working_hour: 7
   memo: ""
   created_at: <%= Time.now.to_s(:db) %>
@@ -117,6 +128,17 @@ employees_2:
   active_flg: 0
   approver_flg: 1
   credit_card_flg: 0
+  regular_in_time: "9:30"
+  regular_in_time_defact: "10:30"
+  regular_in_time_pm: "13:30"
+  regular_out_time: "17:30"
+  regular_out_time_early_am: "12:30"
+  regular_out_time_early_full: "15:30"
+  max_out_time: "29:00"
+  regular_rest_hour: "1:00"
+  regular_rest_hour_half: "0:00"
+  regular_over_time_meel: "20:00"
+  regular_over_time_taxi: "22:00"
   regular_working_hour: 7
   memo: ""
   created_at: <%= Time.now.to_s(:db) %>
@@ -181,6 +203,17 @@ employees_3:
   active_flg: 0
   approver_flg: 1
   credit_card_flg: 0
+  regular_in_time: "9:30"
+  regular_in_time_defact: "10:30"
+  regular_in_time_pm: "13:30"
+  regular_out_time: "17:30"
+  regular_out_time_early_am: "12:30"
+  regular_out_time_early_full: "15:30"
+  max_out_time: "29:00"
+  regular_rest_hour: "1:00"
+  regular_rest_hour_half: "0:00"
+  regular_over_time_meel: "20:00"
+  regular_over_time_taxi: "22:00"
   regular_working_hour: 7
   memo: ""
   created_at: <%= Time.now.to_s(:db) %>
@@ -245,6 +278,17 @@ employees_4:
   active_flg: 0
   approver_flg: 1
   credit_card_flg: 0
+  regular_in_time: "9:30"
+  regular_in_time_defact: "10:30"
+  regular_in_time_pm: "13:30"
+  regular_out_time: "17:30"
+  regular_out_time_early_am: "12:30"
+  regular_out_time_early_full: "15:30"
+  max_out_time: "29:00"
+  regular_rest_hour: "1:00"
+  regular_rest_hour_half: "0:00"
+  regular_over_time_meel: "20:00"
+  regular_over_time_taxi: "22:00"
   regular_working_hour: 7
   memo: ""
   created_at: <%= Time.now.to_s(:db) %>
@@ -309,6 +353,17 @@ employees_5:
   active_flg: 0
   approver_flg: 1
   credit_card_flg: 0
+  regular_in_time: "9:30"
+  regular_in_time_defact: "10:30"
+  regular_in_time_pm: "13:30"
+  regular_out_time: "17:30"
+  regular_out_time_early_am: "12:30"
+  regular_out_time_early_full: "15:30"
+  max_out_time: "29:00"
+  regular_rest_hour: "1:00"
+  regular_rest_hour_half: "0:00"
+  regular_over_time_meel: "20:00"
+  regular_over_time_taxi: "22:00"
   regular_working_hour: 7
   memo: ""
   created_at: <%= Time.now.to_s(:db) %>
@@ -373,6 +428,17 @@ employees_6:
   active_flg: 0
   approver_flg: 1
   credit_card_flg: 0
+  regular_in_time: "9:30"
+  regular_in_time_defact: "10:30"
+  regular_in_time_pm: "13:30"
+  regular_out_time: "17:30"
+  regular_out_time_early_am: "12:30"
+  regular_out_time_early_full: "15:30"
+  max_out_time: "29:00"
+  regular_rest_hour: "1:00"
+  regular_rest_hour_half: "0:00"
+  regular_over_time_meel: "20:00"
+  regular_over_time_taxi: "22:00"
   regular_working_hour: 7
   memo: ""
   created_at: <%= Time.now.to_s(:db) %>
@@ -437,6 +503,17 @@ employees_7:
   active_flg: 0
   approver_flg: 1
   credit_card_flg: 0
+  regular_in_time: "9:30"
+  regular_in_time_defact: "10:30"
+  regular_in_time_pm: "13:30"
+  regular_out_time: "17:30"
+  regular_out_time_early_am: "12:30"
+  regular_out_time_early_full: "15:30"
+  max_out_time: "29:00"
+  regular_rest_hour: "1:00"
+  regular_rest_hour_half: "0:00"
+  regular_over_time_meel: "20:00"
+  regular_over_time_taxi: "22:00"
   regular_working_hour: 7
   memo: ""
   created_at: <%= Time.now.to_s(:db) %>
@@ -501,6 +578,17 @@ employees_8:
   active_flg: 0
   approver_flg: 1
   credit_card_flg: 0
+  regular_in_time: "9:30"
+  regular_in_time_defact: "10:30"
+  regular_in_time_pm: "13:30"
+  regular_out_time: "17:30"
+  regular_out_time_early_am: "12:30"
+  regular_out_time_early_full: "15:30"
+  max_out_time: "29:00"
+  regular_rest_hour: "1:00"
+  regular_rest_hour_half: "0:00"
+  regular_over_time_meel: "20:00"
+  regular_over_time_taxi: "22:00"
   regular_working_hour: 7
   memo: ""
   created_at: <%= Time.now.to_s(:db) %>
@@ -565,6 +653,17 @@ employees_9:
   active_flg: 0
   approver_flg: 1
   credit_card_flg: 0
+  regular_in_time: "9:30"
+  regular_in_time_defact: "10:30"
+  regular_in_time_pm: "13:30"
+  regular_out_time: "17:30"
+  regular_out_time_early_am: "12:30"
+  regular_out_time_early_full: "15:30"
+  max_out_time: "29:00"
+  regular_rest_hour: "1:00"
+  regular_rest_hour_half: "0:00"
+  regular_over_time_meel: "20:00"
+  regular_over_time_taxi: "22:00"
   regular_working_hour: 7
   memo: ""
   created_at: <%= Time.now.to_s(:db) %>
@@ -629,6 +728,17 @@ employees_10:
   active_flg: 0
   approver_flg: 1
   credit_card_flg: 0
+  regular_in_time: "9:30"
+  regular_in_time_defact: "10:30"
+  regular_in_time_pm: "13:30"
+  regular_out_time: "17:30"
+  regular_out_time_early_am: "12:30"
+  regular_out_time_early_full: "15:30"
+  max_out_time: "29:00"
+  regular_rest_hour: "1:00"
+  regular_rest_hour_half: "0:00"
+  regular_over_time_meel: "20:00"
+  regular_over_time_taxi: "22:00"
   regular_working_hour: 7
   memo: ""
   created_at: <%= Time.now.to_s(:db) %>
@@ -693,6 +803,17 @@ employees_11:
   active_flg: 0
   approver_flg: 1
   credit_card_flg: 0
+  regular_in_time: "9:30"
+  regular_in_time_defact: "10:30"
+  regular_in_time_pm: "13:30"
+  regular_out_time: "17:30"
+  regular_out_time_early_am: "12:30"
+  regular_out_time_early_full: "15:30"
+  max_out_time: "29:00"
+  regular_rest_hour: "1:00"
+  regular_rest_hour_half: "0:00"
+  regular_over_time_meel: "20:00"
+  regular_over_time_taxi: "22:00"
   regular_working_hour: 7
   memo: ""
   created_at: <%= Time.now.to_s(:db) %>
