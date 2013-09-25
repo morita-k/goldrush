@@ -117,7 +117,7 @@
   <tr style="text-align: center;<%= daily_working.working_date_color %>"  >
     <td style="width: 5%;"><%=h getDayOfWeek(daily_working.working_date) %></td>
     <td style="width: 10%;">
-      <%= link_to_popup_mode daily_working.working_date.to_date, :controller => 'daily_working', :action => 'edit', :id => daily_working, :back_to => request.env['REQUEST_URI'] %>
+      <%= link_to_popup_mode daily_working.working_date.to_date, :controller => 'daily_working', :action => 'edit', :id => daily_working, :user_id => daily_working.user_id, :back_to => request.env['REQUEST_URI'] %>
     </td>
     <td style="width: 6%;">
       <% unless (!daily_working.action_type_blank? || daily_working.holiday? || holiday_application || other_applications.present?) %>

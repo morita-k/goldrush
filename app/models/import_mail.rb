@@ -138,6 +138,12 @@ class ImportMail < ActiveRecord::Base
           end
         end
       end
+
+      # 流出メールだった場合、OutflowMailを作成する
+      if import_mail.outflow_mail?
+        OutflowMail.create_outflow_mails(import_mail)
+      end
+
     end # transaction
   end
   
@@ -231,10 +237,10 @@ class ImportMail < ActiveRecord::Base
   def detect_proper_in(body)
     return false if bp_member_flg != 1
     StringUtil.detect_lines(body, /社員/) do |line|
-      return true unless SpecialWord.bad_proper_words.detect{|x| line.include?(x)}
+      return true unless SpecialWord.ignore_word_propers.detect{|x| line.include?(x)}
     end
     StringUtil.detect_lines(body, /ﾌﾟﾛﾊﾟｰ/) do |line|
-      return true unless SpecialWord.bad_proper_words.detect{|x| line.include?(x)}
+      return true unless SpecialWord.ignore_word_propers.detect{|x| line.include?(x)}
     end
     return false
   end
@@ -431,6 +437,13 @@ class ImportMail < ActiveRecord::Base
       # テストモードなら常にtrue
       true
     end
+  end
+
+  def outflow_mail?
+    criterion = SysConfig.get_outflow_criterion.to_i
+    mail_address_str = self.mail_to + self.mail_cc
+
+    (criterion.nil? || mail_address_str.blank?) ? false : (mail_address_str.split(",").length >= criterion)
   end
 
   # DBにある既存データ全ての年齢を正規化する。
