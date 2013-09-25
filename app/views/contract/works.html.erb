@@ -1,0 +1,31 @@
+<h1>稼働状況表</h1>
+
+<table class="list_table">
+  <tr><th>人材</th>
+    <%= each_month(@target_start, @target_end) do |month| %>
+      <th><%=month.strftime("%Y/%m")%></th>
+    <% end %>
+  </tr>
+<% @works.each do |hr, contracts| %>
+  <tr>
+    <th rowspan=2><%= back_to_link hr.useful_name, :controller => :bp_member, :action => :show, :id => contracts.first.approach.bp_member_id %></th>
+    <%= each_month(@target_start, @target_end) do |month| %>
+      <% if contract = include_term?(month.beginning_of_month, month.end_of_month, contracts) %>
+        <td class="black_link" style="background-color: <%=color(contract, contract.upper_contract_status_type)%>"><%= back_to_link contract.upper_contract_status_type_short_name, :controller => :approach, :action => :show, :id => contract.approach_id %></td>
+      <% else %>
+        <td></td>
+      <% end %>
+    <% end %>
+  </tr>
+  <tr>
+    <%= each_month(@target_start, @target_end) do |month| %>
+      <% if contract = include_term?(month.beginning_of_month, month.end_of_month, contracts) %>
+        <td class="black_link" style="background-color: <%=color(contract, contract.down_contract_status_type)%>"><%= back_to_link contract.down_contract_status_type_short_name, :controller => :approach, :action => :show, :id => contract.approach_id %></td>
+      <% else %>
+        <td></td>
+      <% end %>
+    <% end %>
+  </tr>
+<% end %>
+</table>
+

@@ -1,4 +1,5 @@
 <h1><%=getLongName('table_name','contracts')%>一覧</h1>
+<%= back_to_link "稼働状況表", :action => :works %>
 
 <%= paginate(@contracts) %>
 
@@ -42,7 +43,7 @@
     <th>粗利率</th>
   </tr>
 <% for contract in @contracts %>
-  <tr>
+  <tr <%=raw(contract.contract_status_type == 'finished' ? 'style="background-color: lightgray"' : "")%>>
     <td rowspan=2><%=h contract.id %></td>
 
     <td rowspan=2><%=back_to_link contract.approach.bp_member.human_resource.useful_name, :controller => :approach, :action => :show, :id => contract.approach %></td>
@@ -55,11 +56,11 @@
 
     <td rowspan=2><%=h contract.contract_renewal %></td>
 
-    <td><%=h contract.approach.start_date %></td>
+    <td><%=_date2 contract.approach.start_date %></td>
 
     <td><%=h contract.approach.biz_offer.business_partner.business_partner_short_name %></td>
 
-    <td><%=h contract.upper_contract_status_type_name %></td>
+    <td style="background-color: <%=color(contract, contract.upper_contract_status_type)%>"><%=h contract.upper_contract_status_type_name %></td>
 
     <td><%=man contract.upper_contract_term.payment_view %></td>
 
@@ -67,12 +68,12 @@
 
     <td><%=man contract.payment_diff_veiw %></td>
   </tr>
-  <tr>
-    <td><%=h contract.approach.end_date %></td>
+  <tr <%=raw(contract.contract_status_type == 'finished' ? 'style="background-color: lightgray"' : "")%>>
+    <td><%=_date2 contract.approach.end_date %></td>
 
     <td><%=h contract.approach.bp_member.business_partner.business_partner_short_name %></td>
 
-    <td><%=h contract.down_contract_status_type_name %></td>
+    <td style="background-color: <%=color(contract, contract.down_contract_status_type)%>"><%=h contract.down_contract_status_type_name %></td>
 
     <td><%=man contract.down_contract_term.payment_view %></td>
 

@@ -1,5 +1,32 @@
 <h1><%= @business.business_title %> [<%= @human_resource.human_resource_name.blank? ? @human_resource.initial : @human_resource.human_resource_name %>] </h1>
 
+<!-- 契約詳細 -->
+<% @approach.contracts.each do |contract| %>
+  <h2><%=getLongName('table_name','contracts')%>情報 <%= contract.term_term%></h2>
+
+  <%= render :partial => 'contract/show', :locals => {:contract => contract} %>
+  <%= back_to_link '契約情報編集', :controller => 'contract', :action => 'edit', :id => contract %>
+
+<% end %>
+
+<!-- 案件詳細 -->
+<h2><%=getLongName('table_name','businesses')%>情報</h2>
+<%= render :partial => 'business/show' %>
+
+<!-- 照会詳細 -->
+<h2><%=getLongName('table_name','biz_offers')%>情報</h2>
+<%= render :partial => 'biz_offer/show' %>
+<%= back_to_link '案件照会情報編集', :controller => :biz_offer, :action => 'edit', :id => @approach.biz_offer %>
+
+<!-- 人材詳細 -->
+<h2><%=getLongName('table_name','human_resources')%>情報</h2>
+<%= render :partial => 'human_resource/show' %>
+
+<!-- 所属詳細 -->
+<h2><%=getLongName('table_name','bp_members')%>情報</h2>
+<%= render :partial => 'bp_member/show' %>
+<%= back_to_link '人材所属情報編集', :controller => :bp_member, :action => 'edit', :id => @approach.bp_member %>
+
 <h2><%=getLongName('table_name','approaches')%>情報</h2>
 <table class="show_table">
 <tr>
@@ -140,24 +167,6 @@
 </table>
 <%= back_to_link '提案情報編集', :action => 'edit', :id => @approach %>
 
-<!-- 案件詳細 -->
-<h2><%=getLongName('table_name','businesses')%>情報</h2>
-<%= render :partial => 'business/show' %>
-
-<!-- 照会詳細 -->
-<h2><%=getLongName('table_name','biz_offers')%>情報</h2>
-<%= render :partial => 'biz_offer/show' %>
-<%= back_to_link '案件照会情報編集', :controller => :biz_offer, :action => 'edit', :id => @approach.biz_offer %>
-
-<!-- 人材詳細 -->
-<h2><%=getLongName('table_name','human_resources')%>情報</h2>
-<%= render :partial => 'human_resource/show' %>
-
-<!-- 所属詳細 -->
-<h2><%=getLongName('table_name','bp_members')%>情報</h2>
-<%= render :partial => 'bp_member/show' %>
-<%= back_to_link '人材所属情報編集', :controller => :bp_member, :action => 'edit', :id => @approach.bp_member %>
-
 
 <%= form_tag do %>
   <% if @approach.approach_status_type == 'approaching' %>
@@ -173,24 +182,6 @@
   <p></p>
 <% end %>
 
-
-<!-- 契約詳細 -->
-<h2><%=getLongName('table_name','contracts')%>情報</h2>
-<% @approach.contracts.each do |contract| %>
-  <%= render :partial => 'contract/show', :locals => {:contract => contract} %>
-  <%= back_to_link '契約情報編集', :controller => 'contract', :action => 'edit', :id => contract %>
-
-  <div style="margin-top:1em">
-  <% x = contract.next_actions(:upper_contract_status_type).map do |action|
-        back_to_link(getLongType('action_type', action.action), :controller => :contract, :action => :do_action, :id => contract, :a => action.action, :type => :upper_contract_status_type)
-      end.join(",") %>
-  <p>上流アクション: <%= raw x %></p>
-  <% x = contract.next_actions(:down_contract_status_type).map do |action|
-        back_to_link(getLongType('action_type', action.action), :controller => :contract, :action => :do_action, :id => contract, :a => action.action, :type => :down_contract_status_type)
-      end.join(",") %>
-  <p>下流アクション: <%= raw x %></p>
-  </div>
-<% end %>
 
 <h2>スキルシート一覧</h2>
 

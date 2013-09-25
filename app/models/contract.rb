@@ -86,6 +86,11 @@ class Contract < ActiveRecord::Base
 #    end
 #  end
 
+  def confirm_warning?(date=Date.today)
+    puts ">>>>>>>>>" + date.to_s + ": " + (contract_start_date - contract_renewal_terms.to_i.month).to_s
+    (contract_start_date - contract_renewal_terms.to_i.month) <= date
+  end
+
   def setup_contracted_at(zone_now)
     if zone_now
       date, hour, min = DateTimeUtil.split_date_hour_minute(zone_now)
@@ -220,13 +225,13 @@ class Contract < ActiveRecord::Base
   # 条件に合致した[契約]に対して"次契約作成項目移送表"シートの処理を行う
   def Contract.make_next(today=Date.today)
     ActiveRecord::Base.transaction do
-      Contract.where("deleted = 0 and contract_status_type = 'contract'").each do |c|
-        make_next_in(c)
+      Contract.where("deleted = 0 and contract_status_type != 'finished'").each do |c|
+        make_next_in(today, c)
       end
     end
   end
 
-  def Contract.make_next_in(c)
+  def Contract.make_next_in(today, c)
     return if (today + c.contract_renewal_terms.to_i.month).strftime("%Y%m") < c.contract_end_date.strftime("%Y%m")
     return if c.next_term
     
@@ -256,6 +261,6 @@ class Contract < ActiveRecord::Base
     n.updated_user = 'make_next'
     n.save!
 
-    make_next_in(n)
+    make_next_in(today, n)
   end
 end
