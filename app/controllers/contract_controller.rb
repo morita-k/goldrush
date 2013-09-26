@@ -2,8 +2,9 @@
 class ContractController < ApplicationController
 
   def index
-    list
-    render :action => 'list'
+    if list
+      render :action => 'list'
+    end
   end
 
 
@@ -12,8 +13,56 @@ class ContractController < ApplicationController
   verify :method => :post, :only => [ :destroy, :create, :update ],
          :redirect_to => { :action => :list }
 
+  def target_date(year,month, then_block, else_block)
+    if year.blank?
+      else_block.call
+    elsif month.blank?
+      st = "#{year}/1/1".to_date
+      ed = "#{year}/12/31".to_date
+      then_block.call st, ed
+    else
+      st = "#{year}/#{month}/1".to_date
+      ed = st.end_of_month
+      then_block.call st, ed
+    end
+  end
+
+  def each_month(st, ed, &block)
+    return if st > ed
+    block.call(st.beginning_of_month, st.end_of_month)
+    each_month(st.next_month, ed, &block)
+  end
+
+  def summary(st, ed, contracts, &cond)
+    sum = {:upper_payment => 0, :down_payment => 0, :gross_profit => 0}
+    each_month(st,ed) do |xst, xed|
+      contracts.each do |c|
+        next unless cond.call c
+        next unless c.in_term?(xst, xed)
+        sum[:upper_payment] += c.upper_contract_term.payment
+        sum[:down_payment] += c.down_contract_term.payment
+        sum[:gross_profit] += (c.upper_contract_term.payment - c.down_contract_term.payment)
+      end
+    end
+    sum
+  end
+    
   def list
-    @contract_pages, @contracts = paginate :contracts, :conditions =>["deleted = 0"], :per_page => current_user.per_page, :order => "contract_start_date desc"
+    if params[:clear]
+      params[:year] = params[:month] = nil
+      redirect_to
+      return false
+    end
+
+    target_date params[:year], params[:month], lambda {|st, ed|
+      @contracts = Contract.where("deleted = 0 and contract_status_type in ('contract','finished') and contract_end_date >= ? and contract_start_date <= ? ", st, ed).order("contract_start_date")
+      @summary = summary(st, ed, @contracts) {true}
+      @summary_prop = summary(st, ed, @contracts) {|c| c.proper? }
+      @summary_non_prop = summary(st, ed, @contracts) {|c| !c.proper? }
+    }, lambda {
+      @contract_pages, @contracts = paginate :contracts, :conditions =>["deleted = 0"], :per_page => current_user.per_page, :order => "contract_start_date desc"
+    }
+    return true
   end
 
   def works

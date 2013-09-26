@@ -45,6 +45,18 @@ module ApplicationHelper
     url_for controller: :outflow_mail, action: :quick_input, popup: 1, only_path: false, protocol: "http://"
   end
 
+  def url_for_photo_preview_popup(photoid)
+    url_for :controller => :photos, :action => :preview, :id => photoid, :popup => 1
+  end
+
+  def url_for_business_partner(photoid)
+    url_for :controller => :business_partner, :action => :new, :photoid => photoid
+  end
+
+  def url_for_bp_pic(photoid)
+    url_for :controller => :bp_pic, :action => :list, :photoid => photoid
+  end
+
   def bp_pic_edit_icon(bp_pic)
     back_to_link(image_tag((bp_pic.memo.blank? ? 'icon-edit.png' : 'icon-comment.png')), {:controller => :bp_pic, :action => :edit, :id => bp_pic}, :title => (bp_pic.memo.blank? ? "担当者を編集する" : bp_pic.memo))
   end
@@ -463,6 +475,10 @@ EOS
     @popup_mode
   end
 
+  def is_photo?
+    !@photo_id.nil?
+  end
+
   def link_to_change_approval_status(application_approval)
     result = []
     return result unless application_approval
@@ -484,7 +500,11 @@ EOS
   end
 
   def request_url
-    request.env['REQUEST_URI']
+    if request.original_url.nil?
+      ""
+    else
+      request.original_url
+    end
   end
 
   def link_or_back(name, options = {}, html_options = {}, &block)

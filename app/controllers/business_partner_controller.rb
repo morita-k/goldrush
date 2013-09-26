@@ -144,6 +144,8 @@ class BusinessPartnerController < ApplicationController
       @bp_pic.bp_pic_short_name = @former_bp_pic.bp_pic_short_name
       @bp_pic.bp_pic_name_kana = @former_bp_pic.bp_pic_name_kana
     end
+
+    @photo_id = params[:photoid] if params[:photoid]
   end
 
   def create
@@ -180,6 +182,10 @@ class BusinessPartnerController < ApplicationController
         set_user_column import_mail
         import_mail.save!
       end
+
+      if @photo_id = params[:photoid]
+        Photo.update_bp_pic(@bp_pic.id, @photo_id)
+      end
       
     end # transaction
     
@@ -189,6 +195,10 @@ class BusinessPartnerController < ApplicationController
       # ポップアップウィンドウの場合、共通リザルト画面を表示する
       flash.now[:notice] = flash_notice
       render 'shared/popup/result'
+    elsif @photo_id
+      # 名刺紐付けの場合、名刺取込一覧画面を表示する
+      flash.now[:notice] = flash_notice
+      redirect_to :controller => :photos, :action => :list
     else
       # ポップアップウィンドウでなければ通常の画面遷移
       flash[:notice] = flash_notice

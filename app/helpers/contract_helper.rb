@@ -11,15 +11,8 @@ module ContractHelper
     raw res
   end
 
-  def in_term?(term_start, term_end, contract)
-    contract.contract_start_date <= term_end and contract.contract_end_date >= term_start
-  end
-
   def include_term?(term_start, term_end, contracts)
-    contracts.each do |contract|
-      return contract if in_term?(term_start,term_end,contract)
-    end
-    return nil
+    Contract.include_term?(term_end, term_end, contracts)
   end
 
   def color(contract, type)
@@ -35,5 +28,33 @@ module ContractHelper
       "waiting_offer" => "greenyellow",
       "waiting_order" => "greenyellow",
     }[type]
+  end
+
+  def years(date=Date.today)
+    ((date.year - 2)..(date.year + 3)).map{|x| x.to_s}.unshift("")
+  end
+
+  def months
+    (1..12).map{|x| sprintf("%02d",x) }.unshift("")
+  end
+
+  def pay(payment)
+    (payment / 10000).to_i.to_s + "万円"
+  end
+
+  def rate(a,b)
+    return "-" if a == 0
+    (b.to_f / a * 100).round(2).to_s + "%"
+  end
+
+  def title
+    y = params[:year]
+    m = params[:month]
+    x = if !y.blank? && !m.blank?
+      "#{y}年#{m}月度 "
+    elsif !y.blank?
+      "#{y}年度 "
+    end
+    x.to_s + getLongName('table_name','contracts') + "一覧"
   end
 end

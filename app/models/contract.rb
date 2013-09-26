@@ -29,21 +29,31 @@ class Contract < ActiveRecord::Base
   # 契約条件が、上流も下流も「契約満了、途中解約、更新なし」であれば「契約完了」にアップデートする
   def make_finished_proc(str)
     return ->(a){
-      if ["finished","abort","closed"].include?(attributes["#{str}_contract_status_type"])
+      if ["finished","abort"].include?(attributes["#{str}_contract_status_type"])
         change_status(:finish_contract, :contract_status_type)
+      elsif ["closed"].include?(attributes["#{str}_contract_status_type"])
+        change_status(:cancel_contract, :contract_status_type)
       end
       return a.to
     }
   end
 
   def finished?
-    ['finished'].include? contract_status_type
+    ['finished','canceled'].include? contract_status_type
   end
 
   def after_initialize
     init_actions([
       [:open, :contract, :conclusion],
       [:contract, :finished, :finish_contract, ->(a){
+        #approachにぶら下がるすべての契約がfinishedしているか確認する
+        if approach.contracts.all?{|c| c.id == self.id || c.finished?}
+          approach.change_status(:finish)
+          approach.save!
+        end
+        return a.to
+      }],
+      [:contract, :canceled, :cancel_contract, ->(a){
         #approachにぶら下がるすべての契約がfinishedしているか確認する
         if approach.contracts.all?{|c| c.id == self.id || c.finished?}
           approach.change_status(:finish)
@@ -85,6 +95,10 @@ class Contract < ActiveRecord::Base
 #      self.closed_at = user.zone_parse("#{closed_at_date} #{closed_at_hour}:#{closed_at_minute}:00")
 #    end
 #  end
+
+  def proper?
+    approach.bp_member.business_partner.self_flg == 1 and approach.bp_member.employment_type == 'permanent'
+  end
 
   def confirm_warning?(date=Date.today)
     puts ">>>>>>>>>" + date.to_s + ": " + (contract_start_date - contract_renewal_terms.to_i.month).to_s
@@ -156,6 +170,17 @@ class Contract < ActiveRecord::Base
 
   def next_term
     Contract.where("approach_id = ? and contract_start_date > ? and contract_status_type != ?", approach_id, contract_end_date, 'finished').order("contract_start_date").first
+  end
+
+  def in_term?(term_start, term_end)
+    contract_start_date <= term_end and contract_end_date >= term_start
+  end
+
+  def Contract.include_term?(term_start, term_end, contracts)
+    contracts.each do |c|
+      return c if c.in_term?(term_start,term_end)
+    end
+    return nil
   end
 
   # 契約終了バッチ
