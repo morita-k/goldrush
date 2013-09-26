@@ -22,7 +22,7 @@ group :assets do
 end
 
 group :test, :development do
-#  gem "rspec-rails", "~> 2.0"
+  gem "rspec-rails"
   gem 'simplecov', :require => false
   gem 'simplecov-rcov', :require => false
 end
@@ -59,7 +59,7 @@ gem 'kaminari'
 gem 'mail', '2.5.3'
 
 # you must install ImageMagick native library before "bundle install"
-gem 'rmagick'
+gem 'rmagick', :require => 'RMagick'
 
 group :development do
   gem 'better_errors'
