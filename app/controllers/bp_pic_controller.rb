@@ -107,21 +107,20 @@ class BpPicController < ApplicationController
       set_conditions
     elsif params[:clear_button]
       session[:bp_pic_search] = {}
-      redirect_to
-      return false
     end
 
     # 検索条件を処理
     cond, incl, order_by = make_conditions
     
     @bp_pics = BpPic.includes(incl).where(cond).order(order_by).page(params[:page]).per(current_user.per_page)
-    
-    if params[:popup] && params[:callback].blank?
-      flash[:warning] = 'ポップアップのパラメータが不正です'
-    end
+
 
     if @photo_id = params[:photoid]
       @popup_mode = 1
+    end
+
+    if params[:popup] && !(params[:callback].blank? || @photo_id.nil?)
+      flash[:warning] = 'ポップアップのパラメータが不正です'
     end
 
     return true
