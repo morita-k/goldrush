@@ -43,4 +43,24 @@
 
 <br />
 
-<%= back_to_link (getLongName('table_name','biz_offers')+'の新規作成'), :action => 'new' %>
+<% if popup? %>
+  <%= back_to_link_popup_mode (getLongName('table_name','biz_offers')+'の新規作成'), :action => 'new' %>
+<% else %>
+  <%= back_to_link (getLongName('table_name','biz_offers')+'の新規作成'), :action => 'new' %>
+<% end %>
+
+
+<script type="text/javascript">
+  <!--
+  function setBizOffer(biz_offer_id, business_title) {
+    if(window.opener.document.setBizOffer){
+      var biz_offer = new Object();
+      biz_offer.biz_offer_id = biz_offer_id;
+      biz_offer.business_title = business_title;
+      window.opener.document.setBizOffer(biz_offer);
+    }
+    window.close();
+  }
+
+  // -->
+</script>

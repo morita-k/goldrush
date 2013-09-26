@@ -5,6 +5,14 @@
     <td><%= @delivery_mail.mail_status_type_name %></td>
   </tr>
   <tr>
+    <th>案件照会</th>
+    <td><%= @delivery_mail.biz_offer_id.blank? ? "" : get_biz_offer_name.business.business_title %></td>
+  </tr>
+  <tr>
+    <th>人材所属</th>
+    <td><%= @delivery_mail.bp_member_id.blank? ? "" : get_bp_member_name.human_resource_name %></td>
+  </tr>
+  <tr>
     <th><%= getLongName('delivery_mails', 'subject') %></th>
     <td><%= (@delivery_mail.subject.blank? ? '(件名なし)' : @delivery_mail.subject) %></td>
   </tr>

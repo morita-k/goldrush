@@ -1,0 +1,18 @@
+<%= form_tag({controller: 'business_partner', action: 'update_quick_input'}, class: "form-inline") do %>
+  <fieldset>
+    <legend>企業情報入力</legend>
+    <%= hidden_field 'business_partner', 'id' %>
+    <label><%=getLongName('business_partners','establishment_year') + ': '%></label>
+    <%= text_field 'business_partner', 'establishment_year', placeholder: getLongName('business_partners','establishment_year') %>
+    <label><%=getLongName('business_partners','employee_number') + ': '%></label>
+    <%= text_field 'business_partner', 'employee_number', placeholder: getLongName('business_partners','employee_number') %>
+    <br/>
+    <label><%=getLongName('business_partners','share_capital') + ': '%></label>
+    <%= text_field 'business_partner', 'share_capital', placeholder: getLongName('business_partners','share_capital') %>
+    <label><%=getLongName('business_partners','email') + ': '%></label>
+    <%= text_field 'business_partner', 'email', placeholder: getLongName('business_partners','email') %>
+    <%= hidden_field_tag 'back_to', request_url %>
+    <br/>
+    <%= submit_tag '更新', class: "btn btn-success", confirm: @business_partner.business_partner_name + 'の情報を更新します。よろしいですか？' %>
+  </fieldset>
+<% end %>

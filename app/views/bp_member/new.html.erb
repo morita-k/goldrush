@@ -8,7 +8,8 @@
 
 <% if params[:import_mail_id] && params[:template_id] %>
   <%= link_or_back '解析テンプレート選択に戻る', :controller => 'analysis_template', :action => 'list' %>
+<% elsif params[:popup] %>
+  <%= link_or_back '戻る', :action => 'list',:popup => 1 %>
 <% else %>
   <%= link_or_back '戻る', :action => 'list' %>
-
 <% end %>

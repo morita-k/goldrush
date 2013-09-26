@@ -284,3 +284,16 @@ div.overflow_hidden {
   word-wrap: break-word;
   word-break: break-all;
 }
+
+.black_link a:link { color: #000000; }
+.black_link a:visited { color: #000000; }
+.black_link a:hover { color: #000000; }
+.black_link a:active { color: #000000; }
+
+.button_to {
+    display: inline;
+}
+
+.button_to div {
+    display: inline;
+}

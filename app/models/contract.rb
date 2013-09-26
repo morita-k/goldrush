@@ -86,6 +86,11 @@ class Contract < ActiveRecord::Base
 #    end
 #  end
 
+  def confirm_warning?(date=Date.today)
+    puts ">>>>>>>>>" + date.to_s + ": " + (contract_start_date - contract_renewal_terms.to_i.month).to_s
+    (contract_start_date - contract_renewal_terms.to_i.month) <= date
+  end
+
   def setup_contracted_at(zone_now)
     if zone_now
       date, hour, min = DateTimeUtil.split_date_hour_minute(zone_now)
@@ -133,8 +138,16 @@ class Contract < ActiveRecord::Base
     (100.0 * payment_diff / upper_contract_term.payment).round(1)
   end
   
+  def contract_start_date_view
+    contract_start_date && contract_start_date.strftime("%y/%m/%d")
+  end
+
+  def contract_end_date_view
+    contract_end_date && contract_end_date.strftime("%y/%m/%d")
+  end
+
   def term_term
-    "#{contract_start_date} ～ #{contract_end_date}"
+    "#{contract_start_date_view} ～ #{contract_end_date_view}"
   end
 
   def contract_renewal
@@ -170,7 +183,7 @@ class Contract < ActiveRecord::Base
   # この条件に合致した契約がある場合、後続契約ありとみなす。
   def Contract.close_contracts(today=Date.today)
     ActiveRecord::Base.transaction do
-      Contract.where("deleted = 0 and contract_status_type = 'contract' and contract_end_date < ?", today).each do |c|
+      Contract.where("deleted = 0 and contract_status_type = 'contract' and contract_end_date < ?", today).order("contract_end_date desc").each do |c|
         next if c.next_term
 
         # 契約
@@ -191,7 +204,7 @@ class Contract < ActiveRecord::Base
         # 案件
         c.approach.biz_offer.business.business_status_type = 'finished'
 
-        # 更新
+       # 更新
         for i in [c.approach.biz_offer.business, c.approach.biz_offer, c.approach.bp_member.human_resource, c.approach, c]
           i.updated_user = 'make_next'
           i.save!
@@ -212,37 +225,42 @@ class Contract < ActiveRecord::Base
   # 条件に合致した[契約]に対して"次契約作成項目移送表"シートの処理を行う
   def Contract.make_next(today=Date.today)
     ActiveRecord::Base.transaction do
-      Contract.where("deleted = 0 and contract_status_type = 'contract'").each do |c|
-        
-        next if (today + c.contract_renewal_terms.to_i.month).strftime("%Y%m") < c.contract_end_date.strftime("%Y%m")
-        next if c.next_term
-        
-        upper = ContractTerm.new(c.upper_contract_term.attributes)
-        upper.created_user = 'make_next'
-        upper.updated_user = 'make_next'
-        upper.save!
-
-        down = ContractTerm.new(c.down_contract_term.attributes)
-        down.created_user = 'make_next'
-        down.updated_user = 'make_next'
-        down.save!
-
-        n = Contract.new
-        n.contract_status_type = 'open'
-        n.approach_id = c.approach_id
-        n.contract_pic_id = c.contract_pic_id
-        n.contract_start_date = c.contract_end_date + 1
-        n.contract_end_date = (n.contract_start_date + c.contract_renewal_unit.to_i.month).at_end_of_month # 契約単位月経過後の月末
-        n.contract_renewal_unit = c.contract_renewal_unit
-        n.contract_renewal_terms = c.contract_renewal_terms
-        n.upper_contract_term_id = upper.id
-        n.down_contract_term_id = down.id
-        n.upper_contract_status_type = 'confirming'
-        n.down_contract_status_type = 'confirming'
-        n.created_user = 'make_next'
-        n.updated_user = 'make_next'
-        n.save!
+      Contract.where("deleted = 0 and contract_status_type != 'finished'").each do |c|
+        make_next_in(today, c)
       end
     end
+  end
+
+  def Contract.make_next_in(today, c)
+    return if (today + c.contract_renewal_terms.to_i.month).strftime("%Y%m") < c.contract_end_date.strftime("%Y%m")
+    return if c.next_term
+    
+    upper = ContractTerm.new(c.upper_contract_term.attributes)
+    upper.created_user = 'make_next'
+    upper.updated_user = 'make_next'
+    upper.save!
+
+    down = ContractTerm.new(c.down_contract_term.attributes)
+    down.created_user = 'make_next'
+    down.updated_user = 'make_next'
+    down.save!
+
+    n = Contract.new
+    n.contract_status_type = 'open'
+    n.approach_id = c.approach_id
+    n.contract_pic_id = c.contract_pic_id
+    n.contract_start_date = c.contract_end_date + 1
+    n.contract_end_date = (n.contract_start_date + c.contract_renewal_unit.to_i.month) - 1 # 契約単位月経過後の月末
+    n.contract_renewal_unit = c.contract_renewal_unit
+    n.contract_renewal_terms = c.contract_renewal_terms
+    n.upper_contract_term_id = upper.id
+    n.down_contract_term_id = down.id
+    n.upper_contract_status_type = 'confirming'
+    n.down_contract_status_type = 'confirming'
+    n.created_user = 'make_next'
+    n.updated_user = 'make_next'
+    n.save!
+
+    make_next_in(today, n)
   end
 end

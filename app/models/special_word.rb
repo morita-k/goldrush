@@ -16,18 +16,18 @@ class SpecialWord < ActiveRecord::Base
   SpecialWord.clear_special_words_cache
 
   def SpecialWord.special_words
-    @@special_words || (@@special_words = get_SpecialWords('special_word'))
+    @@special_words || (@@special_words = get_special_words('special_word'))
   end
 
   def SpecialWord.ignore_words
-    @@ignore_words || (@@ignore_words = get_SpecialWords('ignore_word').map{|x| x.target_word})
+    @@ignore_words || (@@ignore_words = get_special_words('ignore_word').map{|x| x.target_word})
   end
 
-  def SpecialWord.bad_proper_words
-    @@bad_proper_words || (@@bad_proper_words = get_SpecialWords('ignore_word_proper').map{|x| x.target_word})
+  def SpecialWord.ignore_word_propers
+    @@bad_proper_words || (@@bad_proper_words = get_special_words('ignore_word_proper').map{|x| x.target_word})
   end
 
-  def SpecialWord.get_SpecialWords(specialwordtype)
+  def SpecialWord.get_special_words(specialwordtype)
     require 'zen2han'
     specialword = where(deleted: 0, special_word_type: specialwordtype)
     specialword.map{|x|

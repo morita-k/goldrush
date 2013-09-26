@@ -1,19 +1,20 @@
 # -*- encoding: utf-8 -*-
 module OutflowMailHelper
 
-  def getmailstatustypename(outflow_mail)
-    if [:non_correspondence, :bad, :good, :unwanted].include?(outflow_mail.outflow_mail_status_type.to_sym)
-      h(outflow_mail.outflow_mail_status_type_name)
-    else
-      ""
-    end
+  def get_bp_name(business_partner_id)
+    business_partner_id.nil? ? "" : BusinessPartner.find(business_partner_id).business_partner_name
   end
 
-  def getbusinesspartnername(business_partner_id)
-    BusinessPartner.find(business_partner_id).business_partner_name
+  def get_bp_pic_name(bp_pic_id)
+    bp_pic_id.nil? ? "" : BpPic.find(bp_pic_id).bp_pic_name
   end
 
-  def getbppicname(bp_pic_id)
-    BpPic.find(bp_pic_id).bp_pic_name
+  def get_sales_pic_id(bp_pic)
+  	bp_pic.nil? ? nil : bp_pic.sales_pic_id
   end
+
+  def search_value_outflow_mail(code)
+    session[:outflow_mail_search] && session[:outflow_mail_search][code]
+  end
+
 end

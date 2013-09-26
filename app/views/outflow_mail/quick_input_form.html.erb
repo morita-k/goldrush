@@ -1,0 +1,29 @@
+<%= form_for @outflow_mail, url: {action: 'create_quick_input'}, html: {class: "form-inline"} do |f| %>
+  <fieldset>
+      <legend>メール情報入力</legend>
+      <%= f.fields_for :business_partner do |f_bp| %>
+        <label><%=getLongName('business_partners','business_partner_name') + '(*): '%></label>
+        <%= f_bp.text_field :business_partner_name %>
+        <label><%=getLongName('business_partners','establishment_year') + ': '%></label>
+        <%= f_bp.text_field :establishment_year %>
+        <label><%=getLongName('business_partners','share_capital') + ': '%></label>
+        <%= f_bp.text_field :share_capital %>
+        </br>
+        <label><%=getLongName('business_partners','employee_number') + ': '%></label>
+        <%= f_bp.text_field :employee_number %>
+      <%end%>
+      <%= f.fields_for :bp_pic do |f_pic| %>
+        <label>問い合わせメール: </label>
+        <%= f_pic.text_field :email1 %>
+        <label><%=getLongName('bp_pics','sales_pic_id') + ': '%></label>
+        <%= f_pic.select :sales_pic_id, options_for_select(BpPic.select_content_list, get_sales_pic_id(@outflow_mail.bp_pic)), :include_blank => true %>
+      <%end%>
+
+      <%= hidden_field_tag 'outflow_mail_id', @outflow_mail.id %>
+      <%= hidden_field_tag 'back_to', request_url %>
+      <br/>
+    
+    <%= submit_tag '作成', class: "btn btn-success", name: 'status_update_button', confirm: @outflow_mail.email_text + 'の情報を作成します。よろしいですか？' %>
+    <%= submit_tag '不要', class: "btn btn-danger", name: 'status_update_button', confirm: 'ステータスを「不要」にします。よろしいですか？' %>
+  </fieldset>
+<%end%>

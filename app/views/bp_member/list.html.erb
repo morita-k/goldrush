@@ -59,8 +59,10 @@
 
 <br />
 
-<% if !popup? %>
-<%= link_to (getLongName('table_name','bp_members')+'の新規作成'), :action => 'new' %>
+<% if popup? %>
+  <%= link_to (getLongName('table_name','bp_members')+'の新規作成'), :action => 'new', :popup => 1 %>
+<% else %>
+  <%= link_to (getLongName('table_name','bp_members')+'の新規作成'), :action => 'new' %>
 <% end %>
 
 <script type="text/javascript">

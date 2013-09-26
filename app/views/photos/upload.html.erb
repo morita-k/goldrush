@@ -1,0 +1,8 @@
+<%= form_tag("/api/import_photo", :multipart => true) do %>
+  <input name="attachment" type="file" />
+  <br/>
+  <label for="sender">送信者</label>
+  <input name="sender" type="text"/>
+  <br/>
+  <input type="submit" />
+<% end %>

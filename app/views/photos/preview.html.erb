@@ -1,0 +1,7 @@
+<div style="text-align: center">
+<%= image_tag(url_for(:action => 'get_image', :filepath => @photo.file_path)) %>
+<br/>
+<%= @photo.photo_sender %>
+<br/>
+<%= _timetoddmmhhmm(@photo.created_at) %>
+</div>
