@@ -43,6 +43,7 @@ module ContractHelper
   end
 
   def rate(a,b)
+    return "-" if a == 0
     (b.to_f / a * 100).round(2).to_s + "%"
   end
 
@@ -52,7 +53,7 @@ module ContractHelper
     x = if !y.blank? && !m.blank?
       "#{y}年#{m}月度 "
     elsif !y.blank?
-      "#[y}年度 "
+      "#{y}年度 "
     end
     x.to_s + getLongName('table_name','contracts') + "一覧"
   end
