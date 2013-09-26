@@ -119,6 +119,11 @@ class BpPicController < ApplicationController
     if params[:popup] && params[:callback].blank?
       flash[:warning] = 'ポップアップのパラメータが不正です'
     end
+
+    if @photo_id = params[:photoid]
+      @popup_mode = 1
+    end
+
     return true
   end
 
@@ -147,6 +152,7 @@ class BpPicController < ApplicationController
     @remarks = Remark.find(:all, :conditions => ["deleted = 0 and remark_key = ? and remark_target_id = ?", 'bp_pics', params[:id]])
     @delivery_mails = DeliveryMail.where(:deleted => 0 , :id => @bp_pic.delivery_mail_ids).order("id desc").page(params[:page]).per(20)
     @former_bp_pic = params[:former_bp_pic_id] ? BpPic.find(params[:former_bp_pic_id]) : @bp_pic.former_bp_pic
+    @photos = Photo.where(:deleted => 0, :parent_id => @bp_pic.id)
   end
 
   def new
@@ -325,6 +331,25 @@ class BpPicController < ApplicationController
   def quick_input_form
     @business_partner = BusinessPartner.find(params[:business_partner_id])
     render template: 'business_partner/quick_input_form', layout: 'blank'
+  end
+
+  def update_photo
+    Photo.update_bp_pic(params[:id], params[:photo_id])
+
+    flash_notice = 'Photo was successfully updated.'
+
+    flash.now[:notice] = flash_notice
+    redirect_to :controller => :photos, :action => :list
+  end
+
+  def update_photo_unlink
+    Photo.update_bp_pic_unlink(params[:photo_id])
+
+    flash_notice = 'Photo was successfully updated.'
+
+    flash.now[:notice] = flash_notice
+
+    redirect_to :back
   end
 
 private

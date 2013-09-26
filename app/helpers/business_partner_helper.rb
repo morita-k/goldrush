@@ -20,5 +20,12 @@ module BusinessPartnerHelper
       return ""
     end
   end
-  
+
+  def photo_id_hidden_field
+    if params[:photoid]
+      hidden_field_tag :photoid, params[:photoid]
+    else
+      ''
+    end
+  end
 end

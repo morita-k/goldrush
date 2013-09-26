@@ -290,3 +290,10 @@ div.overflow_hidden {
 .black_link a:hover { color: #000000; }
 .black_link a:active { color: #000000; }
 
+.button_to {
+    display: inline;
+}
+
+.button_to div {
+    display: inline;
+}
