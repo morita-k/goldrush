@@ -1,7 +1,25 @@
-<h1><%=getLongName('table_name','contracts')%>一覧</h1>
+<h1><%= title%></h1>
+
+<%= form_tag( {}, {:class => ""}) do %>
+  <div class="form-gorup form-inline">
+    <label for="year">対象年月</label>
+    <%= select_tag "year", options_for_select(years, params[:year].to_s) %>
+    <%= select_tag "month", options_for_select(months, params[:month].to_s) %>
+    <%= submit_tag "選択", :name => "select" %>
+    <%= submit_tag "クリア", :name => "clear" %>
+  </div>
+<% end %>
+
 <%= back_to_link "稼働状況表", :action => :works %>
 
-<%= paginate(@contracts) %>
+<%= @contract_pages && paginate(@contracts) %>
+
+<% if @summary %>
+  <table class="list_table">
+    <tr><th>売上</th><th>原価</th><th>粗利</th><th>粗利率</th></tr>
+    <tr><td class="right"><%=pay @summary[:upper_payment]%></td><td class="right"><%=pay @summary[:down_payment]%></td><td class="right"><%=pay @summary[:gross_profit]%></td><td class="right"><%= rate @summary[:upper_payment], @summary[:gross_profit] %></td></tr>
+  </table>
+<% end %>
 
 <table class="list_table">
   <tr>
@@ -43,7 +61,7 @@
     <th>粗利率</th>
   </tr>
 <% for contract in @contracts %>
-  <tr <%=raw(contract.contract_status_type == 'finished' ? 'style="background-color: lightgray"' : "")%>>
+  <tr <%=raw(contract.finished? ? 'style="background-color: lightgray"' : "")%>>
     <td rowspan=2><%=h contract.id %></td>
 
     <td rowspan=2><%=back_to_link contract.approach.bp_member.human_resource.useful_name, :controller => :approach, :action => :show, :id => contract.approach %></td>
@@ -62,29 +80,29 @@
 
     <td style="background-color: <%=color(contract, contract.upper_contract_status_type)%>"><%=h contract.upper_contract_status_type_name %></td>
 
-    <td><%=man contract.upper_contract_term.payment_view %></td>
+    <td class="right"><%=man contract.upper_contract_term.payment_view %></td>
 
     <td><%=h contract.upper_contract_term.cutoff_and_sight %></td>
 
-    <td><%=man contract.payment_diff_veiw %></td>
+    <td class="right"><%=man contract.payment_diff_veiw %></td>
   </tr>
-  <tr <%=raw(contract.contract_status_type == 'finished' ? 'style="background-color: lightgray"' : "")%>>
+  <tr <%=raw(contract.finished? ? 'style="background-color: lightgray"' : "")%>>
     <td><%=_date2 contract.approach.end_date %></td>
 
     <td><%=h contract.approach.bp_member.business_partner.business_partner_short_name %></td>
 
     <td style="background-color: <%=color(contract, contract.down_contract_status_type)%>"><%=h contract.down_contract_status_type_name %></td>
 
-    <td><%=man contract.down_contract_term.payment_view %></td>
+    <td class="right"><%=man contract.down_contract_term.payment_view %></td>
 
     <td><%=h contract.down_contract_term.cutoff_and_sight %></td>
 
-    <td><%=h contract.payment_redio %>%</td>
+    <td class="right"><%=h contract.payment_redio %>%</td>
   </tr>
 <% end %>
 </table>
 
-<%= paginate(@contracts) %>
+<%= @contract_pages && paginate(@contracts) %>
 
 <br />
 
