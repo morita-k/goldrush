@@ -9,6 +9,9 @@
 </div>
 <% end %>
 
+<% if @photos %>
+  <%= (square_table @photos, :col => 4 do |photo| get_photo_thumbnail_link(photo) end).html_safe %>
+<% end %>
 <table class="show_table">
 <tr>
   <th><%= getLongName('business_partners', 'business_partner_name') %></th><td><%=link_to @bp_pic.business_partner.business_partner_name, :controller => :business_partner, :action => :show, :id => @bp_pic.business_partner_id %></td>

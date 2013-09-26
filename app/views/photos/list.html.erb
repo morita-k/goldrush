@@ -1,0 +1,4 @@
+<h1>名刺取込一覧</h1>
+<div style="text-align:center;">
+<%= (square_table @photos, :col => 4 do |photo| get_photo_thumbnail(photo) end).html_safe %>
+</div>

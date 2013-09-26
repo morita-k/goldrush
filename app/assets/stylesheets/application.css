@@ -293,3 +293,11 @@ div.overflow_hidden {
 .right {
   text-align: right;
 }  
+
+.button_to {
+    display: inline;
+}
+
+.button_to div {
+    display: inline;
+}

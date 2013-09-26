@@ -106,4 +106,10 @@ class ApiController < ApplicationController
     }
   end
 
+  def import_photo
+    src = params[:attachment]
+    sender = params[:sender]
+    Photo.import_photo(src, sender)
+    render :text => 'REQUEST OK!'
+  end
 end
