@@ -96,6 +96,10 @@ class Contract < ActiveRecord::Base
 #    end
 #  end
 
+  def proper?
+    approach.bp_member.business_partner.self_flg == 1 and approach.bp_member.employment_type == 'permanent'
+  end
+
   def confirm_warning?(date=Date.today)
     puts ">>>>>>>>>" + date.to_s + ": " + (contract_start_date - contract_renewal_terms.to_i.month).to_s
     (contract_start_date - contract_renewal_terms.to_i.month) <= date

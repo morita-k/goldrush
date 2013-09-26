@@ -33,6 +33,20 @@ class ContractController < ApplicationController
     each_month(st.next_month, ed, &block)
   end
 
+  def summary(st, ed, contracts, &cond)
+    sum = {:upper_payment => 0, :down_payment => 0, :gross_profit => 0}
+    each_month(st,ed) do |xst, xed|
+      contracts.each do |c|
+        next unless cond.call c
+        next unless c.in_term?(xst, xed)
+        sum[:upper_payment] += c.upper_contract_term.payment
+        sum[:down_payment] += c.down_contract_term.payment
+        sum[:gross_profit] += (c.upper_contract_term.payment - c.down_contract_term.payment)
+      end
+    end
+    sum
+  end
+    
   def list
     if params[:clear]
       params[:year] = params[:month] = nil
@@ -42,15 +56,9 @@ class ContractController < ApplicationController
 
     target_date params[:year], params[:month], lambda {|st, ed|
       @contracts = Contract.where("deleted = 0 and contract_status_type in ('contract','finished') and contract_end_date >= ? and contract_start_date <= ? ", st, ed).order("contract_start_date")
-      @summary = {:upper_payment => 0, :down_payment => 0, :gross_profit => 0}
-      each_month(st,ed) do |xst, xed|
-        @contracts.each do |c|
-          next unless c.in_term?(xst, xed)
-          @summary[:upper_payment] += c.upper_contract_term.payment
-          @summary[:down_payment] += c.down_contract_term.payment
-          @summary[:gross_profit] += (c.upper_contract_term.payment - c.down_contract_term.payment)
-        end
-      end
+      @summary = summary(st, ed, @contracts) {true}
+      @summary_prop = summary(st, ed, @contracts) {|c| c.proper? }
+      @summary_non_prop = summary(st, ed, @contracts) {|c| !c.proper? }
     }, lambda {
       @contract_pages, @contracts = paginate :contracts, :conditions =>["deleted = 0"], :per_page => current_user.per_page, :order => "contract_start_date desc"
     }
