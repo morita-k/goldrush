@@ -1,6 +1,6 @@
 <h1><%= @business_partner.blank? ? getLongName('table_name','business_partners') : "#{@business_partner.business_partner_name}担当" %>一覧</h1>
 
-<%= form_tag_popup_mode(params[:callback].blank? ? {} : {:callback => params[:callback]}) do %>
+<%= form_tag_popup_mode(set_url_param) do %>
 <table>
   <tr>
     <th style="text-align: right">コード(営業|取引|販管):</th>
@@ -51,6 +51,7 @@
     <% end %>
   </p>
 <br />
+<%= hidden_field_tag 'photoid', @photo_id if @photo_id %>
 <% end %>
 
 <%= form_for :addGroup, :url => {:controller => :bp_pic, :action => :proc_bp_pic_ids} do |f| %>
@@ -151,7 +152,11 @@
       <tr>
         <% if popup? %>
           <td><%= star_links(bp_pic.business_partner) %> <%= bp_pic.business_partner.business_partner_name %><%= basic_contract_concluded_text(bp_pic.business_partner) %></td>
+          <% unless @photo_id %>
           <td><%= star_links(bp_pic) %> <%=link_to h(bp_pic.usefulname), '#', :onClick => "setBpPicToParentWindow(#{bp_pic.id},'#{bp_pic.usefulname}', '#{bp_pic.business_partner_name}');return false;" %></td>
+          <% else %>
+            <td><%= star_links(bp_pic) %> <%=link_to bp_pic.usefulname, {:controller => :bp_pic, :action => :update_photo, :id => bp_pic.id, :photo_id => @photo_id, :popup => 1} %></td>
+          <% end %>
         <% else %>
           <td><%= check_box_tag 'ids[]', bp_pic.id, false %></td>
           <td><%= star_links(bp_pic.business_partner) %> <%=back_to_link bp_pic.business_partner.business_partner_name, {:controller => :business_partner, :action => :show, :id => bp_pic.business_partner}, {:class => 'bp_name'} %><%= basic_contract_concluded_text(bp_pic.business_partner) %></td>
@@ -214,4 +219,6 @@ function setBpPicToParentWindow(bp_pic_id, bp_pic_name, business_partner_name) {
 // -->
 </script>
 <% end # if popup? %>
-
+<% if is_photo? %>
+  <%= link_or_back '戻る', {:controller => :photos ,:action => 'list'} %>
+<% end %>

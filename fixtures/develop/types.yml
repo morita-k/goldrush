@@ -5398,3 +5398,43 @@ types_270:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
+types_271:
+  id: 271
+  owner_id: 
+  type_section: "photo_status_type"
+  type_key: "unfixed"
+  long_name: "未登録"
+  short_name: "未登録"
+  other_name: "未登録"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 1
+  display_order2: 1
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_272:
+  id: 272
+  owner_id: 
+  type_section: "photo_status_type"
+  type_key: "fixed"
+  long_name: "登録済み"
+  short_name: "登録済み"
+  other_name: "登録済み"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 2
+  display_order2: 2
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0

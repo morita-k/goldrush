@@ -1,6 +1,14 @@
 # -*- encoding: utf-8 -*-
 GoldRush::Application.routes.draw do
 
+  resources :photos do
+    collection do
+      get 'list'
+      get 'upload'
+      get 'get_image'
+    end
+  end
+
   resources :tags
 
 
