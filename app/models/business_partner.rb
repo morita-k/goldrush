@@ -77,6 +77,7 @@ class BusinessPartner < ActiveRecord::Base
     pic.bp_pic_name_kana = pic_name
     pic.email1 = email
     pic.memo = memo
+    pic.working_status_type = 'working'
     pic.created_user = 'import'
     pic.updated_user = 'import'
     begin

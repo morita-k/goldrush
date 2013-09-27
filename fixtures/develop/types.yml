@@ -5181,7 +5181,7 @@ types_259:
 types_260:
   id: 260
   owner_id: 
-  type_section: "working_status"
+  type_section: "working_status_type"
   type_key: "working"
   long_name: "在職"
   short_name: "在"
@@ -5201,7 +5201,7 @@ types_260:
 types_261:
   id: 261
   owner_id: 
-  type_section: "working_status"
+  type_section: "working_status_type"
   type_key: "changed"
   long_name: "転職"
   short_name: "転"
@@ -5221,7 +5221,7 @@ types_261:
 types_262:
   id: 262
   owner_id: 
-  type_section: "working_status"
+  type_section: "working_status_type"
   type_key: "retired"
   long_name: "退職"
   short_name: "退"

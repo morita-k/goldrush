@@ -10,7 +10,7 @@ class BpPicController < ApplicationController
       :email => params[:email],
       :bp_pic_group_id => params[:bp_pic_group_id],
       :nondelivery_score => params[:nondelivery_score],
-      :working_status => params[:working_status],
+      :working_status_type => params[:working_status_type],
       :jiet => params[:jiet]
     }
   end
@@ -54,8 +54,8 @@ class BpPicController < ApplicationController
     end
     
     # 在職者以外
-    if !(x = session[:bp_pic_search][:working_status]).blank?
-      sql += " and working_status <> ?"
+    if !(x = session[:bp_pic_search][:working_status_type]).blank?
+      sql += " and working_status_type <> ?"
       param << x
     end
 
@@ -90,7 +90,7 @@ class BpPicController < ApplicationController
     end
     
     # order by
-    if (x = session[:bp_pic_search][:working_status]).blank?
+    if (x = session[:bp_pic_search][:working_status_type]).blank?
       order_by = "bp_pics.updated_at desc"
     else
       #在職者以外を検索した場合は、後任者・転職先が登録されていないものを先頭に
@@ -213,9 +213,9 @@ class BpPicController < ApplicationController
     render :text => bp_pic.starred
   end
 
-  def update_working_status
+  def update_working_status_type
     @bp_pic = BpPic.find(params[:id])
-    @bp_pic.working_status = params[:working_status]
+    @bp_pic.working_status_type = params[:working_status_type]
     set_user_column @bp_pic
     @bp_pic.save!
     flash[:notice] = 'BpPic was successfully updated.'

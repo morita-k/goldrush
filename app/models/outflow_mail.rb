@@ -53,7 +53,7 @@ class OutflowMail < ActiveRecord::Base
     pic.bp_pic_name_kana    = "ご担当者"
     pic.email1              = form_pic[:email1].blank? ? create_unknown_address(bp.id) : form_pic[:email1]
     pic.email2              = self.email
-    pic.working_status      = "working"
+    pic.working_status_type = "working"
     pic.save!
 
     self.outflow_mail_status_type = "good"

@@ -39,7 +39,7 @@
 <th><label for="bp_pic_nondelivery_score"><%=getLongName('bp_pics','nondelivery_score')%></label></th><td><%= text_field 'bp_pic', 'nondelivery_score'  %></td>
 </tr>
 <tr>
-  <th><label for="bp_pic_working_status"><%=getLongName('bp_pics','working_status')%></th><td><%= select('bp_pic', 'working_status', getTypes('working_status'), :include_blank => false) %></td>
+  <th><label for="bp_pic_working_status_type"><%=getLongName('bp_pics','working_status_type')%></th><td><%= select('bp_pic', 'working_status_type', getTypes('working_status_type'), :include_blank => false) %></td>
 </tr>
 <% unless @bp_pic.working? %>
   <tr>

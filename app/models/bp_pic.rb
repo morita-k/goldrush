@@ -62,7 +62,7 @@ class BpPic < ActiveRecord::Base
   end
 
   def working?
-    self.working_status == "working"
+    self.working_status_type == "working"
   end
   
   def BpPic.score_nondelivery(reason)
@@ -83,7 +83,7 @@ class BpPic < ActiveRecord::Base
   def BpPic.update_changed(new_id, old_id)
     former_bp_pic = BpPic.find(old_id)
     former_bp_pic.change_to_bp_pic_id = new_id
-    former_bp_pic.working_status = "changed"
+    former_bp_pic.working_status_type = "changed"
     former_bp_pic.save!
   end
 
