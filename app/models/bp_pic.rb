@@ -1,5 +1,7 @@
 # -*- encoding: utf-8 -*-
 class BpPic < ActiveRecord::Base
+  include AutoTypeName
+
   belongs_to :business_partner
   belongs_to :sales_pic, :class_name => 'User'
   belongs_to :substitute_bp_pic, :class_name => 'BpPic'
