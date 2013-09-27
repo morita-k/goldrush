@@ -28,7 +28,7 @@
   </tr>
   <tr>
     <th style="text-align: right">在職者以外:</th>
-    <td><%= check_box_tag 'working_status', 'working', !search_value(:working_status).blank? %></td>
+    <td><%= check_box_tag 'working_status_type', 'working', !search_value(:working_status_type).blank? %></td>
   </tr>
   <tr>
     <th style="text-align: right">JIET:</th>
@@ -162,7 +162,7 @@
           <td><%= star_links(bp_pic.business_partner) %> <%=back_to_link bp_pic.business_partner.business_partner_name, {:controller => :business_partner, :action => :show, :id => bp_pic.business_partner}, {:class => 'bp_name'} %><%= basic_contract_concluded_text(bp_pic.business_partner) %></td>
           <td style="border-right-color: silver;"><%= star_links(bp_pic) %> <%=back_to_link bp_pic.usefulname, {:action => :show, :id => bp_pic}, {:class => 'bp_pic_name'} %>
             <% unless bp_pic.working? %>
-              <% links = working_status_links_list(bp_pic) %>[<%= links[0] %>|<%= links[1] %>]
+              <% links = working_status_type_links_list(bp_pic) %>[<%= links[0] %>|<%= links[1] %>]
             <% end %>
             <%= bp_pic.jiet? ? raw('[<span title="JIET取り込み" style="font-weight:bold">J</span>]') : ''%>
           </td>

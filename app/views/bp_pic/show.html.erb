@@ -56,7 +56,7 @@
   <th><%= getLongName('bp_pics', 'nondelivery_score') %></th><td><%=@bp_pic.nondelivery_score %><%= @bp_pic.nondelivery? ? '(メール停止)' : '' %></td>
 </tr>
 <tr>
-  <th><%= getLongName('bp_pics', 'working_status') %></th><td><%= getLongType('working_status', @bp_pic.working_status) %>(<% links = working_status_links_show(@bp_pic) %><%= links[0] %>|<%= links[1] %>)</td>
+  <th><%= getLongName('bp_pics', 'working_status_type') %></th><td><%= @bp_pic.working_status_type_name %>(<% links = working_status_type_links_show(@bp_pic) %><%= links[0] %>|<%= links[1] %>)</td>
 </tr>
 <% unless @former_bp_pic.blank? %>
 <tr>
