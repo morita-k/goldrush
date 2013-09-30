@@ -25,8 +25,6 @@ group :test, :development do
   gem "rspec-rails"
   gem 'simplecov', :require => false
   gem 'simplecov-rcov', :require => false
-  gem 'capybara', '2.0.3'
-  gem 'turnip'
 end
 
 gem 'jquery-rails'
