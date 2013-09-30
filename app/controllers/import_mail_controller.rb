@@ -94,8 +94,7 @@ class ImportMailController < ApplicationController
     end
 
     unless (free_word = session[:import_mail_search][:free_word]).blank?
-      sql += " and (mail_subject like ? or mail_body like ?) "
-      sql_params << '%' + free_word + '%'
+      sql += " and (concat(mail_subject, '-', mail_body) like ?) "
       sql_params << '%' + free_word + '%'
     end
 
@@ -128,12 +127,9 @@ class ImportMailController < ApplicationController
     end
     cond, incl, joins = make_conditions
 
-    limit_count = 1000 + params[:page].to_i * current_user.per_page
-
     @import_mails = ImportMail.includes(incl).joins(joins)
                                              .where(cond)
                                              .order("id desc")
-                                             .limit(limit_count)
                                              .page(params[:page])
                                              .per(current_user.per_page)
   end
