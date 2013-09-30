@@ -112,4 +112,33 @@ class ApiController < ApplicationController
     Photo.import_photo(src, sender)
     render :text => 'REQUEST OK!'
   end
+
+  def close_contracts
+    if params[:date]
+      Contract.close_contracts(params[:date].to_date)
+    else
+      Contract.close_contracts
+    end
+
+    if params[:back_to]
+      redirect_to params[:back_to]
+    else
+      render :text => 'REQUEST OK!'
+    end
+  end
+
+  def make_next_contracts
+    if params[:date]
+      Contract.make_next(params[:date].to_date)
+    else
+      Contract.make_next
+    end
+
+    if params[:back_to]
+      redirect_to params[:back_to]
+    else
+      render :text => 'REQUEST OK!'
+    end
+  end
+
 end

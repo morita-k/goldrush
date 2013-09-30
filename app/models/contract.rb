@@ -169,7 +169,7 @@ class Contract < ActiveRecord::Base
   end
 
   def next_term
-    Contract.where("approach_id = ? and contract_start_date > ? and contract_status_type != ?", approach_id, contract_end_date, 'finished').order("contract_start_date").first
+    Contract.where("deleted = 0 and approach_id = ? and contract_start_date > ? and contract_status_type != ?", approach_id, contract_end_date, 'finished').order("contract_start_date").first
   end
 
   def in_term?(term_start, term_end)

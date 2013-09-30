@@ -249,4 +249,10 @@ class SysConfig < ActiveRecord::Base
     get_configuration("outflow_mail", "outflow_criterion").value1
   end
 
+  def self.get_import_mail_date_limit
+    unless (date_limit = get_configuration("import_mail", "date_limit")).blank?
+      date_limit.value1.to_i
+    end
+  end
+
 end

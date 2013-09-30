@@ -64,7 +64,7 @@
             <% end %>
           </td>
           <td><%= star_links(detail.bp_pic.business_partner) %> <%= back_to_link detail.bp_pic.business_partner.business_partner_name, :controller => :business_partner, :action => :show, :id => detail.bp_pic.business_partner_id %></td>
-          <td><%= star_links(detail.bp_pic) %> <%= back_to_link "#{detail.bp_pic.usefulname} #{"(" + getLongType('working_status', detail.bp_pic.working_status) + ")" unless detail.bp_pic.working?} <#{detail.bp_pic.email1}>", :controller => :bp_pic, :action => :show, :id => detail.bp_pic_id %></td>
+          <td><%= star_links(detail.bp_pic) %> <%= back_to_link "#{detail.bp_pic.usefulname}" + (" (#{detail.bp_pic.working_status_type_name})" unless detail.bp_pic.working?).to_s + " <#{detail.bp_pic.email1}>", :controller => :bp_pic, :action => :show, :id => detail.bp_pic_id %></td>
           <td><%= detail.bp_pic.memo%></td>
           <td><span class='<%= "status_#{detail.id}" %>'><%= link_to "", {:controller => :bp_pic_group_details, :action => :suspend, :id => detail, :authenticity_token => form_authenticity_token}, :remote => true, :method => :put, :class => (detail.suspended? ? "status_toggle off" : "status_toggle on") %></span></td>
         </tr>

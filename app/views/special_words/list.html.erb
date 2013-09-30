@@ -1,0 +1,33 @@
+<h1><%= getLongName('table_name','special_words')%> 一覧</h1>
+
+<%= paginate(@special_words) %>
+
+<table class="list_table">
+  <tr>
+    <% for column in SpecialWord.columns %>
+      <% if system_column?(column.name) then next end %>
+      <th><%=getShortName('special_words', column.name)%></th>
+    <% end %>
+    <th></th>
+  </tr>
+
+<% @special_words.each do |special_word| %>
+  <tr>
+    <% for column in SpecialWord.columns %>
+      <% if system_column?(column.name) then next end %>
+      <td><%=simple_format(h special_word.send(column.name)) %></td>
+    <% end %>
+    <td>
+      <%= link_to '表示', :action => 'show', :id => special_word %>,
+      <%= link_to '変更', :action => 'edit', :id => special_word %>,
+      <%= link_to '削除', { :action => 'destroy', :id => special_word, :authenticity_token => form_authenticity_token }, :confirm => 'この情報を削除します。よろしいですか?', :method => :post %>
+    </td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= paginate(@special_words) %>
+
+<%= back_to_link getLongName('table_name','special_words') + ' の新規作成', :action => 'new' %>

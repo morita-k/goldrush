@@ -1,5 +1,6 @@
 class BpPicGroupDetail < ActiveRecord::Base
   belongs_to :bp_pic
+  belongs_to :bp_pic_group
   attr_accessible :bp_pic_group_id, :bp_pic_id, :id, :memo, :owner_id, :suspended, :lock_version
   
   def suspended?

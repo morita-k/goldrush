@@ -56,7 +56,7 @@
   <th><%= getLongName('bp_pics', 'nondelivery_score') %></th><td><%=@bp_pic.nondelivery_score %><%= @bp_pic.nondelivery? ? '(メール停止)' : '' %></td>
 </tr>
 <tr>
-  <th><%= getLongName('bp_pics', 'working_status') %></th><td><%= getLongType('working_status', @bp_pic.working_status) %>(<% links = working_status_links_show(@bp_pic) %><%= links[0] %>|<%= links[1] %>)</td>
+  <th><%= getLongName('bp_pics', 'working_status_type') %></th><td><%= @bp_pic.working_status_type_name %>(<% links = working_status_type_links_show(@bp_pic) %><%= links[0] %>|<%= links[1] %>)</td>
 </tr>
 <% unless @former_bp_pic.blank? %>
 <tr>
@@ -80,3 +80,19 @@
 <%= render :partial => 'remarks/list', :locals => {:remark_key => "bp_pics", :remark_target_id => @bp_pic} %>
 <h3>送信メール一覧</h3>
 <%= render :partial => 'delivery_mails/list' %>
+
+<% unless @bp_pic_groups_details.blank? %>
+<h3>取引先担当グループ一覧</h3>
+  <table class="show_table">
+    <tr>
+      <th><%= getLongName('bp_pic_groups', 'bp_pic_group_name') %></th>
+      <th><%= getLongName('bp_pic_groups', 'memo') %></th>
+    </tr>
+    <% @bp_pic_groups_details.each do |bp_pic_group_detail| %>
+      <tr>
+        <td><%= link_to bp_pic_group_detail.bp_pic_group.bp_pic_group_name , {:controller => 'bp_pic_groups', :action => 'show', :id => bp_pic_group_detail.bp_pic_group.id} %></td>
+        <td><%= bp_pic_group_detail.bp_pic_group.memo %></td>
+      </tr>
+    <% end %>
+  </table>
+<% end %>
