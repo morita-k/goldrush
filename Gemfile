@@ -22,9 +22,13 @@ group :assets do
 end
 
 group :test, :development do
-#  gem "rspec-rails"
+  gem "rspec-rails"
   gem 'simplecov', :require => false
   gem 'simplecov-rcov', :require => false
+  gem 'capybara', '2.0.3'
+  gem 'capybara-webkit'
+  gem 'turnip'
+  gem 'spring'
 end
 
 gem 'jquery-rails'

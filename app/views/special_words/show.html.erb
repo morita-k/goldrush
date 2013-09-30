@@ -1,0 +1,15 @@
+<h1><%= getLongName('table_name','special_words')%> 詳細</h1>
+
+<table class="show_table">
+  <%- for column in SpecialWord.columns -%>
+    <%- if system_column?(column.name) then next end -%>
+    <tr>
+      <th><%= getLongName('special_words', column.name) %></th><td><%=simple_format h(@special_word.send(column.name)) %></td>
+    </tr>
+  <% end %>
+</table>
+
+<%= back_to_link '編集', :action => 'edit', :id => @special_word %> |
+<%= link_to '削除', {:id => @special_word, :authenticity_token => form_authenticity_token}, method: :delete, data: { confirm: '削除します。よろしいですか?' } %> |
+<%= link_or_back '戻る', 'list' %>
+

@@ -25,6 +25,8 @@ class ImportMailController < ApplicationController
       :payment_to => params[:payment_to],
       :age_from => params[:age_from],
       :age_to => params[:age_to],
+      :free_word => params[:free_word],
+      :date_limit => 1,
     }
   end
 
@@ -91,8 +93,23 @@ class ImportMailController < ApplicationController
       sql_params << age_to
     end
 
+    unless (free_word = session[:import_mail_search][:free_word]).blank?
+      sql += " and (mail_subject like ? or mail_body like ?) "
+      sql_params << '%' + free_word + '%'
+      sql_params << '%' + free_word + '%'
+    end
+
     if !(session[:import_mail_search][:starred]).blank?
       sql += " and starred > 0"
+    end
+
+    unless session[:import_mail_search][:date_limit].blank?
+      if (before_days = SysConfig.get_import_mail_date_limit).blank?
+        before_days = 30
+      end
+      date_now = Date.today.next_day(1).to_datetime.strftime('%F %T')
+      date_before = Date.today.prev_day(before_days).to_datetime.strftime('%F %T')
+      sql += " and received_at BETWEEN '" + date_before + "' AND '" + date_now + "'"
     end
 
     return [sql_params.unshift(sql), incl, joins]

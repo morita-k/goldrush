@@ -80,3 +80,19 @@
 <%= render :partial => 'remarks/list', :locals => {:remark_key => "bp_pics", :remark_target_id => @bp_pic} %>
 <h3>送信メール一覧</h3>
 <%= render :partial => 'delivery_mails/list' %>
+
+<% unless @bp_pic_groups_details.blank? %>
+<h3>取引先担当グループ一覧</h3>
+  <table class="show_table">
+    <tr>
+      <th><%= getLongName('bp_pic_groups', 'bp_pic_group_name') %></th>
+      <th><%= getLongName('bp_pic_groups', 'memo') %></th>
+    </tr>
+    <% @bp_pic_groups_details.each do |bp_pic_group_detail| %>
+      <tr>
+        <td><%= link_to bp_pic_group_detail.bp_pic_group.bp_pic_group_name , {:controller => 'bp_pic_groups', :action => 'show', :id => bp_pic_group_detail.bp_pic_group.id} %></td>
+        <td><%= bp_pic_group_detail.bp_pic_group.memo %></td>
+      </tr>
+    <% end %>
+  </table>
+<% end %>
