@@ -186,7 +186,7 @@ class ContractController < ApplicationController
     set_user_column @contract
     @contract.save!
     
-    redirect_to :action => 'list'
+    redirect_to(back_to || {:action => 'list'})
   end
 
   def do_action

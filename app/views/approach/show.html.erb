@@ -5,7 +5,8 @@
   <h2><%=getLongName('table_name','contracts')%>情報 <%= contract.term_term%></h2>
 
   <%= render :partial => 'contract/show', :locals => {:contract => contract} %>
-  <%= back_to_link '契約情報編集', :controller => 'contract', :action => 'edit', :id => contract %>
+  <%= back_to_link '契約情報編集', :controller => 'contract', :action => 'edit', :id => contract %> |
+  <%= back_to_link '契約削除', {:controller => 'contract', :action => 'destroy', :id => contract, :authenticity_token => form_authenticity_token}, :method => :post, :confirm => "この契約を削除します。よろしいですか？" %>
 
 <% end %>
 
