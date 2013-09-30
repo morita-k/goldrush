@@ -129,9 +129,6 @@ ActiveRecord::Schema.define(:version => 0) do
     t.date     "can_interview_date"
     t.integer  "approach_upper_contract_term_id", :limit => 8,                 :null => false
     t.integer  "approach_down_contract_term_id",  :limit => 8,                 :null => false
-    t.datetime "closed_at",                                                    :null => false
-    t.date     "start_date"
-    t.date     "end_date"
     t.text     "memo"
     t.datetime "created_at",                                                   :null => false
     t.datetime "updated_at",                                                   :null => false
@@ -140,6 +137,9 @@ ActiveRecord::Schema.define(:version => 0) do
     t.string   "updated_user",                    :limit => 80
     t.datetime "deleted_at"
     t.integer  "deleted",                                       :default => 0
+    t.datetime "closed_at",                                                    :null => false
+    t.date     "start_date"
+    t.date     "end_date"
   end
 
   add_index "approaches", ["id"], :name => "id", :unique => true
@@ -336,36 +336,36 @@ ActiveRecord::Schema.define(:version => 0) do
 
   create_table "bp_pics", :force => true do |t|
     t.integer  "owner_id",             :limit => 8
-    t.integer  "business_partner_id",  :limit => 8,                   :null => false
-    t.string   "bp_pic_name",                                         :null => false
-    t.string   "bp_pic_short_name",                                   :null => false
-    t.string   "bp_pic_name_kana",                                    :null => false
+    t.integer  "business_partner_id",  :limit => 8,                         :null => false
+    t.string   "bp_pic_name",                                               :null => false
+    t.string   "bp_pic_short_name",                                         :null => false
+    t.string   "bp_pic_name_kana",                                          :null => false
     t.string   "depertment"
     t.string   "position"
     t.string   "tel_direct",           :limit => 40
     t.string   "tel_mobile",           :limit => 40
-    t.string   "email1",                                              :null => false
+    t.string   "email1",                                                    :null => false
     t.string   "email2"
     t.date     "contact_date"
     t.integer  "sales_pic_id",         :limit => 8
     t.integer  "contact_mail_flg"
-    t.integer  "nondelivery_score",                  :default => 0,   :null => false
-    t.string   "working_status",       :limit => 40
+    t.integer  "nondelivery_score",                  :default => 0,         :null => false
+    t.string   "working_status_type",  :limit => 40, :default => "working", :null => false
     t.integer  "change_to_bp_pic_id",  :limit => 8
     t.integer  "substitute_bp_pic_id", :limit => 8
     t.integer  "jiet",                               :default => 0
-    t.integer  "starred",                            :default => 0
-    t.float    "rating",                             :default => 0.0
     t.integer  "import_mail_id",       :limit => 8
     t.string   "tag_text"
     t.text     "memo"
-    t.datetime "created_at",                                          :null => false
-    t.datetime "updated_at",                                          :null => false
+    t.datetime "created_at",                                                :null => false
+    t.datetime "updated_at",                                                :null => false
     t.integer  "lock_version",         :limit => 8,  :default => 0
     t.string   "created_user",         :limit => 80
     t.string   "updated_user",         :limit => 80
     t.datetime "deleted_at"
     t.integer  "deleted",                            :default => 0
+    t.integer  "starred",                            :default => 0
+    t.integer  "rating",                             :default => 0
   end
 
   add_index "bp_pics", ["id"], :name => "id", :unique => true
@@ -446,11 +446,11 @@ ActiveRecord::Schema.define(:version => 0) do
     t.integer  "owner_id",             :limit => 8
     t.integer  "eubp_id",              :limit => 8
     t.integer  "eubp_pic_id",          :limit => 8
-    t.string   "business_status_type", :limit => 40,                    :null => false
-    t.datetime "issue_datetime",                                        :null => false
+    t.string   "business_status_type", :limit => 40,                  :null => false
+    t.datetime "issue_datetime",                                      :null => false
     t.date     "due_date"
     t.string   "term_type",            :limit => 40
-    t.string   "business_title",                                        :null => false
+    t.string   "business_title",                                      :null => false
     t.string   "business_point"
     t.string   "business_description"
     t.integer  "member_change_flg",                    :default => 0
@@ -469,17 +469,17 @@ ActiveRecord::Schema.define(:version => 0) do
     t.string   "nationality_limit"
     t.string   "sex_limit"
     t.string   "communication"
-    t.integer  "starred",                              :default => 0
-    t.float    "rating",                               :default => 0.0
-    t.string   "link",                 :limit => 1000
     t.text     "memo"
-    t.datetime "created_at",                                            :null => false
-    t.datetime "updated_at",                                            :null => false
+    t.datetime "created_at",                                          :null => false
+    t.datetime "updated_at",                                          :null => false
     t.integer  "lock_version",         :limit => 8,    :default => 0
     t.string   "created_user",         :limit => 80
     t.string   "updated_user",         :limit => 80
     t.datetime "deleted_at"
     t.integer  "deleted",                              :default => 0
+    t.integer  "starred",                              :default => 0
+    t.integer  "rating",                               :default => 0
+    t.string   "link",                 :limit => 1000
   end
 
   add_index "businesses", ["id"], :name => "id", :unique => true
@@ -501,6 +501,26 @@ ActiveRecord::Schema.define(:version => 0) do
   end
 
   add_index "comments", ["id"], :name => "id", :unique => true
+
+  create_table "configurations", :force => true do |t|
+    t.integer  "owner_id",                :limit => 8
+    t.string   "config_section",          :limit => 40,                :null => false
+    t.string   "config_key",              :limit => 40,                :null => false
+    t.string   "value1"
+    t.string   "value2"
+    t.string   "value3"
+    t.text     "config_description_text"
+    t.datetime "created_at",                                           :null => false
+    t.datetime "updated_at",                                           :null => false
+    t.integer  "lock_version",            :limit => 8,  :default => 0
+    t.string   "created_user",            :limit => 80
+    t.string   "updated_user",            :limit => 80
+    t.datetime "deleted_at"
+    t.integer  "deleted",                               :default => 0
+  end
+
+  add_index "configurations", ["config_section", "config_key"], :name => "idx_configurations_3", :unique => true
+  add_index "configurations", ["id"], :name => "id", :unique => true
 
   create_table "contact_histories", :force => true do |t|
     t.integer  "owner_id",                  :limit => 8
@@ -556,10 +576,6 @@ ActiveRecord::Schema.define(:version => 0) do
     t.string   "contract_status_type",       :limit => 40,                :null => false
     t.datetime "contracted_at"
     t.integer  "contract_pic_id",            :limit => 8
-    t.date     "contract_start_date",                                     :null => false
-    t.date     "contract_end_date",                                       :null => false
-    t.integer  "contract_renewal_unit",      :limit => 8,  :default => 0
-    t.integer  "contract_renewal_terms",     :limit => 8,  :default => 0
     t.integer  "upper_contract_term_id",     :limit => 8,                 :null => false
     t.integer  "down_contract_term_id",      :limit => 8,                 :null => false
     t.string   "upper_contract_status_type", :limit => 40,                :null => false
@@ -572,6 +588,10 @@ ActiveRecord::Schema.define(:version => 0) do
     t.string   "updated_user",               :limit => 80
     t.datetime "deleted_at"
     t.integer  "deleted",                                  :default => 0
+    t.date     "contract_start_date",                                     :null => false
+    t.date     "contract_end_date",                                       :null => false
+    t.integer  "contract_renewal_unit",      :limit => 8,  :default => 0
+    t.integer  "contract_renewal_terms",     :limit => 8,  :default => 0
   end
 
   add_index "contracts", ["id"], :name => "id", :unique => true
@@ -913,7 +933,7 @@ ActiveRecord::Schema.define(:version => 0) do
     t.string   "human_resource_name"
     t.string   "human_resource_short_name"
     t.string   "human_resource_name_kana"
-    t.string   "initial",                    :limit => 80,                    :null => false
+    t.string   "initial",                    :limit => 80,                  :null => false
     t.string   "email"
     t.string   "tel1",                       :limit => 40
     t.string   "tel2",                       :limit => 40
@@ -930,21 +950,21 @@ ActiveRecord::Schema.define(:version => 0) do
     t.text     "skill"
     t.string   "skill_tag"
     t.text     "qualification"
-    t.string   "communication_type",         :limit => 40,                    :null => false
+    t.string   "communication_type",         :limit => 40,                  :null => false
     t.string   "attendance"
     t.string   "human_resource_status_type", :limit => 40
     t.integer  "jiet",                                       :default => 0
-    t.integer  "starred",                                    :default => 0
-    t.float    "rating",                                     :default => 0.0
-    t.string   "link",                       :limit => 1000
     t.text     "memo"
-    t.datetime "created_at",                                                  :null => false
-    t.datetime "updated_at",                                                  :null => false
+    t.datetime "created_at",                                                :null => false
+    t.datetime "updated_at",                                                :null => false
     t.integer  "lock_version",               :limit => 8,    :default => 0
     t.string   "created_user",               :limit => 80
     t.string   "updated_user",               :limit => 80
     t.datetime "deleted_at"
     t.integer  "deleted",                                    :default => 0
+    t.integer  "starred",                                    :default => 0
+    t.integer  "rating",                                     :default => 0
+    t.string   "link",                       :limit => 1000
   end
 
   add_index "human_resources", ["id"], :name => "id", :unique => true
@@ -987,6 +1007,7 @@ ActiveRecord::Schema.define(:version => 0) do
 
   add_index "import_mails", ["delivery_mail_id"], :name => "idx_import_mails_21"
   add_index "import_mails", ["id"], :name => "id", :unique => true
+  add_index "import_mails", ["in_reply_to"], :name => "idx_import_mails_23"
   add_index "import_mails", ["mail_from", "received_at"], :name => "idx_import_mails_12"
   add_index "import_mails", ["message_id"], :name => "idx_import_mails_11"
   add_index "import_mails", ["starred"], :name => "idx_import_mails_22"
@@ -1236,6 +1257,7 @@ ActiveRecord::Schema.define(:version => 0) do
     t.string   "file_path",                                      :null => false
     t.string   "thumbnail_path",                                 :null => false
     t.string   "photo_status_type", :limit => 40,                :null => false
+    t.string   "photo_sender"
     t.datetime "created_at",                                     :null => false
     t.datetime "updated_at",                                     :null => false
     t.integer  "lock_version",      :limit => 8,  :default => 0
