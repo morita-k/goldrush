@@ -1,0 +1,54 @@
+<%= error_messages_for 'special_words' %>
+
+<table class="show_table">
+  <tr>
+    <th>
+      <label for="special_words_id"><%= getLongName('special_words', 'id') %></label>
+    </th>
+    <td>
+      <%= @special_word.id || 'none' %>
+    </td>
+  </tr>
+  <tr>
+    <th>
+      <label for="special_word_config_key"><%=getLongName('special_words','owner_id')%></label>
+    </th>
+    <td>
+      <%= text_field 'special_word', 'owner_id'  %>
+    </td>
+  </tr>
+  <tr>
+    <th>
+      <label for="special_word_value1"><%=getLongName('special_words','special_word_type')%></label>
+    </th>
+    <td>
+      <%= select 'special_word', 'special_word_type', getTypes('special_word_type') %>
+    </td>
+  </tr>
+  <tr>
+    <th>
+      <label for="special_word_value2"><%=getLongName('special_words','target_word')%></label>
+    </th>
+    <td>
+      <%= text_field 'special_word', 'target_word'  %>
+    </td>
+  </tr>
+  <tr>
+    <th>
+      <label for="special_word_value3"><%=getLongName('special_words','convert_to_word')%></label>
+    </th>
+    <td>
+      <%= text_field 'special_word', 'convert_to_word'  %>
+    </td>
+  </tr>
+  <tr>
+    <th>
+      <label for="special_word_value3"><%=getLongName('special_words','memo')%></label>
+    </th>
+    <td>
+      <%= text_area 'special_word', 'memo'  %>
+    </td>
+  </tr>
+</table>
+<%= hidden_field 'special_word', 'lock_version'  %>
+<%= hidden_field_tag 'back_to', back_to  %>

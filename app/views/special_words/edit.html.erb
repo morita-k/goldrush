@@ -1,0 +1,9 @@
+<h1><%= getLongName('table_name','special_words')%> の編集</h1>
+
+<%= form_tag :action => 'update', :id => @special_word do %>
+  <%= render :partial => 'form' %>
+  <%= submit_tag '更新' %>
+<% end %>
+
+<%= link_to '表示', :action => 'show', :id => @special_word %> |
+<%= link_to '一覧に戻る', :action => 'list' %>
