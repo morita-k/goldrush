@@ -152,6 +152,9 @@ class BpPicController < ApplicationController
     @delivery_mails = DeliveryMail.where(:deleted => 0 , :id => @bp_pic.delivery_mail_ids).order("id desc").page(params[:page]).per(20)
     @former_bp_pic = params[:former_bp_pic_id] ? BpPic.find(params[:former_bp_pic_id]) : @bp_pic.former_bp_pic
     @bp_pic_groups_details = BpPicGroupDetail.where(:deleted => 0, :bp_pic_id => params[:id], :suspended => 0)
+    @bp_pic_groups_details.reject! do |bp_pic_groups_detail|
+      bp_pic_groups_detail.bp_pic.deleted != 0 || bp_pic_groups_detail.bp_pic_group.deleted != 0
+    end
     @photos = Photo.where(:deleted => 0, :parent_id => @bp_pic.id)
   end
 
