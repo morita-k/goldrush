@@ -62,7 +62,6 @@ class ImportMail < ActiveRecord::Base
       import_mail.mail_to = tryConv(m,'To')
       import_mail.mail_cc = tryConv(m,'Cc')
       import_mail.mail_bcc = tryConv(m,'Bcc')
-      import_mail.message_source = src
       import_mail.message_id = m.message_id
 
       # プロセス間で同期をとるために何でもいいから存在するレコードをロック(users#1 => systemユーザー)
@@ -76,6 +75,12 @@ class ImportMail < ActiveRecord::Base
       
       # attempt_fileのため(import_mail_idが必要)に一旦登録
       import_mail.save!
+      import_mail_src = ImportMailSource.new
+      import_mail_src.import_mail_id = import_mail.id
+      import_mail_src.message_source = src
+      import_mail_src.created_user = 'import_mail'
+      import_mail_src.updated_user = 'import_mail'
+      import_mail_src.save!
       
       # 添付ファイルがなければ案件、あれば人材と割り切る
       import_mail.biz_offer_flg = 1
