@@ -119,7 +119,12 @@ class ApiController < ApplicationController
     else
       Contract.close_contracts
     end
-    render :text => 'REQUEST OK!'
+
+    if params[:back_to]
+      redirect_to params[:back_to]
+    else
+      render :text => 'REQUEST OK!'
+    end
   end
 
   def make_next_contracts
@@ -128,7 +133,12 @@ class ApiController < ApplicationController
     else
       Contract.make_next
     end
-    render :text => 'REQUEST OK!'
+
+    if params[:back_to]
+      redirect_to params[:back_to]
+    else
+      render :text => 'REQUEST OK!'
+    end
   end
 
 end

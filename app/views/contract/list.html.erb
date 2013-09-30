@@ -35,7 +35,9 @@
 
 <br />
 
-<%= back_to_link (getLongName('table_name','contracts')+'の新規作成'), :action => 'quick_new' %>
+<%= back_to_link (getLongName('table_name','contracts')+'の新規作成'), :action => 'quick_new' %> |
+<%= back_to_link "次期契約作成処理", {:controller => :api, :action => 'make_next_contracts', :authenticity_token => form_authenticity_token}, :method => :post, :class => 'btn btn-primary btn-small', :confirm => "通知期限2カ月前の契約に対して、次期契約を自動生成します。よろしいですか？" %> |
+<%= back_to_link "契約終了処理", {:controller => :api, :action => 'close_contracts', :authenticity_token => form_authenticity_token}, :method => :post, :class => 'btn btn-primary btn-small', :confirm => "期限の切れた契約をクローズします(ただし確認中契約がある場合はクローズしません)。よろしいですか？" %>
 
 <% unless session[:msgids].to_s.split(",").include?("keiyaku1") %>
 <div class="alert alert-block">
