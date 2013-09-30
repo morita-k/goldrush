@@ -12,7 +12,8 @@ bp_pics_1:
   email1: "tanaka-k@applicative.jp"
   email2: "tanaka-k@sharingss.com"
   import_mail_id: 
-  memo: 
+  memo:
+  working_status_type : "working"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -34,7 +35,8 @@ bp_pics_2:
   email1: "ihara-k@applicative.jp"
   email2: "ihara-k@sharingss.com"
   import_mail_id: 
-  memo: 
+  memo:
+  working_status_type : "working"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -56,7 +58,8 @@ bp_pics_3:
   email1: "shiga-t@sharingss.com"
   email2: "shiga-t@applicative.jp"
   import_mail_id: 
-  memo: 
+  memo:
+  working_status_type : "working"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -78,7 +81,8 @@ bp_pics_4:
   email1: "satou-k@sharingss.com"
   email2: "satou-k@applicative.jp"
   import_mail_id: 
-  memo: 
+  memo:
+  working_status_type : "working"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -100,7 +104,8 @@ bp_pics_5:
   email1: "t_tsuruoka@enzantrades.co.jp"
   email2: ""
   import_mail_id: 
-  memo: 
+  memo:
+  working_status_type : "working"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -122,7 +127,8 @@ bp_pics_6:
   email1: "kazunori.shinoda@futureantiques.co.jp"
   email2: ""
   import_mail_id: 
-  memo: 
+  memo:
+  working_status_type : "working"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -144,7 +150,8 @@ bp_pics_7:
   email1: "nara@asgard.jpn.com"
   email2: ""
   import_mail_id: 
-  memo: 
+  memo:
+  working_status_type : "working"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -167,6 +174,7 @@ bp_pics_8:
   email2: ""
   import_mail_id: 
   memo: 外出していることが多いため携帯にご連絡お願いします。
+  working_status_type : "working"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -188,7 +196,8 @@ bp_pics_9:
   email1: "kishino@mytec-software.co.jp"
   email2: ""
   import_mail_id: 
-  memo: 
+  memo:
+  working_status_type : "working"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -210,7 +219,8 @@ bp_pics_10:
   email1: "tokuni.ueda@global-thinking.com"
   email2: ""
   import_mail_id: 
-  memo: 
+  memo:
+  working_status_type : "working"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0

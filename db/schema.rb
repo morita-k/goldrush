@@ -350,7 +350,7 @@ ActiveRecord::Schema.define(:version => 0) do
     t.integer  "sales_pic_id",         :limit => 8
     t.integer  "contact_mail_flg"
     t.integer  "nondelivery_score",                  :default => 0,         :null => false
-    t.string   "working_status_type",  :limit => 40, :default => "working", :null => false
+    t.string   "working_status_type",  :limit => 40,                        :null => false
     t.integer  "change_to_bp_pic_id",  :limit => 8
     t.integer  "substitute_bp_pic_id", :limit => 8
     t.integer  "jiet",                               :default => 0
