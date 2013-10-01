@@ -16,4 +16,12 @@ class PhotosController < ApplicationController
   def preview
     @photo = Photo.find(params[:id])
   end
+
+  def delete
+    photo_id = params[:photoid]
+
+    Photo.delete_photo(photo_id)
+
+    redirect_to :controller => :photos, :action => :list
+  end
 end
