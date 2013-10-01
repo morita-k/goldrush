@@ -23,7 +23,7 @@
     <th><label>上流取引先</label></th><td><%=h @business.biz_offers[0].business_partner.blank? ? "" : @business.biz_offers[0].business_partner.business_partner_name %></td>
   </tr>
   <tr>
-    <th><label>上流取引先担当</label></label></th><td><%=h (@business.biz_offers[0].business_partner.blank? || @business.biz_offers[0].bp_pic.blank?) ? "" : @business.biz_offers[0].bp_pic.bp_pic_name %></td>
+    <th><label>上流取引先担当</label></th><td><%=h (@business.biz_offers[0].business_partner.blank? || @business.biz_offers[0].bp_pic.blank?) ? "" : @business.biz_offers[0].bp_pic.bp_pic_name %></td>
   </tr>
 </table>
 

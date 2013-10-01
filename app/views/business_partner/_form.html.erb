@@ -70,11 +70,14 @@
   <%= check_box 'business_partner', 'down_flg'  %> 下位会社(案件メール対象)
 </td>
 </tr>
-<th><label for="business_partner_category"><%=getLongName('business_partners','establishment_year')%></label></th><td><%= text_field 'business_partner', 'establishment_year'  %></td>
+<tr>
+  <th><label for="business_partner_category"><%=getLongName('business_partners','establishment_year')%></label></th><td><%= text_field 'business_partner', 'establishment_year'  %></td>
 </tr>
-<th><label for="business_partner_category"><%=getLongName('business_partners','employee_number')%></label></th><td><%= text_field 'business_partner', 'employee_number'  %></td>
+<tr>
+  <th><label for="business_partner_category"><%=getLongName('business_partners','employee_number')%></label></th><td><%= text_field 'business_partner', 'employee_number'  %></td>
 </tr>
-<th><label for="business_partner_category"><%=getLongName('business_partners','share_capital')%></label></th><td><%= text_field 'business_partner', 'share_capital'  %></td>
+<tr>
+  <th><label for="business_partner_category"><%=getLongName('business_partners','share_capital')%></label></th><td><%= text_field 'business_partner', 'share_capital'  %></td>
 </tr>
 <tr>
 <th><label for="business_partner_memo"><%=getLongName('business_partners','memo')%></label></th><td><%= resizable_area 'business_partner', 'memo'  %></td>

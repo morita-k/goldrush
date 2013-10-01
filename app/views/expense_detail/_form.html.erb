@@ -75,7 +75,7 @@ function clear_row(index){
   <tr style="background-color: #DCDCDC">
     <td style="text-align: left;" >
       <%= text_field_tag "uexpense_detail#{i}[buy_date]", (expense_detail.buy_date.to_date if expense_detail.buy_date != nil), :size => '12', :onClick => "ucal#{i}.write();", :onChange => "ucal#{i}.getFormValue(); ucal#{i}.hide();", :onblur => "if (uflgCal#{i}) {ucal#{i}.hide();}", :class => "input_buy_date" %>
-      </br>
+      <br/>
       <div id="ucalDisplay<%=i%>" onmouseover="uflgCal<%=i%> = false;" onmouseout="uflgCal<%=i%> = true;" ></div>
     </td>
     <td><%= text_field_tag "uexpense_detail#{i}[book_no]", expense_detail.book_no, :size => '10', :class => "input_book_no" %></td>
@@ -94,7 +94,7 @@ function clear_row(index){
   <tr>
     <td style="text-align: left;" >
       <%= text_field_tag "expense_detail#{i}[buy_date]", (expense_detail.buy_date && expense_detail.buy_date.to_date), :size => '12', :onClick => "cal#{i}.write();", :onChange => "cal#{i}.getFormValue(); cal#{i}.hide();", :onblur => "if (flgCal#{i}) {cal#{i}.hide();}", :class => "input_buy_date" %>
-      </br>
+      <br/>
       <div id="calDisplay<%=i%>" onmouseover="flgCal<%=i%> = false;" onmouseout="flgCal<%=i%> = true;" ></div>
     </td>
     <td><%= text_field_tag "expense_detail#{i}[book_no]", expense_detail.book_no, :size => '10', :class => "input_book_no" %></td>
