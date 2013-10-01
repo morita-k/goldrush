@@ -29,6 +29,16 @@ class Photo < ActiveRecord::Base
     photo.update_and_store!
   end
 
+  def Photo.delete_photo(photo_id)
+    photo = find(photo_id)
+
+    photo.delete_and_store!
+
+    photo.deleted = 9
+    photo.deleted_at = Time.now
+    photo.save!
+  end
+
   def update_and_store!
     original_file = self.file_path
     original_thumbnail_file = self.thumbnail_path
@@ -42,11 +52,31 @@ class Photo < ActiveRecord::Base
 
   end
 
+  def delete_and_store!
+    original_file = self.file_path
+    original_thumbnail_file = self.thumbnail_path
+
+    do_delete(original_file)
+    do_delete(original_thumbnail_file)
+
+    folder_path = File::dirname(original_file)
+
+    if Dir::entries(folder_path).size == 2
+      Dir::rmdir(folder_path)
+    end
+  end
+
   def do_copy(original_file_path, copy_file_path)
     original_image = Magick::ImageList.new(original_file_path).first
     original_image.write(copy_file_path)
 
     File.delete(original_file_path)
+  end
+
+  def do_delete(original_file_path)
+    if File.exist?(original_file_path)
+      File.delete(original_file_path)
+    end
   end
 
   def create_and_store!(upfile, parent_id, file_name, parent_table_name, loginuser)
