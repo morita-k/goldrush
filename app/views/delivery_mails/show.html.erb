@@ -64,13 +64,12 @@
           %></td>
         <% else %>
           <td>
-            <% dmt = delivery_mail_target.get_reply_import_mail %>
-            <% if dmt != nil %>
+            <% if delivery_mail_target.get_import_mail_id != nil %>
               <%=
                 back_to_link "詳細",
                 :controller => :import_mail,
                 :action => :show,
-                :id => dmt.id
+                :id => delivery_mail_target.get_import_mail_id
               %>
             <% else %>
               &nbsp;
