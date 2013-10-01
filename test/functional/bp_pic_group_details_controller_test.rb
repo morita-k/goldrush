@@ -21,6 +21,12 @@ class BpPicGroupDetailsControllerTest < ActionController::TestCase
 
   test "should create bp_pic_group_detail" do
     assert_difference('BpPicGroupDetail.count') do
+      @new_bp_pic_group_detail = bp_pic_group_details(:bp_pic_group_details_1)
+      @new_bp_pic_group_detail.bp_pic_id = 2
+      post :create, bp_pic_group_detail: { bp_pic_group_id: @new_bp_pic_group_detail.bp_pic_group_id, bp_pic_id: @new_bp_pic_group_detail.bp_pic_id, memo: @bp_pic_group_detail.memo }, id: @new_bp_pic_group_detail.id, back_to: "/bp_pic_group_detail"
+    end
+
+    assert_no_difference('BpPicGroupDetail.count') do
       post :create, bp_pic_group_detail: { bp_pic_group_id: @bp_pic_group_detail.bp_pic_group_id, bp_pic_id: @bp_pic_group_detail.bp_pic_id, memo: @bp_pic_group_detail.memo }, id: @bp_pic_group_detail.id, back_to: "/bp_pic_group_detail"
     end
 
