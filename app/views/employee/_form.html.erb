@@ -46,7 +46,7 @@
   <th><%=getLongName('employees','entry_date')%>(*)</th>
   <td>
   <input type="text" id="employee_entry_date" name="employee[entry_date]" value="<%=h @employee.entry_date.to_date if @employee.entry_date != nil %>" size="15" onClick="cal1.write();" onChange="cal1.getFormValue(); cal1.hide();" onblur="if (flgCal1) {cal1.hide();}">
-  </br>
+  <br/>
   <div id="calDisplay1" onmouseover="flgCal1 = false;" onmouseout="flgCal1 = true;" ></div>
   </td>
 </tr>
@@ -54,7 +54,7 @@
   <th><%=getLongName('employees','resignation_date')%></th>
   <td>
   <input type="text" id="employee_resignation_date" name="employee[resignation_date]" value="<%=h @employee.resignation_date.to_date if @employee.resignation_date != nil %>" size="15" onClick="cal2.write();" onChange="cal2.getFormValue(); cal2.hide();" onblur="if (flgCal2) {cal2.hide();}">
-  </br>
+  <br/>
   <div id="calDisplay2" onmouseover="flgCal2 = false;" onmouseout="flgCal2 = true;" ></div>
   </td>
 </tr>
@@ -117,10 +117,10 @@
 <tr>
   <th><%=getLongName('employees','address1')%></th>
   <td>
-	  <%= text_field 'employee', 'address1_1', {:id => 'employee_address1_1', :size => '80'} %>(<%=getLongName('employees','address1_1')%>)</br>
-	  <%= text_field 'employee', 'address1_2', {:id => 'employee_address1_2', :size => '80'} %>(<%=getLongName('employees','address1_2')%>)</br>
-	  <%= text_field 'employee', 'address1_3', {:id => 'employee_address1_3', :size => '80'} %>(<%=getLongName('employees','address1_3')%>)</br>
-	  <%= text_field 'employee', 'address1_4', {:id => 'employee_address1_4', :size => '80'} %>(<%=getLongName('employees','address1_4')%>)</br>
+	  <%= text_field 'employee', 'address1_1', {:id => 'employee_address1_1', :size => '80'} %>(<%=getLongName('employees','address1_1')%>)<br/>
+	  <%= text_field 'employee', 'address1_2', {:id => 'employee_address1_2', :size => '80'} %>(<%=getLongName('employees','address1_2')%>)<br/>
+	  <%= text_field 'employee', 'address1_3', {:id => 'employee_address1_3', :size => '80'} %>(<%=getLongName('employees','address1_3')%>)<br/>
+	  <%= text_field 'employee', 'address1_4', {:id => 'employee_address1_4', :size => '80'} %>(<%=getLongName('employees','address1_4')%>)<br/>
   </td>
 </tr>
 <tr>
