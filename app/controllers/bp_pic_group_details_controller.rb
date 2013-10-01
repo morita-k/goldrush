@@ -42,13 +42,18 @@ class BpPicGroupDetailsController < ApplicationController
   # POST /bp_pic_group_details.json
   def create
     @bp_pic_group_detail = BpPicGroupDetail.new(params[:bp_pic_group_detail])
-    
+
     if @bp_pic_group_detail.bp_pic_id
       respond_to do |format|
         begin
-          @bp_pic_group_detail.save!
-          format.html { redirect_to back_to, notice: 'Bp pic group detail was successfully created.' }
-          format.json { render json: @bp_pic_group_detail, status: :created, location: @bp_pic_group_detail }
+          if BpPicGroupDetail.where(:deleted => 0, :bp_pic_group_id => @bp_pic_group_detail.bp_pic_group_id, :bp_pic_id => @bp_pic_group_detail.bp_pic_id).blank?
+            @bp_pic_group_detail.save!
+            format.html { redirect_to back_to, notice: 'Bp pic group detail was successfully created.' }
+            format.json { render json: @bp_pic_group_detail, status: :created, location: @bp_pic_group_detail }
+          else
+            format.html { redirect_to back_to, notice: '選択された取引先担当は既に登録済みのため追加できません。' }
+            format.json { render json: @bp_pic_group_detail.errors, status: :unprocessable_entity }
+          end
         rescue ActiveRecord::RecordInvalid
           format.html { render action: "new" }
           format.json { render json: @bp_pic_group_detail.errors, status: :unprocessable_entity }
