@@ -38,8 +38,8 @@
       <th>返信メール</th>
     <% end %>
   </tr>
-  <tr id="table_header">
     <% @delivery_mail.delivery_mail_targets.each do |delivery_mail_target| %>
+      <tr id="table_header">
         <td><%=
           back_to_link delivery_mail_target.bp_pic.business_partner.business_partner_name,
             :controller => :business_partner,
@@ -75,8 +75,8 @@
             <% end %>
           </td>
         <% end %>
+      </tr>
     <% end %>
-  </tr>
 </table>
 
 <% if @delivery_mail.unsend? %>
