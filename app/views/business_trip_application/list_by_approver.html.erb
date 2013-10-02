@@ -1,11 +1,11 @@
 <h1>出張申請承認一覧</h1>
-<%= link_to '全て', :controller => :application_approval, :action => :working_app %></li> | 
-<%= link_to '休暇申請承認', :controller => :holiday_application, :action => :list_by_approver %></li> | 
-<%= link_to '出張申請承認', :controller => :business_trip_application, :action => :list_by_approver %></li> | 
-<%= link_to '他勤怠申請承認', :controller => :other_application, :action => :list_by_approver %></li> | 
+<li><%= link_to '全て', :controller => :application_approval, :action => :working_app %></li> |
+<li><%= link_to '休暇申請承認', :controller => :holiday_application, :action => :list_by_approver %></li> |
+<li><%= link_to '出張申請承認', :controller => :business_trip_application, :action => :list_by_approver %></li> |
+<li><%= link_to '他勤怠申請承認', :controller => :other_application, :action => :list_by_approver %></li> |
 <% if false %>
-<%= link_to '勤怠承認', :controller => :monthly_working, :action => :list_by_approver %></li> | 
-<%= link_to '週報承認', :controller => :weekly_report, :action => :list_by_approver %></li>
+<li><%= link_to '勤怠承認', :controller => :monthly_working, :action => :list_by_approver %></li> |
+<li><%= link_to '週報承認', :controller => :weekly_report, :action => :list_by_approver %></li>
 <% end %>
 <br>   
 <hr> 
@@ -17,10 +17,10 @@
     <th style="width: 6%;">No</th>
     <th style="width: 9%;"><%=getShortName('employees', 'insurance_code')%></th> 
     <th><%=getShortName('employees', 'employee_name')%></th> 
-    <th th style="width: 9%;"><%=getShortName('business_trip_applications', 'application_date')%></th> 
-    <th th style="width: 9%;"><%=getShortName('business_trip_applications', 'start_date')%></th> 
-    <th th style="width: 9%;"><%=getShortName('business_trip_applications', 'end_date')%></th> 
-    <th th style="width: 20%;"><%=getShortName('business_trip_applications', 'content')%></th> 
+    <th style="width: 9%;"><%=getShortName('business_trip_applications', 'application_date')%></th>
+    <th style="width: 9%;"><%=getShortName('business_trip_applications', 'start_date')%></th>
+    <th style="width: 9%;"><%=getShortName('business_trip_applications', 'end_date')%></th>
+    <th style="width: 20%;"><%=getShortName('business_trip_applications', 'content')%></th>
     
     <th>状態</th> 
     

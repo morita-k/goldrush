@@ -22,7 +22,7 @@ group :assets do
 end
 
 group :test, :development do
-  gem "rspec-rails"
+  #gem "rspec-rails"
   gem 'simplecov', :require => false
   gem 'simplecov-rcov', :require => false
 end

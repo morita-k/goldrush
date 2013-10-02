@@ -9,7 +9,9 @@ class OutflowMailController < ApplicationController
 
   def make_conditons
     status = session[:outflow_mail_search][:outflow_mail_status]
-    "outflow_mails.deleted = 0" + (status.blank? ? "" : " and outflow_mail_status_type = '#{status}'")
+    conditions = "outflow_mails.deleted = 0"
+    conditions += status.blank? ? "" : " and outflow_mail_status_type = '#{status}'"
+    conditions += @import_mail_id.blank? ? "" : " and import_mail_id = '#{@import_mail_id}'"
   end
 
   def index
@@ -18,6 +20,7 @@ class OutflowMailController < ApplicationController
   end
 
   def list
+    @import_mail_id = params[:import_mail_id]
     session[:outflow_mail_search] ||= {}
     if params[:search_button]
       set_conditions
@@ -28,24 +31,27 @@ class OutflowMailController < ApplicationController
     cond = make_conditons
 
     @outflow_mails = OutflowMail.where(cond)
+    @import_mail = @import_mail_id.blank? ? nil : ImportMail.find(@import_mail_id)
   end
 
   def quick_input
+    import_mail_id = params[:import_mail_id]
     if params[:outflow_mail_id].nil?
-      @outflow_mail = OutflowMail.where(outflow_mail_status_type: "non_correspondence", deleted: 0).first
+      @outflow_mail = OutflowMail.where(outflow_mail_status_type: "non_correspondence", import_mail_id: import_mail_id, deleted: 0).first
     else
-      @outflow_mail = OutflowMail.where(id: params[:outflow_mail_id], deleted: 0).first
+      @outflow_mail = OutflowMail.where(id: params[:outflow_mail_id], import_mail_id: import_mail_id, deleted: 0).first
     end
 
     render layout: 'blank'
   end
 
   def next_address
-    outflow_mail_ids = OutflowMail.where(outflow_mail_status_type: "non_correspondence", deleted: 0).map(&:id)
+    import_mail_id = params[:import_mail_id]
+    outflow_mail_ids = OutflowMail.where(outflow_mail_status_type: "non_correspondence", import_mail_id: import_mail_id, deleted: 0).map(&:id)
     # idが"要素が一意かつ昇順に整列された配列"であることを利用してnext_idを算出
     next_id = outflow_mail_ids.reject{|id| id <= params[:outflow_mail_id].to_i}.first
 
-    redirect_to action: 'quick_input', popup: params[:popup], outflow_mail_id: next_id, only_path: false, protocol: "http://"
+    redirect_to action: 'quick_input', popup: params[:popup], outflow_mail_id: next_id, import_mail_id: import_mail_id, only_path: false, protocol: "http://"
   end
 
   def create_quick_input

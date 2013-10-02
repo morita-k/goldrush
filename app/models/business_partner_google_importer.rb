@@ -102,6 +102,7 @@ class BusinessPartnerGoogleImporter < BusinessPartner
         bp.updated_user = 'import' if bp.new_record?
         bp.save!
 
+        bp_pic.working_status_type = 'working'
         bp_pic.created_user = 'import'
         bp_pic.updated_user = 'import' if bp_pic.new_record?
         bp_pic.save!

@@ -5,7 +5,7 @@
     <tr>
       <td><%= radio_button_tag "order", "count", session[:import_mail_order][:order] == "count" %></td><td>メール件数</td>
       <td><%= radio_button_tag "order", "fifty", session[:import_mail_order][:order] == "fifty" %></td><td>五十音</td>
-      <td><%= radio_button_tag "order", "time", session[:import_mail_order][:order] == "time" %></td><td>最終メール受信時刻</td></td>
+      <td><%= radio_button_tag "order", "time", session[:import_mail_order][:order] == "time" %></td><td>最終メール受信時刻</td>
     </tr>
 </table>
 <p><%= submit_tag '　　並び替え　　', :name => 'search_button' %></p>
