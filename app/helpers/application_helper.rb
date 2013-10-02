@@ -41,8 +41,8 @@ module ApplicationHelper
     url_for controller: :bp_pic, action: :quick_input, popup: 1, page: params[:page], only_path: false, protocol: "http://"
   end
 
-  def url_for_outflow_mail_input_popup()
-    url_for controller: :outflow_mail, action: :quick_input, popup: 1, only_path: false, protocol: "http://"
+  def url_for_outflow_mail_input_popup(import_mail_id)
+    url_for controller: :outflow_mail, action: :quick_input, import_mail_id: import_mail_id, popup: 1, only_path: false, protocol: "http://"
   end
 
   def url_for_photo_preview_popup(photoid)

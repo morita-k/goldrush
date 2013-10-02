@@ -9,7 +9,7 @@
       <div class="row-fluid">
         <div class="span12">
           <%= content_tag :h2, @outflow_mail.email_text %>
-          <button class="btn btn-success" type="button" onclick="getNextOutflowMail(<%= @outflow_mail.id %>)">次の企業</button>
+          <button class="btn btn-success" type="button" onclick="getNextOutflowMail(<%= @outflow_mail.id %>, <%= @outflow_mail.import_mail_id %>)">次の企業</button>
           <button class="btn btn-danger" type="button" onclick='finishConfirm()'>入力終了</button>
           <button class="btn btn-info" type="button" onclick="disp_full('<%= @outflow_mail.url %>');return false;">別のタブで開く</button>
         </div>
@@ -54,9 +54,9 @@
     }
     window.onresize = dynamicResize();
 
-    function getNextOutflowMail(id, page) {
+    function getNextOutflowMail(id, import_mail_id) {
       // 新しい取引先を取得して再描画
-      location.href = 'next_address?popup=1&outflow_mail_id=' + id
+      location.href = 'next_address?popup=1&outflow_mail_id=' + id + '&import_mail_id=' + import_mail_id
     }
 
     function finishConfirm() {

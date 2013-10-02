@@ -10,6 +10,7 @@
         <%= check_box_tag 'registed', 1, session[:import_mail_search][:registed].to_i == 1 %> 登録済み
         <%= check_box_tag 'proper_flg', 1, session[:import_mail_search][:proper_flg].to_i == 1 %> プロパー
         <%= check_box_tag 'starred', 1, session[:import_mail_search][:starred].to_i == 1 %> スター
+        <%= check_box_tag 'outflow_mail_flg', 1, session[:import_mail_search][:outflow_mail_flg].to_i == 1 %> 流出メール
       </td>
     </tr>
     <tr>
@@ -38,7 +39,7 @@
     </tr>
 </table>
 <br/>
-<%= submit_tag '　　検索　　', :name => 'search_button' %> <%= submit_tag '　　クリア　　', :name => 'clear_button' %> <%= button_to_function "流出メールチェック", "location.href = 'outflow_mail';"%>
+<%= submit_tag '　　検索　　', :name => 'search_button' %> <%= submit_tag '　　クリア　　', :name => 'clear_button' %>
 <% end %>
 
 <%= paginate_far(@import_mails) %>
@@ -67,6 +68,9 @@
     </td>
     <td style="overflow: hidden">
       <div class="overflow_hidden">
+        <% if import_mail.outflow_mail_flg == 1 %>
+        <%= button_to '流出', {:controller => :outflow_mail, :action => :list, :import_mail_id => import_mail.id}, {class: 'btn btn-danger btn-mini',style: 'line-height:14px;'}  %>
+        <% end %>
         <%= star_links import_mail %> <%= link_to_detail(import_mail, request_url) %>
       </div>
     </td>
