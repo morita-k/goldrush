@@ -1,3 +1,6 @@
+<%= link_to_function '埋め込みコマンド一覧ーの表示', '$("#insert_cursor").toggle()' %>
+<br/>
+<div id="insert_cursor" style="display:none">
 送信先:
 <a href='javascript:insertAtCursor(xtarget, "%%bp_pic_name%%");'>担当者名</a>
 <a href='javascript:insertAtCursor(xtarget, "%%business_partner_name%%");'>取引先会社名</a><br/>
@@ -75,3 +78,4 @@
 <a href='javascript:insertAtCursor(xtarget, "%human_resources.link%");'>リンク</a>
 <a href='javascript:insertAtCursor(xtarget, "%human_resources.memo%");'>メモ</a>
 <br/>
+</div>

@@ -16,7 +16,7 @@
 <!-- ヘッダ -->
 <%- unless @menu_hide -%>
 <div class="navbar navbar-fixed-top">
-  <div class="navbar-inner">
+  <div class="navbar-inner" style="<%= get_background_color %>">
       <% if popup? %>
         <span class="brand">Gold Rush</span>
       <% else %>
