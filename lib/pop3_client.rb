@@ -17,12 +17,13 @@ class Pop3Client
   end
   
   def Pop3Client.pop_mail_with_settings(settings, &block)
+    pop3_mail_login = SysConfig.get_pop3_mail_login
     Net::POP3.enable_ssl(OpenSSL::SSL::VERIFY_NONE) if settings[:enable_tls] == 1
     begin
       Net::POP3.start(settings[:pop_server],
                       settings[:pop_port],
-                      settings[:user_name],
-                      settings[:password]){|pop|
+                      pop3_mail_login.value1,
+                      pop3_mail_login.value2){|pop|
         pop.each_mail{ |mail|
           str = mail.pop
           block.call(Mail.new(str), str)

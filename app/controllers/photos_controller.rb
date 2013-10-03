@@ -3,7 +3,7 @@ class PhotosController < ApplicationController
 
   # GET /photos/list
   def list
-    @photos = Photo.where(deleted: 0, photo_status_type: :unfixed).order(:created_at)
+    @photos = Photo.where(deleted: 0, photo_status_type: :unfixed).order('created_at desc')
   end
 
   def get_image

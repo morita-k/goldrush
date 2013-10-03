@@ -7,9 +7,10 @@ class ApiController < ApplicationController
   before_filter :api_auth_required, :except => [:error]
 
   def api_auth_required
+    api_login = SysConfig.get_api_login
     if logged_in?
       return true
-    elsif params[:login] == 'goldrush' && params[:password] == 'furuponpon'
+    elsif params[:login] == api_login.value1 && params[:password] == api_login.value2
       return true
     else
       redirect_to :action => :error
