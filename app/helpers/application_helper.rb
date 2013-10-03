@@ -574,5 +574,16 @@ EOS
       tag(tag_name, option)
     end
   end
-  
+
+  def get_background_color
+    if ENV['RAILS_ENV'] == 'development'
+      style = 'background-image: -moz-linear-gradient(top, #ffff00, #ffff00);'
+      style += 'background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffff00), to(#ffff00));'
+      style += 'background-image: -webkit-linear-gradient(top, #ffff00, #ffff00);'
+      style += 'background-image: -o-linear-gradient(top, #ffff00, #ffff00);'
+      style += 'background-image: linear-gradient(to bottom, #ffff00, #ffff00);'
+    else
+      ''
+    end
+  end
 end
