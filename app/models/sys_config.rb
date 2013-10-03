@@ -255,4 +255,12 @@ class SysConfig < ActiveRecord::Base
     end
   end
 
+  def self.get_pop3_mail_login
+    get_configuration("pop3_mail_login", "username_password")
+  end
+
+  def self.get_api_login
+    get_configuration("api_login", "username_password")
+  end
+
 end
