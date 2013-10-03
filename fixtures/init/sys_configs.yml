@@ -1044,3 +1044,51 @@ sys_configs_60:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
+sys_configs_61:
+  id: 63
+  owner_id: 
+  config_section: "import_mail"
+  config_key: "date_limit"
+  value1: "14"
+  value2: ""
+  value3: ""
+  config_description_text: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+sys_configs_62:
+  id: 64
+  owner_id: 
+  config_section: "pop3_mail_login"
+  config_key: "username_password"
+  value1: "ses_dev2@i.applicative.jp"
+  value2: "applicative**ses"
+  value3: ""
+  config_description_text: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+sys_configs_63:
+  id: 65
+  owner_id: 
+  config_section: "api_login"
+  config_key: "username_password"
+  value1: "goldrush"
+  value2: "furuponpon"
+  value3: ""
+  config_description_text: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
