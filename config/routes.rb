@@ -21,6 +21,9 @@ GoldRush::Application.routes.draw do
     member do
       put 'change_star'
     end
+    collection do
+      get 'announcement'
+    end
   end
 
   resources :bp_pic_group_details do
