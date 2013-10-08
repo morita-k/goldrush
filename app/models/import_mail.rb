@@ -39,6 +39,8 @@ class ImportMail < ActiveRecord::Base
   #  src : 取り込むメールのソーステキスト
   def ImportMail.import_mail_in(m, src)
     now = Time.now
+    attachment_flg = 0
+    import_mail_id = nil
     ActiveRecord::Base::transaction do
       import_mail = ImportMail.new
 
@@ -113,6 +115,8 @@ class ImportMail < ActiveRecord::Base
             attachment_file.create_by_import(upfile, import_mail.id, file_name)
             import_mail.biz_offer_flg = 0
             import_mail.bp_member_flg = 1
+
+            attachment_flg = 1
           elsif part.content_type.include?('text/plain')
             # 添付ファイルでなくtext/plainの場合、メール本文。
             # 上書きされる可能性あり？
@@ -131,6 +135,8 @@ class ImportMail < ActiveRecord::Base
       import_mail.save!
       import_mail.analyze!
       import_mail.save!
+
+      import_mail_id = import_mail.id
       
       # JIETの案件・人材メールだった場合、案件照会・人材所属を作成
       if import_mail.jiet_ses_mail?
@@ -150,6 +156,10 @@ class ImportMail < ActiveRecord::Base
       end
 
     end # transaction
+
+    if attachment_flg == 1
+      AttachmentFile.set_property_file(import_mail_id)
+    end
   end
   
   def ImportMail.import

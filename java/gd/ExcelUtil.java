@@ -1,22 +1,26 @@
 package gd;
 
-import java.io.PrintStream;
+import org.apache.poi.POIXMLProperties;
+import org.apache.poi.hpsf.*;
+import org.apache.poi.hssf.usermodel.*;
+import org.apache.poi.hssf.util.Region;
+import org.apache.poi.openxml4j.util.Nullable;
+import org.apache.poi.poifs.filesystem.DirectoryEntry;
+import org.apache.poi.poifs.filesystem.DocumentEntry;
+import org.apache.poi.poifs.filesystem.DocumentInputStream;
+import org.apache.poi.poifs.filesystem.POIFSFileSystem;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
+
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.sql.ResultSet;
+import java.io.PrintStream;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Calendar;
-import org.apache.poi.hssf.usermodel.*;
-import org.apache.poi.hssf.record.*;
-import org.apache.poi.hssf.model.*;
-import org.apache.poi.poifs.filesystem.POIFSFileSystem;
-
-import org.apache.poi.hssf.usermodel.*;
-import org.apache.poi.poifs.filesystem.POIFSFileSystem;
-import org.apache.poi.hssf.util.Region;
+import java.util.Date;
+import java.util.TimeZone;
 
 public class ExcelUtil {
   PrintStream o;
@@ -49,10 +53,10 @@ public class ExcelUtil {
   public HSSFCell getCell(HSSFSheet sheet, int row, int col){
     // Row,Colがなければcreateして返す
     if (sheet.getRow(row) == null) sheet.createRow(row);
-    if (sheet.getRow(row).getCell((short)col) == null) sheet.getRow(row).createCell((short)col);
+    if (sheet.getRow(row).getCell(col) == null) sheet.getRow(row).createCell((short)col);
     // 文字化け対応
-    sheet.getRow(row).getCell((short)col).setEncoding(HSSFCell.ENCODING_UTF_16);
-    return sheet.getRow(row).getCell((short)col);
+    sheet.getRow(row).getCell(col);
+    return sheet.getRow(row).getCell(col);
   }
   
   public void procFormatDetail(HSSFWorkbook workbook, HSSFSheet sheet, int num_row) throws SQLException {
@@ -223,4 +227,77 @@ public class ExcelUtil {
     getCell(sheet,num_row + 3,2).setCellValue(temporary_total);
     getCell(sheet,num_row + 4,2).setCellValue(all_total - temporary_total);
   }
+
+  public void setProperty(String fileName) throws IOException {
+    FileOutputStream out = null;
+    FileInputStream fis = new FileInputStream(fileName);
+    POIFSFileSystem fs = new POIFSFileSystem(fis);
+    DirectoryEntry dir = fs.getRoot();
+    SummaryInformation si;
+    try{
+        out = new FileOutputStream(fileName);
+        DocumentEntry dsiEntry = (DocumentEntry)dir.getEntry(SummaryInformation.DEFAULT_STREAM_NAME);
+        DocumentInputStream dis = new DocumentInputStream(dsiEntry);
+        PropertySet ps = new PropertySet(dis);
+        dis.close();
+        si = new SummaryInformation(ps);
+        si.setAuthor("アプリカティブ株式会社");
+        si.setLastAuthor("アプリカティブ株式会社");
+        si.setCreateDateTime(new Date());
+        si.setLastSaveDateTime(new Date());
+        si.write(dir, SummaryInformation.DEFAULT_STREAM_NAME);
+        fs.writeFilesystem(out);
+    } catch (NoPropertySetStreamException e) {
+        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+    } catch (MarkUnsupportedException e) {
+        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+    } catch (UnexpectedPropertySetTypeException e) {
+        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+    } catch (WritingNotSupportedException e) {
+        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+    } finally{
+      o.println("Excel/Doc Close!!");
+      if (out != null) out.close();
+      else o.println("Error don't open file.. " + fileName);
+    }
+  }
+
+    public void setDocxProperty(String fileName) throws IOException {
+        o.println(fileName);
+        FileInputStream fis = new FileInputStream(fileName);
+        Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("JST"));
+        o.println(cal.getTime());
+        try{
+            XWPFDocument docx = new XWPFDocument(fis);
+            fis.close();
+            FileOutputStream fos = new FileOutputStream(fileName);
+            POIXMLProperties.CoreProperties coreProperties = docx.getProperties().getCoreProperties();
+            coreProperties.setCreator("アプリカティブ株式会社");
+            coreProperties.setCreated(new Nullable<Date>(cal.getTime()));
+            coreProperties.setModified(new Nullable<Date>(cal.getTime()));
+            docx.write(fos);
+            fos.close();
+        }finally{
+            o.println("Docx Close!!");
+        }
+    }
+
+    public void setXlsxProperty(String fileName) throws IOException {
+        o.println(fileName);
+        FileInputStream fis = new FileInputStream(fileName);
+        Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("JST"));
+        try{
+            XSSFWorkbook xlsx = new XSSFWorkbook(fis);
+            fis.close();
+            FileOutputStream fos = new FileOutputStream(fileName);
+            POIXMLProperties.CoreProperties coreProperties = xlsx.getProperties().getCoreProperties();
+            coreProperties.setCreator("アプリカティブ株式会社");
+            coreProperties.setCreated(new Nullable<Date>(cal.getTime()));
+            coreProperties.setModified(new Nullable<Date>(cal.getTime()));
+            xlsx.write(fos);
+            fos.close();
+        }finally{
+            o.println("Xlsx Close!!");
+        }
+    }
 }
