@@ -72,7 +72,7 @@ public class GuardianCase extends Base {
       if (index == 0) {
       	sheetCount += 1;
         curSheetTotal = workbook.cloneSheet(0);
-        workbook.setSheetName(sheetCount, "temp", HSSFWorkbook.ENCODING_UTF_16);
+        workbook.setSheetName(sheetCount, "temp");
         procSummaryPaymentPerCaseHeader(res, curSheetTotal);
       	if (res.getDate("expense_paid_date") != null) sheetNameTotal = (new SimpleDateFormat("yyyyMMdd")).format(res.getDate("expense_paid_date")) + "都度精算";
       }
@@ -91,7 +91,7 @@ public class GuardianCase extends Base {
             count = 0;
             sheetCount += 1;
             curSheet = workbook.cloneSheet(0);
-            workbook.setSheetName(sheetCount, ExcelUtil.PREFIX_BOOK_NO_CONTENT, HSSFWorkbook.ENCODING_UTF_16);
+            workbook.setSheetName(sheetCount, ExcelUtil.PREFIX_BOOK_NO_CONTENT);
             procPaymentPerCaseHeader(res, curSheet);
           }
         	procPaymentPerCaseDetail(res, curSheet, ExcelUtil.HEADER_ROW_COUNT + count);
@@ -118,7 +118,7 @@ public class GuardianCase extends Base {
             count = 0;
             sheetCount += 1;
             curSheet = workbook.cloneSheet(0);
-            workbook.setSheetName(sheetCount, res.getString("book_no"), HSSFWorkbook.ENCODING_UTF_16);
+            workbook.setSheetName(sheetCount, res.getString("book_no"));
             procPaymentPerCaseHeader(res, curSheet);
             procPaymentPerCaseDetail(res, curSheet, ExcelUtil.HEADER_ROW_COUNT + count);
             count += 1;
@@ -138,7 +138,7 @@ public class GuardianCase extends Base {
       eu.procFormatFooter(workbook, curSheet, startFooterRow);
       
       curSheetTotal = workbook.cloneSheet(1);
-      workbook.setSheetName(sheetCount + 1, sheetNameTotal, HSSFWorkbook.ENCODING_UTF_16);
+      workbook.setSheetName(sheetCount + 1, sheetNameTotal);
       workbook.removeSheetAt(0);
       workbook.removeSheetAt(0);
   	}
