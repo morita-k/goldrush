@@ -26,7 +26,7 @@ public class SetPoiFile extends Base {
     @Override
     public String getQueryString() {
         String sql = ""
-                + "SELECT * FROM Attachment_Files \n"
+                + "SELECT * FROM attachment_files \n"
                 + " where                                   \n"
                 + " id IN (" + ids + ")                \n";
         return sql;
