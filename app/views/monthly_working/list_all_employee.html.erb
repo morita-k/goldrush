@@ -15,7 +15,7 @@
 <%= form_tag :action => 'clear_monthly_working', :back_to => request.env['REQUEST_URI'] do %>
   <p>
     再初期化を行いたい作業月を選択して下さい
-    </br>
+    <br/>
     <%= select_tag 'reinit_year', options_for_select(@arr_year, @cur_year.to_i) %>年　
     <%= select_tag 'reinit_month', options_for_select(@arr_month, @cur_month.to_i) %>月　
     <%= submit_tag '作業日報データの再初期化', :confirm => '作業日報データ再初期化します。よろしいですか?' %>

@@ -1,4 +1,24 @@
 <%= content_tag :h1, getLongName('table_name', 'outflow_mails') + " 一覧" %>
+
+<table class="show_table">
+  <% if @import_mail.business_partner %>
+    <tr>
+      <th><%= getLongName('import_mails', 'business_partner_id') %></th><td><%=link_to @import_mail.business_partner.business_partner_name, :controller => :business_partner, :action => :show, :id => @import_mail.business_partner_id %></td>
+    </tr>
+  <% end %>
+  <% if @import_mail.bp_pic %>
+    <tr>
+      <th><%= getLongName('import_mails', 'bp_pic_id') %></th><td><%=link_to @import_mail.bp_pic.bp_pic_name, :controller => :bp_pic, :action => :show, :id => @import_mail.bp_pic_id %></td>
+    </tr>
+  <% end %>
+  <tr>
+    <th><%= getLongName('import_mails', 'mail_sender_name') %></th><td><%=h @import_mail.mail_sender_name %></td>
+  </tr>
+  <tr>
+    <th>取り込みメール</th><td><%= link_to '詳細', :controller => 'import_mail', :action => 'show', :id => @import_mail.id %></td>
+  </tr>
+</table>
+<br/>
 <%= form_tag do %>
   <table>
     <tr>
@@ -13,9 +33,9 @@
   </table>
   <br/>
   <%= submit_tag '　　検索　　', :name => 'search_button' %> <%= submit_tag '　　クリア　　', :name => 'clear_button' %>
-  <input type=button value='会社チェック' onClick="disp_full('<%=url_for_outflow_mail_input_popup%>');return false;" />
+  <input type=button value='会社チェック' onClick="disp_full('<%=url_for_outflow_mail_input_popup(@import_mail.id)%>');return false;" />
+  <%= hidden_field_tag 'import_mail_id', @import_mail.id %>
 <% end %>
-
 <table class="list_table" style="margin-top:0px">
   <tr>
     <!-- <th colspan="5">流出メールアドレス一覧</th> -->
@@ -28,7 +48,7 @@
 
   <% @outflow_mails.each do |outflow_mail| %>
   <tr>
-    <td><%= back_to_link outflow_mail.email_text, {controller: :import_mail, action: :show, id: outflow_mail.import_mail_id} %></td>
+    <td><%= outflow_mail.email_text %></td>
     <td><%= outflow_mail.outflow_mail_status_type_name %></td>
     <td><%= link_to h(outflow_mail.url), outflow_mail.url, target: '_blank' %></td>
     <td><%= back_to_link get_bp_name(outflow_mail.business_partner_id), {:controller => :business_partner ,:action => :show, :id => outflow_mail.business_partner_id}, {:class => 'business_partner_name'} %></td>

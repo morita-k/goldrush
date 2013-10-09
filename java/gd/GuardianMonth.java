@@ -72,7 +72,7 @@ public class GuardianMonth extends Base {
       if (index == 0) {
       	sheetCount += 1;
         curSheetTotal = workbook.cloneSheet(0);
-        workbook.setSheetName(sheetCount, "temp", HSSFWorkbook.ENCODING_UTF_16);
+        workbook.setSheetName(sheetCount, "temp");
         procSummaryPaymentPerMonthHeader(res, curSheetTotal);
       	if (res.getDate("cutoff_end_date") != null) sheetNameTotal = (new SimpleDateFormat("yyyyMM月")).format(res.getDate("cutoff_end_date")) + "締月次精算";
       }
@@ -105,7 +105,7 @@ public class GuardianMonth extends Base {
             count = 0;
             sheetCount += 1;
             curSheet = workbook.cloneSheet(0);
-            workbook.setSheetName(sheetCount, ExcelUtil.PREFIX_BOOK_NO_CONTENT, HSSFWorkbook.ENCODING_UTF_16);
+            workbook.setSheetName(sheetCount, ExcelUtil.PREFIX_BOOK_NO_CONTENT);
             procPaymentPerMonthHeader(res, curSheet);
           }
         	procPaymentPerMonthDetail(res, curSheet, ExcelUtil.HEADER_ROW_COUNT + count);
@@ -132,7 +132,7 @@ public class GuardianMonth extends Base {
             count = 0;
             sheetCount += 1;
             curSheet = workbook.cloneSheet(0);
-            workbook.setSheetName(sheetCount, res.getString("book_no"), HSSFWorkbook.ENCODING_UTF_16);
+            workbook.setSheetName(sheetCount, res.getString("book_no"));
             procPaymentPerMonthHeader(res, curSheet);
             procPaymentPerMonthDetail(res, curSheet, ExcelUtil.HEADER_ROW_COUNT + count);
             count += 1;
@@ -153,7 +153,7 @@ public class GuardianMonth extends Base {
       eu.procFormatFooter(workbook, curSheet, startFooterRow);
       
       curSheetTotal = workbook.cloneSheet(1);
-      workbook.setSheetName(sheetCount + 1, sheetNameTotal, HSSFWorkbook.ENCODING_UTF_16);
+      workbook.setSheetName(sheetCount + 1, sheetNameTotal);
       workbook.removeSheetAt(0);
       workbook.removeSheetAt(0);
     }

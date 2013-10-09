@@ -41,8 +41,8 @@ module ApplicationHelper
     url_for controller: :bp_pic, action: :quick_input, popup: 1, page: params[:page], only_path: false, protocol: "http://"
   end
 
-  def url_for_outflow_mail_input_popup()
-    url_for controller: :outflow_mail, action: :quick_input, popup: 1, only_path: false, protocol: "http://"
+  def url_for_outflow_mail_input_popup(import_mail_id)
+    url_for controller: :outflow_mail, action: :quick_input, import_mail_id: import_mail_id, popup: 1, only_path: false, protocol: "http://"
   end
 
   def url_for_photo_preview_popup(photoid)
@@ -55,6 +55,10 @@ module ApplicationHelper
 
   def url_for_bp_pic(photoid)
     url_for :controller => :bp_pic, :action => :list, :photoid => photoid
+  end
+
+  def url_for_delete_photo(photoid)
+    url_for :controller => :photos, :action => :delete, :photoid => photoid
   end
 
   def bp_pic_edit_icon(bp_pic)
@@ -570,5 +574,16 @@ EOS
       tag(tag_name, option)
     end
   end
-  
+
+  def get_background_color
+    if ENV['RAILS_ENV'] == 'development'
+      style = 'background-image: -moz-linear-gradient(top, #ffff00, #ffff00);'
+      style += 'background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffff00), to(#ffff00));'
+      style += 'background-image: -webkit-linear-gradient(top, #ffff00, #ffff00);'
+      style += 'background-image: -o-linear-gradient(top, #ffff00, #ffff00);'
+      style += 'background-image: linear-gradient(to bottom, #ffff00, #ffff00);'
+    else
+      ''
+    end
+  end
 end

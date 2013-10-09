@@ -230,7 +230,7 @@
   <th>写真</th>
   <td>
   <% unless @user.employee.attached_file1.blank? %>
-    <img src="<%= url_for :action => 'open_file_picture', :id => @user %>"
+    <img src="<%= url_for :action => 'open_file_picture', :id => @user %>">
   <% end %>
   </td>
 </tr>

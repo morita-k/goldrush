@@ -8,6 +8,8 @@ module PhotosHelper
     str += button_to '新規', url_for_business_partner(photo.id), :onclick => "disp_wide(\"" + url_for_photo_preview_popup(photo.id) + "\");"
     str += "　　　"
     str += button_to '更新', url_for_bp_pic(photo.id), :onclick => "disp_wide(\"" + url_for_photo_preview_popup(photo.id) + "\");"
+    str += "　　　"
+    str += button_to '削除', url_for_delete_photo(photo.id), :confirm => '削除しますか?'
     str += "<br/>".html_safe
     str += photo.photo_sender
     str += "<br/>".html_safe

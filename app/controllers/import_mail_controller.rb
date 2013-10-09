@@ -21,6 +21,7 @@ class ImportMailController < ApplicationController
       :proper_flg => params[:proper_flg],
       :tag => params[:tag],
       :starred => params[:starred],
+      :outflow_mail_flg => params[:outflow_mail_flg],
       :payment_from => params[:payment_from],
       :payment_to => params[:payment_to],
       :age_from => params[:age_from],
@@ -72,7 +73,15 @@ class ImportMailController < ApplicationController
         sql_params += [pids]
       end
     end
-    
+
+    unless session[:import_mail_search][:starred].blank?
+      sql += " and starred > 0"
+    end
+
+    unless session[:import_mail_search][:outflow_mail_flg].blank?
+      sql += " and outflow_mail_flg = 1"
+    end
+
     unless (payment_from = session[:import_mail_search][:payment_from]).blank?
       sql += " and payment_text >= ? "
       sql_params << payment_from
@@ -96,10 +105,6 @@ class ImportMailController < ApplicationController
     unless (free_word = session[:import_mail_search][:free_word]).blank?
       sql += " and (concat(mail_subject, '-', mail_body) like ?) "
       sql_params << '%' + free_word + '%'
-    end
-
-    if !(session[:import_mail_search][:starred]).blank?
-      sql += " and starred > 0"
     end
 
     unless session[:import_mail_search][:date_limit].blank?
