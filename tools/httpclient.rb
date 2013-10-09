@@ -5,7 +5,7 @@ def main
   # 第一引数はURL
   url = ARGV.shift
   # 第二引数以降、key=value形式でパラメータが渡される形式
-  params = 'goldrush' && params[:password] == 'furuponpon'
+  params = {"login" => 'goldrush', "password" => 'furuponpon'}
   ARGV.each do |arg|
     pr = str_to_hash(arg)
     params.merge! str_to_hash(arg)
