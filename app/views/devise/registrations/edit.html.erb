@@ -10,7 +10,7 @@
 
   <tr>
   <th><%= f.label :current_password, '現在のパスワード' %></th>
-  <td><%= f.password_field :current_password %><br/><i>(登録内容を変更する場合、現在のパスワードが必要です)</td>
+  <td><%= f.password_field :current_password %><br/><i>(登録内容を変更する場合、現在のパスワードが必要です)</i></td>
   </tr>
 
   <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>

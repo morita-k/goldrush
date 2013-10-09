@@ -51,8 +51,6 @@ ActionMailer::Base.file_settings = {
 
 require 'pop3_client'
 Pop3Client.settings = {
-  :user_name  => 'ses_dev2@i.applicative.jp',
-  :password   => 'applicative**ses',
   :enable_tls => 1,
   :pop_port   => "995",
   :pop_server => 'pop.gmail.com',

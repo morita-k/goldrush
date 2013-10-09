@@ -9,8 +9,11 @@
 </div>
 <% end %>
 
-<% if @photos %>
+<% unless @photos.blank? %>
+  <%= link_to_function '写真の表示', '$("#photo_table").toggle()' %>
+  <div id="photo_table" style="display:none;">
   <%= (square_table @photos, :col => 4 do |photo| get_photo_thumbnail_link(photo) end).html_safe %>
+  </div>
 <% end %>
 <table class="show_table">
 <tr>
@@ -77,12 +80,8 @@
 <%= delete_to '削除', @bp_pic %> |
 <%= link_or_back '戻る', :action => 'list' %>
 
-<%= render :partial => 'remarks/list', :locals => {:remark_key => "bp_pics", :remark_target_id => @bp_pic} %>
-<h3>送信メール一覧</h3>
-<%= render :partial => 'delivery_mails/list' %>
-
-<% unless @bp_pic_groups_details.blank? %>
 <h3>取引先担当グループ一覧</h3>
+<% unless @bp_pic_groups_details.blank? %>
   <table class="show_table">
     <tr>
       <th><%= getLongName('bp_pic_groups', 'bp_pic_group_name') %></th>
@@ -96,3 +95,8 @@
     <% end %>
   </table>
 <% end %>
+
+<%= render :partial => 'remarks/list', :locals => {:remark_key => "bp_pics", :remark_target_id => @bp_pic} %>
+<h3>送信メール一覧</h3>
+<%= render :partial => 'delivery_mails/list' %>
+

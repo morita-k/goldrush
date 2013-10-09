@@ -38,7 +38,6 @@
       <th>返信メール</th>
     <% end %>
   </tr>
-  <tr>
     <% @delivery_mail.delivery_mail_targets.each do |delivery_mail_target| %>
       <tr id="table_header">
         <td><%=
@@ -64,13 +63,12 @@
           %></td>
         <% else %>
           <td>
-            <% dmt = delivery_mail_target.get_reply_import_mail %>
-            <% if dmt != nil %>
+            <% if delivery_mail_target.get_import_mail_id != nil %>
               <%=
                 back_to_link "詳細",
                 :controller => :import_mail,
                 :action => :show,
-                :id => dmt.id
+                :id => delivery_mail_target.get_import_mail_id
               %>
             <% else %>
               &nbsp;
@@ -79,7 +77,6 @@
         <% end %>
       </tr>
     <% end %>
-  </tr>
 </table>
 
 <% if @delivery_mail.unsend? %>

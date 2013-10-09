@@ -24,6 +24,15 @@ class DeliveryMailsController < ApplicationController
   # GET /delivery_mails/1.json
   def show
     @delivery_mail = DeliveryMail.find(params[:id]).get_informations
+    @delivery_mail.delivery_mail_targets.each do |delivery_mail_target|
+      delivery_mail_target.get_reply_import_mail
+    end
+    if @delivery_mail.delivery_mail_targets.size > 1
+      @delivery_mail.delivery_mail_targets.sort_by! do |delivery_mail_target|
+        delivery_mail_target.get_import_mail_id.nil? ? 0 : - delivery_mail_target.get_import_mail_id
+      end
+    end
+
     @attachment_files = AttachmentFile.attachment_files("delivery_mails", @delivery_mail.id)
     
     respond_to do |format|

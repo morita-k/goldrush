@@ -2,10 +2,11 @@ require 'rubygems'
 require 'httpclient'
 
 def main
+  api_login = SysConfig.get_api_login
   # 第一引数はURL
   url = ARGV.shift
   # 第二引数以降、key=value形式でパラメータが渡される形式
-  params = {"login" => 'goldrush', "password" => 'furuponpon'}
+  params = {"login" => api_login.value1, "password" => api_login.value2}
   ARGV.each do |arg|
     pr = str_to_hash(arg)
     params.merge! str_to_hash(arg)

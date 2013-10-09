@@ -3,7 +3,7 @@ class PhotosController < ApplicationController
 
   # GET /photos/list
   def list
-    @photos = Photo.where(deleted: 0, photo_status_type: :unfixed).order(:created_at)
+    @photos = Photo.where(deleted: 0, photo_status_type: :unfixed).order('created_at desc')
   end
 
   def get_image
@@ -15,5 +15,13 @@ class PhotosController < ApplicationController
 
   def preview
     @photo = Photo.find(params[:id])
+  end
+
+  def delete
+    photo_id = params[:photoid]
+
+    Photo.delete_photo(photo_id)
+
+    redirect_to :controller => :photos, :action => :list
   end
 end
