@@ -58,4 +58,17 @@
 <tr>
   <th><%= getLongName('biz_offers', 'memo') %></th><td><%=simple_format h(@biz_offer.memo) %></td>
 </tr>
+
+<tr>
+  <th><%= getLongName('biz_offers', 'created_at') %></th><td><%=@biz_offer.created_at %></td>
+</tr>
+<tr>
+  <th><%= getLongName('biz_offers', 'created_user') %></th><td><%= get_nickname(@biz_offer.created_user) %></td>
+</tr>
+<tr>
+  <th><%= getLongName('biz_offers', 'updated_at') %></th><td><%=@biz_offer.updated_at %></td>
+</tr>
+<tr>
+  <th><%= getLongName('biz_offers', 'updated_user') %></th><td><%= get_nickname(@biz_offer.updated_user) %></td>
+</tr>
 </table>

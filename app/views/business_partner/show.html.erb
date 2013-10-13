@@ -80,6 +80,18 @@
 <tr>
   <th><%= getLongName('business_partners', 'tag_text') %></th><td><%=h @business_partner.tag_text %></td>
 </tr>
+<tr>
+  <th><%= getLongName('business_partners', 'created_at') %></th><td><%=@business_partner.created_at %></td>
+</tr>
+<tr>
+  <th><%= getLongName('business_partners', 'created_user') %></th><td><%= get_nickname(@business_partner.created_user) %></td>
+</tr>
+<tr>
+  <th><%= getLongName('business_partners', 'updated_at') %></th><td><%=@business_partner.updated_at %></td>
+</tr>
+<tr>
+  <th><%= getLongName('business_partners', 'updated_user') %></th><td><%= get_nickname(@business_partner.updated_user) %></td>
+</tr>
 
 </table>
 <%= back_to_link '編集', :action => 'edit', :id => @business_partner %> |

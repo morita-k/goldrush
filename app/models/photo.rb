@@ -1,4 +1,5 @@
 # -*- encoding: utf-8 -*-
+require 'nkf'
 class Photo < ActiveRecord::Base
   include AutoTypeName
 
