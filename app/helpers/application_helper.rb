@@ -586,4 +586,8 @@ EOS
       ''
     end
   end
+
+  def get_nickname(login)
+    User.get_nickname(login)
+  end
 end

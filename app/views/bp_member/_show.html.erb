@@ -36,4 +36,16 @@
 <tr>
   <th><%= getLongName('bp_members', 'memo') %></th><td><%=simple_format h(@bp_member.memo) %></td>
 </tr>
+<tr>
+  <th><%= getLongName('bp_members', 'created_at') %></th><td><%= _time_long(@bp_member.created_at) %></td>
+</tr>
+<tr>
+  <th><%= getLongName('bp_members', 'created_user') %></th><td><%= get_nickname(@bp_member.created_user) %></td>
+</tr>
+<tr>
+  <th><%= getLongName('bp_members', 'updated_at') %></th><td><%= _time_long(@bp_member.updated_at) %></td>
+</tr>
+<tr>
+  <th><%= getLongName('bp_members', 'updated_user') %></th><td><%= get_nickname(@bp_member.updated_user) %></td>
+</tr>
 </table>
