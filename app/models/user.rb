@@ -278,5 +278,10 @@ class User < ActiveRecord::Base
       (crypted_password.blank? || !password.blank?)
     end
 =end
+
+  def self.get_nickname(login)
+    user = User.where(:login => login).first
+    user.blank? || user.nickname.blank? ? login : user.nickname
+  end
 end
 

@@ -65,4 +65,17 @@
 <tr>
   <th><%= getLongName('human_resources', 'memo') %></th><td><%=simple_format h(@human_resource.memo) %></td>
 </tr>
+
+<tr>
+  <th><%= getLongName('human_resources', 'created_at') %></th><td><%= _time_long(@human_resource.created_at) %></td>
+</tr>
+<tr>
+  <th><%= getLongName('human_resources', 'created_user') %></th><td><%= get_nickname(@human_resource.created_user) %></td>
+</tr>
+<tr>
+  <th><%= getLongName('human_resources', 'updated_at') %></th><td><%= _time_long(@human_resource.updated_at) %></td>
+</tr>
+<tr>
+  <th><%= getLongName('human_resources', 'updated_user') %></th><td><%= get_nickname(@human_resource.updated_user) %></td>
+</tr>
 </table>

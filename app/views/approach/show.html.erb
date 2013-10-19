@@ -165,6 +165,19 @@
 <tr>
   <th><%= getLongName('approaches', 'memo') %></th><td colspan=2><%=simple_format @approach.memo %></td>
 </tr>
+
+<tr>
+  <th><%= getLongName('approaches', 'created_at') %></th><td colspan=2><%= _time_long(@approach.created_at) %></td>
+</tr>
+<tr>
+  <th><%= getLongName('approaches', 'created_user') %></th><td colspan=2><%= get_nickname(@approach.created_user) %></td>
+</tr>
+<tr>
+  <th><%= getLongName('approaches', 'updated_at') %></th><td colspan=2><%= _time_long(@approach.updated_at) %></td>
+</tr>
+<tr>
+  <th><%= getLongName('approaches', 'updated_user') %></th><td colspan=2><%= get_nickname(@approach.updated_user) %></td>
+</tr>
 </table>
 <%= back_to_link '提案情報編集', :action => 'edit', :id => @approach %>
 
