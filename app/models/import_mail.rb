@@ -230,7 +230,9 @@ class ImportMail < ActiveRecord::Base
   end
 
   def detect_payments_in(body)
-    StringUtil.detect_payments(body).sort.reverse.first
+    result_payments = StringUtil.detect_payments(body).sort
+    #案件だったら最大単価を取得、人材だったら最小単価を取得する。
+    self.biz_offer_flg == 1 ? result_payments.reverse.first : result_payments.first
   end
 
   def detect_nearest_station

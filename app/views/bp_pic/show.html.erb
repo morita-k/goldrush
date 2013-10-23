@@ -75,6 +75,18 @@
 <tr>
   <th><%= getLongName('bp_pics', 'memo') %></th><td><%=simple_format(h @bp_pic.memo) %></td>
 </tr>
+<tr>
+  <th><%= getLongName('bp_pics', 'created_at') %></th><td><%= _time_long(@bp_pic.created_at) %></td>
+</tr>
+<tr>
+  <th><%= getLongName('bp_pics', 'created_user') %></th><td><%= get_nickname(@bp_pic.created_user) %></td>
+</tr>
+<tr>
+  <th><%= getLongName('bp_pics', 'updated_at') %></th><td><%= _time_long(@bp_pic.updated_at) %></td>
+</tr>
+<tr>
+  <th><%= getLongName('bp_pics', 'updated_user') %></th><td><%= get_nickname(@bp_pic.updated_user) %></td>
+</tr>
 </table>
 <%= back_to_link '編集', :action => 'edit', :id => @bp_pic %> |
 <%= delete_to '削除', @bp_pic %> |

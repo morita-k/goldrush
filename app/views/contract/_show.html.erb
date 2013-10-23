@@ -168,4 +168,18 @@
 <tr>
   <th><%= getLongName('contracts', 'memo') %></th><td colspan=2><%=simple_format h(contract.memo) %></td>
 </tr>
+
+
+  <tr>
+    <th><%= getLongName('contracts', 'created_at') %></th><td colspan=2><%= _time_long(contract.created_at) %></td>
+  </tr>
+  <tr>
+    <th><%= getLongName('contracts', 'created_user') %></th><td colspan=2><%= get_nickname(contract.created_user) %></td>
+  </tr>
+  <tr>
+    <th><%= getLongName('contracts', 'updated_at') %></th><td colspan=2><%= _time_long(contract.updated_at) %></td>
+  </tr>
+  <tr>
+    <th><%= getLongName('contracts', 'updated_user') %></th><td colspan=2><%= get_nickname(contract.updated_user) %></td>
+  </tr>
 </table>

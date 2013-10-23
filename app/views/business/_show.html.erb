@@ -75,4 +75,17 @@
 <tr>
   <th><%= getLongName('businesses', 'memo') %></th><td><%=simple_format h(@business.memo) %></td>
 </tr>
+
+<tr>
+  <th><%= getLongName('businesses', 'created_at') %></th><td><%= _time_long(@business.created_at) %></td>
+</tr>
+<tr>
+  <th><%= getLongName('businesses', 'created_user') %></th><td><%= get_nickname(@business.created_user) %></td>
+</tr>
+<tr>
+  <th><%= getLongName('businesses', 'updated_at') %></th><td><%= _time_long(@business.updated_at) %></td>
+</tr>
+<tr>
+  <th><%= getLongName('businesses', 'updated_user') %></th><td><%= get_nickname(@business.updated_user) %></td>
+</tr>
 </table>
