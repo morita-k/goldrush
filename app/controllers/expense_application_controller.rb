@@ -1,4 +1,5 @@
 # -*- encoding: utf-8 -*-
+require 'sales_person_logic'
 class ExpenseApplicationController < ApplicationController
   include SalesPersonLogic
 

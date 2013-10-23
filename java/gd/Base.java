@@ -20,8 +20,8 @@ public abstract class Base {
 
 	public void doProc(String url, String user, String pass) throws Exception{
     try{
-      Class.forName("oracle.jdbc.driver.OracleDriver").newInstance();
-      con = DriverManager.getConnection(url,user,pass);
+      Class.forName("org.gjt.mm.mysql.Driver").newInstance();
+      con = DriverManager.getConnection(url + "?useUnicode=true&characterEncoding=UTF-8",user,pass);
       
       o.println("接続成功!!");
       

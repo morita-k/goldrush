@@ -89,6 +89,43 @@ class AttachmentFile < ActiveRecord::Base
     end
   end
 
+  def self.set_property_file(import_mail_id)
+    target_files = AttachmentFile.where(:parent_id => import_mail_id)
+
+    target_attachment_ids = []
+    p target_files
+    target_files.each do |target_file|
+      if /.doc|.docx|.xls|.xlsx/ =~ target_file.extention
+        target_attachment_ids.push(target_file.id)
+      end
+    end
+
+    unless target_attachment_ids.blank?
+      call_poi_modify_property(target_attachment_ids)
+    end
+  end
+
+  def self.call_poi_modify_property(target_attachment_ids)
+    java_dir = File.join(Rails.root, 'java')
+    sep = ENV["OS"] ? ";" : ":" # Windows or UNIX??
+    class_path = ["#{java_dir}","#{java_dir}/lib/*"].join(sep)
+    host = ActiveRecord::Base.configurations[ENV['RAILS_ENV']]['host']
+    if host.nil? || host[0] == '/'[0] # hostの一文字目が'/'だったらUNIX SOCKETと判断
+      host = 'localhost'
+    end
+    username = ActiveRecord::Base.configurations[ENV['RAILS_ENV']]['username']
+    password = ActiveRecord::Base.configurations[ENV['RAILS_ENV']]['password']
+    if password.blank?
+      password = '\"\"'
+    end
+    database = ActiveRecord::Base.configurations[ENV['RAILS_ENV']]['database']
+
+    command = "java -classpath #{class_path} gd/SetPoiProperty jdbc:mysql://#{host}:3306/#{database} #{username} #{password} #{target_attachment_ids.join(',')} #{Rails.root}"
+
+    logger.debug(command)
+    result = `#{command}`
+  end
+
 private
   def make_store_dir
     Dir.mkdir file_dir unless File.exist? file_dir
