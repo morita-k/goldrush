@@ -1074,3 +1074,19 @@ sys_configs_62:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
+sys_configs_63:
+  id: 66
+  owner_id: 
+  config_section: "outflow_mail"
+  config_key: "outflow_criterion"
+  value1: "50"
+  value2: ""
+  value3: ""
+  config_description_text: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 
