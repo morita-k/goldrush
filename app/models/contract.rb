@@ -16,6 +16,23 @@ class Contract < ActiveRecord::Base
 #  validates_presence_of     :closed_at, :contract_pic_id, :start_date
   validates_presence_of     :contract_pic_id
 
+  def change_term_status
+    case contract_status_type
+    when 'open'
+      self.upper_contract_status_type = 'waiting_order'
+      self.down_contract_status_type = 'waiting_offer'
+    when 'contract'
+      self.upper_contract_status_type = 'contracted'
+      self.down_contract_status_type = 'contracted'
+    when 'finished'
+      self.upper_contract_status_type = 'finished'
+      self.down_contract_status_type = 'finished'
+    when 'canceled'
+      self.upper_contract_status_type = 'closed'
+      self.down_contract_status_type = 'closed'
+    end
+  end
+
   # 契約条件が、上流も下流も「契約済み」であれば「契約中」にアップデートする
   def make_contract_proc(str)
     return ->(a){
