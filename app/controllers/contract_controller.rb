@@ -153,8 +153,10 @@ class ContractController < ApplicationController
   def update
     Contract.transaction do
       @contract = Contract.find(params[:id], :conditions =>["deleted = 0"])
+      org_contract_status_type = @contract.contract_status_type
       @contract.attributes = params[:contract]
 #      @contract.perse_closed_at(current_user)
+      @contract.change_term_status if org_contract_status_type != @contract.contract_status_type
       @contract.perse_contracted_at(current_user)
       @contract.upper_contract_term.attributes = params[:upper_contract_term]
       @contract.down_contract_term.attributes = params[:down_contract_term]
@@ -247,6 +249,7 @@ private
     contract.approach.biz_offer.biz_offer_status_type = 'working'
 
     contract.approach.biz_offer.business.business_status_type = 'working'
+    contract.approach.biz_offer.business.business_title = '未定（仮）'
 
   end
 
@@ -342,6 +345,8 @@ private
     contract.upper_contract_term.attributes = params[:upper_contract_term]
     contract.down_contract_term.attributes = params[:down_contract_term]
 #    contract.perse_closed_at(current_user)
+    contract.change_term_status
+
     set_user_column contract
     set_user_column contract.upper_contract_term
     set_user_column contract.down_contract_term
