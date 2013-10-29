@@ -3,7 +3,7 @@
 <table class="input_table">
 <tr>
   <th><label for="contract_contract_status_type"><%=getLongName('contracts','contract_status_type')%></label></th>
-  <td><%= @contract.contract_status_type_name  %></td>
+  <td><%= select 'contract', 'contract_status_type', getTypes('contract_status_type') %></td>
 </tr>
 <tr>
   <th><label for="contract_upper_contract_status_type"><%=getLongName('contracts','upper_contract_status_type')%></label></th>
@@ -15,7 +15,7 @@
 </tr>
 <%if false%>
 <tr>
-  <th><label for="contract_closed_at"><%=getLongName('contracts','closed_at')%>(*)</label></th>
+  <th class="must"><label for="contract_closed_at"><%=getLongName('contracts','closed_at')%>(*)</label></th>
   <td>
     <%= date_field 'contract', 'closed_at_date' %>
     <%= select 'contract', 'closed_at_hour', (0..23).to_a.map{|x| sprintf("%0.2d", x)} %> : 
@@ -34,7 +34,7 @@
 </tr>
 <% end %>
 <tr>
-  <th><label for="contract_contract_pic_name">契約担当(*)</label></th>
+  <th class="must"><label for="contract_contract_pic_name">契約担当(*)</label></th>
   <td><%= text_field_tag 'contract_pic_name', @contract.contract_pic.blank? ? "" : @contract.contract_pic.employee.employee_name, :readonly => true, :style => "background-color: silver;", :size => 30 %>
     <input type=button value='...' onClick="disp_wide('<%=url_for :controller => 'employee', :action => 'list', :popup =>1, :mode => 'Contract' %>');return false;" />
     <input type=button value='クリア' onClick="clearContractUser();return false;" />
@@ -42,7 +42,7 @@
 </tr>
 <%if false %>
 <tr>
-  <th><label for="contract_start_date"><%=getLongName('contracts','start_date')%>(*)</label></th>
+  <th class="must"><label for="contract_start_date"><%=getLongName('contracts','start_date')%>(*)</label></th>
   <td><%= date_field 'contract', 'start_date' %></td>
 </tr>
 <tr>
@@ -51,19 +51,19 @@
 </tr>
 <%end%>
 <tr>
-  <th><label for="contract_contract_start_date"><%=getLongName('contracts','contract_start_date')%>(*)</label></th>
+  <th class="must"><label for="contract_contract_start_date"><%=getLongName('contracts','contract_start_date')%>(*)</label></th>
   <td><%= date_field 'contract', 'contract_start_date'  %></td>
 </tr>
 <tr>
-  <th><label for="contract_contract_end_date"><%=getLongName('contracts','contract_end_date')%>(*)</label></th>
+  <th class="must"><label for="contract_contract_end_date"><%=getLongName('contracts','contract_end_date')%>(*)</label></th>
   <td><%= date_field 'contract', 'contract_end_date'  %></td>
 </tr>
 <tr>
-  <th><label for="contract_contract_renewal_unit"><%=getLongName('contracts','contract_renewal_unit')%>(*)</label></th>
+  <th class="must"><label for="contract_contract_renewal_unit"><%=getLongName('contracts','contract_renewal_unit')%>(*)</label></th>
   <td><%= text_field 'contract', 'contract_renewal_unit'  %></td>
 </tr>
 <tr>
-  <th><label for="contract_contract_renewal_terms"><%=getLongName('contracts','contract_renewal_terms')%>(*)</label></th>
+  <th class="must"><label for="contract_contract_renewal_terms"><%=getLongName('contracts','contract_renewal_terms')%>(*)</label></th>
   <td><%= text_field 'contract', 'contract_renewal_terms'  %></td>
 </tr>
 <tr>

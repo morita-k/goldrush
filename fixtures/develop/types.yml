@@ -4383,9 +4383,9 @@ types_220:
   owner_id: 
   type_section: "tax_type"
   type_key: "include"
-  long_name: "税抜"
-  short_name: "税抜"
-  other_name: "税抜"
+  long_name: "税込"
+  short_name: "税込"
+  other_name: "税込"
   type_description: ""
   type_description_text: ""
   display_order1: 1
@@ -4403,9 +4403,9 @@ types_221:
   owner_id: 
   type_section: "tax_type"
   type_key: "exclude"
-  long_name: "税込"
-  short_name: "税込"
-  other_name: "税込"
+  long_name: "税抜"
+  short_name: "税抜"
+  other_name: "税抜"
   type_description: ""
   type_description_text: ""
   display_order1: 2
