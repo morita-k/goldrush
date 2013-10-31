@@ -14,12 +14,14 @@ import java.sql.SQLException;
 public class SetPoiFile extends Base {
     String ids;
     String root;
+    String author;
     ExcelUtil eu;
 
-    public SetPoiFile(String ids, String root)throws IOException {
+    public SetPoiFile(String ids, String root, String author)throws IOException {
         super();
         this.ids = ids;
         this.root = root;
+        this.author = author;
         eu = new ExcelUtil();
     }
 
@@ -36,14 +38,14 @@ public class SetPoiFile extends Base {
     public void procResultSet(ResultSet res) throws SQLException {
         while(res.next()){
             try {
-                writeExcel(res.getString("file_path"),res.getString("file_path"), res.getString("extention"), "アプリカティブ株式会社");
+                writeExcel(res.getString("file_path"),res.getString("file_path"), res.getString("extention"));
             } catch (IOException e) {
                 e.getStackTrace();
             }
         }
     }
 
-    public void writeExcel(String inputFileName, String outputFileName, String extention, String author) throws  IOException{
+    public void writeExcel(String inputFileName, String outputFileName, String extention) throws  IOException{
         String allInputFileName = root + "/" + inputFileName;
         String allOutputFileName = root + "/" + outputFileName;
         if(extention.contains(".docx")){
