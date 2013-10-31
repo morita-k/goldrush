@@ -228,21 +228,21 @@ public class ExcelUtil {
     getCell(sheet,num_row + 4,2).setCellValue(all_total - temporary_total);
   }
 
-  public void setProperty(String fileName) throws IOException {
+  public void setProperty(String inputFileName, String outputFileName, String author) throws IOException {
     FileOutputStream out = null;
-    FileInputStream fis = new FileInputStream(fileName);
+    FileInputStream fis = new FileInputStream(inputFileName);
     POIFSFileSystem fs = new POIFSFileSystem(fis);
     DirectoryEntry dir = fs.getRoot();
     SummaryInformation si;
     try{
-        out = new FileOutputStream(fileName);
+        out = new FileOutputStream(outputFileName);
         DocumentEntry dsiEntry = (DocumentEntry)dir.getEntry(SummaryInformation.DEFAULT_STREAM_NAME);
         DocumentInputStream dis = new DocumentInputStream(dsiEntry);
         PropertySet ps = new PropertySet(dis);
         dis.close();
         si = new SummaryInformation(ps);
-        si.setAuthor("アプリカティブ株式会社");
-        si.setLastAuthor("アプリカティブ株式会社");
+        si.setAuthor(author);
+        si.setLastAuthor(author);
         si.setCreateDateTime(new Date());
         si.setLastSaveDateTime(new Date());
         si.write(dir, SummaryInformation.DEFAULT_STREAM_NAME);
@@ -258,21 +258,21 @@ public class ExcelUtil {
     } finally{
       o.println("Excel/Doc Close!!");
       if (out != null) out.close();
-      else o.println("Error don't open file.. " + fileName);
+      else o.println("Error don't open file.. " + inputFileName);
     }
   }
 
-    public void setDocxProperty(String fileName) throws IOException {
-        o.println(fileName);
-        FileInputStream fis = new FileInputStream(fileName);
+    public void setDocxProperty(String inputFileName, String outputFileName, String author) throws IOException {
+        o.println(inputFileName);
+        FileInputStream fis = new FileInputStream(inputFileName);
         Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("JST"));
         o.println(cal.getTime());
         try{
             XWPFDocument docx = new XWPFDocument(fis);
             fis.close();
-            FileOutputStream fos = new FileOutputStream(fileName);
+            FileOutputStream fos = new FileOutputStream(outputFileName);
             POIXMLProperties.CoreProperties coreProperties = docx.getProperties().getCoreProperties();
-            coreProperties.setCreator("アプリカティブ株式会社");
+            coreProperties.setCreator(author);
             coreProperties.setCreated(new Nullable<Date>(cal.getTime()));
             coreProperties.setModified(new Nullable<Date>(cal.getTime()));
             docx.write(fos);
@@ -282,16 +282,16 @@ public class ExcelUtil {
         }
     }
 
-    public void setXlsxProperty(String fileName) throws IOException {
-        o.println(fileName);
-        FileInputStream fis = new FileInputStream(fileName);
+    public void setXlsxProperty(String inputFileName, String outputFileName, String author) throws IOException {
+        o.println(inputFileName);
+        FileInputStream fis = new FileInputStream(inputFileName);
         Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("JST"));
         try{
             XSSFWorkbook xlsx = new XSSFWorkbook(fis);
             fis.close();
-            FileOutputStream fos = new FileOutputStream(fileName);
+            FileOutputStream fos = new FileOutputStream(outputFileName);
             POIXMLProperties.CoreProperties coreProperties = xlsx.getProperties().getCoreProperties();
-            coreProperties.setCreator("アプリカティブ株式会社");
+            coreProperties.setCreator(author);
             coreProperties.setCreated(new Nullable<Date>(cal.getTime()));
             coreProperties.setModified(new Nullable<Date>(cal.getTime()));
             xlsx.write(fos);
