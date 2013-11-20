@@ -29,10 +29,18 @@ def around_http_client(&block)
   agent.receive_timeout = 300
 #  agent.debug_dev = STDOUT
   agent.debug_dev = api_logfile
-  block.call agent
+  3.times do |x|
+    begin
+      block.call agent
+      break
+    rescue SocketError => e
+      STDERR.puts "SocketError #{x+1} times."
+      sleep 1
+    end
+  end
 ensure
-#  agent.debug_dev = nil
-#  api_logfile.close
+  agent.debug_dev = nil
+  api_logfile.close
 end
 
 def str_to_hash(str, separator="=")
