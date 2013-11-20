@@ -833,38 +833,6 @@ sys_configs_52:
 sys_configs_53:
   id: 53
   owner_id: 
-  config_section: "delivery_mails"
-  config_key: "mail_from"
-  value1: "ses@dev.applicative.jp"
-  value2: ""
-  value3: ""
-  config_description_text: ""
-  created_at: <%= Time.now.to_s(:db) %>
-  updated_at: <%= Time.now.to_s(:db) %>
-  lock_version: 0
-  created_user: "initial"
-  updated_user: "initial"
-  deleted_at: 
-  deleted: 0
-sys_configs_54:
-  id: 54
-  owner_id: 
-  config_section: "delivery_mails"
-  config_key: "mail_from_name"
-  value1: "アプリカティブ案件情報"
-  value2: ""
-  value3: ""
-  config_description_text: ""
-  created_at: <%= Time.now.to_s(:db) %>
-  updated_at: <%= Time.now.to_s(:db) %>
-  lock_version: 0
-  created_user: "initial"
-  updated_user: "initial"
-  deleted_at: 
-  deleted: 0
-sys_configs_55:
-  id: 57
-  owner_id: 
   config_section: "seq"
   config_key: "sales_code"
   value1: "0"
@@ -878,8 +846,26 @@ sys_configs_55:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-sys_configs_56:
-  id: 59
+sys_configs_54:
+  id: 54
+  owner_id: 
+  config_section: "business_partners"
+  config_key: "prodmode"
+  value1: "0"
+  value2: ""
+  value3: ""
+  config_description_text: |-
+    本番環境では1。それ以外はレコードなしか1以外。
+    データ取り込み時にメールアドレスをテスト用に変換するロジックをOFFにする
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+sys_configs_55:
+  id: 55
   owner_id: 
   config_section: "skill"
   config_key: "major_words"
@@ -975,8 +961,8 @@ sys_configs_56:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-sys_configs_57:
-  id: 60
+sys_configs_56:
+  id: 56
   owner_id: 
   config_section: "analysis_templates"
   config_key: "indent"
@@ -994,8 +980,8 @@ sys_configs_57:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-sys_configs_58:
-  id: 61
+sys_configs_57:
+  id: 57
   owner_id: 
   config_section: "delivery_mails"
   config_key: "return_path"
@@ -1010,8 +996,8 @@ sys_configs_58:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-sys_configs_59:
-  id: 62
+sys_configs_58:
+  id: 58
   owner_id: 
   config_section: "import_mail"
   config_key: "jiet"
@@ -1026,8 +1012,8 @@ sys_configs_59:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-sys_configs_60:
-  id: 63
+sys_configs_59:
+  id: 59
   owner_id: 
   config_section: "import_mail"
   config_key: "date_limit"
@@ -1042,8 +1028,8 @@ sys_configs_60:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-sys_configs_61:
-  id: 64
+sys_configs_60:
+  id: 60
   owner_id: 
   config_section: "pop3_mail_login"
   config_key: "username_password"
@@ -1058,8 +1044,8 @@ sys_configs_61:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-sys_configs_62:
-  id: 65
+sys_configs_61:
+  id: 61
   owner_id: 
   config_section: "api_login"
   config_key: "username_password"
@@ -1074,3 +1060,19 @@ sys_configs_62:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
+sys_configs_62:
+  id: 62
+  owner_id: 
+  config_section: "outflow_mail"
+  config_key: "outflow_criterion"
+  value1: "50"
+  value2: ""
+  value3: ""
+  config_description_text: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 

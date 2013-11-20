@@ -15,7 +15,10 @@ bp_pics_1:
   sales_pic_id: 14
   contact_mail_flg: 
   nondelivery_score: 0
-  working_status_type : "working"
+  working_status_type: ""
+  change_to_bp_pic_id: 
+  substitute_bp_pic_id: 
+  jiet: 
   starred: 
   rating: 
   import_mail_id: 
@@ -45,7 +48,10 @@ bp_pics_2:
   sales_pic_id: 
   contact_mail_flg: 
   nondelivery_score: 0
-  working_status_type : "working"
+  working_status_type: ""
+  change_to_bp_pic_id: 
+  substitute_bp_pic_id: 
+  jiet: 
   starred: 
   rating: 
   import_mail_id: 
@@ -75,7 +81,10 @@ bp_pics_3:
   sales_pic_id: 15
   contact_mail_flg: 
   nondelivery_score: 0
-  working_status_type : "working"
+  working_status_type: ""
+  change_to_bp_pic_id: 
+  substitute_bp_pic_id: 
+  jiet: 
   starred: 
   rating: 
   import_mail_id: 
@@ -105,7 +114,10 @@ bp_pics_4:
   sales_pic_id: 
   contact_mail_flg: 
   nondelivery_score: 0
-  working_status_type : "working"
+  working_status_type: ""
+  change_to_bp_pic_id: 
+  substitute_bp_pic_id: 
+  jiet: 
   starred: 
   rating: 
   import_mail_id: 

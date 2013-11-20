@@ -12,7 +12,6 @@ import_mails_1:
   mail_to: ""
   mail_cc: ""
   mail_bcc: ""
-  message_source: "メッセージソース"
   message_id: ""
   biz_offer_flg: 
   bp_member_flg: 
@@ -42,7 +41,6 @@ import_mails_2:
   mail_to: ""
   mail_cc: ""
   mail_bcc: ""
-  message_source: "source2"
   message_id: ""
   biz_offer_flg: 
   bp_member_flg: 
@@ -72,7 +70,6 @@ import_mails_3:
   mail_to: ""
   mail_cc: ""
   mail_bcc: ""
-  message_source: "source3"
   message_id: ""
   biz_offer_flg: 
   bp_member_flg: 
@@ -102,7 +99,6 @@ import_mails_4:
   mail_to: ""
   mail_cc: ""
   mail_bcc: ""
-  message_source: "source4"
   message_id: ""
   biz_offer_flg: 
   bp_member_flg: 
@@ -132,7 +128,6 @@ import_mails_5:
   mail_to: ""
   mail_cc: ""
   mail_bcc: ""
-  message_source: "source5"
   message_id: ""
   biz_offer_flg: 
   bp_member_flg: 
@@ -162,7 +157,6 @@ import_mails_6:
   mail_to: ""
   mail_cc: ""
   mail_bcc: ""
-  message_source: "source6"
   message_id: ""
   biz_offer_flg: 
   bp_member_flg: 

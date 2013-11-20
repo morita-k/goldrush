@@ -14,12 +14,14 @@ import java.sql.SQLException;
 public class SetPoiFile extends Base {
     String ids;
     String root;
+    String author;
     ExcelUtil eu;
 
-    public SetPoiFile(String ids, String root)throws IOException {
+    public SetPoiFile(String ids, String root, String author)throws IOException {
         super();
         this.ids = ids;
         this.root = root;
+        this.author = author;
         eu = new ExcelUtil();
     }
 
@@ -36,21 +38,22 @@ public class SetPoiFile extends Base {
     public void procResultSet(ResultSet res) throws SQLException {
         while(res.next()){
             try {
-                writeExcel(res.getString("file_path"), res.getString("extention"));
+                writeExcel(res.getString("file_path"),res.getString("file_path"), res.getString("extention"));
             } catch (IOException e) {
                 e.getStackTrace();
             }
         }
     }
 
-    private void writeExcel(String fileName, String extention) throws  IOException{
-        String allFileName = root + "/" + fileName;
+    public void writeExcel(String inputFileName, String outputFileName, String extention) throws  IOException{
+        String allInputFileName = root + "/" + inputFileName;
+        String allOutputFileName = root + "/" + outputFileName;
         if(extention.contains(".docx")){
-            eu.setDocxProperty(allFileName);
+            eu.setDocxProperty(allInputFileName, allOutputFileName, author);
         }else if(extention.contains(".xlsx")){
-            eu.setXlsxProperty(allFileName);
+            eu.setXlsxProperty(allInputFileName, allOutputFileName, author);
         }else{
-            eu.setProperty(allFileName);
+            eu.setProperty(allInputFileName, allOutputFileName, author);
         }
     }
 
