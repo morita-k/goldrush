@@ -61,6 +61,10 @@ module ApplicationHelper
     url_for :controller => :photos, :action => :delete, :photoid => photoid
   end
 
+  def url_for_rotate_photo(photoid, left_rotate)
+    url_for :controller => :photos, :action => :rotate, :photoid => photoid , :left_rotate => left_rotate
+  end
+
   def bp_pic_edit_icon(bp_pic)
     back_to_link(image_tag((bp_pic.memo.blank? ? 'icon-edit.png' : 'icon-comment.png')), {:controller => :bp_pic, :action => :edit, :id => bp_pic}, :title => (bp_pic.memo.blank? ? "担当者を編集する" : bp_pic.memo))
   end

@@ -11,6 +11,10 @@ module PhotosHelper
     str += "　　　"
     str += button_to '削除', url_for_delete_photo(photo.id), :confirm => '削除しますか?'
     str += "<br/>".html_safe
+    str += button_to '左回転', url_for_rotate_photo(photo.id, true)
+    str += "　　　"
+    str += button_to '右回転', url_for_rotate_photo(photo.id, false)
+    str += "<br/>".html_safe
     str += photo.photo_sender
     str += "<br/>".html_safe
     str += _timetoddmmhhmm(photo.created_at)
