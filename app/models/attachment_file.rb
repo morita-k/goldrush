@@ -120,7 +120,7 @@ class AttachmentFile < ActiveRecord::Base
     end
     database = ActiveRecord::Base.configurations[ENV['RAILS_ENV']]['database']
 
-    author = 'アプリカティブ株式会社'
+    author = SysConfig.get_company_name
     command = "java -classpath #{class_path} gd/SetPoiProperty jdbc:mysql://#{host}:3306/#{database} #{username} #{password} #{target_attachment_ids.join(',')} #{Rails.root} #{author}"
 
     logger.debug(command)
