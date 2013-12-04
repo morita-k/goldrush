@@ -28,10 +28,15 @@ class PhotosController < ApplicationController
   def rotate
     photo_id = params[:photoid]
     left_rotate = params[:left_rotate]
-    p left_rotate
+    target_page = params[:target_page]
 
     Photo.rotate_photo(photo_id, left_rotate)
 
-    redirect_to :controller => :photos, :action => :list
+    if target_page == 'photo'
+      redirect_to :controller => :photos, :action => :list
+    else
+      bp_pic_id = params[:bp_pic_id]
+      redirect_to :controller => :bp_pic, :action => :show, :id => bp_pic_id
+    end
   end
 end
