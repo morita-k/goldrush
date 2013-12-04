@@ -12,7 +12,7 @@
 <% unless @photos.blank? %>
   <%= link_to_function '写真の表示', '$("#photo_table").toggle()' %>
   <div id="photo_table" style="display:none;">
-  <%= (square_table @photos, :col => 4 do |photo| get_photo_thumbnail_link(photo) end).html_safe %>
+  <%= (square_table @photos, :col => 4 do |photo| get_photo_thumbnail_link(photo, @bp_pic.id) end).html_safe %>
   </div>
 <% end %>
 <table class="show_table">

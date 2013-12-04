@@ -61,8 +61,8 @@ module ApplicationHelper
     url_for :controller => :photos, :action => :delete, :photoid => photoid
   end
 
-  def url_for_rotate_photo(photoid, left_rotate)
-    url_for :controller => :photos, :action => :rotate, :photoid => photoid , :left_rotate => left_rotate
+  def url_for_rotate_photo(photoid, left_rotate, target_page, bp_pic_id = nil)
+    url_for :controller => :photos, :action => :rotate, :photoid => photoid , :left_rotate => left_rotate, :target_page => target_page, :bp_pic_id => bp_pic_id
   end
 
   def bp_pic_edit_icon(bp_pic)
