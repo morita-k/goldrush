@@ -32,6 +32,9 @@ class OutflowMail < ActiveRecord::Base
 
       outflow_mail.save!
     end
+
+    import_mail.outflow_mail_flg = 1
+    import_mail.save!
   end
 
   def create_bp_and_pic(outflow_mail_form)
