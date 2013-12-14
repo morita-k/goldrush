@@ -40,6 +40,14 @@ class Photo < ActiveRecord::Base
     photo.save!
   end
 
+  def Photo.rotate_photo(photo_id, left_rotate)
+    photo = find(photo_id)
+
+    photo.set_orientation(photo.file_path, left_rotate)
+    photo.set_orientation(photo.thumbnail_path, left_rotate)
+
+  end
+
   def update_and_store!
     original_file = self.file_path
     original_thumbnail_file = self.thumbnail_path
@@ -158,6 +166,18 @@ class Photo < ActiveRecord::Base
   def create_store_parent_table_thumbnail_name
     # 「親テーブル名_親テーブルId_添付ファイルId.拡張子」
     "#{self.parent_table_name}_#{self.parent_id}_#{self.id}_tn#{self.extention}"
+  end
+
+  def set_orientation(file_path, left_rotate)
+    target_image = Magick::ImageList.new(file_path).first
+
+    if left_rotate == "true"
+      target_image.rotate!(-90)
+    else
+      target_image.rotate!(90)
+    end
+
+    target_image.write(file_path)
   end
 
   private

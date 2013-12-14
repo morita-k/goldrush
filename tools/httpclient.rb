@@ -23,16 +23,24 @@ end
 
 def around_http_client(&block)
   # HTTP Clientの準備
-#  api_logfile = File.open(File.join('log',"cloud_api_call.#{Process.pid}.log"), "a")
+  api_logfile = File.open(File.join('log',"mail","http_client_call.#{Time.now.strftime('%Y%m%d_%H%M%S')}.#{Process.pid}.log"), "a")
   agent = HTTPClient.new
   agent.ssl_config.verify_mode = OpenSSL::SSL::VERIFY_NONE
   agent.receive_timeout = 300
 #  agent.debug_dev = STDOUT
-#  agent.debug_dev = api_logfile
-  block.call agent
+  agent.debug_dev = api_logfile
+  3.times do |x|
+    begin
+      block.call agent
+      break
+    rescue SocketError => e
+      STDERR.puts "SocketError #{x+1} times."
+      sleep 1
+    end
+  end
 ensure
-#  agent.debug_dev = nil
-#  api_logfile.close
+  agent.debug_dev = nil
+  api_logfile.close
 end
 
 def str_to_hash(str, separator="=")

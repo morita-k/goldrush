@@ -62,11 +62,19 @@ class DeliveryMailsController < ApplicationController
     @delivery_mail = DeliveryMail.new
     @delivery_mail.bp_pic_group_id = params[:bp_pic_group_id]
     if (target_mail_template = get_target_mail_template)
-      p target_mail_template
       @delivery_mail.content = target_mail_template.content
       @delivery_mail.subject = target_mail_template.subject
       @delivery_mail.mail_cc = target_mail_template.mail_cc
       @delivery_mail.mail_bcc = target_mail_template.mail_bcc
+
+      unless current_user.mail_signature.blank?
+        @delivery_mail.content += <<EOS
+
+
+--
+#{current_user.mail_signature}
+EOS
+      end
     else
       @delivery_mail.content = <<EOS
 %%business_partner_name%%
