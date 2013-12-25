@@ -95,4 +95,55 @@ class OutflowMailController < ApplicationController
     render layout: 'blank'
   end
 
+  def analyze_outflow_mail
+    outflow_mail_list_raw = params[:outflow_mail_list][0]
+    outflow_mail_list_raw.gsub!(/(\r\n|\r|\n)/, ',')
+
+    unless outflow_mail_list_raw.nil? || outflow_mail_list_raw.size == 0
+      outflow_mail_list = outflow_mail_list_raw.split(',')
+
+      outflow_mail_list.each do |outflow_mail|
+        unless outflow_mail =~ (/^[a-zA-Z0-9_¥.¥-]+@[A-Za-z0-9_¥.¥-]+\.[A-Za-z0-9_¥.¥-]+$/)
+          flash[:err] = "不正なメールアドレスが含まれております。 " + outflow_mail
+          return redirect_to :controller => 'outflow_mail', :action => 'new', :params => {:outflow_mail_list_raw => outflow_mail_list_raw}
+        end
+      end
+
+      now = Time.now
+      import_mail = ImportMail.new
+      import_mail.mail_from = 'outflow_maril@applicative.jp'
+      import_mail.mail_sender_name = '流出メール解析'
+      import_mail.received_at = now
+      import_mail.mail_cc = outflow_mail_list_raw
+      mail_name = '流出メール解析' + now.strftime("%Y%m%d%H%M%S")
+      import_mail.mail_subject = mail_name + '解析中'
+      import_mail.outflow_mail_flg = '1'
+
+      import_mail.save!
+
+      Thread.start do
+
+        OutflowMail.create_outflow_mails(import_mail)
+
+        import_mail.mail_subject = mail_name + '完了'
+
+        import_mail.save!
+      end
+
+      flash[:notice] = "流出メールの解析を実行中です。"
+    end
+
+    return redirect_to :controller => 'outflow_mail', :action => 'new'
+  end
+
+  def new
+      @outflow_mail_list_raw = params[:outflow_mail_list_raw]
+
+      p @outflow_mail_list_raw
+      @import_mails = ImportMail.includes([]).joins([])
+      .where("outflow_mail_flg = 1")
+      .order("id desc")
+      .page(params[:page])
+      .per(current_user.per_page)
+  end
 end
