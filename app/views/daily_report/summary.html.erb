@@ -1,0 +1,101 @@
+<h1><%=getLongName('table_name','daily_reports')%>集計</h1>
+
+<%= form_tag do %>
+  <table>
+    <tr>
+      <td style="text-align: right">集計期間:</td>
+      <td>
+        <%= radio_button_tag :summary_term_flg, :year, session[:daily_report_summary][:summary_term_flg].nil? || session[:daily_report_summary][:summary_term_flg] == 'year' %> 年次
+        <%= radio_button_tag :summary_term_flg, :month, session[:daily_report_summary][:summary_term_flg] == 'month' %> 月次
+        <%= radio_button_tag :summary_term_flg, :day, session[:daily_report_summary][:summary_term_flg] == 'day' %> 日次
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align: right">対象:</td>
+      <td>
+        <% @target_user.each do |target_user| %>
+        <%= check_box_tag 'summary_target_flg[]', target_user.id, session[:daily_report_summary][:summary_target_flg] != nil && session[:daily_report_summary][:summary_target_flg].include?(target_user.id.to_s) %><%= target_user.employee.employee_name %>
+        <% end %>
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align: right">集計方法:</td>
+      <td>
+        <%= radio_button_tag :summary_method_flg, :summary, session[:daily_report_summary][:summary_method_flg].nil? || session[:daily_report_summary][:summary_method_flg] == 'summary' %> 全体
+        <%= radio_button_tag :summary_method_flg, :individual, session[:daily_report_summary][:summary_method_flg] == 'individual' %> 個別
+      </td>
+    </tr>
+  </table>
+  <br/>
+  <%= submit_tag '　　検索　　', :name => 'search_button' %> <%= submit_tag '　　クリア　　', :name => 'clear_button' %>
+  <%= hidden_field nil, :date, :value => @target_date %>
+  <br/>
+<% end %>
+
+<% unless @target_summary.nil? %>
+  <% unless session[:daily_report_summary][:summary_term_flg] == 'year' %>
+    <%= h session[:daily_report_summary][:summary_term_flg] == 'month' ? @target_date.split('-')[0] : @target_date %>
+    <br/>
+    <%= link_to('前の' + @target_date_string, {:date => @preview_date, :summary_term_flg => session[:daily_report_summary][:summary_term_flg] ,:summary_target_flg => session[:daily_report_summary][:summary_target_flg], :summary_method_flg => session[:daily_report_summary][:summary_method_flg]}) %>
+    <%= link_to('次の' + @target_date_string, {:date => @next_date, :summary_term_flg => session[:daily_report_summary][:summary_term_flg] ,:summary_target_flg => session[:daily_report_summary][:summary_target_flg], :summary_method_flg => session[:daily_report_summary][:summary_method_flg]}) %>
+    <br/>
+  <% end %>
+  <% if session[:daily_report_summary][:summary_method_flg] == 'summary' %>
+    <% unless @target_summary.all.count == 0  %>
+    <%= h "全体" %>
+    <table class="list_table">
+      <tr>
+        <th><%= getLongName('daily_reports', 'report_date') %></th>
+        <th><%= getLongName('daily_reports', 'contracts') %></th>
+        <th><%= getLongName('daily_reports', 'gross_profits') %></th>
+        <th><%= getLongName('daily_reports', 'interviews') %></th>
+        <th><%= getLongName('daily_reports', 'new_meetings') %></th>
+        <th><%= getLongName('daily_reports', 'exist_meetings') %></th>
+      </tr>
+      <% @target_summary.each do |target_daily_report| %>
+        <tr>
+            <td><%= h target_daily_report["target_date"] %></td>
+            <td><%= h target_daily_report["contracts"].to_i %></td>
+            <td><%= h target_daily_report["gross_profits"].to_i %></td>
+            <td><%= h target_daily_report["interviews"].to_i %></td>
+            <td><%= h target_daily_report["new_meetings"].to_i %></td>
+            <td><%= h target_daily_report["exist_meetings"].to_i %></td>
+        </tr>
+      <% end  %>
+    </table>
+    <% end %>
+  <% else  %>
+    <% @target_summary_individual.each do |target_summary_individual| %>
+      <% unless target_summary_individual[:target_summary_report].nil? || target_summary_individual[:target_summary_report].size == 0 %>
+      <%= h target_summary_individual[:user_name] %>
+        <table class="list_table">
+          <tr>
+            <th><%= getLongName('daily_reports', 'report_date') %></th>
+            <th><%= getLongName('daily_reports', 'contracts') %></th>
+            <th><%= getLongName('daily_reports', 'gross_profits') %></th>
+            <th><%= getLongName('daily_reports', 'interviews') %></th>
+            <th><%= getLongName('daily_reports', 'new_meetings') %></th>
+            <th><%= getLongName('daily_reports', 'exist_meetings') %></th>
+            <% if session[:daily_report_summary][:summary_term_flg] == 'day' %>
+            <th><%= getLongName('daily_reports', 'contact_matter') %></th>
+            <% end %>
+          </tr>
+        <% target_summary_individual[:target_summary_report].each do |target_daily_report| %>
+          <tr>
+            <td><%= h target_daily_report["target_date"] %></td>
+            <td><%= h target_daily_report["contracts"].to_i %></td>
+            <td><%= h target_daily_report["gross_profits"].to_i %></td>
+            <td><%= h target_daily_report["interviews"].to_i %></td>
+            <td><%= h target_daily_report["new_meetings"].to_i %></td>
+            <td><%= h target_daily_report["exist_meetings"].to_i %></td>
+            <% if session[:daily_report_summary][:summary_term_flg] == 'day' %>
+            <td><%= h target_daily_report["contact_matter"] %></td>
+            <% end %>
+          </tr>
+        <% end  %>
+        </table>
+        <br/>
+      <% end  %>
+    <% end  %>
+  <% end  %>
+<% end  %>
