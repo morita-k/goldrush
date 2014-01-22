@@ -60,7 +60,7 @@
 
     <td style="background-color: <%=color(contract, contract.upper_contract_status_type)%>"><%=h contract.upper_contract_status_type_name %></td>
 
-    <td class="right"><%=man contract.upper_contract_term.payment_view %></td>
+    <td class="right"><%=man contract.upper_contract_term.payment_view_tax %></td>
 
     <td><%=h contract.upper_contract_term.cutoff_and_sight %></td>
 
@@ -73,7 +73,7 @@
 
     <td style="background-color: <%=color(contract, contract.down_contract_status_type)%>"><%=h contract.down_contract_status_type_name %></td>
 
-    <td class="right"><%=man contract.down_contract_term.payment_view %></td>
+    <td class="right"><%=man contract.down_contract_term.payment_view_tax %></td>
 
     <td><%=h contract.down_contract_term.cutoff_and_sight %></td>
 
