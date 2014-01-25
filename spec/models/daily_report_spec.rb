@@ -1,8 +1,7 @@
 # -*- encoding: utf-8 -*-
 require 'spec_helper'
 
-describe DailyReport, 'get_daily_report' do
-
+describe DailyReport ,'get_daily_report' do
   describe '順次テスト' do
     def create_reports
       31.times do
@@ -65,10 +64,8 @@ describe DailyReport, 'get_daily_report' do
   end
 end
 
-describe DailyReport, 'get_distinct_user' do
-
+describe DailyReport ,'get_distinct_user' do
   describe '順次テスト' do
-
     before(:all) do
       self.use_transactional_fixtures = false
     end
@@ -109,8 +106,7 @@ describe DailyReport, 'get_distinct_user' do
   end
 end
 
-describe DailyReport, 'update_daily_report' do
-
+describe DailyReport ,'update_daily_report' do
   it '数値を入力していると更新される' do
     target_daily_report = FG.create(:daily_report_test011)
     target_daily_report.succeeds = 2
@@ -194,8 +190,7 @@ describe DailyReport, 'update_daily_report' do
   end
 end
 
-describe DailyReport, 'get_summary_report' do
-
+describe DailyReport ,'get_summary_report' do
   def create_reports
     31.times do
       FG.create(:sequence_dates01)
@@ -216,172 +211,6 @@ describe DailyReport, 'get_summary_report' do
 
     after(:all) do
       self.use_transactional_fixtures = true
-    end
-
-    it '集計期間:年次, 対象:なし, 集計方法:全体' do
-      daily_report_summary = Hash.new
-      daily_report_summary[:summary_term_flg] = 'year'
-      daily_report_summary[:summary_target_flg] = nil
-      daily_report_summary[:summary_method_flg] = 'summary'
-
-      result_daily_report = DailyReport.get_summary_report(daily_report_summary, '2014-01')
-
-      expect(result_daily_report.all).to have(2).items
-      expect(result_daily_report[0].succeeds).to eq(62)
-      expect(result_daily_report[0].gross_profits).to eq(62)
-      expect(result_daily_report[0].interviews).to eq(62)
-      expect(result_daily_report[0].new_meetings).to eq(62)
-      expect(result_daily_report[0].exist_meetings).to eq(62)
-      expect(result_daily_report[1].succeeds).to eq(31)
-      expect(result_daily_report[1].gross_profits).to eq(31)
-      expect(result_daily_report[1].interviews).to eq(31)
-      expect(result_daily_report[1].new_meetings).to eq(31)
-      expect(result_daily_report[1].exist_meetings).to eq(31)
-    end
-
-    it '集計期間:年次, 対象:なし, 集計方法:個別' do
-      daily_report_summary = Hash.new
-      daily_report_summary[:summary_term_flg] = 'year'
-      daily_report_summary[:summary_target_flg] = nil
-      daily_report_summary[:summary_method_flg] = 'individual'
-
-      result_daily_report = DailyReport.get_summary_report(daily_report_summary, '2014-01')
-
-      expect(result_daily_report.all).to have(3).items
-      expect(result_daily_report[0].succeeds).to eq(31)
-      expect(result_daily_report[0].gross_profits).to eq(31)
-      expect(result_daily_report[0].interviews).to eq(31)
-      expect(result_daily_report[0].new_meetings).to eq(31)
-      expect(result_daily_report[0].exist_meetings).to eq(31)
-      expect(result_daily_report[0].user_id).to eq(1)
-      expect(result_daily_report[1].succeeds).to eq(31)
-      expect(result_daily_report[1].gross_profits).to eq(31)
-      expect(result_daily_report[1].interviews).to eq(31)
-      expect(result_daily_report[1].new_meetings).to eq(31)
-      expect(result_daily_report[1].exist_meetings).to eq(31)
-      expect(result_daily_report[1].user_id).to eq(2)
-      expect(result_daily_report[2].succeeds).to eq(31)
-      expect(result_daily_report[2].gross_profits).to eq(31)
-      expect(result_daily_report[2].interviews).to eq(31)
-      expect(result_daily_report[2].new_meetings).to eq(31)
-      expect(result_daily_report[2].exist_meetings).to eq(31)
-      expect(result_daily_report[2].user_id).to eq(1)
-    end
-
-    it '集計期間:年次, 対象:1, 集計方法:全体' do
-      daily_report_summary = Hash.new
-      daily_report_summary[:summary_term_flg] = 'year'
-      daily_report_summary[:summary_target_flg] = '1'
-      daily_report_summary[:summary_method_flg] = 'summary'
-
-      result_daily_report = DailyReport.get_summary_report(daily_report_summary, '2014-01')
-
-      expect(result_daily_report.all).to have(2).items
-      expect(result_daily_report[0].succeeds).to eq(31)
-      expect(result_daily_report[0].gross_profits).to eq(31)
-      expect(result_daily_report[0].interviews).to eq(31)
-      expect(result_daily_report[0].new_meetings).to eq(31)
-      expect(result_daily_report[0].exist_meetings).to eq(31)
-      expect(result_daily_report[1].succeeds).to eq(31)
-      expect(result_daily_report[1].gross_profits).to eq(31)
-      expect(result_daily_report[1].interviews).to eq(31)
-      expect(result_daily_report[1].new_meetings).to eq(31)
-      expect(result_daily_report[1].exist_meetings).to eq(31)
-    end
-
-    it '集計期間:年次, 対象:1, 集計方法:個別' do
-      daily_report_summary = Hash.new
-      daily_report_summary[:summary_term_flg] = 'year'
-      daily_report_summary[:summary_target_flg] = '1'
-      daily_report_summary[:summary_method_flg] = 'individual'
-
-      result_daily_report = DailyReport.get_summary_report(daily_report_summary, '2014-01')
-
-      expect(result_daily_report.all).to have(2).items
-      expect(result_daily_report[0].succeeds).to eq(31)
-      expect(result_daily_report[0].gross_profits).to eq(31)
-      expect(result_daily_report[0].interviews).to eq(31)
-      expect(result_daily_report[0].new_meetings).to eq(31)
-      expect(result_daily_report[0].exist_meetings).to eq(31)
-      expect(result_daily_report[0].user_id).to eq(1)
-      expect(result_daily_report[1].succeeds).to eq(31)
-      expect(result_daily_report[1].gross_profits).to eq(31)
-      expect(result_daily_report[1].interviews).to eq(31)
-      expect(result_daily_report[1].new_meetings).to eq(31)
-      expect(result_daily_report[1].exist_meetings).to eq(31)
-      expect(result_daily_report[1].user_id).to eq(1)
-    end
-
-    it '集計期間:月次, 対象:なし, 集計方法:全体' do
-      daily_report_summary = Hash.new
-      daily_report_summary[:summary_term_flg] = 'month'
-      daily_report_summary[:summary_target_flg] = nil
-      daily_report_summary[:summary_method_flg] = 'summary'
-
-      result_daily_report = DailyReport.get_summary_report(daily_report_summary, '2014-01')
-
-      expect(result_daily_report.all).to have(1).items
-      expect(result_daily_report[0].succeeds).to eq(62)
-      expect(result_daily_report[0].gross_profits).to eq(62)
-      expect(result_daily_report[0].interviews).to eq(62)
-      expect(result_daily_report[0].new_meetings).to eq(62)
-      expect(result_daily_report[0].exist_meetings).to eq(62)
-    end
-
-    it '集計期間:月次, 対象:なし, 集計方法:個別' do
-      daily_report_summary = Hash.new
-      daily_report_summary[:summary_term_flg] = 'month'
-      daily_report_summary[:summary_target_flg] = nil
-      daily_report_summary[:summary_method_flg] = 'individual'
-
-      result_daily_report = DailyReport.get_summary_report(daily_report_summary, '2014-01')
-
-      expect(result_daily_report.all).to have(2).items
-      expect(result_daily_report[0].succeeds).to eq(31)
-      expect(result_daily_report[0].gross_profits).to eq(31)
-      expect(result_daily_report[0].interviews).to eq(31)
-      expect(result_daily_report[0].new_meetings).to eq(31)
-      expect(result_daily_report[0].exist_meetings).to eq(31)
-      expect(result_daily_report[0].user_id).to eq(1)
-      expect(result_daily_report[1].succeeds).to eq(31)
-      expect(result_daily_report[1].gross_profits).to eq(31)
-      expect(result_daily_report[1].interviews).to eq(31)
-      expect(result_daily_report[1].new_meetings).to eq(31)
-      expect(result_daily_report[1].exist_meetings).to eq(31)
-      expect(result_daily_report[1].user_id).to eq(2)
-    end
-
-    it '集計期間:月次, 対象:1, 集計方法:全体' do
-      daily_report_summary = Hash.new
-      daily_report_summary[:summary_term_flg] = 'month'
-      daily_report_summary[:summary_target_flg] = '1'
-      daily_report_summary[:summary_method_flg] = 'summary'
-
-      result_daily_report = DailyReport.get_summary_report(daily_report_summary, '2014-01')
-
-      expect(result_daily_report.all).to have(1).items
-      expect(result_daily_report[0].succeeds).to eq(31)
-      expect(result_daily_report[0].gross_profits).to eq(31)
-      expect(result_daily_report[0].interviews).to eq(31)
-      expect(result_daily_report[0].new_meetings).to eq(31)
-      expect(result_daily_report[0].exist_meetings).to eq(31)
-    end
-
-    it '集計期間:月次, 対象:1, 集計方法:個別' do
-      daily_report_summary = Hash.new
-      daily_report_summary[:summary_term_flg] = 'month'
-      daily_report_summary[:summary_target_flg] = '1'
-      daily_report_summary[:summary_method_flg] = 'individual'
-
-      result_daily_report = DailyReport.get_summary_report(daily_report_summary, '2014-01')
-
-      expect(result_daily_report.all).to have(1).items
-      expect(result_daily_report[0].succeeds).to eq(31)
-      expect(result_daily_report[0].gross_profits).to eq(31)
-      expect(result_daily_report[0].interviews).to eq(31)
-      expect(result_daily_report[0].new_meetings).to eq(31)
-      expect(result_daily_report[0].exist_meetings).to eq(31)
-      expect(result_daily_report[0].user_id).to eq(1)
     end
 
     it '集計期間:日次, 対象:なし, 集計方法:全体' do
@@ -482,7 +311,7 @@ describe DailyReport, 'get_summary_report' do
 
     it '対象の月のデータが存在しない場合空のリストが返ってくる' do
       daily_report_summary = Hash.new
-      daily_report_summary[:summary_term_flg] = 'month'
+      daily_report_summary[:summary_term_flg] = 'day'
       daily_report_summary[:summary_target_flg] = '1'
       daily_report_summary[:summary_method_flg] = 'summary'
 
@@ -492,3 +321,6 @@ describe DailyReport, 'get_summary_report' do
     end
   end
 end
+
+
+
