@@ -13,10 +13,15 @@ class DailyReportController < ApplicationController
   end
 
   def update
+    set_target_user
     update_data = params[:target_daily_report]
     target_date = params[:date]
 
-    DailyReport.update_daily_report(update_data)
+
+    DailyReport.update_daily_report(update_data, @target_user.id)
+    DailyReportSummary.update_daily_report_summary(target_date, @target_user.id)
+
+    DailyReportSummary.send_mail(target_date, @target_user, request.raw_host_with_port)
 
     flash[:notice] = '日報を更新しました。'
 
@@ -35,7 +40,11 @@ class DailyReportController < ApplicationController
       return false
     else
       set_conditions
-      @target_summary = DailyReport.get_summary_report(session[:daily_report_summary], @target_date)
+      if session[:daily_report_summary][:summary_term_flg] == 'day'
+        @target_summary = DailyReport.get_summary_report(session[:daily_report_summary], @target_date)
+      else
+        @target_summary = DailyReportSummary.get_summary_report(session[:daily_report_summary], @target_date)
+      end
 
       if session[:daily_report_summary][:summary_method_flg] == 'individual'
         @target_summary_individual = get_summary_individual
@@ -56,11 +65,11 @@ class DailyReportController < ApplicationController
   def get_summary_individual
     target_summary_individuals = Array.new
 
-    @target_user.each do |target_user|
+    @target_user.includes(:user).each do |target_user|
       target_summary_individual = Hash.new
 
-      target_summary_individual[:user_id] = target_user.id
-      target_summary_individual[:user_name] = target_user.employee.employee_name
+      target_summary_individual[:user_id] = target_user.user.id
+      target_summary_individual[:user_name] = target_user.user.employee.employee_name
       target_summary_individual[:target_summary_report] = Array.new
 
       target_summary_individuals.push(target_summary_individual)

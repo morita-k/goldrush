@@ -13,8 +13,8 @@
     <tr>
       <td style="text-align: right">対象:</td>
       <td>
-        <% @target_user.each do |target_user| %>
-        <%= check_box_tag 'summary_target_flg[]', target_user.id, session[:daily_report_summary][:summary_target_flg] != nil && session[:daily_report_summary][:summary_target_flg].include?(target_user.id.to_s) %><%= target_user.employee.employee_name %>
+        <% @target_user.includes(:user).each do |target_user| %>
+        <%= check_box_tag 'summary_target_flg[]', target_user.user.id, session[:daily_report_summary][:summary_target_flg] != nil && session[:daily_report_summary][:summary_target_flg].include?(target_user.user.id.to_s) %><%= target_user.user.employee.employee_name %>
         <% end %>
       </td>
     </tr>
@@ -46,16 +46,20 @@
     <table class="list_table">
       <tr>
         <th><%= getLongName('daily_reports', 'report_date') %></th>
-        <th><%= getLongName('daily_reports', 'contracts') %></th>
+        <th><%= getLongName('daily_reports', 'succeeds') %></th>
         <th><%= getLongName('daily_reports', 'gross_profits') %></th>
         <th><%= getLongName('daily_reports', 'interviews') %></th>
         <th><%= getLongName('daily_reports', 'new_meetings') %></th>
         <th><%= getLongName('daily_reports', 'exist_meetings') %></th>
       </tr>
       <% @target_summary.each do |target_daily_report| %>
-        <tr>
+        <% if session[:daily_report_summary][:summary_term_flg] == 'day' %>
+          <tr style="<%= "background-color: lightgrey;" if BaseDate.is_holiday?(target_daily_report["target_date"]) %>">
+        <% else %>
+          <tr>
+        <% end %>
             <td><%= h target_daily_report["target_date"] %></td>
-            <td><%= h target_daily_report["contracts"].to_i %></td>
+            <td><%= h target_daily_report["succeeds"].to_i %></td>
             <td><%= h target_daily_report["gross_profits"].to_i %></td>
             <td><%= h target_daily_report["interviews"].to_i %></td>
             <td><%= h target_daily_report["new_meetings"].to_i %></td>
@@ -71,7 +75,7 @@
         <table class="list_table">
           <tr>
             <th><%= getLongName('daily_reports', 'report_date') %></th>
-            <th><%= getLongName('daily_reports', 'contracts') %></th>
+            <th><%= getLongName('daily_reports', 'succeeds') %></th>
             <th><%= getLongName('daily_reports', 'gross_profits') %></th>
             <th><%= getLongName('daily_reports', 'interviews') %></th>
             <th><%= getLongName('daily_reports', 'new_meetings') %></th>
@@ -81,9 +85,13 @@
             <% end %>
           </tr>
         <% target_summary_individual[:target_summary_report].each do |target_daily_report| %>
+          <% if session[:daily_report_summary][:summary_term_flg] == 'day' %>
+          <tr style="<%= "background-color: lightgrey;" if BaseDate.is_holiday?(target_daily_report["target_date"]) %>">
+          <% else %>
           <tr>
+          <% end %>
             <td><%= h target_daily_report["target_date"] %></td>
-            <td><%= h target_daily_report["contracts"].to_i %></td>
+            <td><%= h target_daily_report["succeeds"].to_i %></td>
             <td><%= h target_daily_report["gross_profits"].to_i %></td>
             <td><%= h target_daily_report["interviews"].to_i %></td>
             <td><%= h target_daily_report["new_meetings"].to_i %></td>

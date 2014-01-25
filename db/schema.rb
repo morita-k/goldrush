@@ -612,23 +612,44 @@ ActiveRecord::Schema.define(:version => 0) do
 
   add_index "contracts", ["id"], :name => "id", :unique => true
 
-  create_table "daily_reports", :force => true do |t|
-    t.integer  "owner_id",       :limit => 8,                          :null => false
-    t.date     "report_date",                                          :null => false
-    t.integer  "contracts",      :limit => 8,  :default => 0,          :null => false
-    t.integer  "gross_profits",  :limit => 8,  :default => 0,          :null => false
-    t.integer  "interviews",     :limit => 8,  :default => 0,          :null => false
-    t.integer  "new_meetings",   :limit => 8,  :default => 0,          :null => false
-    t.integer  "exist_meetings", :limit => 8,  :default => 0,          :null => false
-    t.text     "contact_matter"
-    t.string   "input_type",     :limit => 40, :default => "notinput", :null => false
-    t.datetime "created_at",                                           :null => false
-    t.datetime "updated_at",                                           :null => false
+  create_table "daily_report_summaries", :force => true do |t|
+    t.integer  "owner_id",       :limit => 8
+    t.integer  "user_id",        :limit => 8,                 :null => false
+    t.date     "report_date",                                 :null => false
+    t.integer  "succeeds",       :limit => 8,  :default => 0
+    t.integer  "gross_profits",  :limit => 8,  :default => 0
+    t.integer  "interviews",     :limit => 8,  :default => 0
+    t.integer  "new_meetings",   :limit => 8,  :default => 0
+    t.integer  "exist_meetings", :limit => 8,  :default => 0
+    t.datetime "created_at",                                  :null => false
+    t.datetime "updated_at",                                  :null => false
     t.integer  "lock_version",   :limit => 8,  :default => 0
     t.string   "created_user",   :limit => 80
     t.string   "updated_user",   :limit => 80
     t.datetime "deleted_at"
     t.integer  "deleted",                      :default => 0
+  end
+
+  add_index "daily_report_summaries", ["id"], :name => "id", :unique => true
+
+  create_table "daily_reports", :force => true do |t|
+    t.integer  "owner_id",                :limit => 8
+    t.integer  "user_id",                 :limit => 8,                 :null => false
+    t.date     "report_date",                                          :null => false
+    t.integer  "succeeds",                :limit => 8,  :default => 0
+    t.integer  "gross_profits",           :limit => 8,  :default => 0
+    t.integer  "interviews",              :limit => 8,  :default => 0
+    t.integer  "new_meetings",            :limit => 8,  :default => 0
+    t.integer  "exist_meetings",          :limit => 8,  :default => 0
+    t.text     "contact_matter"
+    t.string   "daily_report_input_type", :limit => 40,                :null => false
+    t.datetime "created_at",                                           :null => false
+    t.datetime "updated_at",                                           :null => false
+    t.integer  "lock_version",            :limit => 8,  :default => 0
+    t.string   "created_user",            :limit => 80
+    t.string   "updated_user",            :limit => 80
+    t.datetime "deleted_at"
+    t.integer  "deleted",                               :default => 0
   end
 
   add_index "daily_reports", ["id"], :name => "id", :unique => true
