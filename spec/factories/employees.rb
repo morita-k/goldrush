@@ -1,0 +1,75 @@
+# -*- encoding: utf-8 -*-
+FactoryGirl.define do
+
+  factory :Employee do
+    id 1
+    user_id 1
+    department_id 1
+    employee_type "regular"
+    position "管理者"
+    employee_code "9801"
+    insurance_code "001"
+    employee_name "管理者"
+    employee_kana_name "管理者"
+    employee_short_name "管理者"
+    birthday_date "2000/01/01"
+    sex_type "man"
+    email ""
+    zip1 ""
+    address1_1 ""
+    address1_2 ""
+    address1_3 ""
+    address1_4 ""
+    tel1 ""
+    fax ""
+    mobile ""
+    mobile_email ""
+    name2 ""
+    zip2 ""
+    address2_1 ""
+    address2_2 ""
+    address2_3 ""
+    address2_4 ""
+    tel2 ""
+    zip3 ""
+    address3_1 ""
+    address3_2 ""
+    address3_3 ""
+    address3_4 ""
+    tel3 ""
+    entry_date "2008/01/01"
+    resignation_reason ""
+    attached_file1 ""
+    attached_file2 ""
+    attached_file3 ""
+    attached_file4 ""
+    bank_name ""
+    branch_name ""
+    account_type "general"
+    account_number ""
+    account_name ""
+    active_date  nil
+    inactive_date nil
+    leave_day 0
+    active_flg 0
+    approver_flg 0
+    credit_card_flg 0
+    regular_in_time "930"
+    regular_in_time_defact "1030"
+    regular_in_time_pm "1330"
+    regular_out_time "1730"
+    regular_out_time_early_am "1230"
+    regular_out_time_early_full "1530"
+    max_out_time "2900"
+    regular_rest_hour "100"
+    regular_rest_hour_half "000"
+    regular_over_time_meel "2000"
+    regular_over_time_taxi "2200"
+    regular_working_hour 7
+    memo ""
+    lock_version 0
+    created_user "initial"
+    updated_user "initial"
+    deleted 0
+  end
+end
