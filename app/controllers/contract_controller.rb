@@ -39,9 +39,9 @@ class ContractController < ApplicationController
       contracts.each do |c|
         next unless cond.call c
         next unless c.in_term?(xst, xed)
-        sum[:upper_payment] += c.upper_contract_term.payment
-        sum[:down_payment] += c.down_contract_term.payment
-        sum[:gross_profit] += (c.upper_contract_term.payment - c.down_contract_term.payment)
+        sum[:upper_payment] += c.upper_contract_term.payment_tax
+        sum[:down_payment] += c.down_contract_term.payment_tax
+        sum[:gross_profit] += (c.upper_contract_term.payment_tax - c.down_contract_term.payment_tax)
       end
     end
     sum
@@ -55,7 +55,8 @@ class ContractController < ApplicationController
     end
 
     target_date params[:year], params[:month], lambda {|st, ed|
-      @contracts = Contract.where("deleted = 0 and contract_status_type in ('contract','finished') and contract_end_date >= ? and contract_start_date <= ? ", st, ed).order("contract_start_date")
+      #@contracts = Contract.where("deleted = 0 and contract_status_type in ('contract','finished') and contract_end_date >= ? and contract_start_date <= ? ", st, ed).order("contract_start_date")
+      @contracts = Contract.where("deleted = 0 and contract_end_date >= ? and contract_start_date <= ? ", st, ed).order("contract_start_date")
       @summary = summary(st, ed, @contracts) {true}
       @summary_prop = summary(st, ed, @contracts) {|c| c.proper? }
       @summary_non_prop = summary(st, ed, @contracts) {|c| !c.proper? }
