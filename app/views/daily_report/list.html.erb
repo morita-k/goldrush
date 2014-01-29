@@ -1,0 +1,53 @@
+<h1><%=getLongName('table_name','daily_reports')%>一覧</h1>
+<h2><%= @target_date %></h2>
+<%= link_to('前の月', {:date => @preview_date}) %>
+<%= link_to('次の月', {:date => @next_date}) %>
+
+<%= form_for :DailyReports ,:url => {:action => 'update', :date => @target_date} do |f| %>
+<%= f.submit '　　更新　　'%>
+
+  <% if @target_daily_reports[0].id.nil? %>
+  <div class="alert alert-block">
+    <h4>この月はまだ初期化されておりません</h4>
+    <p>
+      日報入力後、更新ボタンをクリックすることでデータが作成されます
+    </p>
+  </div>
+  <% end %>
+<table class="list_table">
+  <tr>
+    <th><%= getLongName('daily_reports', 'report_date') %></th>
+    <th><%= getLongName('daily_reports', 'succeeds') %></th>
+    <th><%= getLongName('daily_reports', 'gross_profits') %></th>
+    <th><%= getLongName('daily_reports', 'interviews') %></th>
+    <th><%= getLongName('daily_reports', 'new_meetings') %></th>
+    <th><%= getLongName('daily_reports', 'exist_meetings') %></th>
+    <th><%= getLongName('daily_reports', 'contact_matter') %></th>
+  </tr>
+  <% @target_daily_reports.each_with_index do |target_daily_report, index| @target_daily_report = target_daily_report %>
+  <tr style="<%= "background-color: lightgrey;" if BaseDate.is_holiday?(@target_daily_report.report_date) %>">
+    <td><%= @target_daily_report.report_date %>
+      <%= hidden_field :target_daily_report, :report_date, :value => @target_daily_report.report_date, :index => index %>
+      <%= hidden_field :target_daily_report, :id, :value => @target_daily_report.id, :index => index %></td>
+    <% if @target_daily_report.daily_report_input_type == 'existinput' %>
+      <td><%= text_field :target_daily_report , :succeeds, :size => 3, :style => "text-align:right" , :index => index %></td>
+      <td><%= text_field :target_daily_report , :gross_profits, :size => 3, :style => "text-align:right" , :index => index %></td>
+      <td><%= text_field :target_daily_report , :interviews, :size => 3, :style => "text-align:right" , :index => index %></td>
+      <td><%= text_field :target_daily_report , :new_meetings, :size => 3, :style => "text-align:right" , :index => index %></td>
+      <td><%= text_field :target_daily_report , :exist_meetings, :size => 3, :style => "text-align:right" , :index => index %></td>
+      <td><%= text_field :target_daily_report , :contact_matter, :size => 100, :index => index %></td>
+    <% else  %>
+      <td><%= text_field :target_daily_report ,:succeeds , :value => '',:size => 3, :style => "text-align:right" , :index => index %></td>
+      <td><%= text_field :target_daily_report ,:gross_profits , :value => '',:size => 3, :style => "text-align:right" , :index => index %></td>
+      <td><%= text_field :target_daily_report ,:interviews , :value => '',:size => 3, :style => "text-align:right" , :index => index %></td>
+      <td><%= text_field :target_daily_report ,:new_meetings , :value => '',:size => 3, :style => "text-align:right" , :index => index %></td>
+      <td><%= text_field :target_daily_report ,:exist_meetings , :value => '',:size => 3, :style => "text-align:right" , :index => index %></td>
+      <td><%= text_field :target_daily_report ,:contact_matter , :value => '',:size => 100, :index => index %></td>
+    <% end %>
+  </tr>
+
+  <% end  %>
+</table>
+<br/>
+<%= f.submit '　　更新　　'%>
+<% end %>

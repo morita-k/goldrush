@@ -21,12 +21,6 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
-group :test, :development do
-  #gem "rspec-rails"
-  gem 'simplecov', :require => false
-  gem 'simplecov-rcov', :require => false
-end
-
 gem 'jquery-rails'
 
 # To use ActiveModel has_secure_password
@@ -64,4 +58,14 @@ gem 'rmagick', :require => 'RMagick'
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
+end
+
+group :test do
+  gem 'simplecov', :require => false
+  gem 'simplecov-rcov', :require => false
+  gem "rspec"
+  gem "rspec-rails"
+  gem "factory_girl_rails", "~> 3.0"
+  gem "database_cleaner"
+  gem "spring"
 end
