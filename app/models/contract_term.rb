@@ -19,8 +19,17 @@ class ContractTerm < ActiveRecord::Base
     payment / 10000.0
   end
   
+  def payment_tax
+    x = (tax_type == 'exclude'  ? 1 : 1.05)
+    payment / x
+  end
+
+  def payment_view_tax
+    payment_tax / 10000.0
+  end
+
   def payment_diff(other)
-    (payment - other.payment)
+    (payment_tax - other.payment_tax)
   end
   
 end

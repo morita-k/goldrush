@@ -5,7 +5,13 @@ gem 'rails', '3.2.13'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'mysql2', '0.3.11'
+# How to install for win32
+# DevKitをインストール
+# mysql-connectgorをダウンロードして展開。展開先を指定
+# gem install mysql2 -- '--with-mysql-dir="C:\home\tools\mysql-connector-c-6.1.3-win32"'
+# bundle install
+# rubyのbinの下にlibmysql.dllをコピー
+gem 'mysql2', '0.3.15'
 
 gem 'json'
 
@@ -52,7 +58,11 @@ gem 'kaminari'
 
 gem 'mail', '2.5.3'
 
-# you must install ImageMagick native library before "bundle install"
+# How to install for win32
+# DevKitをインストール
+# ImageMagickをインストールしてインストール先を指定
+# gem install rmagick -v '2.13.2' -- '--platform=ruby --with-opt-dir="C:\Program Files (x86)\ImageMagick-6.8.6-Q16"'
+# bundle install
 gem 'rmagick', :require => 'RMagick'
 
 group :development do
