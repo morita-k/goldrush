@@ -5,6 +5,15 @@
 
 <%= form_for :DailyReports ,:url => {:action => 'update', :date => @target_date} do |f| %>
 <%= f.submit '　　更新　　'%>
+
+  <% if @target_daily_reports[0].id.nil? %>
+  <div class="alert alert-block">
+    <h4>この月はまだ初期化されておりません</h4>
+    <p>
+      日報入力後、更新ボタンをクリックすることでデータが作成されます
+    </p>
+  </div>
+  <% end %>
 <table class="list_table">
   <tr>
     <th><%= getLongName('daily_reports', 'report_date') %></th>
