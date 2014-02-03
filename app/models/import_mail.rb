@@ -22,7 +22,7 @@ class ImportMail < ActiveRecord::Base
       return NKF.nkf('-w', map.header[header_key].value)
     end
   end
-  
+
   def ImportMail.import_mail(m, src)
     open(File.join(Dir.tmpdir, 'goldrush_import_mail.lock'), 'w') do |f|
       begin
@@ -44,14 +44,6 @@ class ImportMail < ActiveRecord::Base
     ActiveRecord::Base::transaction do
       import_mail = ImportMail.new
 
-      if m.in_reply_to
-        import_mail.in_reply_to = m.in_reply_to
-        dmt = DeliveryMailTarget.where(message_id: import_mail.in_reply_to).first
-        if(dmt != nil && dmt.delivery_mail_id != nil)
-          import_mail.delivery_mail_id = dmt.delivery_mail_id
-        end
-      end
-
       import_mail.received_at = m.date.blank? ? now : m.date
       subject = tryConv(m, 'Subject') { m.subject }
       import_mail.mail_subject = subject.blank? ? 'unknown subject' : subject
@@ -65,6 +57,24 @@ class ImportMail < ActiveRecord::Base
       import_mail.mail_cc = tryConv(m,'Cc')
       import_mail.mail_bcc = tryConv(m,'Bcc')
       import_mail.message_id = m.message_id
+
+      if m.in_reply_to
+        import_mail.in_reply_to = m.in_reply_to
+        dmt = DeliveryMailTarget.where(message_id: import_mail.in_reply_to).first
+        if(dmt != nil && dmt.delivery_mail_id != nil)
+          import_mail.delivery_mail_id = dmt.delivery_mail_id
+        else
+          # 配信メールへの返信でなくて、ユーザーのメールアドレス宛だった場合、
+          # ユーザーへの個人的なメールとみなして取り込みを中止する。
+          User.getUsers.each do |user|
+            if import_mail.mail_to.include?(user.email)
+              puts "to member private mail: see system_logs"
+              SystemLog.warn('import mail', 'to member private', import_mail.inspect , 'import mail')
+              return
+            end
+          end
+        end
+      end
 
       # プロセス間で同期をとるために何でもいいから存在するレコードをロック(users#1 => systemユーザー)
       #User.find(1, :lock => true)
