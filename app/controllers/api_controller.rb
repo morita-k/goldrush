@@ -45,6 +45,12 @@ class ApiController < ApplicationController
     render :text => 'REQUEST OK!'
   end
   
+  def import_reply_mail
+    src = params[:mail]
+    ImportMail.import_reply_mail(Mail.new(src), src)
+    render :text => 'REQUEST OK!'
+  end
+  
   def broadcast_mail
     DeliveryMail.send_mails
     
