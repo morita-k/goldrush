@@ -321,6 +321,3 @@ describe DailyReport ,'get_summary_report' do
     end
   end
 end
-
-
-

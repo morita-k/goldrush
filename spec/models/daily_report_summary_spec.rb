@@ -229,6 +229,11 @@ describe DailyReportSummary, 'get_summary_report' do
 end
 
 describe DailyReportSummary, 'send_mail' do
+
+  before(:all) do
+    ActionMailer::Base.deliveries = []
+  end
+
   before(:each) do
     @user = FG.create(:User)
     FG.create(:Employee)
