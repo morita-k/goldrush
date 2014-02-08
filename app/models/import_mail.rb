@@ -23,7 +23,7 @@ class ImportMail < ActiveRecord::Base
   end
 
   def ImportMail.import_reply_mail(m, src)
-    import_mail_in(m, src, true)
+    ImportMail.import_mail_in(m, src, true)
   end
 
   def ImportMail.import_mail(m, src)
@@ -56,12 +56,17 @@ class ImportMail < ActiveRecord::Base
   end
 
   def detect_deliverty_mail(reply_mode)
-    dmt = DeliveryMailTarget.where(message_id: self.in_reply_to).first
-    if(dmt != nil && dmt.delivery_mail_id != nil)
+    dmt = self.in_reply_to && DeliveryMailTarget.where(message_id: self.in_reply_to).first
+    if((dmt != nil) && (dmt.delivery_mail_id != nil))
       self.delivery_mail_id = dmt.delivery_mail_id
     else
       # リプライモード時、リプライでなければ取り込み中止
-      return false if reply_mode
+      if (!self.mail_from.include?("forwarding-noreply_google.com")) && reply_mode
+        puts "SKIP IMPORT: reply_mode and not match in_reply_to"
+        SystemLog.warn('import mail', 'to member private', self.inspect , 'import mail')
+	return false
+      end
+	
 #      # 配信メールへの返信でなくて、ユーザーのメールアドレス宛だった場合、
 #      # ユーザーへの個人的なメールとみなして取り込みを中止する。
 #      User.getUsers.each do |user|
@@ -184,7 +189,6 @@ class ImportMail < ActiveRecord::Base
   
   def ImportMail.import
     Pop3Client.pop_mail do |m, src|
-      puts">>>>>>>>>>>>>>>>>>>>>>>>>>> POP3 MAIL"
       ImportMail.import_mail(m, src)
     end # Pop3Client.pop_mail do
   end # def
