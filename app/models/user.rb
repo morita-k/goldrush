@@ -17,6 +17,27 @@ class User < ActiveRecord::Base
 #  before_create :create_login
   before_save :create_login
 
+  after_save :purge_cache
+
+  def purge_cache
+    User.purge_cache
+  end
+  
+  @@cache = nil
+
+  def User.load_cache
+    @@cache = User.find(:all)
+  end
+
+  def User.purge_cache
+    @@cache = nil
+  end
+
+  def User.getUsers
+    @@cache = User.load_cache unless @@cache
+    @@cache
+  end
+
   def zone
     'Tokyo'
   end

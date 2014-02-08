@@ -11,18 +11,21 @@ class ImportMail < ActiveRecord::Base
   has_many :tag_details, :foreign_key  => :parent_id, :conditions => "tag_details.tag_key = 'import_mails'"
 
   def ImportMail.tryConv(map, header_key, &block)
-    str = nil
     begin
       if block_given?
         return block.call
       else
         return map[header_key].to_s
       end
-    rescue Encoding::UndefinedConversionError => e
+    rescue Encoding::UndefinedConversionError
       return NKF.nkf('-w', map.header[header_key].value)
     end
   end
-  
+
+  def ImportMail.import_reply_mail(m, src)
+    ImportMail.import_mail_in(m, src, true)
+  end
+
   def ImportMail.import_mail(m, src)
     open(File.join(Dir.tmpdir, 'goldrush_import_mail.lock'), 'w') do |f|
       begin
@@ -34,37 +37,59 @@ class ImportMail < ActiveRecord::Base
     end
   end
   
+  def make_import_mail(m)
+    now = Time.now
+    self.received_at = m.date.blank? ? now : m.date
+    subject = ImportMail.tryConv(m, 'Subject') { m.subject }
+    self.mail_subject = subject.blank? ? 'unknown subject' : subject
+    self.mail_from = m.from != nil ? m.from[0].to_s : "unknown"
+    unless SysConfig.email_prodmode?
+      self.mail_from = StringUtil.to_test_address(self.mail_from)
+    end
+    self.set_bp
+    self.mail_sender_name = ImportMail.tryConv(m,'From')
+    self.mail_to = ImportMail.tryConv(m,'To')
+    self.mail_cc = ImportMail.tryConv(m,'Cc')
+    self.mail_bcc = ImportMail.tryConv(m,'Bcc')
+    self.message_id = m.message_id
+    self.in_reply_to = m.in_reply_to
+  end
+
+  def detect_deliverty_mail(reply_mode)
+    dmt = self.in_reply_to && DeliveryMailTarget.where(message_id: self.in_reply_to).first
+    if((dmt != nil) && (dmt.delivery_mail_id != nil))
+      self.delivery_mail_id = dmt.delivery_mail_id
+    else
+      # リプライモード時、リプライでなければ取り込み中止
+      if (!self.mail_from.include?("forwarding-noreply_google.com")) && reply_mode
+        puts "SKIP IMPORT: reply_mode and not match in_reply_to"
+        SystemLog.warn('import mail', 'to member private', self.inspect , 'import mail')
+	return false
+      end
+	
+#      # 配信メールへの返信でなくて、ユーザーのメールアドレス宛だった場合、
+#      # ユーザーへの個人的なメールとみなして取り込みを中止する。
+#      User.getUsers.each do |user|
+#        if self.mail_to.include?(user.email)
+#          puts "to member private mail: see system_logs"
+#          SystemLog.warn('import mail', 'to member private', self.inspect , 'import mail')
+#          return false
+#        end
+#      end
+    end
+    return true
+  end
+
   # メールを取り込む
   #  m   : 取り込むMailオブジェクト
   #  src : 取り込むメールのソーステキスト
-  def ImportMail.import_mail_in(m, src)
-    now = Time.now
+  def ImportMail.import_mail_in(m, src, reply_mode=false)
     attachment_flg = 0
     import_mail_id = nil
     ActiveRecord::Base::transaction do
       import_mail = ImportMail.new
-
-      if m.in_reply_to
-        import_mail.in_reply_to = m.in_reply_to
-        dmt = DeliveryMailTarget.where(message_id: import_mail.in_reply_to).first
-        if(dmt != nil && dmt.delivery_mail_id != nil)
-          import_mail.delivery_mail_id = dmt.delivery_mail_id
-        end
-      end
-
-      import_mail.received_at = m.date.blank? ? now : m.date
-      subject = tryConv(m, 'Subject') { m.subject }
-      import_mail.mail_subject = subject.blank? ? 'unknown subject' : subject
-      import_mail.mail_from = m.from != nil ? m.from[0].to_s : "unknown"
-      unless SysConfig.email_prodmode?
-        import_mail.mail_from = StringUtil.to_test_address(import_mail.mail_from)
-      end
-      import_mail.set_bp
-      import_mail.mail_sender_name = tryConv(m,'From')
-      import_mail.mail_to = tryConv(m,'To')
-      import_mail.mail_cc = tryConv(m,'Cc')
-      import_mail.mail_bcc = tryConv(m,'Bcc')
-      import_mail.message_id = m.message_id
+      import_mail.make_import_mail(m)
+      return unless import_mail.detect_deliverty_mail(reply_mode)
 
       # プロセス間で同期をとるために何でもいいから存在するレコードをロック(users#1 => systemユーザー)
       #User.find(1, :lock => true)
@@ -164,7 +189,6 @@ class ImportMail < ActiveRecord::Base
   
   def ImportMail.import
     Pop3Client.pop_mail do |m, src|
-      puts">>>>>>>>>>>>>>>>>>>>>>>>>>> POP3 MAIL"
       ImportMail.import_mail(m, src)
     end # Pop3Client.pop_mail do
   end # def
