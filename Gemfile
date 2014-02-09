@@ -6,11 +6,11 @@ gem 'rails', '3.2.13'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 # How to install for win32
-# DevKit‚ðƒCƒ“ƒXƒg[ƒ‹
-# mysql-connectgor‚ðƒ_ƒEƒ“ƒ[ƒh‚µ‚Ä“WŠJB“WŠJæ‚ðŽw’è
+# DevKitã‚’ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«
+# mysql-connectgorã‚’ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰ã—ã¦å±•é–‹ã€‚å±•é–‹å…ˆã‚’æŒ‡å®š
 # gem install mysql2 -- '--with-mysql-dir="C:\home\tools\mysql-connector-c-6.1.3-win32"'
 # bundle install
-# ruby‚Ìbin‚Ì‰º‚Élibmysql.dll‚ðƒRƒs[
+# rubyã®binã®ä¸‹ã«libmysql.dllã‚’ã‚³ãƒ”ãƒ¼
 gem 'mysql2', '0.3.15'
 
 gem 'json'
@@ -59,8 +59,8 @@ gem 'kaminari'
 gem 'mail', '2.5.3'
 
 # How to install for win32
-# DevKit‚ðƒCƒ“ƒXƒg[ƒ‹
-# ImageMagick‚ðƒCƒ“ƒXƒg[ƒ‹‚µ‚ÄƒCƒ“ƒXƒg[ƒ‹æ‚ðŽw’è
+# DevKitã‚’ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«
+# ImageMagickã‚’ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã—ã¦ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«å…ˆã‚’æŒ‡å®š
 # gem install rmagick -v '2.13.2' -- '--platform=ruby --with-opt-dir="C:\Program Files (x86)\ImageMagick-6.8.6-Q16"'
 # bundle install
 gem 'rmagick', :require => 'RMagick'
@@ -78,4 +78,9 @@ group :test do
   gem "factory_girl_rails", "~> 3.0"
   gem "database_cleaner"
   gem "spring"
+  gem "spring-commands-rspec"
+  gem "guard-rspec"
+  gem 'guard-spring'
+  gem "rb-fsevent", :require => false
+  gem "terminal-notifier-guard"
 end
