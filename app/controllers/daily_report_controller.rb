@@ -25,7 +25,7 @@ class DailyReportController < ApplicationController
 
     flash[:notice] = '日報を更新しました。'
 
-    redirect_to :action => 'list', :date => target_date
+    redirect_to :action => 'index', :date => target_date
   end
 
   def summary
