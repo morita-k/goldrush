@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 class DailyReportController < ApplicationController
 
-  def list
+  def index
     set_target_user
     set_date
 

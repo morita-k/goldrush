@@ -45,7 +45,6 @@
               <li>メール受信</li>
               <li><%= link_to '取り込みメール', :controller => '/import_mail' %></li>
               <li><%= link_to '解析テンプレート', :controller => '/analysis_template' %></li>
-              <li><%= link_to 'タグ管理', :controller => '/tags' %></li>
               <li><%= link_to '流出メール解析', :controller => '/outflow_mail', :action => 'new' %></li>
             </ul>
           </li>
@@ -65,6 +64,7 @@
               <li><%= link_to '祝日設定', :controller => '/base_date' %></li>
               <li><%= link_to 'システム設定', :controller => '/sys_config' %></li>
               <li><%= link_to '特別単語設定', :controller => '/special_words' %></li>
+              <li><%= link_to 'タグ管理', :controller => '/tags' %></li>
             </ul>
           </li>
           <% end %>
