@@ -85,7 +85,17 @@ class AccountController < ApplicationController
       # アップロードファイルの保存
       store_upload_file
 
+      set_user_column @employee
       @employee.save!
+
+      u = params[:user]
+      if (u.include?("password") || u.include?("password_confirmation")) && (u["password"].blank? && u["password_confirmation"].blank?)
+        u.delete("password")
+        u.delete("password_confirmation")
+      end
+      @user.attributes = u
+      set_user_column @user
+      @user.save!
 
       request.env['HTTPS'] = nil unless params[:https]
       if params[:back_to].blank?
