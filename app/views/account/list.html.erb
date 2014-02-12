@@ -1,17 +1,11 @@
 <h1>社員情報一覧</h1>
-<%= form_tag :action => 'do_search' do %>
-  <%= render :partial => 'form_search' %>  
-<% end %>
 
-<hr>
+<%= paginate(@employees) %>
 <%= link_and_if @edit_type != 'list_all', '入社・退社年月日一覧', :action => :list, :edit_type => 'list_all' %> | 
 <%= link_and_if @edit_type != 'list_address', '住所・電話番号一覧', :action => :list, :edit_type => 'list_address' %>
-  
-<br/>
-<br/>
-<%= paginate(@employees) %>
 
-<table class="list_table">
+
+<table class="list_table" style="margin-top:5px">
   <tr>
     <th align="center">No</th>
     <th><%=getShortName('users', 'login')%></th> 
@@ -82,5 +76,5 @@
 <br />
 
 <% if current_user.personnel_department? %>
-  <%= link_to (getLongName('table_name','users')+'の新規作成'), :action => 'signup' %>
+  <%= link_to (getLongName('table_name','users')+'の新規作成'), :action => 'new' %>
 <% end %>
