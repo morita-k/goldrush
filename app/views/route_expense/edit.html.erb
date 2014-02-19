@@ -1,9 +1,0 @@
-<h1><%=getLongName('table_name','route_expenses')%>編集</h1>
-<p>社員名: <%=h @route_expense.user.employee.employee_name %></p>
-<%= form_tag :action => 'update', :id => @route_expense do %>
-  <%= render :partial => 'form' %>
-  <%= submit_tag '更新' %>
-<% end %>
-
-<%= link_to '表示', :action => 'show', :id => @route_expense %>
-

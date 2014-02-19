@@ -2,11 +2,11 @@
 class SpecialWordsController < ApplicationController
   # GET /special_words
   # GET /special_words.json
-  def list
+  def index
     @special_words = SpecialWord.where(deleted: 0).page(params[:page]).per(50)
 
     respond_to do |format|
-      format.html # listhtml.erb
+      format.html # index.html.erb
       format.json { render json: @special_words }
     end
   end
@@ -47,7 +47,7 @@ class SpecialWordsController < ApplicationController
     respond_to do |format|
       begin
         @special_word.save!
-        format.html { redirect_to :action => 'list', notice: 'Special word was successfully created.' }
+        format.html { redirect_to @special_word, notice: 'Special word was successfully created.' }
         format.json { render json: @special_word, status: :created, location: @special_word }
       rescue ActiveRecord::RecordInvalid
         format.html { render action: "new" }
@@ -66,7 +66,7 @@ class SpecialWordsController < ApplicationController
     respond_to do |format|
       begin
         @special_word.save!
-        format.html { redirect_to :action => 'list', notice: 'Special word was successfully updated.' }
+        format.html { redirect_to @special_word, notice: 'Special word was successfully updated.' }
         format.json { head :no_content }
       rescue ActiveRecord::RecordInvalid
         format.html { render action: "edit" }
@@ -84,7 +84,7 @@ class SpecialWordsController < ApplicationController
     @special_word.save!
     
     respond_to do |format|
-      format.html { redirect_to :action => 'list' }
+      format.html { redirect_to special_words_url }
       format.json { head :no_content }
     end
   end

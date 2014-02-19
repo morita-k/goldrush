@@ -1,8 +1,0 @@
-<h1><%=getLongName('table_name','announcements')%>新規作成</h1>
-
-<%= form_tag do %>
-  <%= error_messages_for 'announcement' %>
-  <p><label for="announcement_announce_message"><%=getLongName('announcements','announce_message')%></label><br /><%= text_area 'announcement', 'announce_message', :size => "80x5" %></p>
-  <%= submit_tag "更新" %>
-<% end %>
-
