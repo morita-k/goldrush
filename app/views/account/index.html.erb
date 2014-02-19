@@ -75,6 +75,6 @@
 <br />
 <br />
 
-<% if current_user.personnel_department? %>
+<% if current_user.super? %>
   <%= link_to (getLongName('table_name','users')+'の新規作成'), :action => 'new' %>
 <% end %>

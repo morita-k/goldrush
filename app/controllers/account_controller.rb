@@ -99,7 +99,7 @@ class AccountController < ApplicationController
 
       request.env['HTTPS'] = nil unless params[:https]
       if params[:back_to].blank?
-        redirect_to(:controller => 'employee', :action => 'list')
+        redirect_to(:controller => 'employee', :action => 'index')
       else
         redirect_to params[:back_to]
       end
@@ -119,7 +119,7 @@ class AccountController < ApplicationController
     {:conditions => param.unshift(sql), :include => include, :per_page => 50, :order => order_by}
   end
 
-  def list
+  def index
     @calendar = true
     @edit_type = params[:edit_type] || 'list_all'
     @departments = Department.find(:all, :conditions => "deleted = 0 ")
