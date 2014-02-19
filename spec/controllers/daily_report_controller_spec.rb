@@ -22,12 +22,12 @@ describe DailyReportController do
     describe '日報' do
 
       before(:each) do
-        get :list, :date => '2014-01'
+        get :index, :date => '2014-01'
       end
 
       it '初回表示時にはidがないDaily_reportを取得する' do
         expect(response).to be_success
-        expect(response).to render_template("list")
+        expect(response).to render_template("index")
 
         expect(assigns(:preview_date)).to eq('2013-12')
         expect(assigns(:next_date)).to eq('2014-02')
@@ -50,13 +50,13 @@ describe DailyReportController do
         end
 
         post :update, {:target_daily_report => target_data, :date => '2014-01'}
-        expect(response).to redirect_to(:action => 'list', :date => '2014-01')
+        expect(response).to redirect_to(:action => 'index', :date => '2014-01')
       end
 
       it '年月を指定していなくても取得できる' do
-        get :list
+        get :index
         expect(response).to be_success
-        expect(response).to render_template("list")
+        expect(response).to render_template("index")
       end
     end
 
