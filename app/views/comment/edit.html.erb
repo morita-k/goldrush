@@ -1,8 +1,0 @@
-<h1><%=getLongName('table_name','comments')%>編集</h1>
-
-<%= form_tag :action => 'update', :id => @comment do %>
-  <%= render :partial => 'form' %>
-  <%= submit_tag '更新' %>
-<% end %>
-
-<%= link_to '戻る', params[:back_to] %>

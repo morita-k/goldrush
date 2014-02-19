@@ -1,9 +1,0 @@
-<h1><%=getLongName('table_name','expense_details')%>編集</h1>
-
-<%= form_tag :action => 'update', :id => @expense_detail do %>
-  <%= render :partial => 'form' %>
-  <%= submit_tag '更新' %>
-<% end %>
-
-<%= link_to '表示', :action => 'show', :id => @expense_detail %> |
-<%= link_to '一覧に戻る', :action => 'list' %>

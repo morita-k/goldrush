@@ -1,9 +1,0 @@
-<h1><%= @expense_application.expense_app_type_name + '申請編集' %></h1>
-
-<%= form_tag({:action => 'update', :id => @expense_application}, :multipart => true) do %>
-  <%= render :partial => 'form' %>
-  <%= submit_tag '更新' %>
-<% end %>
-
-<%= link_to '表示', :action => 'show', :id => @expense_application %> |
-<%= link_to '一覧に戻る', :controller => :base_application, :action => 'expense_list' %>

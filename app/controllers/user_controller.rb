@@ -16,5 +16,12 @@ class UserController < ApplicationController
     @user_pages, @users = paginate(:users, :per_page => 50, :conditions => ["deleted = 0", 1])
   end
 
+  def fixmessage
+    session[:msgids] ||= ""
+    session[:msgids] = (session[:msgids].split(",") << params[:id]).uniq.join(",")
+    respond_to do |format|
+      format.js {render :text => ";"}
+    end
+  end
 
 end

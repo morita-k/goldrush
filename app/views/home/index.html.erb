@@ -1,25 +1,4 @@
 <h1><%=current_user.employee.employee_name%>さんのマイページ</h1>
 
-<h2>お知らせ</h2>
-<%= simple_format @announcement.announce_message %>
 
-<br/>
-<h2>申請</h2>
-<ul>
-<li><%=@monthly_application_count%>件勤務表が、申請中です。<%= link_to '詳細', :controller => :base_application, :action => :working_list, :mode => 'monthly' %></li>
-<li><%=@weekly_application_count%>件週報が、申請中です。<%= link_to '詳細', :controller => :base_application, :action => :working_list, :mode => 'weekly' %></li>
-<li><%=@working_application_count%>件勤怠申請が、申請中です。<%= link_to '詳細', :controller => :base_application, :action => :working_list, :mode => 'working' %></li>
-<li><%=@expense_application_count%>件経費申請が、申請中です。<%= link_to '詳細', :controller => :base_application, :action => :expense_list %></li>
-</ul>
-<br/>
 
-<% if current_user.approver? or current_user.sales? %>
-<h2>承認</h2>
-<ul>
-<li><%=@monthly_approval_count%>件勤務表が、承認待ちです。<%= link_to '詳細', :controller => :base_application, :action => :working_list_by_approver, :mode => 'monthly' %></li>
-<li><%=@weekly_approval_count%>件週報が、承認待ちです。<%= link_to '詳細', :controller => :base_application, :action => :working_list_by_approver, :mode => 'weekly' %></li>
-<li><%=@working_approval_count%>件勤怠申請が、承認待ちです。<%= link_to '詳細', :controller => :base_application, :action => :working_list_by_approver, :mode => 'working' %></li>
-<li><%=@expense_approval_count%>件経費申請が、承認待ちです。<%= link_to '詳細', :controller => :base_application, :action => :expense_list_by_approver %></li>
-</ul>                           
-<br/>
-<% end %>
