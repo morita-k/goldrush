@@ -1,9 +1,0 @@
-<h1><%=getLongName('table_name','route_expense_details')%>編集</h1>
-
-<%= form_tag :action => 'update', :id => @route_expense_detail, :back_to => params[:back_to] do %>
-  <%= render :partial => 'form' %>
-  <%= submit_tag '更新' %>
-<% end %>
-
-<%= link_to '表示', :action => 'show', :id => @route_expense_detail, :back_to => params[:back_to] %> |
-<%= link_to '戻る', (params[:back_to] ||{:action => 'list', :id => @route_expense_detail.route_expense.user}) %>

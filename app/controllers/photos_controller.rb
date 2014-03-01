@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
 class PhotosController < ApplicationController
 
-  # GET /photos/list
-  def list
+  # GET /photos/
+  def index
     @photos = Photo.where(deleted: 0, photo_status_type: :unfixed).order('created_at desc')
   end
 
@@ -22,7 +22,7 @@ class PhotosController < ApplicationController
 
     Photo.delete_photo(photo_id)
 
-    redirect_to :controller => :photos, :action => :list
+    redirect_to :controller => :photos, :action => :index
   end
 
   def rotate
@@ -33,7 +33,7 @@ class PhotosController < ApplicationController
     Photo.rotate_photo(photo_id, left_rotate)
 
     if target_page == 'photo'
-      redirect_to :controller => :photos, :action => :list
+      redirect_to :controller => :photos, :action => :index
     else
       bp_pic_id = params[:bp_pic_id]
       redirect_to :controller => :bp_pic, :action => :show, :id => bp_pic_id

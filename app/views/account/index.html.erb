@@ -1,5 +1,80 @@
-<h1>アカウント管理</h1>
+<h1>社員情報一覧</h1>
 
-Login: <%= current_user.login %> <br>
-email: <%= current_user.email %> <br>
+<%= paginate(@employees) %>
+<%= link_and_if @edit_type != 'list_all', '入社・退社年月日一覧', :action => :list, :edit_type => 'list_all' %> | 
+<%= link_and_if @edit_type != 'list_address', '住所・電話番号一覧', :action => :list, :edit_type => 'list_address' %>
 
+
+<table class="list_table" style="margin-top:5px">
+  <tr>
+    <th align="center">No</th>
+    <th><%=getShortName('users', 'login')%></th> 
+    <th>アクセス権限</th> 
+    <th>部署</th> 
+    <% if @edit_type == 'list_address' %>
+      <th><%=getLongName('employees','insurance_code')%></th> 
+      <th><%=getLongName('employees','employee_name')%></th> 
+      <th>郵便番号</th> 
+      <th>住所</th> 
+      <th>電話番号</th> 
+    <% else %>
+      <th><%=getLongName('employees','insurance_code')%></th> 
+      <th><%=getLongName('employees','employee_name')%></th> 
+      <th>年齢</th> 
+      <th><%=getLongName('employees','birthday_date')%></th> 
+      <th>入社年月日</th> 
+      <th>退社年月日</th> 
+      <th>勤務年月数</th>
+      <th>所定労働時間</th>
+    <% end %>
+  </tr>
+
+<% @employees.each_index do |idx| employee = @employees[idx] %>
+  <tr>
+    <td align="center"><%=h employee.employee_code %></td>
+    <td><%= back_to_link "#{employee.user.login}", :action => 'show', :id => employee.user %></td>
+    <td><%=h TypeUtil.getLongType('access_level_type', employee.user.access_level_type) %></td>
+    <% if employee %>
+      <td><%=h employee.department.department_shortname %></td>
+      <% if @edit_type == 'list_address' %>
+        <td><%=h employee.insurance_code %></td>
+        <td><%=h employee.employee_name %></td>
+        <td align="center"><%=h employee.zip1 %></td>
+        <td><%=h employee.address1 %></td>
+        <td align="center"><%=h employee.tel1 %></td>
+      <% else %>
+        <td><%=h employee.insurance_code %></td>
+        <td><%=h employee.employee_name %></td>
+        <td align="center"><%=h employee.calAge %></td>
+        <td align="center"><%=h employee.birthday_date.to_date if employee.birthday_date != nil %></td>
+        <td align="center"><%=h employee.entry_date.to_date if employee.entry_date != nil %></td>
+        <td align="center"><%=h employee.resignation_date.to_date if employee.resignation_date != nil %></td>
+        <td align="center"><%=h employee.calWorkingYearMonth %></td>
+        <td align="center"><%=h employee.regular_working_hour %>h</td>
+
+      <% end %>
+    <% else %>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    <% end %>
+  </tr>
+<% end %>
+</table>
+<br />
+
+<%= paginate(@employees) %>
+
+<br />
+<br />
+
+<% if current_user.super? %>
+  <%= link_to (getLongName('table_name','users')+'の新規作成'), :action => 'new' %>
+<% end %>

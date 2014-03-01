@@ -1,9 +1,0 @@
-<h1><%=getLongName('table_name','business_trip_applications')%>編集</h1>
-
-<%= form_tag :action => 'update', :id => @business_trip_application do %>
-  <%= render :partial => 'form' %>
-  <%= submit_tag '更新' %>
-<% end %>
-
-<%= link_to '表示', :action => 'show', :id => @business_trip_application %> |
-<%= link_to '戻る', :controller => :base_application, :action => :working_list, :mode => 'all_working' %>

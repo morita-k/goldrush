@@ -1,54 +1,37 @@
-<%= error_messages_for 'special_words' %>
+<%= form_for(@special_word) do |f| %>
+<%= hidden_field_tag 'back_to', back_to %>
+<%= f.hidden_field :lock_version %>
+  <% if @special_word.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@special_word.errors.count, "error") %> prohibited this special_word from being saved:</h2>
 
-<table class="show_table">
+      <ul>
+      <% @special_word.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+<table class="form_table">
   <tr>
-    <th>
-      <label for="special_words_id"><%= getLongName('special_words', 'id') %></label>
-    </th>
-    <td>
-      <%= @special_word.id || 'none' %>
-    </td>
+    <th><%= f.label :special_word_type, getLongName('special_words', 'special_word_type') %></th>
+    <td><%= f.text_field :special_word_type %></td>
   </tr>
   <tr>
-    <th>
-      <label for="special_word_config_key"><%=getLongName('special_words','owner_id')%></label>
-    </th>
-    <td>
-      <%= text_field 'special_word', 'owner_id'  %>
-    </td>
+    <th><%= f.label :target_word, getLongName('special_words', 'target_word') %></th>
+    <td><%= f.text_field :target_word %></td>
   </tr>
   <tr>
-    <th>
-      <label for="special_word_value1"><%=getLongName('special_words','special_word_type')%></label>
-    </th>
-    <td>
-      <%= select 'special_word', 'special_word_type', getTypes('special_word_type') %>
-    </td>
+    <th><%= f.label :convert_to_word, getLongName('special_words', 'convert_to_word') %></th>
+    <td><%= f.text_field :convert_to_word %></td>
   </tr>
   <tr>
-    <th>
-      <label for="special_word_value2"><%=getLongName('special_words','target_word')%></label>
-    </th>
-    <td>
-      <%= text_field 'special_word', 'target_word'  %>
-    </td>
-  </tr>
-  <tr>
-    <th>
-      <label for="special_word_value3"><%=getLongName('special_words','convert_to_word')%></label>
-    </th>
-    <td>
-      <%= text_field 'special_word', 'convert_to_word'  %>
-    </td>
-  </tr>
-  <tr>
-    <th>
-      <label for="special_word_value3"><%=getLongName('special_words','memo')%></label>
-    </th>
-    <td>
-      <%= text_area 'special_word', 'memo'  %>
-    </td>
+    <th><%= f.label :memo, getLongName('special_words', 'memo') %></th>
+    <td><%= f.text_field :memo %></td>
   </tr>
 </table>
-<%= hidden_field 'special_word', 'lock_version'  %>
-<%= hidden_field_tag 'back_to', back_to  %>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

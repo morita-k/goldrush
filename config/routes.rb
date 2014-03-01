@@ -1,6 +1,9 @@
 # -*- encoding: utf-8 -*-
 GoldRush::Application.routes.draw do
 
+  resources :special_words
+
+
   resources :photos do
     collection do
       get 'list'

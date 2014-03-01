@@ -1,0 +1,27 @@
+<h1><%= getLongName('table_name','special_words')%> 一覧</h1>
+
+<%= paginate(@special_words) %>
+
+<table class="list_table">
+  <tr>
+    <th><%= getLongName('special_words', 'special_word_type') %></th>
+    <th><%= getLongName('special_words', 'target_word') %></th>
+    <th><%= getLongName('special_words', 'convert_to_word') %></th>
+    <th><%= getLongName('special_words', 'memo') %></th>
+  </tr>
+
+<% @special_words.each do |special_word| %>
+  <tr>
+    <td><%= back_to_link special_word.special_word_type, special_word %></td>
+    <td><%= special_word.target_word %></td>
+    <td><%= special_word.convert_to_word %></td>
+    <td><%= special_word.memo %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= paginate(@special_words) %>
+
+<%= back_to_link getLongName('table_name','special_words') + ' の新規作成', new_special_word_path %>

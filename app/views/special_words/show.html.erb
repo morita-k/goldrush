@@ -1,15 +1,25 @@
 <h1><%= getLongName('table_name','special_words')%> 詳細</h1>
 
 <table class="show_table">
-  <%- for column in SpecialWord.columns -%>
-    <%- if system_column?(column.name) then next end -%>
-    <tr>
-      <th><%= getLongName('special_words', column.name) %></th><td><%=simple_format h(@special_word.send(column.name)) %></td>
-    </tr>
-  <% end %>
+  <tr>
+    <th><%= getLongName('special_words', 'special_word_type') %></th>
+    <td><%= @special_word.special_word_type %></td>
+  </tr>
+  <tr>
+    <th><%= getLongName('special_words', 'target_word') %></th>
+    <td><%= @special_word.target_word %></td>
+  </tr>
+  <tr>
+    <th><%= getLongName('special_words', 'convert_to_word') %></th>
+    <td><%= @special_word.convert_to_word %></td>
+  </tr>
+  <tr>
+    <th><%= getLongName('special_words', 'memo') %></th>
+    <td><%= @special_word.memo %></td>
+  </tr>
 </table>
 
-<%= back_to_link '編集', :action => 'edit', :id => @special_word %> |
+<%= back_to_link '編集', edit_special_word_path(@special_word) %> |
 <%= link_to '削除', {:id => @special_word, :authenticity_token => form_authenticity_token}, method: :delete, data: { confirm: '削除します。よろしいですか?' } %> |
-<%= back_to_link '戻る', :action => 'list' %>
+<%= link_or_back '戻る', special_words_path %>
 

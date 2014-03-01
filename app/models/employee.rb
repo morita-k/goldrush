@@ -1,4 +1,5 @@
 # -*- encoding: utf-8 -*-
+require 'date_time_util'
 class Employee < ActiveRecord::Base
   include AutoTypeName
   include DateTimeUtil
@@ -20,7 +21,7 @@ class Employee < ActiveRecord::Base
                             :regular_over_time_taxi
   validates_numericality_of :insurance_code, :employee_code, :on => :create
   
-  validates_length_of :insurance_code, :is => 3
+#  validates_length_of :insurance_code, :is => 3
   validates_length_of :employee_name, :maximum=>100
   validates_length_of :employee_kana_name, :maximum=>100
   
