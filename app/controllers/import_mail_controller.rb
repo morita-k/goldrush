@@ -103,8 +103,10 @@ class ImportMailController < ApplicationController
     end
 
     unless (free_word = session[:import_mail_search][:free_word]).blank?
-      sql += " and (concat(mail_subject, '-', mail_body) like ?) "
-      sql_params << '%' + free_word + '%'
+      free_word.split.each do |word|
+        sql += " and (concat(mail_subject, '-', mail_body) like ?) "
+        sql_params << '%' + word + '%'
+      end
     end
 
     unless session[:import_mail_search][:date_limit].blank?
