@@ -102,12 +102,12 @@ class OutflowMailController < ApplicationController
     outflow_mail_list_raw.gsub!(/(\r\n|\r|\n)/, ',')
 
     unless outflow_mail_list_raw.nil? || outflow_mail_list_raw.size == 0
-      outflow_mail_list = outflow_mail_list_raw.split(',')
+      outflow_mail_list = outflow_mail_list_raw.split(',').map{|x| x.strip}
 
       outflow_mail_list.each do |outflow_mail|
         unless outflow_mail =~ (/^[a-zA-Z0-9_¥.¥-]+@[A-Za-z0-9_¥.¥-]+\.[A-Za-z0-9_¥.¥-]+$/)
           flash[:err] = "不正なメールアドレスが含まれております。 " + outflow_mail
-          return redirect_to :controller => 'outflow_mail', :action => 'new', :params => {:outflow_mail_list_raw => outflow_mail_list_raw}
+          return redirect_to :controller => 'outflow_mail', :action => 'new'#, :params => {:outflow_mail_list_raw => outflow_mail_list_raw}
         end
       end
 

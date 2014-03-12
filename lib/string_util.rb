@@ -68,7 +68,7 @@ module StringUtil
   end
   
   def StringUtil.to_test_address(email)
-    "test+" + email.sub("@","_") + "@i.applicative.jp" unless email.blank?
+    "test+" + email.sub("@","_at_") + "@dev.applicative.jp" unless email.blank?
   end
   
   def StringUtil.detect_words(str)
