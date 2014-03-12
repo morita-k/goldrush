@@ -1,4 +1,6 @@
 # -*- encoding: utf-8 -*-
+require 'string_util'
+
 class OutflowMail < ActiveRecord::Base
   include AutoTypeName
 
@@ -21,20 +23,33 @@ class OutflowMail < ActiveRecord::Base
       outflow_mail.email          = address
       outflow_mail.email_text     = text
 
-      if OutflowMail.check_duplication_domain(address)
-        outflow_mail.outflow_mail_status_type = "unwanted"
-      elsif active_url = OutflowMail.search_active_url(address)
-        outflow_mail.outflow_mail_status_type = "non_correspondence"
-        outflow_mail.url                      = active_url
-      else
-        outflow_mail.outflow_mail_status_type = "bad"
-      end
+      outflow_mail.check_status
 
       outflow_mail.save!
     end
 
     import_mail.outflow_mail_flg = 1
     import_mail.save!
+  end
+
+  def self.update_outflow_mails(import_mail)
+    import_mail.outflow_mails.each do |outflow_mail|
+      if OutflowMail.check_duplication_domain(outflow_mail.email)
+        outflow_mail.outflow_mail_status_type = "unwanted"
+      end
+      outflow_mail.save!
+    end
+  end
+
+  def check_status
+    if OutflowMail.check_duplication_domain(self.email)
+      self.outflow_mail_status_type = "unwanted"
+    elsif active_url = OutflowMail.search_active_url(self.email)
+      self.outflow_mail_status_type = "non_correspondence"
+      self.url = active_url
+    else
+      self.outflow_mail_status_type = "bad"
+    end
   end
 
   def create_bp_and_pic(outflow_mail_form)
@@ -100,12 +115,13 @@ class OutflowMail < ActiveRecord::Base
 
   # アドレスから推測されるURLを叩いて、有効なURLを返す
   def self.search_active_url(email_address)
-  	if email_address =~ /.*?@(.*)/
-      url = OutflowMail.common_url_table($1).map{|url|
-        OutflowMail.check_active_url(url)}.select{|url|
-          (url.first == "200") || (url.first == "301")}.first
+    if email_address =~ /.*?@(.*)/
+      OutflowMail.common_url_table($1).map{|domain| OutflowMail.check_active_url(domain)}.each do |result|
+        if ["200","301"].include?(result.first)
+          return "http://" + result.second
+        end
+      end
     end
-    url.nil? ? nil : "http://" + url.second # trueの時、本当は[]を返したい...
   end
 
   def self.mail_address_parser(email_str)
@@ -123,9 +139,12 @@ class OutflowMail < ActiveRecord::Base
   end
 
   def self.check_duplication_domain(mail_address)
-    new_domain = mail_address.split("@").second
-    exist_pic_mail_domain = BpPic.where(deleted: 0).map{|pic| pic.email1.split("@").second}.select{|dom| dom == new_domain}.first
-    exist_outflow_mail_domain = OutflowMail.where(deleted: 0).map{|outflow| outflow.email.split("@").second}.select{|dom| dom == new_domain}.first
+    unless SysConfig.email_prodmode?
+      mail_address = StringUtil.to_test_address(mail_address)
+    end
+    new_domain_like = "%@" + mail_address.split("@").second
+    exist_pic_mail_domain = BpPic.where("deleted = 0 and email1 like ?", new_domain_like).first
+    exist_outflow_mail_domain = OutflowMail.where("deleted = 0 and email like ? and outflow_mail_status_type != 'unwanted'", new_domain_like).first
     
     exist_pic_mail_domain || exist_outflow_mail_domain
   end
