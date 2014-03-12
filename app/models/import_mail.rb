@@ -62,7 +62,7 @@ class ImportMail < ActiveRecord::Base
       self.delivery_mail_id = dmt.delivery_mail_id
     else
       # リプライモード時、リプライでなければ取り込み中止
-      if (!self.mail_from.include?("forwarding-noreply_google.com")) && reply_mode
+      if (!self.mail_from.include?("forwarding-noreply@google.com")) && reply_mode
         puts "SKIP IMPORT: reply_mode and not match in_reply_to"
         SystemLog.warn('import mail', 'to member private', self.inspect , 'import mail')
 	return false
