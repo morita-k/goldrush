@@ -141,10 +141,12 @@ class OutflowMail < ActiveRecord::Base
   def check_duplication_domain
     unless SysConfig.email_prodmode?
       mail_address = StringUtil.to_test_address(self.email)
+      at = "_at_"
     else
       mail_address = self.email
+      at = "@"
     end
-    new_domain_like = "%@" + mail_address.split("@").second
+    new_domain_like = "%" + at + mail_address.split(at).second
     exist_pic_mail_domain = BpPic.where("deleted = 0 and email1 like ?", new_domain_like).first
     exist_outflow_mail_domain = OutflowMail.where("deleted = 0 and import_mail_id != ? and email like ? and outflow_mail_status_type != 'unwanted'", self.import_mail_id, new_domain_like).first
     
