@@ -9,6 +9,7 @@ class ImportMail < ActiveRecord::Base
   has_many :bp_members
   has_many :biz_offers
   has_many :tag_details, :foreign_key  => :parent_id, :conditions => "tag_details.tag_key = 'import_mails'"
+  has_many :outflow_mails, :conditions => "outflow_mails.deleted = 0"
 
   def ImportMail.tryConv(map, header_key, &block)
     begin

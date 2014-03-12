@@ -34,6 +34,7 @@
   <br/>
   <%= submit_tag '　　検索　　', :name => 'search_button' %> <%= submit_tag '　　クリア　　', :name => 'clear_button' %>
   <input type=button value='会社チェック' onClick="disp_full('<%=url_for_outflow_mail_input_popup(@import_mail.id)%>');return false;" />
+  <%= submit_tag '　再解析　', :name => 'analyze_button' %>
   <%= hidden_field_tag 'import_mail_id', @import_mail.id %>
 <% end %>
 <table class="list_table" style="margin-top:0px">
