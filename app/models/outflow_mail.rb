@@ -34,7 +34,7 @@ class OutflowMail < ActiveRecord::Base
 
   def self.update_outflow_mails(import_mail)
     import_mail.outflow_mails.each do |outflow_mail|
-      if OutflowMail.check_duplication_domain(outflow_mail.email)
+      if outflow_mail.check_duplication_domain
         outflow_mail.outflow_mail_status_type = "unwanted"
       end
       outflow_mail.save!
@@ -42,7 +42,7 @@ class OutflowMail < ActiveRecord::Base
   end
 
   def check_status
-    if OutflowMail.check_duplication_domain(self.email)
+    if check_duplication_domain
       self.outflow_mail_status_type = "unwanted"
     elsif active_url = OutflowMail.search_active_url(self.email)
       self.outflow_mail_status_type = "non_correspondence"
@@ -138,13 +138,15 @@ class OutflowMail < ActiveRecord::Base
     address_hash
   end
 
-  def self.check_duplication_domain(mail_address)
+  def check_duplication_domain
     unless SysConfig.email_prodmode?
-      mail_address = StringUtil.to_test_address(mail_address)
+      mail_address = StringUtil.to_test_address(self.email)
+    else
+      mail_address = self.email
     end
     new_domain_like = "%@" + mail_address.split("@").second
     exist_pic_mail_domain = BpPic.where("deleted = 0 and email1 like ?", new_domain_like).first
-    exist_outflow_mail_domain = OutflowMail.where("deleted = 0 and email like ? and outflow_mail_status_type != 'unwanted'", new_domain_like).first
+    exist_outflow_mail_domain = OutflowMail.where("deleted = 0 and import_mail_id != ? and email like ? and outflow_mail_status_type != 'unwanted'", self.import_mail_id, new_domain_like).first
     
     exist_pic_mail_domain || exist_outflow_mail_domain
   end
