@@ -36,7 +36,7 @@ describe DailyReportController do
         expect(assigns(:target_daily_reports)).to have(31).items
       end
 
-      it '取得したレポートをUpdateで更新する' do
+      it '取得したレポートをUpdateで更新する(Return-Pathなし)' do
         target_daily_report = assigns(:target_daily_reports)
         target_data = Hash.new
 
@@ -46,6 +46,24 @@ describe DailyReportController do
           target_daily_report[number].interviews = 3
           target_daily_report[number].new_meetings = 4
           target_daily_report[number].exist_meetings = 5
+          target_data[number.to_s] = target_daily_report[number].attributes
+        end
+
+        post :update, {:target_daily_report => target_data, :date => '2014-01'}
+        expect(response).to redirect_to(:action => 'index', :date => '2014-01')
+      end
+
+      it '取得したレポートをUpdateで更新する(Return-Pathあり)' do
+        FG.create(:SysConfig_test002)
+        target_daily_report = assigns(:target_daily_reports)
+        target_data = Hash.new
+
+        0.upto(target_daily_report.size - 1) do |number|
+          target_daily_report[number].succeeds = nil
+          target_daily_report[number].gross_profits = nil
+          target_daily_report[number].interviews = nil
+          target_daily_report[number].new_meetings = nil
+          target_daily_report[number].exist_meetings = nil
           target_data[number.to_s] = target_daily_report[number].attributes
         end
 
@@ -65,25 +83,88 @@ describe DailyReportController do
         get :summary
       end
 
-      it '年次で取得する' do
+      it '集計期間:年次, 対象:なし, 集計方法:全体' do
         expect(response).to be_success
         expect(response).to render_template("summary")
 
+        post :summary, {:summary_term_flg => 'year', :summary_target_flg => nil, :summary_method_flg => 'summary'}
+        expect(response).to be_success
+        expect(response).to render_template("summary")
+        expect(session[:daily_report_summary]).not_to be_nil
+      end
+
+      it '集計期間:年次, 対象:1, 集計方法:全体' do
+        post :summary, {:summary_term_flg => 'year', :summary_target_flg => [1], :summary_method_flg => 'summary'}
+        expect(response).to be_success
+        expect(response).to render_template("summary")
+        expect(session[:daily_report_summary]).not_to be_nil
+      end
+
+      it '集計期間:年次, 対象:なし, 集計方法:個別' do
         post :summary, {:summary_term_flg => 'year', :summary_target_flg => nil, :summary_method_flg => 'individual'}
         expect(response).to be_success
         expect(response).to render_template("summary")
         expect(session[:daily_report_summary]).not_to be_nil
       end
 
-      it '月次で取得する' do
+      it '集計期間:年次, 対象:1, 集計方法:個別' do
+        post :summary, {:summary_term_flg => 'year', :summary_target_flg => [1], :summary_method_flg => 'individual'}
+        expect(response).to be_success
+        expect(response).to render_template("summary")
+        expect(session[:daily_report_summary]).not_to be_nil
+      end
+
+      it '集計期間:月次, 対象:なし, 集計方法:全体' do
+        post :summary, {:summary_term_flg => 'month', :summary_target_flg => nil, :summary_method_flg => 'summary'}
+        expect(response).to be_success
+        expect(response).to render_template("summary")
+        expect(session[:daily_report_summary]).not_to be_nil
+      end
+
+      it '集計期間:月次, 対象:1, 集計方法:全体' do
+        post :summary, {:summary_term_flg => 'month', :summary_target_flg => [1], :summary_method_flg => 'summary'}
+        expect(response).to be_success
+        expect(response).to render_template("summary")
+        expect(session[:daily_report_summary]).not_to be_nil
+      end
+
+      it '集計期間:月次, 対象:なし, 集計方法:個別' do
         post :summary, {:summary_term_flg => 'month', :summary_target_flg => nil, :summary_method_flg => 'individual'}
         expect(response).to be_success
         expect(response).to render_template("summary")
         expect(session[:daily_report_summary]).not_to be_nil
       end
 
-      it '日次で取得する' do
+      it '集計期間:月次, 対象:1, 集計方法:個別' do
+        post :summary, {:summary_term_flg => 'month', :summary_target_flg => [1], :summary_method_flg => 'individual'}
+        expect(response).to be_success
+        expect(response).to render_template("summary")
+        expect(session[:daily_report_summary]).not_to be_nil
+      end
+
+      it '集計期間:日次, 対象:なし, 集計方法:全体' do
+        post :summary, {:summary_term_flg => 'day', :summary_target_flg => nil, :summary_method_flg => 'summary'}
+        expect(response).to be_success
+        expect(response).to render_template("summary")
+        expect(session[:daily_report_summary]).not_to be_nil
+      end
+
+      it '集計期間:日次, 対象:1, 集計方法:全体' do
+        post :summary, {:summary_term_flg => 'day', :summary_target_flg => [1], :summary_method_flg => 'summary'}
+        expect(response).to be_success
+        expect(response).to render_template("summary")
+        expect(session[:daily_report_summary]).not_to be_nil
+      end
+
+      it '集計期間:日次, 対象:なし, 集計方法:個別' do
         post :summary, {:summary_term_flg => 'day', :summary_target_flg => nil, :summary_method_flg => 'individual'}
+        expect(response).to be_success
+        expect(response).to render_template("summary")
+        expect(session[:daily_report_summary]).not_to be_nil
+      end
+
+      it '集計期間:日次, 対象:1, 集計方法:個別' do
+        post :summary, {:summary_term_flg => 'day', :summary_target_flg => [1], :summary_method_flg => 'individual'}
         expect(response).to be_success
         expect(response).to render_template("summary")
         expect(session[:daily_report_summary]).not_to be_nil
