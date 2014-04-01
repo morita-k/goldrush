@@ -76,7 +76,7 @@ class SysConfig < ActiveRecord::Base
   end
   
   def SysConfig.load_cache
-    @@cache = SysConfig.find(:all)
+    @@cache = SysConfig.find(:all, :conditions => "deleted = 0")
   end
 
   def SysConfig.purge_cache

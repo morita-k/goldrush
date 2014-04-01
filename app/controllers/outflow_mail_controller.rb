@@ -7,11 +7,11 @@ class OutflowMailController < ApplicationController
     }
   end
 
-  def make_conditons
+  def make_conditons(import_mail)
     status = session[:outflow_mail_search][:outflow_mail_status]
     conditions = "outflow_mails.deleted = 0"
+    conditions += " and import_mail_id = '#{import_mail.id}'"
     conditions += status.blank? ? "" : " and outflow_mail_status_type = '#{status}'"
-    conditions += @import_mail_id.blank? ? "" : " and import_mail_id = '#{@import_mail_id}'"
   end
 
   def index
@@ -20,18 +20,20 @@ class OutflowMailController < ApplicationController
   end
 
   def list
-    @import_mail_id = params[:import_mail_id]
+    @import_mail = ImportMail.find(params[:import_mail_id])
     session[:outflow_mail_search] ||= {}
     if params[:search_button]
       set_conditions
     elsif params[:clear_button]
       session[:outflow_mail_search] = {}
+    elsif params[:analyze_button]
+      update_outflow_mails(@import_mail)
+      return
     end
 
-    cond = make_conditons
+    cond = make_conditons(@import_mail)
 
     @outflow_mails = OutflowMail.where(cond)
-    @import_mail = @import_mail_id.blank? ? nil : ImportMail.find(@import_mail_id)
   end
 
   def quick_input
@@ -100,12 +102,12 @@ class OutflowMailController < ApplicationController
     outflow_mail_list_raw.gsub!(/(\r\n|\r|\n)/, ',')
 
     unless outflow_mail_list_raw.nil? || outflow_mail_list_raw.size == 0
-      outflow_mail_list = outflow_mail_list_raw.split(',')
+      outflow_mail_list = outflow_mail_list_raw.split(',').map{|x| x.strip}
 
       outflow_mail_list.each do |outflow_mail|
         unless outflow_mail =~ (/^[a-zA-Z0-9_¥.¥-]+@[A-Za-z0-9_¥.¥-]+\.[A-Za-z0-9_¥.¥-]+$/)
           flash[:err] = "不正なメールアドレスが含まれております。 " + outflow_mail
-          return redirect_to :controller => 'outflow_mail', :action => 'new', :params => {:outflow_mail_list_raw => outflow_mail_list_raw}
+          return redirect_to :controller => 'outflow_mail', :action => 'new'#, :params => {:outflow_mail_list_raw => outflow_mail_list_raw}
         end
       end
 
@@ -115,7 +117,7 @@ class OutflowMailController < ApplicationController
       import_mail.mail_sender_name = '流出メール解析'
       import_mail.received_at = now
       import_mail.mail_cc = outflow_mail_list_raw
-      mail_name = '流出メール解析' + now.strftime("%Y%m%d%H%M%S")
+      mail_name = '流出メール解析' + " [#{now.strftime("%Y/%m/%d/ %H:%M:%S")}] "
       import_mail.mail_subject = mail_name + '解析中'
       import_mail.outflow_mail_flg = '1'
 
@@ -139,11 +141,29 @@ class OutflowMailController < ApplicationController
   def new
       @outflow_mail_list_raw = params[:outflow_mail_list_raw]
 
-      p @outflow_mail_list_raw
       @import_mails = ImportMail.includes([]).joins([])
       .where("outflow_mail_flg = 1")
       .order("id desc")
       .page(params[:page])
       .per(current_user.per_page)
+  end
+
+private
+
+  def update_outflow_mails(import_mail)
+#    mail_name = import_mail.mail_subject + " [#{Time.now.strftime("%Y/%m/%d/ %H:%M:%S")}] "
+#    import_mail.mail_subject = mail_name + '再解析中'
+
+#    import_mail.save!
+
+#    Thread.start do
+      OutflowMail.update_outflow_mails(import_mail)
+#      import_mail.mail_subject = mail_name + '完了'
+#      import_mail.save!
+#    end
+
+#    flash[:notice] = "流出メールの解析を実行中です。"
+    flash[:notice] = "流出メールの再解析を実行中しました。"
+    return redirect_to :controller => 'outflow_mail', :action => 'list', :import_mail_id => import_mail
   end
 end
