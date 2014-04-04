@@ -4,7 +4,7 @@ class DailyReportSummary < ActiveRecord::Base
 
   belongs_to :user
 
-  SELECT_SUMMARY_COLUMNS = "SUM(succeeds) AS succeeds, SUM(gross_profits) AS gross_profits, SUM(interviews) AS interviews, SUM(new_meetings) AS new_meetings, SUM(exist_meetings) AS exist_meetings "
+  SELECT_SUMMARY_COLUMNS = "SUM(succeeds) AS succeeds, SUM(gross_profits) AS gross_profits, SUM(interviews) AS interviews, SUM(new_meetings) AS new_meetings, SUM(exist_meetings) AS exist_meetings, SUM(send_delivery_mails) AS send_delivery_mails "
 
   def self.update_daily_report_summary(target_date, target_user_id)
     target_daily_reports = DailyReport.where("user_id = :target_id AND report_date LIKE :target_date", {:target_id => "#{target_user_id}",:target_date => "#{target_date}%"})
@@ -26,6 +26,7 @@ class DailyReportSummary < ActiveRecord::Base
       summary_interviews = 0
       summary_new_meetings = 0
       summary_exist_meetings = 0
+      summary_send_delivery_mails = 0
 
       target_daily_reports.each do |target_daily_report|
         summary_succeeds += target_daily_report.succeeds
@@ -33,6 +34,7 @@ class DailyReportSummary < ActiveRecord::Base
         summary_interviews += target_daily_report.interviews
         summary_new_meetings += target_daily_report.new_meetings
         summary_exist_meetings += target_daily_report.exist_meetings
+        summary_send_delivery_mails += target_daily_report.send_delivery_mails
       end
 
       target_daily_report_summary.succeeds = summary_succeeds
@@ -40,6 +42,7 @@ class DailyReportSummary < ActiveRecord::Base
       target_daily_report_summary.interviews = summary_interviews
       target_daily_report_summary.new_meetings = summary_new_meetings
       target_daily_report_summary.exist_meetings = summary_exist_meetings
+      target_daily_report_summary.send_delivery_mails = summary_send_delivery_mails
 
       target_daily_report_summary.save!
     end
