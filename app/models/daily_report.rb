@@ -4,7 +4,7 @@ class DailyReport < ActiveRecord::Base
 
   belongs_to :user
 
-  SELECT_SUMMARY_COLUMNS = "SUM(succeeds) AS succeeds, SUM(gross_profits) AS gross_profits, SUM(interviews) AS interviews, SUM(new_meetings) AS new_meetings, SUM(exist_meetings) AS exist_meetings "
+  SELECT_SUMMARY_COLUMNS = "SUM(succeeds) AS succeeds, SUM(gross_profits) AS gross_profits, SUM(interviews) AS interviews, SUM(new_meetings) AS new_meetings, SUM(exist_meetings) AS exist_meetings, SUM(send_delivery_mails) AS send_delivery_mails "
 
   def self.get_daily_report(target_date, target_user_id)
     target_daily_reports = self.where("user_id = :target_id AND report_date LIKE :target_date", {:target_id => "#{target_user_id}",:target_date => "#{target_date}%"})
@@ -32,7 +32,7 @@ class DailyReport < ActiveRecord::Base
     target_daily_reports
   end
 
-  def self.update_daily_report(target_data, target_user_id)
+  def self.update_daily_report(target_data, target_user, delivery_mails)
     target_data.each do |key, value|
       target_date = value[:report_date]
       target_succeeds = value[:succeeds]
@@ -44,10 +44,14 @@ class DailyReport < ActiveRecord::Base
       if value[:id].nil? || value[:id] == ""
         target_daily_report = DailyReport.new
         target_daily_report.report_date = target_date
-        target_daily_report.user_id = target_user_id
+        target_daily_report.user_id = target_user.id
         target_daily_report.daily_report_input_type = 'notinput'
       else
         target_daily_report = self.where(:id => value[:id]).first
+      end
+
+      unless delivery_mails.nil?
+        target_daily_report.send_delivery_mails = delivery_mails.select{|x| /^#{target_date}/ =~ x['send_end_at'].to_s && x['mail_from'] == target_user.email}.size
       end
 
       if  (target_succeeds.nil? || target_succeeds.size == 0) &&

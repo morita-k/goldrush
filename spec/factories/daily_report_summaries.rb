@@ -7,6 +7,7 @@ FactoryGirl.define do
     interviews 31
     new_meetings 31
     exist_meetings 31
+    send_delivery_mails 31
     report_date Date.new(2014, 1, 1)
 
     trait :test001 do
