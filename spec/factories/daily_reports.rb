@@ -19,6 +19,7 @@ FactoryGirl.define do
     interviews 1
     new_meetings 1
     exist_meetings 1
+    send_delivery_mails 1
     contact_matter '連絡事項'
     report_date Date.new(2014, 1, 1)
     daily_report_input_type 'notinput'

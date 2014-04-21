@@ -123,7 +123,8 @@ describe DailyReport do
       target_data = Hash.new
       target_data['1'] = target_daily_report
 
-      DailyReport.update_daily_report(target_data, '1')
+      user = FG.create(:User)
+      DailyReport.update_daily_report(target_data, user, nil)
 
       result_daily_report = DailyReport.all
       expect(result_daily_report).to have(1).items
@@ -149,7 +150,8 @@ describe DailyReport do
       target_data = Hash.new
       target_data['1'] = target_daily_report
 
-      DailyReport.update_daily_report(target_data, '1')
+      user = FG.create(:User)
+      DailyReport.update_daily_report(target_data, user, nil)
       result_daily_report = DailyReport.all
       expect(result_daily_report).to have(1).items
       expect(result_daily_report[0].succeeds).to eq(1)
@@ -174,7 +176,8 @@ describe DailyReport do
       target_data = Hash.new
       target_data['1'] = target_daily_report
 
-      DailyReport.update_daily_report(target_data, '1')
+      user = FG.create(:User)
+      DailyReport.update_daily_report(target_data, user, nil)
 
       result_daily_report = DailyReport.all
       expect(result_daily_report).to have(1).items
@@ -189,7 +192,7 @@ describe DailyReport do
 
     describe 'エラーテスト' do
       it '引数をnilにするとエラーになる' do
-        expect{DailyReport.update_daily_report(nil, nil)}.to raise_error(NoMethodError)
+        expect{DailyReport.update_daily_report(nil, nil, nil)}.to raise_error(NoMethodError)
       end
     end
   end

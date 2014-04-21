@@ -22,6 +22,7 @@
     <th><%= getLongName('daily_reports', 'interviews') %></th>
     <th><%= getLongName('daily_reports', 'new_meetings') %></th>
     <th><%= getLongName('daily_reports', 'exist_meetings') %></th>
+    <th><%= getLongName('daily_reports', 'send_delivery_mails') %></th>
     <th><%= getLongName('daily_reports', 'contact_matter') %></th>
   </tr>
   <% @target_daily_reports.each_with_index do |target_daily_report, index| @target_daily_report = target_daily_report %>
@@ -35,6 +36,7 @@
       <td><%= text_field :target_daily_report , :interviews, :size => 3, :style => "text-align:right" , :index => index %></td>
       <td><%= text_field :target_daily_report , :new_meetings, :size => 3, :style => "text-align:right" , :index => index %></td>
       <td><%= text_field :target_daily_report , :exist_meetings, :size => 3, :style => "text-align:right" , :index => index %></td>
+      <td><%= h @target_daily_report["send_delivery_mails"].to_i %></td>
       <td><%= text_field :target_daily_report , :contact_matter, :size => 100, :index => index %></td>
     <% else  %>
       <td><%= text_field :target_daily_report ,:succeeds , :value => '',:size => 3, :style => "text-align:right" , :index => index %></td>
@@ -42,6 +44,7 @@
       <td><%= text_field :target_daily_report ,:interviews , :value => '',:size => 3, :style => "text-align:right" , :index => index %></td>
       <td><%= text_field :target_daily_report ,:new_meetings , :value => '',:size => 3, :style => "text-align:right" , :index => index %></td>
       <td><%= text_field :target_daily_report ,:exist_meetings , :value => '',:size => 3, :style => "text-align:right" , :index => index %></td>
+      <td><%= h @target_daily_report["send_delivery_mails"].to_i %></td>
       <td><%= text_field :target_daily_report ,:contact_matter , :value => '',:size => 100, :index => index %></td>
     <% end %>
   </tr>
