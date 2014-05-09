@@ -1,9 +1,0 @@
-<h1><%=getLongName('table_name','application_approvals')%>編集</h1>
-
-<%= form_tag :action => 'update', :id => @application_approval do %>
-  <%= render :partial => 'form' %>
-  <%= submit_tag '更新' %>
-<% end %>
-
-<%= link_to '表示', :action => 'show', :id => @application_approval %> |
-<%= link_to '一覧に戻る', :action => 'list' %>

@@ -219,20 +219,12 @@ module ApplicationHelper
        changeMonth: false,
 EOS
 
-    if("#{object_name}_#{method}" == "expense_application_preferred_date")
-      result += <<EOS
-        beforeShow: function(input, inst){
-          inst.dpDiv.css({marginTop: -260 + 'px'});
-        },
-EOS
-    else
-      result += <<EOS
-        beforeShow: function(input, inst){
-          inst.dpDiv.css({marginTop: 0 + 'px'});
-        },
+    result += <<EOS
+      beforeShow: function(input, inst){
+        inst.dpDiv.css({marginTop: 0 + 'px'});
+      },
 
 EOS
-    end
 
     result += <<EOS
            });
@@ -485,22 +477,6 @@ EOS
 
   def is_photo?
     !@photo_id.nil?
-  end
-
-  def link_to_change_approval_status(application_approval)
-    result = []
-    return result unless application_approval
-    change_to_statuses =  ApplicationApproval.change_to_status(application_approval.approval_status_type)
-    return result unless change_to_statuses
-    change_to_statuses.each{|change_to_status|
-      str = ApplicationApproval.approval_action_str(change_to_status)
-      if change_to_status == 'reject'
-        result << link_to(str, { :controller => 'application_approval', :action => 'reject', :id => application_approval, :application_type => application_approval.application_type, :approval_status_type => change_to_status, :back_to => request.env['REQUEST_URI'] , :authenticity_token => form_authenticity_token})
-      else
-        result << link_to(str, { :controller => 'application_approval', :action => 'change_approval_status', :id => application_approval, :application_type => application_approval.application_type, :approval_status_type => change_to_status, :back_to => request.env['REQUEST_URI'], :authenticity_token => form_authenticity_token }, :confirm => "この申請を#{str}します。よろしいですか?", :method => :post)
-      end
-    }
-    result 
   end
 
   def back_to

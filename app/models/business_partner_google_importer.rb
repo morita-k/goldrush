@@ -144,7 +144,7 @@ class BusinessPartnerGoogleImporter < BusinessPartner
   def BusinessPartnerGoogleImporter.change_bp(bp, other_bp)
     # 既存の取引先と紐づくデータを新しく取り込む取引先に紐付け
     # 他にContactHistory, DeliveryError, Interview(interview_bp_id)があるが、利用していない。
-    [BpPic, Project, AnalysisTemplate, BizOffer, BpMember, ImportMail].each do |sym|
+    [BpPic, AnalysisTemplate, BizOffer, BpMember, ImportMail].each do |sym|
       sym.where(:business_partner_id => bp.id, :deleted => 0).each do |target|
         target.business_partner = other_bp
         target.save!
