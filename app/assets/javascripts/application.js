@@ -55,3 +55,11 @@ function checkTest(){
 	return true;
 };
 
+$(document).ready(function(){
+		$('#collapseForm').on('hide.bs.collapse', function(){
+				$('#collapseArrow').animate({rotate: 90})
+		});
+		$('#collapseForm').on('show.bs.collapse', function(){
+				$('#collapseArrow').animate({rotate: 0})
+		});
+});

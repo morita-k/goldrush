@@ -3,10 +3,10 @@
     <div class="accordion" id="accordion2">
       <div class="accordion-group">
         <div class="accordion-heading">
-          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne"><h1><%= @business_partner.blank? ? getLongName('table_name','business_partners') : "#{@business_partner.business_partner_name}担当" %> <i id="xxxx" class="fa fa-arrow-circle-o-down"></i></h1></a>
+          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseForm"><h1><%= @business_partner.blank? ? getLongName('table_name','business_partners') : "#{@business_partner.business_partner_name}担当" %> <i id="collapseArrow" class="fa fa-arrow-circle-o-down"></i></h1></a>
         </div>
         <%= form_tag_popup_mode(set_url_param) do %>
-          <div id="collapseOne" class="collapse in">
+          <div id="collapseForm" class="collapse in">
           <div class="accordion-inner">
             <table class="form_table">
               <tr>
@@ -196,21 +196,3 @@ function setBpPicToParentWindow(bp_pic_id, bp_pic_name, business_partner_name) {
 
 <% if is_photo? %> <%= link_or_back '戻る', {:controller => :photos ,:action => 'list'} %> <% end %>
 
-<script type="text/javascript">
-<!--
-$(document).ready(function(){
-    $('#collapseOne').on('hide.bs.collapse', function(){
-      $('#xxxx').css({ rotate: '60deg' });
-      });
-    $('#collapseOne').on('hidden.bs.collapse', function(){
-      $('#xxxx').css({ rotate: '90deg' });
-      });
-    $('#collapseOne').on('shown.bs.collapse', function(){
-      $('#xxxx').css({ rotate: '0deg' });
-      });
-    $('#collapseOne').on('show.bs.collapse', function(){
-      $('#xxxx').css({ rotate: '30deg' });
-      });
-    });
-// -->
-</script>
