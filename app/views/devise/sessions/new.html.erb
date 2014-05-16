@@ -1,25 +1,26 @@
-<h2>ログイン</h2>
-
-<%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
-<table class="form_table">
-  <tr>
-  <th><%= f.label :email, 'Eメール' %></th>
-  <td><%= f.email_field :email, :autofocus => true %></td>
-  </tr>
-
-  <tr>
-  <th><%= f.label :password, 'パスワード' %></th>
-  <td><%= f.password_field :password %></td>
-  </tr>
-
-  <% if devise_mapping.rememberable? -%>
-    <tr>
-    <th><%= f.label :remember_me, 'ログインしたままにする' %></th>
-    <td><%= f.check_box :remember_me %></td>
-   </tr>
-  <% end -%>
-</table>
-  <p><%= f.submit "ログイン"%></p>
-<% end %>
-
-<%#= render "devise/shared/links" %>
+<div class="container">
+  <div class="row">
+    <div class="login_area">
+      <%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => {:id => "form"}) do |f| %>
+      <div style="text-align:center">
+        <p><%= image_tag 'logo.png' %></p>
+        <p>&nbsp;</p>
+      </div>
+      <div class="login_left">ID </div>
+      <div class="login_right"><%= f.email_field :email, :autofocus => true %></div>
+      <div class="clearfix"></div>
+      <div class="login_left">Password</div>
+      <div class="login_right"><%= f.password_field :password %></div>
+      <div class="clearfix"></div>
+      <div class="login_left">ログインしたままにする</div>
+      <div class="login_right"><%= f.check_box :remember_me %> </div>
+      <div class="clearfix"></div>
+      <p>&nbsp;</p>
+      <div style="text-align:center">
+        <%= submit_tag "LOGIN", :class => "btn btn-warning btn-large" %>
+      </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+</div>

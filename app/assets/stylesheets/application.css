@@ -12,3 +12,28 @@
  *= require_self
  */
 
+.login_left {
+  float: left;
+  width: 28%;
+  text-align: right;
+  margin-right: 2%;
+  vertical-align: middle;
+  height: 30px;
+  margin-top: 10px;
+}
+.login_right {
+  float: right;
+  width: 70%;
+  margin-top: 3px;
+}
+.login_right input {
+  width: 62%;
+}
+.login_right input[type="checkbox"] {
+  width: auto;
+  margin-top: 9px;
+}
+}
+.login_area img {
+  margin-top: 5%;
+}
