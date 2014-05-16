@@ -2,7 +2,7 @@
 
 <%= form_tag :action => 'create' do %>
   <%= render :partial => 'form' %>
-  <%= submit_tag "登録" %>
+  <%= submit_tag "登録", :class => 'btn btn-info btn-midium' %>
   <%= popup_hidden_field %>
   <%= photo_id_hidden_field %>
 <% end %>

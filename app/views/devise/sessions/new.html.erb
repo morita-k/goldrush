@@ -1,26 +1,21 @@
-<div class="container">
-  <div class="row">
-    <div class="login_area">
-      <%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => {:id => "form"}) do |f| %>
-      <div style="text-align:center">
-        <p><%= image_tag 'logo.png' %></p>
-        <p>&nbsp;</p>
-      </div>
-      <div class="login_left">ID </div>
-      <div class="login_right"><%= f.email_field :email, :autofocus => true %></div>
-      <div class="clearfix"></div>
-      <div class="login_left">Password</div>
-      <div class="login_right"><%= f.password_field :password %></div>
-      <div class="clearfix"></div>
-      <div class="login_left">ログインしたままにする</div>
-      <div class="login_right"><%= f.check_box :remember_me %> </div>
-      <div class="clearfix"></div>
-      <p>&nbsp;</p>
-      <div style="text-align:center">
-        <%= submit_tag "LOGIN", :class => "btn btn-warning btn-large" %>
-      </div>
-      <% end %>
-    </div>
+<div class="login_area">
+  <%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => {:id => "form"}) do |f| %>
+  <div style="text-align:center">
+    <p><%= image_tag 'logo.png' %></p>
+    <p>&nbsp;</p>
   </div>
-</div>
+  <div class="login_left">ID </div>
+  <div class="login_right"><%= f.email_field :email, :autofocus => true %></div>
+  <div class="clearfix"></div>
+  <div class="login_left">Password</div>
+  <div class="login_right"><%= f.password_field :password %></div>
+  <div class="clearfix"></div>
+  <div class="login_left">ログインしたままにする</div>
+  <div class="login_right"><%= f.check_box :remember_me %> </div>
+  <div class="clearfix"></div>
+  <p>&nbsp;</p>
+  <div style="text-align:center">
+    <%= submit_tag "LOGIN", :class => "btn btn-warning btn-large" %>
+  </div>
+  <% end %>
 </div>
