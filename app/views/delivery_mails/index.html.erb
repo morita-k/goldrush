@@ -1,15 +1,14 @@
 <% if group? %>
-  <h1><%= getLongName('table_name','delivery_mails')%> 一覧</h1>
-  <%= render 'bp_pic_groups/show_table' %>
+  <%= accordion_around(getLongName('table_name','delivery_mails')+"一覧", "") do %>
+    <%= render 'bp_pic_groups/show_table' %>
+  <% end %>
+  <div class="submit_box">
+    <%= back_to_link getLongName('table_name','delivery_mails') + ' の新規作成', {:controller => :delivery_mails , :action => :new, :id => params[:id] }, btn_primary(:method => :get) %>
+    <%= link_or_back '戻る', :controller => :bp_pic_groups %>
+  </div>
 <% else %>
   <h1>即席メール 一覧</h1>
 <% end %>
 
-  <%= render :partial => 'list' %>
+<%= render :partial => 'list' %>
 
-<br />
-
-<% if group? %>
-<%= back_to_link getLongName('table_name','delivery_mails') + ' の新規作成', {:controller => :delivery_mails , :action => :new, :id => params[:id] }, :method => :get %> |
-<%= link_or_back '戻る', :controller => :bp_pic_groups %>
-<% end %>

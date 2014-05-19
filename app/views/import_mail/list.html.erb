@@ -1,8 +1,8 @@
-<h1><%=getLongName('table_name','import_mails')%>一覧</h1>
+<%= accordion_around(getLongName('table_name','import_mails')+"一覧", "") do %>
 <%= form_tag do %>
-<table>
+<table class="form_table">
     <tr>
-      <td style="text-align: right">フラグ:</td>
+      <th><i class="fa fa-angle-double-right "></i>フラグ</th>
       <td>
         <%= check_box_tag 'biz_offer_flg', 1, session[:import_mail_search][:biz_offer_flg].to_i == 1 %> 案件
         <%= check_box_tag 'bp_member_flg', 1, session[:import_mail_search][:bp_member_flg].to_i == 1 %> 人材
@@ -14,35 +14,40 @@
       </td>
     </tr>
     <tr>
-      <td style="text-align: right">タグ:</td>
+      <th><i class="fa fa-angle-double-right "></i>タグ</th>
       <td><%= text_field_tag 'tag', session[:import_mail_search][:tag]%></td>
     </tr>
     <tr>
-      <td style="text-align: right">単価:</td>
+      <th><i class="fa fa-angle-double-right "></i>単価</th>
       <td class="bounds_input">
         <%= text_field_tag 'payment_from', session[:import_mail_search][:payment_from]%>万 ～
         <%= text_field_tag 'payment_to', session[:import_mail_search][:payment_to]%>万
       </td>
     </tr>
     <tr>
-      <td style="text-align: right">年齢:</td>
+      <th><i class="fa fa-angle-double-right "></i>年齢</th>
       <td class="bounds_input">
         <%= text_field_tag 'age_from', session[:import_mail_search][:age_from]%>歳 ～
         <%= text_field_tag 'age_to', session[:import_mail_search][:age_to]%>歳
       </td>
     </tr>
     <tr>
-      <td style="text-align: right;">フリーワード</td>
+      <th><i class="fa fa-angle-double-right "></i>フリーワード</th>
       <td>
         <%= text_field_tag 'free_word', session[:import_mail_search][:free_word]%>
       </td>
     </tr>
+    <tr>
+      <th colspan="2">
+        <%= submit_tag '　　検索　　', btn_warning(:name => 'search_button') %> <%= submit_tag '　　クリア　　', btn_default(:name => 'clear_button') %>
+      </th>
+    </tr>
 </table>
-<br/>
-<%= submit_tag '　　検索　　', :name => 'search_button' %> <%= submit_tag '　　クリア　　', :name => 'clear_button' %>
+<% end %>
 <% end %>
 
 <%= paginate_far(@import_mails) %>
+
 <% unless session[:msgids].to_s.split(",").include?("123") %>
 <div class="alert alert-block">
  <button type="button" class="close" data-dismiss="alert" onclick="fixmessage('<%=url_for(:controller => :user, :action => :fixmessage, :id => '123', :authenticity_token => form_authenticity_token)%>')">&times;</button>

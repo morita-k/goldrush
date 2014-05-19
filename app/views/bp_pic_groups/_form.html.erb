@@ -1,4 +1,3 @@
-<%= form_for(@bp_pic_group) do |f| %>
 <%= back_to_field_tag %>
 <% source_group_id = params[:src_id] %>
 <%= hidden_field_tag('src_id', source_group_id) unless source_group_id.nil? %>
@@ -34,9 +33,6 @@
     <td><%= f.text_area :memo %></td>
   </tr>
 </table>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
 
 
 
@@ -54,4 +50,3 @@
   }
 // -->
 </script>
-<% end %>

@@ -1,11 +1,11 @@
-<h1><%= getLongName('table_name','delivery_mails')%> 詳細</h1>
-
-<%= render 'show' %>
+<%= accordion_around(getLongName('table_name','delivery_mails')+"一覧", "") do %>
+  <%= render 'show' %>
+<% end %>
 
 <!-- 配信エラー一覧  -->
 <% if !@delivery_mail.delivery_errors.empty? %>
 <h2><%= getLongName('table_name','delivery_errors')%> 一覧</h2>
-<table class="show_table" id="delivery_error">
+<table class="list_table table-bordered table-hover" id="delivery_error">
   <tr>
     <th><%= getLongName('business_partners', 'business_partner_name') %></th>
     <th><%= getLongName('bp_pics', 'bp_pic_name') %></th>
@@ -28,7 +28,7 @@
 <!-- 配信メール対象一覧  -->
 <h2><%= getLongName('table_name','delivery_mail_targets')%> 一覧</h2>
 
-<table class="show_table" id="delivery_mail_target">
+<table class="list_table table-bordered table-hover" id="delivery_mail_target">
   <tr>
     <th><%= getLongName('business_partners', 'business_partner_name') %></th>
     <th><%= getLongName('bp_pics', 'bp_pic_name') %></th>
@@ -79,8 +79,10 @@
     <% end %>
 </table>
 
+<div class="submit_box">
 <% if @delivery_mail.unsend? %>
-  <%= back_to_link '編集', {:action => :edit, :id => @delivery_mail.id} %> |
+  <%= back_to_link '編集', {:action => :edit, :id => @delivery_mail.id}, btn_primary %>
 <% end %>
 <%= link_or_back '戻る', {:action => :index, :id => @delivery_mail.bp_pic_group_id} %>
+</div>
 

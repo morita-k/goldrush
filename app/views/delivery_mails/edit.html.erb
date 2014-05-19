@@ -1,10 +1,16 @@
-<h1><%= getLongName('table_name','delivery_mails')%> の編集</h1>
+<%= form_for(@delivery_mail, :html => {:enctype => 'multipart/form-data'}) do |f| %>
+  <%= accordion_around(getLongName('table_name','delivery_mails')+"の編集", "") do %>
+    <%= render 'form', :f => f %>
+  <% end %>
 
-<%= render 'form' %>
+  <% if !@attachment_files.blank? %>
+    <h2>添付ファイル一覧</h2>
+    <%= render :partial => 'attachment_file/list' %>
+  <% end %>
 
-<% if !@attachment_files.blank? %>
-  <h2>添付ファイル一覧</h2>
-  <%= render :partial => 'attachment_file/list' %>
+  <div class="submit_box">
+    <%= submit_tag '　更新　', btn_primary %>
+    <%= link_or_back '戻る', delivery_mails_path %>
+  </div>
 <% end %>
 
-<%= link_or_back '戻る', delivery_mails_path %>

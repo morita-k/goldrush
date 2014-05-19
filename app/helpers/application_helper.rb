@@ -612,4 +612,27 @@ EOS
 EOS
     res
   end
+
+  def btn_primary(opt={})
+    btn_in('primary',opt)
+  end
+
+  def btn_info(opt={})
+    btn_in('info',opt)
+  end
+
+  def btn_warning(opt={})
+    btn_in('warning',opt)
+  end
+
+  def btn_default(opt={})
+    btn_in('default',opt)
+  end
+
+  def btn_in(kind, opt)
+    if opt[:class].blank?
+      opt[:class] = "btn btn-#{kind} btn-medium"
+    end
+    opt
+  end
 end

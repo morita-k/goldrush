@@ -1,5 +1,9 @@
-<h1><%= getLongName('table_name','mail_templates')%> の編集</h1>
-
-<%= render 'form' %>
-
-<%= link_or_back '戻る', mail_templates_path %>
+<%= form_for(@mail_template) do |f| %>
+  <%= accordion_around(getLongName('table_name','mail_templates')+"の編集", "") do %>
+    <%= render 'form', :f => f %>
+  <% end %>
+  <div class="submit_box">
+    <%= submit_tag '　更新　', btn_primary %>
+    <%= link_or_back '戻る', mail_templates_path %>
+  </div>
+<% end %>

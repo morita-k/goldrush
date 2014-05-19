@@ -1,11 +1,12 @@
-<h1><%=getLongName('table_name','analysis_templates')%>新規作成</h1>
 
 <%= form_tag :action => 'create', :mode => params[:mode] do %>
 
 
+<%= accordion_around(getLongName('table_name','analysis_templates')+"新規作成", "") do %>
   <!--[form:analysis_template]-->
     <%= render :partial => 'form' %>
   <!--[eoform:analysis_template]-->
+<% end %>
   
   <% if params[:mode] == 'biz_offer' %>
     <!--[form:analysis_template_item]-->
@@ -16,7 +17,9 @@
       <%= render :partial => 'analysis_template_item/form_bp_member' %>
     <!--[eoform:analysis_template_item]-->
   <% end %>
-  <%= submit_tag "登録" %>
+  <div class="submit_box">
+  <%= submit_tag "登録", btn_primary %>
+  <%= link_or_back '戻る', :action => 'list' %>
+  </div>
 <% end %>
 
-<%= link_or_back '戻る', :action => 'list' %>

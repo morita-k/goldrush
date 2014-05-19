@@ -1,25 +1,29 @@
-<a name="top"></a>
 <% if @delivery_mail %>
-  <h1><%= getLongName('table_name','delivery_mails')%> 確認</h1>
+  <%= accordion_around(getLongName('table_name','delivery_mails')+"確認", "") do %>
+    <%= render 'delivery_mails/show' %>
+  <% end %>
 
-  <%= render 'delivery_mails/show' %>
-  <p></p>
-  <%= back_to_link 'メールの内容を再編集する', edit_delivery_mail_path(@delivery_mail) %>
+  <% if !@attachment_files.blank? %>
+    <h2>添付ファイル一覧</h2>
+    <%= render :partial => 'attachment_file/list' %>
+  <% end %>
+
+  <div class="submit_box">
+  <%= back_to_link 'メールの内容を再編集する', edit_delivery_mail_path(@delivery_mail), btn_primary %>
+</div>
 
   <h1><%= @bp_pic_group.bp_pic_group_name %>のメンバーを選択してください。</h1>
 <% else %>
-  <h1><%= getLongName('table_name','bp_pic_groups')%> 確認</h1>
-  <%= render 'bp_pic_groups/show_table' %>
-  <%= back_to_link 'グループ名とメモの編集', {:action => :edit, :id => @bp_pic_group.id} %> |
-  <%= link_to 'グループをコピー', {action: :new, src_id: @bp_pic_group.id, back_to: back_to} %> |
-  <%= link_to 'グループを削除', {:action => :destroy, :id => @bp_pic_group.id, :authenticity_token => form_authenticity_token}, method: :delete, data: { confirm: '削除します。よろしいですか?' } %> |
+  <%= accordion_around(getLongName('table_name','bp_pic_groups')+"確認", "") do %>
+    <%= render 'bp_pic_groups/show_table' %>
+  <% end %>
+  <div class="submit_box">
+  <%= back_to_link 'グループ名とメモの編集', {:action => :edit, :id => @bp_pic_group.id}, btn_primary %>
+  <%= link_to 'グループをコピー', {action: :new, src_id: @bp_pic_group.id, back_to: back_to}, btn_primary %>
+  <%= link_to 'グループを削除', {:action => :destroy, :id => @bp_pic_group.id, :authenticity_token => form_authenticity_token}, btn_primary({:method => :delete, :data => { :confirm => '削除します。よろしいですか?' }}) %>
   <%= link_or_back '戻る', bp_pic_groups_path %>
-  <hr />
-<% end %>
-
-
-<% unless @delivery_mail %>
-<div>
+</div>
+  <%= accordion_around_h2("取引先担当の追加", "2") do %>
   <%= form_tag(url_for(:controller => :bp_pic_group_details, :action => :create), :method => :post) do %>
     <table class="show_table">
         <tr>
@@ -34,19 +38,21 @@
     </table>
     <%= hidden_field_tag 'bp_pic_group_detail[bp_pic_group_id]', @bp_pic_group.id %>
     <%= hidden_field_tag 'back_to', request.url  %>
-    <%= submit_tag "取引先担当を追加", :id => "submit_bp_pic_group_detail", :disabled => "disabled" %>
+    <%= submit_tag "取引先担当を追加", btn_primary(:id => "submit_bp_pic_group_detail", :disabled => "disabled") %>
   <% end %>
   <input type="hidden" id="business_partner_id" />
-</div>
+<% end %>
 <% end %>
 
-<% if @delivery_mail %>
-  <p><%= button_tag "全てのチェックをはずす", type: 'button', onclick: '$(".mail_status_check_box").attr("checked", false)' %></P>
-<% end %>
 <div>
   <%= form_tag url_for_bp_pic_list(@delivery_mail), :method => :post do %>
-    <%= send_buttons %>
-    <table class="show_table" style="margin-top:2px;">
+    <div class="submit_box">
+      <%= send_buttons %>
+      <% if @delivery_mail %>
+        <%= button_tag "全てのチェックをはずす", type: 'button', onclick: '$(".mail_status_check_box").attr("checked", false)', class: "btn btn-default btn-medium" %>
+      <% end %>
+    </div>
+    <table class="list_table">
       <tr>
         <th style="width:1%"></th>
         <th><%= getLongName('business_partners', 'business_partner_name') %></th>
@@ -70,10 +76,14 @@
         </tr>
       <% end %>
     </table>
-    <%= send_buttons %>
+    <div class="submit_box">
+      <%= send_buttons %>
+      <% if @delivery_mail %>
+        <%= button_tag "全てのチェックをはずす", type: 'button', onclick: '$(".mail_status_check_box").attr("checked", false)', class: "btn btn-default btn-medium" %>
+      <% end %>
+      <%= link_or_back '戻る', bp_pic_groups_path %>
+    </div>
   <% end %>
-<div><a href="#top">ページトップ</a></div>
-<%= link_or_back '戻る', bp_pic_groups_path %>
 </div>
 <script type="text/javascript">
 <!--
