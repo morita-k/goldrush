@@ -1,8 +1,9 @@
-<h1><%=getLongName('table_name','bp_members')%>編集</h1>
 
 <%= form_tag :action => 'update', :id => @bp_member, :human_resource_id => @human_resource do %>
   <%= render :partial => 'form' %>
-  <%= submit_tag '更新' %>
+  <div class="submit_box">
+    <%= submit_tag '更新' %>
+    <%= link_or_back '戻る', :action => 'list' %>
+</div>
 <% end %>
 
-<%= link_or_back '戻る', :action => 'list' %>

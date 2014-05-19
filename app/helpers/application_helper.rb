@@ -436,6 +436,9 @@ EOS
   end
 
   def link_or_back(name, options = {}, html_options = {}, &block)
+    if html_options[:class].blank?
+      html_options[:class] = "btn btn-default btn-medium"
+    end
     link_to(name, (back_to || options), html_options, &block)
   end
 
@@ -491,10 +494,6 @@ EOS
     else
       request.original_url
     end
-  end
-
-  def link_or_back(name, options = {}, html_options = {}, &block)
-    link_to(name, (back_to || options), html_options, &block)
   end
 
   def back_to_field_tag

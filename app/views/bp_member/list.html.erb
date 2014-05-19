@@ -1,69 +1,69 @@
-<h1><%=getLongName('table_name','bp_members')%>一覧</h1>
-
+<%= accordion_around(getLongName("table_name", "bp_members")+"一覧", "") do %>
 <%= form_tag_popup_mode do %>
-<table>
+<table class="form_table">
   <tr>
-    <th style="text-align: right">下流取引先：</th>
+    <th><i class="fa fa-angle-double-right"></i>下流取引先</th>
     <td><%= text_field_tag 'business_partner_name', search_value_bp_member(:business_partner_name) %></td>
   </tr>
   <tr>
-    <th style="text-align: right">下流担当者：</th>
+    <th><i class="fa fa-angle-double-right"></i>下流担当者</th>
     <td><%= text_field_tag 'bp_pic_name', search_value_bp_member(:bp_pic_name) %></td>
   </tr>
   <tr>
-    <th style="text-align: right">人材氏名：</th>
+    <th><i class="fa fa-angle-double-right"></i>人材氏名</th>
     <td><%= text_field_tag 'hr_name', session[:bp_member_search] && session[:bp_member_search][:hr_name], size: 60 %></td>
   </tr>
   <tr>
-    <th style="text-align: right">スキル：</th>
+    <th><i class="fa fa-angle-double-right"></i>スキル</th>
     <td><%= text_field_tag 'skill_tag', search_value_bp_member(:skill_tag) %></td>
   </tr>
   <tr>
-    <th style="text-align: right">単価下限：</th>
+    <th><i class="fa fa-angle-double-right"></i>単価下限</th>
     <td class="bounds_input">
       <%= text_field_tag 'payment_from', search_value_bp_member(:payment_from) %>万 ～ <%= text_field_tag 'payment_to', search_value_bp_member(:payment_to) %>万
     </td>
   </tr>
   <tr>
-    <th style="text-align: right">年齢：</th>
+    <th><i class="fa fa-angle-double-right"></i>年齢</th>
     <td class="bounds_input">
       <%= text_field_tag 'age_from', search_value_bp_member(:age_from) %>歳 ～ <%= text_field_tag 'age_to', search_value_bp_member(:age_to) %>歳
     </td>
   </tr>
   <tr>
-    <th style="text-align: right">ステータス：</th>
+    <th><i class="fa fa-angle-double-right"></i>ステータス</th>
     <td><%= select_tag 'human_resource_status_type', options_for_select([[]] + getTypes('human_resource_status_type'), search_value_bp_member(:human_resource_status_type)) %></td>
   </tr>
-  <!-- <tr>
-    <th style="text-align: right">雇用形態：</th>
-    <td><%=select_tag 'employment_type', options_for_select([[]] + getTypes('employment_type'), search_value_bp_member(:employment_type)) %></td>
-  </tr> -->
   <tr>
-    <th style="text-align: right">JIET:</th>
+    <th><i class="fa fa-angle-double-right"></i>JIET</th>
     <td class="jiet_radio">
       <%= radio_button_tag 'jiet', "0", search_value_bp_member(:jiet) == "0" %> どちらも
       <%= radio_button_tag 'jiet', "1", search_value_bp_member(:jiet) == "1" %> JIET以外
       <%= radio_button_tag 'jiet', "2", search_value_bp_member(:jiet) == "2" %> JIETのみ
     </td>
   </tr>
+  <tr>
+    <th colspan="2">
+      <%= submit_tag '　　検索　　', :name => 'search_button', :class => 'btn btn-warning btn-midium' %>
+      <%= submit_tag '　　クリア　　', :name => 'clear_button', :class => 'btn btn-warning btn-midium' %>
+    </th>
+  </tr>
 </table>
-<p><%= submit_tag '　　検索　　', :name => 'search_button' %> <%= submit_tag '　　クリア　　', :name => 'clear_button' %></p>
-<br />
 <% end %>
+<% end %>
+
+<div class="submit_box">
+<% if popup? %>
+  <%= back_to_link_popup_mode (getLongName('table_name','bp_members')+'の新規作成'), {:action => 'new', :popup => 1}, :class => "btn btn-primary btn-medium" %>
+<% else %>
+  <%= back_to_link (getLongName('table_name','bp_members')+'の新規作成'), {:action => 'new'}, :class => "btn btn-primary btn-medium" %>
+<% end %>
+</div>
 
 <%= paginate(@bp_members) %>
 
 <%= render :partial => 'list', :locals => {:bp_members => @bp_members} %>
 
 <%= paginate(@bp_members) %>
-
-<br />
-
-<% if popup? %>
-  <%= link_to (getLongName('table_name','bp_members')+'の新規作成'), :action => 'new', :popup => 1 %>
-<% else %>
-  <%= link_to (getLongName('table_name','bp_members')+'の新規作成'), :action => 'new' %>
-<% end %>
 
 <script type="text/javascript">
 <!--
