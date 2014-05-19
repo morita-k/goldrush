@@ -202,7 +202,7 @@ module ApplicationHelper
      <script type="text/javascript">
         // <![CDATA[
         jQuery(function () {
-            jQuery('.typeahead').typeahead()
+//            jQuery('.typeahead').typeahead()
         });
         // ]]>
       </script>
@@ -574,11 +574,19 @@ EOS
   end
   
   def accordion_around(title, suffix, hide=false, &block)
+    accordion_around_in(1, title, suffix, hide, &block)
+  end
+
+  def accordion_around_h2(title, suffix, hide=false, &block)
+    accordion_around_in(2, title, suffix, hide, &block)
+  end
+
+  def accordion_around_in(level, title, suffix, hide, &block)
     res = raw <<EOS
 <div class="accordion" id="accordion#{suffix}">
   <div class="accordion-group">
     <div class="accordion-heading">
-      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion#{suffix}" href="#collapseForm#{suffix}"><h1>#{title} <i id="collapseArrow#{suffix}" class="fa fa-arrow-circle-o-down"></i></h1></a>
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion#{suffix}" href="#collapseForm#{suffix}"><h#{level}>#{title} <i id="collapseArrow#{suffix}" class="fa fa-arrow-circle-o-down"></i></h#{level}></a>
     </div>
     <div id="collapseForm#{suffix}" class="collapse in">
       <div class="accordion-inner">
@@ -589,18 +597,20 @@ EOS
 </div>
 
 <div class="accordion-bottom"></div>
-EOS
-    if hide
-      res += raw(<<EOS)
 <script type="text/javascript">
 <!--
   $(document).ready(function(){
-    $("#collapseForm#{suffix}").collapse("toggle");
+    #{hide ? "$('#collapseForm#{suffix}').collapse('toggle');$('#collapseArrow#{suffix}').animate({rotate: 90});" : "" }
+    $('#collapseForm#{suffix}').on('hide.bs.collapse', function(){
+      $('#collapseArrow#{suffix}').animate({rotate: 90})
+    });
+      $('#collapseForm#{suffix}').on('show.bs.collapse', function(){
+          $('#collapseArrow#{suffix}').animate({rotate: 0})
+      });
   });
 -->
 </script>
 EOS
-    end
     res
   end
 end

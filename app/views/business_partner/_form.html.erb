@@ -1,14 +1,6 @@
 <%= error_messages_for 'business_partner' %>
 
-<div class="accordion" id="accordion1">
-  <div class="accordion-group">
-    <div class="accordion-heading">
-      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion1" href="#collapseForm"><h1>取引先 <i id="collapseArrow" class="fa fa-arrow-circle-o-down"></i></h1></a>
-    </div>
-
-
-    <div id="collapseForm" class="collapse in">
-      <div class="accordion-inner">
+<%= accordion_around("取引先", "") do %>
         <% if @business_partner.new_record? %>
           <input class="btn btn-info btn-midium" type=button value='登録済の取引先を選択' onClick="disp_wide('<%=url_for :controller => 'business_partner', :action => 'list', :popup =>1, :flg => 'eu,down,upper,self', :mail => 1 %>');return false;" />
           <input class="btn btn-info btn-midium" type=button value='取引先情報クリア' onClick="clearBp();return false;" />
@@ -93,11 +85,7 @@
             <th><label for="business_partner_memo"><%=getLongName('business_partners','memo')%></label></th><td><%= resizable_area 'business_partner', 'memo'  %></td>
           </tr>
         </table>
-      </div><%# accordion-inner %>
-    </div><%# collapseForm %>
-  </div><%# accordion-group %>
-</div><%# accordion %>
-<div class="accordion-bottom"></div>
+      <% end %>
 <!--[form:business_partner]-->
 <!--[eoform:business_partner]-->
 
@@ -106,19 +94,9 @@
 <%= back_to_field_tag %>
 
 <% if @business_partner.new_record? %>
-<div class="accordion" id="accordion2">
-  <div class="accordion-group">
-    <div class="accordion-heading">
-      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseForm2"><h1>取引先担当 <i id="collapseArrow2" class="fa fa-arrow-circle-o-down"></i></h1></a>
-    </div>
-    <div id="collapseForm2" class="collapse in">
-      <div class="accordion-inner">
-        <%= render :partial => 'bp_pic/form' %>
-      </div><%# accordion-inner %>
-    </div><%# collapseForm2 %>
-  </div><%# accordion-group %>
-</div><%# accordion %>
-<div class="accordion-bottom"></div>
+  <%= accordion_around_h2("取引先担当", "2") do %>
+    <%= render :partial => 'bp_pic/form' %>
+  <% end %>
 
 <%= hidden_field 'business_partner', 'id' %>
 

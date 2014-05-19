@@ -1,7 +1,8 @@
 
 <%= form_tag :action => 'create' do %>
   <%= render :partial => 'form' %>
-  <div class="submit_box"><%= submit_tag "　登　録　", :class => 'btn btn-info btn-midium' %>
+  <div class="submit_box">
+    <%= submit_tag "　登　録　", :class => 'btn btn-info btn-midium' %>
     <% if is_photo? %>
       <%= link_or_back '　戻　る　', {:controller => :photos ,:action => 'list'}, {:class => 'btn btn-default btn-midium'} %>
     <% else %>

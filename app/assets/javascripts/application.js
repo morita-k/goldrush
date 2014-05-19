@@ -55,14 +55,3 @@ function checkTest(){
 	return true;
 };
 
-$(document).ready(function(){
-		var forms = ["", "2","3","4","5","6","7","8","9"];
-		$.each(forms, function(i, v){
-			$('#collapseForm'+v).on('hide.bs.collapse', function(){
-					$('#collapseArrow'+v).animate({rotate: 90})
-			});
-			$('#collapseForm'+v).on('show.bs.collapse', function(){
-					$('#collapseArrow'+v).animate({rotate: 0})
-			});
-		});
-});

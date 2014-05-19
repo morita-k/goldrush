@@ -1,7 +1,7 @@
 <% upper_contract_term = contract.upper_contract_term %>
 <% down_contract_term = contract.down_contract_term %>
 
-<table class="show_table">
+<table class="show_table show_table_col3">
 <tr>
   <th><%= getLongName('contracts', 'contract_status_type') %></th><td colspan=2><%=h contract.contract_status_type_name%></td>
 </tr>
@@ -48,8 +48,8 @@
 </tr>
 <tr>
   <th>契約流契約条件</th>
-  <th>上流</th>
-  <th>下流</th>
+  <th style="width:37%">上流</th>
+  <th style="width:37%">下流</th>
 </tr>
 <tr>
   <th>契約条件ステータス</th>
