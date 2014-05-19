@@ -1,7 +1,7 @@
-<div class="accordion" id="accordion2">
+<div class="accordion" id="accordion1">
   <div class="accordion-group">
     <div class="accordion-heading">
-      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseForm"><h1><%= @business_partner.blank? ? getLongName('table_name','business_partners') : "#{@business_partner.business_partner_name}担当" %> <i id="collapseArrow" class="fa fa-arrow-circle-o-down"></i></h1></a>
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion1" href="#collapseForm"><h1><%= @business_partner.blank? ? getLongName('table_name','business_partners') : "#{@business_partner.business_partner_name}担当" %> <i id="collapseArrow" class="fa fa-arrow-circle-o-down"></i></h1></a>
     </div>
     <%= form_tag_popup_mode(set_url_param) do %>
     <div id="collapseForm" class="collapse in">

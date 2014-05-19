@@ -439,8 +439,10 @@ EOS
     link_to(name, (back_to || options), html_options, &block)
   end
 
-  def delete_to(name, object, action = 'destroy')
-    link_to(name, { :action => action, :id => object, :back_to => back_to, :authenticity_token => form_authenticity_token }, :confirm => 'この情報を削除します。よろしいですか?', :method => :post)
+  def delete_to(name, object, action = 'destroy', option = {})
+    option[:confirm] = 'この情報を削除します。よろしいですか?'
+    option[:method] = :post
+    link_to(name, { :action => action, :id => object, :back_to => back_to, :authenticity_token => form_authenticity_token }, option)
   end
 
   def square_table(array, options = {}, tag_options = {}, &block)
@@ -569,5 +571,36 @@ EOS
 
   def get_nickname(login)
     User.get_nickname(login)
+  end
+  
+  def accordion_around(title, suffix, hide=false, &block)
+    res = raw <<EOS
+<div class="accordion" id="accordion#{suffix}">
+  <div class="accordion-group">
+    <div class="accordion-heading">
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion#{suffix}" href="#collapseForm#{suffix}"><h1>#{title} <i id="collapseArrow#{suffix}" class="fa fa-arrow-circle-o-down"></i></h1></a>
+    </div>
+    <div id="collapseForm#{suffix}" class="collapse in">
+      <div class="accordion-inner">
+        #{capture(&block)}
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="accordion-bottom"></div>
+EOS
+    if hide
+      res += raw(<<EOS)
+<script type="text/javascript">
+<!--
+  $(document).ready(function(){
+    $("#collapseForm#{suffix}").collapse("toggle");
+  });
+-->
+</script>
+EOS
+    end
+    res
   end
 end
