@@ -94,9 +94,7 @@
 <%= back_to_field_tag %>
 
 <% if @business_partner.new_record? %>
-  <%= accordion_around_h2("取引先担当", "2") do %>
-    <%= render :partial => 'bp_pic/form' %>
-  <% end %>
+  <%= render :partial => 'bp_pic/form' %>
 
 <%= hidden_field 'business_partner', 'id' %>
 
