@@ -445,6 +445,7 @@ EOS
   def delete_to(name, object, action = 'destroy', option = {})
     option[:confirm] = 'この情報を削除します。よろしいですか?'
     option[:method] = :post
+    option[:class] = "btn btn-default btn-medium" if option[:class].blank?
     link_to(name, { :action => action, :id => object, :back_to => back_to, :authenticity_token => form_authenticity_token }, option)
   end
 

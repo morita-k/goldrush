@@ -44,9 +44,6 @@
   <tr>
     <th colspan="2">
       <%= submit_tag '　　検索　　', :name => 'search_button', :class => 'btn btn-warning btn-midium' %> <%= submit_tag '　　クリア　　', :name => 'clear_button', :class => 'btn btn-warning btn-midium' %>
-      <% unless popup? %>
-        <input type=button value='会社チェック支援機能' onClick="disp_full('<%=url_for_bp_pic_input_popup%>');return false;" class="btn btn-warning btn-midium" />
-    <% end %>
     </th>
   </tr>
   </table>
@@ -61,7 +58,10 @@
     <td>
       <%= link_to (getLongName('table_name','business_partners')+'/'+getLongName('table_name','bp_pics')+'の新規作成'), {:controller => :business_partner, :action => 'new', :flg => params[:flg], :back_to => request.env['REQUEST_URI']}, {:class => "btn btn-primary btn-midium"} %>
       <%= link_to "選択した取引先担当をグループに追加", "#addGroupModal", {:rel => "leanModal", :class => "btn btn-primary btn-midium"} %>
-      <%= submit_tag 'あいさつメール作成', :name => "contact_mail_new_button" ,:onclick => "if(!checkTest()){return false;}", :class => "btn btn-primary btn-midium"%><br>
+      <%= submit_tag 'あいさつメール作成', :name => "contact_mail_new_button" ,:onclick => "if(!checkTest()){return false;}", :class => "btn btn-primary btn-midium"%>
+      <% unless popup? %>
+        <input type=button value='会社チェック支援機能' onClick="disp_full('<%=url_for_bp_pic_input_popup%>');return false;" class="btn btn-info btn-midium" />
+      <% end %>
     </td>
   </tr>
 </table>

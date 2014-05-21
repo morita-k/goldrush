@@ -1,9 +1,9 @@
-<h1><%=getLongName('table_name','daily_reports')%>集計</h1>
+<%=accordion_around(getLongName('table_name','daily_reports')+"集計", "") do %>
 
 <%= form_tag do %>
-  <table>
+  <table class="form_table">
     <tr>
-      <td style="text-align: right">集計期間:</td>
+      <th>集計期間</th>
       <td>
         <%= radio_button_tag :summary_term_flg, :year, session[:daily_report_summary][:summary_term_flg].nil? || session[:daily_report_summary][:summary_term_flg] == 'year' %> 年次
         <%= radio_button_tag :summary_term_flg, :month, session[:daily_report_summary][:summary_term_flg] == 'month' %> 月次
@@ -11,7 +11,7 @@
       </td>
     </tr>
     <tr>
-      <td style="text-align: right">対象:</td>
+      <th>対象</th>
       <td>
         <% @target_user.includes(:user).each do |target_user| %>
         <%= check_box_tag 'summary_target_flg[]', target_user.user.id, session[:daily_report_summary][:summary_target_flg] != nil && session[:daily_report_summary][:summary_target_flg].include?(target_user.user.id.to_s) %><%= target_user.user.employee.employee_name %>
@@ -19,7 +19,7 @@
       </td>
     </tr>
     <tr>
-      <td style="text-align: right">集計方法:</td>
+      <th>集計方法</th>
       <td>
         <%= radio_button_tag :summary_method_flg, :summary, session[:daily_report_summary][:summary_method_flg].nil? || session[:daily_report_summary][:summary_method_flg] == 'summary' %> 全体
         <%= radio_button_tag :summary_method_flg, :individual, session[:daily_report_summary][:summary_method_flg] == 'individual' %> 個別
@@ -27,22 +27,23 @@
     </tr>
   </table>
   <br/>
-  <%= submit_tag '　　検索　　', :name => 'search_button' %> <%= submit_tag '　　クリア　　', :name => 'clear_button' %>
+  <%= submit_tag '　　検索　　', btn_warning(:name => 'search_button') %> <%= submit_tag '　　クリア　　', btn_default(:name => 'clear_button') %>
   <%= hidden_field nil, :date, :value => @target_date %>
   <br/>
+<% end %>
 <% end %>
 
 <% unless @target_summary.nil? %>
   <% unless session[:daily_report_summary][:summary_term_flg] == 'year' %>
-    <%= h session[:daily_report_summary][:summary_term_flg] == 'month' ? @target_date.split('-')[0] : @target_date %>
-    <br/>
-    <%= link_to('前の' + @target_date_string, {:date => @preview_date, :summary_term_flg => session[:daily_report_summary][:summary_term_flg] ,:summary_target_flg => session[:daily_report_summary][:summary_target_flg], :summary_method_flg => session[:daily_report_summary][:summary_method_flg]}) %>
-    <%= link_to('次の' + @target_date_string, {:date => @next_date, :summary_term_flg => session[:daily_report_summary][:summary_term_flg] ,:summary_target_flg => session[:daily_report_summary][:summary_target_flg], :summary_method_flg => session[:daily_report_summary][:summary_method_flg]}) %>
-    <br/>
+    <h2><%= h session[:daily_report_summary][:summary_term_flg] == 'month' ? @target_date.split('-')[0] : @target_date %></h2>
+    <div class="submit_box">
+      <%= link_to('前の' + @target_date_string, {:date => @preview_date, :summary_term_flg => session[:daily_report_summary][:summary_term_flg] ,:summary_target_flg => session[:daily_report_summary][:summary_target_flg], :summary_method_flg => session[:daily_report_summary][:summary_method_flg]}, btn_info) %>
+      <%= link_to('次の' + @target_date_string, {:date => @next_date, :summary_term_flg => session[:daily_report_summary][:summary_term_flg] ,:summary_target_flg => session[:daily_report_summary][:summary_target_flg], :summary_method_flg => session[:daily_report_summary][:summary_method_flg]}, btn_info) %>
+    </div>
   <% end %>
   <% if session[:daily_report_summary][:summary_method_flg] == 'summary' %>
     <% unless @target_summary.all.count == 0  %>
-    <%= h "全体" %>
+    <%= content_tag :h3, "全体" %>
     <table class="list_table">
       <tr>
         <th><%= getLongName('daily_reports', 'report_date') %></th>
@@ -73,7 +74,7 @@
   <% else  %>
     <% @target_summary_individual.each do |target_summary_individual| %>
       <% unless target_summary_individual[:target_summary_report].nil? || target_summary_individual[:target_summary_report].size == 0 %>
-      <%= h target_summary_individual[:user_name] %>
+      <%= content_tag :h3, target_summary_individual[:user_name] %>
         <table class="list_table">
           <tr>
             <th><%= getLongName('daily_reports', 'report_date') %></th>
