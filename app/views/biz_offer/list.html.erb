@@ -1,39 +1,51 @@
-<h1><%=getLongName('table_name','biz_offers')%>一覧</h1>
-
+<%= accordion_around("案件照会情報一覧", "") do %>
 <%= form_tag_popup_mode do %>
-<table>
+<table class="form_table">
   <tr>
-    <th style="text-align: right">上流取引先：</th>
+  <th><i class="fa fa-angle-double-right"></i>上流取引先</th>
     <td><%= text_field_tag 'business_partner_name', search_value_biz_offer(:business_partner_name), size: 60 %></td>
   </tr>
   <tr>
-    <th style="text-align: right">上流担当者：</th>
+    <th><i class="fa fa-angle-double-right"></i>上流担当者</th>
     <td><%= text_field_tag 'bp_pic_name', search_value_biz_offer(:bp_pic_name) %></td>
   </tr>
   <tr>
-    <th style="text-align: right">スキル：</th>
+    <th><i class="fa fa-angle-double-right"></i>スキル</th>
     <td><%= text_field_tag 'skill_tag', search_value_biz_offer(:skill_tag) %></td>
   </tr>
   <tr>
-    <th style="text-align: right">単価上限：</th>
+    <th><i class="fa fa-angle-double-right"></i>単価上限</th>
     <td class="bounds_input"><%= text_field_tag 'payment_from', search_value_biz_offer(:payment_from) %>万 ～ <%= text_field_tag 'payment_to', search_value_biz_offer(:payment_to) %>万</td>
   </tr>
   <tr>
-    <th style="text-align: right">照会ステータス：</th>
+    <th><i class="fa fa-angle-double-right"></i>照会ステータス</th>
     <td><%= select_tag 'biz_offer_status_type', options_for_select([[]] + getTypes('biz_offer_status_type'), search_value_biz_offer(:biz_offer_status_type)) %></td>
   </tr>
   <tr>
-    <th style="text-align: right">JIET:</th>
+    <th><i class="fa fa-angle-double-right"></i>JIET</th>
     <td class="jiet_radio">
       <%= radio_button_tag 'jiet', "0", search_value_biz_offer(:jiet) == "0" %> どちらも
       <%= radio_button_tag 'jiet', "1", search_value_biz_offer(:jiet) == "1" %> JIET以外
       <%= radio_button_tag 'jiet', "2", search_value_biz_offer(:jiet) == "2" %> JIETのみ
     </td>
   </tr>
+  <tr>
+    <th colspan="2">
+      <%= submit_tag '　　検索　　', :name => 'search_button', :class => 'btn btn-warning btn-midium' %>
+      <%= submit_tag '　　クリア　　', :name => 'clear_button', :class => 'btn btn-warning btn-midium' %>
+    </th>
+  </tr>
 </table>
-<p><%= submit_tag '　　検索　　', :name => 'search_button' %> <%= submit_tag '　　クリア　　', :name => 'clear_button' %></p>
-<br />
 <% end %>
+<% end %>
+
+<div class="submit_box">
+<% if popup? %>
+  <%= back_to_link_popup_mode (getLongName('table_name','biz_offers')+'の新規作成'), {:action => 'new'}, :class => "btn btn-primary btn-btn-medium"  %>
+<% else %>
+  <%= back_to_link (getLongName('table_name','biz_offers')+'の新規作成'), {:action => 'new'}, :class => "btn btn-primary btn-btn-medium"  %>
+<% end %>
+</div>
 
 <%= paginate(@biz_offers) %>
 
@@ -41,13 +53,6 @@
 
 <%= paginate(@biz_offers) %>
 
-<br />
-
-<% if popup? %>
-  <%= back_to_link_popup_mode (getLongName('table_name','biz_offers')+'の新規作成'), :action => 'new' %>
-<% else %>
-  <%= back_to_link (getLongName('table_name','biz_offers')+'の新規作成'), :action => 'new' %>
-<% end %>
 
 
 <script type="text/javascript">

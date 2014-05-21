@@ -1,11 +1,16 @@
-<h1><%= getLongName('table_name','delivery_mails')%> の新規作成</h1>
+<%= form_for(@delivery_mail, :html => {:enctype => 'multipart/form-data'}) do |f| %>
+  <%= accordion_around(getLongName('table_name','delivery_mails')+"の新規作成", "") do %>
+    <%= render 'form', :f => f %>
+  <% end %>
 
-<%= render 'form' %>
+  <%# コピー機能でメールをnewした場合で、コピー元に添付ファイルがある場合の対応 %>
+  <% if !@attachment_files.blank? %>
+    <h2>添付ファイル一覧</h2>
+    <%= render :partial => 'attachment_file/list' %>
+  <% end %>
 
-<%# コピー機能でメールをnewした場合で、コピー元に添付ファイルがある場合の対応 %>
-<% if !@attachment_files.blank? %>
-  <h2>添付ファイル一覧</h2>
-  <%= render :partial => 'attachment_file/list' %>
+  <div class="submit_box">
+    <%= submit_tag '　登録　', btn_primary %>
+    <%= link_or_back '戻る' %>
+  </div>
 <% end %>
-
-<%= link_or_back '戻る' %>

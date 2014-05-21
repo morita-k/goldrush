@@ -202,7 +202,7 @@ module ApplicationHelper
      <script type="text/javascript">
         // <![CDATA[
         jQuery(function () {
-            jQuery('.typeahead').typeahead()
+//            jQuery('.typeahead').typeahead()
         });
         // ]]>
       </script>
@@ -436,11 +436,17 @@ EOS
   end
 
   def link_or_back(name, options = {}, html_options = {}, &block)
+    if html_options[:class].blank?
+      html_options[:class] = "btn btn-default btn-medium"
+    end
     link_to(name, (back_to || options), html_options, &block)
   end
 
-  def delete_to(name, object, action = 'destroy')
-    link_to(name, { :action => action, :id => object, :back_to => back_to, :authenticity_token => form_authenticity_token }, :confirm => 'この情報を削除します。よろしいですか?', :method => :post)
+  def delete_to(name, object, action = 'destroy', option = {})
+    option[:confirm] = 'この情報を削除します。よろしいですか?'
+    option[:method] = :post
+    option[:class] = "btn btn-default btn-medium" if option[:class].blank?
+    link_to(name, { :action => action, :id => object, :back_to => back_to, :authenticity_token => form_authenticity_token }, option)
   end
 
   def square_table(array, options = {}, tag_options = {}, &block)
@@ -489,10 +495,6 @@ EOS
     else
       request.original_url
     end
-  end
-
-  def link_or_back(name, options = {}, html_options = {}, &block)
-    link_to(name, (back_to || options), html_options, &block)
   end
 
   def back_to_field_tag
@@ -569,5 +571,69 @@ EOS
 
   def get_nickname(login)
     User.get_nickname(login)
+  end
+  
+  def accordion_around(title, suffix, hide=false, &block)
+    accordion_around_in(1, title, suffix, hide, &block)
+  end
+
+  def accordion_around_h2(title, suffix, hide=false, &block)
+    accordion_around_in(2, title, suffix, hide, &block)
+  end
+
+  def accordion_around_in(level, title, suffix, hide, &block)
+    res = raw <<EOS
+<div class="accordion" id="accordion#{suffix}">
+  <div class="accordion-group">
+    <div class="accordion-heading">
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion#{suffix}" href="#collapseForm#{suffix}"><h#{level}>#{title} <i id="collapseArrow#{suffix}" class="fa fa-arrow-circle-o-down"></i></h#{level}></a>
+    </div>
+    <div id="collapseForm#{suffix}" class="collapse in">
+      <div class="accordion-inner">
+        #{capture(&block)}
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="accordion-bottom"></div>
+<script type="text/javascript">
+<!--
+  $(document).ready(function(){
+    #{hide ? "$('#collapseForm#{suffix}').collapse('toggle');$('#collapseArrow#{suffix}').animate({rotate: 90});" : "" }
+    $('#collapseForm#{suffix}').on('hide.bs.collapse', function(){
+      $('#collapseArrow#{suffix}').animate({rotate: 90})
+    });
+      $('#collapseForm#{suffix}').on('show.bs.collapse', function(){
+          $('#collapseArrow#{suffix}').animate({rotate: 0})
+      });
+  });
+-->
+</script>
+EOS
+    res
+  end
+
+  def btn_primary(opt={})
+    btn_in('primary',opt)
+  end
+
+  def btn_info(opt={})
+    btn_in('info',opt)
+  end
+
+  def btn_warning(opt={})
+    btn_in('warning',opt)
+  end
+
+  def btn_default(opt={})
+    btn_in('default',opt)
+  end
+
+  def btn_in(kind, opt)
+    if opt[:class].blank?
+      opt[:class] = "btn btn-#{kind} btn-medium"
+    end
+    opt
   end
 end

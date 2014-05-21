@@ -31,10 +31,10 @@ module BpPicGroupsHelper
     if @delivery_mail
       res << hidden_field_tag('delivery_mail_id', @delivery_mail.id)
       res << hidden_field_tag('bp_pic_group_id', @bp_pic_group.id)
-      res << submit_tag("選択した担当者へメール送信", :confirm => "以上の内容で送信予約しますか？\n※予約日時が過去の場合、すぐに送信されます。")
+      res << submit_tag("選択した担当者へメール送信", btn_warning(:confirm => "以上の内容で送信予約しますか？\n※予約日時が過去の場合、すぐに送信されます。"))
       res << hidden_field_tag(:back_to, request_url)
     else
-      res << submit_tag("選択した担当者を削除", :confirm => "選択した担当者をリストから削除します。\nよろしいですか？")
+      res << submit_tag("選択した担当者を削除", btn_primary(:confirm => "選択した担当者をリストから削除します。\nよろしいですか？"))
       res << hidden_field_tag('back_to', request_url)
     end
     raw res.join("\n")

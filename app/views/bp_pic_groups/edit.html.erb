@@ -1,5 +1,11 @@
-<h1><%= getLongName('table_name','bp_pic_groups')%> の編集</h1>
+<%= form_for(@bp_pic_group) do |f| %>
+  <%= accordion_around(getLongName('table_name','bp_pic_groups')+" の編集", "") do %>
+    <% @bp_pic_group.add_copy_string if !params[:src_id].blank? %>
+    <%= render 'form', :f => f %>
+  <% end %>
+  <div class="submit_box">
+    <%= submit_tag '　更新　', btn_primary %>
+    <%= link_or_back '戻る', bp_pic_groups_path %>
+  </div>
+<% end %>
 
-<%= render 'form' %>
-
-<%= link_or_back '戻る', bp_pic_groups_path %>

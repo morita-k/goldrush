@@ -1,8 +1,9 @@
-<h1><%=getLongName('table_name','approaches')%>編集</h1>
 
 <%= form_tag :action => 'update', :id => @approach do %>
   <%= render :partial => 'form' %>
-  <%= submit_tag '更新' %>
+  <div class="submit_box">
+    <%= submit_tag '更新', :class => "btn btn-primary btn-medium" %>
+    <%= link_or_back '戻る', :action => 'show', :id => @approach %>
+  </div>
 <% end %>
 
-<%= link_to '戻る', :action => 'show', :id => @approach %>

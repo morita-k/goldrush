@@ -1,22 +1,25 @@
 <%= error_messages_for 'contract' %>
 
-<%= render :partial => 'form_inc' %>
+<%= accordion_around(getLongName('table_name','contracts'), "") do %>
+  <%= render :partial => 'form_inc' %>
+<% end %>
 
-<h2>契約契約条件</h2>
-<table class="show_table">
-  <%= render :partial => 'contract_term/form_inc_2col', :locals => {:upper_contract_term => @contract.upper_contract_term, :down_contract_term => @contract.down_contract_term, :upper_model_name => 'upper_contract_term', :down_model_name => 'down_contract_term', :contract => @contract} %>
-</table>
+<%= accordion_around_h2("契約条件", "2") do %>
+  <table class="show_table show_table_col3">
+    <%= render :partial => 'contract_term/form_inc_2col', :locals => {:upper_contract_term => @contract.upper_contract_term, :down_contract_term => @contract.down_contract_term, :upper_model_name => 'upper_contract_term', :down_model_name => 'down_contract_term', :contract => @contract} %>
+  </table>
+<% end %>
 
 <script type="text/javascript">
 <!--
 document.setContractUser = function(user){
-    document.getElementById("contract_contract_pic_id").value = user.contract_pic_id;
-    document.getElementById("contract_pic_name").value = user.contract_pic_name;
+  document.getElementById("contract_contract_pic_id").value = user.contract_pic_id;
+  document.getElementById("contract_pic_name").value = user.contract_pic_name;
 }
 
 function clearSalesUser(){
-    document.getElementById("contract_contract_pic_id").value = "";
-    document.getElementById("contract_pic_name").value = "";
+  document.getElementById("contract_contract_pic_id").value = "";
+  document.getElementById("contract_pic_name").value = "";
 }
 
 // -->

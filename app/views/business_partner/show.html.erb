@@ -1,126 +1,137 @@
-<h1><%= @business_partner.business_partner_code_name %>詳細</h1>
-
-<%= link_to "取引先のメール一覧", :controller => :import_mail, :action => :list, :id => @business_partner %>
-<table class="show_table">
-<tr>
-  <th><%= getLongName('business_partners', 'business_partner_code') %></th><td><%=h @business_partner.business_partner_code %></td>
-</tr>
-<tr>
-  <th><%= getLongName('business_partners', 'sales_management_code') %></th><td><%=h @business_partner.sales_management_code %></td>
-</tr>
-<tr>
-  <th><%= getLongName('business_partners', 'business_partner_short_name') %></th><td><%=h @business_partner.business_partner_short_name %></td>
-</tr>
-<tr>
-  <th><%= getLongName('business_partners', 'business_partner_name_kana') %></th><td><%=h @business_partner.business_partner_name_kana %></td>
-</tr>
-<tr>
-  <th><%= getLongName('business_partners', 'business_partner_name_en') %></th><td><%=h @business_partner.business_partner_name_en %></td>
-</tr>
-<tr>
-  <th><%= getLongName('business_partners', 'sales_status_type') %></th><td><%=h @business_partner.sales_status_type_name %></td>
-</tr>
-<tr>
-  <th><%= getLongName('business_partners', 'basic_contract_first_party_status_type') %></th><td><%= get_basic_contract_first_party_status_type_text(@business_partner) %></td>
-</tr>
-<tr>
-  <th><%= getLongName('business_partners', 'basic_contract_second_party_status_type') %></th><td><%= get_basic_contract_second_party_status_type_text(@business_partner) %></td>
-</tr>
-<tr>
-  <th><%= getLongName('business_partners', 'ceo_name') %></th><td><%=h @business_partner.ceo_name %></td>
-</tr>
-<tr>
-  <th><%= getLongName('business_partners', 'url') %></th><td><%=link_to h(@business_partner.url), @business_partner.url, target: '_blank' %></td>
-</tr>
-<tr>
-  <th><%= getLongName('business_partners', 'zip') %></th><td><%=h @business_partner.zip %></td>
-</tr>
-<tr>
-  <th><%= getLongName('business_partners', 'address1') %></th><td><%=h @business_partner.address1 %></td>
-</tr>
-<tr>
-  <th><%= getLongName('business_partners', 'address2') %></th><td><%=h @business_partner.address2 %></td>
-</tr>
-<tr>
-  <th><%= getLongName('business_partners', 'tel') %></th><td><%=h @business_partner.tel %></td>
-</tr>
-<tr>
-  <th><%= getLongName('business_partners', 'fax') %></th><td><%=h @business_partner.fax %></td>
-</tr>
-<tr>
-  <th><%= getLongName('business_partners', 'email') %></th><td><%=h @business_partner.email %></td>
-</tr>
-<tr>
-  <th><%= getLongName('business_partners', 'category') %></th><td><%=h @business_partner.category %></td>
-</tr>
-<tr>
-  <th><%= getLongName('business_partners', 'establishment_year') %></th><td><%=h @business_partner.establishment_year %></td>
-</tr>
-<tr>
-  <th><%= getLongName('business_partners', 'employee_number') %></th><td><%=h @business_partner.employee_number %></td>
-</tr>
-<tr>
-  <th><%= getLongName('business_partners', 'share_capital') %></th><td><%=h @business_partner.share_capital %></td>
-</tr>
-<tr>
-  <th><%= getLongName('business_partners', 'self_flg') %></th><td><%=h @business_partner.self_flg %></td>
-</tr>
-<tr>
-  <th><%= getLongName('business_partners', 'eu_flg') %></th><td><%=h @business_partner.eu_flg %></td>
-</tr>
-<tr>
-  <th><%= getLongName('business_partners', 'upper_flg') %></th><td><%=h @business_partner.upper_flg %></td>
-</tr>
-<tr>
-  <th><%= getLongName('business_partners', 'down_flg') %></th><td><%=h @business_partner.down_flg %></td>
-</tr>
-<tr>
-  <th><%= getLongName('business_partners', 'memo') %></th><td><%=simple_format h(@business_partner.memo) %></td>
-</tr>
-<tr>
-  <th><%= getLongName('business_partners', 'tag_text') %></th><td><%=h @business_partner.tag_text %></td>
-</tr>
-<tr>
-  <th><%= getLongName('business_partners', 'created_at') %></th><td><%= _time_long(@business_partner.created_at) %></td>
-</tr>
-<tr>
-  <th><%= getLongName('business_partners', 'created_user') %></th><td><%= get_nickname(@business_partner.created_user) %></td>
-</tr>
-<tr>
-  <th><%= getLongName('business_partners', 'updated_at') %></th><td><%= _time_long(@business_partner.updated_at) %></td>
-</tr>
-<tr>
-  <th><%= getLongName('business_partners', 'updated_user') %></th><td><%= get_nickname(@business_partner.updated_user) %></td>
-</tr>
-
-</table>
-<%= back_to_link '編集', :action => 'edit', :id => @business_partner %> |
-<%= delete_to '削除', @business_partner %> |
-<%= link_or_back '戻る', :controller => :bp_pic, :action => 'list' %>
-
-  <p></p>
-  <h2><%=getLongName('table_name','bp_pics')%>一覧</h2>
-<% if !@bp_pics.blank? %>
-  <%= render :partial => 'bp_pic/list' %>
-<% end %>
-<%= back_to_link (getLongName('table_name','bp_pics')+'を追加'), :controller => :bp_pic, :action => 'new', :business_partner_id => @business_partner %>
-
-<% if !@businesses.blank? %>
-  <p></p>
-  <h2><%=getLongName('table_name','businesses')%>一覧</h2>
-  <%= render :partial => 'business/list', :locals => {:businesses => @businesses} %>
+<%= accordion_around(@business_partner.business_partner_code_name+"詳細", "") do %>
+  <%= link_to "取引先のメール一覧", {:controller => :import_mail, :action => :list, :id => @business_partner}, {:class => "btn btn-info btn-midium"} %>
+  <table class="show_table">
+    <tr>
+      <th><%= getLongName('business_partners', 'business_partner_code') %></th><td><%=h @business_partner.business_partner_code %></td>
+    </tr>
+    <tr>
+      <th><%= getLongName('business_partners', 'sales_management_code') %></th><td><%=h @business_partner.sales_management_code %></td>
+    </tr>
+    <tr>
+      <th><%= getLongName('business_partners', 'business_partner_short_name') %></th><td><%=h @business_partner.business_partner_short_name %></td>
+    </tr>
+    <tr>
+      <th><%= getLongName('business_partners', 'business_partner_name_kana') %></th><td><%=h @business_partner.business_partner_name_kana %></td>
+    </tr>
+    <tr>
+      <th><%= getLongName('business_partners', 'business_partner_name_en') %></th><td><%=h @business_partner.business_partner_name_en %></td>
+    </tr>
+    <tr>
+      <th><%= getLongName('business_partners', 'sales_status_type') %></th><td><%=h @business_partner.sales_status_type_name %></td>
+    </tr>
+    <tr>
+      <th><%= getLongName('business_partners', 'basic_contract_first_party_status_type') %></th><td><%= get_basic_contract_first_party_status_type_text(@business_partner) %></td>
+    </tr>
+    <tr>
+      <th><%= getLongName('business_partners', 'basic_contract_second_party_status_type') %></th><td><%= get_basic_contract_second_party_status_type_text(@business_partner) %></td>
+    </tr>
+    <tr>
+      <th><%= getLongName('business_partners', 'ceo_name') %></th><td><%=h @business_partner.ceo_name %></td>
+    </tr>
+    <tr>
+      <th><%= getLongName('business_partners', 'url') %></th><td><%=link_to h(@business_partner.url), @business_partner.url, target: '_blank' %></td>
+    </tr>
+    <tr>
+      <th><%= getLongName('business_partners', 'zip') %></th><td><%=h @business_partner.zip %></td>
+    </tr>
+    <tr>
+      <th><%= getLongName('business_partners', 'address1') %></th><td><%=h @business_partner.address1 %></td>
+    </tr>
+    <tr>
+      <th><%= getLongName('business_partners', 'address2') %></th><td><%=h @business_partner.address2 %></td>
+    </tr>
+    <tr>
+      <th><%= getLongName('business_partners', 'tel') %></th><td><%=h @business_partner.tel %></td>
+    </tr>
+    <tr>
+      <th><%= getLongName('business_partners', 'fax') %></th><td><%=h @business_partner.fax %></td>
+    </tr>
+    <tr>
+      <th><%= getLongName('business_partners', 'email') %></th><td><%=h @business_partner.email %></td>
+    </tr>
+    <tr>
+      <th><%= getLongName('business_partners', 'category') %></th><td><%=h @business_partner.category %></td>
+    </tr>
+    <tr>
+      <th><%= getLongName('business_partners', 'establishment_year') %></th><td><%=h @business_partner.establishment_year %></td>
+    </tr>
+    <tr>
+      <th><%= getLongName('business_partners', 'employee_number') %></th><td><%=h @business_partner.employee_number %></td>
+    </tr>
+    <tr>
+      <th><%= getLongName('business_partners', 'share_capital') %></th><td><%=h @business_partner.share_capital %></td>
+    </tr>
+    <tr>
+      <th><%= getLongName('business_partners', 'self_flg') %></th><td><%=h @business_partner.self_flg %></td>
+    </tr>
+    <tr>
+      <th><%= getLongName('business_partners', 'eu_flg') %></th><td><%=h @business_partner.eu_flg %></td>
+    </tr>
+    <tr>
+      <th><%= getLongName('business_partners', 'upper_flg') %></th><td><%=h @business_partner.upper_flg %></td>
+    </tr>
+    <tr>
+      <th><%= getLongName('business_partners', 'down_flg') %></th><td><%=h @business_partner.down_flg %></td>
+    </tr>
+    <tr>
+      <th><%= getLongName('business_partners', 'memo') %></th><td><%=simple_format h(@business_partner.memo) %></td>
+    </tr>
+    <tr>
+      <th><%= getLongName('business_partners', 'tag_text') %></th><td><%=h @business_partner.tag_text %></td>
+    </tr>
+    <tr>
+      <th><%= getLongName('business_partners', 'created_at') %></th><td><%= _time_long(@business_partner.created_at) %></td>
+    </tr>
+    <tr>
+      <th><%= getLongName('business_partners', 'created_user') %></th><td><%= get_nickname(@business_partner.created_user) %></td>
+    </tr>
+    <tr>
+      <th><%= getLongName('business_partners', 'updated_at') %></th><td><%= _time_long(@business_partner.updated_at) %></td>
+    </tr>
+    <tr>
+      <th><%= getLongName('business_partners', 'updated_user') %></th><td><%= get_nickname(@business_partner.updated_user) %></td>
+    </tr>
+  </table>
 <% end %>
 
-<% if !@biz_offers.blank? %>
-  <p></p>
-  <h2><%=getLongName('table_name','biz_offers')%>一覧</h2>
-  <%= render :partial => 'biz_offer/list', :locals => {:biz_offers => @biz_offers} %>
+<div class="submit_box">
+<%= back_to_link '　編　集　', {:action => 'edit', :id => @business_partner}, {:class => "btn btn-info btn-midium"} %> 
+<%= delete_to '　削　除　', @business_partner, 'destroy', {:class => "btn btn-info btn-midium"} %> 
+<%= link_or_back '　戻　る　', {:controller => :bp_pic, :action => 'list'}, {:class => "btn btn-default btn-midium"} %>
+</div>
+
+<%= accordion_around_h2(getLongName('table_name','bp_pics')+"一覧", "2") do %>
+  <% if !@bp_pics.blank? %>
+    <%= render :partial => 'bp_pic/list' %>
+  <% end %>
 <% end %>
 
-<% if !@bp_members.blank? %>
-  <p></p>
-  <h2><%=getLongName('table_name','bp_members')%>一覧</h2>
-  <%= render :partial => 'bp_member/list', :locals => {:bp_members => @bp_members} %>
+<div class="submit_box">
+  <%= back_to_link (getLongName('table_name','bp_pics')+'を追加'), {:controller => :bp_pic, :action => 'new', :business_partner_id => @business_partner}, {:class => "btn btn-info btn-midium"} %>
+</div>
+
+<%= accordion_around_h2(getLongName('table_name','businesses')+"一覧", "3", @businesses.blank?) do %>
+  <% if !@businesses.blank? %>
+    <%= render :partial => 'business/list', :locals => {:businesses => @businesses} %>
+  <% end %>
 <% end %>
 
-<%= render :partial => 'remarks/list', :locals => {:remark_key => "business_partners", :remark_target_id => @business_partner} %>
+<%= accordion_around_h2(getLongName('table_name','biz_offers')+"一覧", "4", @biz_offers.blank?) do %>
+  <% if !@biz_offers.blank? %>
+    <%= render :partial => 'biz_offer/list', :locals => {:biz_offers => @biz_offers} %>
+  <% end %>
+<% end %>
+
+<%= accordion_around_h2(getLongName('table_name','bp_members')+"一覧", "5", @bp_members.blank?) do %>
+  <% if !@bp_members.blank? %>
+    <%= render :partial => 'bp_member/list', :locals => {:bp_members => @bp_members} %>
+  <% end %>
+<% end %>
+
+<%= accordion_around_h2("コメント一覧", "6", @remarks.empty?) do %>
+  <%= render :partial => 'remarks/list', :locals => {:remark_key => "business_partners", :remark_target_id => @business_partner} %>
+<% end %>
+
+<div class="submit_box">
+  <%= back_to_link 'コメント追加', {:controller => :remarks, :action => :new, :remark_target_id => @business_partner, :remark_key => "business_partners"}, {:class => "btn btn-info btn-medium"} %>
+</div>

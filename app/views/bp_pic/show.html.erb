@@ -15,6 +15,7 @@
   <%= (square_table @photos, :col => 4 do |photo| get_photo_thumbnail_link(photo, @bp_pic.id) end).html_safe %>
   </div>
 <% end %>
+<%= accordion_around "担当者", "" do %>
 <table class="show_table">
 <tr>
   <th><%= getLongName('business_partners', 'business_partner_name') %></th><td><%=link_to @bp_pic.business_partner.business_partner_name, :controller => :business_partner, :action => :show, :id => @bp_pic.business_partner_id %></td>
@@ -88,13 +89,16 @@
   <th><%= getLongName('bp_pics', 'updated_user') %></th><td><%= get_nickname(@bp_pic.updated_user) %></td>
 </tr>
 </table>
-<%= back_to_link '編集', :action => 'edit', :id => @bp_pic %> |
-<%= delete_to '削除', @bp_pic %> |
-<%= link_or_back '戻る', :action => 'list' %>
+<% end %><%# accordion_around %>
+<div class="submit_box">
+  <%= back_to_link '編集', {:action => 'edit', :id => @bp_pic}, btn_primary %>
+  <%= delete_to '削除', @bp_pic, btn_primary%>
+  <%= link_or_back '戻る', :action => 'list' %>
+</div>
 
-<h3>取引先担当グループ一覧</h3>
+<%= accordion_around_h2 "取引先担当グループ一覧", "2", @bp_pic_groups_details.blank? do %>
 <% unless @bp_pic_groups_details.blank? %>
-  <table class="show_table">
+  <table class="list_table table-bordered table-hover">
     <tr>
       <th><%= getLongName('bp_pic_groups', 'bp_pic_group_name') %></th>
       <th><%= getLongName('bp_pic_groups', 'memo') %></th>
@@ -107,8 +111,13 @@
     <% end %>
   </table>
 <% end %>
+<% end %>
 
-<%= render :partial => 'remarks/list', :locals => {:remark_key => "bp_pics", :remark_target_id => @bp_pic} %>
-<h3>送信メール一覧</h3>
-<%= render :partial => 'delivery_mails/list' %>
+<%= accordion_around_h2("コメント一覧", "3", @remarks.empty?) do %>
+  <%= render :partial => 'remarks/list', :locals => {:remark_key => "bp_pics", :remark_target_id => @bp_pic} %>
+<% end %>
+
+<%= accordion_around_h2("送信メール一覧", "4", @delivery_mails.empty?) do %>
+  <%= render :partial => 'delivery_mails/list' %>
+<% end %>
 

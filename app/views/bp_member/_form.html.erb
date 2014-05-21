@@ -1,13 +1,11 @@
 <%= error_messages_for 'bp_member' %>
 
 
-<h2>人材</h2>
-<!--[form:human_resource]-->
+<%= accordion_around("人材", "") do %>
   <%= render :partial => 'human_resource/form' %>
-<!--[eoform:human_resource]-->
+<% end %>
 
-
-<h2>所属</h2>
+<%= accordion_around_h2("所属", "2") do %>
 <!--[form:bp_member]-->
   <%= hidden_field_tag 'human_resource_id', params[:human_resource_id] %>
   <%= hidden_field 'bp_member', 'human_resource_id', :value => @human_resource.id %>
@@ -57,7 +55,7 @@
 <th><label for="bp_member_memo"><%=getLongName('bp_members','memo')%></label></th><td><%= resizable_area 'bp_member', 'memo'  %></td>
 </tr>
 </table>
-<!--[eoform:bp_member]-->
+<% end %>
 
 <%= hidden_field 'bp_member', 'lock_version' %>
 <%= hidden_field 'bp_member', 'import_mail_id' %>

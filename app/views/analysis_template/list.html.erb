@@ -1,5 +1,10 @@
 <h1><%=getLongName('table_name','analysis_templates')%>一覧</h1>
 
+<div class="submit_box">
+<%= back_to_link_popup_mode ('照会用'+getLongName('table_name','analysis_templates')+'の新規作成'), {:action => 'new', :mode => 'biz_offer', :import_mail_id => params[:import_mail_id]}, btn_primary %>
+<%= back_to_link_popup_mode ('所属用'+getLongName('table_name','analysis_templates')+'の新規作成'), {:action => 'new', :mode => 'bp_member', :import_mail_id => params[:import_mail_id]}, btn_primary %>
+</div>
+
 <%= @analysis_template_pages ? paginate(@analysis_templates) : '' %>
 
 <% if params[:mode] && params[:import_mail_id] %>
@@ -8,7 +13,7 @@
   <% end %>
 <% end %>
 
-<table class="list_table">
+<table class="list_table table-bordered table-hover">
   <tr>
     <% if params[:mode] && params[:import_mail_id] %>
       <th></th>
@@ -42,5 +47,3 @@
 
 <br />
 
-<%= back_to_link_popup_mode ('照会用'+getLongName('table_name','analysis_templates')+'の新規作成'), :action => 'new', :mode => 'biz_offer', :import_mail_id => params[:import_mail_id] %> | 
-<%= back_to_link_popup_mode ('所属用'+getLongName('table_name','analysis_templates')+'の新規作成'), :action => 'new', :mode => 'bp_member', :import_mail_id => params[:import_mail_id] %>

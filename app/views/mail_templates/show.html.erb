@@ -1,4 +1,4 @@
-<h1><%= getLongName('table_name','mail_templates')%> 詳細</h1>
+<%= accordion_around(getLongName('table_name','mail_templates_path')+"詳細", "") do %>
 
 <table class="show_table">
 
@@ -33,7 +33,11 @@
 
 </table>
 
-<%= back_to_link '編集', edit_mail_template_path(@mail_template) %> |
-<%= link_to '削除', {:id => @mail_template, :authenticity_token => form_authenticity_token}, method: :delete, data: { confirm: '削除します。よろしいですか?' } %> |
+<% end %>
+
+<div class="submit_box">
+  <%= back_to_link '編集', edit_mail_template_path(@mail_template), btn_primary %>
+<%= link_to '削除', {:id => @mail_template, :authenticity_token => form_authenticity_token}, method: :delete, data: { confirm: '削除します。よろしいですか?' }, class: "btn btn-primary btn-medium" %>
 <%= link_or_back '戻る', mail_templates_path %>
+</div>
 

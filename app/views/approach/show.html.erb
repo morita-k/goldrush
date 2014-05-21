@@ -2,34 +2,45 @@
 
 <!-- 契約詳細 -->
 <% @approach.contracts.each do |contract| %>
-  <h2><%=getLongName('table_name','contracts')%>情報 <%= contract.term_term%></h2>
+  <%= accordion_around_h2("#{getLongName('table_name','contracts')}情報 #{contract.term_term} 上流[#{contract.upper_contract_status_type_name}] 下流[#{contract.down_contract_status_type_name}]", "c#{contract.id}", :hide) do %>
 
   <%= render :partial => 'contract/show', :locals => {:contract => contract} %>
-  <%= back_to_link '契約情報編集', :controller => 'contract', :action => 'edit', :id => contract %> |
-  <%= back_to_link '契約削除', {:controller => 'contract', :action => 'destroy', :id => contract, :authenticity_token => form_authenticity_token}, :method => :post, :confirm => "この契約を削除します。よろしいですか？" %>
+<% end %>
+<div class="submit_box">
+  <%= back_to_link '契約情報編集', {:controller => 'contract', :action => 'edit', :id => contract}, {:class => "btn btn-primary btn-mideum"} %>
+  <%= back_to_link '契約削除', {:controller => 'contract', :action => 'destroy', :id => contract, :authenticity_token => form_authenticity_token}, :method => :post, :confirm => "この契約を削除します。よろしいですか？", :class => "btn btn-primary btn-mideum" %>
+</div>
 
 <% end %>
 
 <!-- 案件詳細 -->
-<h2><%=getLongName('table_name','businesses')%>情報</h2>
-<%= render :partial => 'business/show' %>
+<%= accordion_around_h2("#{getLongName('table_name','businesses')}情報", "2") do %>
+  <%= render :partial => 'business/show' %>
+<% end %>
 
 <!-- 照会詳細 -->
-<h2><%=getLongName('table_name','biz_offers')%>情報</h2>
+<%= accordion_around_h2("#{getLongName('table_name','biz_offers')}情報", "3") do %>
 <%= render :partial => 'biz_offer/show' %>
-<%= back_to_link '案件照会情報編集', :controller => :biz_offer, :action => 'edit', :id => @approach.biz_offer %>
+<% end %>
+<div class="submit_box">
+  <%= back_to_link '案件照会情報編集', {:controller => :biz_offer, :action => 'edit', :id => @approach.biz_offer}, {:class => "btn btn-primary btn-mideum"} %>
+</div>
 
 <!-- 人材詳細 -->
-<h2><%=getLongName('table_name','human_resources')%>情報</h2>
+<%= accordion_around_h2("#{getLongName('table_name','human_resources')}情報", "4") do %>
 <%= render :partial => 'human_resource/show' %>
+<% end %>
 
 <!-- 所属詳細 -->
-<h2><%=getLongName('table_name','bp_members')%>情報</h2>
+<%= accordion_around_h2("#{getLongName('table_name','bp_members')}情報", "5") do %>
 <%= render :partial => 'bp_member/show' %>
-<%= back_to_link '人材所属情報編集', :controller => :bp_member, :action => 'edit', :id => @approach.bp_member %>
+<% end %>
+<div class="submit_box">
+  <%= back_to_link '人材所属情報編集', {:controller => :bp_member, :action => 'edit', :id => @approach.bp_member}, {:class=>"btn btn-primary btn-mideum"} %>
+</div>
 
-<h2><%=getLongName('table_name','approaches')%>情報</h2>
-<table class="show_table">
+<%= accordion_around_h2("#{getLongName('table_name','approaches')}情報", "6") do %>
+<table class="show_table show_table_col3">
 <tr>
   <th><%= getLongName('approaches', 'approach_status_type') %></th><td colspan=2><%=h @approach.approach_status_type_name %></td>
 </tr>
@@ -61,8 +72,8 @@
 </tr>
 <tr>
   <th>提案契約条件</th>
-  <th>上流</th>
-  <th>下流</th>
+  <th style="width:37%">上流</th>
+  <th style="width:37%">下流</th>
 </tr>
 <tr>
   <th><%= getLongName('contract_terms', 'term_type') %></th>
@@ -85,6 +96,7 @@
   <td><%=h (@approach_down_contract_term.time_adjust_type) %></td>
 </tr>
 <tr>
+  <th><%= getLongName('contract_terms', 'time_adjust_type') %></th>
   <th><%= getLongName('contract_terms', 'time_adjust_upper') %></th>
   <td><%=h @approach_upper_contract_term.time_adjust_upper %></td>
   <td><%=h @approach_down_contract_term.time_adjust_upper %></td>
@@ -129,28 +141,6 @@
   <td><%=h @approach_upper_contract_term.payment_sight_type_name%></td>
   <td><%=h @approach_down_contract_term.payment_sight_type_name%></td>
 </tr>
-<%if false%>
-<tr>
-  <th><%= getLongName('contract_terms', 'contract_start_date') %></th>
-  <td><%=h @approach_upper_contract_term.contract_start_date %></td>
-  <td><%=h @approach_down_contract_term.contract_start_date %></td>
-</tr>
-<tr>
-  <th><%= getLongName('contract_terms', 'contract_end_date') %></th>
-  <td><%=h @approach_upper_contract_term.contract_end_date %></td>
-  <td><%=h @approach_down_contract_term.contract_end_date %></td>
-</tr>
-<tr>
-  <th><%= getLongName('contract_terms', 'contract_renewal_unit') %></th>
-  <td><%=h @approach_upper_contract_term.contract_renewal_unit %></td>
-  <td><%=h @approach_down_contract_term.contract_renewal_unit %></td>
-</tr>
-<tr>
-  <th><%= getLongName('contract_terms', 'contract_renewal_terms') %></th>
-  <td><%=h @approach_upper_contract_term.contract_renewal_terms %></td>
-  <td><%=h @approach_down_contract_term.contract_renewal_terms %></td>
-</tr>
-<%end%>
 <tr>
   <th>ペナルティーなど</th>
   <td><%=h @approach_upper_contract_term.other_terms %></td>
@@ -179,23 +169,22 @@
   <th><%= getLongName('approaches', 'updated_user') %></th><td colspan=2><%= get_nickname(@approach.updated_user) %></td>
 </tr>
 </table>
-<%= back_to_link '提案情報編集', :action => 'edit', :id => @approach %>
-
-
+<% end %>
+<div class="submit_box">
+  <%= back_to_link '提案情報編集', {:action => 'edit', :id => @approach}, {:class => "btn btn-primary btn-mideum"} %>
 <%= form_tag do %>
   <% if @approach.approach_status_type == 'approaching' %>
     <h3>提案ステータス変更ボタン</h3>
-    <%= submit_tag '　　提案成功　　', :name => 'approach_success', :confirm => "次は面談を作成してくださいね。" %> 
-    <%= submit_tag '　　提案調整　　', :name => 'approach_adjustment' %> 
-    <%= submit_tag '　　提案却下　　', :name => 'approach_reject' %> 
+    <%= submit_tag '　　提案成功　　', :name => 'approach_success', :confirm => "次は面談を作成してくださいね。", :class => "btn btn-primary btn-mideum" %> 
+    <%= submit_tag '　　提案調整　　', :name => 'approach_adjustment', :class => "btn btn-primary btn-mideum" %> 
+    <%= submit_tag '　　提案却下　　', :name => 'approach_reject', :class => "btn btn-primary btn-mideum" %> 
   <% elsif @approach.approach_status_type == 'adjust' %>
     <h3>提案ステータス変更ボタン</h3>
-    <%= submit_tag '　　提案却下　　', :name => 'approach_reject' %> 
-    <%= submit_tag '　　再提案　　', :name => 'approach_retry' %>
+    <%= submit_tag '　　提案却下　　', :name => 'approach_reject', :class => "btn btn-primary btn-mideum" %> 
+    <%= submit_tag '　　再提案　　', :name => 'approach_retry', :class => "btn btn-primary btn-mideum" %>
   <% end %>
-  <p></p>
 <% end %>
-
+</div>
 
 <h2>スキルシート一覧</h2>
 
@@ -204,18 +193,14 @@
 <% end %>
 
 <%= form_tag({:controller => 'attachment_file', :action => 'create', :parent_table => 'approaches', :parent_id => @approach, :back_to => request.env['REQUEST_URI']}, :multipart => true) do %>
-  <div>
-  <table>
-    <tr>
-      <td rowspan=2>スキルシートのアップロード </td>
-      <td><%= file_field_tag 'upfile', :size => 60 %></td>
-    </tr>
-    <tr>
-      <td><%= submit_tag "アップロードする" %></td>
-    </tr>
-  </table>
+  <div class="submit_box">
+     <%= hidden_field_tag 'back_to', request_url %>
+     <i class="fa fa-angle-double-right "></i> スキルシートのアップロード<br>
+     <%= file_field_tag 'upfile', :size => 60 %> <%= submit_tag "アップロードする", :class => "btn btn-primary btn-mideum" %>
   </div>
 <% end %>
 
-<p><%= link_or_back '戻る', :action => :list %></p>
+<div class="submit_box">
+  <%= link_or_back '戻る', {:action => :list}, {:class => "btn btn-default btn-medium"} %>
+</div>
 

@@ -1,8 +1,14 @@
 <h1><%= getLongName('table_name','mail_templates')%> 一覧</h1>
 
+<% unless popup? %>
+  <div class="submit_box">
+    <%= back_to_link getLongName('table_name','mail_templates') + ' の新規作成', new_mail_template_path, btn_primary %>
+  </div>
+<% end %>
+
 <%= paginate(@mail_templates) %>
 
-<table class="list_table">
+<table class="list_table table-bordered table-hover">
   <tr>
 
     <th><%= getLongName('mail_templates', 'mail_template_category') %></th>
@@ -30,10 +36,6 @@
 <br />
 
 <%= paginate(@mail_templates) %>
-
-<% unless popup? %>
-<%= back_to_link getLongName('table_name','mail_templates') + ' の新規作成', new_mail_template_path %>
-<% end %>
 
 <% if popup? %>
 <script type="text/javascript">

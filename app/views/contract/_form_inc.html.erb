@@ -1,6 +1,6 @@
 <%= hidden_field 'contract', 'lock_version' %>
 <!--[form:contract]-->
-<table class="input_table">
+<table class="form_table">
 <tr>
   <th><label for="contract_contract_status_type"><%=getLongName('contracts','contract_status_type')%></label></th>
   <td><%= select 'contract', 'contract_status_type', getTypes('contract_status_type') %></td>
