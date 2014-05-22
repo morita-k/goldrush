@@ -102,7 +102,7 @@
     <% end %>
       <th><%=getShortName('bp_pics', 'business_partner_id') %></th>
       <th <%= !popup? && "colspan=2"%>><%=getShortName('bp_pics', 'bp_pic_name') %></th>
-      <th><%=getShortName('bp_pics', 'email1') %></th>  
+      <th class="hidden-xs"><%=getShortName('bp_pics', 'email1') %></th>  
       <% unless popup? %>
         <th>営業</th>
       <th>あ</th>
@@ -131,7 +131,7 @@
     </td>
     <td style="text-align:center;width:16px"><%= bp_pic_edit_icon(bp_pic) %></td>
   <% end %><%# popup? %>
-    <td><div class="overflow_hidden"><%=h bp_pic.email1 %></div></td>
+    <td class="hidden-xs"><div class="overflow_hidden"><%=h bp_pic.email1 %></div></td>
     <% unless popup? %>
       <td><%= bp_pic.sales_pic_name %></td>
     <td style="text-align:center;">
