@@ -1,0 +1,491 @@
+@import "twitter/bootstrap/bootstrap";
+
+// Set the correct sprite paths
+@iconSpritePath: image-url("twitter/bootstrap/glyphicons-halflings.png");
+@iconWhiteSpritePath: image-url("twitter/bootstrap/glyphicons-halflings-white.png");
+
+// Set the Font Awesome (Font Awesome is default. You can disable by commenting below lines)
+@fontAwesomeEotPath: asset-url("fontawesome-webfont.eot");
+@fontAwesomeEotPath_iefix: asset-url("fontawesome-webfont.eot?#iefix");
+@fontAwesomeWoffPath: asset-url("fontawesome-webfont.woff");
+@fontAwesomeTtfPath: asset-url("fontawesome-webfont.ttf");
+@fontAwesomeSvgPath: asset-url("fontawesome-webfont.svg#fontawesomeregular");
+
+// Font Awesome
+@import "fontawesome/font-awesome";
+
+// Glyphicons
+//@import "twitter/bootstrap/sprites.less";
+
+// Your custom LESS stylesheets goes here
+//
+// Since bootstrap was imported above you have access to its mixins which
+// you may use and inherit here
+//
+// If you'd like to override bootstrap's own variables, you can do so here as well
+// See http://twitter.github.com/bootstrap/customize.html#variables for their names and documentation
+//
+// Example:
+// @linkColor: #ff0000;
+
+html {
+    font-size: 100%;
+}
+
+body {
+    /*background-image:url(img/bg.jpg)*/
+    color: #333333;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif,Meiryo;
+    /*font-family: Meiryo;*/
+    /*font-size: 14px;*/
+    font-size:0.8em;
+    line-height: 20px;
+    margin: 0px;
+    /*background-image: url(../img/tweed.png);*/
+    background-repeat: repeat;
+    color:#333;
+    background-color:#f4f4f4;
+}
+
+h1 {
+    width: 96%;
+    color:#FFF;
+    font-size:2.2em;
+    margin: 0px 0px;
+    border-radius: 10px;
+    margin: 0px auto 5px auto;	
+    padding: 15px 0px 10px 15px;
+    background-color: #0099CC;
+    border-bottom: 0px none;
+    opacity:0.7;
+}
+
+h2 {
+    width: 96%;
+    color:#FFF;
+    font-size:1.5em;
+    margin: 0px 0px;
+    border-radius: 7px;
+    margin: 0px auto 5px auto;	
+    padding: 10px 0px 10px 15px;
+    background-color: #0099CC;
+    border-bottom: 0px none;
+    opacity:0.7;
+}
+
+h3 {
+    width: 96%;
+    color:#FFF;
+    font-size:1.0em;
+    margin: 0px 0px;
+    border-radius: 3px;
+    margin: 0px auto 5px auto;	
+    padding: 5px 0px 5px 10px;
+    background-color: #0099CC;
+    border-bottom: 0px none;
+    opacity:0.7;
+}
+
+a:focus {
+    outline-offset: -2px;
+    outline: thin dotted #333333;
+}
+
+a:hover, a:active {
+    outline: 0px none;
+}
+
+a:hover, a:focus {
+    color: #005580;
+    text-decoration: none;
+}
+
+.row {
+    color:#666;
+    font-family: "メイリオ", Meiryo;
+
+}
+
+.row:before, .row:after {
+    content: "";
+    display: table;
+    line-height: 0;
+    font-weight:normal;
+}
+
+.row:after {
+    clear: both;
+}
+
+
+select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
+    border-radius: 4px;
+    color: #555555;
+    display: inline-block;
+    font-size: 14px;
+    height: 30px;
+    line-height: 20px;
+    margin-bottom: 0px;
+    padding: 4px 6px;
+    vertical-align: middle;
+}
+
+input[type="text"], textarea, .uneditable-input {
+    width: 98%;
+}
+
+.bounds_input input[type="text"] {
+    width: 40%;
+}
+
+input, button, select, textarea {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+label, input, button, select, textarea {
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 20px;
+}
+
+textarea {
+    height: auto;
+}
+
+textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
+    background-color: #FFFFFF;
+    border: 1px solid #CCCCCC;
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset;
+    transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+}
+
+textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[type="datetime"]:focus, input[type="datetime-local"]:focus, input[type="date"]:focus, input[type="month"]:focus, input[type="time"]:focus, input[type="week"]:focus, input[type="number"]:focus, input[type="email"]:focus, input[type="url"]:focus, input[type="search"]:focus, input[type="tel"]:focus, input[type="color"]:focus, .uneditable-input:focus {
+    border-color: rgba(82, 168, 236, 0.8);
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset, 0px 0px 8px rgba(82, 168, 236, 0.6);
+    outline: 0px none;
+}
+
+.container {
+    margin-left: auto;
+    margin-right: auto;
+    color:#333;
+}
+
+.container, .navbar-static-top .container, .navbar-fixed-top .container, .navbar-fixed-bottom .container {
+    width: 100%;
+}
+
+.navbar-brand img {
+    margin-top: -10px;
+}
+
+.navbar {
+    min-height: 40px;
+}
+
+.navbar .nav > li > a {
+    color: #0098CB;
+    float: none;
+    padding: 10px 15px;
+    text-decoration: none;
+    /*text-shadow: 0px 1px 0px #FFFFFF;*/
+}
+
+.navbar .divider-vertical {
+    border-left: 1px dotted #CCCCCC;
+    border-right: 1px dotted #FFFFFF;
+    height: 40px;
+    margin: 0px;
+}
+
+.navbar-inverse .divider-vertical {
+    border-left-color: #111111;
+    border-right-color: #222222;
+}
+
+.navbar-nav {
+    margin-top: 5px;
+}
+
+.form_table th {
+    width: 22%;
+}
+
+.form_table td {
+    width: 75%;
+    padding-right: 20px;
+}
+
+.accordion .form_table {
+    width: 100%;
+    text-align: left;
+    border-radius: none;
+}
+.form_table tr {
+    line-height: 20px;
+}
+.form_table th, .form_table td {
+    line-height: 34px;
+}
+
+.form_table label {
+    display: inline;
+}
+
+.form_table input[type="checkbox"] {
+    display: inline;
+    margin-top: 4px;
+    padding-top: 4px;
+}
+
+.show_table th {
+    width: 22%;
+}
+
+.show_table td {
+    width: 75%;
+    padding-right: 20px;
+}
+
+.show_table_col3 td {
+    width: auto;
+}
+
+.show_table {
+    width: 100%;
+    text-align: left;
+}
+.show_table tr {
+    line-height: 20px;
+}
+.show_table th, .show_table td {
+    line-height: 34px;
+}
+
+.show_table label {
+    display: inline;
+}
+
+.accordion {
+    margin-bottom: 0px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 96%;
+}
+
+.accordion h1{
+    color:#FFF;
+    font-size:2.2em;
+    padding: 0px;
+    margin: 10px 0px;
+}
+
+.accordion h2{
+    color:#FFF;
+    font-size:1.5em;
+    padding: 0px;
+    margin: 5px 0px;
+}
+
+.accordion-group {
+    border-radius: 10px;
+    margin-bottom: 0px;	
+}
+
+.accordion-heading {
+    background-color: #0099CC;
+    border-bottom: 0px none;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    opacity:0.7;
+}
+
+.accordion-heading .accordion-toggle {
+    display: block;
+    padding-top: 5px;
+    padding-right: 15px;
+    padding-bottom: 1px;
+    padding-left: 15px;
+}
+
+.accordion-toggle {
+    cursor: pointer;
+}
+
+.accordion-inner {
+    border-bottom-left-radius:0px;
+    border-bottom-right-radius:0px;
+    margin:0px;
+    background-color:#fff;
+    border: 1px solid #BBCCC9;
+    opacity:0.8;
+    padding-top: 9px;
+    padding-right: 15px;
+    padding-bottom: 9px;
+    padding-left: 15px;
+	position: relative;
+}
+
+.accordion-bottom {
+    height: 10px;
+    width: 96%;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 10px;
+    background-color: #0099CC;
+    border-bottom-left-radius:10px;
+    border-bottom-right-radius:10px;
+    opacity:0.7;
+}
+.accordion-inner .menu_leftside{
+    float:left;
+    padding-right:2px;
+    width:45%;
+    text-align: left;
+}
+.accordion-inner .menu_rightside{
+    float:right;
+    padding-right:0px;
+    width:45%;
+    text-align: left;
+}
+
+.accordion .left {
+    width: 50%;
+    float: left;
+}
+.accordion .right {
+    float: right;
+    width: 50%;
+}
+
+.accordion-heading a:focus {
+    outline: 0px none;
+}
+
+.list_table {
+    background-color: transparent;
+    border-collapse: collapse;
+    border-spacing: 0px;
+    max-width: 96%;
+    text-align:left;
+    width:96%;
+    margin-left:2%;
+    margin-right:2%;
+    background-color:#fff;
+    margin-bottom: 1%;
+}
+
+.list_table th, .list_table td {
+    border-top: 1px solid #DDDDDD;
+    line-height: 20px;
+    padding: 8px;
+    text-align: left;
+    vertical-align: top;
+}
+
+.list_table th {
+    font-weight: bold;
+    vertical-align: bottom;
+    background-color:#F6F6F6;
+    color:#0099CC;
+}
+
+.list_table .text-right {
+    text-align: right;
+}
+
+.list_table .text-center {
+    text-align: center;
+}
+
+.accordion-inner .list_table {
+    max-width: 100%;
+    width:100%;
+    margin-left:0px;
+    margin-right:0px;
+}
+
+.table2 {
+    background-color: transparent;
+    border-collapse: collapse;
+    border-spacing: 0px;
+    max-width: 96%;
+    text-align:left;
+    width:96%;
+    margin-left:2%;
+    margin-right:2%;
+    background-color:;
+    margin-bottom: 10px;
+    padding: 2px;
+}
+
+.pagination {
+    margin-top: 10px;
+    margin-right: 0px;
+    margin-bottom: 10px;
+    margin-left: 2%;
+}
+
+.pagination ul > li > a, .pagination ul > li > span {
+    color:#0099CC;
+}
+
+.modal-footer {
+    background-color: #F5F5F5;
+    border-radius: 0px 0px 6px 6px;
+    border-top: 1px solid #DDDDDD;
+    box-shadow: 0px 1px 0px #FFFFFF inset;
+    margin-bottom: 0px;
+    text-align: right;
+    width: 96%;
+    margin-right: auto;
+    margin-left: auto;
+    padding-top: 14px;
+    padding-right: 2%;
+    padding-bottom: 15px;
+    padding-left: 2%;
+}
+
+.modal-footer:before, .modal-footer:after {
+    content: "";
+    display: table;
+    line-height: 0;
+}
+
+.modal-footer:after {
+    clear: both;
+}
+
+.modal-footer .btn + .btn {
+    margin-bottom: 0px;
+    margin-left: 5px;
+}
+
+.modal-footer .btn-group .btn + .btn {
+    margin-left: -1px;
+}
+
+.modal-footer .btn-block + .btn-block {
+    margin-left: 0px;
+}
+
+input[type="file"] {
+    display: inline;
+}
+
+.submit_box {
+    width: 96%;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 10px;
+}
+
+.field_with_errors input {
+   background-color: pink;
+}
+
+.photo_table {
+    width: 100%;
+    text-align: center;
+}

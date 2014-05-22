@@ -1,8 +1,12 @@
 <h1><%= getLongName('table_name','bp_pic_groups')%> 一覧</h1>
 
+<div class="submit_box">
+  <%= back_to_link getLongName('table_name','bp_pic_groups') + ' の新規作成', {:controller => :bp_pic_groups , :action => :new } , :class => "btn btn-primary btn-medium" %>
+</div>
+
 <%= paginate(@bp_pic_groups) %>
 
-<table class="list_table">
+<table class="list_table table-bordered table-hover">
   <tr>
     <th><%= getLongName('bp_pic_groups', 'bp_pic_group_name') %></th>
     <th><%= getLongName('bp_pic_groups', 'memo') %></th>
@@ -23,4 +27,3 @@
 
 <%= paginate(@bp_pic_groups) %>
 
-<%= back_to_link getLongName('table_name','bp_pic_groups') + ' の新規作成', {:controller => :bp_pic_groups , :action => :new } %>

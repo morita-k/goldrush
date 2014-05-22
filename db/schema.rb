@@ -53,71 +53,6 @@ ActiveRecord::Schema.define(:version => 0) do
 
   add_index "analysis_templates", ["id"], :name => "id", :unique => true
 
-  create_table "announcements", :force => true do |t|
-    t.integer  "owner_id",         :limit => 8
-    t.string   "announce_section", :limit => 40,                :null => false
-    t.string   "announce_key",     :limit => 40,                :null => false
-    t.string   "announce_subject"
-    t.string   "announce_message"
-    t.date     "start_date"
-    t.date     "end_date"
-    t.datetime "created_at",                                    :null => false
-    t.datetime "updated_at",                                    :null => false
-    t.integer  "lock_version",     :limit => 8,  :default => 0
-    t.string   "created_user",     :limit => 80
-    t.string   "updated_user",     :limit => 80
-    t.datetime "deleted_at"
-    t.integer  "deleted",                        :default => 0
-  end
-
-  add_index "announcements", ["id"], :name => "id", :unique => true
-
-  create_table "annual_vacations", :force => true do |t|
-    t.integer  "owner_id",                :limit => 8
-    t.integer  "user_id",                 :limit => 8
-    t.integer  "year",                    :limit => 8
-    t.date     "start_date"
-    t.date     "end_date"
-    t.float    "day_total",                             :default => 0.0
-    t.float    "used_total",                            :default => 0.0
-    t.float    "previous_year_day_total",               :default => 0.0
-    t.integer  "life_plan_flg",           :limit => 8,  :default => 0
-    t.float    "life_plan_day_total",                   :default => 0.0
-    t.float    "life_plan_used_total",                  :default => 0.0
-    t.datetime "created_at",                                             :null => false
-    t.datetime "updated_at",                                             :null => false
-    t.integer  "lock_version",            :limit => 8,  :default => 0
-    t.string   "created_user",            :limit => 80
-    t.string   "updated_user",            :limit => 80
-    t.datetime "deleted_at"
-    t.integer  "deleted",                               :default => 0
-  end
-
-  add_index "annual_vacations", ["id"], :name => "id", :unique => true
-
-  create_table "application_approvals", :force => true do |t|
-    t.integer  "owner_id",              :limit => 8
-    t.integer  "user_id",               :limit => 8
-    t.integer  "approval_authority_id", :limit => 8
-    t.integer  "base_application_id",   :limit => 8
-    t.string   "application_type",      :limit => 40
-    t.date     "application_date"
-    t.integer  "approver_id",           :limit => 8
-    t.string   "approval_status_type",  :limit => 40
-    t.date     "approval_date"
-    t.integer  "approval_order",        :limit => 8
-    t.text     "memo"
-    t.datetime "created_at",                                         :null => false
-    t.datetime "updated_at",                                         :null => false
-    t.integer  "lock_version",          :limit => 8,  :default => 0
-    t.string   "created_user",          :limit => 80
-    t.string   "updated_user",          :limit => 80
-    t.datetime "deleted_at"
-    t.integer  "deleted",                             :default => 0
-  end
-
-  add_index "application_approvals", ["id"], :name => "id", :unique => true
-
   create_table "approaches", :force => true do |t|
     t.integer  "owner_id",                        :limit => 8
     t.integer  "biz_offer_id",                    :limit => 8,                 :null => false
@@ -129,6 +64,9 @@ ActiveRecord::Schema.define(:version => 0) do
     t.date     "can_interview_date"
     t.integer  "approach_upper_contract_term_id", :limit => 8,                 :null => false
     t.integer  "approach_down_contract_term_id",  :limit => 8,                 :null => false
+    t.datetime "closed_at",                                                    :null => false
+    t.date     "start_date"
+    t.date     "end_date"
     t.text     "memo"
     t.datetime "created_at",                                                   :null => false
     t.datetime "updated_at",                                                   :null => false
@@ -137,29 +75,9 @@ ActiveRecord::Schema.define(:version => 0) do
     t.string   "updated_user",                    :limit => 80
     t.datetime "deleted_at"
     t.integer  "deleted",                                       :default => 0
-    t.datetime "closed_at",                                                    :null => false
-    t.date     "start_date"
-    t.date     "end_date"
   end
 
   add_index "approaches", ["id"], :name => "id", :unique => true
-
-  create_table "approval_authorities", :force => true do |t|
-    t.integer  "owner_id",      :limit => 8
-    t.integer  "user_id",       :limit => 8
-    t.integer  "approver_id",   :limit => 8
-    t.string   "approver_type", :limit => 40
-    t.integer  "active_flg",                  :default => 0
-    t.datetime "created_at",                                 :null => false
-    t.datetime "updated_at",                                 :null => false
-    t.integer  "lock_version",  :limit => 8,  :default => 0
-    t.string   "created_user",  :limit => 80
-    t.string   "updated_user",  :limit => 80
-    t.datetime "deleted_at"
-    t.integer  "deleted",                     :default => 0
-  end
-
-  add_index "approval_authorities", ["id"], :name => "id", :unique => true
 
   create_table "attachment_files", :force => true do |t|
     t.integer  "owner_id",          :limit => 8
@@ -178,27 +96,7 @@ ActiveRecord::Schema.define(:version => 0) do
   end
 
   add_index "attachment_files", ["id"], :name => "id", :unique => true
-  add_index "attachment_files", ["parent_table_name", "parent_id"], :name => "idx_attachment_files_15"
-
-  create_table "base_applications", :force => true do |t|
-    t.integer  "owner_id",                :limit => 8
-    t.integer  "user_id",                 :limit => 8
-    t.string   "application_type",        :limit => 40
-    t.string   "approval_status_type",    :limit => 40
-    t.date     "approval_date"
-    t.date     "application_date"
-    t.integer  "accounting_approval_flg",               :default => 0
-    t.integer  "unfixed_flg",                           :default => 0
-    t.datetime "created_at",                                           :null => false
-    t.datetime "updated_at",                                           :null => false
-    t.integer  "lock_version",            :limit => 8,  :default => 0
-    t.string   "created_user",            :limit => 80
-    t.string   "updated_user",            :limit => 80
-    t.datetime "deleted_at"
-    t.integer  "deleted",                               :default => 0
-  end
-
-  add_index "base_applications", ["id"], :name => "id", :unique => true
+  add_index "attachment_files", ["parent_table_name", "parent_id"], :name => "idx_attachment_files_13"
 
   create_table "base_dates", :force => true do |t|
     t.integer  "owner_id",      :limit => 8
@@ -270,7 +168,7 @@ ActiveRecord::Schema.define(:version => 0) do
   end
 
   add_index "biz_offers", ["id"], :name => "id", :unique => true
-  add_index "biz_offers", ["import_mail_id"], :name => "idx_biz_offers_13"
+  add_index "biz_offers", ["import_mail_id"], :name => "idx_biz_offers_11"
 
   create_table "bp_members", :force => true do |t|
     t.integer  "owner_id",            :limit => 8
@@ -298,7 +196,7 @@ ActiveRecord::Schema.define(:version => 0) do
   end
 
   add_index "bp_members", ["id"], :name => "id", :unique => true
-  add_index "bp_members", ["import_mail_id"], :name => "idx_bp_members_14"
+  add_index "bp_members", ["import_mail_id"], :name => "idx_bp_members_12"
 
   create_table "bp_pic_group_details", :force => true do |t|
     t.integer  "owner_id",        :limit => 8
@@ -315,7 +213,7 @@ ActiveRecord::Schema.define(:version => 0) do
     t.integer  "deleted",                       :default => 0
   end
 
-  add_index "bp_pic_group_details", ["bp_pic_group_id"], :name => "idx_bp_pic_group_details_16"
+  add_index "bp_pic_group_details", ["bp_pic_group_id"], :name => "idx_bp_pic_group_details_14"
   add_index "bp_pic_group_details", ["id"], :name => "id", :unique => true
 
   create_table "bp_pic_groups", :force => true do |t|
@@ -370,22 +268,6 @@ ActiveRecord::Schema.define(:version => 0) do
 
   add_index "bp_pics", ["id"], :name => "id", :unique => true
 
-  create_table "business_human_connections", :force => true do |t|
-    t.string   "connection_type", :limit => 40,                :null => false
-    t.integer  "import_mail_id",  :limit => 8,                 :null => false
-    t.integer  "biz_offer_id",    :limit => 8
-    t.integer  "bp_member_id",    :limit => 8
-    t.datetime "created_at",                                   :null => false
-    t.datetime "updated_at",                                   :null => false
-    t.integer  "lock_version",    :limit => 8,  :default => 0
-    t.string   "created_user",    :limit => 80
-    t.string   "updated_user",    :limit => 80
-    t.datetime "deleted_at"
-    t.integer  "deleted",                       :default => 0
-  end
-
-  add_index "business_human_connections", ["id"], :name => "id", :unique => true
-
   create_table "business_partners", :force => true do |t|
     t.integer  "owner_id",                                :limit => 8
     t.string   "sales_code",                              :limit => 80
@@ -430,34 +312,6 @@ ActiveRecord::Schema.define(:version => 0) do
 
   add_index "business_partners", ["id"], :name => "id", :unique => true
 
-  create_table "business_trip_applications", :force => true do |t|
-    t.integer  "owner_id",            :limit => 8
-    t.integer  "user_id",             :limit => 8
-    t.integer  "base_application_id", :limit => 8
-    t.date     "application_date"
-    t.date     "start_date"
-    t.date     "end_date"
-    t.integer  "day_total",           :limit => 8
-    t.string   "reason"
-    t.string   "content"
-    t.string   "location"
-    t.string   "client"
-    t.string   "book_no",             :limit => 40
-    t.decimal  "approximate_amount",                :precision => 12, :scale => 2
-    t.integer  "active_flg",                                                       :default => 0
-    t.integer  "sales_person_id",     :limit => 8
-    t.text     "memo"
-    t.datetime "created_at",                                                                      :null => false
-    t.datetime "updated_at",                                                                      :null => false
-    t.integer  "lock_version",        :limit => 8,                                 :default => 0
-    t.string   "created_user",        :limit => 80
-    t.string   "updated_user",        :limit => 80
-    t.datetime "deleted_at"
-    t.integer  "deleted",                                                          :default => 0
-  end
-
-  add_index "business_trip_applications", ["id"], :name => "id", :unique => true
-
   create_table "businesses", :force => true do |t|
     t.integer  "owner_id",             :limit => 8
     t.integer  "eubp_id",              :limit => 8
@@ -500,64 +354,6 @@ ActiveRecord::Schema.define(:version => 0) do
 
   add_index "businesses", ["id"], :name => "id", :unique => true
 
-  create_table "comments", :force => true do |t|
-    t.integer  "owner_id",                :limit => 8
-    t.integer  "weekly_report_id",        :limit => 8
-    t.integer  "application_approval_id", :limit => 8
-    t.integer  "user_id",                 :limit => 8
-    t.date     "comment_date"
-    t.text     "content"
-    t.datetime "created_at",                                           :null => false
-    t.datetime "updated_at",                                           :null => false
-    t.integer  "lock_version",            :limit => 8,  :default => 0
-    t.string   "created_user",            :limit => 80
-    t.string   "updated_user",            :limit => 80
-    t.datetime "deleted_at"
-    t.integer  "deleted",                               :default => 0
-  end
-
-  add_index "comments", ["id"], :name => "id", :unique => true
-
-  create_table "configurations", :force => true do |t|
-    t.integer  "owner_id",                :limit => 8
-    t.string   "config_section",          :limit => 40,                :null => false
-    t.string   "config_key",              :limit => 40,                :null => false
-    t.string   "value1"
-    t.string   "value2"
-    t.string   "value3"
-    t.text     "config_description_text"
-    t.datetime "created_at",                                           :null => false
-    t.datetime "updated_at",                                           :null => false
-    t.integer  "lock_version",            :limit => 8,  :default => 0
-    t.string   "created_user",            :limit => 80
-    t.string   "updated_user",            :limit => 80
-    t.datetime "deleted_at"
-    t.integer  "deleted",                               :default => 0
-  end
-
-  add_index "configurations", ["config_section", "config_key"], :name => "idx_configurations_3", :unique => true
-  add_index "configurations", ["id"], :name => "id", :unique => true
-
-  create_table "contact_histories", :force => true do |t|
-    t.integer  "owner_id",                  :limit => 8
-    t.integer  "contact_user_id",           :limit => 8,                 :null => false
-    t.integer  "business_partner_id",       :limit => 8,                 :null => false
-    t.datetime "contacted_at",                                           :null => false
-    t.string   "business_partner_pic_name"
-    t.string   "contact_reason"
-    t.text     "contact_content"
-    t.string   "contact_result"
-    t.datetime "created_at",                                             :null => false
-    t.datetime "updated_at",                                             :null => false
-    t.integer  "lock_version",              :limit => 8,  :default => 0
-    t.string   "created_user",              :limit => 80
-    t.string   "updated_user",              :limit => 80
-    t.datetime "deleted_at"
-    t.integer  "deleted",                                 :default => 0
-  end
-
-  add_index "contact_histories", ["id"], :name => "id", :unique => true
-
   create_table "contract_terms", :force => true do |t|
     t.integer  "owner_id",              :limit => 8
     t.string   "term_type",             :limit => 40,                                                 :null => false
@@ -592,6 +388,10 @@ ActiveRecord::Schema.define(:version => 0) do
     t.string   "contract_status_type",       :limit => 40,                :null => false
     t.datetime "contracted_at"
     t.integer  "contract_pic_id",            :limit => 8
+    t.date     "contract_start_date",                                     :null => false
+    t.date     "contract_end_date",                                       :null => false
+    t.integer  "contract_renewal_unit",      :limit => 8,  :default => 0
+    t.integer  "contract_renewal_terms",     :limit => 8,  :default => 0
     t.integer  "upper_contract_term_id",     :limit => 8,                 :null => false
     t.integer  "down_contract_term_id",      :limit => 8,                 :null => false
     t.string   "upper_contract_status_type", :limit => 40,                :null => false
@@ -604,10 +404,6 @@ ActiveRecord::Schema.define(:version => 0) do
     t.string   "updated_user",               :limit => 80
     t.datetime "deleted_at"
     t.integer  "deleted",                                  :default => 0
-    t.date     "contract_start_date",                                     :null => false
-    t.date     "contract_end_date",                                       :null => false
-    t.integer  "contract_renewal_unit",      :limit => 8,  :default => 0
-    t.integer  "contract_renewal_terms",     :limit => 8,  :default => 0
   end
 
   add_index "contracts", ["id"], :name => "id", :unique => true
@@ -619,9 +415,9 @@ ActiveRecord::Schema.define(:version => 0) do
     t.integer  "succeeds",            :limit => 8,  :default => 0
     t.integer  "gross_profits",       :limit => 8,  :default => 0
     t.integer  "interviews",          :limit => 8,  :default => 0
+    t.integer  "send_delivery_mails", :limit => 8,  :default => 0
     t.integer  "new_meetings",        :limit => 8,  :default => 0
     t.integer  "exist_meetings",      :limit => 8,  :default => 0
-    t.integer  "send_delivery_mails", :limit => 8,  :default => 0
     t.datetime "created_at",                                       :null => false
     t.datetime "updated_at",                                       :null => false
     t.integer  "lock_version",        :limit => 8,  :default => 0
@@ -656,48 +452,6 @@ ActiveRecord::Schema.define(:version => 0) do
 
   add_index "daily_reports", ["id"], :name => "id", :unique => true
 
-  create_table "daily_workings", :force => true do |t|
-    t.integer  "owner_id",               :limit => 8
-    t.integer  "user_id",                :limit => 8
-    t.integer  "base_date_id",           :limit => 8
-    t.integer  "weekly_report_id",       :limit => 8
-    t.integer  "monthly_working_id",     :limit => 8
-    t.string   "working_type",           :limit => 40
-    t.date     "application_date"
-    t.date     "working_date"
-    t.integer  "in_time",                :limit => 8
-    t.integer  "out_time",               :limit => 8
-    t.integer  "rest_hour",              :limit => 8
-    t.integer  "hour_total",             :limit => 8
-    t.integer  "over_time",              :limit => 8
-    t.integer  "come_lately_flg",                      :default => 0
-    t.integer  "leave_early_flg",                      :default => 0
-    t.integer  "direct_in_flg",                        :default => 0
-    t.integer  "direct_out_flg",                       :default => 0
-    t.integer  "over_time_taxi_flg",                   :default => 0
-    t.integer  "over_time_meel_flg",                   :default => 0
-    t.string   "location"
-    t.string   "summary"
-    t.string   "action_type",            :limit => 40
-    t.integer  "holiday_flg",                          :default => 0
-    t.integer  "delayed_cancel_flg",                   :default => 0
-    t.integer  "delayed_cancel_user_id", :limit => 8
-    t.integer  "taxi_flg",                             :default => 0
-    t.integer  "business_trip_flg",                    :default => 0
-    t.text     "memo"
-    t.datetime "created_at",                                          :null => false
-    t.datetime "updated_at",                                          :null => false
-    t.integer  "lock_version",           :limit => 8,  :default => 0
-    t.string   "created_user",           :limit => 80
-    t.string   "updated_user",           :limit => 80
-    t.datetime "deleted_at"
-    t.integer  "deleted",                              :default => 0
-  end
-
-  add_index "daily_workings", ["id"], :name => "id", :unique => true
-  add_index "daily_workings", ["user_id", "base_date_id"], :name => "idx_daily_workings_7", :unique => true
-  add_index "daily_workings", ["user_id", "working_date"], :name => "idx_daily_workings_6", :unique => true
-
   create_table "delivery_errors", :force => true do |t|
     t.integer  "owner_id",            :limit => 8
     t.integer  "delivery_mail_id",    :limit => 8
@@ -715,7 +469,7 @@ ActiveRecord::Schema.define(:version => 0) do
     t.integer  "deleted",                           :default => 0
   end
 
-  add_index "delivery_errors", ["delivery_mail_id"], :name => "idx_delivery_errors_17"
+  add_index "delivery_errors", ["delivery_mail_id"], :name => "idx_delivery_errors_15"
   add_index "delivery_errors", ["id"], :name => "id", :unique => true
 
   create_table "delivery_mail_targets", :force => true do |t|
@@ -732,10 +486,10 @@ ActiveRecord::Schema.define(:version => 0) do
     t.integer  "deleted",                        :default => 0
   end
 
-  add_index "delivery_mail_targets", ["bp_pic_id"], :name => "idx_delivery_mail_targets_20"
-  add_index "delivery_mail_targets", ["delivery_mail_id"], :name => "idx_delivery_mail_targets_18"
+  add_index "delivery_mail_targets", ["bp_pic_id"], :name => "idx_delivery_mail_targets_18"
+  add_index "delivery_mail_targets", ["delivery_mail_id"], :name => "idx_delivery_mail_targets_16"
   add_index "delivery_mail_targets", ["id"], :name => "id", :unique => true
-  add_index "delivery_mail_targets", ["message_id"], :name => "idx_delivery_mail_targets_19"
+  add_index "delivery_mail_targets", ["message_id"], :name => "idx_delivery_mail_targets_17"
 
   create_table "delivery_mails", :force => true do |t|
     t.integer  "owner_id",              :limit => 8
@@ -860,134 +614,6 @@ ActiveRecord::Schema.define(:version => 0) do
 
   add_index "employees", ["id"], :name => "id", :unique => true
 
-  create_table "expense_applications", :force => true do |t|
-    t.integer  "owner_id",                :limit => 8
-    t.integer  "user_id",                 :limit => 8
-    t.integer  "base_application_id",     :limit => 8
-    t.string   "expense_app_type",        :limit => 40,                                                :null => false
-    t.date     "application_date"
-    t.date     "plan_buy_date"
-    t.date     "preferred_date"
-    t.date     "start_date"
-    t.date     "end_date"
-    t.integer  "day_total",               :limit => 8
-    t.string   "book_no",                 :limit => 40
-    t.string   "account_item",            :limit => 40
-    t.string   "purpose"
-    t.string   "content"
-    t.string   "client",                  :limit => 100
-    t.string   "location"
-    t.integer  "participation_number",    :limit => 8
-    t.string   "company_name",            :limit => 80
-    t.string   "participant_name",        :limit => 80
-    t.string   "staff_name",              :limit => 80
-    t.string   "remark"
-    t.string   "attached_material"
-    t.string   "attached_material_name"
-    t.string   "payment_no",              :limit => 100
-    t.string   "payee_name",              :limit => 100
-    t.string   "payee_name_kana",         :limit => 100
-    t.string   "payee_zip",               :limit => 40
-    t.string   "payee_address"
-    t.string   "payee_tel",               :limit => 40
-    t.string   "payee_bank_name",         :limit => 100
-    t.string   "payee_branch_name",       :limit => 100
-    t.string   "payee_account_name",      :limit => 100
-    t.string   "payee_account_name_kana", :limit => 100
-    t.string   "account_type",            :limit => 40
-    t.string   "account_number",          :limit => 40
-    t.string   "work_place_zip",          :limit => 40
-    t.string   "work_place_address"
-    t.string   "work_place_tel",          :limit => 40
-    t.string   "work_place_fax",          :limit => 40
-    t.string   "unit1",                   :limit => 100
-    t.string   "unit2",                   :limit => 100
-    t.string   "abstract"
-    t.string   "production_name",         :limit => 100
-    t.string   "contact_person",          :limit => 100
-    t.string   "payment_method_type",     :limit => 40
-    t.decimal  "payment_amount",                         :precision => 12, :scale => 2
-    t.decimal  "withholding_tax",                        :precision => 12, :scale => 2
-    t.decimal  "other_expenses",                         :precision => 12, :scale => 2
-    t.decimal  "approximate_amount",                     :precision => 12, :scale => 2
-    t.integer  "temporary_app_flg",                                                     :default => 0
-    t.integer  "temporary_scrip_flg",                                                   :default => 0
-    t.integer  "payment_flg",                                                           :default => 0
-    t.date     "payment_date"
-    t.string   "app_status_type",         :limit => 40
-    t.integer  "sales_person_id",         :limit => 8
-    t.text     "memo"
-    t.datetime "created_at",                                                                           :null => false
-    t.datetime "updated_at",                                                                           :null => false
-    t.integer  "lock_version",            :limit => 8,                                  :default => 0
-    t.string   "created_user",            :limit => 80
-    t.string   "updated_user",            :limit => 80
-    t.datetime "deleted_at"
-    t.integer  "deleted",                                                               :default => 0
-  end
-
-  add_index "expense_applications", ["id"], :name => "id", :unique => true
-
-  create_table "expense_details", :force => true do |t|
-    t.integer  "owner_id",                     :limit => 8
-    t.integer  "user_id",                      :limit => 8
-    t.integer  "expense_application_id",       :limit => 8
-    t.integer  "business_trip_application_id", :limit => 8
-    t.integer  "payment_per_month_id",         :limit => 8
-    t.integer  "payment_per_case_id",          :limit => 8
-    t.string   "expense_type",                 :limit => 40
-    t.date     "buy_date"
-    t.string   "book_no",                      :limit => 40
-    t.string   "account_item",                 :limit => 40
-    t.string   "purpose"
-    t.string   "content"
-    t.decimal  "amount",                                     :precision => 12, :scale => 2
-    t.integer  "business_trip_flg",                                                         :default => 0
-    t.integer  "temporary_flg",                                                             :default => 0
-    t.integer  "temporary_scrip_flg",                                                       :default => 0
-    t.integer  "temporary_payment_flg",                                                     :default => 0
-    t.integer  "credit_card_flg",                                                           :default => 0
-    t.string   "cutoff_status_type",           :limit => 40
-    t.text     "memo"
-    t.datetime "created_at",                                                                               :null => false
-    t.datetime "updated_at",                                                                               :null => false
-    t.integer  "lock_version",                 :limit => 8,                                 :default => 0
-    t.string   "created_user",                 :limit => 80
-    t.string   "updated_user",                 :limit => 80
-    t.datetime "deleted_at"
-    t.integer  "deleted",                                                                   :default => 0
-  end
-
-  add_index "expense_details", ["id"], :name => "id", :unique => true
-
-  create_table "holiday_applications", :force => true do |t|
-    t.integer  "owner_id",            :limit => 8
-    t.integer  "user_id",             :limit => 8
-    t.integer  "base_application_id", :limit => 8
-    t.string   "working_type",        :limit => 40
-    t.date     "application_date"
-    t.date     "start_date"
-    t.date     "end_date"
-    t.integer  "start_time",          :limit => 8
-    t.integer  "end_time",            :limit => 8
-    t.float    "day_total"
-    t.integer  "hour_total",          :limit => 8,  :default => 0
-    t.string   "reason"
-    t.string   "content"
-    t.integer  "taxi_flg",                          :default => 0
-    t.integer  "active_flg",                        :default => 0
-    t.text     "memo"
-    t.datetime "created_at",                                       :null => false
-    t.datetime "updated_at",                                       :null => false
-    t.integer  "lock_version",        :limit => 8,  :default => 0
-    t.string   "created_user",        :limit => 80
-    t.string   "updated_user",        :limit => 80
-    t.datetime "deleted_at"
-    t.integer  "deleted",                           :default => 0
-  end
-
-  add_index "holiday_applications", ["id"], :name => "id", :unique => true
-
   create_table "human_resources", :force => true do |t|
     t.integer  "owner_id",                   :limit => 8
     t.string   "human_resource_name"
@@ -1079,14 +705,14 @@ ActiveRecord::Schema.define(:version => 0) do
     t.integer  "deleted",                                   :default => 0
   end
 
-  add_index "import_mails", ["delivery_mail_id"], :name => "idx_import_mails_21"
+  add_index "import_mails", ["delivery_mail_id"], :name => "idx_import_mails_19"
   add_index "import_mails", ["id"], :name => "id", :unique => true
-  add_index "import_mails", ["in_reply_to"], :name => "idx_import_mails_23"
-  add_index "import_mails", ["mail_from", "received_at"], :name => "idx_import_mails_12"
-  add_index "import_mails", ["message_id"], :name => "idx_import_mails_11"
-  add_index "import_mails", ["outflow_mail_flg"], :name => "idx_import_mails_25"
-  add_index "import_mails", ["received_at"], :name => "idx_import_mails_24"
-  add_index "import_mails", ["starred"], :name => "idx_import_mails_22"
+  add_index "import_mails", ["in_reply_to"], :name => "idx_import_mails_21"
+  add_index "import_mails", ["mail_from", "received_at"], :name => "idx_import_mails_10"
+  add_index "import_mails", ["message_id"], :name => "idx_import_mails_9"
+  add_index "import_mails", ["outflow_mail_flg"], :name => "idx_import_mails_23"
+  add_index "import_mails", ["received_at"], :name => "idx_import_mails_22"
+  add_index "import_mails", ["starred"], :name => "idx_import_mails_20"
 
   create_table "interviews", :force => true do |t|
     t.integer  "owner_id",              :limit => 8
@@ -1132,41 +758,6 @@ ActiveRecord::Schema.define(:version => 0) do
 
   add_index "mail_templates", ["id"], :name => "id", :unique => true
 
-  create_table "monthly_workings", :force => true do |t|
-    t.integer  "owner_id",                       :limit => 8
-    t.integer  "user_id",                        :limit => 8
-    t.integer  "base_application_id",            :limit => 8
-    t.integer  "base_month_id",                  :limit => 8
-    t.date     "application_date"
-    t.integer  "report_month",                   :limit => 8
-    t.date     "start_date"
-    t.date     "end_date"
-    t.integer  "last_flg",                                     :default => 0
-    t.integer  "next_time_flg",                                :default => 0
-    t.integer  "labor_day_total",                :limit => 8,  :default => 0
-    t.integer  "compensatory_hour_total",        :limit => 8,  :default => 0
-    t.integer  "compensatory_used_total",        :limit => 8,  :default => 0
-    t.integer  "pre_comp_used_total",            :limit => 8,  :default => 0
-    t.integer  "working_day_total",              :limit => 8,  :default => 0
-    t.integer  "remain_total",                   :limit => 8,  :default => 0
-    t.integer  "compensatory_remain_total",      :limit => 8,  :default => 0
-    t.integer  "cutoff_day_total",               :limit => 8,  :default => 0
-    t.integer  "cutoff_compensatory_hour_total", :limit => 8,  :default => 0
-    t.integer  "summer_vacation_remain_total",   :limit => 8,  :default => 0
-    t.integer  "life_plan_remain_total",         :limit => 8,  :default => 0
-    t.integer  "hold_flg",                                     :default => 0
-    t.text     "memo"
-    t.datetime "created_at",                                                  :null => false
-    t.datetime "updated_at",                                                  :null => false
-    t.integer  "lock_version",                   :limit => 8,  :default => 0
-    t.string   "created_user",                   :limit => 80
-    t.string   "updated_user",                   :limit => 80
-    t.datetime "deleted_at"
-    t.integer  "deleted",                                      :default => 0
-  end
-
-  add_index "monthly_workings", ["id"], :name => "id", :unique => true
-
   create_table "names", :force => true do |t|
     t.integer  "owner_id",         :limit => 8
     t.string   "name_lcale",       :limit => 40,                 :null => false
@@ -1187,33 +778,6 @@ ActiveRecord::Schema.define(:version => 0) do
 
   add_index "names", ["id"], :name => "id", :unique => true
   add_index "names", ["name_lcale", "name_section", "name_key"], :name => "idx_names_1", :unique => true
-
-  create_table "other_applications", :force => true do |t|
-    t.integer  "owner_id",            :limit => 8
-    t.integer  "user_id",             :limit => 8
-    t.integer  "base_application_id", :limit => 8
-    t.string   "working_option_type", :limit => 40
-    t.date     "application_date"
-    t.date     "target_date"
-    t.integer  "start_time",          :limit => 8
-    t.integer  "end_time",            :limit => 8
-    t.integer  "hour_total",          :limit => 8,  :default => 0
-    t.string   "reason"
-    t.string   "content"
-    t.integer  "taxi_flg",                          :default => 0
-    t.integer  "active_flg",                        :default => 0
-    t.integer  "delayed_cancel_flg",                :default => 0
-    t.text     "memo"
-    t.datetime "created_at",                                       :null => false
-    t.datetime "updated_at",                                       :null => false
-    t.integer  "lock_version",        :limit => 8,  :default => 0
-    t.string   "created_user",        :limit => 80
-    t.string   "updated_user",        :limit => 80
-    t.datetime "deleted_at"
-    t.integer  "deleted",                           :default => 0
-  end
-
-  add_index "other_applications", ["id"], :name => "id", :unique => true
 
   create_table "outflow_mails", :force => true do |t|
     t.integer  "owner_id",                 :limit => 8
@@ -1256,74 +820,6 @@ ActiveRecord::Schema.define(:version => 0) do
 
   add_index "owners", ["id"], :name => "id", :unique => true
 
-  create_table "payment_per_cases", :force => true do |t|
-    t.integer  "owner_id",              :limit => 8
-    t.integer  "user_id",               :limit => 8
-    t.integer  "base_application_id",   :limit => 8
-    t.integer  "payment_per_month_id",  :limit => 8
-    t.date     "expense_paid_date"
-    t.string   "cutoff_status_type",    :limit => 40,                                               :null => false
-    t.decimal  "total_amount",                        :precision => 12, :scale => 2
-    t.integer  "temporary_scrip_flg",                                                :default => 0
-    t.integer  "temporary_payment_flg",                                              :default => 0
-    t.date     "payment_date"
-    t.text     "memo"
-    t.datetime "created_at",                                                                        :null => false
-    t.datetime "updated_at",                                                                        :null => false
-    t.integer  "lock_version",          :limit => 8,                                 :default => 0
-    t.string   "created_user",          :limit => 80
-    t.string   "updated_user",          :limit => 80
-    t.datetime "deleted_at"
-    t.integer  "deleted",                                                            :default => 0
-  end
-
-  add_index "payment_per_cases", ["id"], :name => "id", :unique => true
-
-  create_table "payment_per_months", :force => true do |t|
-    t.integer  "owner_id",               :limit => 8
-    t.integer  "user_id",                :limit => 8
-    t.integer  "base_application_id",    :limit => 8
-    t.integer  "base_month_id",          :limit => 8
-    t.integer  "cutoff_period",          :limit => 8
-    t.date     "cutoff_start_date"
-    t.date     "cutoff_end_date"
-    t.date     "expense_paid_date"
-    t.string   "cutoff_status_type",     :limit => 40,                                               :null => false
-    t.decimal  "temporary_amount_total",               :precision => 12, :scale => 2
-    t.decimal  "total_amount",                         :precision => 12, :scale => 2
-    t.integer  "temporary_scrip_flg",                                                 :default => 0
-    t.integer  "temporary_payment_flg",                                               :default => 0
-    t.text     "memo"
-    t.datetime "created_at",                                                                         :null => false
-    t.datetime "updated_at",                                                                         :null => false
-    t.integer  "lock_version",           :limit => 8,                                 :default => 0
-    t.string   "created_user",           :limit => 80
-    t.string   "updated_user",           :limit => 80
-    t.datetime "deleted_at"
-    t.integer  "deleted",                                                             :default => 0
-  end
-
-  add_index "payment_per_months", ["id"], :name => "id", :unique => true
-
-  create_table "personal_sales", :force => true do |t|
-    t.integer  "owner_id",            :limit => 8
-    t.integer  "user_id",             :limit => 8,                                                  :null => false
-    t.integer  "project_id",          :limit => 8,                                                  :null => false
-    t.integer  "base_month_id",       :limit => 8,                                                  :null => false
-    t.decimal  "planed_sales_amount",               :precision => 12, :scale => 2, :default => 0.0
-    t.decimal  "sales_amount",                      :precision => 12, :scale => 2, :default => 0.0
-    t.text     "memo"
-    t.datetime "created_at",                                                                        :null => false
-    t.datetime "updated_at",                                                                        :null => false
-    t.integer  "lock_version",        :limit => 8,                                 :default => 0
-    t.string   "created_user",        :limit => 80
-    t.string   "updated_user",        :limit => 80
-    t.datetime "deleted_at"
-    t.integer  "deleted",                                                          :default => 0
-  end
-
-  add_index "personal_sales", ["id"], :name => "id", :unique => true
-
   create_table "photos", :force => true do |t|
     t.integer  "owner_id",          :limit => 8
     t.string   "parent_table_name",                              :null => false
@@ -1333,7 +829,7 @@ ActiveRecord::Schema.define(:version => 0) do
     t.string   "file_path",                                      :null => false
     t.string   "thumbnail_path",                                 :null => false
     t.string   "photo_status_type", :limit => 40,                :null => false
-    t.string   "photo_sender"
+    t.string   "photo_sender",                                   :null => false
     t.datetime "created_at",                                     :null => false
     t.datetime "updated_at",                                     :null => false
     t.integer  "lock_version",      :limit => 8,  :default => 0
@@ -1344,47 +840,6 @@ ActiveRecord::Schema.define(:version => 0) do
   end
 
   add_index "photos", ["id"], :name => "id", :unique => true
-
-  create_table "project_members", :force => true do |t|
-    t.integer  "owner_id",     :limit => 8
-    t.integer  "user_id",      :limit => 8,                 :null => false
-    t.integer  "project_id",   :limit => 8,                 :null => false
-    t.datetime "created_at",                                :null => false
-    t.datetime "updated_at",                                :null => false
-    t.integer  "lock_version", :limit => 8,  :default => 0
-    t.string   "created_user", :limit => 80
-    t.string   "updated_user", :limit => 80
-    t.datetime "deleted_at"
-    t.integer  "deleted",                    :default => 0
-  end
-
-  add_index "project_members", ["id"], :name => "id", :unique => true
-
-  create_table "projects", :force => true do |t|
-    t.integer  "owner_id",            :limit => 8
-    t.integer  "business_partner_id", :limit => 8,                                                  :null => false
-    t.string   "project_name",                                                                      :null => false
-    t.string   "project_short_name",                                                                :null => false
-    t.string   "project_name_kana",                                                                 :null => false
-    t.string   "project_code_name",                                                                 :null => false
-    t.integer  "pic_id",              :limit => 8
-    t.date     "project_start_date",                                                                :null => false
-    t.date     "project_end_date",                                                                  :null => false
-    t.decimal  "order_amount",                      :precision => 12, :scale => 2, :default => 0.0
-    t.decimal  "subcontract_cost",                  :precision => 12, :scale => 2, :default => 0.0
-    t.string   "project_type",        :limit => 40,                                                 :null => false
-    t.string   "project_status_type", :limit => 40,                                                 :null => false
-    t.text     "memo"
-    t.datetime "created_at",                                                                        :null => false
-    t.datetime "updated_at",                                                                        :null => false
-    t.integer  "lock_version",        :limit => 8,                                 :default => 0
-    t.string   "created_user",        :limit => 80
-    t.string   "updated_user",        :limit => 80
-    t.datetime "deleted_at"
-    t.integer  "deleted",                                                          :default => 0
-  end
-
-  add_index "projects", ["id"], :name => "id", :unique => true
 
   create_table "remarks", :force => true do |t|
     t.integer  "owner_id",         :limit => 8
@@ -1402,41 +857,6 @@ ActiveRecord::Schema.define(:version => 0) do
   end
 
   add_index "remarks", ["id"], :name => "id", :unique => true
-
-  create_table "route_expense_details", :force => true do |t|
-    t.integer  "owner_id",          :limit => 8
-    t.integer  "route_expense_id",  :limit => 8
-    t.string   "organization_name", :limit => 100,                                               :null => false
-    t.string   "station_from",      :limit => 100,                                               :null => false
-    t.string   "station_to",        :limit => 100,                                               :null => false
-    t.decimal  "monthly_amount",                   :precision => 12, :scale => 2,                :null => false
-    t.text     "memo"
-    t.datetime "created_at",                                                                     :null => false
-    t.datetime "updated_at",                                                                     :null => false
-    t.integer  "lock_version",      :limit => 8,                                  :default => 0
-    t.string   "created_user",      :limit => 80
-    t.string   "updated_user",      :limit => 80
-    t.datetime "deleted_at"
-    t.integer  "deleted",                                                         :default => 0
-  end
-
-  add_index "route_expense_details", ["id"], :name => "id", :unique => true
-
-  create_table "route_expenses", :force => true do |t|
-    t.integer  "owner_id",     :limit => 8
-    t.integer  "user_id",      :limit => 8
-    t.decimal  "total_amount",               :precision => 12, :scale => 2
-    t.text     "memo"
-    t.datetime "created_at",                                                               :null => false
-    t.datetime "updated_at",                                                               :null => false
-    t.integer  "lock_version", :limit => 8,                                 :default => 0
-    t.string   "created_user", :limit => 80
-    t.string   "updated_user", :limit => 80
-    t.datetime "deleted_at"
-    t.integer  "deleted",                                                   :default => 0
-  end
-
-  add_index "route_expenses", ["id"], :name => "id", :unique => true
 
   create_table "schema_versions", :primary_key => "version", :force => true do |t|
   end
@@ -1530,8 +950,8 @@ ActiveRecord::Schema.define(:version => 0) do
   end
 
   add_index "tag_details", ["id"], :name => "id", :unique => true
-  add_index "tag_details", ["parent_id", "tag_id"], :name => "idx_tag_details_10"
-  add_index "tag_details", ["tag_id", "parent_id"], :name => "idx_tag_details_9"
+  add_index "tag_details", ["parent_id", "tag_id"], :name => "idx_tag_details_8"
+  add_index "tag_details", ["tag_id", "parent_id"], :name => "idx_tag_details_7", :unique => true
 
   create_table "tag_journals", :force => true do |t|
     t.integer  "owner_id",            :limit => 8
@@ -1571,7 +991,7 @@ ActiveRecord::Schema.define(:version => 0) do
   end
 
   add_index "tags", ["id"], :name => "id", :unique => true
-  add_index "tags", ["tag_key", "tag_text"], :name => "idx_tags_8"
+  add_index "tags", ["tag_key", "tag_text"], :name => "idx_tags_6", :unique => true
 
   create_table "types", :force => true do |t|
     t.integer  "owner_id",              :limit => 8
@@ -1637,77 +1057,6 @@ ActiveRecord::Schema.define(:version => 0) do
   add_index "users", ["email"], :name => "idx_users_5"
   add_index "users", ["id"], :name => "id", :unique => true
   add_index "users", ["login"], :name => "idx_users_4", :unique => true
-
-  create_table "vacations", :force => true do |t|
-    t.integer  "owner_id",                       :limit => 8
-    t.integer  "user_id",                        :limit => 8
-    t.integer  "compensatory_hour_total",        :limit => 8,  :default => 0
-    t.integer  "compensatory_used_total",        :limit => 8,  :default => 0
-    t.integer  "cutoff_compensatory_hour_total", :limit => 8,  :default => 0
-    t.integer  "summer_vacation_day_total",      :limit => 8,  :default => 0
-    t.integer  "summer_vacation_used_total",     :limit => 8,  :default => 0
-    t.float    "day_total",                                    :default => 0.0
-    t.float    "used_total",                                   :default => 0.0
-    t.float    "cutoff_day_total",                             :default => 0.0
-    t.float    "life_plan_day_total",                          :default => 0.0
-    t.float    "life_plan_used_total",                         :default => 0.0
-    t.float    "pre_comp_hour_total",                          :default => 0.0
-    t.float    "pre_comp_used_total",                          :default => 0.0
-    t.float    "pre_cutoff_comp_hour_total",                   :default => 0.0
-    t.datetime "created_at",                                                    :null => false
-    t.datetime "updated_at",                                                    :null => false
-    t.integer  "lock_version",                   :limit => 8,  :default => 0
-    t.string   "created_user",                   :limit => 80
-    t.string   "updated_user",                   :limit => 80
-    t.datetime "deleted_at"
-    t.integer  "deleted",                                      :default => 0
-  end
-
-  add_index "vacations", ["id"], :name => "id", :unique => true
-
-  create_table "weekly_report_details", :force => true do |t|
-    t.integer  "owner_id",         :limit => 8
-    t.integer  "weekly_report_id", :limit => 8
-    t.string   "title",            :limit => 100
-    t.string   "content"
-    t.string   "client"
-    t.string   "relative_staff",   :limit => 100
-    t.text     "memo"
-    t.datetime "created_at",                                     :null => false
-    t.datetime "updated_at",                                     :null => false
-    t.integer  "lock_version",     :limit => 8,   :default => 0
-    t.string   "created_user",     :limit => 80
-    t.string   "updated_user",     :limit => 80
-    t.datetime "deleted_at"
-    t.integer  "deleted",                         :default => 0
-  end
-
-  add_index "weekly_report_details", ["id"], :name => "id", :unique => true
-
-  create_table "weekly_reports", :force => true do |t|
-    t.integer  "owner_id",            :limit => 8
-    t.integer  "user_id",             :limit => 8
-    t.integer  "base_application_id", :limit => 8
-    t.integer  "base_month_id",       :limit => 8
-    t.date     "report_date"
-    t.date     "start_date"
-    t.date     "end_date"
-    t.string   "title"
-    t.string   "content"
-    t.string   "client"
-    t.string   "relative_staff"
-    t.integer  "last_flg",                          :default => 0
-    t.text     "memo"
-    t.datetime "created_at",                                       :null => false
-    t.datetime "updated_at",                                       :null => false
-    t.integer  "lock_version",        :limit => 8,  :default => 0
-    t.string   "created_user",        :limit => 80
-    t.string   "updated_user",        :limit => 80
-    t.datetime "deleted_at"
-    t.integer  "deleted",                           :default => 0
-  end
-
-  add_index "weekly_reports", ["id"], :name => "id", :unique => true
 
   create_table "working_logs", :force => true do |t|
     t.integer  "owner_id",         :limit => 8

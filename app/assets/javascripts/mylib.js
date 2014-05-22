@@ -95,6 +95,10 @@ function disp_wide(url){
   disp(url, "width=820,height=480,resizable=yes,scrollbars=yes");
 }
 
+function disp_photo(url){
+  disp(url, "width=810,height=670,resizable=yes,scrollbars=no");
+}
+
 function popup_close() {
   var odoc = window.opener.document;
   odoc.getElementById("flashmsg").innerHTML = "<div style='font-size: 20px; color: green'>申請が登録されました。更新してください</div>"

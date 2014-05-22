@@ -1,10 +1,12 @@
-<% if params[:src_id].nil? %>
-  <h1><%= getLongName('table_name','bp_pic_groups')%> の新規作成</h1>
-<% else %>
-  <h1><%= @bp_pic_group.bp_pic_group_name %> からコピーして新規作成</h1>
-  <% @bp_pic_group.add_copy_string %>
+<%= form_for(@bp_pic_group) do |f| %>
+  <% title = params[:src_id].blank? ? getLongName('table_name','bp_pic_groups')+"の新規作成" : @bp_pic_group.bp_pic_group_name+"からコピーして新規作成" %>
+  <%= accordion_around(title, "") do %>
+    <% @bp_pic_group.add_copy_string if !params[:src_id].blank? %>
+    <%= render 'form', :f => f %>
+  <% end %>
+  <div class="submit_box">
+    <%= submit_tag '　登録　', btn_primary %>
+    <%= link_or_back '戻る', bp_pic_groups_path %>
+  </div>
 <% end %>
 
-<%= render 'form' %>
-
-<%= link_or_back '戻る', bp_pic_groups_path %>

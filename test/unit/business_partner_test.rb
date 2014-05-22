@@ -12,7 +12,6 @@ class BusinessPartnerTest < ActiveSupport::TestCase
   test "import_csv" do
     # インポート前の確認
     assert_equal(1, BpPic.find(1).business_partner_id, "BpPicの事前データがおかしい")
-    assert_equal(1, Project.find(1).business_partner_id, "Projectの事前データがおかしい")
     assert_equal(1, AnalysisTemplate.find(1).business_partner_id, "AnalysisTemplateの事前データがおかしい")
     assert_equal(1, BizOffer.find(1).business_partner_id, "BizOfferの事前データがおかしい")
     assert_equal(1, BpMember.find(1).business_partner_id, "BpMemberの事前データがおかしい")
@@ -26,7 +25,6 @@ class BusinessPartnerTest < ActiveSupport::TestCase
 
     # 名寄せが発生
     assert_equal(2, BpPic.find(1).business_partner_id, "BpPicが名寄せ出来ていない")
-    assert_equal(2, Project.find(1).business_partner_id, "Projectが名寄せ出来ていない")
     assert_equal(2, AnalysisTemplate.find(1).business_partner_id, "AnalysisTemplateが名寄せ出来ていない")
     assert_equal(2, BizOffer.find(1).business_partner_id, "BizOfferが名寄せ出来ていない")
     assert_equal(2, BpMember.find(1).business_partner_id, "BpMemberが名寄せ出来ていない")

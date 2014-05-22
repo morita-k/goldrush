@@ -79,7 +79,6 @@ class User < ActiveRecord::Base
   include AutoTypeName
   
   has_many :monthly_workings, :conditions => "monthly_workings.deleted = 0", :order => "start_date"
-  has_many :comments, :conditions => "comments.deleted = 0"
   has_many :holiday_applications, :conditions => "holiday_applications.deleted = 0"
   has_many :other_applications, :conditions => "other_applications.deleted = 0"
   has_many :business_trip_applications, :conditions => "business_trip_applications.deleted = 0"

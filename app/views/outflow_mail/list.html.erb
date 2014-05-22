@@ -1,6 +1,7 @@
-<%= content_tag :h1, getLongName('table_name', 'outflow_mails') + " 一覧" %>
+<%= form_tag do %>
+<%= accordion_around(getLongName('table_name', 'outflow_mails') + " 一覧", "") do %>
 
-<table class="show_table">
+<table class="form_table">
   <% if @import_mail.business_partner %>
     <tr>
       <th><%= getLongName('import_mails', 'business_partner_id') %></th><td><%=link_to @import_mail.business_partner.business_partner_name, :controller => :business_partner, :action => :show, :id => @import_mail.business_partner_id %></td>
@@ -17,27 +18,29 @@
   <tr>
     <th>取り込みメール</th><td><%= link_to '詳細', :controller => 'import_mail', :action => 'show', :id => @import_mail.id %></td>
   </tr>
+  <tr>
+    <th>ステータス</th>
+    <td class="outflow_radio">
+      <%= radio_button_tag 'outflow_mail_status', "non_correspondence", search_value_outflow_mail(:outflow_mail_status) == "non_correspondence" %> 未対応
+      <%= radio_button_tag 'outflow_mail_status', "good", search_value_outflow_mail(:outflow_mail_status) == "good" %> 有用
+      <%= radio_button_tag 'outflow_mail_status', "bad", search_value_outflow_mail(:outflow_mail_status) == "bad" %> 不要
+      <%= radio_button_tag 'outflow_mail_status', "unwanted", search_value_outflow_mail(:outflow_mail_status) == "unwanted" %> 重複
+    </td>
+  </tr>
 </table>
-<br/>
-<%= form_tag do %>
-  <table>
-    <tr>
-      <td style="text-align: right">ステータス:</td>
-      <td class="outflow_radio">
-        <%= radio_button_tag 'outflow_mail_status', "non_correspondence", search_value_outflow_mail(:outflow_mail_status) == "non_correspondence" %> 未対応
-        <%= radio_button_tag 'outflow_mail_status', "good", search_value_outflow_mail(:outflow_mail_status) == "good" %> 有用
-        <%= radio_button_tag 'outflow_mail_status', "bad", search_value_outflow_mail(:outflow_mail_status) == "bad" %> 不要
-        <%= radio_button_tag 'outflow_mail_status', "unwanted", search_value_outflow_mail(:outflow_mail_status) == "unwanted" %> 重複
-      </td>
-    </tr>
-  </table>
-  <br/>
-  <%= submit_tag '　　検索　　', :name => 'search_button' %> <%= submit_tag '　　クリア　　', :name => 'clear_button' %>
-  <input type=button value='会社チェック' onClick="disp_full('<%=url_for_outflow_mail_input_popup(@import_mail.id)%>');return false;" />
-  <%= submit_tag '　再解析　', :name => 'analyze_button' %>
+  <%= submit_tag '　　検索　　', :name => 'search_button', :class => "btn btn-warning btn-medium" %>
+  <%= submit_tag '　　クリア　　', :name => 'clear_button', :class => "btn btn-default btn-medium" %>
   <%= hidden_field_tag 'import_mail_id', @import_mail.id %>
 <% end %>
-<table class="list_table" style="margin-top:0px">
+
+<div class="submit_box">
+  <%= submit_tag '　再解析　', :name => 'analyze_button', :class => "btn btn-primary btn-medium" %>
+  <input type=button value='会社チェック' onClick="disp_full('<%=url_for_outflow_mail_input_popup(@import_mail.id)%>');return false;" class="btn btn-info btn-medium" />
+</div>
+
+<% end %>
+
+<table class="list_table table-bordered table-hover">
   <tr>
     <!-- <th colspan="5">流出メールアドレス一覧</th> -->
     <th><%= getLongName('outflow_mails', 'email_text') %></th>

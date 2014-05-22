@@ -1,8 +1,9 @@
-<h1><%=getLongName('table_name','contracts')%>編集</h1>
 
 <%= form_tag :action => 'update', :id => @contract do %>
   <%= render :partial => 'form' %>
-  <%= submit_tag '更新' %>
+  <div class="submit_box">
+    <%= submit_tag '更新', :class => "btn btn-primary btn-medium" %>
+    <%= link_or_back '戻る', {:controller => 'approach', :action => 'show', :id => @contract.approach_id}, :class => "btn btn-default btn-medium"  %>
+  </div>
 <% end %>
 
-<%= link_to '戻る', :controller => 'approach', :action => 'show', :id => @contract.approach_id %>

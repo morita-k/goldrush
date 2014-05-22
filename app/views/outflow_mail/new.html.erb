@@ -1,11 +1,12 @@
-<%= content_tag :h1, getLongName('table_name', 'outflow_mails') + ' 解析' %>
+<%= accordion_around(getLongName('table_name', 'outflow_mails') + ' 解析', "") do %>
 
 <%= content_tag :p, '流出メールのアドレスをカンマ(,)区切りで入力して解析ボタンをクリックしてください。' %>
 <%= form_tag(:action => 'analyze_outflow_mail') do %>
 
-<%= text_area 'outflow_mail_list', '', :value => @outflow_mail_list_raw.nil? ? '' : @outflow_mail_list_raw, :style => "width:600px;", :rows => 10 %><br/>
-<%= submit_tag "解析" %>
+<%= text_area 'outflow_mail_list', '', :value => @outflow_mail_list_raw.nil? ? '' : @outflow_mail_list_raw, :style => "width:600px;margin-bottom: 4px;", :rows => 10 %><br/>
+<%= submit_tag "解析", :class => "btn btn-warning btn-medium" %>
 
+<% end %>
 <% end %>
 
 <%= paginate_far(@import_mails) %>

@@ -1,5 +1,4 @@
-<h1><%= title%></h1>
-
+<%= accordion_around(title, "") do %>
 <%= form_tag( {}, {:class => ""}) do %>
   <div class="form-gorup form-inline">
     <label for="year">対象年月</label>
@@ -9,16 +8,23 @@
     <%= submit_tag "クリア", :name => "clear" %>
   </div>
 <% end %>
+<% end %>
 
-<%= back_to_link "稼働状況表", :action => :works %>
+<div class="submit_box">
+<%= back_to_link "稼働状況表", {:action => :works}, {:class => "btn btn-info btn-midium"} %>
+<%= back_to_link (getLongName('table_name','contracts')+'の新規作成'), {:action => 'quick_new'}, {:class => "btn btn-primary btn-midium"} %>
+<%= back_to_link "次期契約作成処理", {:controller => :api, :action => 'make_next_contracts', :authenticity_token => form_authenticity_token}, :method => :post, :class => 'btn btn-primary btn-small', :confirm => "通知期限2カ月前の契約に対して、次期契約を自動生成します。よろしいですか？" %>
+<%= back_to_link "契約終了処理", {:controller => :api, :action => 'close_contracts', :authenticity_token => form_authenticity_token}, :method => :post, :class => 'btn btn-primary btn-small', :confirm => "期限の切れた契約をクローズします(ただし確認中契約がある場合はクローズしません)。よろしいですか？" %>
+</div>
 
 <%= @contract_pages && paginate(@contracts) %>
 
 <% if @summary %>
-  <table class="list_table">
+  <h2>サマリー</h2>
+  <table class="list_table table-bordered table-hover">
     <tr><th>種別</th><th>売上</th><th>原価</th><th>粗利</th><th>粗利率</th></tr>
     <% [["社員", @summary_prop], ["外注", @summary_non_prop], ["合計", @summary]].each do |x| %>
-      <tr><td><%=x[0]%></td><td class="right"><%=pay x[1][:upper_payment]%></td><td class="right"><%=pay x[1][:down_payment]%></td><td class="right"><%=pay x[1][:gross_profit]%></td><td class="right"><%= rate x[1][:upper_payment], x[1][:gross_profit] %></td></tr>
+        <tr><td><%=x[0]%></td><td class="text-right"><%=pay x[1][:upper_payment]%></td><td class="text-right"><%=pay x[1][:down_payment]%></td><td class="text-right"><%=pay x[1][:gross_profit]%></td><td class="text-right"><%= rate x[1][:upper_payment], x[1][:gross_profit] %></td></tr>
     <% end %>
   </table>
   <% prop, non_prop = @contracts.partition {|c| c.proper? } %>
@@ -33,11 +39,6 @@
 
 <%= @contract_pages && paginate(@contracts) %>
 
-<br />
-
-<%= back_to_link (getLongName('table_name','contracts')+'の新規作成'), :action => 'quick_new' %> |
-<%= back_to_link "次期契約作成処理", {:controller => :api, :action => 'make_next_contracts', :authenticity_token => form_authenticity_token}, :method => :post, :class => 'btn btn-primary btn-small', :confirm => "通知期限2カ月前の契約に対して、次期契約を自動生成します。よろしいですか？" %> |
-<%= back_to_link "契約終了処理", {:controller => :api, :action => 'close_contracts', :authenticity_token => form_authenticity_token}, :method => :post, :class => 'btn btn-primary btn-small', :confirm => "期限の切れた契約をクローズします(ただし確認中契約がある場合はクローズしません)。よろしいですか？" %>
 
 <% unless session[:msgids].to_s.split(",").include?("keiyaku1") %>
 <div class="alert alert-block">

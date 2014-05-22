@@ -1,6 +1,6 @@
 <h1>稼働状況表</h1>
 
-<table class="list_table">
+<table class="list_table table-bordered table-hover">
   <tr><th>人材</th>
     <%= each_month(@target_start, @target_end) do |month| %>
       <th><%=month.strftime("%Y/%m")%></th>

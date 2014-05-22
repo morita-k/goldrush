@@ -1,9 +1,9 @@
-<h1><%=getLongName('table_name','analysis_templates')%>編集</h1>
-
 <%= form_tag :action => 'update', :id => @analysis_template do %>
+  <%= accordion_around(getLongName('table_name','analysis_templates')+"編集", "") do %>
   <!--[form:analysis_template]-->
     <%= render :partial => 'form' %>
   <!--[eoform:analysis_template]-->
+  <% end %>
 
   <% if @mode == 'biz_offer' %>
     <!--[form:analysis_template_item]-->
@@ -15,7 +15,9 @@
     <!--[eoform:analysis_template_item]-->
   <% end %>
 
-  <%= submit_tag '更新' %>
+  <div class="submit_box">
+  <%= submit_tag '更新', btn_primary %>
+  <%= link_or_back '戻る', :action => 'show', :id => @analysis_template %>
+  </div>
 <% end %>
 
-<%= link_or_back '戻る', :action => 'show', :id => @analysis_template %>

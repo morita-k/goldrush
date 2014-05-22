@@ -1,4 +1,3 @@
-<%= form_for(@delivery_mail, :html => {:enctype => 'multipart/form-data'}) do |f| %>
 <%#= hidden_field_tag 'bp_pic_id', @bp_pics %>
 <%= back_to_field_tag %>
 <%= f.hidden_field :lock_version %>
@@ -113,7 +112,6 @@
     <%= f.submit(:value => 'メールを送信する') %>
   <% end %>
 </div>
-<% end %><%# form_for %>
 
 <script type="text/javascript">
 <!--

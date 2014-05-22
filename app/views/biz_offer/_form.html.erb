@@ -1,17 +1,14 @@
 <%= error_messages_for 'biz_offer' %>
 
 
-<h2>案件</h2>
-<!--[form:business]-->
+<%= accordion_around("案件", "") do %>
   <%= render :partial => 'business/form' %>
-<!--[eoform:business]-->
+<% end %>
 
 
-<h2>照会</h2>
-<!--[form:biz_offer]-->
+<%= accordion_around_h2("照会", "2") do %>
   <%= hidden_field 'biz_offer', 'business_id', :value => @business.id %>
-
-<table class="show_table">
+<table class="form_table">
 <tr>
   <th><label for="business_partner_name">上流取引先</label></th>
   <td><%= text_field_tag 'business_partner_name', @biz_offer.business_partner.blank? ? "" : @biz_offer.business_partner.business_partner_name, :readonly => true, :style => "background-color: silver;", :size => 30 %></td>
@@ -86,6 +83,7 @@
 <th><label for="biz_offer_memo"><%=getLongName('biz_offers','memo')%></label></th><td><%= resizable_area 'biz_offer', 'memo'  %></td>
 </tr>
 </table>
+<% end %>
 
 <!--[eoform:biz_offer]-->
 <%= hidden_field 'biz_offer', 'lock_version' %>

@@ -1,3 +1,4 @@
+<%= accordion_around(getLongName('table_name','analysis_templates')+"詳細", "") do %>
 <table class="show_table">
 <tr>
   <th><%= getLongName('analysis_templates', 'analysis_template_name') %></th>
@@ -21,16 +22,21 @@
 </tr>
 
 </table>
-<%= back_to_link_popup_mode '編集', :action => 'edit', :id => @analysis_template %> |
-<%= delete_to '削除',@analysis_template %> |
-<%= link_or_back '戻る', :action => 'list' %>
+<% end %>
+<div class="submit_box">
+<%= back_to_link_popup_mode '編集', {:action => 'edit', :id => @analysis_template}, btn_primary %>
+<%= delete_to '削除',@analysis_template, 'destroy', btn_primary%>
+<%= link_or_back '戻る', :action => 'list' %><br/>
+</div>
+<div class="submit_box">
+<%= back_to_link_popup_mode (getLongName('table_name','analysis_template_items')+'の追加'), {:controller => :analysis_template_item, :action => 'new', :id => @analysis_template}, btn_primary %>
+</div>
 
 <p></p>
 
 <!-- 解析項目 -->
 <h2><%=getLongName('table_name','analysis_template_items')%>情報</h2>
 <%= render :partial => 'analysis_template_item/list' %>
-<%= back_to_link_popup_mode (getLongName('table_name','analysis_template_items')+'の追加'), :controller => :analysis_template_item, :action => 'new', :id => @analysis_template %>
 
 
 

@@ -57,10 +57,6 @@ module ApplicationHelper
     url_for :controller => :bp_pic, :action => :list, :photoid => photoid
   end
 
-  def url_for_delete_photo(photoid)
-    url_for :controller => :photos, :action => :delete, :photoid => photoid
-  end
-
   def url_for_rotate_photo(photoid, left_rotate, target_page, bp_pic_id = nil)
     url_for :controller => :photos, :action => :rotate, :photoid => photoid , :left_rotate => left_rotate, :target_page => target_page, :bp_pic_id => bp_pic_id
   end
@@ -202,7 +198,7 @@ module ApplicationHelper
      <script type="text/javascript">
         // <![CDATA[
         jQuery(function () {
-            jQuery('.typeahead').typeahead()
+//            jQuery('.typeahead').typeahead()
         });
         // ]]>
       </script>
@@ -219,20 +215,12 @@ module ApplicationHelper
        changeMonth: false,
 EOS
 
-    if("#{object_name}_#{method}" == "expense_application_preferred_date")
-      result += <<EOS
-        beforeShow: function(input, inst){
-          inst.dpDiv.css({marginTop: -260 + 'px'});
-        },
-EOS
-    else
-      result += <<EOS
-        beforeShow: function(input, inst){
-          inst.dpDiv.css({marginTop: 0 + 'px'});
-        },
+    result += <<EOS
+      beforeShow: function(input, inst){
+        inst.dpDiv.css({marginTop: 0 + 'px'});
+      },
 
 EOS
-    end
 
     result += <<EOS
            });
@@ -444,11 +432,17 @@ EOS
   end
 
   def link_or_back(name, options = {}, html_options = {}, &block)
+    if html_options[:class].blank?
+      html_options[:class] = "btn btn-default btn-medium"
+    end
     link_to(name, (back_to || options), html_options, &block)
   end
 
-  def delete_to(name, object, action = 'destroy')
-    link_to(name, { :action => action, :id => object, :back_to => back_to, :authenticity_token => form_authenticity_token }, :confirm => 'この情報を削除します。よろしいですか?', :method => :post)
+  def delete_to(name, object, action = 'destroy', option = {})
+    option[:confirm] = 'この情報を削除します。よろしいですか?'
+    option[:method] = :post
+    option[:class] = "btn btn-default btn-medium" if option[:class].blank?
+    link_to(name, { :action => action, :id => object, :back_to => back_to, :authenticity_token => form_authenticity_token }, option)
   end
 
   def square_table(array, options = {}, tag_options = {}, &block)
@@ -462,14 +456,13 @@ EOS
     end
     str = ""
     str << "<#{tag_option_arr.join(' ')}>\n"
-    first = true
     array.each_index do |idx|
       if idx % col == 0
         str << '<tr style="text-align: center;">'
         col.times do |j|
           str << '<td>'
           if x = array[idx+j]
-            str << block.call(x, idx)
+            str << capture do block.call(x, idx) end
           end
           str << '</td>'
         end
@@ -477,6 +470,7 @@ EOS
       end
     end
     str << '</table>'
+    raw str
   end
 
   def popup?
@@ -485,22 +479,6 @@ EOS
 
   def is_photo?
     !@photo_id.nil?
-  end
-
-  def link_to_change_approval_status(application_approval)
-    result = []
-    return result unless application_approval
-    change_to_statuses =  ApplicationApproval.change_to_status(application_approval.approval_status_type)
-    return result unless change_to_statuses
-    change_to_statuses.each{|change_to_status|
-      str = ApplicationApproval.approval_action_str(change_to_status)
-      if change_to_status == 'reject'
-        result << link_to(str, { :controller => 'application_approval', :action => 'reject', :id => application_approval, :application_type => application_approval.application_type, :approval_status_type => change_to_status, :back_to => request.env['REQUEST_URI'] , :authenticity_token => form_authenticity_token})
-      else
-        result << link_to(str, { :controller => 'application_approval', :action => 'change_approval_status', :id => application_approval, :application_type => application_approval.application_type, :approval_status_type => change_to_status, :back_to => request.env['REQUEST_URI'], :authenticity_token => form_authenticity_token }, :confirm => "この申請を#{str}します。よろしいですか?", :method => :post)
-      end
-    }
-    result 
   end
 
   def back_to
@@ -513,10 +491,6 @@ EOS
     else
       request.original_url
     end
-  end
-
-  def link_or_back(name, options = {}, html_options = {}, &block)
-    link_to(name, (back_to || options), html_options, &block)
   end
 
   def back_to_field_tag
@@ -559,6 +533,12 @@ EOS
     link_to text, "#", option
   end
   
+  def disp_photo_link(text, url_option, option={})
+    url = url_for(url_option)
+    option[:onclick] = "disp_photo('#{url}');return false"
+    link_to text, "#", option
+  end
+  
   def popover(tag_name, text, content, option = {})
     if !option[:rel]
       option[:rel] = ( option[:title] ? "popover" : "popover-without-title" )
@@ -593,5 +573,69 @@ EOS
 
   def get_nickname(login)
     User.get_nickname(login)
+  end
+  
+  def accordion_around(title, suffix, hide=false, &block)
+    accordion_around_in(1, title, suffix, hide, &block)
+  end
+
+  def accordion_around_h2(title, suffix, hide=false, &block)
+    accordion_around_in(2, title, suffix, hide, &block)
+  end
+
+  def accordion_around_in(level, title, suffix, hide, &block)
+    res = raw <<EOS
+<div class="accordion" id="accordion#{suffix}">
+  <div class="accordion-group">
+    <div class="accordion-heading">
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion#{suffix}" href="#collapseForm#{suffix}"><h#{level}>#{title} <i id="collapseArrow#{suffix}" class="fa fa-arrow-circle-o-down"></i></h#{level}></a>
+    </div>
+    <div id="collapseForm#{suffix}" class="collapse in">
+      <div class="accordion-inner">
+        #{capture(&block)}
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="accordion-bottom"></div>
+<script type="text/javascript">
+<!--
+  $(document).ready(function(){
+    #{hide ? "$('#collapseForm#{suffix}').collapse('toggle');$('#collapseArrow#{suffix}').animate({rotate: 90});" : "" }
+    $('#collapseForm#{suffix}').on('hide.bs.collapse', function(){
+      $('#collapseArrow#{suffix}').animate({rotate: 90})
+    });
+      $('#collapseForm#{suffix}').on('show.bs.collapse', function(){
+          $('#collapseArrow#{suffix}').animate({rotate: 0})
+      });
+  });
+-->
+</script>
+EOS
+    res
+  end
+
+  def btn_primary(opt={})
+    btn_in('primary',opt)
+  end
+
+  def btn_info(opt={})
+    btn_in('info',opt)
+  end
+
+  def btn_warning(opt={})
+    btn_in('warning',opt)
+  end
+
+  def btn_default(opt={})
+    btn_in('default',opt)
+  end
+
+  def btn_in(kind, opt)
+    if opt[:class].blank?
+      opt[:class] = "btn btn-#{kind} btn-medium"
+    end
+    opt
   end
 end

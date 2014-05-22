@@ -1,11 +1,12 @@
-<h1><%=getLongName('table_name','daily_reports')%>一覧</h1>
+<%= content_tag :h1, getLongName('table_name','daily_reports')+"一覧" %>
 <h2><%= @target_date %></h2>
-<%= link_to('前の月', {:date => @preview_date}) %>
-<%= link_to('次の月', {:date => @next_date}) %>
-
 <%= form_for :DailyReports ,:url => {:action => 'update', :date => @target_date} do |f| %>
-<%= f.submit '　　更新　　'%>
+<div class="submit_box">
+<%= link_to('前の月', {:date => @preview_date}, :class=>"btn btn-info") %>
+<%= link_to('次の月', {:date => @next_date}, :class=>"btn btn-info") %>
+</div>
 
+<div class="submit_box">
   <% if @target_daily_reports[0].id.nil? %>
   <div class="alert alert-block">
     <h4>この月はまだ初期化されておりません</h4>
@@ -14,6 +15,8 @@
     </p>
   </div>
   <% end %>
+  <%= f.submit '　　更新　　', :class=>"btn btn-primary btn-medium"%>
+</div>
 <table class="list_table">
   <tr>
     <th><%= getLongName('daily_reports', 'report_date') %></th>
@@ -51,6 +54,7 @@
 
   <% end  %>
 </table>
-<br/>
-<%= f.submit '　　更新　　'%>
+<div class="submit_box">
+<%= f.submit '　　更新　　', :class=>"btn btn-primary btn-medium"%>
+</div>
 <% end %>

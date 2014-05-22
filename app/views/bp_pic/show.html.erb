@@ -9,12 +9,21 @@
 </div>
 <% end %>
 
-<% unless @photos.blank? %>
-  <%= link_to_function '写真の表示', '$("#photo_table").toggle()' %>
-  <div id="photo_table" style="display:none;">
-  <%= (square_table @photos, :col => 4 do |photo| get_photo_thumbnail_link(photo, @bp_pic.id) end).html_safe %>
-  </div>
-<% end %>
+<%= accordion_around "担当者", "" do %>
+  <% if @photos && photo = @photos.shift %>
+    <div id="top_photo" class="panel panel-default" style="display:inilne; position: absolute; right: 100px; top: 40px;">
+      <div style="text-align: center" class="panel-body">
+        <div>
+          <i class="glyphicon glyphicon-user"></i> <%= photo.photo_sender %> <%= _timetoddmmhhmm(photo.created_at) %><br>
+          <%= link_to image_tag(url_for :controller => 'photos', :action => 'get_image', :id => photo, :tn => 1), {:controller => :photos, :action => :preview, :id => photo, :popup => 1}, :target => "_blank"  %>
+        </div>
+        <div class="btn-group btn-group-xs" style="margin-bottom:10px">
+          <%= back_to_link((content_tag :i, "", :class => "glyphicon glyphicon-remove-circle"), {:controller => :bp_pic, :action => :update_photo_unlink, :photo_id => photo.id}, btn_primary(:title => "写真の登録を解除する")) %>
+          <%= back_to_link((content_tag :i, "", :class => "glyphicon glyphicon-repeat"), url_for_rotate_photo(photo.id, false, 'bp_pic'), btn_primary(:title => "写真を右転する")) %>
+        </div>
+      </div>
+    </div>
+  <% end %>
 <table class="show_table">
 <tr>
   <th><%= getLongName('business_partners', 'business_partner_name') %></th><td><%=link_to @bp_pic.business_partner.business_partner_name, :controller => :business_partner, :action => :show, :id => @bp_pic.business_partner_id %></td>
@@ -88,13 +97,37 @@
   <th><%= getLongName('bp_pics', 'updated_user') %></th><td><%= get_nickname(@bp_pic.updated_user) %></td>
 </tr>
 </table>
-<%= back_to_link '編集', :action => 'edit', :id => @bp_pic %> |
-<%= delete_to '削除', @bp_pic %> |
-<%= link_or_back '戻る', :action => 'list' %>
+<% end %><%# accordion_around %>
+<div class="submit_box">
+  <%= back_to_link '編集', {:action => 'edit', :id => @bp_pic}, btn_primary %>
+  <%= delete_to '削除', @bp_pic, btn_primary%>
+  <%= link_or_back '戻る', :action => 'list' %>
+</div>
 
-<h3>取引先担当グループ一覧</h3>
+<% if @photos && !@photos.empty? %>
+  <%= accordion_around_h2 "その他の写真", "p", @photos.blank? do %>
+    <div id="photo_table">
+      <%= square_table @photos, {:col => 4}, {:class => "photo_table"} do |photo| %>
+        <div class="panel panel-default">
+        <div class="panel-body">
+          <div>
+          <i class="glyphicon glyphicon-user"></i> <%= photo.photo_sender %> <%= _timetoddmmhhmm(photo.created_at) %><br>
+          <%= link_to image_tag(url_for :controller => 'photos', :action => 'get_image', :id => photo, :tn => 1), {:controller => :photos, :action => :preview, :id => photo, :popup => 1}, :target => "_blank"  %>
+        </div>
+          <div class="btn-group btn-group-xs" style="margin-bottom:10px">
+            <%= back_to_link((content_tag :i, "", :class => "glyphicon glyphicon-remove-circle"), {:controller => :bp_pic, :action => :update_photo_unlink, :photo_id => photo.id}, btn_primary(:title => "写真の登録を解除する")) %>
+            <%= back_to_link((content_tag :i, "", :class => "glyphicon glyphicon-repeat"), url_for_rotate_photo(photo.id, false, 'bp_pic'), btn_primary(:title => "写真を右転する")) %>
+          </div>
+        </div>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>
+
+<%= accordion_around_h2 "取引先担当グループ一覧", "2", @bp_pic_groups_details.blank? do %>
 <% unless @bp_pic_groups_details.blank? %>
-  <table class="show_table">
+  <table class="list_table table-bordered table-hover">
     <tr>
       <th><%= getLongName('bp_pic_groups', 'bp_pic_group_name') %></th>
       <th><%= getLongName('bp_pic_groups', 'memo') %></th>
@@ -107,8 +140,16 @@
     <% end %>
   </table>
 <% end %>
+<% end %>
 
-<%= render :partial => 'remarks/list', :locals => {:remark_key => "bp_pics", :remark_target_id => @bp_pic} %>
-<h3>送信メール一覧</h3>
-<%= render :partial => 'delivery_mails/list' %>
+<%= accordion_around_h2("コメント一覧", "3", @remarks.empty?) do %>
+  <%= render :partial => 'remarks/list', :locals => {:remark_key => "bp_pics", :remark_target_id => @bp_pic} %>
+<% end %>
+<div class="submit_box">
+  <%= back_to_link 'コメント追加', {:controller => :remarks, :action => :new, :remark_target_id => @bp_pic, :remark_key => "bp_pic"}, {:class => "btn btn-info btn-medium"} %>
+</div>
+
+<%= accordion_around_h2("送信メール一覧", "4", @delivery_mails.empty?) do %>
+  <%= render :partial => 'delivery_mails/list' %>
+<% end %>
 

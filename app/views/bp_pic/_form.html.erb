@@ -1,7 +1,9 @@
 <%= error_messages_for 'bp_pic' %>
+<% title =  @bp_pic.new_record? ? "#{@bp_pic.business_partner.business_partner_short_name} #{params[:retired_bp_pic_id] && '後任'}担当新規作成" : "#{@bp_pic.bp_pic_name} (#{@bp_pic.business_partner.business_partner_short_name})編集" %>
+<%= accordion_around(title, "2") do %>
 
 <!--[form:bp_pic]-->
-<table class="show_table">
+<table class="form_table">
 <tr>
 <th><label for="bp_pic_bp_pic_name"><%=getLongName('bp_pics','bp_pic_name')%>(*)</label></th><td><%= text_field 'bp_pic', 'bp_pic_name'  %></td>
 </tr>
@@ -85,6 +87,7 @@
 <th><label for="bp_pic_memo"><%=getLongName('bp_pics','memo')%></label></th><td><%= resizable_area 'bp_pic', 'memo'  %></td>
 </tr>
 </table>
+<% end %>
 
 <!--[eoform:bp_pic]-->
 <%= hidden_field 'bp_pic', 'lock_version' %>

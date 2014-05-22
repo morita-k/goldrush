@@ -1,7 +1,7 @@
 <% eval("@#{model_name} = contract_term") %>
 
 <!--[form:contract_term]-->
-<table class="input_table">
+<table class="form_table">
 <tr>
 <th><label for="<%=model_name%>_term_type"><%=getLongName('contract_terms','term_type')%></label></th>
 <td><%= select model_name, 'term_type', getTypes('term_type')  %></td>
