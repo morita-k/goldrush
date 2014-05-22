@@ -48,12 +48,18 @@
     <div class="navbar-header">
       <% if popup? %>
         <span class="navbar-brand"><%=image_tag('logo2.png', :size => "100x20") %></span>
-    <% else %>
+      <% else %>
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#global-manu-navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
         <%=link_to image_tag('logo2.png', :size => "100x20"), "/", :class => "navbar-brand" %>
-    <% end %>
+      <% end %>
     </div>
     <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse">
+    <div class="collapse navbar-collapse" id="global-manu-navbar-collapse">
       <% if logged_in? && !popup? %>
         <ul class="nav navbar-nav">
         <li class="dropdown">
