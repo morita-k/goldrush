@@ -118,7 +118,7 @@
     <% unless @photo_id %>
       <td><%= star_links(bp_pic) %> <%=link_to h(bp_pic.usefulname), '#', :onClick => "setBpPicToParentWindow(#{bp_pic.id},'#{bp_pic.usefulname}', '#{bp_pic.business_partner_name}');return false;" %></td>
   <% else %>
-      <td><%= star_links(bp_pic) %> <%=link_to bp_pic.usefulname, {:controller => :bp_pic, :action => :update_photo, :id => bp_pic.id, :photo_id => @photo_id, :popup => 1} %></td>
+    <td><%= star_links(bp_pic) %> <%=link_to bp_pic.usefulname, {:controller => :bp_pic, :action => :update_photo, :id => bp_pic.id, :photo_id => @photo_id, :popup => 1, :back_to => back_to} %></td>
   <% end %>
   <% else %>
       <td><%= check_box_tag 'ids[]', bp_pic.id, false %></td>

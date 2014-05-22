@@ -342,7 +342,7 @@ class BpPicController < ApplicationController
     flash_notice = 'Photo was successfully updated.'
 
     flash.now[:notice] = flash_notice
-    redirect_to :controller => :photos, :action => :list
+    redirect_to back_to
   end
 
   def update_photo_unlink
@@ -363,7 +363,6 @@ private
   end
   
   def space_trim(bp_name)
-    bp_name_list = bp_name.split(/[\s"　"]/)
     trimed_bp_name = ""
     bp_name_list.each do |bp_name_element|
       trimed_bp_name << bp_name_element

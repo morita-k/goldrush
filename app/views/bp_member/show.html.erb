@@ -12,8 +12,8 @@
 <div class="submit_box">
   <%= back_to_link '編集', {:action => 'edit', :id => @bp_member, :human_resource_id => @human_resource}, :class => "btn btn-primary btn-medium" %>
 <% if !@bp_member.import_mail_id.blank? %>
-  <%= link_to '解析元メールを見る', "#", :onclick => "disp_wide('#{url_for({:controller => 'import_mail', :action => 'show', :id => @bp_member.import_mail_id, :popup => 1})}');return false;", :class => "btn btn-primary btn-medium" %>
-  <%= link_to '解析テンプレートで再解析を行う', "#", :onclick => "disp_wide('#{url_for({:controller => 'analysis_template', :action => 'list', :mode => 'bp_member', :target_id => @bp_member.id, :import_mail_id => @bp_member.import_mail_id, :popup => 1})}');return false;", :class => "btn btn-primary btn-medium" %>
+  <%= link_to '解析元メールを見る', "#", :onclick => "disp_wide('#{url_for({:controller => 'import_mail', :action => 'show', :id => @bp_member.import_mail_id, :popup => 1})}');return false;", :class => "btn btn-info btn-medium" %>
+  <%= link_to '解析テンプレートで再解析を行う', "#", :onclick => "disp_wide('#{url_for({:controller => 'analysis_template', :action => 'list', :mode => 'bp_member', :target_id => @bp_member.id, :import_mail_id => @bp_member.import_mail_id, :popup => 1})}');return false;", :class => "btn btn-info btn-medium" %>
 <% end %>
 <%= link_or_back '戻る', :action => 'list' %>
 </div>
@@ -25,16 +25,21 @@
 <% end %>
 
 <%= form_tag({:controller => 'attachment_file', :action => 'create', :parent_table => 'bp_members', :parent_id => @bp_member, :back_to => request.env['REQUEST_URI']}, :multipart => true) do %>
-  <div>
+  <div class="submit_box">
   <table>
     <tr>
       <td rowspan=2>経歴書のアップロード </td>
-      <td><%= file_field_tag 'upfile', :size => 60 %><%= submit_tag "アップロードする" %></td>
+      <td><%= file_field_tag 'upfile', :size => 60 %><%= submit_tag "アップロードする", btn_primary %></td>
     </tr>
   </table>
   </div>
 <% end %>
 
+<%= accordion_around_h2("コメント一覧", "6", @remarks.empty?) do %>
 <%= render :partial => 'remarks/list', :locals => {:remark_key => "bp_members", :remark_target_id => @bp_member} %>
+<% end %>
 
+<div class="submit_box">
+  <%= back_to_link 'コメント追加', {:controller => :remarks, :action => :new, :remark_target_id => @bp_member, :remark_key => "bp_members"}, {:class => "btn btn-info btn-medium"} %>
+</div>
 

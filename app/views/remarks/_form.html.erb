@@ -1,3 +1,4 @@
+<div class="submit_box">
 <%= form_for(@remark) do |f| %>
 <%= hidden_field_tag 'back_to', params[:back_to] %>
 <%= f.hidden_field :lock_version %>
@@ -35,7 +36,7 @@
   <%= hidden_field 'remark', 'remark_key' %>
 
 </table>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+<%= submit_tag "　登録　",  btn_primary %>
+<%= link_or_back '戻る', remarks_path %>
 <% end %>
+</div>

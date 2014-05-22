@@ -8,6 +8,7 @@ GoldRush::Application.routes.draw do
     collection do
       get 'list'
       get 'upload'
+      get 'rotate'
       get 'get_image'
     end
   end
