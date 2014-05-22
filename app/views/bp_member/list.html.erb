@@ -53,7 +53,7 @@
 
 <div class="submit_box">
 <% if popup? %>
-  <%= back_to_link_popup_mode (getLongName('table_name','bp_members')+'の新規作成'), {:action => 'new', :popup => 1}, :class => "btn btn-primary btn-medium" %>
+  <%= back_to_link_popup_mode (getLongName('table_name','bp_members')+'の新規作成'), {:action => 'new', :popup => 1}, :class => "btn btn-primary btn-medium glyphicon glyphicon-star" %>
 <% else %>
   <%= back_to_link (getLongName('table_name','bp_members')+'の新規作成'), {:action => 'new'}, :class => "btn btn-primary btn-medium" %>
 <% end %>

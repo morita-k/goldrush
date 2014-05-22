@@ -57,10 +57,6 @@ module ApplicationHelper
     url_for :controller => :bp_pic, :action => :list, :photoid => photoid
   end
 
-  def url_for_delete_photo(photoid)
-    url_for :controller => :photos, :action => :delete, :photoid => photoid
-  end
-
   def url_for_rotate_photo(photoid, left_rotate, target_page, bp_pic_id = nil)
     url_for :controller => :photos, :action => :rotate, :photoid => photoid , :left_rotate => left_rotate, :target_page => target_page, :bp_pic_id => bp_pic_id
   end
@@ -460,14 +456,13 @@ EOS
     end
     str = ""
     str << "<#{tag_option_arr.join(' ')}>\n"
-    first = true
     array.each_index do |idx|
       if idx % col == 0
         str << '<tr style="text-align: center;">'
         col.times do |j|
           str << '<td>'
           if x = array[idx+j]
-            str << block.call(x, idx)
+            str << capture do block.call(x, idx) end
           end
           str << '</td>'
         end
@@ -475,6 +470,7 @@ EOS
       end
     end
     str << '</table>'
+    raw str
   end
 
   def popup?
@@ -534,6 +530,12 @@ EOS
   def disp_wide_link(text, url_option, option={})
     url = url_for(url_option)
     option[:onclick] = "disp_wide('#{url}');return false"
+    link_to text, "#", option
+  end
+  
+  def disp_photo_link(text, url_option, option={})
+    url = url_for(url_option)
+    option[:onclick] = "disp_photo('#{url}');return false"
     link_to text, "#", option
   end
   

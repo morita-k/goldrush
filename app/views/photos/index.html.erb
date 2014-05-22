@@ -1,4 +1,16 @@
 <h1>名刺取込一覧</h1>
-<div style="text-align:center;">
-<%= (square_table @photos, :col => 4 do |photo| get_photo_thumbnail(photo) end).html_safe %>
-</div>
+  <%= square_table @photos, {:col => 4}, {:class => "photo_table"} do |photo| %>
+    <div class="panel panel-default">
+    <div class="panel-body">
+      <i class="glyphicon glyphicon-user"></i> <%= photo.photo_sender %> <%= _timetoddmmhhmm(photo.created_at) %>
+      <%= link_to image_tag(url_for(:action => 'get_image', :id => photo, :tn => 1), :width => 220), {:controller => :photos, :action => :preview, :id => photo, :popup => 1}, :target => "_blank"  %>
+    </div>
+    <div class="btn-group btn-group-xs" style="margin-bottom:10px">
+      <%= back_to_link((content_tag :i, "", :class => "glyphicon glyphicon-plus"), url_for_business_partner(photo.id), :onclick => "disp_photo('#{url_for_photo_preview_popup(photo.id)}');", :class => "btn btn-primary btn-small", :title => "取引先担当新規作成") %>
+      <%= back_to_link((content_tag :i, "", :class => "glyphicon glyphicon-edit"), url_for_bp_pic(photo.id), :onclick => "disp_photo('#{url_for_photo_preview_popup(photo.id)}');", :class => "btn btn-primary btn-small", :title => "取引先担当に写真追加") %>
+      <%= back_to_link((content_tag :i, "", :class => "glyphicon glyphicon-trash"), {:controller => :photos, :action => :delete, :id => photo.id}, :confirm => "削除しますか？", :class => "btn btn-primary btn-small", :title => "写真削除") %>
+      <%= back_to_link((content_tag :i, "", :class => "glyphicon glyphicon-circle-arrow-left"), url_for_rotate_photo(photo.id, true, 'photo'), :class => "btn btn-primary btn-small", :title => "写真を右転する") %>
+      <%= back_to_link((content_tag :i, "", :class => "glyphicon glyphicon-circle-arrow-right"), url_for_rotate_photo(photo.id, false, 'photo'), :class => "btn btn-primary btn-small", :title => "写真を右転する") %>
+    </div>
+    </div>
+  <% end %>

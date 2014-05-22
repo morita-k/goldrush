@@ -7,7 +7,13 @@ class PhotosController < ApplicationController
   end
 
   def get_image
-    filepath = params[:filepath]
+    photo = Photo.find(params[:id])
+    if params[:tn]
+      filepath = photo.thumbnail_path
+    else
+      filepath = photo.file_path
+    end
+
     File.open(filepath, 'rb') do |f|
       send_data f.read, :type => "image/jpg", :disposition => "inline"
     end
@@ -18,25 +24,19 @@ class PhotosController < ApplicationController
   end
 
   def delete
-    photo_id = params[:photoid]
+    photo_id = params[:id]
 
     Photo.delete_photo(photo_id)
 
-    redirect_to :controller => :photos, :action => :index
+    redirect_to back_to || {:controller => :photos, :action => :index}
   end
 
   def rotate
     photo_id = params[:photoid]
     left_rotate = params[:left_rotate]
-    target_page = params[:target_page]
 
     Photo.rotate_photo(photo_id, left_rotate)
 
-    if target_page == 'photo'
-      redirect_to :controller => :photos, :action => :index
-    else
-      bp_pic_id = params[:bp_pic_id]
-      redirect_to :controller => :bp_pic, :action => :show, :id => bp_pic_id
-    end
+    redirect_to back_to
   end
 end
