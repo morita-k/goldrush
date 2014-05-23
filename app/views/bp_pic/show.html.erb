@@ -146,7 +146,7 @@
   <%= render :partial => 'remarks/list', :locals => {:remark_key => "bp_pics", :remark_target_id => @bp_pic} %>
 <% end %>
 <div class="submit_box">
-  <%= back_to_link 'コメント追加', {:controller => :remarks, :action => :new, :remark_target_id => @bp_pic, :remark_key => "bp_pic"}, {:class => "btn btn-info btn-medium"} %>
+  <%= back_to_link 'コメント追加', {:controller => :remarks, :action => :new, :remark_target_id => @bp_pic, :remark_key => "bp_pics"}, {:class => "btn btn-info btn-medium"} %>
 </div>
 
 <%= accordion_around_h2("送信メール一覧", "4", @delivery_mails.empty?) do %>
