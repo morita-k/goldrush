@@ -11,16 +11,7 @@ describe DailyReportController do
 
   describe '順次テスト' do
 
-    before(:all) do
-      self.use_transactional_fixtures = false
-    end
-
-    after(:all) do
-      self.use_transactional_fixtures = true
-    end
-
     describe '日報' do
-
       before(:each) do
         get :index, :date => '2014-01'
       end
