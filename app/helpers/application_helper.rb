@@ -124,7 +124,7 @@ module ApplicationHelper
     if time.blank?
       ""
     elsif [ActiveSupport::TimeWithZone, Time, Date].include?(time.class)
-      t = time.to_time.getlocal.strftime("%Y/%m/%d %H:%M:%S")
+      time.to_time.getlocal.strftime("%Y/%m/%d %H:%M:%S")
     else
       time
     end
@@ -638,4 +638,9 @@ EOS
     end
     opt
   end
+
+  def show_stars(rate)
+    raw ("<i class='glyphicon glyphicon-star stars-active'></i>"  * rate + "<i class='glyphicon glyphicon-star stars-inactive'></i>" * (5 - rate))
+  end
+
 end
