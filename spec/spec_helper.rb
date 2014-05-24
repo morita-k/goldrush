@@ -37,8 +37,9 @@ RSpec.configure do |config|
   config.infer_base_class_for_anonymous_controllers = false
 
   config.before(:all) do
-    FactoryGirl.reload
+    DatabaseCleaner.clean
     DatabaseCleaner.start
+    FactoryGirl.reload
   end
 
   config.after(:all) do
