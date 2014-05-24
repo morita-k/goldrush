@@ -2,7 +2,7 @@
 <%= form_tag :action => 'update', :id => @bp_member, :human_resource_id => @human_resource do %>
   <%= render :partial => 'form' %>
   <div class="submit_box">
-    <%= submit_tag '更新' %>
+    <%= submit_tag '更新', btn_primary %>
     <%= link_or_back '戻る', :action => 'list' %>
 </div>
 <% end %>

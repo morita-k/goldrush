@@ -2,14 +2,14 @@
 
 <%= form_tag :action => 'create' do %>
   <%= render :partial => 'form' %>
-  <%= submit_tag "登録" %>
+  <div class="submit_box">
+    <%= submit_tag '登録', :class => "btn btn-primary btn-medium" %>
+    <% if params[:import_mail_id] && params[:template_id] %>
+      <%= link_or_back '解析テンプレート選択に戻る', {:controller => 'analysis_template', :action => 'list'} %>
+    <% else %>
+      <%= link_or_back '戻る', {:action => 'list',:popup => params[:popup]} %>
+    <% end %>
+  </div>
   <%= popup_hidden_field %>
 <% end %>
 
-<% if params[:import_mail_id] && params[:template_id] %>
-  <%= link_or_back '解析テンプレート選択に戻る', :controller => 'analysis_template', :action => 'list' %>
-<% elsif params[:popup] %>
-  <%= link_or_back '戻る', :action => 'list',:popup => 1 %>
-<% else %>
-  <%= link_or_back '戻る', :action => 'list' %>
-<% end %>
