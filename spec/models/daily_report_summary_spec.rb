@@ -12,11 +12,11 @@ describe DailyReportSummary do
       result_daily_report_summary = DailyReportSummary.all
       expect(result_daily_report_summary).to have(1).items
       expect(result_daily_report_summary[0].id).to eq(1)
-      expect(result_daily_report_summary[0].succeeds).to eq(1)
-      expect(result_daily_report_summary[0].gross_profits).to eq(1)
-      expect(result_daily_report_summary[0].interviews).to eq(1)
-      expect(result_daily_report_summary[0].new_meetings).to eq(1)
-      expect(result_daily_report_summary[0].exist_meetings).to eq(1)
+      expect(result_daily_report_summary[0].succeed_count).to eq(1)
+      expect(result_daily_report_summary[0].gross_profit_count).to eq(1)
+      expect(result_daily_report_summary[0].interview_count).to eq(1)
+      expect(result_daily_report_summary[0].new_meeting_count).to eq(1)
+      expect(result_daily_report_summary[0].exist_meeting_count).to eq(1)
     end
 
     it '日報が入力されていないと更新されない' do
@@ -57,11 +57,11 @@ describe DailyReportSummary do
         result_daily_report = DailyReportSummary.get_summary_report(daily_report_summary, '2014-01')
 
         expect(result_daily_report.all).to have(1).items
-        expect(result_daily_report[0].succeeds).to eq(93)
-        expect(result_daily_report[0].gross_profits).to eq(93)
-        expect(result_daily_report[0].interviews).to eq(93)
-        expect(result_daily_report[0].new_meetings).to eq(93)
-        expect(result_daily_report[0].exist_meetings).to eq(93)
+        expect(result_daily_report[0].succeed_count).to eq(93)
+        expect(result_daily_report[0].gross_profit_count).to eq(93)
+        expect(result_daily_report[0].interview_count).to eq(93)
+        expect(result_daily_report[0].new_meeting_count).to eq(93)
+        expect(result_daily_report[0].exist_meeting_count).to eq(93)
       end
 
       it '集計期間:年次, 対象:なし, 集計方法:個別' do
@@ -73,17 +73,17 @@ describe DailyReportSummary do
         result_daily_report = DailyReportSummary.get_summary_report(daily_report_summary, '2014-01')
 
         expect(result_daily_report.all).to have(2).items
-        expect(result_daily_report[0].succeeds).to eq(31)
-        expect(result_daily_report[0].gross_profits).to eq(31)
-        expect(result_daily_report[0].interviews).to eq(31)
-        expect(result_daily_report[0].new_meetings).to eq(31)
-        expect(result_daily_report[0].exist_meetings).to eq(31)
+        expect(result_daily_report[0].succeed_count).to eq(31)
+        expect(result_daily_report[0].gross_profit_count).to eq(31)
+        expect(result_daily_report[0].interview_count).to eq(31)
+        expect(result_daily_report[0].new_meeting_count).to eq(31)
+        expect(result_daily_report[0].exist_meeting_count).to eq(31)
         expect(result_daily_report[0].user_id).to eq(1)
-        expect(result_daily_report[1].succeeds).to eq(62)
-        expect(result_daily_report[1].gross_profits).to eq(62)
-        expect(result_daily_report[1].interviews).to eq(62)
-        expect(result_daily_report[1].new_meetings).to eq(62)
-        expect(result_daily_report[1].exist_meetings).to eq(62)
+        expect(result_daily_report[1].succeed_count).to eq(62)
+        expect(result_daily_report[1].gross_profit_count).to eq(62)
+        expect(result_daily_report[1].interview_count).to eq(62)
+        expect(result_daily_report[1].new_meeting_count).to eq(62)
+        expect(result_daily_report[1].exist_meeting_count).to eq(62)
         expect(result_daily_report[1].user_id).to eq(2)
       end
 
@@ -96,11 +96,11 @@ describe DailyReportSummary do
         result_daily_report = DailyReportSummary.get_summary_report(daily_report_summary, '2014-01')
 
         expect(result_daily_report.all).to have(1).items
-        expect(result_daily_report[0].succeeds).to eq(31)
-        expect(result_daily_report[0].gross_profits).to eq(31)
-        expect(result_daily_report[0].interviews).to eq(31)
-        expect(result_daily_report[0].new_meetings).to eq(31)
-        expect(result_daily_report[0].exist_meetings).to eq(31)
+        expect(result_daily_report[0].succeed_count).to eq(31)
+        expect(result_daily_report[0].gross_profit_count).to eq(31)
+        expect(result_daily_report[0].interview_count).to eq(31)
+        expect(result_daily_report[0].new_meeting_count).to eq(31)
+        expect(result_daily_report[0].exist_meeting_count).to eq(31)
       end
 
       it '集計期間:年次, 対象:1, 集計方法:個別' do
@@ -112,11 +112,11 @@ describe DailyReportSummary do
         result_daily_report = DailyReportSummary.get_summary_report(daily_report_summary, '2014-01')
 
         expect(result_daily_report.all).to have(1).items
-        expect(result_daily_report[0].succeeds).to eq(31)
-        expect(result_daily_report[0].gross_profits).to eq(31)
-        expect(result_daily_report[0].interviews).to eq(31)
-        expect(result_daily_report[0].new_meetings).to eq(31)
-        expect(result_daily_report[0].exist_meetings).to eq(31)
+        expect(result_daily_report[0].succeed_count).to eq(31)
+        expect(result_daily_report[0].gross_profit_count).to eq(31)
+        expect(result_daily_report[0].interview_count).to eq(31)
+        expect(result_daily_report[0].new_meeting_count).to eq(31)
+        expect(result_daily_report[0].exist_meeting_count).to eq(31)
         expect(result_daily_report[0].user_id).to eq(1)
       end
 
@@ -129,16 +129,16 @@ describe DailyReportSummary do
         result_daily_report = DailyReportSummary.get_summary_report(daily_report_summary, '2014-01')
 
         expect(result_daily_report.all).to have(2).items
-        expect(result_daily_report[0].succeeds).to eq(62)
-        expect(result_daily_report[0].gross_profits).to eq(62)
-        expect(result_daily_report[0].interviews).to eq(62)
-        expect(result_daily_report[0].new_meetings).to eq(62)
-        expect(result_daily_report[0].exist_meetings).to eq(62)
-        expect(result_daily_report[1].succeeds).to eq(31)
-        expect(result_daily_report[1].gross_profits).to eq(31)
-        expect(result_daily_report[1].interviews).to eq(31)
-        expect(result_daily_report[1].new_meetings).to eq(31)
-        expect(result_daily_report[1].exist_meetings).to eq(31)
+        expect(result_daily_report[0].succeed_count).to eq(62)
+        expect(result_daily_report[0].gross_profit_count).to eq(62)
+        expect(result_daily_report[0].interview_count).to eq(62)
+        expect(result_daily_report[0].new_meeting_count).to eq(62)
+        expect(result_daily_report[0].exist_meeting_count).to eq(62)
+        expect(result_daily_report[1].succeed_count).to eq(31)
+        expect(result_daily_report[1].gross_profit_count).to eq(31)
+        expect(result_daily_report[1].interview_count).to eq(31)
+        expect(result_daily_report[1].new_meeting_count).to eq(31)
+        expect(result_daily_report[1].exist_meeting_count).to eq(31)
       end
 
       it '集計期間:月次, 対象:なし, 集計方法:個別' do
@@ -150,23 +150,23 @@ describe DailyReportSummary do
         result_daily_report = DailyReportSummary.get_summary_report(daily_report_summary, '2014-01')
 
         expect(result_daily_report.all).to have(3).items
-        expect(result_daily_report[0].succeeds).to eq(31)
-        expect(result_daily_report[0].gross_profits).to eq(31)
-        expect(result_daily_report[0].interviews).to eq(31)
-        expect(result_daily_report[0].new_meetings).to eq(31)
-        expect(result_daily_report[0].exist_meetings).to eq(31)
+        expect(result_daily_report[0].succeed_count).to eq(31)
+        expect(result_daily_report[0].gross_profit_count).to eq(31)
+        expect(result_daily_report[0].interview_count).to eq(31)
+        expect(result_daily_report[0].new_meeting_count).to eq(31)
+        expect(result_daily_report[0].exist_meeting_count).to eq(31)
         expect(result_daily_report[0].user_id).to eq(1)
-        expect(result_daily_report[1].succeeds).to eq(31)
-        expect(result_daily_report[1].gross_profits).to eq(31)
-        expect(result_daily_report[1].interviews).to eq(31)
-        expect(result_daily_report[1].new_meetings).to eq(31)
-        expect(result_daily_report[1].exist_meetings).to eq(31)
+        expect(result_daily_report[1].succeed_count).to eq(31)
+        expect(result_daily_report[1].gross_profit_count).to eq(31)
+        expect(result_daily_report[1].interview_count).to eq(31)
+        expect(result_daily_report[1].new_meeting_count).to eq(31)
+        expect(result_daily_report[1].exist_meeting_count).to eq(31)
         expect(result_daily_report[1].user_id).to eq(2)
-        expect(result_daily_report[2].succeeds).to eq(31)
-        expect(result_daily_report[2].gross_profits).to eq(31)
-        expect(result_daily_report[2].interviews).to eq(31)
-        expect(result_daily_report[2].new_meetings).to eq(31)
-        expect(result_daily_report[2].exist_meetings).to eq(31)
+        expect(result_daily_report[2].succeed_count).to eq(31)
+        expect(result_daily_report[2].gross_profit_count).to eq(31)
+        expect(result_daily_report[2].interview_count).to eq(31)
+        expect(result_daily_report[2].new_meeting_count).to eq(31)
+        expect(result_daily_report[2].exist_meeting_count).to eq(31)
         expect(result_daily_report[2].user_id).to eq(2)
       end
 
@@ -179,11 +179,11 @@ describe DailyReportSummary do
         result_daily_report = DailyReportSummary.get_summary_report(daily_report_summary, '2014-01')
 
         expect(result_daily_report.all).to have(1).items
-        expect(result_daily_report[0].succeeds).to eq(31)
-        expect(result_daily_report[0].gross_profits).to eq(31)
-        expect(result_daily_report[0].interviews).to eq(31)
-        expect(result_daily_report[0].new_meetings).to eq(31)
-        expect(result_daily_report[0].exist_meetings).to eq(31)
+        expect(result_daily_report[0].succeed_count).to eq(31)
+        expect(result_daily_report[0].gross_profit_count).to eq(31)
+        expect(result_daily_report[0].interview_count).to eq(31)
+        expect(result_daily_report[0].new_meeting_count).to eq(31)
+        expect(result_daily_report[0].exist_meeting_count).to eq(31)
       end
 
       it '集計期間:月次, 対象:1, 集計方法:個別' do
@@ -195,11 +195,11 @@ describe DailyReportSummary do
         result_daily_report = DailyReportSummary.get_summary_report(daily_report_summary, '2014-01')
 
         expect(result_daily_report.all).to have(1).items
-        expect(result_daily_report[0].succeeds).to eq(31)
-        expect(result_daily_report[0].gross_profits).to eq(31)
-        expect(result_daily_report[0].interviews).to eq(31)
-        expect(result_daily_report[0].new_meetings).to eq(31)
-        expect(result_daily_report[0].exist_meetings).to eq(31)
+        expect(result_daily_report[0].succeed_count).to eq(31)
+        expect(result_daily_report[0].gross_profit_count).to eq(31)
+        expect(result_daily_report[0].interview_count).to eq(31)
+        expect(result_daily_report[0].new_meeting_count).to eq(31)
+        expect(result_daily_report[0].exist_meeting_count).to eq(31)
         expect(result_daily_report[0].user_id).to eq(1)
       end
     end

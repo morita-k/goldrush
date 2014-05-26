@@ -5,7 +5,7 @@ class DailyReport < ActiveRecord::Base
 
   belongs_to :user
 
-  SELECT_SUMMARY_COLUMNS = "SUM(succeeds) AS succeeds, SUM(gross_profits) AS gross_profits, SUM(interviews) AS interviews, SUM(new_meetings) AS new_meetings, SUM(exist_meetings) AS exist_meetings, SUM(send_delivery_mails) AS send_delivery_mails "
+  SELECT_SUMMARY_COLUMNS = "SUM(succeed_count) AS succeed_count, SUM(gross_profit_count) AS gross_profit_count, SUM(interview_count) AS interview_count, SUM(new_meeting_count) AS new_meeting_count, SUM(exist_meeting_count) AS exist_meeting_count, SUM(send_delivery_mail_count) AS send_delivery_mail_count "
 
   def self.get_daily_report(target_date, target_user_id)
     target_daily_reports = self.where("user_id = :target_id AND report_date LIKE :target_date", {:target_id => "#{target_user_id}",:target_date => "#{target_date}%"})
@@ -36,11 +36,11 @@ class DailyReport < ActiveRecord::Base
   def self.update_daily_report(target_data, target_user, delivery_mails)
     target_data.each do |key, value|
       target_date = value[:report_date]
-      target_succeeds = value[:succeeds]
-      target_gross_profits = value[:gross_profits]
-      target_interviews = value[:interviews]
-      target_new_meetings = value[:new_meetings]
-      target_exist_meetings = value[:exist_meetings]
+      target_succeed_count = value[:succeed_count]
+      target_gross_profit_count = value[:gross_profit_count]
+      target_interview_count = value[:interview_count]
+      target_new_meeting_count = value[:new_meeting_count]
+      target_exist_meeting_count = value[:exist_meeting_count]
 
       if value[:id].nil? || value[:id] == ""
         target_daily_report = DailyReport.new
@@ -52,24 +52,24 @@ class DailyReport < ActiveRecord::Base
       end
 
       unless delivery_mails.nil?
-        target_daily_report.send_delivery_mails = delivery_mails.select{|x| /^#{target_date}/ =~ x['send_end_at'].to_s && x['mail_from'] == target_user.email}.size
+        target_daily_report.send_delivery_mail_count = delivery_mails.select{|x| /^#{target_date}/ =~ x['send_end_at'].to_s && x['mail_from'] == target_user.email}.size
       end
 
-      if  (target_succeeds.nil? || target_succeeds.size == 0) &&
-          (target_gross_profits.nil? || target_gross_profits.size == 0) &&
-          (target_interviews.nil? || target_interviews.size == 0) &&
-          (target_new_meetings.nil? || target_new_meetings.size == 0) &&
-          (target_exist_meetings.nil? || target_exist_meetings.size == 0)
+      if  (target_succeed_count.nil? || target_succeed_count.size == 0) &&
+          (target_gross_profit_count.nil? || target_gross_profit_count.size == 0) &&
+          (target_interview_count.nil? || target_interview_count.size == 0) &&
+          (target_new_meeting_count.nil? || target_new_meeting_count.size == 0) &&
+          (target_exist_meeting_count.nil? || target_exist_meeting_count.size == 0)
 
         target_daily_report.save!
         next
       end
 
-      target_daily_report.succeeds = target_succeeds.blank? ? 0 : target_succeeds
-      target_daily_report.gross_profits = target_gross_profits.blank? ? 0 : target_gross_profits
-      target_daily_report.interviews = target_interviews.blank? ? 0 : target_interviews
-      target_daily_report.new_meetings = target_new_meetings.blank? ? 0 : target_new_meetings
-      target_daily_report.exist_meetings = target_exist_meetings.blank? ? 0 : target_exist_meetings
+      target_daily_report.succeed_count = target_succeed_count.blank? ? 0 : target_succeed_count
+      target_daily_report.gross_profit_count = target_gross_profit_count.blank? ? 0 : target_gross_profit_count
+      target_daily_report.interview_count = target_interview_count.blank? ? 0 : target_interview_count
+      target_daily_report.new_meeting_count = target_new_meeting_count.blank? ? 0 : target_new_meeting_count
+      target_daily_report.exist_meeting_count = target_exist_meeting_count.blank? ? 0 : target_exist_meeting_count
       target_daily_report.contact_matter = value[:contact_matter]
       target_daily_report.daily_report_input_type = 'existinput'
 
