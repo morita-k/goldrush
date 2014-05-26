@@ -4,7 +4,7 @@ class DailyReportSummary < ActiveRecord::Base
 
   belongs_to :user
 
-  SELECT_SUMMARY_COLUMNS = "SUM(succeeds) AS succeeds, SUM(gross_profits) AS gross_profits, SUM(interviews) AS interviews, SUM(new_meetings) AS new_meetings, SUM(exist_meetings) AS exist_meetings, SUM(send_delivery_mails) AS send_delivery_mails "
+  SELECT_SUMMARY_COLUMNS = "SUM(succeed_count) AS succeed_count, SUM(gross_profit_count) AS gross_profit_count, SUM(interview_count) AS interview_count, SUM(new_meeting_count) AS new_meeting_count, SUM(exist_meeting_count) AS exist_meeting_count, SUM(send_delivery_mail_count) AS send_delivery_mail_count "
 
   def self.update_daily_report_summary(target_date, target_user_id)
     target_daily_reports = DailyReport.where("user_id = :target_id AND report_date LIKE :target_date", {:target_id => "#{target_user_id}",:target_date => "#{target_date}%"})
@@ -21,28 +21,28 @@ class DailyReportSummary < ActiveRecord::Base
         target_daily_report_summary.report_date = target_date + '-01'
       end
 
-      summary_succeeds = 0
-      summary_gross_profits = 0
-      summary_interviews = 0
-      summary_new_meetings = 0
-      summary_exist_meetings = 0
-      summary_send_delivery_mails = 0
+      summary_succeed_count = 0
+      summary_gross_profit_count = 0
+      summary_interview_count = 0
+      summary_new_meeting_count = 0
+      summary_exist_meeting_count = 0
+      summary_send_delivery_mail_count = 0
 
       target_daily_reports.each do |target_daily_report|
-        summary_succeeds += target_daily_report.succeeds
-        summary_gross_profits += target_daily_report.gross_profits
-        summary_interviews += target_daily_report.interviews
-        summary_new_meetings += target_daily_report.new_meetings
-        summary_exist_meetings += target_daily_report.exist_meetings
-        summary_send_delivery_mails += target_daily_report.send_delivery_mails
+        summary_succeed_count += target_daily_report.succeed_count
+        summary_gross_profit_count += target_daily_report.gross_profit_count
+        summary_interview_count += target_daily_report.interview_count
+        summary_new_meeting_count += target_daily_report.new_meeting_count
+        summary_exist_meeting_count += target_daily_report.exist_meeting_count
+        summary_send_delivery_mail_count += target_daily_report.send_delivery_mail_count
       end
 
-      target_daily_report_summary.succeeds = summary_succeeds
-      target_daily_report_summary.gross_profits = summary_gross_profits
-      target_daily_report_summary.interviews = summary_interviews
-      target_daily_report_summary.new_meetings = summary_new_meetings
-      target_daily_report_summary.exist_meetings = summary_exist_meetings
-      target_daily_report_summary.send_delivery_mails = summary_send_delivery_mails
+      target_daily_report_summary.succeed_count = summary_succeed_count
+      target_daily_report_summary.gross_profit_count = summary_gross_profit_count
+      target_daily_report_summary.interview_count = summary_interview_count
+      target_daily_report_summary.new_meeting_count = summary_new_meeting_count
+      target_daily_report_summary.exist_meeting_count = summary_exist_meeting_count
+      target_daily_report_summary.send_delivery_mail_count = summary_send_delivery_mail_count
 
       target_daily_report_summary.save!
     end
@@ -149,19 +149,19 @@ class DailyReportSummary < ActiveRecord::Base
 #{target_user.employee.employee_name}の日報更新をお知らせします。
 
 成約数
-#{target_daily_report_summary.succeeds}
+#{target_daily_report_summary.succeed_count}
 
 粗利（単位：万）
-#{target_daily_report_summary.gross_profits}
+#{target_daily_report_summary.gross_profit_count}
 
 面談数
-#{target_daily_report_summary.interviews}
+#{target_daily_report_summary.interview_count}
 
 新規会合
-#{target_daily_report_summary.new_meetings}
+#{target_daily_report_summary.new_meeting_count}
 
 既存会合
-#{target_daily_report_summary.exist_meetings}
+#{target_daily_report_summary.exist_meeting_count}
 
 詳細は以下のURLから確認できます。
 https://#{domain_name}/daily_report/summary?date=#{target_date}&summary_method_flg=individual&summary_target_flg%5B%5D=#{target_user.id}&summary_term_flg=day

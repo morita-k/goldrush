@@ -2,12 +2,12 @@
 FactoryGirl.define do
 
   factory :DailyReportSummary do
-    succeeds 31
-    gross_profits 31
-    interviews 31
-    new_meetings 31
-    exist_meetings 31
-    send_delivery_mails 31
+    succeed_count 31
+    gross_profit_count 31
+    interview_count 31
+    new_meeting_count 31
+    exist_meeting_count 31
+    send_delivery_mail_count 31
     report_date Date.new(2014, 1, 1)
 
     trait :test001 do
