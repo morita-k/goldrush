@@ -1,12 +1,8 @@
-<%= accordion_around(getLongName('table_name','analysis_templates')+"詳細", "") do %>
+<%= accordion_around(@analysis_template.analysis_template_type_name+"用"+getLongName('table_name','analysis_templates')+"詳細", "") do %>
 <table class="show_table">
 <tr>
   <th><%= getLongName('analysis_templates', 'analysis_template_name') %></th>
   <td><%=h @analysis_template.analysis_template_name %></td>
-</tr>
-<tr>
-  <th><%= getLongName('analysis_templates', 'analysis_template_type') %></th>
-  <td><%=h @analysis_template.analysis_template_type_name %></td>
 </tr>
 <tr>
   <th><%= getLongName('business_partners', 'business_partner_name') %></th>

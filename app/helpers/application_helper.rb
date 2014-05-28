@@ -61,6 +61,10 @@ module ApplicationHelper
     url_for :controller => :business_partner, :action => :new, :photoid => photoid
   end
 
+  def url_for_business_partner_popup
+    url_for :controller => :business_partner, :action => :list, :popup => 1
+  end
+
   def url_for_bp_pic(photoid)
     url_for :controller => :bp_pic, :action => :list, :photoid => photoid
   end
