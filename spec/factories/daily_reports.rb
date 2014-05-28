@@ -14,12 +14,12 @@ FactoryGirl.define do
   end
 
   factory :DailyReport do
-    succeeds 1
-    gross_profits 1
-    interviews 1
-    new_meetings 1
-    exist_meetings 1
-    send_delivery_mails 1
+    succeed_count 1
+    gross_profit_count 1
+    interview_count 1
+    new_meeting_count 1
+    exist_meeting_count 1
+    send_delivery_mail_count 1
     contact_matter '連絡事項'
     report_date Date.new(2014, 1, 1)
     daily_report_input_type 'notinput'
