@@ -79,13 +79,13 @@ class BpPic < ActiveRecord::Base
 
   #転職元を検索
   def former_bp_pic
-    BpPic.where(:change_to_bp_pic_id => id, :deleted => 0).first
+    BpPic.where(:change_to_bp_pic_id => id, :deleted => 0).first if id
   end
 
   def BpPic.update_changed(new_id, old_id)
     former_bp_pic = BpPic.find(old_id)
     former_bp_pic.change_to_bp_pic_id = new_id
-    former_bp_pic.working_status_type = "changed"
+    former_bp_pic.working_status_type = "retired"
     former_bp_pic.save!
   end
 

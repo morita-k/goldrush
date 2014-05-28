@@ -24,6 +24,14 @@ module ApplicationHelper
     url_for :controller => :bp_pic, :action => :list, :popup =>1, :callback => callback
   end
 
+  def url_for_bp_pic_by_id_popup(id, callback = :setBpPic)
+    url_for :controller => :bp_pic, :action => :list, :id => id, :popup =>1, :callback => callback
+  end
+
+  def url_for_bp_pic_by_bp_pic_name_popup(bp_pic_name, callback = :setBpPic)
+    url_for :controller => :bp_pic, :action => :list, :bp_pic_name => bp_pic_name, :search_button => 1, :popup =>1, :callback => callback
+  end
+
   def url_for_mail_template_popup(callback = :setMailTemplate)
     url_for :controller => :mail_templates, :action => :index, :popup =>1, :callback => callback
   end
