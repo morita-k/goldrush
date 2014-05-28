@@ -13,7 +13,7 @@
     </div>
   <% end %>
 
-<%= disp_wide_link "テンプレートからメールを作成する", :controller => :mail_templates, :action => :index, :popup => 1 %>
+  <%= disp_wide_link "テンプレートからメールを作成する", {:controller => :mail_templates, :action => :index, :popup => 1}, :class => "btn btn-info btn-medium" %>
 <table class="show_table" style="margin-top: 0em;">
 <%if  @delivery_mail.bp_pic_group %>
   <tr>

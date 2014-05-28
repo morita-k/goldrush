@@ -591,6 +591,10 @@ EOS
     accordion_around_in(2, title, suffix, hide, &block)
   end
 
+  def accordion_around_h3(title, suffix, hide=false, &block)
+    accordion_around_in(3, title, suffix, hide, &block)
+  end
+
   def accordion_around_in(level, title, suffix, hide, &block)
     res = raw <<EOS
 <div class="accordion" id="accordion#{suffix}">
