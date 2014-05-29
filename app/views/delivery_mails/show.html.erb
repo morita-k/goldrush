@@ -38,46 +38,11 @@
       <th>返信メール</th>
     <% end %>
   </tr>
-    <% @delivery_mail.delivery_mail_targets.each do |delivery_mail_target| %>
-      <tr id="table_header">
-        <td><%=
-          back_to_link delivery_mail_target.bp_pic.business_partner.business_partner_name,
-            :controller => :business_partner,
-            :action => :show,
-            :id => delivery_mail_target.bp_pic.business_partner_id
-        %></td>
-        <td><%=
-          back_to_link delivery_mail_target.bp_pic.usefulname,
-            :controller => :bp_pic,
-            :action => :show,
-            :id => delivery_mail_target.bp_pic_id
-        %></td>
-        <% if @delivery_mail.mail_status_type == 'unsend' %>
-          <td><%=
-            back_to_link "削除",
-              {:controller => :delivery_mail_targets,
-                :action => :destroy,
-                :id => delivery_mail_target.id,
-                :authenticity_token => form_authenticity_token},
-                :method => :delete, :confirm => "このレコードを削除します。よろしいですか？"
-          %></td>
-        <% else %>
-          <td>
-            <% if delivery_mail_target.get_import_mail_id != nil %>
-              <%=
-                back_to_link "詳細",
-                :controller => :import_mail,
-                :action => :show,
-                :id => delivery_mail_target.get_import_mail_id
-              %>
-            <% else %>
-              &nbsp;
-            <% end %>
-          </td>
-        <% end %>
-      </tr>
-    <% end %>
+  <%= render :partial => 'show_line' %>
 </table>
+<div class="submit_box" id="spinner">
+  <%= link_to 'もっと見る...', {:controller => :delivery_mails, :action => :show_all, :id => @delivery_mail}, :'data-type' => :html, :remote => true, :id => :show_all, :style=>"width: 100%; margin-top: -13px;", :class=> "btn btn-default" %>
+</div>
 
 <div class="submit_box">
 <% if @delivery_mail.unsend? %>
@@ -86,3 +51,37 @@
 <%= link_or_back '戻る', {:action => :index, :id => @delivery_mail.bp_pic_group_id} %>
 </div>
 
+<script type="text/javascript">
+<!--
+$(function() {
+  var spinner = null;
+  var target = document.getElementById('spinner');
+  $('#show_all').on('ajax:before', function(){
+      var opts = {
+          lines: 11, // The number of lines to draw
+          length: 4, // The length of each line
+          width: 3, // The line thickness
+          radius: 8, // The radius of the inner circle
+          corners: 1, // Corner roundness (0..1)
+          rotate: 0, // The rotation offset
+          direction: 1, // 1: clockwise, -1: counterclockwise
+          color: '#000', // #rgb or #rrggbb or array of colors
+          speed: 1, // Rounds per second
+          trail: 60, // Afterglow percentage
+          shadow: false, // Whether to render a shadow
+          hwaccel: false, // Whether to use hardware acceleration
+          className: 'spinner', // The CSS class to assign to the spinner
+          zIndex: 2e9, // The z-index (defaults to 2000000000)
+          top: '50%', // Top position relative to parent
+          left: '50%' // Left position relative to parent
+      };
+      spinner = new Spinner(opts).spin(target);
+  });
+  $('#show_all').on('ajax:success', function(data, res, xhr){
+      spinner.stop();
+      $('#delivery_mail_target').html(res);
+      $('#show_all').hide();
+  });
+});
+-->
+</script>

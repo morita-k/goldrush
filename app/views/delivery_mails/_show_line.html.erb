@@ -1,0 +1,39 @@
+<% @delivery_mail_targets.each do |delivery_mail_target| %>
+  <tr id="table_header">
+    <td><%=
+      back_to_link delivery_mail_target.bp_pic.business_partner.business_partner_name,
+        :controller => :business_partner,
+        :action => :show,
+        :id => delivery_mail_target.bp_pic.business_partner_id
+    %></td>
+    <td><%=
+      back_to_link delivery_mail_target.bp_pic.usefulname,
+        :controller => :bp_pic,
+        :action => :show,
+        :id => delivery_mail_target.bp_pic_id
+    %></td>
+    <% if @delivery_mail.mail_status_type == 'unsend' %>
+      <td><%=
+        back_to_link "削除",
+          {:controller => :delivery_mail_targets,
+            :action => :destroy,
+            :id => delivery_mail_target.id,
+            :authenticity_token => form_authenticity_token},
+            :method => :delete, :confirm => "このレコードを削除します。よろしいですか？"
+      %></td>
+    <% else %>
+      <td>
+        <% if delivery_mail_target.get_import_mail_id != nil %>
+          <%=
+            back_to_link "詳細",
+            :controller => :import_mail,
+            :action => :show,
+            :id => delivery_mail_target.get_import_mail_id
+          %>
+        <% else %>
+          &nbsp;
+        <% end %>
+      </td>
+    <% end %>
+  </tr>
+<% end %>
