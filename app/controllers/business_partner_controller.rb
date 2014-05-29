@@ -24,7 +24,6 @@ class BusinessPartnerController < ApplicationController
     param = []
     incl = []
     sql = "business_partners.deleted = 0"
-    order_by = ""
 
     if !(sales_code = session[:business_partner_search][:sales_code]).blank?
       sql += " and (business_partner_code = ? or sales_code = ?)"
@@ -41,19 +40,19 @@ class BusinessPartnerController < ApplicationController
   def make_conditions
     cond, incl = _make_conditions
     
-    if !(self_flg = session[:business_partner_search][:self_flg]).blank?
+    if !(session[:business_partner_search][:self_flg]).blank?
       cond[0] += " and self_flg = 1"
     end
 
-    if !(eu_flg = session[:business_partner_search][:eu_flg]).blank?
+    if !(session[:business_partner_search][:eu_flg]).blank?
       cond[0] += " and eu_flg = 1"
     end
 
-    if !(upper_flg = session[:business_partner_search][:upper_flg]).blank?
+    if !(session[:business_partner_search][:upper_flg]).blank?
       cond[0] += " and upper_flg = 1"
     end
 
-    if !(down_flg = session[:business_partner_search][:down_flg]).blank?
+    if !(session[:business_partner_search][:down_flg]).blank?
       cond[0] += " and down_flg = 1"
     end
 
@@ -133,12 +132,13 @@ class BusinessPartnerController < ApplicationController
     end
     
     @bp_pic = BpPic.new
+    @bp_pic.working_status_type = 'working'
     @bp_pic.business_partner = @business_partner
     if params[:import_mail_id]
       @business_partner.import_mail_id = params[:import_mail_id]
       @bp_pic.import_mail_id = params[:import_mail_id]
     end
-    @former_bp_pic = params[:former_bp_pic_id] ? BpPic.find(params[:former_bp_pic_id]) : @bp_pic.former_bp_pic
+    @former_bp_pic = !params[:former_bp_pic_id].blank? ? BpPic.find(params[:former_bp_pic_id]) : @bp_pic.former_bp_pic
     unless @former_bp_pic.blank? #転職の場合
       @bp_pic.bp_pic_name = @former_bp_pic.bp_pic_name
       @bp_pic.bp_pic_short_name = @former_bp_pic.bp_pic_short_name
@@ -152,7 +152,7 @@ class BusinessPartnerController < ApplicationController
     @bp_pic = BpPic.new(params[:bp_pic])
     ActiveRecord::Base.transaction do
       
-      if new_flg = params[:business_partner][:id].blank?
+      if params[:business_partner][:id].blank?
         @business_partner = BusinessPartner.new(params[:business_partner])
         @business_partner.basic_contract_first_party_status_type ||= 'none'
         @business_partner.basic_contract_second_party_status_type ||= 'none'

@@ -2,7 +2,7 @@
 <%= form_tag :action => 'create', :mode => params[:mode] do %>
 
 
-<%= accordion_around(getLongName('table_name','analysis_templates')+"新規作成", "") do %>
+<%= accordion_around(@analysis_template.analysis_template_type_name + "用" +  getLongName('table_name','analysis_templates')+"新規作成", "") do %>
   <!--[form:analysis_template]-->
     <%= render :partial => 'form' %>
   <!--[eoform:analysis_template]-->

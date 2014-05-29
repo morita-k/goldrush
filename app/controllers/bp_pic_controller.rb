@@ -160,6 +160,7 @@ class BpPicController < ApplicationController
 
   def new
     @bp_pic = BpPic.new
+    @bp_pic.working_status_type = 'working'
     business_partner = BusinessPartner.find(params[:business_partner_id])
     @bp_pic.business_partner = business_partner
   end
