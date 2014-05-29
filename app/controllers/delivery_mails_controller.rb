@@ -24,19 +24,33 @@ class DeliveryMailsController < ApplicationController
   # GET /delivery_mails/1.json
   def show
     @delivery_mail = DeliveryMail.find(params[:id]).get_informations
-    @delivery_mail.delivery_mail_targets.each do |delivery_mail_target|
+    @delivery_mail_targets = @delivery_mail.get_delivery_mail_targets(@target_limit || 20)
+    @delivery_mail_targets.each do |delivery_mail_target|
       delivery_mail_target.get_reply_import_mail
     end
-    if @delivery_mail.delivery_mail_targets.size > 1
-      @delivery_mail.delivery_mail_targets.sort_by! do |delivery_mail_target|
-        delivery_mail_target.get_import_mail_id.nil? ? 0 : - delivery_mail_target.get_import_mail_id
-      end
+    @delivery_mail_targets.sort_by! do |delivery_mail_target|
+      delivery_mail_target.get_import_mail_id.nil? ? 0 : - delivery_mail_target.get_import_mail_id
     end
 
     @attachment_files = AttachmentFile.attachment_files("delivery_mails", @delivery_mail.id)
     
     respond_to do |format|
       format.html # show.html.erb
+      format.json { render json: @delivery_mail }
+    end
+  end
+
+  def show_all
+    @delivery_mail = DeliveryMail.find(params[:id]).get_informations
+    @delivery_mail_targets = @delivery_mail.get_delivery_mail_targets(2000)
+    @delivery_mail_targets.each do |delivery_mail_target|
+      delivery_mail_target.get_reply_import_mail
+    end
+    @delivery_mail_targets.sort_by! do |delivery_mail_target|
+      delivery_mail_target.get_import_mail_id.nil? ? 0 : - delivery_mail_target.get_import_mail_id
+    end
+    respond_to do |format|
+      format.html { render layout: false } # show.html.erb
       format.json { render json: @delivery_mail }
     end
   end
@@ -303,7 +317,7 @@ EOS
     respond_to do |format|
       format.html { render action: "new" }
     end
-  rescue ValidationAbort => e
+  rescue ValidationAbort
     respond_to do |format|
       format.html {
         flash[:warning] = '営業担当が設定されていません。'
