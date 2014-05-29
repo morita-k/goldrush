@@ -1,4 +1,6 @@
 <%= error_messages_for 'analysis_template_item' %>
+<% title =  @analysis_template_item.new_record? ? "の新規作成" : "編集" %>
+<%= accordion_around(getLongName("table_name", "analysis_template_items") + title, "2") do %>
 
 <table class="show_table">
 <tr>
@@ -34,6 +36,7 @@
   <td><%= resizable_area 'analysis_template_item', 'memo'  %></td>
 </tr>
 </table>
+<% end %>
 <%= hidden_field 'analysis_template_item', 'analysis_template_id' %>
 <%= hidden_field 'analysis_template_item', 'lock_version' %>
 <%= hidden_field_tag 'back_to', back_to %>

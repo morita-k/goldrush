@@ -11,16 +11,7 @@ describe DailyReportController do
 
   describe '順次テスト' do
 
-    before(:all) do
-      self.use_transactional_fixtures = false
-    end
-
-    after(:all) do
-      self.use_transactional_fixtures = true
-    end
-
     describe '日報' do
-
       before(:each) do
         get :index, :date => '2014-01'
       end
@@ -41,11 +32,11 @@ describe DailyReportController do
         target_data = Hash.new
 
         0.upto(target_daily_report.size - 1) do |number|
-          target_daily_report[number].succeeds = 1
-          target_daily_report[number].gross_profits = 2
-          target_daily_report[number].interviews = 3
-          target_daily_report[number].new_meetings = 4
-          target_daily_report[number].exist_meetings = 5
+          target_daily_report[number].succeed_count = 1
+          target_daily_report[number].gross_profit_count = 2
+          target_daily_report[number].interview_count = 3
+          target_daily_report[number].new_meeting_count = 4
+          target_daily_report[number].exist_meeting_count = 5
           target_data[number.to_s] = target_daily_report[number].attributes
         end
 
@@ -59,11 +50,11 @@ describe DailyReportController do
         target_data = Hash.new
 
         0.upto(target_daily_report.size - 1) do |number|
-          target_daily_report[number].succeeds = nil
-          target_daily_report[number].gross_profits = nil
-          target_daily_report[number].interviews = nil
-          target_daily_report[number].new_meetings = nil
-          target_daily_report[number].exist_meetings = nil
+          target_daily_report[number].succeed_count = nil
+          target_daily_report[number].gross_profit_count = nil
+          target_daily_report[number].interview_count = nil
+          target_daily_report[number].new_meeting_count = nil
+          target_daily_report[number].exist_meeting_count = nil
           target_data[number.to_s] = target_daily_report[number].attributes
         end
 

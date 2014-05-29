@@ -47,12 +47,12 @@
     <table class="list_table">
       <tr>
         <th><%= getLongName('daily_reports', 'report_date') %></th>
-        <th><%= getLongName('daily_reports', 'succeeds') %></th>
-        <th><%= getLongName('daily_reports', 'gross_profits') %></th>
-        <th><%= getLongName('daily_reports', 'interviews') %></th>
-        <th><%= getLongName('daily_reports', 'new_meetings') %></th>
-        <th><%= getLongName('daily_reports', 'exist_meetings') %></th>
-        <th><%= getLongName('daily_reports', 'send_delivery_mails') %></th>
+        <th><%= getLongName('daily_reports', 'succeed_count') %></th>
+        <th><%= getLongName('daily_reports', 'gross_profit_count') %></th>
+        <th><%= getLongName('daily_reports', 'interview_count') %></th>
+        <th><%= getLongName('daily_reports', 'new_meeting_count') %></th>
+        <th><%= getLongName('daily_reports', 'exist_meeting_count') %></th>
+        <th><%= getLongName('daily_reports', 'send_delivery_mail_count') %></th>
       </tr>
       <% @target_summary.each do |target_daily_report| %>
         <% if session[:daily_report_summary][:summary_term_flg] == 'day' %>
@@ -61,12 +61,12 @@
           <tr>
         <% end %>
           <td><%= h target_daily_report["target_date"] %></td>
-          <td><%= h target_daily_report["succeeds"].to_i %></td>
-          <td><%= h target_daily_report["gross_profits"].to_i %></td>
-          <td><%= h target_daily_report["interviews"].to_i %></td>
-          <td><%= h target_daily_report["new_meetings"].to_i %></td>
-          <td><%= h target_daily_report["exist_meetings"].to_i %></td>
-          <td><%= h target_daily_report["send_delivery_mails"].to_i %></td>
+          <td><%= h target_daily_report["succeed_count"].to_i %></td>
+          <td><%= h target_daily_report["gross_profit_count"].to_i %></td>
+          <td><%= h target_daily_report["interview_count"].to_i %></td>
+          <td><%= h target_daily_report["new_meeting_count"].to_i %></td>
+          <td><%= h target_daily_report["exist_meeting_count"].to_i %></td>
+          <td><%= h target_daily_report["send_delivery_mail_count"].to_i %></td>
         </tr>
       <% end  %>
     </table>
@@ -78,12 +78,12 @@
         <table class="list_table">
           <tr>
             <th><%= getLongName('daily_reports', 'report_date') %></th>
-            <th><%= getLongName('daily_reports', 'succeeds') %></th>
-            <th><%= getLongName('daily_reports', 'gross_profits') %></th>
-            <th><%= getLongName('daily_reports', 'interviews') %></th>
-            <th><%= getLongName('daily_reports', 'new_meetings') %></th>
-            <th><%= getLongName('daily_reports', 'exist_meetings') %></th>
-            <th><%= getLongName('daily_reports', 'send_delivery_mails') %></th>
+            <th><%= getLongName('daily_reports', 'succeed_count') %></th>
+            <th><%= getLongName('daily_reports', 'gross_profit_count') %></th>
+            <th><%= getLongName('daily_reports', 'interview_count') %></th>
+            <th><%= getLongName('daily_reports', 'new_meeting_count') %></th>
+            <th><%= getLongName('daily_reports', 'exist_meeting_count') %></th>
+            <th><%= getLongName('daily_reports', 'send_delivery_mail_count') %></th>
             <% if session[:daily_report_summary][:summary_term_flg] == 'day' %>
             <th><%= getLongName('daily_reports', 'contact_matter') %></th>
             <% end %>
@@ -95,12 +95,12 @@
           <tr>
           <% end %>
             <td><%= h target_daily_report["target_date"] %></td>
-            <td><%= h target_daily_report["succeeds"].to_i %></td>
-            <td><%= h target_daily_report["gross_profits"].to_i %></td>
-            <td><%= h target_daily_report["interviews"].to_i %></td>
-            <td><%= h target_daily_report["new_meetings"].to_i %></td>
-            <td><%= h target_daily_report["exist_meetings"].to_i %></td>
-            <td><%= h target_daily_report["send_delivery_mails"].to_i %></td>
+            <td><%= h target_daily_report["succeed_count"].to_i %></td>
+            <td><%= h target_daily_report["gross_profit_count"].to_i %></td>
+            <td><%= h target_daily_report["interview_count"].to_i %></td>
+            <td><%= h target_daily_report["new_meeting_count"].to_i %></td>
+            <td><%= h target_daily_report["exist_meeting_count"].to_i %></td>
+            <td><%= h target_daily_report["send_delivery_mail_count"].to_i %></td>
             <% if session[:daily_report_summary][:summary_term_flg] == 'day' %>
             <td><%= h target_daily_report["contact_matter"] %></td>
             <% end %>

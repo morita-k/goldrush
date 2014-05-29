@@ -13,7 +13,7 @@
     </div>
   <% end %>
 
-<%= disp_wide_link "テンプレートからメールを作成する", :controller => :mail_templates, :action => :index, :popup => 1 %>
+  <%= disp_wide_link "テンプレートからメールを作成する", {:controller => :mail_templates, :action => :index, :popup => 1}, :class => "btn btn-info btn-medium" %>
 <table class="show_table" style="margin-top: 0em;">
 <%if  @delivery_mail.bp_pic_group %>
   <tr>
@@ -31,7 +31,7 @@
   <tr>
     <th><label>案件照会</label></th>
     <td>
-      <%= text_field_tag 'former_delivery_mail_business_title', @delivery_mail.biz_offer_id.blank? ? "" : get_biz_offer_name.business.business_title, :readOnly => true, :style => "background-color: silver;", :size => 30 %>
+      <%= text_field_tag 'former_delivery_mail_business_title', @delivery_mail.biz_offer_id.blank? ? "" : get_biz_offer_name.business.business_title, :readonly => true, :style => "background-color: silver;", :size => 30 %>
       <input type=button value='...' onClick="disp_wide('<%=url_for_biz_offer_popup :setBizOffer%>');return false;" />
       <input type=button value='クリア' onClick="clearFmBzOf();return false;" />
       <%= f.hidden_field :biz_offer_id %>
@@ -40,7 +40,7 @@
   <tr>
     <th><label>人材所属</label></th>
     <td>
-      <%= text_field_tag 'former_delivery_mail_bp_member_name', @delivery_mail.bp_member_id.blank? ? "" : get_bp_member_name.human_resource_name, :readOnly => true, :style => "background-color: silver;", :size => 30 %>
+      <%= text_field_tag 'former_delivery_mail_bp_member_name', @delivery_mail.bp_member_id.blank? ? "" : get_bp_member_name.human_resource_name, :readonly => true, :style => "background-color: silver;", :size => 30 %>
       <input type=button value='...' onClick="disp_wide('<%=url_for_bp_member_popup :setBpMember%>');return false;" />
       <input type=button value='クリア' onClick="clearFmBpMem();return false;" />
       <%= f.hidden_field :bp_member_id %>
@@ -107,7 +107,7 @@
   <%= hidden_field 'delivery_mail', 'bp_pic_group_id' %>
   <%= hidden_field_tag 'bp_pic_ids', params[:bp_pic_ids] %>
   <% unless @bp_pics %>
-    <%= f.submit(:value => 'メールを作成し、対象者選択へ進む') %> <%= f.submit(:name => 'testmail', :value => 'テストメールを送信する', :confirm => "一旦メールを保存し、送信者宛てにテストメールを送信してこの画面に戻ります。") %>
+    <%= f.submit(:value => 'メールを作成し、対象者選択へ進む', :class => "btn btn-primary btn-medium") %> <%= f.submit(:name => 'testmail', :value => 'テストメールを送信する', :confirm => "一旦メールを保存し、送信者宛てにテストメールを送信してこの画面に戻ります。", :class => "btn btn-info btn-medium") %>
   <% else %>
     <%= f.submit(:value => 'メールを送信する') %>
   <% end %>

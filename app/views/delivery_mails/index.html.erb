@@ -3,7 +3,7 @@
     <%= render 'bp_pic_groups/show_table' %>
   <% end %>
   <div class="submit_box">
-    <%= back_to_link getLongName('table_name','delivery_mails') + ' の新規作成', {:controller => :delivery_mails , :action => :new, :id => params[:id] }, btn_primary(:method => :get) %>
+    <%= back_to_link getLongName('table_name','delivery_mails') + ' の新規作成', {:controller => :delivery_mails , :action => :new, :bp_pic_group_id => params[:bp_pic_group_id] }, btn_primary(:method => :get) %>
     <%= link_or_back '戻る', :controller => :bp_pic_groups %>
   </div>
 <% else %>

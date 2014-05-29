@@ -113,11 +113,11 @@ describe DailyReport do
   describe 'update_daily_report' do
     it '数値を入力していると更新される' do
       target_daily_report = FG.create(:daily_report_test011)
-      target_daily_report.succeeds = 2
-      target_daily_report.gross_profits = 3
-      target_daily_report.interviews = 4
-      target_daily_report.new_meetings = 5
-      target_daily_report.exist_meetings = 6
+      target_daily_report.succeed_count = 2
+      target_daily_report.gross_profit_count = 3
+      target_daily_report.interview_count = 4
+      target_daily_report.new_meeting_count = 5
+      target_daily_report.exist_meeting_count = 6
       target_daily_report.contact_matter = '変更連絡事項'
 
       target_data = Hash.new
@@ -129,22 +129,22 @@ describe DailyReport do
       result_daily_report = DailyReport.all
       expect(result_daily_report).to have(1).items
       expect(result_daily_report[0].id).to eq(1)
-      expect(result_daily_report[0].succeeds).to eq(2)
-      expect(result_daily_report[0].gross_profits).to eq(3)
-      expect(result_daily_report[0].interviews).to eq(4)
-      expect(result_daily_report[0].new_meetings).to eq(5)
-      expect(result_daily_report[0].exist_meetings).to eq(6)
+      expect(result_daily_report[0].succeed_count).to eq(2)
+      expect(result_daily_report[0].gross_profit_count).to eq(3)
+      expect(result_daily_report[0].interview_count).to eq(4)
+      expect(result_daily_report[0].new_meeting_count).to eq(5)
+      expect(result_daily_report[0].exist_meeting_count).to eq(6)
       expect(result_daily_report[0].contact_matter).to eq('変更連絡事項')
       expect(result_daily_report[0].daily_report_input_type).to eq('existinput')
     end
 
     it '数値を全ての項目が入力されていないと更新されない' do
       target_daily_report = FG.create(:daily_report_test011)
-      target_daily_report.succeeds = nil
-      target_daily_report.gross_profits = nil
-      target_daily_report.interviews = nil
-      target_daily_report.new_meetings = nil
-      target_daily_report.exist_meetings = nil
+      target_daily_report.succeed_count = nil
+      target_daily_report.gross_profit_count = nil
+      target_daily_report.interview_count = nil
+      target_daily_report.new_meeting_count = nil
+      target_daily_report.exist_meeting_count = nil
       target_daily_report.contact_matter = '変更連絡事項'
 
       target_data = Hash.new
@@ -154,22 +154,22 @@ describe DailyReport do
       DailyReport.update_daily_report(target_data, user, nil)
       result_daily_report = DailyReport.all
       expect(result_daily_report).to have(1).items
-      expect(result_daily_report[0].succeeds).to eq(1)
-      expect(result_daily_report[0].gross_profits).to eq(1)
-      expect(result_daily_report[0].interviews).to eq(1)
-      expect(result_daily_report[0].new_meetings).to eq(1)
-      expect(result_daily_report[0].exist_meetings).to eq(1)
+      expect(result_daily_report[0].succeed_count).to eq(1)
+      expect(result_daily_report[0].gross_profit_count).to eq(1)
+      expect(result_daily_report[0].interview_count).to eq(1)
+      expect(result_daily_report[0].new_meeting_count).to eq(1)
+      expect(result_daily_report[0].exist_meeting_count).to eq(1)
       expect(result_daily_report[0].contact_matter).to eq('連絡事項')
       expect(result_daily_report[0].daily_report_input_type).to eq('notinput')
     end
 
     it '数値を入力していると更新される(user_idがない場合でも引数のuser_idで補完する)' do
       target_daily_report = FG.build(:daily_report_test011)
-      target_daily_report.succeeds = 2
-      target_daily_report.gross_profits = 3
-      target_daily_report.interviews = 4
-      target_daily_report.new_meetings = 5
-      target_daily_report.exist_meetings = 6
+      target_daily_report.succeed_count = 2
+      target_daily_report.gross_profit_count = 3
+      target_daily_report.interview_count = 4
+      target_daily_report.new_meeting_count = 5
+      target_daily_report.exist_meeting_count = 6
       target_daily_report.contact_matter = '変更連絡事項'
       target_daily_report.id = ''
 
@@ -181,11 +181,11 @@ describe DailyReport do
 
       result_daily_report = DailyReport.all
       expect(result_daily_report).to have(1).items
-      expect(result_daily_report[0].succeeds).to eq(2)
-      expect(result_daily_report[0].gross_profits).to eq(3)
-      expect(result_daily_report[0].interviews).to eq(4)
-      expect(result_daily_report[0].new_meetings).to eq(5)
-      expect(result_daily_report[0].exist_meetings).to eq(6)
+      expect(result_daily_report[0].succeed_count).to eq(2)
+      expect(result_daily_report[0].gross_profit_count).to eq(3)
+      expect(result_daily_report[0].interview_count).to eq(4)
+      expect(result_daily_report[0].new_meeting_count).to eq(5)
+      expect(result_daily_report[0].exist_meeting_count).to eq(6)
       expect(result_daily_report[0].contact_matter).to eq('変更連絡事項')
       expect(result_daily_report[0].daily_report_input_type).to eq('existinput')
     end
@@ -229,11 +229,11 @@ describe DailyReport do
         expect(result_daily_report.all).to have(31).items
 
         0.upto(30) do |n|
-          expect(result_daily_report[n].succeeds).to eq(2)
-          expect(result_daily_report[n].gross_profits).to eq(2)
-          expect(result_daily_report[n].interviews).to eq(2)
-          expect(result_daily_report[n].new_meetings).to eq(2)
-          expect(result_daily_report[n].exist_meetings).to eq(2)
+          expect(result_daily_report[n].succeed_count).to eq(2)
+          expect(result_daily_report[n].gross_profit_count).to eq(2)
+          expect(result_daily_report[n].interview_count).to eq(2)
+          expect(result_daily_report[n].new_meeting_count).to eq(2)
+          expect(result_daily_report[n].exist_meeting_count).to eq(2)
         end
       end
 
@@ -248,11 +248,11 @@ describe DailyReport do
         expect(result_daily_report.all).to have(62).items
 
         0.upto(61) do |n|
-          expect(result_daily_report[n].succeeds).to eq(1)
-          expect(result_daily_report[n].gross_profits).to eq(1)
-          expect(result_daily_report[n].interviews).to eq(1)
-          expect(result_daily_report[n].new_meetings).to eq(1)
-          expect(result_daily_report[n].exist_meetings).to eq(1)
+          expect(result_daily_report[n].succeed_count).to eq(1)
+          expect(result_daily_report[n].gross_profit_count).to eq(1)
+          expect(result_daily_report[n].interview_count).to eq(1)
+          expect(result_daily_report[n].new_meeting_count).to eq(1)
+          expect(result_daily_report[n].exist_meeting_count).to eq(1)
 
           if n < 31
             expect(result_daily_report[n].user_id).to eq(1)
@@ -273,11 +273,11 @@ describe DailyReport do
         expect(result_daily_report.all).to have(31).items
 
         0.upto(30) do |n|
-          expect(result_daily_report[n].succeeds).to eq(1)
-          expect(result_daily_report[n].gross_profits).to eq(1)
-          expect(result_daily_report[n].interviews).to eq(1)
-          expect(result_daily_report[n].new_meetings).to eq(1)
-          expect(result_daily_report[n].exist_meetings).to eq(1)
+          expect(result_daily_report[n].succeed_count).to eq(1)
+          expect(result_daily_report[n].gross_profit_count).to eq(1)
+          expect(result_daily_report[n].interview_count).to eq(1)
+          expect(result_daily_report[n].new_meeting_count).to eq(1)
+          expect(result_daily_report[n].exist_meeting_count).to eq(1)
         end
       end
 
@@ -292,11 +292,11 @@ describe DailyReport do
         expect(result_daily_report.all).to have(31).items
 
         0.upto(30) do |n|
-          expect(result_daily_report[n].succeeds).to eq(1)
-          expect(result_daily_report[n].gross_profits).to eq(1)
-          expect(result_daily_report[n].interviews).to eq(1)
-          expect(result_daily_report[n].new_meetings).to eq(1)
-          expect(result_daily_report[n].exist_meetings).to eq(1)
+          expect(result_daily_report[n].succeed_count).to eq(1)
+          expect(result_daily_report[n].gross_profit_count).to eq(1)
+          expect(result_daily_report[n].interview_count).to eq(1)
+          expect(result_daily_report[n].new_meeting_count).to eq(1)
+          expect(result_daily_report[n].exist_meeting_count).to eq(1)
           expect(result_daily_report[n].user_id).to eq(1)
         end
       end

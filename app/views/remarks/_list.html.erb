@@ -1,30 +1,16 @@
+<div class="list-group">
 <% @remarks.each do |remark| %>
-  <table class="show_table">
-    <tr>
-      <th>作成者</th>
-      <td><%= remark.get_created_user.employee.employee_name %></td>
-    </tr>
-    <tr>
-      <th>作成日時</th>
-      <td><%= label_tag 'create_name', _time_long(remark.created_at) %></td>
-    </tr>
-    <tr>
-      <th>レート</th>
-      <td>
-        <% for i in 1..5 %>
-          <% if remark.rating >= i %>
-            <%= image_tag("star_yellow.png") %>
-          <% else %>
-            <%= image_tag("star_gray.png") %>
-          <% end %>
-        <% end %>
-      </td>
-    </tr>
-    <tr>
-      <td colspan=2><%= simple_format remark.remark_content %></td>
-    </tr>
-  </table>
+  <div class="list-group-item">
+    <div class="list-group-item-heading remark_header"><%= remark.get_created_user.employee.employee_name %><br>
+      <%= label_tag 'create_name', _time_long(remark.created_at) %> 
+      <%= show_stars remark.rating %>
+    </div>
+    <p class="list-group-item-text"><%= simple_format remark.remark_content %></p>
+  </div>
   <% if remark.created_user == current_user.login %>
-    <%= back_to_link '　編　集　', {:controller => :remarks, :action => :edit, :id => remark.id}, {:class => "btn btn-info btn-medium"}  %> <%= link_to '　削　除　',url_for(:controller => :remarks, :action => :destroy, :authenticity_token => form_authenticity_token, :id => remark.id, :back => remark_key, :bk_id => params[:id]), {:class => "btn btn-info btn-medium", :method => :delete} %>
+    <div class="btn-group btn-group-xs">
+    <%= back_to_link '　編　集　', {:controller => :remarks, :action => :edit, :id => remark.id}, {:class => "btn btn-primary"}  %> <%= link_to '　削　除　',url_for(:controller => :remarks, :action => :destroy, :authenticity_token => form_authenticity_token, :id => remark.id, :back => remark_key, :bk_id => params[:id]), {:class => "btn btn-default", :method => :delete} %>
+  </div>
   <% end %>
 <% end %>
+</div>

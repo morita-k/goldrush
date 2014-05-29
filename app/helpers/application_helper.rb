@@ -24,6 +24,14 @@ module ApplicationHelper
     url_for :controller => :bp_pic, :action => :list, :popup =>1, :callback => callback
   end
 
+  def url_for_bp_pic_by_id_popup(id, callback = :setBpPic)
+    url_for :controller => :bp_pic, :action => :list, :id => id, :popup =>1, :callback => callback
+  end
+
+  def url_for_bp_pic_by_bp_pic_name_popup(bp_pic_name, callback = :setBpPic)
+    url_for :controller => :bp_pic, :action => :list, :bp_pic_name => bp_pic_name, :search_button => 1, :popup =>1, :callback => callback
+  end
+
   def url_for_mail_template_popup(callback = :setMailTemplate)
     url_for :controller => :mail_templates, :action => :index, :popup =>1, :callback => callback
   end
@@ -51,6 +59,10 @@ module ApplicationHelper
 
   def url_for_business_partner(photoid)
     url_for :controller => :business_partner, :action => :new, :photoid => photoid
+  end
+
+  def url_for_business_partner_popup
+    url_for :controller => :business_partner, :action => :list, :popup => 1
   end
 
   def url_for_bp_pic(photoid)
@@ -124,7 +136,7 @@ module ApplicationHelper
     if time.blank?
       ""
     elsif [ActiveSupport::TimeWithZone, Time, Date].include?(time.class)
-      t = time.to_time.getlocal.strftime("%Y/%m/%d %H:%M:%S")
+      time.to_time.getlocal.strftime("%Y/%m/%d %H:%M:%S")
     else
       time
     end
@@ -583,6 +595,10 @@ EOS
     accordion_around_in(2, title, suffix, hide, &block)
   end
 
+  def accordion_around_h3(title, suffix, hide=false, &block)
+    accordion_around_in(3, title, suffix, hide, &block)
+  end
+
   def accordion_around_in(level, title, suffix, hide, &block)
     res = raw <<EOS
 <div class="accordion" id="accordion#{suffix}">
@@ -638,4 +654,9 @@ EOS
     end
     opt
   end
+
+  def show_stars(rate)
+    raw ("<i class='glyphicon glyphicon-star stars-active'></i>"  * rate + "<i class='glyphicon glyphicon-star stars-inactive'></i>" * (5 - rate))
+  end
+
 end

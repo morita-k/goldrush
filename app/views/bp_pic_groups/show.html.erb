@@ -1,5 +1,5 @@
 <% if @delivery_mail %>
-  <%= accordion_around(getLongName('table_name','delivery_mails')+"確認", "") do %>
+  <%= accordion_around(getLongName('table_name','delivery_mails'), "") do %>
     <%= render 'delivery_mails/show' %>
   <% end %>
 
@@ -9,40 +9,40 @@
   <% end %>
 
   <div class="submit_box">
-  <%= back_to_link 'メールの内容を再編集する', edit_delivery_mail_path(@delivery_mail), btn_primary %>
-</div>
+    <%= back_to_link 'メールの内容を再編集する', edit_delivery_mail_path(@delivery_mail), btn_primary %>
+  </div>
 
   <h1><%= @bp_pic_group.bp_pic_group_name %>のメンバーを選択してください。</h1>
-<% else %>
-  <%= accordion_around(getLongName('table_name','bp_pic_groups')+"確認", "") do %>
+<% else %><%# @delivery_mail %>
+  <%= accordion_around(getLongName('table_name','bp_pic_groups'), "") do %>
     <%= render 'bp_pic_groups/show_table' %>
   <% end %>
   <div class="submit_box">
-  <%= back_to_link 'グループ名とメモの編集', {:action => :edit, :id => @bp_pic_group.id}, btn_primary %>
-  <%= link_to 'グループをコピー', {action: :new, src_id: @bp_pic_group.id, back_to: back_to}, btn_primary %>
-  <%= link_to 'グループを削除', {:action => :destroy, :id => @bp_pic_group.id, :authenticity_token => form_authenticity_token}, btn_default({:method => :delete, :data => { :confirm => '削除します。よろしいですか?' }}) %>
-  <%= link_or_back '戻る', bp_pic_groups_path %>
-</div>
+    <%= back_to_link 'グループ名とメモの編集', {:action => :edit, :id => @bp_pic_group.id}, btn_primary %>
+    <%= link_to 'グループをコピー', {action: :new, src_id: @bp_pic_group.id, back_to: back_to}, btn_primary %>
+    <%= link_to 'グループを削除', {:action => :destroy, :id => @bp_pic_group.id, :authenticity_token => form_authenticity_token}, btn_default({:method => :delete, :data => { :confirm => '削除します。よろしいですか?' }}) %>
+    <%= link_or_back '戻る', bp_pic_groups_path %>
+  </div>
   <%= accordion_around_h2("取引先担当の追加", "2") do %>
-  <%= form_tag(url_for(:controller => :bp_pic_group_details, :action => :create), :method => :post) do %>
-    <table class="show_table">
-        <tr>
-        <th><label for="business_partner_name">取引先</label></th><td><%= text_field_tag 'business_partner_name', "", :readonly => true, :style => "background-color: silver;", :size => 30 %>
-        </tr>
-        <tr>
-        <th><label for="bp_pic_name">取引先担当</label></th><td><%= text_field_tag 'bp_pic_name', "", :readonly => true, :style => "background-color: silver;", :size => 30 %>
-            <input type=button value='...' onClick="disp_wide('<%=url_for_bp_pic_popup%>');return false;" />
-            <input type=button value='クリア' onClick="clearBpPic();return false;" />
-            <%= hidden_field 'bp_pic_group_detail', 'bp_pic_id' %></td>
-        </tr>
-    </table>
-    <%= hidden_field_tag 'bp_pic_group_detail[bp_pic_group_id]', @bp_pic_group.id %>
-    <%= hidden_field_tag 'back_to', request.url  %>
-    <%= submit_tag "取引先担当を追加", btn_primary(:id => "submit_bp_pic_group_detail", :disabled => "disabled") %>
+    <%= form_tag(url_for(:controller => :bp_pic_group_details, :action => :create), :method => :post) do %>
+      <table class="show_table">
+          <tr>
+          <th><label for="business_partner_name">取引先</label></th><td><%= text_field_tag 'business_partner_name', "", :readonly => true, :style => "background-color: silver;", :size => 30 %>
+          </tr>
+          <tr>
+          <th><label for="bp_pic_name">取引先担当</label></th><td><%= text_field_tag 'bp_pic_name', "", :readonly => true, :style => "background-color: silver;", :size => 30 %>
+              <input type=button value='...' onClick="disp_wide('<%=url_for_bp_pic_popup%>');return false;" />
+              <input type=button value='クリア' onClick="clearBpPic();return false;" />
+              <%= hidden_field 'bp_pic_group_detail', 'bp_pic_id' %></td>
+          </tr>
+      </table>
+      <%= hidden_field_tag 'bp_pic_group_detail[bp_pic_group_id]', @bp_pic_group.id %>
+      <%= hidden_field_tag 'back_to', request.url  %>
+      <%= submit_tag "取引先担当を追加", btn_primary(:id => "submit_bp_pic_group_detail", :disabled => "disabled") %>
+      <input type="hidden" id="business_partner_id" />
+    <% end %>
   <% end %>
-  <input type="hidden" id="business_partner_id" />
-<% end %>
-<% end %>
+<% end %><%# @delivery_mail %>
 
 <div>
   <%= form_tag url_for_bp_pic_list(@delivery_mail), :method => :post do %>
@@ -52,7 +52,7 @@
         <%= button_tag "全てのチェックをはずす", type: 'button', onclick: '$(".mail_status_check_box").attr("checked", false)', class: "btn btn-default btn-medium" %>
       <% end %>
     </div>
-    <table class="list_table">
+    <table class="list_table table-bordered">
       <tr>
         <th style="width:1%"></th>
         <th><%= getLongName('business_partners', 'business_partner_name') %></th>
@@ -72,7 +72,7 @@
           <td><%= star_links(detail.bp_pic.business_partner) %> <%= back_to_link detail.bp_pic.business_partner.business_partner_name, :controller => :business_partner, :action => :show, :id => detail.bp_pic.business_partner_id %></td>
           <td><%= star_links(detail.bp_pic) %> <%= back_to_link "#{detail.bp_pic.usefulname}" + (" (#{detail.bp_pic.working_status_type_name})" unless detail.bp_pic.working?).to_s + " <#{detail.bp_pic.email1}>", :controller => :bp_pic, :action => :show, :id => detail.bp_pic_id %></td>
           <td><%= detail.bp_pic.memo%></td>
-          <td><span class='<%= "status_#{detail.id}" %>'><%= link_to "", {:controller => :bp_pic_group_details, :action => :suspend, :id => detail, :authenticity_token => form_authenticity_token}, :remote => true, :method => :put, :class => (detail.suspended? ? "status_toggle off" : "status_toggle on") %></span></td>
+          <td style="text-align: center;"><span class='<%= "status_#{detail.id}" %>'><%= link_to (detail.suspended? ? "OFF" : "ON"), {:controller => :bp_pic_group_details, :action => :suspend, :id => detail, :authenticity_token => form_authenticity_token}, :remote => true, :method => :put, :class => (detail.suspended? ? "label label-default" : "label label-warning") %></span></td>
         </tr>
       <% end %>
     </table>
@@ -89,26 +89,31 @@
 <!--
 
 function changeStatus(id, status){
-  target_row = $('#tr_' + id);
-  target_link = $('.status_' + id + ' a');
-  target_checkbox = $('#tr_' + id + " td:first-child input");
+  var label_class = "";
+  var target_row = $('#tr_' + id);
+  var target_link = $('.status_' + id + ' a');
+  var target_checkbox = $('#tr_' + id + " td:first-child input");
   switch(status){
     case 'on' : 
       target_row.css('background-color', '<%=suspended_colors[0]%>');
       <% if @delivery_mail %>
       target_checkbox.prop('checked', true);
       <% end %>
+      target_class = "warning";
+      target_link.text("ON");
       break;
     case 'off' : 
       target_row.css('background-color', '<%=suspended_colors[1]%>');
       <% if @delivery_mail %>
       target_checkbox.prop('checked', false);
       <% end %>
+      target_class = "default";
+      target_link.text("OFF");
       break;
     default :
       return;
   }
-  target_link.attr('class', 'status_toggle ' + status);
+  target_link.attr('class', 'label label-' + target_class);
   changeSendFlag(id, target_checkbox.prop('checked'));
 }
 

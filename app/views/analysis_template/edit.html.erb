@@ -1,5 +1,5 @@
 <%= form_tag :action => 'update', :id => @analysis_template do %>
-  <%= accordion_around(getLongName('table_name','analysis_templates')+"編集", "") do %>
+  <%= accordion_around(@analysis_template.analysis_template_type_name + "用" +  getLongName('table_name','analysis_templates')+"編集", "") do %>
   <!--[form:analysis_template]-->
     <%= render :partial => 'form' %>
   <!--[eoform:analysis_template]-->

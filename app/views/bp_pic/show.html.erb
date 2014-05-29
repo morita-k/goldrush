@@ -68,7 +68,7 @@
   <th><%= getLongName('bp_pics', 'nondelivery_score') %></th><td><%=@bp_pic.nondelivery_score %><%= @bp_pic.nondelivery? ? '(メール停止)' : '' %></td>
 </tr>
 <tr>
-  <th><%= getLongName('bp_pics', 'working_status_type') %></th><td><%= @bp_pic.working_status_type_name %>(<% links = working_status_type_links_show(@bp_pic) %><%= links[0] %>|<%= links[1] %>)</td>
+  <th><%= getLongName('bp_pics', 'working_status_type') %></th><td><%= @bp_pic.working_status_type_name %> <% working_status_type_links_show(@bp_pic).each{|x| %> <%= x %><% } %></td>
 </tr>
 <% unless @former_bp_pic.blank? %>
 <tr>
@@ -146,7 +146,7 @@
   <%= render :partial => 'remarks/list', :locals => {:remark_key => "bp_pics", :remark_target_id => @bp_pic} %>
 <% end %>
 <div class="submit_box">
-  <%= back_to_link 'コメント追加', {:controller => :remarks, :action => :new, :remark_target_id => @bp_pic, :remark_key => "bp_pic"}, {:class => "btn btn-info btn-medium"} %>
+  <%= back_to_link 'コメント追加', {:controller => :remarks, :action => :new, :remark_target_id => @bp_pic, :remark_key => "bp_pics"}, {:class => "btn btn-info btn-medium"} %>
 </div>
 
 <%= accordion_around_h2("送信メール一覧", "4", @delivery_mails.empty?) do %>

@@ -3,20 +3,20 @@
       <legend>メール情報入力</legend>
       <%= f.fields_for :business_partner do |f_bp| %>
         <label><%=getLongName('business_partners','business_partner_name') + '(*): '%></label>
-        <%= f_bp.text_field :business_partner_name %>
+        <%= f_bp.text_field :business_partner_name, :style => "width: 10em;" %>
         <label><%=getLongName('business_partners','establishment_year') + ': '%></label>
-        <%= f_bp.text_field :establishment_year %>
+        <%= f_bp.text_field :establishment_year, :style => "width: 5em;" %>
         <label><%=getLongName('business_partners','share_capital') + ': '%></label>
-        <%= f_bp.text_field :share_capital %>
-        </br>
+        <%= f_bp.text_field :share_capital, :style => "width: 5em;" %>
         <label><%=getLongName('business_partners','employee_number') + ': '%></label>
-        <%= f_bp.text_field :employee_number %>
+        <%= f_bp.text_field :employee_number, :style => "width: 5em;" %>
       <%end%>
+      <br/>
       <%= f.fields_for :bp_pic do |f_pic| %>
         <label>問い合わせメール: </label>
-        <%= f_pic.text_field :email1 %>
+        <%= f_pic.text_field :email1, :style => "width: 10em;" %>
         <label><%=getLongName('bp_pics','sales_pic_id') + ': '%></label>
-        <%= f_pic.select :sales_pic_id, options_for_select(BpPic.select_content_list, get_sales_pic_id(@outflow_mail.bp_pic)), :include_blank => true %>
+        <%= f_pic.select :sales_pic_id, options_for_select(BpPic.select_content_list, get_sales_pic_id(@outflow_mail.bp_pic)), :include_blank => true, :style => "width: 5em;" %>
       <%end%>
 
       <%= hidden_field_tag 'outflow_mail_id', @outflow_mail.id %>

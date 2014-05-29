@@ -71,4 +71,20 @@ div.flag {
   display:inline-block;
 }
 
+.remark_header {
+  background-color: #D9EDF7;
+  border-color: #BCE8F1;
+  color: #31708F;
+  padding: 5px 0px 0px 5px;
+  margin-bottom: 5px;
+  border: 1px solid transparent;
+  border-radius: 2px;
+}
+
+.stars-inactive {
+  color: silver;
+}
+.stars-active {
+  color: gold;
+}
 

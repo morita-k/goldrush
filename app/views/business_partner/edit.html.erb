@@ -1,8 +1,9 @@
 
 <%= form_tag :action => 'update', :id => @business_partner do %>
   <%= render :partial => 'form' %>
-  <%= submit_tag '更新' %>
+  <div class="submit_box">
+    <%= submit_tag '更新', btn_primary %>
+    <%= link_or_back '戻る', :action => 'list' %>
+  </div>
 <% end %>
 
-<%= link_to '詳細', :action => 'show', :id => @business_partner %> |
-<%= link_to '一覧に戻る', :action => 'list' %>
