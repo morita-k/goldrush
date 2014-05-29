@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 module StringUtil
-  DETECT_WORD_REGEXP = Regexp.new(/[a-zA-Z][a-zA-Z0-9\.+\-# ]+/)
+  DETECT_WORD_REGEXP = Regexp.new(/[a-zA-Z][a-zA-Z0-9\.+\-# \/]+/)
   FULLSPACE_TRIM_REGEXP = Regexp.new(/^[　 \t\r\n\f\v]*(.*)/o)
   ASCII_SYMBOLS_REGEXP = /[!-\/:-@\[-`{-~]/
   # 全角トリム

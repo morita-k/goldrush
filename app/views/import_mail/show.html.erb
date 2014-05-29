@@ -21,12 +21,12 @@
 <table class="show_table">
 <% if @import_mail.business_partner %>
   <tr>
-    <th><%= getLongName('import_mails', 'business_partner_id') %></th><td><%=link_to @import_mail.business_partner.business_partner_name, :controller => :business_partner, :action => :show, :id => @import_mail.business_partner_id %></td>
+    <th><%= getLongName('import_mails', 'business_partner_id') %></th><td><%= star_links(@import_mail.business_partner) %> <%=link_to @import_mail.business_partner.business_partner_name, :controller => :business_partner, :action => :show, :id => @import_mail.business_partner_id %></td>
   </tr>
 <% end %>
 <% if @import_mail.bp_pic %>
   <tr>
-    <th><%= getLongName('import_mails', 'bp_pic_id') %></th><td><%=link_to @import_mail.bp_pic.bp_pic_name, :controller => :bp_pic, :action => :show, :id => @import_mail.bp_pic_id %></td>
+    <th><%= getLongName('import_mails', 'bp_pic_id') %></th><td><%= star_links(@import_mail.bp_pic) %> <%=link_to @import_mail.bp_pic.bp_pic_name, :controller => :bp_pic, :action => :show, :id => @import_mail.bp_pic_id %></td>
   </tr>
 <% end %>
   <tr>

@@ -2,6 +2,9 @@
   <%= link_to "取引先のメール一覧", {:controller => :import_mail, :action => :list, :id => @business_partner}, {:class => "btn btn-info btn-midium"} %>
   <table class="show_table">
     <tr>
+      <th>スター</th><td><%= star_links(@business_partner) %></td>
+    </tr>
+    <tr>
       <th><%= getLongName('business_partners', 'business_partner_code') %></th><td><%=h @business_partner.business_partner_code %></td>
     </tr>
     <tr>

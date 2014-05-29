@@ -514,7 +514,7 @@ EOS
     DateTimeUtil.calHourMinuteFormat(sec)
   end
   
-  def star_links(target)
+  def star_links(target, title = "")
     icon_opt = { id: StarUtil.attr_id(target),
                  class: StarUtil.attr_class(target),
                  name: StarUtil.attr_name(target),
@@ -527,7 +527,7 @@ EOS
                  authenticity_token: form_authenticity_token }
     
     content_tag(:span, class: "linked_star") do
-      link_to( content_tag(:span, "★", icon_opt), link_opt, :remote => true, :method => :put )
+      link_to( content_tag(:span, "★", icon_opt), link_opt, :remote => true, :method => :put , :title => title)
     end
   end
   
