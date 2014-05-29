@@ -3,9 +3,9 @@
   <th><%= getLongName('human_resources', 'human_resource_name') %></th>
     <td>
       <% if @bp_member %>
-        <%=back_to_link @human_resource.human_resource_name, :controller => :bp_member, :action => :show, :id => @bp_member%>
+        <%= star_links(@human_resource) %> <%=back_to_link @human_resource.human_resource_name, :controller => :bp_member, :action => :show, :id => @bp_member%>
       <% else %>
-        <%= @human_resource.human_resource_name %>
+        <%= star_links(@human_resource) %> <%= @human_resource.human_resource_name %>
       <% end %>
     </td>
 </tr>
