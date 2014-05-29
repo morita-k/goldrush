@@ -87,3 +87,6 @@ group :test do
   gem "rb-fsevent", :require => false
   gem "terminal-notifier-guard"
 end
+
+gem 'rb-readline'
+

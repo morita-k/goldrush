@@ -19,6 +19,10 @@ class DeliveryMail < ActiveRecord::Base
   
   before_save :normalize_cc_bcc!
 
+  def get_delivery_mail_targets(limit=20)
+    DeliveryMailTarget.joins("left outer join import_mails on import_mails.in_reply_to = delivery_mail_targets.message_id").where("delivery_mail_targets.delivery_mail_id = ? and delivery_mail_targets.deleted = 0", self.id).order("import_mails.in_reply_to desc, delivery_mail_targets.delivery_mail_id").limit(limit)
+  end
+
   def group?
     self.delivery_mail_type == "group"
   end
