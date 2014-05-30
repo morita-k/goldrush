@@ -457,6 +457,13 @@ EOS
     link_to(name, { :action => action, :id => object, :back_to => back_to, :authenticity_token => form_authenticity_token }, option)
   end
 
+  def delete_to_rest(name, object, option = {})
+    option[:data] = {confirm: 'この情報を削除します。よろしいですか?'}
+    option[:method] = :delete
+    option[:class] = "btn btn-default btn-medium" if option[:class].blank?
+    link_to(name, { :id => object, :back_to => back_to, :authenticity_token => form_authenticity_token }, option)
+  end
+
   def square_table(array, options = {}, tag_options = {}, &block)
     col = (options[:col] || 3).to_i
     tag_option_arr = ['table']

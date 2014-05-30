@@ -1,9 +1,10 @@
 <h1><%= getLongName('table_name','special_words')%> 詳細</h1>
 
+<div class="submit_box">
 <table class="show_table">
   <tr>
     <th><%= getLongName('special_words', 'special_word_type') %></th>
-    <td><%= @special_word.special_word_type %></td>
+    <td><%= @special_word.special_word_type_name %></td>
   </tr>
   <tr>
     <th><%= getLongName('special_words', 'target_word') %></th>
@@ -19,7 +20,7 @@
   </tr>
 </table>
 
-<%= back_to_link '編集', edit_special_word_path(@special_word) %> |
-<%= link_to '削除', {:id => @special_word, :authenticity_token => form_authenticity_token}, method: :delete, data: { confirm: '削除します。よろしいですか?' } %> |
+<%= back_to_link '編集', edit_special_word_path(@special_word), btn_primary %>
+<%= delete_to_rest '削除', @special_word %>
 <%= link_or_back '戻る', special_words_path %>
-
+</div>

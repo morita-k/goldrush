@@ -470,6 +470,10 @@ class ImportMail < ActiveRecord::Base
     end
   end
 
+  def proper?
+    proper_flg == 1
+  end
+
   def jiet_ses_mail?
     if SysConfig.email_prodmode?
       jiet_mail_address = SysConfig.get_jiet_analysis_target_address

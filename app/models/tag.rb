@@ -70,21 +70,32 @@ class Tag < ActiveRecord::Base
   end
   
   def Tag.clear_tag_cache
-    @@good_tags = nil
-    @@bad_tags = nil
+    @@starred_tags_cache = Array.new(5)
   end
   Tag.clear_tag_cache
   
+  def Tag.verygood_tags
+    starred_tags(2)
+  end
+
   def Tag.good_tags
-    @@good_tags || (@@good_tags = starred_tags(1))
+    starred_tags(1)
+  end
+
+  def Tag.even_tags
+    starred_tags(0)
+  end
+
+  def Tag.notbad_tags
+    starred_tags(4)
   end
 
   def Tag.bad_tags
-    @@bad_tags || (@@bad_tags = starred_tags(3))
+    starred_tags(3)
   end
 
   def Tag.starred_tags(star)
-    where(deleted: 0, tag_key: "import_mails", starred: star).map{|x| x.tag_text}
+    @@starred_tags_cache[star] || (@@starred_tags_cache[star] = where(deleted: 0, tag_key: "import_mails", starred: star).map{|x| x.tag_text})
   end
   
   # strに対して、全角半角変換を行い、不要な文字列(メアド、URL)を削除する
@@ -121,6 +132,17 @@ class Tag < ActiveRecord::Base
 
     words.join(",")
   end
+
+  def tag_key_name
+    tag_key_name_map[tag_key]
+  end
+
+  def tag_key_name_map
+    {"import_mails" => "取り込みメール",
+     "businesses" => "案件",
+     "human_resources" => "人材"}
+  end
+
 
 end
 

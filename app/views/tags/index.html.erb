@@ -1,69 +1,79 @@
-<h1><%= getLongName('table_name','tags')%> 一覧</h1>
+<% search = session[:tags_search] || {} %>
+<% search_tag_key = session[:tags_search][:tag_key] || "" %>
+<%= accordion_around(getLongName('table_name','tags')+" 一覧","") do %>
+  <%= form_tag_popup_mode({}, {:method => :get}) do %>
+  <table class="form_table">
+  <tr>
+    <th><i class="fa fa-angle-double-right "></i> タグ種別</th>
+    <td>
+      <label>
+        <%= radio_button_tag 'tag_key', "", search_tag_key  == "" %> 全部
+      </label>
+      <label>
+        <%= radio_button_tag 'tag_key', "import_mails", search_tag_key == "tag" %> 取り込みメール
+      </label>
+      <label>
+        <%= radio_button_tag 'tag_key', "businesses", search_tag_key == 'businesses' %> 案件
+      </label>
+      <label>
+        <%= radio_button_tag 'tag_key', "human_resources", search_tag_key == 'human_resources' %> 人材
+      </label>
+    </td>
+  </tr>
+  <tr>
+    <th><i class="fa fa-angle-double-right "></i> タグ</th>
+    <td>
+    <label for="tag_text"><%= text_field_tag 'tag_text', search[:tag_text] %></label>
+    </td>
+  </tr>
+  <tr>
+    <th><i class="fa fa-angle-double-right "></i> スター</th>
+    <td>
+      <div class="btn-group" data-toggle="buttons">
+      <label class="btn btn-default">
+        <%= radio_button_tag 'starred', "", search[:starred]  == "" %> 全部
+      </label>
+      <%= star_radios(search[:starred]) %>
+    </div>
+    </td>
+  </tr>
+  <tr>
+    <th colspan="2">
+      <%= submit_tag '　　検索　　', :name => 'search_button', :class => 'btn btn-warning btn-midium' %> <%= submit_tag '　　クリア　　', :name => 'clear_button', :class => 'btn btn-warning btn-midium' %>
+    </th>
+  </tr>
+</table>
+  <% end %>
+<% end %>
 
 <%= paginate(@tags) %>
 
-<table class="list_table">
+<table class="list_table table-bordered table-hover">
   <tr>
 
     <th><%= getLongName('tags', 'tag_key') %></th>
 
     <th><%= getLongName('tags', 'tag_text') %></th>
 
+    <th><%= getLongName('tags', 'starred') %></th>
+
     <th><%= getLongName('tags', 'tag_count') %></th>
 
     <th><%= getLongName('tags', 'inc_count') %></th>
-
-    <th><%= getLongName('tags', 'tag_level') %></th>
-
-    <th><%= getLongName('tags', 'display_order1') %></th>
-
-    <th><%= getLongName('tags', 'display_order2') %></th>
-
-    <th><%= getLongName('tags', 'display_order3') %></th>
-
-    <th><%= getLongName('tags', 'starred') %></th>
 
   </tr>
 
 <% @tags.each do |tag| %>
   <tr>
-
-
-    <td><%= back_to_link tag.tag_key, tag %></td>
-
-
-
-    <td><%= star_links(tag) %> <%= tag.tag_text %></td>
-
-
-
+    <td><%= tag.tag_key_name %></td>
+    <td><%= tag.tag_text %></td>
+    <td>
+      <div class="btn-group" data-toggle="buttons">
+        <%= star_radios(tag.starred, tag.id) %>
+      </div>
+    </td>
     <td><%= tag.tag_count %></td>
-
-
-
     <td><%= tag.inc_count %></td>
-
-
-
-    <td><%= tag.tag_level %></td>
-
-
-
-    <td><%= tag.display_order1 %></td>
-
-
-
-    <td><%= tag.display_order2 %></td>
-
-
-
-    <td><%= tag.display_order3 %></td>
-
-
-
-    <td><%= tag.starred %></td>
-
-
   </tr>
 <% end %>
 </table>
@@ -72,4 +82,19 @@
 
 <%= paginate(@tags) %>
 
-<%= back_to_link getLongName('table_name','tags') + ' の新規作成', new_tag_path %>
+<script type="text/javascript">
+<!--
+$(function () {
+    $("input[type='radio']").on("change", function() {
+      var tag_id = this.getAttribute("tag_id");
+      if(!tag_id){
+        //
+      }else{
+        $.post('<%= url_for :controller => :tags, :action => :fix %>', {tag_id: tag_id, starred: this.value}, function(tag_tag){ return function(data, status, xhr){
+          //
+        }}(this));
+      }
+    });
+});
+-->
+</script>
