@@ -69,6 +69,16 @@
 
 <script type="text/javascript">
 <!--
+$(function () {
+    $(".tag").on("click", function() {
+      if(confirm("このタグを削除します。よろしいですか？")){
+        var tag = this.getAttribute("value");
+        $.post('<%= url_for :controller => :tags, :action => :fix %>', {tag: tag}, function(tag_tag){ return function(data, status, xhr){
+          tag_tag.style.display = 'none';
+        }}(this));
+      }
+    });
+});
 
 // メールの本文がユーザに選択されている場合、その部分を解析テンプレートに渡す
 $(".analysis_mail_link").bind('click', function(event) {

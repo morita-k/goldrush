@@ -1,8 +1,40 @@
-<h1><%= getLongName('table_name','special_words')%> 一覧</h1>
+<% search = session[:special_words_search][:special_word_type] || "" %>
+<%= accordion_around(getLongName('table_name','special_words')+" 一覧","") do %>
+  <%= form_tag_popup_mode({}, {:method => :get}) do %>
+  <table class="form_table">
+  <tr>
+    <th><i class="fa fa-angle-double-right "></i> 単語区分</th>
+    <td>
+      <label>
+        <%= radio_button_tag 'special_word_type', "", search  == "" %> 全部
+      </label>
+      <label>
+        <%= radio_button_tag 'special_word_type', "special_word", search == "special_word" %> 特別単語
+      </label>
+      <label>
+        <%= radio_button_tag 'special_word_type', "ignore_word", search == 'ignore_word' %> 無視単語
+      </label>
+      <label>
+        <%= radio_button_tag 'special_word_type', "ignore_word_proper", search == 'ignore_word_proper' %> 社員用無視単語
+      </label>
+    </td>
+  </tr>
+  <tr>
+    <th colspan="2">
+      <%= submit_tag '　　検索　　', :name => 'search_button', :class => 'btn btn-warning btn-midium' %> <%= submit_tag '　　クリア　　', :name => 'clear_button', :class => 'btn btn-warning btn-midium' %>
+    </th>
+  </tr>
+</table>
+  <% end %>
+<% end %>
+
+<div class="submit_box">
+  <%= back_to_link getLongName('table_name','special_words') + ' の新規作成', new_special_word_path, btn_primary  %>
+</div>
 
 <%= paginate(@special_words) %>
 
-<table class="list_table">
+<table class="list_table table-bordered table-hover">
   <tr>
     <th><%= getLongName('special_words', 'special_word_type') %></th>
     <th><%= getLongName('special_words', 'target_word') %></th>
@@ -10,9 +42,9 @@
     <th><%= getLongName('special_words', 'memo') %></th>
   </tr>
 
-<% @special_words.each do |special_word| %>
-  <tr>
-    <td><%= back_to_link special_word.special_word_type, special_word %></td>
+  <% @special_words.each do |special_word| %>
+    <tr>
+    <td><%= back_to_link special_word.special_word_type_name, special_word %></td>
     <td><%= special_word.target_word %></td>
     <td><%= special_word.convert_to_word %></td>
     <td><%= special_word.memo %></td>
@@ -24,4 +56,3 @@
 
 <%= paginate(@special_words) %>
 
-<%= back_to_link getLongName('table_name','special_words') + ' の新規作成', new_special_word_path %>

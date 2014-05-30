@@ -97,20 +97,24 @@ module ImportMailHelper
   
   def format_tags(tag_text, words)
     tag_text.to_s.split(",").map do |x|
-      if Tag.good_tags.include?(x.downcase)
-        "<span class='label label-success tag'>#{x}</span>"
+      if Tag.verygood_tags.include?(x.downcase)
+        "<span class='label label-warning tag'>#{x}</span>"
+      elsif Tag.good_tags.include?(x.downcase)
+        "<span class='label label-info tag'>#{x}</span>"
       elsif Tag.bad_tags.include?(x.downcase)
         nil
       else
-        "<span class='label label-default tag'>#{x}</span>"
+        "<span class='label label-default tag' title='このタグを削除' value='#{ERB::Util.url_encode(x.downcase)}'>#{x} x</span>"
       end
     end.compact.join(" ")
   end
 
   def format_only_major_tags(tag_text, words)
     tag_text.to_s.split(",").map do |x|
-      if Tag.good_tags.include?(x.downcase)
-        "<span class='label label-success tag'>#{x}</span>"
+      if Tag.verygood_tags.include?(x.downcase)
+        "<span class='label label-warning tag'>#{x}</span>"
+      elsif Tag.good_tags.include?(x.downcase)
+        "<span class='label label-info tag'>#{x}</span>"
       else
         nil
       end
