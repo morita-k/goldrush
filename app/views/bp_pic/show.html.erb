@@ -100,7 +100,7 @@
 <% end %><%# accordion_around %>
 <div class="submit_box">
   <%= back_to_link '編集', {:action => 'edit', :id => @bp_pic}, btn_primary %>
-  <%= delete_to '削除', @bp_pic, btn_primary%>
+  <%= delete_to '削除', @bp_pic, 'destroy', btn_primary%>
   <%= link_or_back '戻る', :action => 'list' %>
 </div>
 
