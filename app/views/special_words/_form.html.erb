@@ -1,3 +1,4 @@
+<div class="submit_box">
 <%= form_for(@special_word) do |f| %>
 <%= hidden_field_tag 'back_to', back_to %>
 <%= f.hidden_field :lock_version %>
@@ -16,7 +17,7 @@
 <table class="form_table">
   <tr>
     <th><%= f.label :special_word_type, getLongName('special_words', 'special_word_type') %></th>
-    <td><%= f.text_field :special_word_type %></td>
+    <td><%= f.select :special_word_type, TypeUtil.getTypeConditions('special_word_type') %></td>
   </tr>
   <tr>
     <th><%= f.label :target_word, getLongName('special_words', 'target_word') %></th>
@@ -31,7 +32,10 @@
     <td><%= f.text_field :memo %></td>
   </tr>
 </table>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+</div>
+<div class=submit_box>
+<%= submit_tag '登録', btn_primary %>
+
+<%= link_or_back '戻る', special_words_path %>
+</div>
 <% end %>

@@ -3,7 +3,17 @@ class SpecialWordsController < ApplicationController
   # GET /special_words
   # GET /special_words.json
   def index
-    @special_words = SpecialWord.where(deleted: 0).page(params[:page]).per(50)
+    session[:special_words_search] ||= {}
+    if params[:search_button]
+      set_conditions
+    elsif params[:clear_button]
+      session[:special_words_search] = {}
+    end
+
+    # 検索条件を処理
+    cond, order_by = make_conditions
+    
+    @special_words = SpecialWord.where(cond).order(order_by).page(params[:page]).per(current_user.per_page)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -47,7 +57,7 @@ class SpecialWordsController < ApplicationController
     respond_to do |format|
       begin
         @special_word.save!
-        format.html { redirect_to @special_word, notice: 'Special word was successfully created.' }
+        format.html { redirect_to((back_to || @special_word), notice: 'Special word was successfully created.') }
         format.json { render json: @special_word, status: :created, location: @special_word }
       rescue ActiveRecord::RecordInvalid
         format.html { render action: "new" }
@@ -66,7 +76,7 @@ class SpecialWordsController < ApplicationController
     respond_to do |format|
       begin
         @special_word.save!
-        format.html { redirect_to @special_word, notice: 'Special word was successfully updated.' }
+        format.html { redirect_to((back_to || @special_word), notice: 'Special word was successfully updated.') }
         format.json { head :no_content }
       rescue ActiveRecord::RecordInvalid
         format.html { render action: "edit" }
@@ -87,5 +97,25 @@ class SpecialWordsController < ApplicationController
       format.html { redirect_to special_words_url }
       format.json { head :no_content }
     end
+  end
+  private
+
+  def set_conditions
+    session[:special_words_search] = {
+      :special_word_type => params[:special_word_type]
+    }
+  end
+
+  def make_conditions(session_params = session[:special_words_search])
+    param = []
+    sql = "deleted = 0"
+    order_by = "special_word_type, id desc"
+    
+    if !(x = session_params[:special_word_type]).blank?
+      sql += " and special_word_type = ?"
+      param << x
+    end
+    
+    return [param.unshift(sql), order_by]
   end
 end
