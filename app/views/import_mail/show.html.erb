@@ -45,7 +45,7 @@
     <th><%= getLongName('import_mails', 'received_at') %></th><td><%=h _time_long(@import_mail.received_at) %></td>
   </tr>
   <tr>
-    <th><%= getLongName('import_mails', 'tag_text') %></th><td><%=raw format_tags(@import_mail.tag_text, @major_words) %></td>
+    <th><%= getLongName('import_mails', 'tag_text') %></th><td><% if @import_mail.proper? then %><span class="label label-danger tag">社員</span> <%end%><%=raw format_tags(@import_mail.tag_text, @major_words) %></td>
   </tr>
   <tr>
     <th><%= getLongName('import_mails', 'mail_subject') %></th><td><%=h @import_mail.mail_subject %></td>
