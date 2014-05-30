@@ -13,8 +13,11 @@ GoldRush::Application.routes.draw do
     end
   end
 
-  resources :tags
-
+  resources :tags do
+    collection do
+      post "fix"
+    end
+  end
 
   resources :mail_templates
 

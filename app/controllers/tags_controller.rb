@@ -5,7 +5,17 @@ class TagsController < ApplicationController
   # GET /tags
   # GET /tags.json
   def index
-    @tags = Tag.where(deleted: 0, tag_key: "import_mails").order("tag_count desc, display_order1 desc").page(params[:page]).per(50)
+    session[:tags_search] ||= {}
+    if params[:search_button]
+      set_conditions
+    elsif params[:clear_button]
+      session[:tags_search] = {}
+    end
+
+    # 検索条件を処理
+    cond, order_by = make_conditions
+    
+    @tags = Tag.where(cond).order(order_by).page(params[:page]).per(current_user.per_page)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -89,6 +99,50 @@ class TagsController < ApplicationController
       format.html { redirect_to tags_url }
       format.json { head :no_content }
     end
+  end
+
+  def fix
+    if params[:tag_id]
+      tag = Tag.find(params[:tag_id])
+    else
+      tag = Tag.where("deleted = 0 and tag_text = ?", params[:tag]).first
+    end
+    tag.starred = params[:starred] || 3
+    tag.save!
+    render :text => "OK", :layout => false
+  end
+
+  private
+
+  def set_conditions
+    session[:tags_search] = {
+      :tag_key => params[:tag_key],
+      :tag_text => params[:tag_text],
+      :starred => params[:starred]
+    }
+  end
+
+  def make_conditions(session_params = session[:tags_search])
+    param = []
+    sql = "deleted = 0"
+    order_by = "tag_key desc, tag_count desc, display_order1 desc"
+    
+    if !(x = session_params[:tag_key]).blank?
+      sql += " and tag_key = ?"
+      param << x
+    end
+    
+    if !(x = session_params[:tag_text]).blank?
+      sql += " and tag_text = ?"
+      param << x
+    end
+    
+    if !(x = session_params[:starred]).blank?
+      sql += " and starred = ?"
+      param << x
+    end
+    
+    return [param.unshift(sql), order_by]
   end
 end
 
