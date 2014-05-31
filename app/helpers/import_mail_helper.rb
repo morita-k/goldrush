@@ -104,7 +104,7 @@ module ImportMailHelper
       elsif Tag.bad_tags.include?(x.downcase)
         nil
       else
-        "<span class='label label-default tag' title='このタグを削除' value='#{ERB::Util.url_encode(x.downcase)}'>#{x} x</span>"
+        "<span class='label label-default tag' title='このタグを削除' value='#{x.downcase}'>#{x} x</span>"
       end
     end.compact.join(" ")
   end
