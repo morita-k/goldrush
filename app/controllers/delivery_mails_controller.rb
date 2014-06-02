@@ -85,7 +85,6 @@ class DeliveryMailsController < ApplicationController
         @delivery_mail.content += <<EOS
 
 
---
 #{current_user.mail_signature}
 EOS
       end
@@ -98,7 +97,6 @@ EOS
         @delivery_mail.content += <<EOS
 
 
---
 #{current_user.mail_signature}
 EOS
       end
@@ -305,7 +303,6 @@ EOS
     unless sales_pic.mail_signature.blank?
       @delivery_mail.content += <<EOS
 
--- 
 #{sales_pic.mail_signature}
 EOS
     end
