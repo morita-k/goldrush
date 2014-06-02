@@ -13,15 +13,15 @@ class Tag < ActiveRecord::Base
     tags && tags.split(",").size > 1
   end
 
-  def Tag.make_conditions_for_tag(tags, tag_key)
+  def Tag.make_conditions_for_tag(tags, tag_key, min_id)
     sqls = []
-    sql_params = [tag_key]
+    sql_params = [tag_key, min_id]
     tags.split(",").each do |tag|
       sqls << "tag_details.tag_text = ?"
       sql_params << tag.strip.downcase
     end
 
-    my_sql = "select parent_id, count(parent_id) as cnt from tag_details where tag_key = ? and (#{sqls.join(' or ')}) group by parent_id having count(parent_id) > ?"
+    my_sql = "select parent_id, count(parent_id) as cnt from tag_details where tag_key = ? and parent_id > ? and (#{sqls.join(' or ')}) group by parent_id having count(parent_id) > ?"
     sql_params << (sqls.size - 1)
     parent_ids = TagDetail.find_by_sql(sql_params.unshift(my_sql)).map{|x| x.parent_id}
     return parent_ids

@@ -17,10 +17,7 @@
         <%= star_links import_mail %> <%= link_to_detail(import_mail, request_url) %>
       </div>
     </td>
-    <td style="overflow: hidden">
-      <div class="overflow_hidden">
-        <span style="line-height: 90%;"><% if import_mail.proper? then %><span class="label label-danger tag">社員</span> <%end%><%= raw format_only_major_tags(import_mail.tag_text, @major_words) %></span></div>
-    </td>
+    <%= render :partial => "td_tags", :locals => {:import_mail => import_mail} %>
     <td><div style="width:2.5em"><%=man import_mail.payment %></div></td>
     <td><div style="width:2.5em"><%=_age(import_mail.age) %></div></td>
     <td style="overflow: hidden;">

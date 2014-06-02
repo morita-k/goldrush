@@ -1,0 +1,83 @@
+<%= accordion_around(getLongName('table_name','import_mails')+"マッチング", "") do %>
+  <% param = session[:import_mail_match] %>
+<%= form_tag do %>
+<table class="form_table">
+    <tr>
+      <th><i class="fa fa-angle-double-right "></i>フラグ</th>
+      <td>
+        <%= check_box_tag 'proper_flg', 1, param[:proper_flg].to_i == 1 %> プロパー
+        <%= check_box_tag 'starred', 1, param[:starred].to_i == 1 %> スター
+      </td>
+    </tr>
+    <tr>
+      <th><i class="fa fa-angle-double-right "></i>タグ</th>
+      <td><%= text_field_tag 'tag', param[:tag]%><br>
+        <%= verygood_tags %>
+      </td>
+    </tr>
+    <tr>
+      <th><i class="fa fa-angle-double-right "></i>単価</th>
+      <td class="bounds_input">
+        <%= text_field_tag 'payment_from', param[:payment_from]%>万 ～
+        <%= text_field_tag 'payment_to', param[:payment_to]%>万
+      </td>
+    </tr>
+    <tr>
+      <th><i class="fa fa-angle-double-right "></i>年齢</th>
+      <td class="bounds_input">
+        <%= text_field_tag 'age_from', param[:age_from]%>歳 ～
+        <%= text_field_tag 'age_to', param[:age_to]%>歳
+      </td>
+    </tr>
+    <tr>
+      <th><i class="fa fa-angle-double-right "></i>フリーワード</th>
+      <td>
+        <%= text_field_tag 'free_word', param[:free_word]%>
+      </td>
+    </tr>
+    <tr>
+      <th><i class="fa fa-angle-double-right "></i>対象日数</th>
+      <td>
+        <%= select_tag 'days', options_for_select((1..30).to_a, (param[:days] || 7))%>
+      </td>
+    </tr>
+    <tr>
+      <th colspan="2">
+        <%= submit_tag '　　検索　　', btn_warning(:name => 'search_button') %> <%= submit_tag '　　クリア　　', btn_default(:name => 'clear_button') %>
+      </th>
+    </tr>
+</table>
+<% end %>
+<% end %>
+
+<div class="row">
+  <div class="col-md-6">
+    <table class="list_table table-bordered table-hover">
+      <tr><th colspan=4>人材メール</th></tr>
+      <% @hr_mails.each do |import_mail| %>
+        <tr>
+          <td style="width:6em"><%= import_mail.bp_pic_id.blank? ? "☆☆" : star_links(import_mail.business_partner, import_mail.business_partner.business_partner_name) + star_links(import_mail.bp_pic, import_mail.bp_pic.bp_pic_name) %><%= star_links(import_mail, import_mail.mail_subject) %>
+          <%= back_to_link raw('<i class="glyphicon glyphicon-log-in"></i>'), :action => :show, :id => import_mail %></td>
+        <%= render :partial => "td_tags", :locals => {:import_mail => import_mail} %>
+        <td><div style="width:2.5em"><%=_age(import_mail.age) %></div></td>
+        <td><div style="width:3.5em"><%=man import_mail.payment %></div></td>
+      </tr>
+    <% end %>
+    </table><%# list_table %>
+  </div>
+  <div class="col-md-6">
+    <table class="list_table table-bordered table-hover">
+      <tr><th colspan=4>案件メール</th></tr>
+      <% @biz_mails.each do |import_mail| %>
+        <tr>
+          <td><div style="width:3.5em"><%=man import_mail.payment %></div></td>
+          <td><div style="width:2.5em"><%=_age(import_mail.age) %></div></td>
+          <%= render :partial => "td_tags", :locals => {:import_mail => import_mail} %>
+          <td style="width:6em"><%= import_mail.bp_pic_id.blank? ? "☆☆" : star_links(import_mail.business_partner, import_mail.business_partner.business_partner_name) + star_links(import_mail.bp_pic, import_mail.bp_pic.bp_pic_name) %><%= star_links(import_mail, import_mail.mail_subject) %>
+          <%= back_to_link raw('<i class="glyphicon glyphicon-log-in"></i>'), :action => :show, :id => import_mail %></td>
+      </tr>
+    <% end %>
+    </table><%# list_table %>
+  </div>
+</div>
+<%= render :partial => 'js' %>

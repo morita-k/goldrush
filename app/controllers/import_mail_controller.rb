@@ -13,7 +13,7 @@ class ImportMailController < ApplicationController
 #         :redirect_to => { :action => :list }
          
   def set_conditions
-    session[:import_mail_search] = {
+    {
       :biz_offer_flg => params[:biz_offer_flg],
       :bp_member_flg => params[:bp_member_flg],
       :unwanted => params[:unwanted],
@@ -27,112 +27,123 @@ class ImportMailController < ApplicationController
       :age_from => params[:age_from],
       :age_to => params[:age_to],
       :free_word => params[:free_word],
+      :days => params[:days] || 7,
       :date_limit => 1,
     }
   end
 
-  def make_conditions_for_tag(tags)
-    Tag.make_conditions_for_tag(tags, "import_mails")
+  def make_conditions_for_tag(tags, min_id)
+    Tag.make_conditions_for_tag(tags, "import_mails", min_id)
   end
 
-  def make_conditions
+  def make_conditions(cond_param)
     sql_params = []
     incl = []
     joins = []
     sql = "import_mails.deleted = 0"
+
+    before_days = cond_param[:days].to_i if cond_param[:days].to_i > 0
+    if (before_days = before_days || SysConfig.get_import_mail_date_limit).blank?
+      before_days = 30
+    end
+    date_now = Date.today.next_day(1).to_datetime
+    date_before = Date.today.prev_day(before_days).to_datetime
+    unless cond_param[:date_limit].blank?
+      sql += " and (received_at BETWEEN ? AND ?)"
+      sql_params << date_before << date_now
+    end
 
     if params[:id]
       sql += " and business_partner_id = ?"
       sql_params << params[:id]
     end
 
-    if !(session[:import_mail_search][:biz_offer_flg]).blank?
+    if !(cond_param[:biz_offer_flg]).blank?
       sql += " and biz_offer_flg = 1"
     end
 
-    if !(session[:import_mail_search][:bp_member_flg]).blank?
+    if !(cond_param[:bp_member_flg]).blank?
       sql += " and bp_member_flg = 1"
     end
 
-    if !(session[:import_mail_search][:unwanted]).blank?
+    if !(cond_param[:unwanted]).blank?
       sql += " and unwanted = 1"
     end
 
-    if !(session[:import_mail_search][:registed]).blank?
+    if !(cond_param[:registed]).blank?
       sql += " and registed = 1"
     end
     
-    if !(session[:import_mail_search][:proper_flg]).blank?
+    if !(cond_param[:proper_flg]).blank?
       sql += " and proper_flg = 1"
     end
     
-    unless session[:import_mail_search][:tag].blank?
-      pids = make_conditions_for_tag(session[:import_mail_search][:tag])
+    unless cond_param[:tag].blank?
+      last_import_mail = ImportMail.where("received_at > ?", date_before).order("id").first
+      pids = make_conditions_for_tag(cond_param[:tag], last_import_mail)
       unless pids.empty?
         sql += " and import_mails.id in (?) "
         sql_params += [pids]
       end
     end
 
-    unless session[:import_mail_search][:starred].blank?
-      sql += " and starred > 0"
+    unless cond_param[:starred].blank?
+      sql += " and starred > 2"
     end
 
-    unless session[:import_mail_search][:outflow_mail_flg].blank?
+    unless cond_param[:outflow_mail_flg].blank?
       sql += " and outflow_mail_flg = 1"
     end
 
-    unless (payment_from = session[:import_mail_search][:payment_from]).blank?
+    unless (payment_from = cond_param[:payment_from]).blank?
       sql += " and payment >= ? "
       sql_params << payment_from
     end
 
-    unless (payment_to = session[:import_mail_search][:payment_to]).blank?
+    unless (payment_to = cond_param[:payment_to]).blank?
       sql += " and payment <= ? "
       sql_params << payment_to
     end
 
-    unless (age_from = session[:import_mail_search][:age_from]).blank?
+    unless (age_from = cond_param[:age_from]).blank?
       sql += " and age >= ? "
       sql_params << age_from
     end
 
-    unless (age_to = session[:import_mail_search][:age_to]).blank?
+    unless (age_to = cond_param[:age_to]).blank?
       sql += " and age <= ? "
       sql_params << age_to
     end
 
-    unless (free_word = session[:import_mail_search][:free_word]).blank?
+    unless (free_word = cond_param[:free_word]).blank?
       free_word.split.each do |word|
         sql += " and (concat(mail_subject, '-', mail_body) like ?) "
         sql_params << '%' + word + '%'
       end
     end
 
-    unless session[:import_mail_search][:date_limit].blank?
-      if (before_days = SysConfig.get_import_mail_date_limit).blank?
-        before_days = 30
-      end
-      date_now = Date.today.next_day(1).to_datetime.strftime('%F %T')
-      date_before = Date.today.prev_day(before_days).to_datetime.strftime('%F %T')
-      sql += " and received_at BETWEEN '" + date_before + "' AND '" + date_now + "'"
-    end
-
     return [sql_params.unshift(sql), incl, joins]
   end
 
-  def list
-    session[:import_mail_search] ||= {}
+  def init_session(key)
+    session[key] ||= {}
     if request.post?
       if params[:search_button]
-        set_conditions
+        session[key] = set_conditions
       elsif params[:clear_button]
-        session[:import_mail_search] = {}
+        session[key] = {}
         redirect_to
         return false
       end
     end
-    cond, incl, joins = make_conditions
+    return true
+  end
+
+  def list
+    unless init_session(:import_mail_search)
+      return false
+    end
+    cond, incl, joins = make_conditions(session[:import_mail_search])
 
     @import_mails = ImportMail.includes(incl).joins(joins)
                                              .where(cond)
@@ -141,35 +152,36 @@ class ImportMailController < ApplicationController
                                              .per(current_user.per_page)
   end
 
+  def matching
+    unless init_session(:import_mail_match)
+      return false
+    end
+
+    param = session[:import_mail_match].dup
+    param.delete(:bp_member_flg)
+    param.delete(:proper_flg)
+    param[:biz_offer_flg] = 1
+    cond, incl, joins = make_conditions(param)
+    @biz_mails = ImportMail.includes(incl).joins(joins)
+                                             .where(cond)
+                                             .order("payment desc")
+                                             .page(params[:page])
+                                             .per(current_user.per_page)
+    param = session[:import_mail_match].dup
+    param.delete(:biz_offer_flg)
+    param[:bp_member_flg] = 1
+    cond, incl, joins = make_conditions(param)
+    @hr_mails = ImportMail.includes(incl).joins(joins)
+                                             .where(cond)
+                                             .order("payment")
+                                             .page(params[:page])
+                                             .per(current_user.per_page)
+  end
+
   def set_order
     session[:import_mail_order] = {
       :order => params[:order]
       }
-  end
-
-  def list_by_from
-    session[:import_mail_order] ||= {}
-    if request.post?
-      set_order
-    end
-    if !(x = session[:import_mail_order][:order]).blank?
-      case x
-        when "count"
-          order = "count(*) desc"
-        when "fifty"
-          order = "mail_from"
-        when "time"
-          order = "max(received_at) desc"
-      else
-        order = "count(*) desc"
-      end
-    else
-      order = "count(*) desc"
-    end
-    @import_mail_pages, @import_mails = paginate :import_mails, :select => "*, count(*) count, max(business_partner_id) bizp_id, max(bp_pic_id) bpic_id, max(received_at) recv_at",
-                                                                :conditions => "deleted = 0", :group => "mail_from",
-                                                                :order => order,
-                                                                :per_page => current_user.per_page
   end
 
   def show

@@ -95,29 +95,35 @@ module ImportMailHelper
     link_to text, url_for(:controller => :bp_pic, :action => :new, :popup => 1, :import_mail_id => import_mail, :business_partner_id => import_mail.business_partner_id), :class => "btn btn-primary btn-medium"
   end
   
+  def verygood_tags
+    res = Tag.verygood_tags.map do |x|
+      "<span class='label label-warning tag'>#{x}</span>"
+    end.sort.join(" ")
+    raw res
+  end
   def format_tags(tag_text, words)
     tag_text.to_s.split(",").map do |x|
       if Tag.verygood_tags.include?(x.downcase)
-        "<span class='label label-warning tag'>#{x}</span>"
+        "<span class='x1 label label-warning tag'>#{x}</span>"
       elsif Tag.good_tags.include?(x.downcase)
-        "<span class='label label-info tag'>#{x}</span>"
+        "<span class='x2 label label-info tag'>#{x}</span>"
       elsif Tag.bad_tags.include?(x.downcase)
         nil
       else
-        "<span class='label label-default tag' title='このタグを削除' value='#{x.downcase}'>#{x} x</span>"
+        "<span class='x3 label label-default tag' title='このタグを削除' value='#{x.downcase}'>#{x} x</span>"
       end
-    end.compact.join(" ")
+    end.compact.sort.join(" ")
   end
 
   def format_only_major_tags(tag_text, words)
     tag_text.to_s.split(",").map do |x|
       if Tag.verygood_tags.include?(x.downcase)
-        "<span class='label label-warning tag'>#{x}</span>"
+        "<span class='x1 label label-warning tag'>#{x}</span>"
       elsif Tag.good_tags.include?(x.downcase)
-        "<span class='label label-info tag'>#{x}</span>"
+        "<span class='x2 label label-info tag'>#{x}</span>"
       else
         nil
       end
-    end.compact.join(" ")
+    end.compact.sort.join(" ")
   end
 end
