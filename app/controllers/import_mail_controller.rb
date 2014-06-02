@@ -83,22 +83,22 @@ class ImportMailController < ApplicationController
     end
 
     unless (payment_from = session[:import_mail_search][:payment_from]).blank?
-      sql += " and payment_text >= ? "
+      sql += " and payment >= ? "
       sql_params << payment_from
     end
 
     unless (payment_to = session[:import_mail_search][:payment_to]).blank?
-      sql += " and payment_text <= ? "
+      sql += " and payment <= ? "
       sql_params << payment_to
     end
 
     unless (age_from = session[:import_mail_search][:age_from]).blank?
-      sql += " and age_text >= ? "
+      sql += " and age >= ? "
       sql_params << age_from
     end
 
     unless (age_to = session[:import_mail_search][:age_to]).blank?
-      sql += " and age_text <= ? "
+      sql += " and age <= ? "
       sql_params << age_to
     end
 

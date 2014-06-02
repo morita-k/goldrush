@@ -21,8 +21,8 @@
       <div class="overflow_hidden">
         <span style="line-height: 90%;"><% if import_mail.proper? then %><span class="label label-danger tag">社員</span> <%end%><%= raw format_only_major_tags(import_mail.tag_text, @major_words) %></span></div>
     </td>
-    <td><div style="width:2.5em"><%=import_mail.payment_text %></div></td>
-    <td><div style="width:2.5em"><%=_age(import_mail.age_text) %></div></td>
+    <td><div style="width:2.5em"><%=man import_mail.payment %></div></td>
+    <td><div style="width:2.5em"><%=_age(import_mail.age) %></div></td>
     <td style="overflow: hidden;">
       <div style="overflow: hidden;width:3em">
         <div rel="station_name" style="width:1000px;" title="<%=import_mail.nearest_station%>"><%= import_mail.nearest_station_short %></div>
