@@ -1,0 +1,5 @@
+    <td style="overflow: hidden">
+      <div class="overflow_hidden">
+        <span style="line-height: 90%;"><% if import_mail.proper? then %><span class="label label-danger tag">社員</span> <%end%><%= raw format_only_major_tags(import_mail.tag_text, @major_words) %></span></div>
+    </td>
+

@@ -52,9 +52,9 @@
   </tr>
   <tr>
     <th><%= f.label :mail_from, getLongName('delivery_mails', 'mail_from') %></th>
-    <td><%=h (@delivery_mail.formated_mail_from) %></td>
-    <%= hidden_field 'delivery_mail', 'mail_from_name' %>
-    <%= hidden_field 'delivery_mail', 'mail_from' %>
+    <td>
+      <%= f.select :formated_mail_from, mail_from_list %>
+    </td>
   </tr>
   <tr>
     <th><%= f.label :mail_cc, getLongName('delivery_mails', 'mail_cc') %></th>

@@ -157,7 +157,7 @@ module StringUtil
   end
   
   def StringUtil.detect_payments(body)
-    StringUtil.detect_regex(body, /[0-9]+[万]/)
+    StringUtil.detect_regex(body, /[0-9.]+[万]/)
   end
   
   def StringUtil.detect_payments_value(body)

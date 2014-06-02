@@ -9,7 +9,7 @@ module ApplicationHelper
   include TypeUtil
 
   def man(amount)
-    "#{amount.to_i}万"
+    "#{amount.to_i}万" if amount && amount > 0
   end
 
   def around_b(str)
@@ -145,7 +145,7 @@ module ApplicationHelper
   def _age(age)
     # 「歳」が二重に表示された場合、DBに入ってるデータがおかしい
     # DBに入れる段階で数値（String）のみにしておくこと
-    age.blank? ? age : age + "歳"
+    age.blank? ? age :  "#{age}歳"
   end
 
   def logged_in?
