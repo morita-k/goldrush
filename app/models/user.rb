@@ -19,6 +19,10 @@ class User < ActiveRecord::Base
 
   after_save :purge_cache
 
+  def formated_mail_from
+    "#{employee.employee_name} <#{email}>"
+  end
+
   def purge_cache
     User.purge_cache
   end

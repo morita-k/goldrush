@@ -85,7 +85,6 @@ class DeliveryMailsController < ApplicationController
         @delivery_mail.content += <<EOS
 
 
---
 #{current_user.mail_signature}
 EOS
       end
@@ -98,7 +97,6 @@ EOS
         @delivery_mail.content += <<EOS
 
 
---
 #{current_user.mail_signature}
 EOS
       end
@@ -293,7 +291,7 @@ EOS
     @delivery_mail = DeliveryMail.new
     #@delivery_mail.bp_pic_group_id = params[:id]
     unless sales_pic = BpPic.find(params[:bp_pic_ids][0]).sales_pic
-      raise ValidationAbort.new("Contact mail method is wants sales_pic id.")
+      sales_pic = current_user
     end
     @delivery_mail.content = ""
     if t = sales_pic.contact_mail_template
@@ -305,7 +303,6 @@ EOS
     unless sales_pic.mail_signature.blank?
       @delivery_mail.content += <<EOS
 
--- 
 #{sales_pic.mail_signature}
 EOS
     end

@@ -62,7 +62,7 @@
   <th><%= getLongName('bp_pics', 'sales_pic_id') %></th><td><%=@bp_pic.sales_pic_name %></td>
 </tr>
 <tr>
-  <th><%= getLongName('bp_pics', 'contact_mail_flg') %></th><td><%=@bp_pic.contact_mail_status %><% if @bp_pic.sales_pic %> (<%= back_to_link @bp_pic.contact_mail_flg == 1 ? "即席メールを送る " : "あいさつメールを送る", :controller => :delivery_mails, :action => :contact_mail_new, :bp_pic_ids => [@bp_pic.id] %>)<% end %></td>
+  <th><%= getLongName('bp_pics', 'contact_mail_flg') %></th><td><%=@bp_pic.contact_mail_status %>(<%= back_to_link @bp_pic.contact_mail_flg == 1 ? "即席メールを送る " : "あいさつメールを送る", :controller => :delivery_mails, :action => :contact_mail_new, :bp_pic_ids => [@bp_pic.id] %>)</td>
 </tr>
 <tr>
   <th><%= getLongName('bp_pics', 'nondelivery_score') %></th><td><%=@bp_pic.nondelivery_score %><%= @bp_pic.nondelivery? ? '(メール停止)' : '' %></td>

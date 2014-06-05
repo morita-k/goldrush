@@ -42,4 +42,8 @@ module DeliveryMailsHelper
   def get_bp_member_name
     BpMember.find(@delivery_mail.bp_member_id)
   end
+
+  def mail_from_list
+    User.includes(:employee).where("users.deleted = 0 and employees.resignation_date is null").map {|x| [x.formated_mail_from]}
+  end
 end

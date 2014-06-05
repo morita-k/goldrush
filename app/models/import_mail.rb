@@ -255,7 +255,7 @@ class ImportMail < ActiveRecord::Base
   end
 
   def detect_payments_in(body)
-    result_payments = StringUtil.detect_payments(body).sort
+    result_payments = StringUtil.detect_payments(body).map{|x| x.split("万")[0].to_f }.sort
     #案件だったら最大単価を取得、人材だったら最小単価を取得する。
     self.biz_offer_flg == 1 ? result_payments.reverse.first : result_payments.first
   end
@@ -295,8 +295,8 @@ class ImportMail < ActiveRecord::Base
   # タグ解析
   #
   def analyze(body = Tag.pre_proc_body(pre_body))
-    self.age_text = detect_ages_in(body)
-    self.payment_text = detect_payments_in(body)
+    self.age = detect_ages_in(body)
+    self.payment = detect_payments_in(body)
     self.nearest_station = detect_nearest_station_in(body)
     self.tag_text = make_tags(body)
     self.proper_flg = detect_proper_in(body) ? 1 : 0
@@ -461,8 +461,8 @@ class ImportMail < ActiveRecord::Base
     File.open(file_name,"w") do |f|
       where(:deleted => 0).each do |mail|
          mail.analyze
-         f.puts "age: #{mail.age_text}"
-         f.puts "pay: #{mail.payment_text}"
+         f.puts "age: #{mail.age}"
+         f.puts "pay: #{mail.payment}"
          f.puts "ner: #{mail.nearest_station}"
          f.puts "tag: #{mail.tag_text}"
       end
@@ -492,14 +492,6 @@ class ImportMail < ActiveRecord::Base
     (criterion.nil? || mail_address_str.blank?) ? false : (mail_address_str.split(",").length >= criterion)
   end
 
-  # DBにある既存データ全ての年齢を正規化する。
-  def ImportMail.to_normalize_age_all!
-    ImportMail.where("age_text is not null").reject{|mail| mail.age_text.blank?}.map{|mail|
-      mail.age_text = HumanResource.normalize_age(mail.age_text)
-      mail.save!
-    }
-  end
-  
 private
   def ImportMail.get_encode_body(mail, body)
     if mail.content_transfer_encoding == 'ISO-2022-JP'

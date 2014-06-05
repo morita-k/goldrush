@@ -57,10 +57,8 @@
   <tr>
     <td>
       <%= link_to (getLongName('table_name','business_partners')+'/'+getLongName('table_name','bp_pics')+'の新規作成'), {:controller => :business_partner, :action => 'new', :flg => params[:flg], :back_to => request.env['REQUEST_URI']}, {:class => "btn btn-primary btn-midium"} %>
-      <%= link_to "選択した取引先担当をグループに追加", "#addGroupModal", {:rel => "leanModal", :class => "btn btn-primary btn-midium"} %>
-      <%= submit_tag 'あいさつメール作成', :name => "contact_mail_new_button" ,:onclick => "if(!checkTest()){return false;}", :class => "btn btn-primary btn-midium"%>
       <% unless popup? %>
-        <input type=button value='会社チェック支援機能' onClick="disp_full('<%=url_for_bp_pic_input_popup%>');return false;" class="btn btn-info btn-midium" />
+        <input type=button value='検索結果に対して会社チェックする' onClick="disp_full('<%=url_for_bp_pic_input_popup%>');return false;" class="btn btn-info btn-midium" />
       <% end %>
     </td>
   </tr>
@@ -98,14 +96,24 @@
   <thead>
     <tr>
       <% if !popup? %>
-        <th></th>
+        <th>
+          <div class="btn-group btn-xs">
+              <button type="button" class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown">
+                <i class="glyphicon glyphicon-check"></i>
+              </button>
+              <ul class="dropdown-menu" role="menu">
+                <li><%= link_to "グループに追加", "#addGroupModal", {:rel => "leanModal"} %></li>
+                <li><%= link_to 'メール作成', "#", :name => "contact_mail_new_button" ,:onclick => "if(checkTest()){var f=document.forms[1];f.action='#{url_for :controller => :bp_pic, :action => :proc_bp_pic_ids, :contact_mail_new_button => 1}';f.submit();return false;}else{return false;}" %></li>
+              </ul>
+            </div>
+        </th>
     <% end %>
       <th><%=getShortName('bp_pics', 'business_partner_id') %></th>
       <th <%= !popup? && "colspan=2"%>><%=getShortName('bp_pics', 'bp_pic_name') %></th>
       <th class="hidden-xs"><%=getShortName('bp_pics', 'email1') %></th>  
       <% unless popup? %>
         <th>営業</th>
-      <th>あ</th>
+        <th><i class="glyphicon glyphicon-envelope"></i></th>
       <th>更新</th>
     <% end %>
     </tr>
@@ -135,7 +143,7 @@
     <% unless popup? %>
       <td><%= bp_pic.sales_pic_name %></td>
     <td style="text-align:center;">
-      <%= back_to_link(image_tag(bp_pic.contact_mail? ? 'icon-check.png' : 'icon-emailforward.png'), {:controller => :delivery_mails, :action => :contact_mail_new, :bp_pic_ids => [bp_pic.id]},{:class => 'sales_pic', :name => (bp_pic.sales_pic.blank? ? "" : bp_pic.sales_pic.id.to_s), :title => "担当営業：" + (bp_pic.sales_pic.blank? ? "未設定" : bp_pic.sales_pic_name), :onclick => "if(this.name == ''){alert('担当営業が設定されていません');return false;}"}) %>
+      <%= back_to_link(image_tag(bp_pic.contact_mail? ? 'icon-check.png' : 'icon-emailforward.png'), {:controller => :delivery_mails, :action => :contact_mail_new, :bp_pic_ids => [bp_pic.id]},{:class => 'sales_pic', :name => (bp_pic.sales_pic.blank? ? "" : bp_pic.sales_pic.id.to_s), :title => "担当営業：" + (bp_pic.sales_pic.blank? ? "未設定" : bp_pic.sales_pic_name)}) %>
     </td>
     <td><%=h _time(bp_pic.updated_at) %></td>
   <% end %>

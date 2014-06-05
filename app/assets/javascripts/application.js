@@ -35,23 +35,6 @@ function checkTest(){
 		alert('取引先担当者を選択してください。');
 		return false;
 	}
-	var errors = [];
-	var sales = [];
-	$.each(ids, function(i, obj) {
-		var sales_pic = $(obj).closest("tr").find("a.sales_pic")[0].name;
-		if(sales_pic.length == 0){
-			errors.push(">" + $(obj).closest("tr").find("a.bp_name").html() + " " + $(obj).closest("tr").find("a.bp_pic_name").html());
-		};
-		sales.push(sales_pic);
-	});
-	if(errors.length > 0){
-		alert("担当営業が設定されていません。\n" + errors.join("\n"));
-		return false;
-	}
-	if($.unique(sales).length > 1){
-		alert("複数の取引先担当者にメールを送信する場合は、担当営業が同一である必要があります。\n担当営業を変更するか、担当営業毎に分けてメールを送信してください。")
-			return false;
-	}
 	return true;
 };
 

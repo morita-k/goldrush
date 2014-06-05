@@ -370,22 +370,6 @@ ActiveRecord::Schema.define(:version => 0) do
 
   add_index "bp_pics", ["id"], :name => "id", :unique => true
 
-  create_table "business_human_connections", :force => true do |t|
-    t.string   "connection_type", :limit => 40,                :null => false
-    t.integer  "import_mail_id",  :limit => 8,                 :null => false
-    t.integer  "biz_offer_id",    :limit => 8
-    t.integer  "bp_member_id",    :limit => 8
-    t.datetime "created_at",                                   :null => false
-    t.datetime "updated_at",                                   :null => false
-    t.integer  "lock_version",    :limit => 8,  :default => 0
-    t.string   "created_user",    :limit => 80
-    t.string   "updated_user",    :limit => 80
-    t.datetime "deleted_at"
-    t.integer  "deleted",                       :default => 0
-  end
-
-  add_index "business_human_connections", ["id"], :name => "id", :unique => true
-
   create_table "business_partners", :force => true do |t|
     t.integer  "owner_id",                                :limit => 8
     t.string   "sales_code",                              :limit => 80
@@ -518,26 +502,6 @@ ActiveRecord::Schema.define(:version => 0) do
 
   add_index "comments", ["id"], :name => "id", :unique => true
 
-  create_table "configurations", :force => true do |t|
-    t.integer  "owner_id",                :limit => 8
-    t.string   "config_section",          :limit => 40,                :null => false
-    t.string   "config_key",              :limit => 40,                :null => false
-    t.string   "value1"
-    t.string   "value2"
-    t.string   "value3"
-    t.text     "config_description_text"
-    t.datetime "created_at",                                           :null => false
-    t.datetime "updated_at",                                           :null => false
-    t.integer  "lock_version",            :limit => 8,  :default => 0
-    t.string   "created_user",            :limit => 80
-    t.string   "updated_user",            :limit => 80
-    t.datetime "deleted_at"
-    t.integer  "deleted",                               :default => 0
-  end
-
-  add_index "configurations", ["config_section", "config_key"], :name => "idx_configurations_3", :unique => true
-  add_index "configurations", ["id"], :name => "id", :unique => true
-
   create_table "contact_histories", :force => true do |t|
     t.integer  "owner_id",                  :limit => 8
     t.integer  "contact_user_id",           :limit => 8,                 :null => false
@@ -613,45 +577,45 @@ ActiveRecord::Schema.define(:version => 0) do
   add_index "contracts", ["id"], :name => "id", :unique => true
 
   create_table "daily_report_summaries", :force => true do |t|
-    t.integer  "owner_id",                 :limit => 8
-    t.integer  "user_id",                  :limit => 8,                 :null => false
-    t.date     "report_date",                                           :null => false
-    t.integer  "succeed_count",            :limit => 8,  :default => 0
-    t.integer  "gross_profit_count",       :limit => 8,  :default => 0
-    t.integer  "interview_count",          :limit => 8,  :default => 0
-    t.integer  "new_meeting_count",        :limit => 8,  :default => 0
-    t.integer  "exist_meeting_count",      :limit => 8,  :default => 0
-    t.integer  "send_delivery_mail_count", :limit => 8,  :default => 0
-    t.datetime "created_at",                                            :null => false
-    t.datetime "updated_at",                                            :null => false
-    t.integer  "lock_version",             :limit => 8,  :default => 0
-    t.string   "created_user",             :limit => 80
-    t.string   "updated_user",             :limit => 80
+    t.integer  "owner_id",            :limit => 8
+    t.integer  "user_id",             :limit => 8,                 :null => false
+    t.date     "report_date",                                      :null => false
+    t.integer  "succeeds",            :limit => 8,  :default => 0
+    t.integer  "gross_profits",       :limit => 8,  :default => 0
+    t.integer  "interviews",          :limit => 8,  :default => 0
+    t.integer  "new_meetings",        :limit => 8,  :default => 0
+    t.integer  "exist_meetings",      :limit => 8,  :default => 0
+    t.integer  "send_delivery_mails", :limit => 8,  :default => 0
+    t.datetime "created_at",                                       :null => false
+    t.datetime "updated_at",                                       :null => false
+    t.integer  "lock_version",        :limit => 8,  :default => 0
+    t.string   "created_user",        :limit => 80
+    t.string   "updated_user",        :limit => 80
     t.datetime "deleted_at"
-    t.integer  "deleted",                                :default => 0
+    t.integer  "deleted",                           :default => 0
   end
 
   add_index "daily_report_summaries", ["id"], :name => "id", :unique => true
 
   create_table "daily_reports", :force => true do |t|
-    t.integer  "owner_id",                 :limit => 8
-    t.integer  "user_id",                  :limit => 8,                 :null => false
-    t.date     "report_date",                                           :null => false
-    t.integer  "succeed_count",            :limit => 8,  :default => 0
-    t.integer  "gross_profit_count",       :limit => 8,  :default => 0
-    t.integer  "interview_count",          :limit => 8,  :default => 0
-    t.integer  "new_meeting_count",        :limit => 8,  :default => 0
-    t.integer  "exist_meeting_count",      :limit => 8,  :default => 0
-    t.integer  "send_delivery_mail_count", :limit => 8,  :default => 0
+    t.integer  "owner_id",                :limit => 8
+    t.integer  "user_id",                 :limit => 8,                 :null => false
+    t.date     "report_date",                                          :null => false
+    t.integer  "succeeds",                :limit => 8,  :default => 0
+    t.integer  "gross_profits",           :limit => 8,  :default => 0
+    t.integer  "interviews",              :limit => 8,  :default => 0
+    t.integer  "new_meetings",            :limit => 8,  :default => 0
+    t.integer  "exist_meetings",          :limit => 8,  :default => 0
+    t.integer  "send_delivery_mails",     :limit => 8,  :default => 0
     t.text     "contact_matter"
-    t.string   "daily_report_input_type",  :limit => 40,                :null => false
-    t.datetime "created_at",                                            :null => false
-    t.datetime "updated_at",                                            :null => false
-    t.integer  "lock_version",             :limit => 8,  :default => 0
-    t.string   "created_user",             :limit => 80
-    t.string   "updated_user",             :limit => 80
+    t.string   "daily_report_input_type", :limit => 40,                :null => false
+    t.datetime "created_at",                                           :null => false
+    t.datetime "updated_at",                                           :null => false
+    t.integer  "lock_version",            :limit => 8,  :default => 0
+    t.string   "created_user",            :limit => 80
+    t.string   "updated_user",            :limit => 80
     t.datetime "deleted_at"
-    t.integer  "deleted",                                :default => 0
+    t.integer  "deleted",                               :default => 0
   end
 
   add_index "daily_reports", ["id"], :name => "id", :unique => true
@@ -1067,8 +1031,8 @@ ActiveRecord::Schema.define(:version => 0) do
     t.integer  "outflow_mail_flg",                          :default => 0
     t.integer  "starred",                                   :default => 0
     t.text     "tag_text"
-    t.string   "payment_text"
-    t.string   "age_text"
+    t.float    "payment"
+    t.integer  "age"
     t.text     "nearest_station",     :limit => 2147483647
     t.datetime "created_at",                                               :null => false
     t.datetime "updated_at",                                               :null => false
