@@ -15,7 +15,9 @@
     </tr>
     <tr>
       <th><i class="fa fa-angle-double-right "></i>タグ</th>
-      <td><%= text_field_tag 'tag', session[:import_mail_search][:tag]%></td>
+      <td><%= text_field_tag 'tag', session[:import_mail_search][:tag]%>
+        <%= verygood_tags %>
+      </td>
     </tr>
     <tr>
       <th><i class="fa fa-angle-double-right "></i>単価</th>
