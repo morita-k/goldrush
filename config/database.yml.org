@@ -14,10 +14,20 @@ development:
   reconnect: false
   database: grdev
   pool: 5
-#  username: trydevisedev
   username: grdev
   password: grdev
   socket: /var/run/mysqld/mysqld.sock
+
+second_development:
+  adapter: mysql2
+  encoding: utf8
+  reconnect: false
+  database: grdev_sub
+  pool: 5
+  username: grdev
+  password: grdev
+  socket: /var/run/mysqld/mysqld.sock
+  #host: localhost
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
