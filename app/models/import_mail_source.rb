@@ -1,4 +1,4 @@
 # -*- encoding: utf-8 -*-
-class ImportMailSource < ActiveRecord::Base
+class ImportMailSource < SecondConnection
   include AutoTypeName
 end
