@@ -126,4 +126,8 @@ module ImportMailHelper
       end
     end.compact.sort.join(" ")
   end
+
+  def show_stars(import_mail)
+     (import_mail.bp_pic_id.blank? ? raw("☆☆") : star_links(import_mail.business_partner, import_mail.business_partner.business_partner_name) + star_links(import_mail.bp_pic, import_mail.bp_pic.bp_pic_name)) + star_links(import_mail, import_mail.mail_subject) + " " + (back_to_link raw('<i class="glyphicon glyphicon-log-in"></i>'), :action => :show, :id => import_mail)
+  end
 end

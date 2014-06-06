@@ -38,3 +38,30 @@ function checkTest(){
 	return true;
 };
 
+$(function () {
+	$("input[type='radio'].starred_radio").on("change", function() {
+		var target_id = this.getAttribute("target_id");
+		var model = this.getAttribute("model");
+		var post_url = this.getAttribute("post_url");
+		if(!target_id){
+			//
+		}else{
+			$.post(post_url, {model: model, target_id: target_id, starred: this.value}, function(tag_tag){ return function(data, status, xhr){
+				//
+			}}(this));
+		}
+	});
+});
+
+$(function() {
+	$(".linked_star a").click(function () {
+		$.ajax({
+			type: "PUT",
+			url: this.getAttribute("href"),
+			success: function(data) {
+				eval(data);
+			}
+		});
+		return false;
+	});
+});

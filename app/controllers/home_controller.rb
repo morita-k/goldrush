@@ -20,7 +20,16 @@ class HomeController < ApplicationController
     color = star_colors[model.starred]
     attr_class = StarUtil.attr_class(model)
     respond_to do |format|
-      format.js { render :text => "Star.update('#{ attr_class }', '#{ color }')" }
+      format.js { render :text => "Star.update('#{ attr_class }', '#{ color }');" }
     end
   end
+
+  def fix
+    model = params[:model].constantize.find(params[:target_id])
+    model.starred = params[:starred] || 3
+    set_user_column model
+    model.save!
+    render :text => "OK", :layout => false
+  end
+
 end

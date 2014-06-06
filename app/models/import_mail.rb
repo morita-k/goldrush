@@ -287,6 +287,19 @@ class ImportMail < ActiveRecord::Base
     return false
   end
 
+  # 人材判定用特別単語でbodyを検索して1件でもhitすれば、人材メールと判断
+  def analyze_bp_member_flg(body)
+    if biz_offer_flg == 1
+      SpecialWord.bp_member_words.each do |word|
+        unless StringUtil.detect_words(body, word).empty?
+          self.biz_offer_flg = 0
+          self.bp_member_flg = 1
+          return
+        end
+      end
+    end
+  end
+
   #
   # 以下の項目に関して、メールの解析を行う
   # 年齢解析
@@ -295,6 +308,7 @@ class ImportMail < ActiveRecord::Base
   # タグ解析
   #
   def analyze(body = Tag.pre_proc_body(pre_body))
+    analyze_bp_member_flg(body)
     self.age = detect_ages_in(body)
     self.payment = detect_payments_in(body)
     self.nearest_station = detect_nearest_station_in(body)
