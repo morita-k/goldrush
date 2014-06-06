@@ -33,7 +33,7 @@
       <label class="btn btn-default">
         <%= radio_button_tag 'starred', "", search[:starred]  == "" %> 全部
       </label>
-      <%= star_radios(search[:starred]) %>
+      <%= tag_star_radios(search[:starred]) %>
     </div>
     </td>
   </tr>
@@ -69,7 +69,7 @@
     <td><%= tag.tag_text %></td>
     <td>
       <div class="btn-group" data-toggle="buttons">
-        <%= star_radios(tag.starred, tag.id) %>
+        <%= tag_star_radios(tag.starred, tag.id) %>
       </div>
     </td>
     <td><%= tag.tag_count %></td>

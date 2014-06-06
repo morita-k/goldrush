@@ -52,30 +52,31 @@
 
 <div class="row">
   <div class="col-md-6">
-    <table class="list_table table-bordered table-hover">
+    <table class="list_table table-bordered">
       <tr><th colspan=4>人材メール</th></tr>
       <% @hr_mails.each do |import_mail| %>
-        <tr>
-          <td style="width:6em"><%= import_mail.bp_pic_id.blank? ? "☆☆" : star_links(import_mail.business_partner, import_mail.business_partner.business_partner_name) + star_links(import_mail.bp_pic, import_mail.bp_pic.bp_pic_name) %><%= star_links(import_mail, import_mail.mail_subject) %>
-          <%= back_to_link raw('<i class="glyphicon glyphicon-log-in"></i>'), :action => :show, :id => import_mail %></td>
+        <tr id="tr_head_<%= import_mail.id %>" class="head_row" import_mail_id="<%= import_mail.id %>">
+          <td style="width:6em"><%= show_stars(import_mail) %></td>
         <%= render :partial => "td_tags", :locals => {:import_mail => import_mail} %>
         <td><div style="width:2.5em"><%=_age(import_mail.age) %></div></td>
         <td><div style="width:3.5em"><%=man import_mail.payment %></div></td>
+      </tr>
+      <tr id="tr_detail_<%= import_mail.id%>" class="detail_row" style="display:none">
       </tr>
     <% end %>
     </table><%# list_table %>
   </div>
   <div class="col-md-6">
-    <table class="list_table table-bordered table-hover">
+    <table class="list_table table-bordered">
       <tr><th colspan=4>案件メール</th></tr>
       <% @biz_mails.each do |import_mail| %>
-        <tr>
+        <tr id="tr_head_<%= import_mail.id %>" class="head_row" import_mail_id="<%= import_mail.id %>">
           <td><div style="width:3.5em"><%=man import_mail.payment %></div></td>
           <td><div style="width:2.5em"><%=_age(import_mail.age) %></div></td>
           <%= render :partial => "td_tags", :locals => {:import_mail => import_mail} %>
-          <td style="width:6em"><%= import_mail.bp_pic_id.blank? ? "☆☆" : star_links(import_mail.business_partner, import_mail.business_partner.business_partner_name) + star_links(import_mail.bp_pic, import_mail.bp_pic.bp_pic_name) %><%= star_links(import_mail, import_mail.mail_subject) %>
-          <%= back_to_link raw('<i class="glyphicon glyphicon-log-in"></i>'), :action => :show, :id => import_mail %></td>
+          <td style="width:6em"><%= show_stars(import_mail) %></td>
       </tr>
+      <tr id="tr_detail_<%= import_mail.id%>" class="detail_row" style="display:none">
     <% end %>
     </table><%# list_table %>
   </div>

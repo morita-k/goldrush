@@ -191,6 +191,11 @@ class ImportMailController < ApplicationController
     @attachment_files = AttachmentFile.find(:all, :conditions => ["deleted = 0 and parent_table_name = 'import_mails' and parent_id = ?", @import_mail.id])
   end
 
+  def detail
+    @import_mail = ImportMail.find(params[:id])
+    render :layout => false
+  end
+
   def new
     @import_mail = ImportMail.new
   end
@@ -275,7 +280,6 @@ class ImportMailController < ApplicationController
     text = "";
     delta = []
     mails.each do |mail|
-      body = mail.preprocbody
       nearest_st = mail.detect_nearest_station
       before = Time.now
       nearest_st_short = ImportMail.extract_station_name_from(nearest_st) if nearest_st
@@ -285,7 +289,7 @@ class ImportMailController < ApplicationController
       text += "[ #{sprintf('%05d',d)} ms ] #{mail.id} [#{nearest_st}] => #{nearest_st_short.to_s}<br/>"
       
     end
-    avg = delta.inject(0.0){ |avg, num| avg += num.to_f / delta.size }
+    avg = delta.inject(0.0){ |sum, num| sum += num.to_f / delta.size }
     text = "平均 #{sprintf('%3d',avg.floor)} ms <br/><br/>" + text
     render :text => text
   end

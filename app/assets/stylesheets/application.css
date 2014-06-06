@@ -93,3 +93,6 @@ div.flag {
   cursor: default;
 }
 
+.detail_row {
+    background-color: lavender;
+}
