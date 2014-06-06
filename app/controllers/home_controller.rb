@@ -20,7 +20,7 @@ class HomeController < ApplicationController
     color = star_colors[model.starred]
     attr_class = StarUtil.attr_class(model)
     respond_to do |format|
-      format.js { render :text => "Star.update('#{ attr_class }', '#{ color }')" }
+      format.js { render :text => "Star.update('#{ attr_class }', '#{ color }');" }
     end
   end
 

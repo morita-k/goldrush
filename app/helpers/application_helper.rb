@@ -534,7 +534,7 @@ EOS
                  authenticity_token: form_authenticity_token }
     
     content_tag(:span, class: "linked_star") do
-      link_to( content_tag(:span, "★", icon_opt), link_opt, :remote => true, :method => :put , :title => title)
+      link_to( content_tag(:span, "★", icon_opt), link_opt, :title => title)
     end
   end
   
@@ -673,7 +673,7 @@ EOS
     end
     res = [3,4,0,1,2].map do |x|
       <<EOS
-      <label class="btn btn-default#{starred.to_s == x.to_s ? ' active' : '' }">
+      <label class="btn btn-xs btn-default#{starred.to_s == x.to_s ? ' active' : '' }">
         #{radio_button_tag("starred#{model_id}", x.to_s, starred.to_s == x.to_s, :post_url => url_for(:controller => :home, :action => :fix), :model => model_str, :target_id => model_id, :class => "starred_radio") } <span style="#{StarUtil.attr_style(x)}">★</span>
       </label>
 EOS

@@ -19,6 +19,11 @@
 <% end %>
 
 <table class="show_table">
+  <tr>
+    <th>メール種別</th>
+    <td class='flag_container'>
+      <span class="btn btn-default btn-xs"><%= build_flag_link("案件", :biz_offer, :biz_offer_flg, @import_mail) %></span><span class="btn btn-default btn-xs"><%= build_flag_link("人材", :bp_member, :bp_member_flg, @import_mail) %></span><span class="btn btn-default btn-xs"><%= build_flag_link("その他", :unwanted, :unwanted, @import_mail) %></span>
+    </td>
   <tr><th>スター</th><td><%= star_radios(@import_mail.starred, @import_mail) %></td></tr>
 <% if @import_mail.business_partner %>
   <tr>
@@ -49,6 +54,15 @@
     <th><%= getLongName('import_mails', 'tag_text') %></th><td><% if @import_mail.proper? then %><span class="label label-danger tag">社員</span> <%end%><%=raw format_tags(@import_mail.tag_text, @major_words) %></td>
   </tr>
   <tr>
+    <th><%= getLongName('import_mails', 'payment') %></th><td><%=man @import_mail.payment %></td>
+  </tr>
+  <tr>
+    <th><%= getLongName('import_mails', 'age') %></th><td><%=_age @import_mail.age %></td>
+  </tr>
+  <tr>
+    <th><%= getLongName('import_mails', 'nearest_station') %></th><td><%= @import_mail.nearest_station %></td>
+  </tr>
+  <tr>
     <th><%= getLongName('import_mails', 'mail_subject') %></th><td><%=h @import_mail.mail_subject %></td>
   </tr>
   <tr>
@@ -67,6 +81,8 @@
 <div class="submit_box">
   <%= link_or_back '戻る', :action => 'list' %>
 </div>
+
+<%= render :partial => 'js' %>
 
 <script type="text/javascript">
 <!--

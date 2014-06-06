@@ -52,3 +52,16 @@ $(function () {
 		}
 	});
 });
+
+$(function() {
+	$(".linked_star a").click(function () {
+		$.ajax({
+			type: "PUT",
+			url: this.getAttribute("href"),
+			success: function(data) {
+				eval(data);
+			}
+		});
+		return false;
+	});
+});
