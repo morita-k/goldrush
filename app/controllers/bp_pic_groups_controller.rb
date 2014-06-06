@@ -14,12 +14,16 @@ class BpPicGroupsController < ApplicationController
   # GET /bp_pic_groups/1
   # GET /bp_pic_groups/1.json
   def show
-    unless params[:delivery_mail_id].blank?
+    @bp_pic_group = BpPicGroup.find(params[:id])
+
+    if params[:delivery_mail_id].blank?
+      @bp_pic_group_details = BpPicGroupDetail.includes(:bp_pic => :business_partner).where(:deleted => 0 , :bp_pic_group_id => @bp_pic_group).page(params[:page]).per(current_user.per_page)
+    else
       @delivery_mail = DeliveryMail.find(params[:delivery_mail_id]).get_informations
       @attachment_files = AttachmentFile.attachment_files("delivery_mails", @delivery_mail.id)
+      @bp_pic_group_details = BpPicGroupDetail.includes(:bp_pic => :business_partner).where(:deleted => 0 , :bp_pic_group_id => @bp_pic_group)
     end
-    
-    @bp_pic_group = BpPicGroup.includes(:bp_pic_group_details => {:bp_pic => :business_partner}).find(params[:id])
+
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @bp_pic_group }

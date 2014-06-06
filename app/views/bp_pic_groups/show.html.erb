@@ -44,47 +44,55 @@
   <% end %>
 <% end %><%# @delivery_mail %>
 
-<div>
-  <%= form_tag url_for_bp_pic_list(@delivery_mail), :method => :post do %>
-    <div class="submit_box">
-      <%= send_buttons %>
-      <% if @delivery_mail %>
-        <%= button_tag "全てのチェックをはずす", type: 'button', onclick: '$(".mail_status_check_box").attr("checked", false)', class: "btn btn-default btn-medium" %>
-      <% end %>
-    </div>
-    <table class="list_table table-bordered">
-      <tr>
-        <th style="width:1%"></th>
-        <th><%= getLongName('business_partners', 'business_partner_name') %></th>
-        <th><%= getLongName('bp_pics', 'bp_pic_name') %></th>
-        <th><%= getLongName('bp_pics', 'memo') %></th>
-        <th style="width:1%">状態</th>
-      </tr>
-      <% @bp_pic_group.bp_pic_group_details.each do | detail | %>
-        <tr id="<%= "tr_#{detail.id}"%>" style="background-color:<%= suspended_color(detail) %>">
-          <td>
-            <% if @delivery_mail %>
-              <%= check_box_tag 'bp_pic_ids[]', detail.bp_pic_id, !(detail.suspended? || detail.nondelivery? || !detail.working?), { class: 'mail_status_check_box', onchange: "changeSendFlag(#{detail.id}, this.checked)" } %>
-            <% else %>
-              <%= check_box_tag 'ids[]', detail.id, false, style: 'margin-top: 0;margin-left: 5px;margin-right: 16px;' %>
-            <% end %>
-          </td>
-          <td><%= star_links(detail.bp_pic.business_partner) %> <%= back_to_link detail.bp_pic.business_partner.business_partner_name, :controller => :business_partner, :action => :show, :id => detail.bp_pic.business_partner_id %></td>
-          <td><%= star_links(detail.bp_pic) %> <%= back_to_link "#{detail.bp_pic.usefulname}" + (" (#{detail.bp_pic.working_status_type_name})" unless detail.bp_pic.working?).to_s + " <#{detail.bp_pic.email1}>", :controller => :bp_pic, :action => :show, :id => detail.bp_pic_id %></td>
-          <td><%= detail.bp_pic.memo%></td>
-          <td style="text-align: center;"><span class='<%= "status_#{detail.id}" %>'><%= link_to (detail.suspended? ? "OFF" : "ON"), {:controller => :bp_pic_group_details, :action => :suspend, :id => detail, :authenticity_token => form_authenticity_token}, :remote => true, :method => :put, :class => (detail.suspended? ? "label label-default" : "label label-warning") %></span></td>
-        </tr>
-      <% end %>
-    </table>
-    <div class="submit_box">
-      <%= send_buttons %>
-      <% if @delivery_mail %>
-        <%= button_tag "全てのチェックをはずす", type: 'button', onclick: '$(".mail_status_check_box").attr("checked", false)', class: "btn btn-default btn-medium" %>
-      <% end %>
-      <%= link_or_back '戻る', bp_pic_groups_path %>
-    </div>
+<%= form_tag url_for_bp_pic_list(@delivery_mail), :method => :post do %>
+  <div class="submit_box">
+    <%= send_buttons %>
+    <% if @delivery_mail %>
+      <%= button_tag "全てのチェックをはずす", type: 'button', onclick: '$(".mail_status_check_box").attr("checked", false)', class: "btn btn-default btn-medium" %>
+    <% end %>
+  </div>
+
+  <% unless @delivery_mail %>
+    <%= paginate(@bp_pic_group_details) %>
   <% end %>
-</div>
+
+  <table class="list_table table-bordered">
+    <tr>
+      <th style="width:1%"></th>
+      <th><%= getLongName('business_partners', 'business_partner_name') %></th>
+      <th><%= getLongName('bp_pics', 'bp_pic_name') %></th>
+      <th><%= getLongName('bp_pics', 'memo') %></th>
+      <th style="width:1%">状態</th>
+    </tr>
+    <% @bp_pic_group_details.each do | detail | %>
+      <tr id="<%= "tr_#{detail.id}"%>" style="background-color:<%= suspended_color(detail) %>">
+        <td>
+          <% if @delivery_mail %>
+            <%= check_box_tag 'bp_pic_ids[]', detail.bp_pic_id, !(detail.suspended? || detail.nondelivery? || !detail.working?), { class: 'mail_status_check_box', onchange: "changeSendFlag(#{detail.id}, this.checked)" } %>
+          <% else %>
+            <%= check_box_tag 'ids[]', detail.id, false, style: 'margin-top: 0;margin-left: 5px;margin-right: 16px;' %>
+          <% end %>
+        </td>
+        <td><%= star_links(detail.bp_pic.business_partner) %> <%= back_to_link detail.bp_pic.business_partner.business_partner_name, :controller => :business_partner, :action => :show, :id => detail.bp_pic.business_partner_id %></td>
+        <td><%= star_links(detail.bp_pic) %> <%= back_to_link "#{detail.bp_pic.usefulname}" + (" (#{detail.bp_pic.working_status_type_name})" unless detail.bp_pic.working?).to_s + " <#{detail.bp_pic.email1}>", :controller => :bp_pic, :action => :show, :id => detail.bp_pic_id %></td>
+        <td><%= detail.bp_pic.memo%></td>
+        <td style="text-align: center;"><span class='<%= "status_#{detail.id}" %>'><%= link_to (detail.suspended? ? "OFF" : "ON"), {:controller => :bp_pic_group_details, :action => :suspend, :id => detail, :authenticity_token => form_authenticity_token}, :remote => true, :method => :put, :class => (detail.suspended? ? "label label-default" : "label label-warning") %></span></td>
+      </tr>
+    <% end %>
+  </table>
+
+  <% unless @delivery_mail %>
+    <%= paginate(@bp_pic_group_details) %>
+  <% end %>
+
+  <div class="submit_box">
+    <%= send_buttons %>
+    <% if @delivery_mail %>
+      <%= button_tag "全てのチェックをはずす", type: 'button', onclick: '$(".mail_status_check_box").attr("checked", false)', class: "btn btn-default btn-medium" %>
+    <% end %>
+    <%= link_or_back '戻る', bp_pic_groups_path %>
+  </div>
+<% end %>
 <script type="text/javascript">
 <!--
 
