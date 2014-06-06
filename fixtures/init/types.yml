@@ -5421,6 +5421,26 @@ types_271:
 types_272:
   id: 272
   owner_id: 
+  type_section: "special_word_type"
+  type_key: "bp_member_word"
+  long_name: "人材メール判定単語"
+  short_name: "人材"
+  other_name: "人材メール判定単語"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 4
+  display_order2: 4
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_273:
+  id: 273
+  owner_id: 
   type_section: "photo_status_type"
   type_key: "unfixed"
   long_name: "未登録"
@@ -5438,8 +5458,8 @@ types_272:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_273:
-  id: 273
+types_274:
+  id: 274
   owner_id: 
   type_section: "photo_status_type"
   type_key: "fixed"
@@ -5458,8 +5478,8 @@ types_273:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_274:
-  id: 274
+types_275:
+  id: 275
   owner_id: 
   type_section: "daily_report_input_type"
   type_key: "notinput"
@@ -5471,15 +5491,15 @@ types_274:
   display_order1: 
   display_order2: 
   logic_bind_type: ""
-  created_at: <%= Time.now.to_s(:db) %>
-  updated_at: <%= Time.now.to_s(:db) %>
+  created_at: 
+  updated_at: 
   lock_version: 
   created_user: ""
   updated_user: ""
   deleted_at: 
   deleted: 
-types_275:
-  id: 275
+types_276:
+  id: 276
   owner_id: 
   type_section: "daily_report_input_type"
   type_key: "existinput"
@@ -5491,8 +5511,8 @@ types_275:
   display_order1: 
   display_order2: 
   logic_bind_type: ""
-  created_at: <%= Time.now.to_s(:db) %>
-  updated_at: <%= Time.now.to_s(:db) %>
+  created_at: 
+  updated_at: 
   lock_version: 
   created_user: ""
   updated_user: ""
