@@ -5488,16 +5488,16 @@ types_275:
   other_name: "未入力"
   type_description: ""
   type_description_text: ""
-  display_order1: 
-  display_order2: 
-  logic_bind_type: ""
-  created_at: 
-  updated_at: 
-  lock_version: 
-  created_user: ""
-  updated_user: ""
+  display_order1: 1
+  display_order2: 1
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
   deleted_at: 
-  deleted: 
+  deleted: 0
 types_276:
   id: 276
   owner_id: 
@@ -5508,13 +5508,13 @@ types_276:
   other_name: "入力済"
   type_description: ""
   type_description_text: ""
-  display_order1: 
-  display_order2: 
-  logic_bind_type: ""
-  created_at: 
-  updated_at: 
-  lock_version: 
-  created_user: ""
-  updated_user: ""
+  display_order1: 2
+  display_order2: 2
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
   deleted_at: 
-  deleted: 
+  deleted: 0
