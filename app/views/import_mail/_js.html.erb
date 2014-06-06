@@ -19,6 +19,22 @@ $(function(){
       document.forms[0].tag.value = this.innerHTML;
     }
   });
+  $('.head_row').click(function(){
+    var import_mail_id = $(this).attr("import_mail_id");
+    var detail =  $("#tr_detail_" + import_mail_id);
+    if(detail.css("display") == "none") {
+      //$('.detail_row').css("display","none");
+      $.get('<%= url_for :controller => :import_mail, :action => :detail%>',
+        {id: import_mail_id},
+        function(_detail){return function(data) {
+          console.log(_detail);
+          _detail.html(data);
+          _detail.css("display", "");
+        }}(detail));
+    }else{
+        detail.css("display", "none");
+    }
+  });
 });
 
 // -->
