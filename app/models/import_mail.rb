@@ -291,7 +291,7 @@ class ImportMail < ActiveRecord::Base
   def analyze_bp_member_flg(body)
     if biz_offer_flg == 1
       SpecialWord.bp_member_words.each do |word|
-        unless StringUtil.detect_words(body, word).empty?
+        unless StringUtil.detect_regex(body, word).empty?
           self.biz_offer_flg = 0
           self.bp_member_flg = 1
           return
