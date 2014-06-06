@@ -25,11 +25,12 @@
     </div>
   <% end %>
 <table class="show_table">
+<tr><th>スター</th><td><%= star_radios(@bp_pic.starred, @bp_pic) %></td></tr>
 <tr>
   <th><%= getLongName('business_partners', 'business_partner_name') %></th><td><%= star_links(@bp_pic.business_partner) %> <%=link_to @bp_pic.business_partner.business_partner_name, :controller => :business_partner, :action => :show, :id => @bp_pic.business_partner_id %></td>
 </tr>
 <tr>
-  <th><%= getLongName('bp_pics', 'bp_pic_name') %></th><td><%= star_links(@bp_pic) %> <%=h @bp_pic.bp_pic_name %></td>
+  <th><%= getLongName('bp_pics', 'bp_pic_name') %></th><td><%=h @bp_pic.bp_pic_name %></td>
 </tr>
 <tr>
   <th><%= getLongName('bp_pics', 'bp_pic_short_name') %></th><td><%=h @bp_pic.bp_pic_short_name %></td>

@@ -19,6 +19,7 @@
 <% end %>
 
 <table class="show_table">
+  <tr><th>スター</th><td><%= star_radios(@import_mail.starred, @import_mail) %></td></tr>
 <% if @import_mail.business_partner %>
   <tr>
     <th><%= getLongName('import_mails', 'business_partner_id') %></th><td><%= star_links(@import_mail.business_partner) %> <%=link_to @import_mail.business_partner.business_partner_name, :controller => :business_partner, :action => :show, :id => @import_mail.business_partner_id %></td>
