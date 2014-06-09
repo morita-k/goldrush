@@ -31,7 +31,7 @@ class BpPicGroupsController < ApplicationController
     else
       @delivery_mail = DeliveryMail.find(params[:delivery_mail_id]).get_informations
       @attachment_files = AttachmentFile.attachment_files("delivery_mails", @delivery_mail.id)
-      @bp_pic_group_details = BpPicGroupDetail.includes(:bp_pic => :business_partner).where(cond)
+      @bp_pic_group_details = BpPicGroupDetail.includes(:bp_pic => :business_partner).where(deleted: 0, bp_pic_group_id: @bp_pic_group)
     end
 
     respond_to do |format|
