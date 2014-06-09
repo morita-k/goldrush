@@ -17,7 +17,7 @@ class SpecialWord < ActiveRecord::Base
   SpecialWord.clear_special_words_cache
 
   def SpecialWord.bp_member_words
-    @@bp_member_words|| (@@bp_member_words = get_special_words('bp_member_word').map{|x| Regexp.new(x.target_word)})
+    @@bp_member_words|| (@@bp_member_words = get_special_words('bp_member_word').map{|x| Regexp.new(x.target_word, Regexp::IGNORECASE)})
   end
 
   def SpecialWord.special_words
