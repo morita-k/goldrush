@@ -18,8 +18,8 @@ import_mails_1:
   registed: 
   unwanted: 
   tag_text: ""
-  payment_text: ""
-  age_text: ""
+  payment: 
+  age: ""
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -47,8 +47,8 @@ import_mails_2:
   registed: 
   unwanted: 
   tag_text: ""
-  payment_text: ""
-  age_text: "20才"
+  payment: 90
+  age: "20"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -76,8 +76,8 @@ import_mails_3:
   registed: 
   unwanted: 
   tag_text: ""
-  payment_text: ""
-  age_text: "３0才"
+  payment: 80
+  age: "30"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -105,8 +105,8 @@ import_mails_4:
   registed: 
   unwanted: 
   tag_text: ""
-  payment_text: ""
-  age_text: "4０歳"
+  payment: 60
+  age: "40"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -134,8 +134,8 @@ import_mails_5:
   registed: 
   unwanted: 
   tag_text: ""
-  payment_text: ""
-  age_text: "５０歳"
+  payment: 50
+  age: "50"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -163,8 +163,8 @@ import_mails_6:
   registed: 
   unwanted: 
   tag_text: ""
-  payment_text: ""
-  age_text: "その他"
+  payment: 
+  age: ""
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0

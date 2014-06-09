@@ -125,7 +125,7 @@ class Tag < ActiveRecord::Base
     }
 
     SpecialWord.special_words.each do |word|
-      if body =~ Regexp.new(word.target_word)
+      if body =~ Regexp.new(word.target_word, Regexp::IGNORECASE)
         words << word.convert_to_word
       end
     end

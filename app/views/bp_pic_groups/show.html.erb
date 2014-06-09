@@ -13,7 +13,7 @@
   </div>
 
   <h1><%= @bp_pic_group.bp_pic_group_name %>のメンバーを選択してください。</h1>
-<% else %><%# @delivery_mail %>
+<% else %><%# else @delivery_mail %>
   <%= accordion_around(getLongName('table_name','bp_pic_groups'), "") do %>
     <%= render 'bp_pic_groups/show_table' %>
   <% end %>
@@ -40,8 +40,35 @@
       <%= hidden_field_tag 'back_to', request.url  %>
       <%= submit_tag "取引先担当を追加", btn_primary(:id => "submit_bp_pic_group_detail", :disabled => "disabled") %>
       <input type="hidden" id="business_partner_id" />
-    <% end %>
+    <% end %><%# form_tag %>
   <% end %>
+  <%= accordion_around_h2("担当者検索", "search") do %>
+    <%= form_tag(url_for(:controller => :bp_pic_groups, :action => :show), :method => :get) do %>
+      <table class="form_table">
+        <tr>
+          <th><i class="fa fa-angle-double-right "></i> 検索</th>
+          <td><label for="textfield1"><%= text_field_tag 'search_text', session[:search_bp_pic_group_details][:search_text], :size => 60 %></label></td>
+        </tr>
+        <tr>
+          <th><i class="fa fa-angle-double-right"></i> 送信停止</th>
+          <td><label for="textfield6"><%= check_box_tag 'nondelivery_score', BpPic::NONDELIVERY_LIMIT, !session[:search_bp_pic_group_details][:nondelivery_score].blank? %></label></td>
+        </tr>
+        <tr>
+          <th><i class="fa fa-angle-double-right"></i> 状態</th>
+          <td>
+            <%= radio_button_tag 'suspended', "", session[:search_bp_pic_group_details][:suspended] == "" %> どちらも
+            <%= radio_button_tag 'suspended', "0", session[:search_bp_pic_group_details][:suspended] == "0" %> ON
+            <%= radio_button_tag 'suspended', "1", session[:search_bp_pic_group_details][:suspended] == "1" %> OFF
+          </td>
+        </tr>
+        <tr>
+          <th colspan="2">
+            <%= submit_tag '　　検索　　', :name => 'search_button', :class => 'btn btn-warning btn-midium' %> <%= submit_tag '　　クリア　　', :name => 'clear_button', :class => 'btn btn-warning btn-midium' %>
+          </th>
+        </tr>
+      </table>
+    <% end %><%# form_tag %>
+  <% end %><%# accordion_around_h2 %>
 <% end %><%# @delivery_mail %>
 
 <%= form_tag url_for_bp_pic_list(@delivery_mail), :method => :post do %>

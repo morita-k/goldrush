@@ -14,14 +14,24 @@ class BpPicGroupsController < ApplicationController
   # GET /bp_pic_groups/1
   # GET /bp_pic_groups/1.json
   def show
+    session[:search_bp_pic_group_details] ||= {}
+    if params[:search_button]
+      session[:search_bp_pic_group_details] = set_conditions
+    elsif params[:clear_button]
+      session[:search_bp_pic_group_details] = {}
+    end
+
     @bp_pic_group = BpPicGroup.find(params[:id])
 
+    # 検索条件を処理
+    cond = make_conditions(session[:search_bp_pic_group_details], @bp_pic_group.id)
+
     if params[:delivery_mail_id].blank?
-      @bp_pic_group_details = BpPicGroupDetail.includes(:bp_pic => :business_partner).where(:deleted => 0 , :bp_pic_group_id => @bp_pic_group).page(params[:page]).per(current_user.per_page)
+      @bp_pic_group_details = BpPicGroupDetail.includes(:bp_pic => :business_partner).where(cond).page(params[:page]).per(current_user.per_page)
     else
       @delivery_mail = DeliveryMail.find(params[:delivery_mail_id]).get_informations
       @attachment_files = AttachmentFile.attachment_files("delivery_mails", @delivery_mail.id)
-      @bp_pic_group_details = BpPicGroupDetail.includes(:bp_pic => :business_partner).where(:deleted => 0 , :bp_pic_group_id => @bp_pic_group)
+      @bp_pic_group_details = BpPicGroupDetail.includes(:bp_pic => :business_partner).where(deleted: 0, bp_pic_group_id: @bp_pic_group)
     end
 
     respond_to do |format|
@@ -167,4 +177,43 @@ class BpPicGroupsController < ApplicationController
     end
   end
 
+  private
+
+  def set_conditions
+    {
+      :search_text => params[:search_text],
+      :nondelivery_score => params[:nondelivery_score],
+      :suspended => params[:suspended]
+    }
+  end
+
+  # around_like
+  def al(str)
+    '%' + str + '%'
+  end
+
+  def make_conditions(search_param, bp_pic_group_id)
+    param = [bp_pic_group_id]
+    sql = "bp_pic_group_details.deleted = 0 and bp_pic_group_id = ? "
+    
+    if !(x = search_param[:search_text]).blank?
+      sql += " and (bp_pics.memo like ? or bp_pics.bp_pic_name like ? or bp_pics.email1 like ? or bp_pics.tel_direct like ? or bp_pics.tel_mobile like ? or business_partners.business_partner_name like ? or business_partners.business_partner_name_kana like ? or business_partners.tel like ? or business_partners.fax like ?)"
+      param += Array.new(9).fill(al(x))
+    end
+
+    # 状態
+    if !(x = search_param[:suspended]).blank?
+      sql += " and suspended = ?"
+      param << x
+    end
+    
+    # 不達スコア
+    if !(x = search_param[:nondelivery_score]).blank?
+      sql += " and bp_pics.nondelivery_score >= ?"
+      param << x
+    end
+    
+    
+    return param.unshift(sql)
+  end
 end
