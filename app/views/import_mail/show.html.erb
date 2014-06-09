@@ -88,8 +88,9 @@
 <!--
 $(function () {
     $(".tag").on("click", function() {
+      var tag = this.getAttribute("value");
+      if(!tag){return false;}
       if(confirm("このタグを削除します。よろしいですか？")){
-        var tag = this.getAttribute("value");
         $.post('<%= url_for :controller => :tags, :action => :fix %>', {tag: tag}, function(tag_tag){ return function(data, status, xhr){
           tag_tag.style.display = 'none';
         }}(this));
