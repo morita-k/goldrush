@@ -405,9 +405,8 @@ EOS
       dmm.save!
 
       ScoreJournal.update_score!(current_user.id, 1, 'add_matching', dmm.id)
-    end
 
-    SystemNotifier.send_info_mail("[GoldRush] マッチング候補が提案されました", <<EOS).deliver
+      SystemNotifier.send_info_mail("[GoldRush] マッチング候補が提案されました", <<EOS).deliver
 
 #{SysConfig.get_system_notifier_url_prefix}/delivery_mails/#{dm.id}
 
@@ -416,6 +415,7 @@ Target mail subject: #{dm.subject}
 Import mail subject: #{im.mail_subject}
 
 EOS
+    end
 
     redirect_to(back_to, notice: "マッチング候補に追加しました！")
   end
