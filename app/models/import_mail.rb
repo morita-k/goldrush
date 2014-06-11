@@ -10,6 +10,7 @@ class ImportMail < ActiveRecord::Base
   has_many :biz_offers
   has_many :tag_details, :foreign_key  => :parent_id, :conditions => "tag_details.tag_key = 'import_mails'"
   has_many :outflow_mails, :conditions => "outflow_mails.deleted = 0"
+  has_many :delivery_mail_matches, :conditions => "delivery_mail_matches.deleted = 0"
 
   def ImportMail.tryConv(map, header_key, &block)
     begin
@@ -60,14 +61,21 @@ class ImportMail < ActiveRecord::Base
     dmt = self.in_reply_to && DeliveryMailTarget.where(message_id: self.in_reply_to).first
     if((dmt != nil) && (dmt.delivery_mail_id != nil))
       self.delivery_mail_id = dmt.delivery_mail_id
+      SystemNotifier.send_info_mail("[GoldRush] 配信メールに対して返信がありました", <<EOS).deliver
+
+#{SysConfig.get_system_notifier_url_prefix}/delivery_mails/#{dmt.delivery_mail_id}
+
+Subject: #{dmt.delivery_mail.subject}
+
+EOS
     else
       # リプライモード時、リプライでなければ取り込み中止
       if (!self.mail_from.include?("forwarding-noreply@google.com")) && reply_mode
         puts "SKIP IMPORT: reply_mode and not match in_reply_to"
         SystemLog.warn('import mail', 'to member private', self.inspect , 'import mail')
-	return false
+        return false
       end
-	
+
 #      # 配信メールへの返信でなくて、ユーザーのメールアドレス宛だった場合、
 #      # ユーザーへの個人的なメールとみなして取り込みを中止する。
 #      User.getUsers.each do |user|

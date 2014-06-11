@@ -1,4 +1,12 @@
+
+<% if @delivery_mail.delivery_mail_matches.exists? %>
+<% @import_mails = @delivery_mail.delivery_mail_matches.map{|x| x.import_mail} %>
+<h2>マッチング候補</h2>
+<%= render :partial => 'import_mail/list' %>
+<% end %>
+
 <%= accordion_around(getLongName('table_name','delivery_mails'), "") do %>
+  <%= link_to "メールマッチングを開始する", {:controller => :delivery_mails, :action => :start_matching, :id => @delivery_mail, :back_to => back_to}, :class => "btn btn-info btn-medium" %>
   <%= render 'show' %>
 <% end %>
 
