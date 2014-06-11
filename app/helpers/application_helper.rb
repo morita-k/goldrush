@@ -8,6 +8,18 @@ module ApplicationHelper
   include NameUtil
   include TypeUtil
 
+  def mail_match_target
+    DeliveryMail.find(session[:mail_match_target_id]) if session[:mail_match_target_id]
+  end
+
+  def or_else(obj, default)
+    obj.blank? ? default : obj
+  end
+
+  def send_or_else(obj, method, default)
+    obj.blank? ? default : (obj.send(method).blank? ? default : obj.send(method))
+  end
+
   def man(amount)
     "#{amount.to_i}万" if amount && amount > 0
   end
