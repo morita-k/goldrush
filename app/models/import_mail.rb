@@ -116,7 +116,10 @@ EOS
       import_mail_src.message_source = src
       import_mail_src.created_user = 'import_mail'
       import_mail_src.updated_user = 'import_mail'
-      import_mail_src.save!
+      # ログが凄いことになるので抑止
+      Rails.logger.silence do
+        import_mail_src.save!
+      end
       
       # 添付ファイルがなければ案件、あれば人材と割り切る
       import_mail.biz_offer_flg = 1
