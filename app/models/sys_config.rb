@@ -267,4 +267,16 @@ class SysConfig < ActiveRecord::Base
     get_configuration("poi_company_name", "company_name").value1
   end
 
+  def self.get_system_notifier_destination
+    get_value("system_notifier", "destination")
+  end
+
+  def self.get_system_notifier_from
+    get_value("system_notifier", "from")
+  end
+
+  def self.get_system_notifier_url_prefix
+    get_value("system_notifier", "url_prefix")
+  end
+
 end

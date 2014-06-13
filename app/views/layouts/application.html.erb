@@ -135,6 +135,41 @@
   <% end %>
 <% end %>
 
+<% if session[:mail_match_target_id] %>
+<% @delivery_mail = DeliveryMail.find(session[:mail_match_target_id]) %>
+  <div class="panel panel-info submit_box" id="accordion_mm">
+    <div class="panel-heading">
+      <button type="button" class="close" onclick="if(confirm('配信メールマッチングモードを終了します。よろしいですか？')){fixmessage('<%=url_for(:controller => :delivery_mails, :action => :fix_matching, :authenticity_token => form_authenticity_token)%>');$('#accordion_mm').hide();}return false;">&times;</button>
+      <a data-toggle="collapse" data-parent="#accordion_mm" href="#collapse_mm">
+        <div><span class="label label-danger">Mail Match</span> [<%= @delivery_mail.mail_status_type_name %>] <%= (or_else @delivery_mail.subject, '(件名なし)') %> <i id="collapseArrow_mm" class="fa fa-arrow-circle-o-down"></i></div></a>
+    </div>
+    <div id="collapse_mm" class="panel-collapse collapse">
+      <ul class="list-group">
+          <li class="list-group-item"><%= link_to "詳細画面に移動", {:controller => :delivery_mails, :action => :show, :id => @delivery_mail}, :class => "btn btn-info btn-medium" %></li>
+          <% @delivery_mail.delivery_mail_matches.each do |dmm| %>
+            <li class="list-group-item"><span class="label label-warning">候補</span> <%= link_to dmm.import_mail.mail_subject, :controller => :import_mail, :action => :show, :id => dmm.import_mail %></li>
+          <% end %>
+          <li class="list-group-item"><%= @delivery_mail.formated_mail_from%> <%= _time_long(@delivery_mail.planned_setting_at) %></li>
+          <li class="list-group-item"><pre><%= @delivery_mail.content %></pre></li>
+      </ul>
+</div>
+  </div>
+<script type="text/javascript">
+<!--
+  $(document).ready(function(){
+//    $('#collapse_mm').collapse('toggle');
+    $('#collapseArrow_mm').animate({rotate: 90});
+    $('#collapse_mm').on('hide.bs.collapse', function(){
+      $('#collapseArrow_mm').animate({rotate: 90})
+    });
+      $('#collapse_mm').on('show.bs.collapse', function(){
+          $('#collapseArrow_mm').animate({rotate: 0})
+      });
+  });
+-->
+</script>
+<% end %>
+
 <div class="container">
   <div class="row">
     <%= yield %>

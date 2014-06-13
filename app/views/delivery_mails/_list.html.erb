@@ -1,4 +1,4 @@
-<%= paginate(@delivery_mails) %>
+<%= paginate(@delivery_mails) if @delivery_mail.respond_to?(:current_page) %>
 <table id="delivery_mail_detail_table" class="list_table table-bordered table-hover">
   <tr>
     <th>ステータス</th>
@@ -25,7 +25,7 @@
     <td style="text-align:center; white-space:nowrap">
       <%= delivery_mail.mail_status_type_name %>
     </td>
-    <td style="overflow: hidden"><div class="overflow_hidden"><%= back_to_link (delivery_mail.subject.blank? ? '(件名なし)' : delivery_mail.subject) , {:controller => :delivery_mails, :action => :show, :id => delivery_mail.id }, :title => delivery_mail.subject %></div></td>
+    <td style="overflow: hidden"><div class="overflow_hidden"><% if delivery_mail.delivery_mail_matches.exists? %><span class="label label-warning">候補<%= delivery_mail.delivery_mail_matches.size %>件</span> <% end %><%= back_to_link (delivery_mail.subject.blank? ? '(件名なし)' : delivery_mail.subject) , {:controller => :delivery_mails, :action => :show, :id => delivery_mail.id }, :title => delivery_mail.subject %></div></td>
     <td style="overflow: hidden"><div class="overflow_hidden"><%= delivery_mail.formated_mail_from %></div></td>
     <% unless group? %>
       <td style="overflow: hidden"><%= mail_to(delivery_mail) %></td>
@@ -50,4 +50,4 @@
   </tr>
 <% end %>
 </table>
-<%= paginate(@delivery_mails) %>
+<%= paginate(@delivery_mails) if @delivery_mail.respond_to?(:current_page) %>

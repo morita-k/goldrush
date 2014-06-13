@@ -978,4 +978,84 @@ sys_configs_61:
   created_user: "initial"
   updated_user: "initial"
   deleted_at: 
-  deleted: 
+  deleted: 0
+sys_configs_62:
+  id: 62
+  owner_id: 
+  config_section: "poi_company_name"
+  config_key: "company_name"
+  value1: "アプリカティブ株式会社"
+  value2: ""
+  value3: ""
+  config_description_text: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+sys_configs_63:
+  id: 63
+  owner_id: 
+  config_section: "daily_report"
+  config_key: "send_mail"
+  value1: "planning@applicative.jp"
+  value2: ""
+  value3: ""
+  config_description_text: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+sys_configs_64:
+  id: 64
+  owner_id: 
+  config_section: "system_notifier"
+  config_key: "destination"
+  value1: "staff@dev.applicative.jp"
+  value2: ""
+  value3: ""
+  config_description_text: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+sys_configs_65:
+  id: 65
+  owner_id: 
+  config_section: "system_notifier"
+  config_key: "from"
+  value1: "system@dev.applicative.jp"
+  value2: ""
+  value3: ""
+  config_description_text: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+sys_configs_66:
+  id: 66
+  owner_id: 
+  config_section: "system_notifier"
+  config_key: "url_prefix"
+  value1: "https://dev.applicative.jp/goldrush"
+  value2: ""
+  value3: ""
+  config_description_text: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0

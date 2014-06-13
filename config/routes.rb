@@ -42,7 +42,12 @@ GoldRush::Application.routes.draw do
   resources :bp_pic_groups
 
   resources :delivery_mails do
+    member do
+      put 'add_matching'
+    end
     collection do
+      put 'fix_matching'
+      put 'unlink_matching'
       get 'contact_mail_new'
       post 'contact_mail_create'
     end

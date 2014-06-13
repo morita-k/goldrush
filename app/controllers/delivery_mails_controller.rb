@@ -242,6 +242,16 @@ EOS
         flash.now[:warn] = "送信に失敗した宛先が存在します。<br>送信に失敗した宛先は配信メール詳細画面から確認できます。"
       end
     end
+
+    SystemNotifier.send_info_mail("[GoldRush] 配信メールがセットされました", <<EOS).deliver
+
+#{SysConfig.get_system_notifier_url_prefix}/delivery_mails/#{delivery_mail.id}
+
+Subject: #{delivery_mail.subject}
+
+#{delivery_mail.content}
+
+EOS
       
     respond_to do |format|
       format.html { redirect_to url_for(:action => :index, :bp_pic_group_id => params[:bp_pic_group_id]), notice: 'Delivery mail targets were successfully created.' }
@@ -371,6 +381,58 @@ EOS
       end
     end
   end
+
+  def start_matching
+    m = DeliveryMail.find(params[:id])
+    session[:mail_match_target_id] = m.id
+    redirect_to :controller => :import_mail, :action => :list
+  end
+
+  def fix_matching
+    session.delete(:mail_match_target_id)
+    render :text => "OK", :layout => false
+  end
+
+  def add_matching
+    ActiveRecord::Base.transaction do
+      dm = DeliveryMail.find(session[:mail_match_target_id])
+      im = ImportMail.find(params[:id])
+      dmm = DeliveryMailMatch.new
+      dmm.delivery_mail = dm
+      dmm.import_mail = im
+      dmm.matching_user_id = current_user.id
+      set_user_column dmm
+      dmm.save!
+
+      ScoreJournal.update_score!(current_user.id, 1, 'add_matching', dmm.id)
+
+      SystemNotifier.send_info_mail("[GoldRush] マッチング候補が提案されました", <<EOS).deliver
+
+#{SysConfig.get_system_notifier_url_prefix}/delivery_mails/#{dm.id}
+
+Target mail subject: #{dm.subject}
+
+Import mail subject: #{im.mail_subject}
+
+EOS
+    end
+
+    redirect_to(back_to, notice: "マッチング候補に追加しました！")
+  end
+
+  def unlink_matching
+    ActiveRecord::Base.transaction do
+      dmm = DeliveryMailMatch.match(params[:delivery_mail_id], params[:import_mail_id])
+      dmm.deleted = 9
+      dmm.deleted_at = Time.now
+      set_user_column dmm
+      dmm.save!
+      ScoreJournal.update_score!(dmm.matching_user_id, -1, 'unlink_matching', dmm.id)
+    end
+
+    redirect_to(back_to, notice: "マッチング候補から外しました。")
+  end
+
 
 private
   def new_proc
