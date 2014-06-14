@@ -12,6 +12,7 @@ class SpecialWord < ActiveRecord::Base
     @@special_words = nil
     @@ignore_words = nil
     @@bad_proper_words = nil
+    @@bp_member_words = nil
   end
   SpecialWord.clear_special_words_cache
 
