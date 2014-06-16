@@ -512,7 +512,7 @@ EOS
 
   def outflow_mail?
     criterion = SysConfig.get_outflow_criterion.to_i
-    mail_address_str = self.mail_to + self.mail_cc
+    mail_address_str = [self.mail_to.to_s, self.mail_cc.to_s].join(",")
 
     (criterion.nil? || mail_address_str.blank?) ? false : (mail_address_str.split(",").length >= criterion)
   end
