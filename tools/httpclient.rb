@@ -18,6 +18,11 @@ def main
   # httpclientを利用したサーバー呼び出し
   around_http_client do |agent|
     res = agent.post url, params
+    if res.status_code != 200
+      File.open(File.join('log',"errmail","http_client_call.#{Time.now.strftime('%Y%m%d_%H%M%S')}.#{Process.pid}.log"), "a") do |file|
+        file.puts res.inspect
+      end
+    end
   end
 end
 
