@@ -127,7 +127,8 @@ class ImportMailJIET < ImportMail
       bp_pic_name_kana: "ご担当者",
       email1: "unknown+#{bp_id}@unknown.applicative.jp",
       import_mail_id: import_mail_id,
-      jiet: 1
+      jiet: 1,
+      working_status_type: 'working'
     }.reject{|k, v| v.blank?}
      
     pic.save!
