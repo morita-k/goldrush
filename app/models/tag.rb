@@ -13,7 +13,7 @@ class Tag < ActiveRecord::Base
     tags && tags.split(",").size > 1
   end
 
-  def Tag.make_conditions_for_tag(tags, tag_key, min_id)
+  def Tag.make_conditions_for_tag(tags, tag_key, min_id=0)
     sqls = []
     sql_params = [tag_key, min_id]
     tags.split(",").each do |tag|
