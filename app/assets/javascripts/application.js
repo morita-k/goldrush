@@ -26,9 +26,7 @@ $(function() {
 });
 
 $(function() {
-	$('a[rel*=addMatchingModal]').click(function(event){
-		$('#msg')[0].focus();
-	}).leanModal({ top : 150, overlay : 1.0, closeButton: ".modal_close"});
+	$('a[rel*=addMatchingModal]').leanModal({ top : 150, overlay : 1.0, closeButton: ".modal_close"});
 });
 
 function groupSelectedCheck(){
