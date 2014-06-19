@@ -147,7 +147,7 @@
       <ul class="list-group">
           <li class="list-group-item"><%= link_to "詳細画面に移動", {:controller => :delivery_mails, :action => :show, :id => @delivery_mail}, :class => "btn btn-info btn-medium" %></li>
           <% @delivery_mail.delivery_mail_matches.each do |dmm| %>
-            <li class="list-group-item"><span class="label label-warning">候補</span> <%= link_to dmm.import_mail.mail_subject, :controller => :import_mail, :action => :show, :id => dmm.import_mail %></li>
+            <li class="list-group-item"><span class="label label-warning">候補</span> <%= link_to dmm.import_mail.mail_subject, :controller => :import_mail, :action => :show, :id => dmm.import_mail %><%= dmm.memo.blank? ? "" : " メモ: #{dmm.memo}" %></li>
           <% end %>
           <li class="list-group-item"><%= @delivery_mail.formated_mail_from%> <%= _time_long(@delivery_mail.planned_setting_at) %></li>
           <li class="list-group-item"><pre><%= @delivery_mail.content %></pre></li>

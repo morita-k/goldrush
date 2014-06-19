@@ -119,13 +119,13 @@ class ApplicationController < ActionController::Base
     params[:back_to]
   end
 
-  def _redirect_or_back_to(option)
+  def _redirect_or_back_to(options = {}, response_status = {})
     if !params[:back_to].blank?
-      redirect_to params[:back_to]
-    elsif request.env["HTTP_REFERER"] =~ /#{url_for(:only_path => false, :controller => '/')}/ #'
-      redirect_to :back
+      redirect_to params[:back_to], response_status
+    elsif request.env["HTTP_REFERER"] =~ /#{root_path}/ #'
+      redirect_to :back, response_status
     else
-      redirect_to option
+      redirect_to option, response_status
     end
   end
 
