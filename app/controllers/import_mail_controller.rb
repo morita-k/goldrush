@@ -111,10 +111,7 @@ class ImportMailController < ApplicationController
   
   # Ajaxでのflg処理
   def change_flg
-  puts">>>>>>>>>>>>>>>>>>>> flg changing now !!!"
-  puts">>>>>>>>>>>>>>>>>>>> import_mail_id : #{params[:import_mail_id]}"
     target_mail = ImportMail.find(params[:import_mail_id])
-  puts">>>>>>>>>>>>>>>>>>>> type : #{params[:type]}"
     if params[:type] == "biz_offer"
       if target_mail.biz_offer_flg == 0
         target_mail.biz_offer_flg = 1
