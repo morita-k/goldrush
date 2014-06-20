@@ -26,7 +26,7 @@ $(function() {
 });
 
 $(function() {
-	$('a[rel*=addMatchingModal]').leanModal({ top : 150, overlay : 1.0, closeButton: ".modal_close"});
+	$('a[rel*=addMatchingModal]').leanModal({ top : 150, overlay : 1.0, closeButton: ".modal_close", afterShow: function(e){$('#msg')[0].focus();}});
 });
 
 function groupSelectedCheck(){
