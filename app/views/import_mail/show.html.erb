@@ -19,8 +19,19 @@
   <% if DeliveryMailMatch.matched?(mm.id, @import_mail.id) %>
     <button class="btn btn-warning btn-medium">マッチング候補</button>
   <% else %>
-    <%= link_to "マッチング候補に追加", {:controller => :delivery_mails, :action => :add_matching, :id => @import_mail, :back_to => back_to}, :method => :put, :class => "btn btn-info btn-medium" %>
-  <% end %>
+    <!-- for Modal Popup -->
+    <div id="addMatchingModal" style="display: none;background: #eeeeee;border-radius: 5px;-webkit-border-radius: 5px;padding:5px;">
+    <%= form_tag({:controller => :delivery_mails, :action => :add_matching, :id => @import_mail, :back_to => back_to}, {:method => :put}) do %>
+     <p>メッセージがあればどうぞ。</p>
+      <%= text_field_tag 'msg' %>
+      <div style="float: right; margin-top: 12px;">
+        <%= submit_tag '　　追加　　', :name => "add_group_button" %>
+        <%= submit_tag 'キャンセル', :onclick => "return false;", :class => "modal_close" %>
+      </div>
+      <% end %><%# form_tag %>
+    </div>
+    <%= link_to "マッチング候補に追加", "#addMatchingModal", :rel => "addMatchingModal", :class => "btn btn-info btn-medium" %>
+    <% end %>
 <% end %>
 
 <% if !@biz_offers.blank? %>

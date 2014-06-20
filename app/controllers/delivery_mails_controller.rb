@@ -243,11 +243,11 @@ EOS
       end
     end
 
-    SystemNotifier.send_info_mail("[GoldRush] 配信メールがセットされました", <<EOS).deliver
+    SystemNotifier.send_info_mail("[GoldRush] 配信メールがセットされました ID:#{delivery_mail.id}", <<EOS).deliver
 
 #{SysConfig.get_system_notifier_url_prefix}/delivery_mails/#{delivery_mail.id}
 
-Subject: #{delivery_mail.subject}
+件名: #{delivery_mail.subject}
 
 #{delivery_mail.content}
 
@@ -400,24 +400,30 @@ EOS
       dmm = DeliveryMailMatch.new
       dmm.delivery_mail = dm
       dmm.import_mail = im
+      dmm.delivery_mail_match_type = 'auto'
       dmm.matching_user_id = current_user.id
+      dmm.memo= params[:msg]
       set_user_column dmm
       dmm.save!
 
       ScoreJournal.update_score!(current_user.id, 1, 'add_matching', dmm.id)
 
-      SystemNotifier.send_info_mail("[GoldRush] マッチング候補が提案されました", <<EOS).deliver
+      SystemNotifier.send_info_mail("[GoldRush] マッチング候補が提案されました ID:#{dm.id}", <<EOS).deliver
 
 #{SysConfig.get_system_notifier_url_prefix}/delivery_mails/#{dm.id}
 
-Target mail subject: #{dm.subject}
+コメント: #{dmm.memo}
 
-Import mail subject: #{im.mail_subject}
+対象メール: #{dm.subject}
+
+提案メール: #{im.mail_subject}
+
+#{im.mail_body}
 
 EOS
     end
 
-    redirect_to(back_to, notice: "マッチング候補に追加しました！")
+    _redirect_or_back_to({:controller => :import_mails, :action => :show , :id => params[:id]}, notice: "マッチング候補に追加しました！")
   end
 
   def unlink_matching
