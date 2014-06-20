@@ -12,142 +12,15 @@ class ImportMailController < ApplicationController
 #  verify :method => :post, :only => [ :destroy, :create, :update ],
 #         :redirect_to => { :action => :list }
          
-  def set_conditions
-    {
-      :biz_offer_flg => params[:biz_offer_flg],
-      :bp_member_flg => params[:bp_member_flg],
-      :unwanted => params[:unwanted],
-      :registed => params[:registed],
-      :proper_flg => params[:proper_flg],
-      :tag => params[:tag],
-      :starred => params[:starred],
-      :outflow_mail_flg => params[:outflow_mail_flg],
-      :payment_from => params[:payment_from],
-      :payment_to => params[:payment_to],
-      :age_from => params[:age_from],
-      :age_to => params[:age_to],
-      :free_word => params[:free_word],
-      :days => params[:days] || 7,
-      :date_limit => 1,
-    }
-  end
-
-  def make_conditions_for_tag(tags, min_id)
-    Tag.make_conditions_for_tag(tags, "import_mails", min_id)
-  end
-
-  def make_conditions(cond_param)
-    sql_params = []
-    incl = []
-    joins = []
-    sql = "import_mails.deleted = 0"
-
-    before_days = cond_param[:days].to_i if cond_param[:days].to_i > 0
-    if (before_days = before_days || SysConfig.get_import_mail_date_limit).blank?
-      before_days = 30
-    end
-    date_now = Date.today.next_day(1).to_datetime
-    date_before = Date.today.prev_day(before_days).to_datetime
-    unless cond_param[:date_limit].blank?
-      sql += " and (received_at BETWEEN ? AND ?)"
-      sql_params << date_before << date_now
-    end
-
-    if params[:id]
-      sql += " and business_partner_id = ?"
-      sql_params << params[:id]
-    end
-
-    if !(cond_param[:biz_offer_flg]).blank?
-      sql += " and biz_offer_flg = 1"
-    end
-
-    if !(cond_param[:bp_member_flg]).blank?
-      sql += " and bp_member_flg = 1"
-    end
-
-    if !(cond_param[:unwanted]).blank?
-      sql += " and unwanted = 1"
-    end
-
-    if !(cond_param[:registed]).blank?
-      sql += " and registed = 1"
-    end
-    
-    if !(cond_param[:proper_flg]).blank?
-      sql += " and proper_flg = 1"
-    end
-    
-    unless cond_param[:tag].blank?
-      last_import_mail = ImportMail.where("received_at > ?", date_before).order("id").first
-      pids = make_conditions_for_tag(cond_param[:tag], last_import_mail)
-      unless pids.empty?
-        sql += " and import_mails.id in (?) "
-        sql_params += [pids]
-      end
-    end
-
-    unless cond_param[:starred].blank?
-      sql += " and starred > 2"
-    end
-
-    unless cond_param[:outflow_mail_flg].blank?
-      sql += " and outflow_mail_flg = 1"
-    end
-
-    unless (payment_from = cond_param[:payment_from]).blank?
-      sql += " and payment >= ? "
-      sql_params << payment_from
-    end
-
-    unless (payment_to = cond_param[:payment_to]).blank?
-      sql += " and payment <= ? "
-      sql_params << payment_to
-    end
-
-    unless (age_from = cond_param[:age_from]).blank?
-      sql += " and age >= ? "
-      sql_params << age_from
-    end
-
-    unless (age_to = cond_param[:age_to]).blank?
-      sql += " and age <= ? "
-      sql_params << age_to
-    end
-
-    unless (free_word = cond_param[:free_word]).blank?
-      free_word.split.each do |word|
-        sql += " and (concat(mail_subject, '-', mail_body) like ?) "
-        sql_params << '%' + word + '%'
-      end
-    end
-
-    return [sql_params.unshift(sql), incl, joins]
-  end
-
-  def init_session(key)
-    session[key] ||= {}
-    if request.post?
-      if params[:search_button]
-        session[key] = set_conditions
-      elsif params[:clear_button]
-        session[key] = {}
-        redirect_to
-        return false
-      end
-    end
-    return true
-  end
-
   def list
     unless init_session(:import_mail_search)
       return false
     end
-    cond, incl, joins = make_conditions(session[:import_mail_search])
+    cond, incl, joins, orderby = make_conditions(session[:import_mail_search])
 
     @import_mails = ImportMail.includes(incl).joins(joins)
                                              .where(cond)
-                                             .order("id desc")
+                                             .order(orderby)
                                              .page(params[:page])
                                              .per(current_user.per_page)
   end
@@ -238,10 +111,7 @@ class ImportMailController < ApplicationController
   
   # Ajaxでのflg処理
   def change_flg
-  puts">>>>>>>>>>>>>>>>>>>> flg changing now !!!"
-  puts">>>>>>>>>>>>>>>>>>>> import_mail_id : #{params[:import_mail_id]}"
     target_mail = ImportMail.find(params[:import_mail_id])
-  puts">>>>>>>>>>>>>>>>>>>> type : #{params[:type]}"
     if params[:type] == "biz_offer"
       if target_mail.biz_offer_flg == 0
         target_mail.biz_offer_flg = 1
@@ -293,5 +163,142 @@ class ImportMailController < ApplicationController
     text = "平均 #{sprintf('%3d',avg.floor)} ms <br/><br/>" + text
     render :text => text
   end
+
+private
+
+  def order_conditions(ord)
+    {
+      "payment" => "payment",
+      "payment desc" => "payment desc",
+      "age" => "age",
+      "age desc" => "age desc",
+      "id" => "id desc",
+    }[ord] || "id desc"
+  end
   
+  def set_conditions
+    {
+      :biz_offer_flg => params[:biz_offer_flg],
+      :bp_member_flg => params[:bp_member_flg],
+      :unwanted => params[:unwanted],
+      :registed => params[:registed],
+      :proper_flg => params[:proper_flg],
+      :tag => params[:tag],
+      :starred => params[:starred],
+      :outflow_mail_flg => params[:outflow_mail_flg],
+      :payment_from => params[:payment_from],
+      :payment_to => params[:payment_to],
+      :age_from => params[:age_from],
+      :age_to => params[:age_to],
+      :free_word => params[:free_word],
+      :days => params[:days] || 5,
+      :order_by => params[:order_by],
+    }
+  end
+
+  def make_conditions_for_tag(tags, min_id)
+    Tag.make_conditions_for_tag(tags, "import_mails", min_id)
+  end
+
+  def make_conditions(cond_param)
+    sql_params = []
+    incl = []
+    joins = []
+    sql = "import_mails.deleted = 0"
+
+    if (days = cond_param[:days].to_i) > 0
+      date_now = Time.now + 1.day
+      date_before = Time.now - days.day
+      sql += " and (received_at BETWEEN ? AND ?)"
+      sql_params << date_before << date_now
+    end
+
+    if params[:id]
+      sql += " and business_partner_id = ?"
+      sql_params << params[:id]
+    end
+
+    if !(cond_param[:biz_offer_flg]).blank?
+      sql += " and biz_offer_flg = 1"
+    end
+
+    if !(cond_param[:bp_member_flg]).blank?
+      sql += " and bp_member_flg = 1"
+    end
+
+    if !(cond_param[:unwanted]).blank?
+      sql += " and unwanted = 1"
+    end
+
+    if !(cond_param[:registed]).blank?
+      sql += " and registed = 1"
+    end
+    
+    if !(cond_param[:proper_flg]).blank?
+      sql += " and proper_flg = 1"
+    end
+    
+    unless cond_param[:tag].blank?
+      last_import_mail = ImportMail.where("received_at > ?", date_before).order("id").first
+      pids = make_conditions_for_tag(cond_param[:tag], last_import_mail)
+      unless pids.empty?
+        sql += " and import_mails.id in (?) "
+        sql_params += [pids]
+      end
+    end
+
+    unless cond_param[:starred].blank?
+      sql += " and starred > 2"
+    end
+
+    unless cond_param[:outflow_mail_flg].blank?
+      sql += " and outflow_mail_flg = 1"
+    end
+
+    unless (payment_from = cond_param[:payment_from]).blank?
+      sql += " and payment >= ? "
+      sql_params << payment_from
+    end
+
+    unless (payment_to = cond_param[:payment_to]).blank?
+      sql += " and payment <= ? "
+      sql_params << payment_to
+    end
+
+    unless (age_from = cond_param[:age_from]).blank?
+      sql += " and age >= ? "
+      sql_params << age_from
+    end
+
+    unless (age_to = cond_param[:age_to]).blank?
+      sql += " and age <= ? "
+      sql_params << age_to
+    end
+
+    unless (free_word = cond_param[:free_word]).blank?
+      free_word.split.each do |word|
+        sql += " and (concat(mail_subject, '-', mail_body) like ?) "
+        sql_params << '%' + word + '%'
+      end
+    end
+
+    orderby = order_conditions(cond_param[:order_by])
+
+    return [sql_params.unshift(sql), incl, joins, orderby]
+  end
+
+  def init_session(key)
+    session[key] ||= {}
+    if request.post?
+      if params[:search_button]
+        session[key] = set_conditions
+      elsif params[:clear_button]
+        session[key] = {}
+        redirect_to
+        return false
+      end
+    end
+    return true
+  end
+
 end

@@ -61,11 +61,14 @@ class ImportMail < ActiveRecord::Base
     dmt = self.in_reply_to && DeliveryMailTarget.where(message_id: self.in_reply_to).first
     if((dmt != nil) && (dmt.delivery_mail_id != nil))
       self.delivery_mail_id = dmt.delivery_mail_id
-      SystemNotifier.send_info_mail("[GoldRush] 配信メールに対して返信がありました", <<EOS).deliver
+      SystemNotifier.send_info_mail("[GoldRush] 配信メールに対して返信がありました ID:#{dmt.delivery_mail_id}", <<EOS).deliver
 
 #{SysConfig.get_system_notifier_url_prefix}/delivery_mails/#{dmt.delivery_mail_id}
 
-Subject: #{dmt.delivery_mail.subject}
+件名: #{mail_subject}
+From: #{mail_sender_name}
+
+#{mail_body}
 
 EOS
     else
@@ -117,7 +120,7 @@ EOS
       import_mail_src.created_user = 'import_mail'
       import_mail_src.updated_user = 'import_mail'
       # ログが凄いことになるので抑止
-      Rails.logger.silence do
+      silence do
         import_mail_src.save!
       end
       
