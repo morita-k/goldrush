@@ -40,6 +40,18 @@
       </td>
     </tr>
     <tr>
+      <th><i class="fa fa-angle-double-right "></i>対象日数</th>
+      <td>
+        <%= select_tag 'days', options_for_select((1..4).to_a + (1..6).to_a.map{|x| x*5}.push("無制限"), (session[:import_mail_search][:days] || 5))%>
+      </td>
+    </tr>
+    <tr>
+      <th><i class="fa fa-angle-double-right "></i>並び順</th>
+      <td>
+        <%= select_tag 'order_by', options_for_select(order_select_conditions, (session[:import_mail_search][:order_by]))%>
+      </td>
+    </tr>
+    <tr>
       <th colspan="2">
         <%= submit_tag '　　検索　　', btn_warning(:name => 'search_button') %> <%= submit_tag '　　クリア　　', btn_default(:name => 'clear_button') %>
       </th>

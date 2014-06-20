@@ -83,7 +83,7 @@
           <li class="divider"></li>
           <li>メール受信</li>
           <li><%= link_to '取り込みメール', :controller => '/import_mail' %></li>
-          <li><%= link_to '取り込みメールマッチング<span class="badge">new</span>'.html_safe, :controller => '/import_mail', :action => :matching %></li>
+          <li><%= link_to '取り込みメールマッチング'.html_safe, :controller => '/import_mail', :action => :matching %></li>
           <li><%= link_to '解析テンプレート', :controller => '/analysis_template' %></li>
           <li><%= link_to '流出メール解析', :controller => '/outflow_mail', :action => 'new' %></li>
         </ul>
