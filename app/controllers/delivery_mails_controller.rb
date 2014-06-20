@@ -243,11 +243,11 @@ EOS
       end
     end
 
-    SystemNotifier.send_info_mail("[GoldRush] 配信メールがセットされました", <<EOS).deliver
+    SystemNotifier.send_info_mail("[GoldRush] 配信メールがセットされました ID:#{delivery_mail.id}", <<EOS).deliver
 
 #{SysConfig.get_system_notifier_url_prefix}/delivery_mails/#{delivery_mail.id}
 
-Subject: #{delivery_mail.subject}
+件名: #{delivery_mail.subject}
 
 #{delivery_mail.content}
 
@@ -411,6 +411,8 @@ EOS
       SystemNotifier.send_info_mail("[GoldRush] マッチング候補が提案されました ID:#{dm.id}", <<EOS).deliver
 
 #{SysConfig.get_system_notifier_url_prefix}/delivery_mails/#{dm.id}
+
+コメント: #{dmm.memo}
 
 対象メール: #{dm.subject}
 
