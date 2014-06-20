@@ -120,7 +120,7 @@ EOS
       import_mail_src.created_user = 'import_mail'
       import_mail_src.updated_user = 'import_mail'
       # ログが凄いことになるので抑止
-      Rails.logger.silence do
+      silence do
         import_mail_src.save!
       end
       
