@@ -51,6 +51,14 @@ class ImportMailController < ApplicationController
                                              .per(current_user.per_page)
   end
 
+  def automatching
+    unless init_session(:import_mail_auto_match)
+      return false
+    end
+
+    @import_mail_matches = ImportMailMatch.order("mail_match_score desc").page(params[:page]).per(current_user.per_page)
+  end
+
   def set_order
     session[:import_mail_order] = {
       :order => params[:order]

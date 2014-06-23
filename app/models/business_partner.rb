@@ -32,6 +32,10 @@ class BusinessPartner < ActiveRecord::Base
     return resultConclude
   end
 
+  def basic_contract_concluded_format
+    basic_contract_concluded.blank? ? "" : "[#{basic_contract_concluded}]"
+  end
+
   def BusinessPartner.export_to_csv
     csv_data = []
     csv_data << "e-mail,Name,ZipCode,Prefecture,Address,Tel,Birthday,Occupation,案件,人材, bp_id, bp_pic_id,グループ"
@@ -90,31 +94,31 @@ class BusinessPartner < ActiveRecord::Base
 
   def BusinessPartner.import_from_csv_data(readable_data, prodmode=false)
     ActiveRecord::Base.transaction do
-    require 'csv'
-    companies = {}
-    bp_id_cache = []
-    bp_pic_id_cache = []
-    CSV.parse(NKF.nkf("-w", readable_data)).each do |row|
-      # Read email
-      email,pic_name,com,pref,address,tel,birth,occupa,down_flg,upper_flg,bp_id,bp_pic_id,group = row
-      next if email.to_s.strip.blank?
-      next if email == 'e-mail'
-      email = StringUtil.to_test_address(email) unless prodmode
+      require 'csv'
+      companies = {}
+      bp_id_cache = []
+      bp_pic_id_cache = []
+      CSV.parse(NKF.nkf("-w", readable_data)).each do |row|
+        # Read email
+        email,pic_name,com,pref,address,tel,birth,occupa,down_flg,upper_flg,bp_id,bp_pic_id,group = row
+        next if email.to_s.strip.blank?
+        next if email == 'e-mail'
+        email = StringUtil.to_test_address(email) unless prodmode
 
-      a,b = com.split("　")
-      company_name = StringUtil.strip_with_full_size_space(a)
+        a,b = com.split("　")
+        company_name = StringUtil.strip_with_full_size_space(a)
 
-      if pic_name =~ /(.*)様/
-        pic_name =  $1
-      end
-      pic_name = StringUtil.strip_with_full_size_space(pic_name.to_s)
-      if bp_id.blank?
-        # bp新規登録
-        bp, names = create_business_partner(companies, email, pic_name, company_name, upper_flg, down_flg)
-        bp_id = bp.id
-        bp_id_cache << bp.id
-      else
-        bp_id = bp_id.to_i
+        if pic_name =~ /(.*)様/
+          pic_name =  $1
+        end
+        pic_name = StringUtil.strip_with_full_size_space(pic_name.to_s)
+        if bp_id.blank?
+          # bp新規登録
+          bp, names = create_business_partner(companies, email, pic_name, company_name, upper_flg, down_flg)
+          bp_id = bp.id
+          bp_id_cache << bp.id
+        else
+          bp_id = bp_id.to_i
 =begin
         unless bp_id_cache.include? bp_id.to_i
           bp_id_cache << bp_id.to_i
@@ -124,14 +128,14 @@ class BusinessPartner < ActiveRecord::Base
           end
         end
 =end
-      end
-      if bp_pic_id.blank?
-        # bp_pic新規登録
-        pic = create_bp_pic(companies, email, pic_name, company_name, row[3..7].reject{|x| x.blank?}.join("\n"))
-        bp_pic_id = pic.id
-        bp_pic_id_cache << pic.id
-      else
-        bp_pic_id = bp_pic_id.to_i
+        end
+        if bp_pic_id.blank?
+          # bp_pic新規登録
+          pic = create_bp_pic(companies, email, pic_name, company_name, row[3..7].reject{|x| x.blank?}.join("\n"))
+          bp_pic_id = pic.id
+          bp_pic_id_cache << pic.id
+        else
+          bp_pic_id = bp_pic_id.to_i
 =begin
         unless bp_pic_id_cache.include? bp_pic_id.to_i
           bp_pic_id_cache << bp_pic_id.to_i
@@ -141,28 +145,28 @@ class BusinessPartner < ActiveRecord::Base
           end
         end
 =end
-      end
-      # グループ登録
-      unless group.blank?
-        unless bp_pic_group = BpPicGroup.where(:deleted => 0, :bp_pic_group_name => group).first
-          bp_pic_group = BpPicGroup.new
-          bp_pic_group.bp_pic_group_name = group
-          bp_pic_group.created_user = 'import'
-          bp_pic_group.updated_user = 'import'
-          bp_pic_group.save! 
         end
-        unless bp_pic_group_detail = BpPicGroupDetail.where(:bp_pic_group_id => :bp_pic_group_id, :bp_pic_id => bp_pic_id).first
-          bp_pic_group_detail = BpPicGroupDetail.new
-          bp_pic_group_detail.bp_pic_group_id = bp_pic_group.id
-          bp_pic_group_detail.bp_pic_id = bp_pic_id
-          bp_pic_group_detail.created_user = 'import'
-          bp_pic_group_detail.updated_user = 'import'
-          bp_pic_group_detail.save! 
+        # グループ登録
+        unless group.blank?
+          unless bp_pic_group = BpPicGroup.where(:deleted => 0, :bp_pic_group_name => group).first
+            bp_pic_group = BpPicGroup.new
+            bp_pic_group.bp_pic_group_name = group
+            bp_pic_group.created_user = 'import'
+            bp_pic_group.updated_user = 'import'
+            bp_pic_group.save! 
+          end
+          unless bp_pic_group_detail = BpPicGroupDetail.where(:bp_pic_group_id => :bp_pic_group_id, :bp_pic_id => bp_pic_id).first
+            bp_pic_group_detail = BpPicGroupDetail.new
+            bp_pic_group_detail.bp_pic_group_id = bp_pic_group.id
+            bp_pic_group_detail.bp_pic_id = bp_pic_id
+            bp_pic_group_detail.created_user = 'import'
+            bp_pic_group_detail.updated_user = 'import'
+            bp_pic_group_detail.save! 
+          end
         end
       end
     end
   end
-end
 
   # 名刺管理アカウントから出力されたCSVファイルをインポート(google.csv)
   def BusinessPartner.import_google_csv_data(readable_file, userlogin, prodmode=false)
