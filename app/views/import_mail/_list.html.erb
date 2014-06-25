@@ -3,7 +3,7 @@
     <th colspan="9">取り込みメール一覧</th>
   </tr>
 <% for import_mail in @import_mails %>
-  <tr <%= "bgcolor=lightgray" unless import_mail.wanted? %> id="tr_<%= import_mail.id %>">
+  <tr <%= "bgcolor=lightgray" unless import_mail.wanted? %> id="tr_<%= import_mail.id %>" import_mail_id="<%=import_mail.id%>" class="head_row">
     <td style="overflow: hidden">
       <div class="overflow_hidden" style="width:20em;">
         <div style="width:1000px;"><%= import_mail.bp_pic_id.blank? ? "" : star_links(import_mail.business_partner, "BP") + star_links(import_mail.bp_pic, "BP担当者") %> <%= import_mail.bp_pic_id.blank? ? import_mail.mail_sender_name : link_to_bp_detail(import_mail) %></div>
@@ -36,8 +36,11 @@
     </td>
     
   </tr>
+  <tr id="tr_detail_<%= import_mail.id%>" class="detail_row" style="display:none">
+  </tr>
 <% end %>
 </table>
 
+<% @colspan=9 %>
 <%= render :partial => 'import_mail/js' %>
 
