@@ -76,7 +76,8 @@ module ImportMailHelper
   end
   
   def link_to_bp_detail(import_mail)
-    link_to import_mail.mail_sender_name, :controller => :business_partner, :action => :show, :id => import_mail.business_partner_id
+    bp = import_mail.business_partner
+    link_to bp.basic_contract_concluded_format + import_mail.mail_sender_name, :controller => :business_partner, :action => :show, :id => import_mail.business_partner_id
   end
   
   def link_to_biz_create(text, import_mail)
@@ -101,7 +102,7 @@ module ImportMailHelper
     end.sort.join(" ")
     raw res
   end
-  def format_tags(tag_text, words)
+  def format_tags(tag_text)
     tag_text.to_s.split(",").map do |x|
       if Tag.verygood_tags.include?(x.downcase)
         "<span class='x1 label label-warning tag'>#{x}</span>"
@@ -115,7 +116,7 @@ module ImportMailHelper
     end.compact.sort.join(" ")
   end
 
-  def format_only_major_tags(tag_text, words)
+  def format_only_major_tags(tag_text)
     tag_text.to_s.split(",").map do |x|
       if Tag.verygood_tags.include?(x.downcase)
         "<span class='x1 label label-warning tag'>#{x}</span>"
