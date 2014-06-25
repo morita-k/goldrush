@@ -19,6 +19,8 @@ class ImportMail < ActiveRecord::Base
       else
         return map[header_key].to_s
       end
+    rescue ArgumentError
+      return "Can't convert subject."
     rescue Encoding::UndefinedConversionError
       return NKF.nkf('-w', map.header[header_key].value)
     end
