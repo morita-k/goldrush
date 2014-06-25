@@ -5,6 +5,17 @@
   <%= render :partial => 'delivery_mails/list' %>
 <% end %>
 <% end %>
+<% if !@biz_offers.blank? %>
+  <%= accordion_around_h2(getLongName('table_name','biz_offers')+"一覧", "biz", @biz_offers.empty?) do %>
+    <%= render :partial => 'biz_offer/list', :locals => {:biz_offers => @biz_offers} %>
+  <% end %>
+<% end %>
+
+<% if !@bp_members.blank? %>
+  <%= accordion_around_h2(getLongName('table_name','bp_members')+"一覧", "bpm", @bp_members.empty?) do %>
+    <%= render :partial => 'bp_member/list', :locals => {:bp_members => @bp_members} %>
+  <% end %>
+<% end %>
 
 <%= accordion_around("取り込みメール詳細", "") do %>
 <%= link_to_biz_create "案件照会作成", @import_mail  %>
@@ -32,16 +43,6 @@
     </div>
     <%= link_to "マッチング候補に追加", "#addMatchingModal", :rel => "addMatchingModal", :class => "btn btn-info btn-medium" %>
     <% end %>
-<% end %>
-
-<% if !@biz_offers.blank? %>
-  <h2><%=getLongName('table_name','biz_offers')%>一覧</h2>
-  <%= render :partial => 'biz_offer/list', :locals => {:biz_offers => @biz_offers} %>
-<% end %>
-
-<% if !@bp_members.blank? %>
-  <h2><%=getLongName('table_name','bp_members')%>一覧</h2>
-  <%= render :partial => 'bp_member/list', :locals => {:bp_members => @bp_members} %>
 <% end %>
 
 <table class="show_table">

@@ -59,6 +59,11 @@ class ImportMailController < ApplicationController
     @import_mail_matches = ImportMailMatch.order("mail_match_score desc").page(params[:page]).per(current_user.per_page)
   end
 
+  def automatching_detail
+    @import_mail_match = ImportMailMatch.find(params[:id])
+    render :layout => false
+  end
+
   def set_order
     session[:import_mail_order] = {
       :order => params[:order]
@@ -73,6 +78,7 @@ class ImportMailController < ApplicationController
   end
 
   def detail
+    @colspan=params[:colspan] || 4
     @import_mail = ImportMail.find(params[:id])
     render :layout => false
   end

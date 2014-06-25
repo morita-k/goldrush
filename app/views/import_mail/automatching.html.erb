@@ -57,7 +57,7 @@
     <th colspan="8">自動マッチングメール一覧</th>
   </tr>
 <% for matches in @import_mail_matches %>
-  <tr>
+  <tr id="tr_head_<%= matches.id %>" class="head_row_auto" import_mail_match_id="<%= matches.id %>">
     <td rowspan=2><%= matches.mail_match_score %></td>
     <td rowspan=2><%= raw format_only_major_tags(matches.tag_text) %></td>
     <td style="width:6em"><%= show_stars(matches.biz_offer_mail) %></td>
@@ -73,6 +73,9 @@
     <td><div style="width:2.5em"><%=_age(matches.bp_member_mail.age) %></div></td>
     <td><%=_time matches.bp_member_mail.received_at %></td>
   </tr>
+  <tr id="tr_detail_<%= matches.id%>" class="detail_row" style="display:none">
+  </tr>
 <% end %><%# for %>
 </table>
 
+<%= render :partial => 'js' %>

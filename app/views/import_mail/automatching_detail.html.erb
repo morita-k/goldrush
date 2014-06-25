@@ -1,0 +1,18 @@
+<td colspan=8>
+  <div class="row">
+    <% [@import_mail_match.biz_offer_mail, @import_mail_match.bp_member_mail].each do |import_mail| %>
+      <div class="col-md-6">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <%= getLongName('import_mails', 'mail_sender_name') %>: <%= import_mail.mail_sender_name %><br>
+            <%= getLongName('import_mails', 'received_at') %>: <%= _time_long(import_mail.received_at) %><br>
+            <%= getLongName('import_mails', 'mail_subject') %>: <%= import_mail.mail_subject %><br>
+          </div>
+          <div class="panel-body">
+            <%=simple_format (import_mail.mail_body) %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</td>

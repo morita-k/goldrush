@@ -1,1 +1,12 @@
-<td colspan=4><%=simple_format (@import_mail.mail_body) %></td>
+<td colspan=<%=@colspan%>>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <%= getLongName('import_mails', 'mail_sender_name') %>: <%= @import_mail.mail_sender_name %><br>
+      <%= getLongName('import_mails', 'received_at') %>: <%= _time_long(@import_mail.received_at) %><br>
+      <%= getLongName('import_mails', 'mail_subject') %>: <%= @import_mail.mail_subject %><br>
+    </div>
+    <div class="panel-body">
+      <%=simple_format (@import_mail.mail_body) %>
+    </div>
+  </div>
+</td>
