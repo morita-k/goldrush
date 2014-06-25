@@ -176,10 +176,10 @@ private
 
   def order_conditions(ord)
     {
-      "payment" => "payment",
-      "payment desc" => "payment desc",
-      "age" => "age",
-      "age desc" => "age desc",
+      "payment" => "payment, id desc",
+      "payment desc" => "payment desc, id desc",
+      "age" => "age, id desc",
+      "age desc" => "age desc, id desc",
       "id" => "id desc",
     }[ord] || "id desc"
   end
