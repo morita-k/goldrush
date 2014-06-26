@@ -187,6 +187,8 @@ EOS
             when "案件"
               ImportMailJIET.analyze_jiet_offer(import_mail)
             when "人財"
+              import_mail.biz_offer_flg = 0
+              import_mail.bp_member_flg = 1
               ImportMailJIET.analyze_jiet_human(import_mail)
           end
         end
@@ -244,13 +246,6 @@ EOS
 #    !AttachmentFile.find(:first, :conditions => ["deleted = 0 and parent_table_name = 'import_mails' and parent_id = ?", self]).blank?
   end
   
-  def change_type(type_name)
-    if type_name == "biz_offer"
-      self.biz_offer_flg = 1
-      self.save!
-    end
-  end
-
   def pre_body
     mail_subject + "\n" + mail_body
   end
@@ -520,6 +515,10 @@ EOS
     mail_address_str = [self.mail_to.to_s, self.mail_cc.to_s].join(",")
 
     (criterion.nil? || mail_address_str.blank?) ? false : (mail_address_str.split(",").length >= criterion)
+  end
+
+  def plural?
+    plural_flg == 1
   end
 
 private
