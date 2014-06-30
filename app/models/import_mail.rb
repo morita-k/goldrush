@@ -227,6 +227,7 @@ EOS
       end
     else
       self.bp_pic_id = mail_bp_pic.id
+      self.plural_flg = mail_bp_pic.plural_flg if mail_bp_pic.plural?
       self.business_partner_id = mail_bp_pic.business_partner.id
     end
   end

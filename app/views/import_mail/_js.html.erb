@@ -91,7 +91,7 @@ $(function(){
     var detail =  $("#tr_detail_" + import_mail_match_id);
     if(detail.css("display") == "none") {
       //$('.detail_row').css("display","none");
-      $.get('<%= url_for :controller => :import_mail, :action => :automatching_detail%>',
+      $.get('<%= url_for :controller => :import_mail_detail, :action => :detail%>',
         {id: import_mail_match_id},
         function(_detail){return function(data) {
           console.log(_detail);

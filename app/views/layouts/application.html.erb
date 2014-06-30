@@ -84,7 +84,7 @@
           <li>メール受信</li>
           <li><%= link_to '取り込みメール', :controller => '/import_mail' %></li>
           <li><%= link_to '取り込みメールマッチング'.html_safe, :controller => '/import_mail', :action => :matching %></li>
-          <li><%= link_to '解析テンプレート', :controller => '/analysis_template' %></li>
+          <li><%= link_to '取り込みメール自動マッチング'.html_safe, :controller => '/import_mail_match' %></li>
           <li><%= link_to '流出メール解析', :controller => '/outflow_mail', :action => 'new' %></li>
         </ul>
         </li>

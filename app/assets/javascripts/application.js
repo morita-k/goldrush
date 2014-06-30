@@ -55,6 +55,12 @@ $(function () {
 			}}(this));
 		}
 	});
+	$("input[type='radio'].plural_radio").on("change", function() {
+		var post_url = this.getAttribute("post_url");
+		$.post(post_url, {flg: this.value}, function(tag_tag){ return function(data, status, xhr){
+			//
+		}}(this));
+	});
 });
 
 $(function() {
