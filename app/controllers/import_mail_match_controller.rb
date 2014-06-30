@@ -17,6 +17,16 @@ class ImportMailMatchController < ApplicationController
     render :layout => false
   end
 
+  def destroy
+    import_mail_match = ImportMailMatch.find(params[:id])
+    import_mail_match.deleted = 9
+    import_mail_match.deleted_at = Time.now
+    set_user_column import_mail_match
+    import_mail_match.save!
+
+    _redirect_or_back_to :action => :index
+  end
+
 private
 
   def set_conditions
