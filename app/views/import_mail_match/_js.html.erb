@@ -1,0 +1,47 @@
+
+<script type="text/javascript">
+<!--
+function isInclude(src, word){
+  return (src.toUpperCase().split(",").indexOf(word) > -1);
+}
+
+$(function(){
+  if($("input[type='text']#tag").size() > 0) {
+    $('.tag').click(function(){
+      var v = document.forms[0].tag.value;
+      if (v){
+        var w = this.innerHTML;
+        if(!isInclude(v, w.toUpperCase())){
+          var x = v.split(",")
+          x.push(this.innerHTML);
+          document.forms[0].tag.value = x.join(",");
+        }
+      }else{
+        document.forms[0].tag.value = this.innerHTML;
+      }
+      return false;
+    });
+  }
+  $('.head_row_auto').click(function(){
+    var import_mail_match_id = $(this).attr("import_mail_match_id");
+    var detail =  $("#tr_detail_" + import_mail_match_id);
+    if(detail.css("display") == "none") {
+      if (detail.html().trim() == "") {
+        $.get('<%= url_for :controller => :import_mail_match, :action => :detail%>/' + import_mail_match_id,
+          function(_detail){return function(data) {
+            console.log(_detail);
+            _detail.html(data);
+            _detail.css("display", "");
+          }}(detail));
+      }else{
+        detail.css("display", "");
+      }
+    }else{
+        detail.css("display", "none");
+    }
+  });
+});
+
+// -->
+</script>
+

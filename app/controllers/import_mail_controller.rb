@@ -51,19 +51,6 @@ class ImportMailController < ApplicationController
                                              .per(current_user.per_page)
   end
 
-  def automatching
-    unless init_session(:import_mail_auto_match)
-      return false
-    end
-
-    @import_mail_matches = ImportMailMatch.order("mail_match_score desc").page(params[:page]).per(current_user.per_page)
-  end
-
-  def automatching_detail
-    @import_mail_match = ImportMailMatch.find(params[:id])
-    render :layout => false
-  end
-
   def set_order
     session[:import_mail_order] = {
       :order => params[:order]
@@ -156,6 +143,16 @@ class ImportMailController < ApplicationController
                       unwanted: target_mail.unwanted }
     # render :text => target_mail.biz_offer_flg.to_s + ',' + target_mail.bp_member_flg.to_s + ',' + target_mail.unwanted.to_s
   end
+
+  def change_plural
+    im = ImportMail.find(params[:id])
+    im.plural_flg = params[:flg].to_i
+    set_user_column im
+    im.save!
+
+    render :text => "OK", :layout => false
+
+  end
   
   def analysis_test
     max = ( params[:max] ? params[:max] : 50 )
@@ -214,9 +211,8 @@ private
     Tag.make_conditions_for_tag(tags, "import_mails", min_id)
   end
 
-  def make_conditions(cond_param)
+  def make_conditions(cond_param, incl = [])
     sql_params = []
-    incl = []
     joins = []
     sql = "import_mails.deleted = 0"
 

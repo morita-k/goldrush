@@ -83,6 +83,9 @@
   <th><%= getLongName('bp_pics', 'jiet') %></th><td><%=@bp_pic.jiet? ? 'JIET' : '' %></td>
 </tr>
 <tr>
+  <th><%= getLongName('bp_pics', 'plural_flg') %></th><td><%=@bp_pic.plural? ? '複数件' : '' %></td>
+</tr>
+<tr>
   <th><%= getLongName('bp_pics', 'memo') %></th><td><%=simple_format(h @bp_pic.memo) %></td>
 </tr>
 <tr>
