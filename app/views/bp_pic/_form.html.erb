@@ -84,6 +84,19 @@
 　　</td>
 </tr>
 <tr>
+  <th><label for="bp_pic_plural_flg"><%=getLongName('bp_pics','plural_flg')%></label></th>
+  <td>
+    <div class="btn-group" data-toggle="buttons">
+      <label class="btn btn-default btn-sm<%=@bp_pic.plural? ? "" : " active" %>">
+        <%= radio_button :bp_pic, 'plural_flg', "0" %>OFF
+      </label>
+      <label class="btn btn-default btn-sm<%=@bp_pic.plural? ? " active" : "" %>">
+        <%= radio_button :bp_pic, 'plural_flg', "1" %>ON
+      </label>
+  </div>
+  </td>
+</tr>
+<tr>
 <th><label for="bp_pic_memo"><%=getLongName('bp_pics','memo')%></label></th><td><%= resizable_area 'bp_pic', 'memo'  %></td>
 </tr>
 </table>
