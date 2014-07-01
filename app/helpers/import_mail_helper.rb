@@ -130,10 +130,18 @@ module ImportMailHelper
 
   def show_stars(import_mail)
     dummy_star = raw("☆☆")
-     (import_mail.bp_pic_id.blank? ? dummy_star : star_links(import_mail.business_partner, import_mail.business_partner.business_partner_name) + star_links(import_mail.bp_pic, import_mail.bp_pic.bp_pic_name)) + star_links(import_mail, import_mail.mail_subject) + " " + (back_to_link raw('<i class="glyphicon glyphicon-log-in"></i>'), :controller => :import_mail, :action => :show, :id => import_mail)
+    (import_mail.bp_pic_id.blank? ? dummy_star : star_links(import_mail.business_partner, import_mail.business_partner.business_partner_name) + star_links(import_mail.bp_pic, import_mail.bp_pic.bp_pic_name)) + star_links(import_mail, import_mail.mail_subject) + " " + (back_to_link raw('<i class="glyphicon glyphicon-log-in"></i>'), :controller => :import_mail, :action => :show, :id => import_mail)
   end
-end
+
+  def show_stars_auto_match(import_mail)
+    dummy_star = raw("☆☆")
+    (import_mail.bp_pic_id.blank? ? dummy_star : star_links(import_mail.business_partner, import_mail.business_partner.business_partner_name) +
+      star_links(import_mail.bp_pic, import_mail.bp_pic.bp_pic_name)) + star_links(import_mail, import_mail.mail_subject) + " " +
+      (import_mail.bp_pic ? back_to_link(import_mail.mail_sender_name, :controller => :bp_pic, :action => :show, :id => import_mail.bp_pic) : import_mail.mail_sender_name)
+  end
 
   def order_select_conditions
     [["新着順", "id"],["単価高い順", "payment desc"],["単価安い順", "payment"],["年齢高い順", "age desc"],["年齢低い順","age"]]
   end
+end
+

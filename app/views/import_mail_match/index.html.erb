@@ -53,22 +53,40 @@
 
 <table class="list_table table-bordered table-hover">
   <tr>
-    <th colspan="9">自動マッチングメール一覧</th>
+    <th colspan="10">自動マッチングメール一覧</th>
   </tr>
 <% for matches in @import_mail_matches %>
   <tr id="tr_head_<%= matches.id %>" class="head_row_auto" import_mail_match_id="<%= matches.id %>">
     <td rowspan=2><%= matches.mail_match_score %></td>
     <td rowspan=2><%= raw format_only_major_tags(matches.tag_text) %></td>
-    <td style="width:6em"><%= show_stars(matches.biz_offer_mail) %></td>
+    <td>
+      <div class="overflow_hidden" style="width:100%;">
+        <%= star_links matches.biz_offer_mail %> <%= back_to_link matches.biz_offer_mail.mail_subject, :controller => :import_mail, :action => :show, :id => matches.biz_offer_mail %>
+      </div>
+    </td>
+    <td>
+      <div class="overflow_hidden" style="width:100%;">
+        <%= show_stars_auto_match(matches.biz_offer_mail) %>
+      </div>
+    </td>
     <td><div style="width:3.5em"><%=man matches.biz_offer_mail.payment %></div></td>
     <td rowspan=2><div style="width:3.5em"><%=man matches.payment_gap %></div></td>
     <td><div style="width:3.5em"><%=_age(matches.biz_offer_mail.age) %></div></td>
     <td rowspan=2><div style="width:3.5em"><%=_age matches.age_gap %></div></td>
     <td><%=_time matches.biz_offer_mail.received_at %></td>
-    <td rowspan=2><%= back_to_link '<i class="glyphicon glyphicon-remove-circle"></i>'.html_safe, {:controller => :import_mail_match, :action => :destroy, :id => matches}, :method => :post, :class => "btn", :title => "マッチングデータを削除", :confirm => "メールマッチング候補を削除します。よろしいですか？" %></td>
+    <td rowspan=2><span class="destroy_btn btn" title="マッチングデータを削除" import_mail_match_id="<%=matches.id%>"><i class="glyphicon glyphicon-remove-circle"></i></span></td>
   </tr>
-  <tr>
-    <td style="width:6em"><%= show_stars(matches.bp_member_mail) %></td>
+  <tr id="tr_head2_<%= matches.id %>">
+    <td>
+      <div class="overflow_hidden" style="width:100%;">
+        <%= star_links matches.bp_member_mail%> <%= back_to_link matches.bp_member_mail.mail_subject, :controller => :import_mail, :action => :show, :id => matches.bp_member_mail%>
+      </div>
+    </td>
+    <td>
+      <div class="overflow_hidden" style="width:100%;">
+        <%= show_stars_auto_match(matches.bp_member_mail) %>
+      </div>
+    </td>
     <td><div style="width:3.5em"><%=man matches.bp_member_mail.payment %></div></td>
     <td><div style="width:3.5em"><%=_age(matches.bp_member_mail.age) %></div></td>
     <td><%=_time matches.bp_member_mail.received_at %></td>
