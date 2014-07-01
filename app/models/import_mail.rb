@@ -11,6 +11,8 @@ class ImportMail < ActiveRecord::Base
   has_many :tag_details, :foreign_key  => :parent_id, :conditions => "tag_details.tag_key = 'import_mails'"
   has_many :outflow_mails, :conditions => "outflow_mails.deleted = 0"
   has_many :delivery_mail_matches, :conditions => "delivery_mail_matches.deleted = 0"
+  has_many :auto_match_biz_offer_mails, :class_name => 'ImportMailMatch', :foreign_key => 'bp_member_mail_id', :conditions => 'import_mail_matches.created_at > DATE_SUB(CURTIME(),INTERVAL 3 DAY) and import_mail_matches.deleted = 0', :order => "mail_match_score desc"
+  has_many :auto_match_bp_member_mails, :class_name => 'ImportMailMatch', :foreign_key => 'biz_offer_mail_id', :conditions => 'import_mail_matches.created_at > DATE_SUB(CURTIME(),INTERVAL 3 DAY) and import_mail_matches.deleted = 0', :order => "mail_match_score desc"
 
   def ImportMail.tryConv(map, header_key, &block)
     begin
