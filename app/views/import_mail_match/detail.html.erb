@@ -1,9 +1,13 @@
-<td colspan=9>
+<td colspan=10>
   <div class="row">
     <% [@import_mail_match.biz_offer_mail, @import_mail_match.bp_member_mail].each do |import_mail| %>
       <div class="col-md-6">
         <div class="panel panel-default">
           <div class="panel-heading">
+            <%= form_tag({:action => :destroy_mail, :id => import_mail}) do %>
+              <%= back_to_field_tag %>
+              <%= submit_tag 'このメールのマッチングをすべて削除する', :class => "btn btn-warning btn-xs" %>
+            <% end %>
             <%= getLongName('import_mails', 'mail_sender_name') %>: <%= import_mail.mail_sender_name %><br>
             <%= getLongName('import_mails', 'received_at') %>: <%= _time_long(import_mail.received_at) %><br>
             <%= getLongName('import_mails', 'mail_subject') %>: <%= import_mail.mail_subject %><br>
