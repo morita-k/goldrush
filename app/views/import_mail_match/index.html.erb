@@ -76,7 +76,7 @@
     <td><%=_time matches.biz_offer_mail.received_at %></td>
     <td rowspan=2><span class="destroy_btn btn" title="マッチングデータを削除" import_mail_match_id="<%=matches.id%>"><i class="glyphicon glyphicon-remove-circle"></i></span></td>
   </tr>
-  <tr id="tr_head2_<%= matches.id %>">
+  <tr id="tr_head2_<%= matches.id %>" class="head_row_auto" import_mail_match_id="<%= matches.id %>">
     <td>
       <div class="overflow_hidden" style="width:100%;">
         <%= star_links matches.bp_member_mail%> <%= back_to_link matches.bp_member_mail.mail_subject, :controller => :import_mail, :action => :show, :id => matches.bp_member_mail%>
