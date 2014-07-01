@@ -57,7 +57,7 @@
   </tr>
 <% for matches in @import_mail_matches %>
   <tr id="tr_head_<%= matches.id %>" class="head_row_auto" import_mail_match_id="<%= matches.id %>">
-    <td rowspan=2><%= matches.mail_match_score %></td>
+    <td rowspan=2 sytle="text-align:center"><%= star_links matches %><br><span title="マッチングスコア"><%= matches.mail_match_score %></span></td>
     <td rowspan=2><%= raw format_only_major_tags(matches.tag_text) %></td>
     <td>
       <div class="overflow_hidden" style="width:100%;">
