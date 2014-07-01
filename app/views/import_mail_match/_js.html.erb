@@ -40,6 +40,13 @@ $(function(){
         detail.css("display", "none");
     }
   });
+  $('.destroy_btn').click(function(){
+    if(confirm("自動マッチングデータを削除します。よろしいですか？")){
+      $.post("<%= url_for :controller => :import_mail_match, :action => :destroy %>/" + $(this).attr("import_mail_match_id"), {}, function(d){eval(d);});
+    }
+    return false;
+  });
+        
 });
 
 // -->

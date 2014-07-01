@@ -19,15 +19,36 @@ class ImportMailMatchController < ApplicationController
 
   def destroy
     import_mail_match = ImportMailMatch.find(params[:id])
-    import_mail_match.deleted = 9
-    import_mail_match.deleted_at = Time.now
-    set_user_column import_mail_match
-    import_mail_match.save!
+    destroy_in(import_mail_match)
 
+    #_redirect_or_back_to :action => :index
+    render :text => <<EOS
+(function(){
+  $('#tr_head_#{params[:id]}').css("display", "none");
+  $('#tr_head2_#{params[:id]}').css("display", "none");
+  $('#tr_detail_#{params[:id]}').css("display", "none");
+})();
+EOS
+  end
+
+  def destroy_mail
+    target_id = params[:id].to_i
+    ActiveRecord::Base.transaction do
+      ImportMailMatch.where("biz_offer_mail_id = ? or bp_member_mail_id = ?", target_id, target_id).each do |x|
+        destroy_in(x)
+      end
+    end
     _redirect_or_back_to :action => :index
   end
 
 private
+
+  def destroy_in(imm)
+    imm.deleted = 9
+    imm.deleted_at = Time.now
+    set_user_column imm
+    imm.save!
+  end
 
   def set_conditions
     {
