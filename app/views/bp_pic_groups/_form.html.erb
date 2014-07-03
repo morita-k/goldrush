@@ -20,6 +20,10 @@
     <td><%= f.text_field :bp_pic_group_name %></td>
   </tr>
   <tr>
+    <th><%= f.label :bp_pic_group_type, getLongName('bp_pic_groups', 'bp_pic_group_type') %>(*)</th>
+    <td><%= f.select :bp_pic_group_type, getTypes('bp_pic_group_type') %></td>
+  </tr>
+  <tr>
     <th><label for="former_bp_pic_group_mail_template_id">メールテンプレート</label></th>
     <td>
       <%= text_field_tag 'former_bp_pic_group_mail_template_name', @bp_pic_group.mail_template_id.blank? ? "" : get_mail_template_name.mail_template_name, :readonly => true, :style => "background-color: silver;", :size => 30 %>
