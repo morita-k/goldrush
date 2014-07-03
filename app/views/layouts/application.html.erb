@@ -126,7 +126,7 @@
 </nav>
 <!--topmenuここまで-->
 <!--headerここまで-->
-<% [[:notice, "success"], [:err, "danger"], [:warning, "warning"]].each do |x| a,b = x %>
+<% [[:notice, "success"], [:err, "danger"], [:warning, "warning"], [:alert, "warning"]].each do |x| a,b = x %>
   <% if flash[a] %>
     <div class="alert alert-<%=b%> alert-dismissable">
       <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
