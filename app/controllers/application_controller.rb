@@ -6,7 +6,7 @@
 
 class ApplicationController < ActionController::Base
   before_filter :authenticate_auth!
-  before_filter :set_gettext_locale
+  # before_filter :set_gettext_locale
   before_filter :check_popup_mode
   protect_from_forgery
   helper :all # include all helpers, all the time

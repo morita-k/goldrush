@@ -32,6 +32,7 @@ module GoldRush
 
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
+    #>>>>>> default_locale set at config/initializers/fast_gettext.rb <<<<<#
     # config.i18n.default_locale = :de
 
     # Configure the default encoding used in templates for Ruby 1.9.
