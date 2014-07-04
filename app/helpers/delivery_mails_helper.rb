@@ -47,4 +47,5 @@ module DeliveryMailsHelper
     user_list = User.includes(:employee).where("users.deleted = 0 and employees.resignation_date is null").map {|x| [x.formated_mail_from]}
     user_list.unshift("#{SysConfig.get_value(:delivery_mails, :default_from_name)} <#{SysConfig.get_value(:delivery_mails, :default_from)}>")
   end
+
 end
