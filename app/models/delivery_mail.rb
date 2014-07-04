@@ -17,7 +17,7 @@ class DeliveryMail < ActiveRecord::Base
   validates_presence_of :subject, :content, :mail_from_name, :mail_from, :planned_setting_at
 
   after_initialize :default_values
-  
+
   before_save :normalize_cc_bcc!
 
   def get_delivery_mail_targets(limit=20)
@@ -55,7 +55,7 @@ class DeliveryMail < ActiveRecord::Base
     self.mail_status_type ||= 'editing'
     self.mail_send_status_type ||= 'ready'
   end
-  
+
   def planned_setting_at_time
     if planned_setting_at_hour && planned_setting_at_minute
       if !planned_setting_at_hour.blank? && !planned_setting_at_minute.blank?
@@ -64,7 +64,7 @@ class DeliveryMail < ActiveRecord::Base
     end
     return ""
   end
-  
+
   def perse_planned_setting_at(user)
     unless planned_setting_at_time.blank? || planned_setting_at_date.blank?
       self.planned_setting_at = user.zone_parse(planned_setting_at_date.to_s + " " + planned_setting_at_time)
@@ -110,12 +110,12 @@ class DeliveryMail < ActiveRecord::Base
       attachment_files
     ).deliver
   end
-  
+
   def DeliveryMail.send_mail_to_each_targets(mail)
     mail.delivery_mail_targets.each do |target|
       begin
         next if target.bp_pic.nondelivery?
-        
+
         opt = { :bp_pic_name => target.bp_pic.bp_pic_short_name,
                 :business_partner_name => target.bp_pic.business_partner.business_partner_name }
 
@@ -133,38 +133,38 @@ EOS
           DeliveryMail.tags_replacement(mail_content, opt),
           mail.attachment_files
         )
-        
+
         current_mail.deliver
         target.message_id = current_mail.header['Message-ID'].to_s
         target.save!
       rescue => e
         DeliveryError.send_error(mail.id, target.bp_pic, e).save!
-        
+
         error_str = "Delivery Mail Send Error: " + e.message + "\n" + e.backtrace.join("\n")
         SystemLog.error('delivery mail', 'mail send error',  error_str, 'delivery mail')
       end
     end
   end
-  
+
   # Broadcast Mails
   def DeliveryMail.send_mails
     fetch_key = Time.now.to_s + " " + rand().to_s
-      
+
     DeliveryMail.
       where("mail_status_type=? and mail_send_status_type=? and planned_setting_at<=?",
              'unsend', 'ready', Time.now).
       update_all(:mail_send_status_type => 'running', :created_user => fetch_key)
-    
+
     DeliveryMail.where(:created_user => fetch_key).each {|mail|
       self.send_mail_to_each_targets(mail)
     }
-    
+
     DeliveryMail.
       where(:created_user => fetch_key).
       update_all(:mail_status_type => 'send',:mail_send_status_type => 'finished',:send_end_at => Time.now)
   end
-  
-  # === Private === 
+
+  # === Private ===
   def DeliveryMail.tags_replacement(tag, option)
     option.inject(tag){|str, k| str.gsub("%%#{k[0].to_s}%%", k[1])}
   end
@@ -181,18 +181,18 @@ EOS
       else
         logger.warn '"Return-Path"が設定されていません。'
       end
-      
+
       attachment_files.each do |file|
         attachments[file.file_name] = file.read_file
       end
-      
+
       mail( to: destination,
             cc: cc,
             bcc: bcc,
-            from: from, 
+            from: from,
             subject: subject,
             body: body )
-      
+
     end
   end
 
@@ -281,5 +281,34 @@ EOS
     else
       "弊社ビジネスパートナー " + bp_member.employment_type_name
     end
+  end
+
+
+  # TODO: ImportMailから写しただけ。concernsかlibに移すべき。
+  def pre_body
+    mail_subject + "\n" + mail_body
+  end
+
+  #
+  # 以下の項目に関して、メールの解析を行う
+  # 年齢解析
+  # 単価解析
+  # 最寄駅解析
+  # タグ解析
+  #
+  def analyze(body = Tag.pre_proc_body(pre_body))
+    analyze_bp_member_flg(body)
+    self.age = detect_ages_in(body)
+    self.payment = detect_payments_in(body)
+    self.nearest_station = detect_nearest_station_in(body)
+    self.tag_text = make_tags(body)
+    self.proper_flg = detect_proper_in(body) ? 1 : 0
+  end
+
+  # 解析とともに保存を行う
+  def analyze!(body = Tag.pre_proc_body(pre_body))
+    analyze(body)
+    Tag.update_tags!("import_mails", id, tag_text)
+    save!
   end
 end
