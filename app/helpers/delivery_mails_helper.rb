@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 module DeliveryMailsHelper
-  
+
   def row_style(delivery_mail)
     if    delivery_mail.canceled?
       return 'canceled'
@@ -12,7 +12,7 @@ module DeliveryMailsHelper
       return 'send'
     end
   end
-  
+
   def group?
     return !params[:bp_pic_group_id].blank?
   end

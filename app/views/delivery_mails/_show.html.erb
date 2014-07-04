@@ -33,6 +33,18 @@
     <td><%= @delivery_mail.mail_bcc %></td>
   </tr>
   <tr>
+    <th><%= getLongName('delivery_mails', 'tag_text') %></th>
+    <td><%=raw format_tags(@delivery_mail.tag_text) %></td>
+  </tr>
+  <tr>
+    <th><%= getLongName('delivery_mails', 'payment') %></th>
+    <td><%= "#{@delivery_mail.payment}万" if @delivery_mail.payment %></td>
+  </tr>
+  <tr>
+    <th><%= getLongName('delivery_mails', 'age') %></th>
+    <td><%= "#{@delivery_mail.age}歳" if @delivery_mail.age %></td>
+  </tr>
+  <tr>
     <th><%= getLongName('delivery_mails', 'planned_setting_at') %></th>
     <td><%= _time_long(@delivery_mail.planned_setting_at) %></td>
   </tr>
