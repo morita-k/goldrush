@@ -65,6 +65,14 @@
     <td><%= f.text_field :mail_bcc %></td>
   </tr>
   <tr>
+    <th><%= f.label :payment, getLongName('delivery_mails', 'payment') %></th>
+    <td class="number_text"><%= f.text_field :payment %>万</td>
+  </tr>
+  <tr>
+    <th><%= f.label :age, getLongName('delivery_mails', 'age') %></th>
+    <td class="number_text"><%= f.text_field :age %>歳</td>
+  </tr>
+  <tr>
     <th><label for :attachment1>添付ファイル1</label></th>
     <td><%= file_field_tag :attachment1 %></td>
   </tr>
