@@ -59,7 +59,7 @@ private
       :age_from => params[:age_from],
       :age_to => params[:age_to],
       :free_word => params[:free_word],
-      :days => params[:days] || 5,
+      :days => params[:days],
     }
   end
 
@@ -74,9 +74,7 @@ private
     if (days = cond_param[:days].to_i) > 0
       date_now = Time.now + 1.day
       date_before = Time.now - days.day
-      sql += " and (#{biz_alias}.received_at BETWEEN ? AND ?)"
-      sql += " and (#{bpm_alias}.received_at BETWEEN ? AND ?)"
-      sql_params << date_before << date_now
+      sql += " and (import_mail_matches.received_at BETWEEN ? AND ?)"
       sql_params << date_before << date_now
     end
 
@@ -132,12 +130,12 @@ private
   end
 
   def init_session(key)
-    session[key] ||= {}
+    session[key] ||= {:days => 5}
     if request.post?
       if params[:search_button]
         session[key] = set_conditions
       elsif params[:clear_button]
-        session[key] = {}
+        session.delete(key)
         redirect_to
         return false
       end
