@@ -168,6 +168,14 @@ class DeliveryMail < ActiveRecord::Base
   class MyMailer < ActionMailer::Base
     def send_del_mail(destination, cc, bcc, from, subject, body, attachment_files)      
       headers['Message-ID'] = "#{SecureRandom.uuid}@#{ActionMailer::Base.smtp_settings[:domain]}"
+
+      # Return-path の設定
+      return_path = SysConfig.get_value(:delivery_mails, :return_path)
+      if return_path
+        headers[:return_path] = return_path
+      else
+        logger.warn '"Return-Path"が設定されていません。'
+      end
       
       attachment_files.each do |file|
         attachments[file.file_name] = file.read_file
@@ -180,13 +188,6 @@ class DeliveryMail < ActiveRecord::Base
             subject: subject,
             body: body )
       
-      # Return-path の設定
-      return_path = SysConfig.get_value(:delivery_mails, :return_path)
-      if return_path
-        headers[:return_path] = return_path
-      else
-        logger.warn '"Return-Path"が設定されていません。'
-      end
     end
   end
 
