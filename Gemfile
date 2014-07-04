@@ -90,3 +90,5 @@ end
 
 gem 'rb-readline'
 
+gem 'dkim', :git => 'git://github.com/jhawthorn/dkim.git'
+

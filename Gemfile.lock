@@ -1,4 +1,10 @@
 GIT
+  remote: git://github.com/jhawthorn/dkim.git
+  revision: 4172296a5d8f4f1875098e7e921f7009acd1d9ef
+  specs:
+    dkim (1.0.0)
+
+GIT
   remote: git://github.com/rails/dynamic_form.git
   revision: ebb03213ef8268e24c60e5e162b811d199777227
   specs:
@@ -235,6 +241,7 @@ DEPENDENCIES
   coffee-rails (~> 3.2.1)
   database_cleaner
   devise (= 3.0.3)
+  dkim!
   dynamic_form!
   factory_girl_rails (~> 3.0)
   gettext (>= 1.9.3)
