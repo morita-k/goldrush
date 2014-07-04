@@ -14,7 +14,14 @@ class ImportMailMatchController < ApplicationController
 
   def detail
     @import_mail_match = ImportMailMatch.find(params[:id])
-    render :layout => false
+    render :layout => false, :partial => 'detail'
+  end
+
+  def show
+    @import_mail_match = ImportMailMatch.find(params[:id], :conditions => "deleted = 0 ")
+  rescue
+    flash[:err] = "対象のマッチングデータが見つかりません。削除された可能性があります。"
+    redirect_to params[:back_to]
   end
 
   def destroy
@@ -29,6 +36,14 @@ class ImportMailMatchController < ApplicationController
   $('#tr_detail_#{params[:id]}').css("display", "none");
 })();
 EOS
+  end
+
+  def destroy_by_show
+    import_mail_match = ImportMailMatch.find(params[:id])
+    destroy_in(import_mail_match)
+
+    flash[:err] = "マッチングデータを削除しました。"
+    redirect_to(back_to || {:action => 'list'})
   end
 
   def destroy_mail
@@ -82,7 +97,7 @@ private
     if !(cond_param[:proper_flg]).blank?
       sql += " and #{bpm_alias}.proper_flg = 1"
     end
-    
+
     unless (tag = cond_param[:tag]).blank?
       tag.split(",").each do |t|
         sql += " and import_mail_matches.tag_text like ?"
