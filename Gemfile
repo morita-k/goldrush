@@ -69,8 +69,16 @@ gem 'mail', '2.5.3'
 gem 'rmagick', :require => 'RMagick'
 
 group :development do
+  # http://qiita.com/yusabana/items/8ce54577d959bb085b37
   gem 'better_errors'
   gem 'binding_of_caller'
+  gem 'hirb'
+  gem 'hirb-unicode'
+  gem 'pry-rails'
+  gem 'pry-debugger'
+
+  # renderファイル名をhtmlソース内にコメント表示
+  gem 'rails_view_annotator'
 end
 
 group :test do
