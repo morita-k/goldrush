@@ -9,7 +9,7 @@ class ImportMailMatchController < ApplicationController
 
     cond, incl, joins = make_conditions(session[:import_mail_auto_match])
 
-    @import_mail_matches = ImportMailMatch.includes(incl).joins(joins).where(cond).order("mail_match_score desc").page(params[:page]).per(current_user.per_page)
+    @import_mail_matches = ImportMailMatch.includes(incl).joins(joins).where(cond).order("import_mail_matches.received_at desc").page(params[:page]).per(current_user.per_page)
   end
 
   def detail
@@ -59,7 +59,8 @@ private
       :age_from => params[:age_from],
       :age_to => params[:age_to],
       :free_word => params[:free_word],
-      :days => params[:days] || 5,
+      :score_from => params[:score_from],
+      :days => params[:days],
     }
   end
 
@@ -74,9 +75,7 @@ private
     if (days = cond_param[:days].to_i) > 0
       date_now = Time.now + 1.day
       date_before = Time.now - days.day
-      sql += " and (#{biz_alias}.received_at BETWEEN ? AND ?)"
-      sql += " and (#{bpm_alias}.received_at BETWEEN ? AND ?)"
-      sql_params << date_before << date_now
+      sql += " and (import_mail_matches.received_at BETWEEN ? AND ?)"
       sql_params << date_before << date_now
     end
 
@@ -128,16 +127,21 @@ private
       end
     end
 
+    unless (score_from = cond_param[:score_from]).blank?
+      sql += " and mail_match_score >= ? "
+      sql_params << score_from
+    end
+
     return [sql_params.unshift(sql), incl, joins]
   end
 
   def init_session(key)
-    session[key] ||= {}
+    session[key] ||= {:days => 5}
     if request.post?
       if params[:search_button]
         session[key] = set_conditions
       elsif params[:clear_button]
-        session[key] = {}
+        session.delete(key)
         redirect_to
         return false
       end

@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 module DeliveryMailsHelper
-  
+
   def row_style(delivery_mail)
     if    delivery_mail.canceled?
       return 'canceled'
@@ -12,7 +12,7 @@ module DeliveryMailsHelper
       return 'send'
     end
   end
-  
+
   def group?
     return !params[:bp_pic_group_id].blank?
   end
@@ -47,4 +47,5 @@ module DeliveryMailsHelper
     user_list = User.includes(:employee).where("users.deleted = 0 and employees.resignation_date is null").map {|x| [x.formated_mail_from]}
     user_list.unshift("#{SysConfig.get_value(:delivery_mails, :default_from_name)} <#{SysConfig.get_value(:delivery_mails, :default_from)}>")
   end
+
 end
