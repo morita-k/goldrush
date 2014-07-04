@@ -9,7 +9,7 @@ class ImportMailMatchController < ApplicationController
 
     cond, incl, joins = make_conditions(session[:import_mail_auto_match])
 
-    @import_mail_matches = ImportMailMatch.includes(incl).joins(joins).where(cond).order("mail_match_score desc").page(params[:page]).per(current_user.per_page)
+    @import_mail_matches = ImportMailMatch.includes(incl).joins(joins).where(cond).order("import_mail_matches.received_at desc").page(params[:page]).per(current_user.per_page)
   end
 
   def detail
@@ -59,6 +59,7 @@ private
       :age_from => params[:age_from],
       :age_to => params[:age_to],
       :free_word => params[:free_word],
+      :score_from => params[:score_from],
       :days => params[:days],
     }
   end
@@ -124,6 +125,11 @@ private
         sql_params << '%' + word + '%'
         sql_params << '%' + word + '%'
       end
+    end
+
+    unless (score_from = cond_param[:score_from]).blank?
+      sql += " and mail_match_score >= ? "
+      sql_params << score_from
     end
 
     return [sql_params.unshift(sql), incl, joins]
