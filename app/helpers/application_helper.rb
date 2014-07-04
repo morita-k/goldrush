@@ -669,7 +669,7 @@ EOS
 
   def btn_in(kind, opt)
     if opt[:class].blank?
-      opt[:class] = "btn btn-#{kind} btn-medium"
+      opt[:class] = "btn btn-#{kind} btn-md"
     end
     opt
   end

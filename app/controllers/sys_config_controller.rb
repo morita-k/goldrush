@@ -55,6 +55,7 @@ class SysConfigController < ApplicationController
     #SysConfig.find(params[:id]).destroy
     sys_config = SysConfig.find(params[:id], :conditions => "deleted = 0 ")
     sys_config.deleted = 9
+    sys_config.deleted_at = Time.now
     sys_config.save!
     redirect_to :action => 'list'
   end

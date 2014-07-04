@@ -1,8 +1,12 @@
 <h1><%=getLongName('table_name','sys_configs')%>一覧</h1>
 
+<div class="submit_box">
+  <%= link_to (getLongName('table_name','sys_configs')+'の新規作成'), {:action => 'new'}, btn_primary %>
+</div>
+
 <%= paginate(@sys_configs) %>
 
-<table class="list_table">
+<table class="list_table table-bordered table-hover">
   <tr>
   <% for column in SysConfig.columns %>
     <% if system_column?(column.name) then next end %>
@@ -28,6 +32,3 @@
 
 <%= paginate(@sys_configs) %>
 
-<br />
-
-<%= link_to (getLongName('table_name','sys_configs')+'の新規作成'), :action => 'new' %>
