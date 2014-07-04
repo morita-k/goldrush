@@ -322,7 +322,7 @@ EOS
   end
 
   def paginate_far(scope, options = {}, &block)
-    paginator = Kaminari::Helpers::Paginator.new self, options.reverse_merge(:current_page => scope.current_page, :total_pages => scope.current_page + 100, :per_page => scope.limit_value, :param_name => Kaminari.config.param_name, :remote => false)
+    paginator = Kaminari::Helpers::Paginator.new self, options.reverse_merge(:current_page => scope.current_page, :total_pages => scope.current_page + 1, :per_page => scope.limit_value, :param_name => Kaminari.config.param_name, :remote => false)
     paginator.to_s
   end
 
@@ -675,7 +675,7 @@ EOS
   end
 
   def show_stars(rate)
-    raw ("<i class='glyphicon glyphicon-star stars-active'></i>"  * rate + "<i class='glyphicon glyphicon-star stars-inactive'></i>" * (5 - rate))
+    raw("<i class='glyphicon glyphicon-star stars-active'></i>"  * rate + "<i class='glyphicon glyphicon-star stars-inactive'></i>" * (5 - rate))
   end
 
   def star_radios(starred, model=nil)
