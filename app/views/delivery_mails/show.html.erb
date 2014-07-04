@@ -1,6 +1,6 @@
 
 <% if @delivery_mail.delivery_mail_matches.exists? %>
-<% @import_mails = @delivery_mail.delivery_mail_matches.map{|x| x.import_mail} %>
+  <% @import_mails = @delivery_mail.filtered_matches.take(10) %>
 <h2>マッチング候補</h2>
 <%= render :partial => 'import_mail/list' %>
 <% end %>

@@ -28,6 +28,30 @@ class DeliveryMail < ActiveRecord::Base
     self.delivery_mail_type == "group"
   end
 
+  def filtered_matches
+    delivery_mail_matches.map{|x| x.import_mail}.select{|im| matching_mail_filter(im)}.sort{|a,b| b.received_at - a.received_at}
+  end
+
+  def matching_mail_filter(im)
+    return false if self.payment.blank?
+    return false if self.age.blank?
+    return false if im.payment.blank?
+    return false if im.age.blank?
+    if self.biz_offer_mail?
+      im.payment <= self.payment && im.age <= self.age
+    elsif self.bp_member_mail?
+      im.payment >= self.payment && im.age >= self.age
+    end
+  end
+
+  def biz_offer_mail?
+    self.bp_pic_group && self.bp_pic_group.bp_pic_group_type == 'biz_offer'
+  end
+
+  def bp_member_mail?
+    self.bp_pic_group && self.bp_pic_group.bp_pic_group_type == 'bp_member'
+  end
+
   def normalize_cc_bcc!
     self.mail_cc = mail_cc.to_s.split(/[ ,;]/).join(",")
     self.mail_bcc = mail_bcc.to_s.split(/[ ,;]/).join(",")
