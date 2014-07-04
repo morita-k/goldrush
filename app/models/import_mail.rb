@@ -81,16 +81,17 @@ EOS
   def detect_deliverty_mail(reply_mode)
     if dmt = self.in_reply_to && DeliveryMailTarget.where(message_id: self.in_reply_to).first
         detect_replay_mail(dmt.delivery_mail_id)
-    elsif /.*GR-BIZ-ID:(\d+)-(\d)/ =~ mail_body
+    elsif /.*GR-BIZ-ID:(\d+)-(\d+)/ =~ mail_body
       if Math.sqrt($1.to_i) % 1 == 0 && Math.sqrt($2.to_i) % 1 == 0
-        dm = DeliveryMail.find(Math.sqrt($1.to_i).to_i)
-        detect_replay_mail(dm.id)
+        dmt = DeliveryMailTarget.find(Math.sqrt($2.to_i).to_i)
+        self.in_reply_to = dmt.message_id
+        detect_replay_mail(dmt.delivery_mail_id)
       else
-        SystemLog.warn('import mail', 'detect replay error invalid GR-BIZ-ID', import_mail.inspect , 'import mail')
+        SystemLog.warn('import mail', "detect replay error invalid ID: #{$&}", self.inspect , 'import mail')
       end
     end
   rescue
-    SystemLog.warn('import mail', 'detect replay error', import_mail.inspect , 'import mail')
+    SystemLog.warn('import mail', 'detect replay error', self.inspect , 'import mail')
   end
 
   # メールを取り込む

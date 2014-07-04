@@ -119,18 +119,18 @@ class DeliveryMail < ActiveRecord::Base
         opt = { :bp_pic_name => target.bp_pic.bp_pic_short_name,
                 :business_partner_name => target.bp_pic.business_partner.business_partner_name }
 
-        mail.content += <<EOS
+        mail_content = mail.content + <<EOS
 案件コード(こちらのコードは消さずにそのままご返信ください)
 GR-BIZ-ID:#{mail.id ** 2}-#{target.id ** 2}
 EOS
-        
+
         current_mail = MyMailer.send_del_mail(
           target.bp_pic.email1,
           mail.mail_cc,
           mail.mail_bcc,
           "#{mail.mail_from_name} <#{mail.mail_from}>",
           DeliveryMail.tags_replacement(mail.subject, opt),
-          DeliveryMail.tags_replacement(mail.content, opt),
+          DeliveryMail.tags_replacement(mail_content, opt),
           mail.attachment_files
         )
         
