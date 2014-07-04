@@ -61,11 +61,11 @@ class ImportMail < ActiveRecord::Base
     self.in_reply_to = m.in_reply_to
   end
 
-  def detect_deliverty_mail(reply_mode)
-    dmt = self.in_reply_to && DeliveryMailTarget.where(message_id: self.in_reply_to).first
-    if((dmt != nil) && (dmt.delivery_mail_id != nil))
-      self.delivery_mail_id = dmt.delivery_mail_id
-      SystemNotifier.send_info_mail("[GoldRush] 配信メールに対して返信がありました ID:#{dmt.delivery_mail_id}", <<EOS).deliver
+  def detect_replay_mail(delivery_mail_id)
+    self.delivery_mail_id = delivery_mail_id
+    self.biz_offer_flg = 0
+    self.bp_member_flg = 0
+    SystemNotifier.send_info_mail("[GoldRush] 配信メールに対して返信がありました ID:#{dmt.delivery_mail_id}", <<EOS).deliver
 
 #{SysConfig.get_system_notifier_url_prefix}/delivery_mails/#{dmt.delivery_mail_id}
 
@@ -75,25 +75,22 @@ From: #{mail_sender_name}
 #{mail_body}
 
 EOS
-    else
-      # リプライモード時、リプライでなければ取り込み中止
-      if (!self.mail_from.include?("forwarding-noreply@google.com")) && reply_mode
-        puts "SKIP IMPORT: reply_mode and not match in_reply_to"
-        SystemLog.warn('import mail', 'to member private', self.inspect , 'import mail')
-        return false
-      end
 
-#      # 配信メールへの返信でなくて、ユーザーのメールアドレス宛だった場合、
-#      # ユーザーへの個人的なメールとみなして取り込みを中止する。
-#      User.getUsers.each do |user|
-#        if self.mail_to.include?(user.email)
-#          puts "to member private mail: see system_logs"
-#          SystemLog.warn('import mail', 'to member private', self.inspect , 'import mail')
-#          return false
-#        end
-#      end
+  end
+
+  def detect_deliverty_mail(reply_mode)
+    if dmt = self.in_reply_to && DeliveryMailTarget.where(message_id: self.in_reply_to).first
+        detect_replay_mail(dmt.delivery_mail_id)
+    elsif /.*GR-BIZ-ID:(\d+)-(\d)/ =~ mail_body
+      if Math.sqrt($1.to_i) % 1 == 0 && Math.sqrt($2.to_i) % 1 == 0
+        dm = DeliveryMail.find(Math.sqrt($1.to_i).to_i)
+        detect_replay_mail(dm.id)
+      else
+        SystemLog.warn('import mail', 'detect replay error invalid GR-BIZ-ID', import_mail.inspect , 'import mail')
+      end
     end
-    return true
+  rescue
+    SystemLog.warn('import mail', 'detect replay error', import_mail.inspect , 'import mail')
   end
 
   # メールを取り込む
@@ -105,7 +102,6 @@ EOS
     ActiveRecord::Base::transaction do
       import_mail = ImportMail.new
       import_mail.make_import_mail(m)
-      return unless import_mail.detect_deliverty_mail(reply_mode)
 
       # プロセス間で同期をとるために何でもいいから存在するレコードをロック(users#1 => systemユーザー)
       #User.find(1, :lock => true)
@@ -174,6 +170,10 @@ EOS
         import_mail.mail_body = get_encode_body(m, m.body)
       end # m.multipart?
       #---------- mail_body ここまで ----------
+
+      # 返信メールの判定
+      import_mail.detect_deliverty_mail(reply_mode)
+
       import_mail.created_user = 'import_mail'
       import_mail.updated_user = 'import_mail'
       import_mail.save!
@@ -548,7 +548,5 @@ CTYPE_TO_EXT = {
 def ext( mail )
   CTYPE_TO_EXT[mail.content_type] || 'txt'
 end
-
-
 
 end
