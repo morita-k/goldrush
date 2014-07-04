@@ -131,18 +131,18 @@ EOS
     @delivery_mail.delivery_mail_type = "group"
     @delivery_mail.perse_planned_setting_at(current_user) # zone
 
-    # tag_analyze
-    @delivery_mail.analyze!
-
     set_user_column @delivery_mail
+
     respond_to do |format|
       begin
-        set_user_column(@delivery_mail)
-
         ActiveRecord::Base.transaction do
           @delivery_mail.save!
+
+          @delivery_mail.tag_analyze!
+
           # 添付ファイルの保存
           store_upload_files(@delivery_mail.id)
+
           # 添付ファイルのコピー
           copy_upload_files(params[:src_mail_id], @delivery_mail.id)
         end
@@ -159,6 +159,7 @@ EOS
             notice: 'Delivery mail was successfully created.')
           }
         end
+
         format.html {
           redirect_to url_for(
             :controller => 'bp_pic_groups',
@@ -169,6 +170,7 @@ EOS
           ),
           notice: 'Delivery mail was successfully created.'
         }
+
         format.json { render json: @delivery_mail, status: :created, location: @delivery_mail }
       rescue ActiveRecord::RecordInvalid
         format.html { render action: "new" }
@@ -187,9 +189,14 @@ EOS
       begin
         @delivery_mail.attributes = params[:delivery_mail]
         @delivery_mail.perse_planned_setting_at(current_user) # zone
+
         set_user_column(@delivery_mail)
+
         ActiveRecord::Base.transaction do
           @delivery_mail.save!
+
+          @delivery_mail.tag_analyze!
+
           # 添付ファイルの保存
           store_upload_files(@delivery_mail.id)
        end

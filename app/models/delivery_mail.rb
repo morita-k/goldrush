@@ -253,6 +253,7 @@ EOS
           when 'human_resources'
             if bp_member
               if replace_words[1].end_with?("_type")
+
                 target_word = bp_member.human_resource[replace_words[1]].nil? ? "" : bp_member.human_resource.type_name(replace_words[1])
               elsif replace_words[1].end_with?("_flg")
                 target_word = bp_member.human_resource[replace_words[1]].nil? ? "" : get_flg(bp_member.human_resource[replace_words[1]])
@@ -283,32 +284,14 @@ EOS
     end
   end
 
-
-  # TODO: ImportMailから写しただけ。concernsかlibに移すべき。
   def pre_body
-    mail_subject + "\n" + mail_body
+    subject + "\n" + content
   end
 
-  #
-  # 以下の項目に関して、メールの解析を行う
-  # 年齢解析
-  # 単価解析
-  # 最寄駅解析
-  # タグ解析
-  #
-  def analyze(body = Tag.pre_proc_body(pre_body))
-    analyze_bp_member_flg(body)
-    self.age = detect_ages_in(body)
-    self.payment = detect_payments_in(body)
-    self.nearest_station = detect_nearest_station_in(body)
-    self.tag_text = make_tags(body)
-    self.proper_flg = detect_proper_in(body) ? 1 : 0
-  end
-
-  # 解析とともに保存を行う
-  def analyze!(body = Tag.pre_proc_body(pre_body))
-    analyze(body)
-    Tag.update_tags!("import_mails", id, tag_text)
-    save!
+  def tag_analyze!(body = Tag.pre_proc_body(pre_body))
+    analyzed_tag_text = Tag.analyze_skill_tags(body)
+    self.tag_text = analyzed_tag_text
+    self.save!
+    Tag.update_tags!("delivery_mails", id, analyzed_tag_text)
   end
 end

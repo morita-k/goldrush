@@ -34,7 +34,7 @@
   </tr>
   <tr>
     <th><%= getLongName('delivery_mails', 'tag_text') %></th>
-    <td><% if @delivery_mail.proper? then %><span class="label label-danger tag">社員</span> <%end%><%=raw format_tags(@delivery_mail.tag_text) %></td>
+    <td><%=raw format_tags(@delivery_mail.tag_text) %></td>
   </tr>
   <tr>
     <th><%= getLongName('delivery_mails', 'payment') %></th>
