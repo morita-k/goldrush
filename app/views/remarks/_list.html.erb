@@ -3,7 +3,7 @@
   <div class="list-group-item">
     <div class="list-group-item-heading remark_header"><%= remark.get_created_user.employee.employee_name %><br>
       <%= label_tag 'create_name', _time_long(remark.created_at) %> 
-      <%= show_stars remark.rating %>
+      <%= show_rate_stars remark.rating %>
     </div>
     <p class="list-group-item-text"><%= simple_format remark.remark_content %></p>
   </div>
