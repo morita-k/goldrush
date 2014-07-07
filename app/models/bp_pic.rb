@@ -70,6 +70,16 @@ class BpPic < ActiveRecord::Base
   def working?
     self.working_status_type == "working"
   end
+
+  def update_import_mails!(login="update_import_mails")
+    email = SysConfig.email_prodmode? ? self.email1 : StringUtil.to_prod_address(self.email1)
+    ImportMail.where(:deleted => 0, :mail_from => email).each do |im|
+      im.bp_pic = self
+      im.business_partner = self.business_partner
+      im.updated_user = login
+      im.save!
+    end
+  end
   
   def BpPic.score_nondelivery(reason)
     reason = reason.to_sym

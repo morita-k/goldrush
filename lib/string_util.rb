@@ -70,7 +70,15 @@ module StringUtil
   def StringUtil.to_test_address(email)
     "test+" + email.sub("@","_at_") + "@dev.applicative.jp" unless email.blank?
   end
-  
+
+  def StringUtil.to_prod_address(email)
+    if /^test\+(.*)@dev\.applicative\.jp/ =~ email
+      $1.sub("_at_","@")
+    else
+      email
+    end
+  end
+
   def StringUtil.detect_words(str)
     r = DETECT_WORD_REGEXP
     StringUtil.detect_regex(str, r)
