@@ -173,6 +173,8 @@ class BusinessPartnerController < ApplicationController
       set_user_column @bp_pic
       @bp_pic.save!
 
+      @bp_pic.update_import_mails!(current_user.login)
+
       BpPic.update_changed(@bp_pic.id, params[:former_bp_pic_id]) unless params[:former_bp_pic_id].blank? # 転職の登録
 
       if !@business_partner.import_mail_id.blank?
@@ -242,7 +244,7 @@ class BusinessPartnerController < ApplicationController
   end
   
   def space_trim(bp_name)
-    bp_name_list = bp_name.split(/[\s"　"]/)
+    bp_name_list = bp_name.split(/[\s　]/)
     trimed_bp_name = ""
     bp_name_list.each do |bp_name_element|
       trimed_bp_name << bp_name_element
@@ -251,7 +253,7 @@ class BusinessPartnerController < ApplicationController
   end
   
   def space_unify(bp_pic_name)
-    bp_name_list = bp_pic_name.split(/["　"]/)
+    bp_name_list = bp_pic_name.split(/[　]/)
     trimed_bp_name = ""
     bp_name_list.each do |bp_name_element|
       trimed_bp_name << bp_name_element

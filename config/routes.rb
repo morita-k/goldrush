@@ -53,6 +53,8 @@ GoldRush::Application.routes.draw do
       put 'unlink_matching'
       get 'contact_mail_new'
       post 'contact_mail_create'
+      get 'reply_mail_new'
+      post 'reply_mail_create'
     end
   end
 
