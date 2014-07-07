@@ -1,5 +1,5 @@
 <%#= hidden_field_tag 'bp_pic_id', @bp_pics %>
-<%= hidden_field_tag 'import_mail_id', @import_mail.id %>
+<%= @import_mail && (hidden_field_tag 'import_mail_id', @import_mail.id) %>
 <%= back_to_field_tag %>
 <%= f.hidden_field :lock_version %>
   <% if @delivery_mail.errors.any? %>
