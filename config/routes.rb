@@ -3,11 +3,9 @@ GoldRush::Application.routes.draw do
 
   resources :special_words
 
- # resources :import_mail_match do
- #   member do
- #     get 'detail'
- #   end
- # end
+  namespace :import_mail_match do
+    match '/show/:id' => :show
+  end
 
   resources :photos do
     collection do

@@ -674,7 +674,7 @@ EOS
     opt
   end
 
-  def show_stars(rate)
+  def show_rate_stars(rate)
     raw("<i class='glyphicon glyphicon-star stars-active'></i>"  * rate + "<i class='glyphicon glyphicon-star stars-inactive'></i>" * (5 - rate))
   end
 
