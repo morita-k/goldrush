@@ -155,7 +155,8 @@ EOS
           "#{mail.mail_from_name} <#{mail.mail_from}>",
           DeliveryMail.tags_replacement(mail.subject, opt),
           DeliveryMail.tags_replacement(mail_content, opt),
-          mail.attachment_files
+          mail.attachment_files,
+          target.in_reply_to
         )
 
         current_mail.deliver
@@ -195,8 +196,9 @@ EOS
 
   # Private Mailer
   class MyMailer < ActionMailer::Base
-    def send_del_mail(destination, cc, bcc, from, subject, body, attachment_files)
+    def send_del_mail(destination, cc, bcc, from, subject, body, attachment_files, in_reply_to=nil)
       headers['Message-ID'] = "#{SecureRandom.uuid}@#{ActionMailer::Base.smtp_settings[:domain]}"
+      headers["In-Rply-To"] = in_reply_to if in_reply_to
 
       # Return-path の設定
       return_path = SysConfig.get_value(:delivery_mails, :return_path)

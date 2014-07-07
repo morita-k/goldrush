@@ -127,6 +127,9 @@ EOS
     unless params[:bp_pic_ids].blank?
       return contact_mail_create(params[:bp_pic_ids].split.uniq)
     end
+    if params[:import_mail_id]
+      return reply_mail_create
+    end
     @delivery_mail = DeliveryMail.new(params[:delivery_mail])
     @delivery_mail.delivery_mail_type = "group"
     @delivery_mail.perse_planned_setting_at(current_user) # zone
@@ -304,6 +307,72 @@ EOS
     respond_to do |format|
       format.html { redirect_to delivery_mails_url }
       format.json { head :no_content }
+    end
+  end
+
+  def reply_mail_new
+    @bp_pics = []
+    @import_mail = ImportMail.find(params[:import_mail_id])
+    @delivery_mail = DeliveryMail.new
+    @delivery_mail.mail_bcc = current_user.email
+
+    new_proc
+
+    @delivery_mail.subject = "Re: " + @import_mail.mail_subject
+    @delivery_mail.content = <<EOS + "\n\n\n" + @import_mail.mail_body.lines.map{|x| "> " + x}.join
+%%business_partner_name%%
+%%bp_pic_name%%　様
+EOS
+
+    respond_to do |format|
+      format.html { render action: "new" }
+    end
+  end
+
+  def reply_mail_create
+    @import_mail = ImportMail.find(params[:import_mail_id])
+    @delivery_mail = DeliveryMail.new(params[:delivery_mail])
+    @delivery_mail.delivery_mail_type = "instant"
+    @delivery_mail.setup_planned_setting_at(current_user.zone_now)
+    @delivery_mail.mail_status_type = 'unsend'
+    set_user_column @delivery_mail
+    respond_to do |format|
+      begin
+        ActiveRecord::Base.transaction do
+          @delivery_mail.save!
+
+          # 添付ファイルの保存
+          store_upload_files(@delivery_mail.id)
+
+          #配信メール対象作成
+          delivery_mail_target = DeliveryMailTarget.new
+          delivery_mail_target.delivery_mail_id = @delivery_mail.id
+          delivery_mail_target.bp_pic_id = @import_mail.bp_pic_id
+          delivery_mail_target.in_reply_to = @import_mail.message_id
+          set_user_column(delivery_mail_target)
+          delivery_mail_target.save!
+        end #transaction
+
+        # メール送信
+        DeliveryMail.send_mails
+        error_count = DeliveryError.where(:delivery_mail_id => @delivery_mail.id).size
+        if error_count > 0
+          flash.now[:warn] = "送信に失敗した宛先が存在します。<br>送信に失敗した宛先は配信メール詳細画面から確認できます。"
+        end
+
+        format.html {
+          redirect_to url_for(
+            :controller => 'delivery_mails',
+            :action => 'show',
+            :id => @delivery_mail.id,
+            :back_to => back_to
+          ),
+          notice: 'Delivery mail was successfully sent.'
+#          redirect_to(back_to , notice: 'Delivery mail was successfully created.')
+        }
+      rescue ActiveRecord::RecordInvalid
+        format.html { render action: "new" }
+      end
     end
   end
 
