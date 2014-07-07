@@ -94,6 +94,12 @@ EOS
     SystemLog.warn('import mail', 'detect replay error', self.inspect , 'import mail')
   end
 
+  def detect_system_mail
+    destination = SysConfig.get_system_notifier_destination
+    from = SysConfig.get_system_notifier_from
+    self.mail_from == from && self.mail_to == destination
+  end
+
   # メールを取り込む
   #  m   : 取り込むMailオブジェクト
   #  src : 取り込むメールのソーステキスト
@@ -103,6 +109,11 @@ EOS
     ActiveRecord::Base::transaction do
       import_mail = ImportMail.new
       import_mail.make_import_mail(m)
+
+      if import_mail.detect_system_mail
+        SystemLog.warn('import mail', 'system mail ignored', import_mail.inspect , 'import mail')
+        return
+      end
 
       # プロセス間で同期をとるために何でもいいから存在するレコードをロック(users#1 => systemユーザー)
       #User.find(1, :lock => true)
