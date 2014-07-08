@@ -68,6 +68,7 @@ private
   def set_conditions
     {
       :proper_flg => params[:proper_flg],
+      :starred => params[:starred],
       :tag => params[:tag],
       :payment_from => params[:payment_from],
       :payment_to => params[:payment_to],
@@ -96,6 +97,10 @@ private
 
     if !(cond_param[:proper_flg]).blank?
       sql += " and #{bpm_alias}.proper_flg = 1"
+    end
+
+    if !(cond_param[:starred]).blank?
+      sql += " and import_mail_matches.starred = 1"
     end
 
     unless (tag = cond_param[:tag]).blank?

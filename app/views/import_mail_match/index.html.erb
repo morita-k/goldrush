@@ -6,6 +6,8 @@
       <th><i class="fa fa-angle-double-right "></i>フラグ</th>
       <td>
         <%= check_box_tag 'proper_flg', 1, param[:proper_flg].to_i == 1 %> プロパー
+        &nbsp;
+        <%= check_box_tag 'starred', 1, param[:starred].to_i == 1 %> スター
       </td>
     </tr>
     <tr>
