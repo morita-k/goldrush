@@ -22,6 +22,13 @@
       </td>
     </tr>
     <tr>
+      <th><i class="fa fa-angle-double-right "></i>単価差</th>
+      <td class="bounds_input">
+        <%= text_field_tag 'payment_gap_from', param[:payment_gap_from]%>万 ～
+        <%= text_field_tag 'payment_gap_to', param[:payment_gap_to]%>万
+      </td>
+    </tr>
+    <tr>
       <th><i class="fa fa-angle-double-right "></i>年齢</th>
       <td class="bounds_input">
         <%= text_field_tag 'age_from', param[:age_from]%>歳 ～
