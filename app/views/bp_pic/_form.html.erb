@@ -1,6 +1,5 @@
 <%= error_messages_for 'bp_pic' %>
-<% title =  @bp_pic.new_record? ? "#{@bp_pic.business_partner && @bp_pic.business_partner.business_partner_short_name} #{params[:retired_bp_pic_id] && '後任'}担当新規作成" : "#{@bp_pic.bp_pic_name} (#{@bp_pic.business_partner.business_partner_short_name})編集" %>
-<%= accordion_around(title, "2") do %>
+<%= accordion_around(bp_pic_form_title, "2") do %>
 
 <!--[form:bp_pic]-->
 <table class="form_table">
