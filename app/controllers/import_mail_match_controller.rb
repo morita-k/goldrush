@@ -100,7 +100,7 @@ private
     end
 
     if !(cond_param[:starred]).blank?
-      sql += " and import_mail_matches.starred = 1"
+      sql += " and (import_mail_matches.starred = 1 or import_mail_matches.starred = 2)"
     end
 
     unless (tag = cond_param[:tag]).blank?
