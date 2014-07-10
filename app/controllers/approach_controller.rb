@@ -26,7 +26,7 @@ class ApproachController < ApplicationController
       @down_contract_term = ContractTerm.find(@contract.down_contract_term_id)
     end
     @interviews = @approach.interviews
-    @attachment_files = AttachmentFile.find(:all, :conditions => ["deleted = 0 and parent_table_name = 'approaches' and parent_id = ?", @approach.id])
+    @attachment_files = AttachmentFile.get_attachment_files('approaches', @approach.id)
 
     if params[:approach_success]
       @approach.approach_status_type = 'result_waiting'
@@ -43,23 +43,23 @@ class ApproachController < ApplicationController
         @approach.approach_status_type = 'approach_failure'
         set_user_column @approach
         @approach.save!
-        
+
         # 照会ステータスを変更する（未実装）
         @biz_offer.change_status_type
         set_user_column @biz_offer
         @biz_offer.save!
-        
+
         # 人材ステータスを変更する（未実装）
         @human_resource.change_status_type
         set_user_column @human_resource
         @human_resource.save!
       end
       redirect_to :controller => 'approach', :action => 'show', :id => @approach
-      
-      
+
+
     elsif params[:create_contract]
       redirect_to :controller => 'contract', :action => 'new', :approach => @approach
-      
+
     elsif params[:result_wait]
       interview = @approach.last_interview
       interview.interview_status_type = 'result_waiting'
@@ -80,17 +80,17 @@ class ApproachController < ApplicationController
         interview.interview_status_type = 'interview_failure'
         set_user_column interview
         interview.save!
-        
+
         # 提案ステータスを「面談失敗」へ変更
         @approach.approach_status_type = 'interview_failure'
         set_user_column @approach
         @approach.save!
-        
+
         # 照会ステータスを変更する（未実装）
         @biz_offer.change_status_type
         set_user_column @biz_offer
         @biz_offer.save!
-        
+
         # 人材ステータスを変更する（未実装）
         @human_resource.change_status_type
         set_user_column @human_resource
@@ -98,7 +98,7 @@ class ApproachController < ApplicationController
       end
       redirect_to :action => 'show', :approach => @approach
     end
-    
+
   end
 
   def new
@@ -108,11 +108,11 @@ class ApproachController < ApplicationController
     @approach.approached_at = Date.today
     @approached_at_hour = Time.new.hour
     @approached_at_min = (Time.new.min / 10) * 10
-    
+
     @approach.closed_at = Date.today
     @closed_at_hour = Time.new.hour
     @closed_at_min = (Time.new.min / 10) * 10
-    
+
     @approach.approach_upper_contract_term = ContractTerm.new
     @approach.approach_down_contract_term = ContractTerm.new
 #    @business = Business.find(params[:business])
@@ -128,11 +128,11 @@ class ApproachController < ApplicationController
       set_user_column @approach
       set_user_column @approach.approach_upper_contract_term
       set_user_column @approach.approach_down_contract_term
-      
+
       if date = DateTimeUtil.str_to_date(params[:approach][:approached_at])
         @approach.approached_at = Time.local(date.year, date.month, date.day, params[:approached_at_hour].to_i, params[:approached_at_minute].to_i)
       end
-      
+
       if date = DateTimeUtil.str_to_date(params[:approach][:closed_at])
         @approach.closed_at = Time.local(date.year, date.month, date.day, params[:closed_at_hour].to_i, params[:closed_at_minute].to_i)
       end
@@ -140,17 +140,17 @@ class ApproachController < ApplicationController
       @approach.save!
       @approach.approach_upper_contract_term.save!
       @approach.approach_down_contract_term.save!
-      
+
       @biz_offer = BizOffer.find(@approach.biz_offer)
       @biz_offer.biz_offer_status_type = 'approached'
       set_user_column @biz_offer
       @biz_offer.save!
-      
+
       @human_resource = HumanResource.find(@approach.bp_member.human_resource_id)
       @human_resource.human_resource_status_type = 'approached'
       set_user_column @human_resource
       @human_resource.save!
-      
+
     end
     flash[:notice] = 'Approach was successfully created.'
     redirect_to :controller => 'biz_offer', :action => 'show', :id => @approach.biz_offer
@@ -181,11 +181,11 @@ class ApproachController < ApplicationController
       set_user_column @approach
       set_user_column @approach.approach_upper_contract_term
       set_user_column @approach.approach_down_contract_term
-      
+
       if date = DateTimeUtil.str_to_date(params[:approach][:approached_at])
         @approach.approached_at = Time.local(date.year, date.month, date.day, params[:approached_at_hour].to_i, params[:approached_at_minute].to_i)
       end
-      
+
       if date = DateTimeUtil.str_to_date(params[:approach][:closed_at])
         @approach.closed_at = Time.local(date.year, date.month, date.day, params[:closed_at_hour].to_i, params[:closed_at_minute].to_i)
       end
@@ -206,7 +206,7 @@ class ApproachController < ApplicationController
     @approach.deleted_at = Time.now
     set_user_column @approach
     @approach.save!
-    
+
     redirect_to :action => 'list'
   end
 end
