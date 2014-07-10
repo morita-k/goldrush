@@ -68,9 +68,12 @@ private
   def set_conditions
     {
       :proper_flg => params[:proper_flg],
+      :starred => params[:starred],
       :tag => params[:tag],
       :payment_from => params[:payment_from],
       :payment_to => params[:payment_to],
+      :payment_gap_from => params[:payment_gap_from],
+      :payment_gap_to => params[:payment_gap_to],
       :age_from => params[:age_from],
       :age_to => params[:age_to],
       :free_word => params[:free_word],
@@ -98,6 +101,10 @@ private
       sql += " and #{bpm_alias}.proper_flg = 1"
     end
 
+    if !(cond_param[:starred]).blank?
+      sql += " and (import_mail_matches.starred = 1 or import_mail_matches.starred = 2)"
+    end
+
     unless (tag = cond_param[:tag]).blank?
       tag.split(",").each do |t|
         sql += " and import_mail_matches.tag_text like ?"
@@ -117,6 +124,16 @@ private
       sql += " and #{bpm_alias}.payment <= ? "
       sql_params << payment_to
       sql_params << payment_to
+    end
+
+    unless (payment_gap_from = cond_param[:payment_gap_from]).blank?
+      sql += " and import_mail_matches.payment_gap >= ? "
+      sql_params << payment_gap_from
+    end
+
+    unless (payment_gap_to = cond_param[:payment_gap_to]).blank?
+      sql += " and import_mail_matches.payment_gap <= ? "
+      sql_params << payment_gap_to
     end
 
     unless (age_from = cond_param[:age_from]).blank?

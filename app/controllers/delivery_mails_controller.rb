@@ -80,27 +80,13 @@ class DeliveryMailsController < ApplicationController
       @delivery_mail.subject = target_mail_template.subject
       @delivery_mail.mail_cc = target_mail_template.mail_cc
       @delivery_mail.mail_bcc = target_mail_template.mail_bcc
-
-      unless current_user.mail_signature.blank?
-        @delivery_mail.content += <<EOS
-
-
-#{current_user.mail_signature}
-EOS
-      end
     else
       @delivery_mail.content = <<EOS
 %%business_partner_name%%
 %%bp_pic_name%%　様
 EOS
-      unless current_user.mail_signature.blank?
-        @delivery_mail.content += <<EOS
-
-
-#{current_user.mail_signature}
-EOS
-      end
     end
+    @delivery_mail.add_signature(current_user)
 
     new_proc
 
@@ -324,6 +310,8 @@ EOS
 %%bp_pic_name%%　様
 EOS
 
+    @delivery_mail.add_signature(current_user)
+
     respond_to do |format|
       format.html { render action: "new" }
     end
@@ -390,12 +378,7 @@ EOS
       @delivery_mail.subject = t.subject
       @delivery_mail.content = t.content
     end
-    unless sales_pic.mail_signature.blank?
-      @delivery_mail.content += <<EOS
-
-#{sales_pic.mail_signature}
-EOS
-    end
+    @delivery_mail.add_signature(sales_pic)
     @delivery_mail.mail_bcc = @delivery_mail.mail_bcc.to_s.split(",").push(sales_pic.email).join(",")
     @delivery_mail.mail_from = sales_pic.email
     @delivery_mail.mail_from_name =sales_pic.employee.employee_name

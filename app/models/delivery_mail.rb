@@ -320,4 +320,10 @@ EOS
     self.save!
     Tag.update_tags!("delivery_mails", id, analyzed_tag_text)
   end
+
+  def add_signature(mail_sender)
+    if signature = mail_sender.mail_signature.presence
+      self.content += "\n\n#{signature}"
+    end
+  end
 end
