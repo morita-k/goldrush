@@ -1,67 +1,67 @@
 <%= accordion_around(getLongName('table_name','import_mails')+"マッチング", "") do %>
   <% param = session[:import_mail_auto_match] %>
   <%= form_tag do %>
-<table class="form_table">
-    <tr>
-      <th><i class="fa fa-angle-double-right "></i>フラグ</th>
-      <td>
-        <%= check_box_tag 'proper_flg', 1, param[:proper_flg].to_i == 1 %> プロパー
-        &nbsp;
-        <%= check_box_tag 'starred', 1, param[:starred].to_i == 1 %> スター
-      </td>
-    </tr>
-    <tr>
-      <th><i class="fa fa-angle-double-right "></i>タグ</th>
-      <td><%= text_field_tag 'tag', param[:tag]%><br>
-        <%= verygood_tags %>
-      </td>
-    </tr>
-    <tr>
-      <th><i class="fa fa-angle-double-right "></i>単価</th>
-      <td class="bounds_input">
-        <%= text_field_tag 'payment_from', param[:payment_from]%>万 ～
-        <%= text_field_tag 'payment_to', param[:payment_to]%>万
-      </td>
-    </tr>
-    <tr>
-      <th><i class="fa fa-angle-double-right "></i>単価差</th>
-      <td class="bounds_input">
-        <%= text_field_tag 'payment_gap_from', param[:payment_gap_from]%>万 ～
-        <%= text_field_tag 'payment_gap_to', param[:payment_gap_to]%>万
-      </td>
-    </tr>
-    <tr>
-      <th><i class="fa fa-angle-double-right "></i>年齢</th>
-      <td class="bounds_input">
-        <%= text_field_tag 'age_from', param[:age_from]%>歳 ～
-        <%= text_field_tag 'age_to', param[:age_to]%>歳
-      </td>
-    </tr>
-    <tr>
-      <th><i class="fa fa-angle-double-right "></i>フリーワード</th>
-      <td>
-        <%= text_field_tag 'free_word', param[:free_word]%>
-      </td>
-    </tr>
-    <tr>
-      <th><i class="fa fa-angle-double-right "></i>スコア下限</th>
-      <td>
-        <%= text_field_tag 'score_from', param[:score_from]%>
-      </td>
-    </tr>
-    <tr>
-      <th><i class="fa fa-angle-double-right "></i>対象日数</th>
-      <td>
-        <%= select_tag 'days', options_for_select((1..4).to_a + (1..6).to_a.map{|x| x*5}.push("無制限"), (param[:days] || 5))%>
-      </td>
-    </tr>
-    <tr>
-      <th colspan="2">
-        <%= submit_tag '　　検索　　', btn_warning(:name => 'search_button') %> <%= submit_tag '　　クリア　　', btn_default(:name => 'clear_button') %>
-      </th>
-    </tr>
-</table>
-<% end %>
+    <table class="form_table">
+      <tr>
+        <th><i class="fa fa-angle-double-right"></i>フラグ</th>
+        <td>
+          <%= check_box_tag 'proper_flg', 1, param[:proper_flg].to_i == 1 %> プロパー
+          &nbsp;
+          <%= check_box_tag 'starred', 1, param[:starred].to_i == 1 %> スター
+        </td>
+      </tr>
+      <tr>
+        <th><i class="fa fa-angle-double-right"></i>タグ</th>
+        <td><%= text_field_tag 'tag', param[:tag]%><br>
+          <%= verygood_tags %>
+        </td>
+      </tr>
+      <tr>
+        <th><i class="fa fa-angle-double-right"></i>単価</th>
+        <td class="bounds_input">
+          <%= text_field_tag 'payment_from', param[:payment_from]%>万 ～
+          <%= text_field_tag 'payment_to', param[:payment_to]%>万
+        </td>
+      </tr>
+      <tr>
+        <th><i class="fa fa-angle-double-right"></i>単価差</th>
+        <td class="bounds_input">
+          <%= text_field_tag 'payment_gap_from', param[:payment_gap_from]%>万 ～
+          <%= text_field_tag 'payment_gap_to', param[:payment_gap_to]%>万
+        </td>
+      </tr>
+      <tr>
+        <th><i class="fa fa-angle-double-right"></i>年齢</th>
+        <td class="bounds_input">
+          <%= text_field_tag 'age_from', param[:age_from]%>歳 ～
+          <%= text_field_tag 'age_to', param[:age_to]%>歳
+        </td>
+      </tr>
+      <tr>
+        <th><i class="fa fa-angle-double-right"></i>フリーワード</th>
+        <td>
+          <%= text_field_tag 'free_word', param[:free_word]%>
+        </td>
+      </tr>
+      <tr>
+        <th><i class="fa fa-angle-double-right"></i>マッチングスコア下限</th>
+        <td>
+          <%= text_field_tag 'score_from', param[:score_from]%>
+        </td>
+      </tr>
+      <tr>
+        <th><i class="fa fa-angle-double-right"></i>対象日数</th>
+        <td>
+          <%= select_tag 'days', options_for_select((1..4).to_a + (1..6).to_a.map{|x| x*5}.push("無制限"), (param[:days] || 5))%>
+        </td>
+      </tr>
+      <tr>
+        <th colspan="2">
+          <%= submit_tag '　　検索　　', btn_warning(:name => 'search_button') %> <%= submit_tag '　　クリア　　', btn_default(:name => 'clear_button') %>
+        </th>
+      </tr>
+    </table>
+  <% end %>
 <% end %>
 
 <%= paginate_far(@import_mail_matches) %>
@@ -70,50 +70,67 @@
   <tr>
     <th colspan="10">自動マッチングメール一覧</th>
   </tr>
-<% @import_mail_matches.each do |matches| %>
-  <tr id="tr_head_<%= matches.id %>" class="head_row_auto" import_mail_match_id="<%= matches.id %>">
-    <td rowspan=2 sytle="text-align:center">
-      <%= star_links matches %><br>
-      <span title="マッチングスコア">
-        <%= back_to_link(matches.mail_match_score, import_mail_match_path(id: matches.id)) %>
-      </span>
-    </td>
-    <td rowspan=2><%= raw format_only_major_tags(matches.tag_text) %></td>
-    <td>
-      <div class="overflow_hidden" style="width:100%;">
-        <%= star_links matches.biz_offer_mail %> <%= back_to_link matches.biz_offer_mail.mail_subject, :controller => :import_mail, :action => :show, :id => matches.biz_offer_mail %>
-      </div>
-    </td>
-    <td>
-      <div class="overflow_hidden" style="width:100%;">
-        <%= show_stars_auto_match(matches.biz_offer_mail) %>
-      </div>
-    </td>
-    <td><div style="width:3.5em"><%=man matches.biz_offer_mail.payment %></div></td>
-    <td rowspan=2><div style="width:3.5em"><%=man matches.payment_gap %></div></td>
-    <td><div style="width:3.5em"><%=_age(matches.biz_offer_mail.age) %></div></td>
-    <td rowspan=2><div style="width:3.5em"><%=_age matches.age_gap %></div></td>
-    <td><%=_time matches.biz_offer_mail.received_at %></td>
-    <td rowspan=2><span class="destroy_btn btn" title="マッチングデータを削除" import_mail_match_id="<%=matches.id%>"><i class="glyphicon glyphicon-remove-circle"></i></span></td>
-  </tr>
-  <tr id="tr_head2_<%= matches.id %>" class="head_row_auto" import_mail_match_id="<%= matches.id %>">
-    <td>
-      <div class="overflow_hidden" style="width:100%;">
-        <%= star_links matches.bp_member_mail%> <%= back_to_link matches.bp_member_mail.mail_subject, :controller => :import_mail, :action => :show, :id => matches.bp_member_mail%>
-      </div>
-    </td>
-    <td>
-      <div class="overflow_hidden" style="width:100%;">
-        <%= show_stars_auto_match(matches.bp_member_mail) %>
-      </div>
-    </td>
-    <td><div style="width:3.5em"><%=man matches.bp_member_mail.payment %></div></td>
-    <td><div style="width:3.5em"><%=_age(matches.bp_member_mail.age) %></div></td>
-    <td><%=_time matches.bp_member_mail.received_at %></td>
-  </tr>
-  <tr id="tr_detail_<%= matches.id%>" class="detail_row" style="display:none">
-  </tr>
-<% end %><%# for %>
+
+  <% @import_mail_matches.each do |matches| %>
+    <tr id="tr_head_<%= matches.id %>" class="head_row_auto" import_mail_match_id="<%= matches.id %>">
+      <td rowspan=2 sytle="text-align:center">
+        <%= star_links matches %>&nbsp;<span title="マッチングスコア" class='label label-default'><%= matches.mail_match_score %></span>
+        <br>
+        <%= back_to_link(matches.id, import_mail_match_path(id: matches.id)) %>
+      </td>
+
+      <td rowspan=2>
+        <%= raw format_only_major_tags(matches.tag_text) %>
+      </td>
+
+      <td>
+        <div class="overflow_hidden" style="width:100%;">
+          <%= star_links matches.biz_offer_mail %>
+          <%= back_to_link matches.biz_offer_mail.mail_subject, :controller => :import_mail, :action => :show, :id => matches.biz_offer_mail %>
+        </div>
+      </td>
+      <td>
+        <div class="overflow_hidden" style="width:100%;">
+          <%= show_stars_auto_match(matches.biz_offer_mail) %>
+        </div>
+      </td>
+
+      <td><div style="width:3.5em"><%=man matches.biz_offer_mail.payment %></div></td>
+      <td rowspan=2><div style="width:3.5em"><%=man matches.payment_gap %></div></td>
+
+      <td><div style="width:3.5em"><%=_age(matches.biz_offer_mail.age) %></div></td>
+      <td rowspan=2><div style="width:3.5em"><%=_age matches.age_gap %></div></td>
+
+      <td><%=_time matches.biz_offer_mail.received_at %></td>
+
+      <td rowspan=2>
+        <span class="destroy_btn btn" title="マッチングデータを削除" import_mail_match_id="<%=matches.id%>"><i class="glyphicon glyphicon-remove-circle"></i></span>
+      </td>
+    </tr>
+
+    <tr id="tr_head2_<%= matches.id %>" class="head_row_auto" import_mail_match_id="<%= matches.id %>">
+      <td>
+        <div class="overflow_hidden" style="width:100%;">
+          <%= star_links matches.bp_member_mail%>
+          <%= back_to_link matches.bp_member_mail.mail_subject, :controller => :import_mail, :action => :show, :id => matches.bp_member_mail%>
+        </div>
+      </td>
+      <td>
+        <div class="overflow_hidden" style="width:100%;">
+          <%= show_stars_auto_match(matches.bp_member_mail) %>
+        </div>
+      </td>
+
+      <td><div style="width:3.5em"><%=man matches.bp_member_mail.payment %></div></td>
+
+      <td><div style="width:3.5em"><%=_age(matches.bp_member_mail.age) %></div></td>
+
+      <td><%=_time matches.bp_member_mail.received_at %></td>
+    </tr>
+
+    <tr id="tr_detail_<%= matches.id%>" class="detail_row" style="display:none">
+    </tr>
+  <% end %>
 </table>
 
 <%= render :partial => 'js' %>
