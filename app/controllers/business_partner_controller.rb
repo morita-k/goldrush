@@ -138,7 +138,7 @@ class BusinessPartnerController < ApplicationController
     elsif params[:photo_id]
       # 名刺紐付けの場合、名刺取込一覧画面を表示する
       flash.now[:notice] = flash_notice
-      redirect_to :controller => :photos, :action => :list
+      _redirect_or_back_to :controller => :photos, :action => :index
     else
       # ポップアップウィンドウでなければ通常の画面遷移
       flash[:notice] = flash_notice
