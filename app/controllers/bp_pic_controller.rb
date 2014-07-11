@@ -345,7 +345,7 @@ class BpPicController < ApplicationController
 
     flash_notice = 'Photo was successfully updated.'
 
-    flash.now[:notice] = flash_notice
+    flash[:notice] = flash_notice
     redirect_to back_to
   end
 
@@ -354,7 +354,7 @@ class BpPicController < ApplicationController
 
     flash_notice = 'Photo was successfully updated.'
 
-    flash.now[:notice] = flash_notice
+    flash[:notice] = flash_notice
 
     redirect_to :back
   end

@@ -78,7 +78,7 @@ module ApplicationHelper
   end
 
   def url_for_bp_pic_list_with_photo_id(photo_id)
-    url_for :controller => :bp_pic, :action => :list, :photo_id => photo_id
+    url_for :controller => :bp_pic, :action => :list, :photo_id => photo_id, :popup => 1
   end
 
   def url_for_rotate_photo(photo_id, left_rotate, target_page, bp_pic_id = nil)
