@@ -76,27 +76,6 @@ class BusinessPartnerTest < ActiveSupport::TestCase
     assert_nil(pic_gotou.sales_pic_id, "何かしらの不具合")
   end
   
-  # 上流・下流フラグ管理
-  test "SES_flag" do
-    BusinessPartnerGoogleImporter.import_google_csv_data(import_data, "testuser", true)
-    
-    bp = BusinessPartner.where(:business_partner_name => "株式会社ヒガシシステム", :deleted => 0).first
-    assert_equal(1, bp.upper_flg, "上流フラグが立っていない")
-    assert_equal(1, bp.down_flg, "下流フラグが立っていない")
-    
-    bp = BusinessPartner.where(:business_partner_name => "株式会社カナガワデザイン", :deleted => 0).first
-    assert_equal(1, bp.upper_flg, "上流フラグが上書きされていない")
-    assert_equal(1, bp.down_flg, "下流フラグが上書きされていない")
-    
-    bp = BusinessPartner.where(:business_partner_name => "株式会社ボールコミュニケーションズ", :deleted => 0).first
-    assert_equal(1, bp.upper_flg, "上流フラグが上書きされている")
-    assert_equal(1, bp.down_flg, "下流フラグが上書きされている")
-    
-    bp = BusinessPartner.where(:business_partner_name => "株式会社フォレストパートナー", :deleted => 0).first
-    assert_equal(0, bp.upper_flg, "上流フラグが上書きされている")
-    assert_equal(0, bp.down_flg, "下流フラグが上書きされている")
-  end
-  
   # メールアドレスがエスケープ出来ているか
   test "prodmode_on" do
     BusinessPartnerGoogleImporter.import_google_csv_data(import_data, "testuser")

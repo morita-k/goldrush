@@ -1,5 +1,5 @@
 <%= accordion_around(@business_partner.blank? ? getLongName('table_name','business_partners') : @business_partner.business_partner_name+"担当", "") do %>
-  <%= form_tag_popup_mode(set_url_param) do %>
+  <%= form_tag_popup_mode(set_bp_pic_url_param) do %>
   <table class="form_table">
   <tr>
     <th><i class="fa fa-angle-double-right "></i> コード（営業｜取引｜販管）</th>
@@ -123,30 +123,30 @@
     <tr>
     <% if popup? %>
       <td><%= star_links(bp_pic.business_partner) %> <%= bp_pic.business_partner.business_partner_name %><%= basic_contract_concluded_text(bp_pic.business_partner) %></td>
-    <% unless @photo_id %>
-      <td><%= star_links(bp_pic) %> <%=link_to h(bp_pic.usefulname), '#', :onClick => "setBpPicToParentWindow(#{bp_pic.id},'#{bp_pic.usefulname}', '#{bp_pic.business_partner_name}');return false;" %></td>
-  <% else %>
-    <td><%= star_links(bp_pic) %> <%=link_to bp_pic.usefulname, {:controller => :bp_pic, :action => :update_photo, :id => bp_pic.id, :photo_id => @photo_id, :popup => 1, :back_to => back_to} %></td>
-  <% end %>
-  <% else %>
+      <% if params[:photo_id] %>
+        <td><%= star_links(bp_pic) %> <%=link_to_popup_mode bp_pic.usefulname, {:controller => :bp_pic, :action => :update_photo, :id => bp_pic.id, :photo_id => params[:photo_id], :back_to => back_to} %></td>
+      <% else %>
+        <td><%= star_links(bp_pic) %> <%=link_to h(bp_pic.usefulname), '#', :onClick => "setBpPicToParentWindow(#{bp_pic.id},'#{bp_pic.usefulname}', '#{bp_pic.business_partner_name}');return false;" %></td>
+      <% end %>
+    <% else %>
       <td><%= check_box_tag 'ids[]', bp_pic.id, false %></td>
-    <td><%= star_links(bp_pic.business_partner) %> <%=back_to_link bp_pic.business_partner.business_partner_name, {:controller => :business_partner, :action => :show, :id => bp_pic.business_partner}, {:class => 'bp_name'} %><%= basic_contract_concluded_text(bp_pic.business_partner) %></td>
-    <td style="border-right-color: silver;"><%= star_links(bp_pic) %> <%=back_to_link bp_pic.usefulname, {:action => :show, :id => bp_pic}, {:class => 'bp_pic_name'} %>
-    <% unless bp_pic.working? %>
-      <% working_status_type_links_list(bp_pic).each do |x| %> <%= x %><% end %>
-    <% end %>
-      <%= bp_pic.jiet? ? raw('[<span title="JIET取り込み" style="font-weight:bold">J</span>]') : ''%>
-    </td>
-    <td style="text-align:center;width:16px"><%= bp_pic_edit_icon(bp_pic) %></td>
-  <% end %><%# popup? %>
+      <td><%= star_links(bp_pic.business_partner) %> <%=back_to_link bp_pic.business_partner.business_partner_name, {:controller => :business_partner, :action => :show, :id => bp_pic.business_partner}, {:class => 'bp_name'} %><%= basic_contract_concluded_text(bp_pic.business_partner) %></td>
+      <td style="border-right-color: silver;"><%= star_links(bp_pic) %> <%=back_to_link bp_pic.usefulname, {:action => :show, :id => bp_pic}, {:class => 'bp_pic_name'} %>
+        <% unless bp_pic.working? %>
+          <% working_status_type_links_list(bp_pic).each do |x| %> <%= x %><% end %>
+        <% end %>
+        <%= bp_pic.jiet? ? raw('[<span title="JIET取り込み" style="font-weight:bold">J</span>]') : ''%>
+      </td>
+      <td style="text-align:center;width:16px"><%= bp_pic_edit_icon(bp_pic) %></td>
+    <% end %><%# popup? %>
     <td class="hidden-xs"><div class="overflow_hidden"><%=h bp_pic.email1 %></div></td>
     <% unless popup? %>
       <td><%= bp_pic.sales_pic_name %></td>
-    <td style="text-align:center;">
-      <%= back_to_link(image_tag(bp_pic.contact_mail? ? 'icon-check.png' : 'icon-emailforward.png'), {:controller => :delivery_mails, :action => :contact_mail_new, :bp_pic_ids => [bp_pic.id]},{:class => 'sales_pic', :name => (bp_pic.sales_pic.blank? ? "" : bp_pic.sales_pic.id.to_s), :title => "担当営業：" + (bp_pic.sales_pic.blank? ? "未設定" : bp_pic.sales_pic_name)}) %>
-    </td>
-    <td><%=h _time(bp_pic.updated_at) %></td>
-  <% end %>
+      <td style="text-align:center;">
+        <%= back_to_link(image_tag(bp_pic.contact_mail? ? 'icon-check.png' : 'icon-emailforward.png'), {:controller => :delivery_mails, :action => :contact_mail_new, :bp_pic_ids => [bp_pic.id]},{:class => 'sales_pic', :name => (bp_pic.sales_pic.blank? ? "" : bp_pic.sales_pic.id.to_s), :title => "担当営業：" + (bp_pic.sales_pic.blank? ? "未設定" : bp_pic.sales_pic_name)}) %>
+      </td>
+      <td><%=h _time(bp_pic.updated_at) %></td>
+    <% end %>
   </tr>
 <% end %><%# for %>
   </tbody>
@@ -189,5 +189,5 @@ function setBpPicToParentWindow(bp_pic_id, bp_pic_name, business_partner_name) {
 </script>
 <% end %><%# if popup? %>
 
-<% if is_photo? %> <%= link_or_back '戻る', {:controller => :photos ,:action => 'list'} %> <% end %>
+<% if params[:photo_id] %> <%= link_or_back '戻る', {:controller => :photos ,:action => 'list'} %> <% end %>
 

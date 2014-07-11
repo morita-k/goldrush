@@ -53,9 +53,9 @@ private
     back_to_link(getLongType("working_status_type",status), {:controller => :bp_pic, :action => :update_working_status_type, :id => id, :working_status_type => status}, :confirm => "勤務ステータスを「#{getLongType("working_status_type",status)}」に変更します。よろしいですか?", :class => "btn btn-default btn-xs")
   end
 
-  def set_url_param
+  def set_bp_pic_url_param
     url_param = params[:callback].blank? ? {} : {:callback => params[:callback]}
-    url_param[:photoid] = @photo_id if @photo_id
+    url_param[:photo_id] = params[:photo_id]
 
     url_param
   end

@@ -93,11 +93,6 @@ class BusinessPartnerGoogleImporter < BusinessPartner
           :sales_status_type => 'listup'
         }.reject{|k,v| v.blank?}
 
-        if tags.include?("SES")
-          bp.upper_flg = 1
-          bp.down_flg = 1
-        end
-
         bp.created_user = 'import'
         bp.updated_user = 'import' if bp.new_record?
         bp.save!

@@ -115,11 +115,7 @@ class BpPicController < ApplicationController
     @bp_pics = BpPic.includes(incl).where(cond).order(order_by).page(params[:page]).per(current_user.per_page)
 
 
-    if @photo_id = params[:photoid]
-      @popup_mode = 1
-    end
-
-    if params[:popup] && !(params[:callback].blank? || @photo_id.nil?)
+    if params[:popup] && !(params[:callback].blank? || params[:photo_id].blank?)
       flash[:warning] = 'ポップアップのパラメータが不正です'
     end
 

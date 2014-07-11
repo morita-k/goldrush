@@ -15,16 +15,12 @@
       <td style="text-align: right">フラグ:</td>
       <td colspan = 3>
         <%= check_box_tag 'self_flg', 1, session[:business_partner_search][:self_flg].to_i == 1 %> 自社　
-        <%= check_box_tag 'eu_flg', 1, session[:business_partner_search][:eu_flg].to_i == 1 %> エンドユーザ　
-        <%= check_box_tag 'upper_flg', 1, session[:business_partner_search][:upper_flg].to_i == 1 %> 上流　
-        <%= check_box_tag 'down_flg', 1, session[:business_partner_search][:down_flg].to_i == 1 %> 下流
       </td>
     </tr>
-  <% else %>
-    <%= hidden_field_tag 'flg', params[:flg] %>
   <% end %>
 </table>
 <%= hidden_field_tag :flg, params[:flg] %>
+<%= hidden_field_tag :mail, params[:mail] %>
 <p><%= submit_tag '　　検索　　', :name => 'search_button' %> <%= submit_tag '　　クリア　　', :name => 'clear_button' %></p>
 <br />
 <% end %>
@@ -39,9 +35,6 @@
     <th><%=getShortName('business_partners', 'basic_contract_first_party_status_type') %></th>
     <th><%=getShortName('business_partners', 'basic_contract_second_party_status_type') %></th>
     <th><%=getShortName('business_partners', 'self_flg') %></th>
-    <th><%=getShortName('business_partners', 'eu_flg') %></th>
-    <th>案件</th>
-    <th>人材</th>
   </tr>
   
 <% for business_partner in @business_partners %>
@@ -51,10 +44,8 @@
 <% if popup? %>
   <% if params[:flg]=='eu' %>
     <td><%= star_links(business_partner) %> <%= link_to h(business_partner.business_partner_name), '#', :onClick => "setEuBpToParentWindow(#{business_partner.id},'#{j business_partner.business_partner_name}');return false;" %></td>
-  <% elsif !params[:mail].blank? %>
-    <td><%= star_links(business_partner) %> <%= link_to h(business_partner.business_partner_short_name), '#', :onClick => %Q|setBpToParentWindowFull(#{business_partner.id},'#{j business_partner.business_partner_code}','#{j business_partner.sales_management_code}','#{j business_partner.business_partner_name}','#{j business_partner.business_partner_short_name}','#{j business_partner.business_partner_name_kana}','#{j business_partner.business_partner_name_en}','#{j business_partner.sales_status_type}','#{j business_partner.ceo_name}','#{j business_partner.url}','#{j business_partner.zip}','#{j business_partner.address1}','#{j business_partner.address2}','#{j business_partner.tel}','#{j business_partner.fax}','#{j business_partner.email}','#{j business_partner.category}','#{business_partner.self_flg}','#{business_partner.eu_flg}','#{business_partner.upper_flg}','#{business_partner.down_flg}','#{j business_partner.memo}');return false;| %></td>
   <% else %>
-    <td><%= star_links(business_partner) %> <%= link_to h(business_partner.business_partner_short_name), '#', :onClick => "setBpToParentWindow(#{business_partner.id},'#{j business_partner.business_partner_name}');return false;" %></td>
+    <td><%= star_links(business_partner) %> <%= link_to h(business_partner.business_partner_short_name), '#', :onClick => %Q|setBpToParentWindowFull(#{business_partner.id},'#{j business_partner.business_partner_code}','#{j business_partner.sales_management_code}','#{j business_partner.business_partner_name}','#{j business_partner.business_partner_short_name}','#{j business_partner.business_partner_name_kana}','#{j business_partner.business_partner_name_en}','#{j business_partner.sales_status_type}','#{j business_partner.ceo_name}','#{j business_partner.url}','#{j business_partner.zip}','#{j business_partner.address1}','#{j business_partner.address2}','#{j business_partner.tel}','#{j business_partner.fax}','#{j business_partner.email}','#{j business_partner.category}', '#{j business_partner.establishment_year}', '#{j business_partner.employee_number}', '#{j business_partner.share_capital}','#{business_partner.self_flg}','#{j business_partner.memo}');return false;| %></td>
   <% end %>
 <% else %>
     <td><%= star_links(business_partner) %> <%=back_to_link h(business_partner.business_partner_short_name), :action => :show, :id => business_partner %></td>
@@ -62,9 +53,6 @@
     <td style="text-align:center;"><%= get_basic_contract_first_party_status_type_text(business_partner) %></td>
     <td style="text-align:center;"><%= get_basic_contract_second_party_status_type_text(business_partner) %></td>
     <td><%=h business_partner.self_flg %></td>
-    <td><%=h business_partner.eu_flg %></td>
-    <td><%=h business_partner.down_flg %></td>
-    <td><%=h business_partner.upper_flg %></td>
   </tr>
 <% end %>
 </table>
@@ -112,7 +100,7 @@ function setEuBpToParentWindow(business_partner_id, business_partner_name) {
   window.close();
 }
 
-function setBpToParentWindowFull(business_partner_id, business_partner_code, sales_management_code, business_partner_name, business_partner_short_name, business_partner_name_kana, business_partner_name_en, sales_status_type, ceo_name, url, zip, address1, address2, tel, fax, email, category, self_flg, eu_flg, upper_flg, down_flg, memo) {
+function setBpToParentWindowFull(business_partner_id, business_partner_code, sales_management_code, business_partner_name, business_partner_short_name, business_partner_name_kana, business_partner_name_en, sales_status_type, ceo_name, url, zip, address1, address2, tel, fax, email, category, establishment_year, employee_number, share_capital, self_flg, memo) {
   if(window.opener.document.setBpFull){
     var bp = new Object();
     
@@ -133,10 +121,10 @@ function setBpToParentWindowFull(business_partner_id, business_partner_code, sal
     bp.fax = fax;
     bp.email = email;
     bp.category = category;
+    bp.establishment_year = establishment_year;
+    bp.employee_number = employee_number;
+    bp.share_capital = share_capital;
     bp.self_flg = self_flg;
-    bp.eu_flg = eu_flg;
-    bp.upper_flg = upper_flg;
-    bp.down_flg = down_flg;
     bp.memo = memo;
     
     window.opener.document.setBpFull(bp);
