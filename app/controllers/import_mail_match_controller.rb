@@ -9,12 +9,19 @@ class ImportMailMatchController < ApplicationController
 
     cond, incl, joins = make_conditions(session[:import_mail_auto_match])
 
-    @import_mail_matches = ImportMailMatch.includes(incl).joins(joins).where(cond).order("mail_match_score desc").page(params[:page]).per(current_user.per_page)
+    @import_mail_matches = ImportMailMatch.includes(incl).joins(joins).where(cond).order("import_mail_matches.received_at desc").page(params[:page]).per(current_user.per_page)
   end
 
   def detail
     @import_mail_match = ImportMailMatch.find(params[:id])
-    render :layout => false
+    render :layout => false, :partial => 'detail'
+  end
+
+  def show
+    @import_mail_match = ImportMailMatch.find(params[:id], :conditions => "deleted = 0 ")
+  rescue
+    flash[:err] = "対象のマッチングデータが見つかりません。削除された可能性があります。"
+    redirect_to params[:back_to]
   end
 
   def destroy
@@ -29,6 +36,14 @@ class ImportMailMatchController < ApplicationController
   $('#tr_detail_#{params[:id]}').css("display", "none");
 })();
 EOS
+  end
+
+  def destroy_by_show
+    import_mail_match = ImportMailMatch.find(params[:id])
+    destroy_in(import_mail_match)
+
+    flash[:err] = "マッチングデータを削除しました。"
+    redirect_to(back_to || {:action => 'list'})
   end
 
   def destroy_mail
@@ -53,13 +68,17 @@ private
   def set_conditions
     {
       :proper_flg => params[:proper_flg],
+      :starred => params[:starred],
       :tag => params[:tag],
       :payment_from => params[:payment_from],
       :payment_to => params[:payment_to],
+      :payment_gap_from => params[:payment_gap_from],
+      :payment_gap_to => params[:payment_gap_to],
       :age_from => params[:age_from],
       :age_to => params[:age_to],
       :free_word => params[:free_word],
-      :days => params[:days] || 5,
+      :score_from => params[:score_from],
+      :days => params[:days],
     }
   end
 
@@ -74,16 +93,18 @@ private
     if (days = cond_param[:days].to_i) > 0
       date_now = Time.now + 1.day
       date_before = Time.now - days.day
-      sql += " and (#{biz_alias}.received_at BETWEEN ? AND ?)"
-      sql += " and (#{bpm_alias}.received_at BETWEEN ? AND ?)"
-      sql_params << date_before << date_now
+      sql += " and (import_mail_matches.received_at BETWEEN ? AND ?)"
       sql_params << date_before << date_now
     end
 
     if !(cond_param[:proper_flg]).blank?
       sql += " and #{bpm_alias}.proper_flg = 1"
     end
-    
+
+    if !(cond_param[:starred]).blank?
+      sql += " and (import_mail_matches.starred = 1 or import_mail_matches.starred = 2)"
+    end
+
     unless (tag = cond_param[:tag]).blank?
       tag.split(",").each do |t|
         sql += " and import_mail_matches.tag_text like ?"
@@ -103,6 +124,16 @@ private
       sql += " and #{bpm_alias}.payment <= ? "
       sql_params << payment_to
       sql_params << payment_to
+    end
+
+    unless (payment_gap_from = cond_param[:payment_gap_from]).blank?
+      sql += " and import_mail_matches.payment_gap >= ? "
+      sql_params << payment_gap_from
+    end
+
+    unless (payment_gap_to = cond_param[:payment_gap_to]).blank?
+      sql += " and import_mail_matches.payment_gap <= ? "
+      sql_params << payment_gap_to
     end
 
     unless (age_from = cond_param[:age_from]).blank?
@@ -128,16 +159,21 @@ private
       end
     end
 
+    unless (score_from = cond_param[:score_from]).blank?
+      sql += " and mail_match_score >= ? "
+      sql_params << score_from
+    end
+
     return [sql_params.unshift(sql), incl, joins]
   end
 
   def init_session(key)
-    session[key] ||= {}
+    session[key] ||= {:days => 5}
     if request.post?
       if params[:search_button]
         session[key] = set_conditions
       elsif params[:clear_button]
-        session[key] = {}
+        session.delete(key)
         redirect_to
         return false
       end

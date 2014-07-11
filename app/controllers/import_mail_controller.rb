@@ -11,7 +11,7 @@ class ImportMailController < ApplicationController
   # GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)
 #  verify :method => :post, :only => [ :destroy, :create, :update ],
 #         :redirect_to => { :action => :list }
-         
+
   def list
     unless init_session(:import_mail_search)
       return false
@@ -105,11 +105,11 @@ class ImportMailController < ApplicationController
     @import_mail.deleted_at = Time.now
     set_user_column @import_mail
     @import_mail.save!
-    
+
     redirect_to :action => 'list'
   end
-  
-  
+
+
   # Ajaxでのflg処理
   def change_flg
     target_mail = ImportMail.find(params[:import_mail_id])
@@ -153,11 +153,11 @@ class ImportMailController < ApplicationController
     render :text => "OK", :layout => false
 
   end
-  
+
   def analysis_test
     max = ( params[:max] ? params[:max] : 50 )
     mails = ImportMail.find(:all, :limit => max)
-    
+
     text = "";
     delta = []
     mails.each do |mail|
@@ -165,10 +165,10 @@ class ImportMailController < ApplicationController
       before = Time.now
       nearest_st_short = ImportMail.extract_station_name_from(nearest_st) if nearest_st
       after = Time.now
-      d = ((after - before) * 1000).floor 
+      d = ((after - before) * 1000).floor
       delta.push d
       text += "[ #{sprintf('%05d',d)} ms ] #{mail.id} [#{nearest_st}] => #{nearest_st_short.to_s}<br/>"
-      
+
     end
     avg = delta.inject(0.0){ |sum, num| sum += num.to_f / delta.size }
     text = "平均 #{sprintf('%3d',avg.floor)} ms <br/><br/>" + text
@@ -186,7 +186,7 @@ private
       "id" => "id desc",
     }[ord] || "id desc"
   end
-  
+
   def set_conditions
     {
       :biz_offer_flg => params[:biz_offer_flg],
@@ -202,7 +202,7 @@ private
       :age_from => params[:age_from],
       :age_to => params[:age_to],
       :free_word => params[:free_word],
-      :days => params[:days] || 5,
+      :days => params[:days],
       :order_by => params[:order_by],
     }
   end
@@ -243,11 +243,11 @@ private
     if !(cond_param[:registed]).blank?
       sql += " and registed = 1"
     end
-    
+
     if !(cond_param[:proper_flg]).blank?
       sql += " and proper_flg = 1"
     end
-    
+
     unless cond_param[:tag].blank?
       last_import_mail = ImportMail.where("received_at > ?", date_before).order("id").first
       pids = make_conditions_for_tag(cond_param[:tag], last_import_mail)
@@ -258,7 +258,7 @@ private
     end
 
     unless cond_param[:starred].blank?
-      sql += " and starred > 2"
+      sql += " and (starred = 1 or starred = 2)"
     end
 
     unless cond_param[:outflow_mail_flg].blank?
@@ -298,12 +298,12 @@ private
   end
 
   def init_session(key)
-    session[key] ||= {}
+    session[key] ||= {:days => 5}
     if request.post?
       if params[:search_button]
         session[key] = set_conditions
       elsif params[:clear_button]
-        session[key] = {}
+        session.delete(key)
         redirect_to
         return false
       end

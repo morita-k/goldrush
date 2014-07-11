@@ -3,11 +3,9 @@ GoldRush::Application.routes.draw do
 
   resources :special_words
 
- # resources :import_mail_match do
- #   member do
- #     get 'detail'
- #   end
- # end
+  namespace :import_mail_match do
+    match '/show/:id' => :show
+  end
 
   resources :photos do
     collection do
@@ -55,6 +53,8 @@ GoldRush::Application.routes.draw do
       put 'unlink_matching'
       get 'contact_mail_new'
       post 'contact_mail_create'
+      get 'reply_mail_new'
+      post 'reply_mail_create'
     end
   end
 

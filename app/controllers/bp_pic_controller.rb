@@ -170,6 +170,9 @@ class BpPicController < ApplicationController
       @bp_pic = BpPic.new(params[:bp_pic])
       set_user_column @bp_pic
       @bp_pic.save!
+
+      @bp_pic.update_import_mails!(current_user.login)
+
       
       BpPic.update_retired(@bp_pic.id, params[:retired_bp_pic_id]) unless params[:retired_bp_pic_id].blank? #退職登録
       BpPic.update_changed(@bp_pic.id, params[:former_bp_pic_id]) unless params[:former_bp_pic_id].blank? #転職登録
@@ -194,10 +197,14 @@ class BpPicController < ApplicationController
   def update
     ActiveRecord::Base.transaction do 
       @bp_pic = BpPic.find(params[:id], :conditions =>["deleted = 0"])
+      old_email1 = @bp_pic.email1
       @bp_pic.attributes = params[:bp_pic]
       @bp_pic.bp_pic_name = params[:bp_pic][:bp_pic_name].gsub(/　/," ")
       set_user_column @bp_pic
       @bp_pic.save!
+
+      @bp_pic.update_import_mails!(current_user.login) if old_email1 != @bp_pic.email1
+
       BpPic.update_changed(@bp_pic.id, params[:former_bp_pic_id]) unless params[:former_bp_pic_id].blank? #転職登録
     end #transaction
     flash[:notice] = 'BpPic was successfully updated.'

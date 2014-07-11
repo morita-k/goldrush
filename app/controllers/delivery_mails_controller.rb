@@ -13,7 +13,7 @@ class DeliveryMailsController < ApplicationController
       cond  = ["delivery_mail_type = ? and deleted = 0",  "instant"]
     end
     @delivery_mails = DeliveryMail.where(cond).order("id desc").page(params[:page]).per(50)
-    
+
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @delivery_mails }
@@ -33,7 +33,7 @@ class DeliveryMailsController < ApplicationController
     end
 
     @attachment_files = AttachmentFile.attachment_files("delivery_mails", @delivery_mail.id)
-    
+
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @delivery_mail }
@@ -80,27 +80,13 @@ class DeliveryMailsController < ApplicationController
       @delivery_mail.subject = target_mail_template.subject
       @delivery_mail.mail_cc = target_mail_template.mail_cc
       @delivery_mail.mail_bcc = target_mail_template.mail_bcc
-
-      unless current_user.mail_signature.blank?
-        @delivery_mail.content += <<EOS
-
-
-#{current_user.mail_signature}
-EOS
-      end
     else
       @delivery_mail.content = <<EOS
 %%business_partner_name%%
 %%bp_pic_name%%　様
 EOS
-      unless current_user.mail_signature.blank?
-        @delivery_mail.content += <<EOS
-
-
-#{current_user.mail_signature}
-EOS
-      end
     end
+    @delivery_mail.add_signature(current_user)
 
     new_proc
 
@@ -127,22 +113,83 @@ EOS
     unless params[:bp_pic_ids].blank?
       return contact_mail_create(params[:bp_pic_ids].split.uniq)
     end
+    if params[:import_mail_id]
+      return reply_mail_create
+    end
     @delivery_mail = DeliveryMail.new(params[:delivery_mail])
     @delivery_mail.delivery_mail_type = "group"
     @delivery_mail.perse_planned_setting_at(current_user) # zone
+
     set_user_column @delivery_mail
+
     respond_to do |format|
       begin
-        set_user_column(@delivery_mail)
-         
         ActiveRecord::Base.transaction do
           @delivery_mail.save!
+
+          @delivery_mail.tag_analyze!
+
           # 添付ファイルの保存
           store_upload_files(@delivery_mail.id)
+
           # 添付ファイルのコピー
           copy_upload_files(params[:src_mail_id], @delivery_mail.id)
         end
-        
+
+        if params[:testmail]
+          DeliveryMail.send_test_mail(@delivery_mail.get_informations)
+          format.html {
+            redirect_to({
+              :controller => 'delivery_mails',
+              :action => 'edit',
+              :id => @delivery_mail,
+              :back_to => back_to
+            },
+            notice: 'Delivery mail was successfully created.')
+          }
+        end
+
+        format.html {
+          redirect_to url_for(
+            :controller => 'bp_pic_groups',
+            :action => 'show',
+            :id => @delivery_mail.bp_pic_group_id,
+            :delivery_mail_id => @delivery_mail.id,
+            :back_to => back_to
+          ),
+          notice: 'Delivery mail was successfully created.'
+        }
+
+        format.json { render json: @delivery_mail, status: :created, location: @delivery_mail }
+      rescue ActiveRecord::RecordInvalid
+        format.html { render action: "new" }
+        format.json { render json: @delivery_mail.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # PUT /delivery_mails/1
+  # PUT /delivery_mails/1.json
+  def update
+    @delivery_mail = DeliveryMail.find(params[:id])
+    @delivery_mail.mail_status_type = 'editing'
+
+    respond_to do |format|
+      begin
+        @delivery_mail.attributes = params[:delivery_mail]
+        @delivery_mail.perse_planned_setting_at(current_user) # zone
+
+        set_user_column(@delivery_mail)
+
+        ActiveRecord::Base.transaction do
+          @delivery_mail.save!
+
+          @delivery_mail.tag_analyze!
+
+          # 添付ファイルの保存
+          store_upload_files(@delivery_mail.id)
+       end
+
         if params[:testmail]
           DeliveryMail.send_test_mail(@delivery_mail.get_informations)
           format.html {
@@ -163,53 +210,6 @@ EOS
             :delivery_mail_id => @delivery_mail.id,
             :back_to => back_to
           ),
-          notice: 'Delivery mail was successfully created.'
-        }
-        format.json { render json: @delivery_mail, status: :created, location: @delivery_mail }
-      rescue ActiveRecord::RecordInvalid
-        format.html { render action: "new" }
-        format.json { render json: @delivery_mail.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # PUT /delivery_mails/1
-  # PUT /delivery_mails/1.json
-  def update
-    @delivery_mail = DeliveryMail.find(params[:id])
-    @delivery_mail.mail_status_type = 'editing'
-
-    respond_to do |format|
-      begin
-        @delivery_mail.attributes = params[:delivery_mail]
-        @delivery_mail.perse_planned_setting_at(current_user) # zone
-        set_user_column(@delivery_mail)
-        ActiveRecord::Base.transaction do
-          @delivery_mail.save!
-          # 添付ファイルの保存
-          store_upload_files(@delivery_mail.id)
-       end
-
-        if params[:testmail]
-          DeliveryMail.send_test_mail(@delivery_mail.get_informations)
-          format.html {
-            redirect_to({
-              :controller => 'delivery_mails',
-              :action => 'edit',
-              :id => @delivery_mail,
-              :back_to => back_to
-            },
-            notice: 'Delivery mail was successfully created.')
-          }
-        end
-        format.html { 
-          redirect_to url_for(
-            :controller => 'bp_pic_groups',
-            :action => 'show',
-            :id => @delivery_mail.bp_pic_group_id,
-            :delivery_mail_id => @delivery_mail.id,
-            :back_to => back_to
-          ),
         notice: 'Delivery mail was successfully updated.' }
         format.json { head :no_content }
       rescue ActiveRecord::RecordInvalid
@@ -218,7 +218,7 @@ EOS
       end
     end
   end
-  
+
   # POST /delivery_mails/add_details
   # POST /delivery_mails/add_details.json
   def add_details
@@ -233,10 +233,10 @@ EOS
       delivery_mail.save!
       add_targets(params[:delivery_mail_id], params[:bp_pic_ids])
     end
-    
+
     if delivery_mail.planned_setting_at < Time.now.to_s
       DeliveryMail.send_mails
-      
+
       error_count = DeliveryError.where(:delivery_mail_id => delivery_mail.id).size
       if error_count > 0
         flash.now[:warn] = "送信に失敗した宛先が存在します。<br>送信に失敗した宛先は配信メール詳細画面から確認できます。"
@@ -252,13 +252,13 @@ EOS
 #{delivery_mail.content}
 
 EOS
-      
+
     respond_to do |format|
       format.html { redirect_to url_for(:action => :index, :bp_pic_group_id => params[:bp_pic_group_id]), notice: 'Delivery mail targets were successfully created.' }
 #        format.json { render json: @delivery_mail_target, status: :created, location: @delivery_mail_target }
     end
   end
-  
+
   def add_targets(delivery_mail_id, bp_pic_ids)
     bp_pic_ids.each do |bp_pic_id|
       next if DeliveryMailTarget.where(:delivery_mail_id => delivery_mail_id, :bp_pic_id => bp_pic_id.to_i, :deleted => 0).first
@@ -277,7 +277,7 @@ EOS
     @delevery_mail.mail_status_type = 'canceled'
     set_user_column @delevery_mail
     @delevery_mail.save!
-    
+
     respond_to do |format|
       format.html { redirect_to back_to, notice: 'Delivery mail was successfully canceled.'  }
     end
@@ -296,6 +296,74 @@ EOS
     end
   end
 
+  def reply_mail_new
+    @bp_pics = []
+    @import_mail = ImportMail.find(params[:import_mail_id])
+    @delivery_mail = DeliveryMail.new
+    @delivery_mail.mail_bcc = current_user.email
+
+    new_proc
+
+    @delivery_mail.subject = "Re: " + @import_mail.mail_subject
+    @delivery_mail.content = <<EOS + "\n\n\n" + @import_mail.mail_body.lines.map{|x| "> " + x}.join
+%%business_partner_name%%
+%%bp_pic_name%%　様
+EOS
+
+    @delivery_mail.add_signature(current_user)
+
+    respond_to do |format|
+      format.html { render action: "new" }
+    end
+  end
+
+  def reply_mail_create
+    @import_mail = ImportMail.find(params[:import_mail_id])
+    @delivery_mail = DeliveryMail.new(params[:delivery_mail])
+    @delivery_mail.delivery_mail_type = "instant"
+    @delivery_mail.setup_planned_setting_at(current_user.zone_now)
+    @delivery_mail.mail_status_type = 'unsend'
+    set_user_column @delivery_mail
+    respond_to do |format|
+      begin
+        ActiveRecord::Base.transaction do
+          @delivery_mail.save!
+
+          # 添付ファイルの保存
+          store_upload_files(@delivery_mail.id)
+
+          #配信メール対象作成
+          delivery_mail_target = DeliveryMailTarget.new
+          delivery_mail_target.delivery_mail_id = @delivery_mail.id
+          delivery_mail_target.bp_pic_id = @import_mail.bp_pic_id
+          delivery_mail_target.in_reply_to = @import_mail.message_id
+          set_user_column(delivery_mail_target)
+          delivery_mail_target.save!
+        end #transaction
+
+        # メール送信
+        DeliveryMail.send_mails
+        error_count = DeliveryError.where(:delivery_mail_id => @delivery_mail.id).size
+        if error_count > 0
+          flash.now[:warn] = "送信に失敗した宛先が存在します。<br>送信に失敗した宛先は配信メール詳細画面から確認できます。"
+        end
+
+        format.html {
+          redirect_to url_for(
+            :controller => 'delivery_mails',
+            :action => 'show',
+            :id => @delivery_mail.id,
+            :back_to => back_to
+          ),
+          notice: 'Delivery mail was successfully sent.'
+#          redirect_to(back_to , notice: 'Delivery mail was successfully created.')
+        }
+      rescue ActiveRecord::RecordInvalid
+        format.html { render action: "new" }
+      end
+    end
+  end
+
   def contact_mail_new
     @bp_pics = BpPic.find(params[:bp_pic_ids])
     @delivery_mail = DeliveryMail.new
@@ -310,12 +378,7 @@ EOS
       @delivery_mail.subject = t.subject
       @delivery_mail.content = t.content
     end
-    unless sales_pic.mail_signature.blank?
-      @delivery_mail.content += <<EOS
-
-#{sales_pic.mail_signature}
-EOS
-    end
+    @delivery_mail.add_signature(sales_pic)
     @delivery_mail.mail_bcc = @delivery_mail.mail_bcc.to_s.split(",").push(sales_pic.email).join(",")
     @delivery_mail.mail_from = sales_pic.email
     @delivery_mail.mail_from_name =sales_pic.employee.employee_name
@@ -341,7 +404,7 @@ EOS
     @delivery_mail.mail_status_type = 'unsend'
     set_user_column @delivery_mail
     respond_to do |format|
-      begin         
+      begin
         ActiveRecord::Base.transaction do
           @delivery_mail.save!
 
@@ -360,12 +423,12 @@ EOS
         end #transaction
 
         # メール送信
-        DeliveryMail.send_mails          
+        DeliveryMail.send_mails
         error_count = DeliveryError.where(:delivery_mail_id => @delivery_mail.id).size
         if error_count > 0
           flash.now[:warn] = "送信に失敗した宛先が存在します。<br>送信に失敗した宛先は配信メール詳細画面から確認できます。"
         end
-        
+
         format.html {
           redirect_to url_for(
             :controller => 'delivery_mails',
@@ -456,7 +519,7 @@ private
       end
     end
   end
-  
+
   def copy_upload_files(src_mail_id, parent_id)
     unless params[:src_mail_id].blank?
        AttachmentFile.attachment_files("delivery_mails", params[:src_mail_id]).each do |src|

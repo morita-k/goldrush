@@ -40,7 +40,7 @@ GoldRush::Application.configure do
 
   # Use a different logger for distributed setups
   # config.logger = ActiveSupport::TaggedLogging.new(SyslogLogger.new)
-  config.logger = Logger.new("log/production.log", 5, 10 * 1024 * 1024)
+  config.logger = Logger.new("log/production.log", 10, 100 * 1024 * 1024)
 
   # Use a different cache store in production
   # config.cache_store = :mem_cache_store
@@ -75,4 +75,14 @@ ActionMailer::Base.raise_delivery_errors = true
 ActionMailer::Base.smtp_settings = {
   :domain             => 'gr.applicative.jp',
 }
+
+#Dkim::domain      = 'applicative.co.jp'
+Dkim::domain      = 'gr.applicative.jp'
+Dkim::identity    = 'error@gr.applicative.jp'
+Dkim::selector    = 'default'
+Dkim::private_key = open('config/applicative.co.jp.dkim.key').read
+ActionMailer::Base.register_interceptor(Dkim::Interceptor)
+
+#Dkim::signable_headers  = Dkim::DefaultHeaders + %w{Return-Path}
+
 

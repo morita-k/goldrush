@@ -12,12 +12,12 @@ class DeliveryMail < ActiveRecord::Base
   has_many :import_mails, :conditions => "import_mails.deleted = 0"
   has_many :delivery_mail_matches, :conditions => "delivery_mail_matches.deleted = 0"
   belongs_to :bp_pic_group
-  attr_accessible :bp_pic_group_id, :content, :id, :mail_bcc, :mail_cc, :mail_from, :mail_from_name, :mail_send_status_type, :mail_status_type, :owner_id, :planned_setting_at, :send_end_at, :subject, :lock_version, :planned_setting_at_hour, :planned_setting_at_minute, :planned_setting_at_date, :delivery_mail_type, :biz_offer_id, :bp_member_id, :formated_mail_from
+  attr_accessible :bp_pic_group_id, :content, :id, :mail_bcc, :mail_cc, :mail_from, :mail_from_name, :mail_send_status_type, :mail_status_type, :owner_id, :planned_setting_at, :send_end_at, :subject, :lock_version, :planned_setting_at_hour, :planned_setting_at_minute, :planned_setting_at_date, :delivery_mail_type, :biz_offer_id, :bp_member_id, :formated_mail_from, :age, :payment
 
   validates_presence_of :subject, :content, :mail_from_name, :mail_from, :planned_setting_at
 
   after_initialize :default_values
-  
+
   before_save :normalize_cc_bcc!
 
   def get_delivery_mail_targets(limit=20)
@@ -26,6 +26,30 @@ class DeliveryMail < ActiveRecord::Base
 
   def group?
     self.delivery_mail_type == "group"
+  end
+
+  def filtered_matches
+    delivery_mail_matches.map{|x| x.import_mail}.select{|im| matching_mail_filter(im)}.sort{|a,b| b.received_at - a.received_at}
+  end
+
+  def matching_mail_filter(im)
+    return false if self.payment.blank?
+    return false if self.age.blank?
+    return false if im.payment.blank?
+    return false if im.age.blank?
+    if self.biz_offer_mail?
+      im.payment <= self.payment && im.age <= self.age
+    elsif self.bp_member_mail?
+      im.payment >= self.payment && im.age >= self.age
+    end
+  end
+
+  def biz_offer_mail?
+    self.bp_pic_group && self.bp_pic_group.bp_pic_group_type == 'biz_offer'
+  end
+
+  def bp_member_mail?
+    self.bp_pic_group && self.bp_pic_group.bp_pic_group_type == 'bp_member'
   end
 
   def normalize_cc_bcc!
@@ -55,7 +79,7 @@ class DeliveryMail < ActiveRecord::Base
     self.mail_status_type ||= 'editing'
     self.mail_send_status_type ||= 'ready'
   end
-  
+
   def planned_setting_at_time
     if planned_setting_at_hour && planned_setting_at_minute
       if !planned_setting_at_hour.blank? && !planned_setting_at_minute.blank?
@@ -64,7 +88,7 @@ class DeliveryMail < ActiveRecord::Base
     end
     return ""
   end
-  
+
   def perse_planned_setting_at(user)
     unless planned_setting_at_time.blank? || planned_setting_at_date.blank?
       self.planned_setting_at = user.zone_parse(planned_setting_at_date.to_s + " " + planned_setting_at_time)
@@ -110,76 +134,72 @@ class DeliveryMail < ActiveRecord::Base
       attachment_files
     ).deliver
   end
-  
+
   def DeliveryMail.send_mail_to_each_targets(mail)
     mail.delivery_mail_targets.each do |target|
       begin
         next if target.bp_pic.nondelivery?
-        
+
         opt = { :bp_pic_name => target.bp_pic.bp_pic_short_name,
                 :business_partner_name => target.bp_pic.business_partner.business_partner_name }
-        
+
+        mail_content = mail.content + <<EOS
+案件コード(こちらのコードは消さずにそのままご返信ください)
+GR-BIZ-ID:#{mail.id ** 2}-#{target.id ** 2}
+EOS
+
         current_mail = MyMailer.send_del_mail(
           target.bp_pic.email1,
           mail.mail_cc,
           mail.mail_bcc,
           "#{mail.mail_from_name} <#{mail.mail_from}>",
           DeliveryMail.tags_replacement(mail.subject, opt),
-          DeliveryMail.tags_replacement(mail.content, opt),
-          mail.attachment_files
+          DeliveryMail.tags_replacement(mail_content, opt),
+          mail.attachment_files,
+          target.in_reply_to
         )
-        
+
         current_mail.deliver
         target.message_id = current_mail.header['Message-ID'].to_s
         target.save!
       rescue => e
         DeliveryError.send_error(mail.id, target.bp_pic, e).save!
-        
+
         error_str = "Delivery Mail Send Error: " + e.message + "\n" + e.backtrace.join("\n")
         SystemLog.error('delivery mail', 'mail send error',  error_str, 'delivery mail')
       end
     end
   end
-  
+
   # Broadcast Mails
   def DeliveryMail.send_mails
     fetch_key = Time.now.to_s + " " + rand().to_s
-      
+
     DeliveryMail.
       where("mail_status_type=? and mail_send_status_type=? and planned_setting_at<=?",
              'unsend', 'ready', Time.now).
       update_all(:mail_send_status_type => 'running', :created_user => fetch_key)
-    
+
     DeliveryMail.where(:created_user => fetch_key).each {|mail|
       self.send_mail_to_each_targets(mail)
     }
-    
+
     DeliveryMail.
       where(:created_user => fetch_key).
       update_all(:mail_status_type => 'send',:mail_send_status_type => 'finished',:send_end_at => Time.now)
   end
-  
-  # === Private === 
+
+  # === Private ===
   def DeliveryMail.tags_replacement(tag, option)
     option.inject(tag){|str, k| str.gsub("%%#{k[0].to_s}%%", k[1])}
   end
 
   # Private Mailer
   class MyMailer < ActionMailer::Base
-    def send_del_mail(destination, cc, bcc, from, subject, body, attachment_files)      
+    def send_del_mail(destination, cc, bcc, from, subject, body, attachment_files, in_reply_to=nil)
       headers['Message-ID'] = "#{SecureRandom.uuid}@#{ActionMailer::Base.smtp_settings[:domain]}"
-      
-      attachment_files.each do |file|
-        attachments[file.file_name] = file.read_file
-      end
-      
-      mail( to: destination,
-            cc: cc,
-            bcc: bcc,
-            from: from, 
-            subject: subject,
-            body: body )
-      
+      headers["In-Rply-To"] = in_reply_to if in_reply_to
+
       # Return-path の設定
       return_path = SysConfig.get_value(:delivery_mails, :return_path)
       if return_path
@@ -187,6 +207,18 @@ class DeliveryMail < ActiveRecord::Base
       else
         logger.warn '"Return-Path"が設定されていません。'
       end
+
+      attachment_files.each do |file|
+        attachments[file.file_name] = file.read_file
+      end
+
+      mail( to: destination,
+            cc: cc,
+            bcc: bcc,
+            from: from,
+            subject: subject,
+            body: body )
+
     end
   end
 
@@ -247,6 +279,7 @@ class DeliveryMail < ActiveRecord::Base
           when 'human_resources'
             if bp_member
               if replace_words[1].end_with?("_type")
+
                 target_word = bp_member.human_resource[replace_words[1]].nil? ? "" : bp_member.human_resource.type_name(replace_words[1])
               elsif replace_words[1].end_with?("_flg")
                 target_word = bp_member.human_resource[replace_words[1]].nil? ? "" : get_flg(bp_member.human_resource[replace_words[1]])
@@ -274,6 +307,23 @@ class DeliveryMail < ActiveRecord::Base
       "BP一社下 " + bp_member.employment_type_name
     else
       "弊社ビジネスパートナー " + bp_member.employment_type_name
+    end
+  end
+
+  def pre_body
+    subject + "\n" + content
+  end
+
+  def tag_analyze!(body = Tag.pre_proc_body(pre_body))
+    analyzed_tag_text = Tag.analyze_skill_tags(body)
+    self.tag_text = analyzed_tag_text
+    self.save!
+    Tag.update_tags!("delivery_mails", id, analyzed_tag_text)
+  end
+
+  def add_signature(mail_sender)
+    if signature = mail_sender.mail_signature.presence
+      self.content += "\n\n#{signature}"
     end
   end
 end

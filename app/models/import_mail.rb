@@ -42,7 +42,7 @@ class ImportMail < ActiveRecord::Base
       end
     end
   end
-  
+
   def make_import_mail(m)
     now = Time.now
     self.received_at = m.date.blank? ? now : m.date
@@ -61,13 +61,13 @@ class ImportMail < ActiveRecord::Base
     self.in_reply_to = m.in_reply_to
   end
 
-  def detect_deliverty_mail(reply_mode)
-    dmt = self.in_reply_to && DeliveryMailTarget.where(message_id: self.in_reply_to).first
-    if((dmt != nil) && (dmt.delivery_mail_id != nil))
-      self.delivery_mail_id = dmt.delivery_mail_id
-      SystemNotifier.send_info_mail("[GoldRush] 配信メールに対して返信がありました ID:#{dmt.delivery_mail_id}", <<EOS).deliver
+  def detect_reply_mail(delivery_mail_id)
+    self.delivery_mail_id = delivery_mail_id
+    self.biz_offer_flg = 0
+    self.bp_member_flg = 0
+    SystemNotifier.send_info_mail("[GoldRush] 配信メールに対して返信がありました ID:#{delivery_mail_id}", <<EOS).deliver
 
-#{SysConfig.get_system_notifier_url_prefix}/delivery_mails/#{dmt.delivery_mail_id}
+#{SysConfig.get_system_notifier_url_prefix}/delivery_mails/#{delivery_mail_id}
 
 件名: #{mail_subject}
 From: #{mail_sender_name}
@@ -75,25 +75,37 @@ From: #{mail_sender_name}
 #{mail_body}
 
 EOS
-    else
-      # リプライモード時、リプライでなければ取り込み中止
-      if (!self.mail_from.include?("forwarding-noreply@google.com")) && reply_mode
-        puts "SKIP IMPORT: reply_mode and not match in_reply_to"
-        SystemLog.warn('import mail', 'to member private', self.inspect , 'import mail')
-        return false
-      end
 
-#      # 配信メールへの返信でなくて、ユーザーのメールアドレス宛だった場合、
-#      # ユーザーへの個人的なメールとみなして取り込みを中止する。
-#      User.getUsers.each do |user|
-#        if self.mail_to.include?(user.email)
-#          puts "to member private mail: see system_logs"
-#          SystemLog.warn('import mail', 'to member private', self.inspect , 'import mail')
-#          return false
-#        end
-#      end
+  end
+
+  def detect_gr_biz_id(body)
+    StringUtil.detect_regex(body, /.*GR-BIZ-ID:\d+-\d+/).first
+  end
+
+  def detect_deliverty_mail(reply_mode)
+    if dmt = self.in_reply_to && DeliveryMailTarget.where(message_id: self.in_reply_to).first
+        detect_reply_mail(dmt.delivery_mail_id)
+    elsif first = detect_gr_biz_id(mail_body) 
+logger.info ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 1" + first
+      return unless /.*GR-BIZ-ID:(\d+)-(\d+)/ =~ first
+logger.info ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 2"
+      if Math.sqrt($1.to_i) % 1 == 0 && Math.sqrt($2.to_i) % 1 == 0
+logger.info ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 3"
+        dmt = DeliveryMailTarget.find(Math.sqrt($2.to_i).to_i)
+        self.in_reply_to = dmt.message_id
+        detect_reply_mail(dmt.delivery_mail_id)
+      else
+        SystemLog.warn('import mail', "detect replay error invalid ID: #{$&}", self.inspect , 'import mail')
+      end
     end
-    return true
+#  rescue
+#    SystemLog.warn('import mail', 'detect replay error', self.inspect , 'import mail')
+  end
+
+  def detect_system_mail
+    destination = SysConfig.get_system_notifier_destination
+    from = SysConfig.get_system_notifier_from
+    self.mail_from == from && self.mail_to == destination
   end
 
   # メールを取り込む
@@ -105,17 +117,21 @@ EOS
     ActiveRecord::Base::transaction do
       import_mail = ImportMail.new
       import_mail.make_import_mail(m)
-      return unless import_mail.detect_deliverty_mail(reply_mode)
+
+      if import_mail.detect_system_mail
+        SystemLog.warn('import mail', 'system mail ignored', import_mail.inspect , 'import mail')
+        return
+      end
 
       # プロセス間で同期をとるために何でもいいから存在するレコードをロック(users#1 => systemユーザー)
       #User.find(1, :lock => true)
-      
+
       if ImportMail.where(message_id: import_mail.message_id, deleted: 0).first || ImportMail.where(mail_from: import_mail.mail_from, mail_subject: import_mail.mail_subject,received_at: ((import_mail.received_at - 1.hour) .. import_mail.received_at + 1.hour), deleted: 0).first
         puts "mail duplicated: see system_logs"
         SystemLog.warn('import mail', 'mail duplicated', import_mail.inspect , 'import mail')
         return
       end
-      
+
       # attempt_fileのため(import_mail_idが必要)に一旦登録
       import_mail.save!
       import_mail_src = ImportMailSource.new
@@ -127,7 +143,7 @@ EOS
       silence do
         import_mail_src.save!
       end
-      
+
       # 添付ファイルがなければ案件、あれば人材と割り切る
       import_mail.biz_offer_flg = 1
       import_mail.bp_member_flg = 0
@@ -154,7 +170,7 @@ EOS
             upfile = part.body.decoded
             #part.base64_decode
             file_name = part.filename.to_s
-            
+
             attachment_file = AttachmentFile.new
             attachment_file.create_by_import(upfile, import_mail.id, file_name)
             import_mail.biz_offer_flg = 0
@@ -174,14 +190,17 @@ EOS
         import_mail.mail_body = get_encode_body(m, m.body)
       end # m.multipart?
       #---------- mail_body ここまで ----------
+
+      # 返信メールの判定
+      import_mail.detect_deliverty_mail(reply_mode)
+
       import_mail.created_user = 'import_mail'
       import_mail.updated_user = 'import_mail'
       import_mail.save!
       import_mail.analyze!
-      import_mail.save!
 
       import_mail_id = import_mail.id
-      
+
       # JIETの案件・人材メールだった場合、案件照会・人材所属を作成
       if import_mail.jiet_ses_mail?
         if import_mail.mail_subject =~ /JIETメール配信サービス\[(..)情報\]/
@@ -207,14 +226,14 @@ EOS
       AttachmentFile.set_property_file(import_mail_id)
     end
   end
-  
+
   def ImportMail.import
     Pop3Client.pop_mail do |m, src|
       ImportMail.import_mail(m, src)
     end # Pop3Client.pop_mail do
   end # def
-  
-  
+
+
   def wanted?
     self.unwanted != 1
   end
@@ -233,22 +252,22 @@ EOS
       self.business_partner_id = mail_bp_pic.business_partner.id
     end
   end
-  
+
   # 取り込みメールに紐づく取引先を取得する
   def get_bizp(id)
     return BusinessPartner.find(id)
   end
-  
+
   # 取り込みメールに紐づく取引先担当を取得する
   def get_bpic(id)
     return BpPic.find(id)
   end
-  
+
   def attachment?
     AttachmentFile.count(:conditions => ["deleted = 0 and parent_table_name = 'import_mails' and parent_id = ?", self]) > 0
 #    !AttachmentFile.find(:first, :conditions => ["deleted = 0 and parent_table_name = 'import_mails' and parent_id = ?", self]).blank?
   end
-  
+
   def pre_body
     mail_subject + "\n" + mail_body
   end
@@ -281,11 +300,11 @@ EOS
   def detect_nearest_station_in(body)
     StringUtil.detect_regex(body, /^.*(最寄|駅).*$/).sort.reverse.first
   end
-  
+
   def detect_proper
     detect_proper_in(Tag.pre_proc_body(pre_body))
   end
-  
+
   # ImportMail.all.each do |x| x.proper_flg = x.detect_proper ? 1 : 0
   #   x.save!
   # end && nil
@@ -336,20 +355,20 @@ EOS
     Tag.update_tags!("import_mails", id, tag_text)
     save!
   end
-  
+
   # タグ生成の本体
   def make_tags(body)
     Tag.analyze_skill_tags(body)
   end
 
   STATION_NAME_SEPARATOR = '/:】'
-  
+
   def nearest_station_short
     ImportMail.extract_station_name_from(self.nearest_station)
   end
-  
+
   def ImportMail.extract_station_name_from(str)
-    
+
     # 001：「～線～駅」にマッチする場合
     result = Zen2Han.toHan(str).strip
     result = StringUtil.detect_regex(str, /.*線(.*駅)/) do |match_str|
@@ -361,7 +380,7 @@ EOS
       result = result.sort.reverse.first.gsub(" ", "")
       return Zen2Han.toZen( StringUtil.remove_ascii_symbols( result ) )
     end
-    
+
     # 002：空白で分割した際に「～駅」にマッチする場合
     result = Zen2Han.toHan(str)
     result = result.split(" ")
@@ -374,7 +393,7 @@ EOS
     if result.class === String
       return Zen2Han.toZen( StringUtil.remove_ascii_symbols( result ) )
     end
-    
+
     # 003:「最寄駅:～」にマッチする場合
     result = Zen2Han.toHan(str).gsub(" ", "")
     result = StringUtil.detect_regex(str, /最寄(り|)(駅|):(.+)/) do |match_str|
@@ -387,35 +406,35 @@ EOS
       result = StringUtil.remove_ascii_symbols( result )
       return ImportMail.add_station_sufix( Zen2Han.toZen( result ) )
     end
-    
+
     # return nil
-    
+
     # 以降、泥臭い処理で可能な限り駅名を抽出する
     result = Zen2Han.toHan(str).strip
-    
+
     # 区切り文字で文字列を分割
     result_list = result.split(/[#{STATION_NAME_SEPARATOR}]/)
-    
+
     # リストサイズが0の場合、区切り文字に空白を使用している可能性がある
     result_list = result_list[0].split(" ") if (result_list.size == 1)
     result_list.flatten!
     # ※項目と内容の区切り文字として空白を使用していない場合、
     # 　路線名と駅名の区切り文字に使っているなどのバリエーションがある為、
     #   最初の区切り文字判定に空白を含めると解析精度が落ちてしまう。
-    
+
     # リストの各要素を最適化
-    result_list.map! { |item| 
+    result_list.map! { |item|
       item.strip!
       item.gsub!(/\(.*?\)/, "")   # 括弧に囲まれた部分除去
-      item.gsub!(/[\(\)]/, "")    # 括弧の除去 
+      item.gsub!(/[\(\)]/, "")    # 括弧の除去
       item = nil if item.empty?   # 空文字列ならnilに(compact!で除去される)
       item
     }
     result_list.compact!
-    
+
     if(result_list.size > 1)
       result_list = result_list[-1].split(" ")
-      
+
       if(result_list.size > 1)
         temp_list = []
         for i in 0...result_list.size
@@ -427,49 +446,49 @@ EOS
         result_list = temp_list.uniq
         # list.reject!{ |item| !(item =~ /駅/) }]
       end
-      
+
       result_list.compact!
-      
+
       # ここまでの処理でリストサイズは１になっている想定
       result = result_list[0]
-      
+
       # 「～線 ◯◯」と書いてあり、「駅」がつかないケース
       if result =~ /線/
         result = result.split("線")[1]
       end
-      
+
       # 文中に「◯◯駅」とだけ書いてあるケース
       if result =~ /駅/
         result = result.split("駅")[0]
       end
-      
+
       # 複数の駅名が「or」で連結して書かれているケース
       if result =~ /or/
         result = result.split("or").sort.reverse.first
       end
-      
+
       # 「最寄り駅」「最寄駅」「最寄」などにマッチする場合はnilを返す
       if result =~ /最寄(り|)(駅|)/
         return nil
       end
-      
+
       # ここまで何かしら結果が得られていれば"ゴミ取り"を行う
       if result
         result.gsub!(/[:0-9a-zA-Z]/,"")
-        
+
         # "ゴミ取り"の結果、最終的に空文字列ならnilを返す
-        return nil if result.empty? 
+        return nil if result.empty?
       else
         return nil
       end
-      
+
       # 全角に戻して結果を返す
       return ImportMail.add_station_sufix( Zen2Han.toZen(result) )
     end
-    
+
     return nil
   end
-  
+
   # 引数の末尾に「駅」をつける
   def ImportMail.add_station_sufix(target)
     if target[-1] != "駅"
@@ -478,7 +497,7 @@ EOS
       return target
     end
   end
-  
+
   def ImportMail.analyze_all
     where(:deleted => 0).each do |mail|
       mail.analyze!
@@ -535,7 +554,7 @@ private
       return NKF.nkf('-w', body.to_s)
     end
   end
-  
+
 CTYPE_TO_EXT = {
   'image/jpeg' => 'jpeg',
   'image/gif'  => 'gif',
@@ -548,7 +567,5 @@ CTYPE_TO_EXT = {
 def ext( mail )
   CTYPE_TO_EXT[mail.content_type] || 'txt'
 end
-
-
 
 end

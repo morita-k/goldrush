@@ -1,7 +1,9 @@
 # -*- encoding: utf-8 -*-
+require 'auto_type_name'
 class BpPicGroup < ActiveRecord::Base
+  include AutoTypeName
   has_many :bp_pic_group_details, :conditions => "bp_pic_group_details.deleted = 0"
-  attr_accessible :bp_pic_group_name, :memo, :lock_version, :mail_template_id
+  attr_accessible :bp_pic_group_name, :memo, :lock_version, :mail_template_id, :bp_pic_group_type
   
   validates_presence_of :bp_pic_group_name
   validates_uniqueness_of :bp_pic_group_name, :case_sensitive => false, :scope => [:deleted, :deleted_at]

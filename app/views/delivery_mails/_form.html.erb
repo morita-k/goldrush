@@ -1,4 +1,5 @@
 <%#= hidden_field_tag 'bp_pic_id', @bp_pics %>
+<%= @import_mail && (hidden_field_tag 'import_mail_id', @import_mail.id) %>
 <%= back_to_field_tag %>
 <%= f.hidden_field :lock_version %>
   <% if @delivery_mail.errors.any? %>
@@ -63,6 +64,14 @@
   <tr>
     <th><%= f.label :mail_bcc, getLongName('delivery_mails', 'mail_bcc') %></th>
     <td><%= f.text_field :mail_bcc %></td>
+  </tr>
+  <tr>
+    <th><%= f.label :payment, getLongName('delivery_mails', 'payment') %></th>
+    <td class="number_text"><%= f.text_field :payment %>万</td>
+  </tr>
+  <tr>
+    <th><%= f.label :age, getLongName('delivery_mails', 'age') %></th>
+    <td class="number_text"><%= f.text_field :age %>歳</td>
   </tr>
   <tr>
     <th><label for :attachment1>添付ファイル1</label></th>

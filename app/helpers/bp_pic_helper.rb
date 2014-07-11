@@ -19,6 +19,19 @@ module BpPicHelper
     end
   end
 
+  def bp_pic_form_title
+    current_business_partner = @business_partner || @bp_pic.business_partner
+    if @bp_pic.new_record?
+      if current_business_partner
+        "#{current_business_partner.business_partner_short_name} #{params[:retired_bp_pic_id] && '後任'}担当新規作成"
+      else
+        "担当新規作成"
+      end
+    else
+      "#{@bp_pic.bp_pic_name} (#{current_business_partner.business_partner_short_name})編集"
+    end
+  end
+
 private
   def working_status_type_link_retired(name, bp_pic, new_bp_pic_id)
     if new_bp_pic_id.blank?

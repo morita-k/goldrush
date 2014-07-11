@@ -1,0 +1,54 @@
+<h1><%=getLongName('table_name','import_mail_matches')%>詳細</h1>
+
+<br>
+
+
+<div class="submit_box">
+<%= link_or_back '　戻　る　', {:action => 'index'}, {:class => "btn btn-default btn-midium"} %>
+<%= delete_to '　削　除　', @import_mail_match, 'destroy_by_show', {:class => "btn btn-info btn-midium"} %>
+</div>
+
+
+<table class="list_table table-bordered table-hover">
+  <tr id="tr_head_<%= @import_mail_match.id %>" class="head_row_auto" import_mail_match_id="<%= @import_mail_match.id %>">
+    <td rowspan=2 sytle="text-align:center">
+      <%= star_links @import_mail_match %><br>
+      <span title="マッチングスコア"><%= @import_mail_match.mail_match_score %></span>
+    </td>
+    <td rowspan=2><%= raw format_only_major_tags(@import_mail_match.tag_text) %></td>
+    <td>
+      <div class="overflow_hidden" style="width:100%;">
+        <%= star_links @import_mail_match.biz_offer_mail %> <%= back_to_link @import_mail_match.biz_offer_mail.mail_subject, :controller => :import_mail, :action => :show, :id => @import_mail_match.biz_offer_mail %>
+      </div>
+    </td>
+    <td>
+      <div class="overflow_hidden" style="width:100%;">
+        <%= show_stars_auto_match(@import_mail_match.biz_offer_mail) %>
+      </div>
+    </td>
+    <td><div style="width:3.5em"><%=man @import_mail_match.biz_offer_mail.payment %></div></td>
+    <td rowspan=2><div style="width:3.5em"><%=man @import_mail_match.payment_gap %></div></td>
+    <td><div style="width:3.5em"><%=_age(@import_mail_match.biz_offer_mail.age) %></div></td>
+    <td rowspan=2><div style="width:3.5em"><%=_age @import_mail_match.age_gap %></div></td>
+    <td><%=_time @import_mail_match.biz_offer_mail.received_at %></td>
+    <td rowspan=2><span class="destroy_btn btn" title="マッチングデータを削除" import_mail_match_id="<%=@import_mail_match.id%>"><i class="glyphicon glyphicon-remove-circle"></i></span></td>
+  </tr>
+  <tr id="tr_head2_<%= @import_mail_match.id %>" class="head_row_auto" import_mail_match_id="<%= @import_mail_match.id %>">
+    <td>
+      <div class="overflow_hidden" style="width:100%;">
+        <%= star_links @import_mail_match.bp_member_mail%> <%= back_to_link @import_mail_match.bp_member_mail.mail_subject, :controller => :import_mail, :action => :show, :id => @import_mail_match.bp_member_mail%>
+      </div>
+    </td>
+    <td>
+      <div class="overflow_hidden" style="width:100%;">
+        <%= show_stars_auto_match(@import_mail_match.bp_member_mail) %>
+      </div>
+    </td>
+    <td><div style="width:3.5em"><%=man @import_mail_match.bp_member_mail.payment %></div></td>
+    <td><div style="width:3.5em"><%=_age(@import_mail_match.bp_member_mail.age) %></div></td>
+    <td><%=_time @import_mail_match.bp_member_mail.received_at %></td>
+  </tr>
+  <tr id="tr_detail_<%= @import_mail_match.id%>" class="detail_row">
+    <%= render :partial => 'detail' %>
+  </tr>
+</table>
