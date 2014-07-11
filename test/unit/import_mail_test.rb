@@ -7,6 +7,7 @@ class ImportMailTest < ActiveSupport::TestCase
   
   test "import mail" do
     im = ImportMail.new
+    im.mail_subject = 'java,c++,oracle'
     im.analyze(<<EOS)
     java
     cobol
@@ -16,6 +17,7 @@ class ImportMailTest < ActiveSupport::TestCase
     80～90万円
 EOS
     assert_equal("cobol,java", im.tag_text)
+    assert_equal("c++,java,oracle", im.subject_tag_text)
     assert_equal("東京駅", im.nearest_station)
     # 年齢正規化処理の為、「歳」は消去。
     assert_equal(39, im.age)
