@@ -22,8 +22,8 @@ module BusinessPartnerHelper
   end
 
   def photo_id_hidden_field
-    if params[:photoid]
-      hidden_field_tag :photoid, params[:photoid]
+    if params[:photo_id]
+      hidden_field_tag :photo_id, params[:photo_id]
     else
       ''
     end

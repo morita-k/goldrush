@@ -14,9 +14,6 @@ class BusinessPartnerController < ApplicationController
       :sales_code => params[:sales_code],
       :business_partner_name => params[:business_partner_name],
       :self_flg => params[:self_flg],
-      :eu_flg => params[:eu_flg],
-      :upper_flg => params[:upper_flg],
-      :down_flg => params[:down_flg]
       }
   end
 
@@ -44,50 +41,7 @@ class BusinessPartnerController < ApplicationController
       cond[0] += " and self_flg = 1"
     end
 
-    if !(session[:business_partner_search][:eu_flg]).blank?
-      cond[0] += " and eu_flg = 1"
-    end
-
-    if !(session[:business_partner_search][:upper_flg]).blank?
-      cond[0] += " and upper_flg = 1"
-    end
-
-    if !(session[:business_partner_search][:down_flg]).blank?
-      cond[0] += " and down_flg = 1"
-    end
-
     #return {:conditions => param.unshift(sql), :include => include, :per_page => current_user.per_page}
-    return [cond, incl]
-  end
-
-# 1 = 1 or self_flg = ? or eu_flg = ? or upper_flg = ? or down_flg = ?
-
-  def make_popup_conditions(self_flg, eu_flg, upper_flg, down_flg)
-    cond, incl = _make_conditions
-#    param = []
-#    sql = "deleted = 0 and (1 = 0"
-#    order_by = ""
-
-    cond[0] += " and (1 = 0"
-
-    if self_flg
-      cond[0] += " or self_flg = 1"
-    end
-
-    if eu_flg
-      cond[0] += " or eu_flg = 1"
-    end
-
-    if upper_flg
-      cond[0] += " or upper_flg = 1"
-    end
-
-    if down_flg
-      cond[0] += " or down_flg = 1"
-    end
-
-    cond[0] += ")"
-
     return [cond, incl]
   end
 
@@ -99,12 +53,8 @@ class BusinessPartnerController < ApplicationController
     elsif params[:clear_button]
       session[:business_partner_search] = {}
     end
-    if !params[:flg].blank?
-      f = params[:flg].split(",")
-      cond, incl = make_popup_conditions(f.include?("self"),f.include?("eu"),f.include?("down"),f.include?("upper"))
-    else
-      cond, incl = make_conditions
-    end
+    
+    cond, incl = make_conditions
     #@business_partner_pages, @business_partners = paginate(:business_partners, cond)
     @business_partners = BusinessPartner.includes(incl).where(cond).order("updated_at desc").page(params[:page]).per(current_user.per_page)
   end
@@ -120,17 +70,6 @@ class BusinessPartnerController < ApplicationController
 
   def new
     @business_partner = BusinessPartner.new
-    if params[:flg] == 'eu'
-      @business_partner.eu_flg = 1
-    elsif params[:flg] == 'upper'
-      @business_partner.upper_flg = 1
-    elsif params[:flg] == 'down'
-      @business_partner.down_flg = 1
-    elsif params[:flg] == 'eu_or_upper'
-      @business_partner.eu_flg = 1
-      @business_partner.upper_flg = 1
-    end
-    
     @bp_pic = BpPic.new
     @bp_pic.working_status_type = 'working'
     @bp_pic.business_partner = @business_partner
@@ -145,7 +84,6 @@ class BusinessPartnerController < ApplicationController
       @bp_pic.bp_pic_name_kana = @former_bp_pic.bp_pic_name_kana
     end
 
-    @photo_id = params[:photoid] if params[:photoid]
   end
 
   def create
@@ -185,8 +123,8 @@ class BusinessPartnerController < ApplicationController
         import_mail.save!
       end
 
-      if @photo_id = params[:photoid]
-        Photo.update_bp_pic(@bp_pic.id, @photo_id)
+      if params[:photo_id]
+        Photo.update_bp_pic(@bp_pic.id, params[:photo_id])
       end
       
     end # transaction
@@ -197,10 +135,10 @@ class BusinessPartnerController < ApplicationController
       # ポップアップウィンドウの場合、共通リザルト画面を表示する
       flash.now[:notice] = flash_notice
       render 'shared/popup/result'
-    elsif @photo_id
+    elsif params[:photo_id]
       # 名刺紐付けの場合、名刺取込一覧画面を表示する
       flash.now[:notice] = flash_notice
-      redirect_to :controller => :photos, :action => :list
+      _redirect_or_back_to :controller => :photos, :action => :index
     else
       # ポップアップウィンドウでなければ通常の画面遷移
       flash[:notice] = flash_notice

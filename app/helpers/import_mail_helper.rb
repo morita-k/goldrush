@@ -81,19 +81,19 @@ module ImportMailHelper
   end
   
   def link_to_biz_create(text, import_mail)
-    link_to text, url_for(:controller => 'analysis_template', :action => 'list', :popup => 1, :mode => 'biz_offer', :import_mail_id => import_mail), :class => "btn btn-primary btn-medium"
+    disp_wide_link text, url_for(:controller => 'analysis_template', :action => 'list', :popup => 1, :mode => 'biz_offer', :import_mail_id => import_mail), :class => "btn btn-primary btn-medium"
   end
   
   def link_to_hresource_create(text, import_mail)
-    link_to text, url_for(:controller => 'analysis_template', :action => 'list', :popup => 1, :mode => 'bp_member', :import_mail_id => import_mail), :class => "btn btn-primary  btn-medium"
+    disp_wide_link text, url_for(:controller => 'analysis_template', :action => 'list', :popup => 1, :mode => 'bp_member', :import_mail_id => import_mail), :class => "btn btn-primary  btn-medium"
   end
   
   def link_to_bp_create(text, import_mail)
-    link_to text, url_for(:controller => 'business_partner', :action => 'new', :popup => 1, :import_mail_id => import_mail), :class => "btn btn-primary btn-medium"
+    disp_wide_link text, url_for(:controller => 'business_partner', :action => 'new', :popup => 1, :import_mail_id => import_mail), :class => "btn btn-primary btn-medium"
   end
   
   def link_to_bp_pic_create(text, import_mail)
-    link_to text, url_for(:controller => :bp_pic, :action => :new, :popup => 1, :import_mail_id => import_mail, :business_partner_id => import_mail.business_partner_id), :class => "btn btn-primary btn-medium"
+    disp_wide_link text, url_for(:controller => :bp_pic, :action => :new, :popup => 1, :import_mail_id => import_mail, :business_partner_id => import_mail.business_partner_id), :class => "btn btn-primary btn-medium"
   end
   
   def verygood_tags

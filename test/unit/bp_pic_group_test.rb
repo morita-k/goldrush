@@ -5,8 +5,8 @@ class BpPicGroupTest < ActiveSupport::TestCase
   #   assert true
   # end
   test "bp_pic_group_name is unique" do
-    group = BpPicGroup.new(bp_pic_group_name: "test group")
-    same_name_group = BpPicGroup.new(bp_pic_group_name: "test group")
+    group = BpPicGroup.new(bp_pic_group_name: "test group", bp_pic_group_type: "other")
+    same_name_group = BpPicGroup.new(bp_pic_group_name: "test group", bp_pic_group_type: "other")
     
     assert_nothing_raised(ActiveRecord::RecordInvalid) do
       group.save!
@@ -17,7 +17,7 @@ class BpPicGroupTest < ActiveSupport::TestCase
   end
   
   test "create clone bp_pic_group" do
-    clone = BpPicGroup.new(bp_pic_group_name: "test_group")
+    clone = BpPicGroup.new(bp_pic_group_name: "test_group", bp_pic_group_type: "other")
     source = BpPicGroup.where(id: 1, deleted: 0)
     
     assert_difference('BpPicGroupDetail.count') do

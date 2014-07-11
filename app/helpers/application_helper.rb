@@ -65,24 +65,24 @@ module ApplicationHelper
     url_for controller: :outflow_mail, action: :quick_input, import_mail_id: import_mail_id, popup: 1, only_path: false, protocol: "http://"
   end
 
-  def url_for_photo_preview_popup(photoid)
-    url_for :controller => :photos, :action => :preview, :id => photoid, :popup => 1
+  def url_for_photo_preview_popup(photo_id)
+    url_for :controller => :photos, :action => :preview, :id => photo_id, :popup => 1
   end
 
-  def url_for_business_partner(photoid)
-    url_for :controller => :business_partner, :action => :new, :photoid => photoid
+  def url_for_business_partner(photo_id)
+    url_for :controller => :business_partner, :action => :new, :photo_id => photo_id
   end
 
   def url_for_business_partner_popup
     url_for :controller => :business_partner, :action => :list, :popup => 1
   end
 
-  def url_for_bp_pic(photoid)
-    url_for :controller => :bp_pic, :action => :list, :photoid => photoid
+  def url_for_bp_pic_list_with_photo_id(photo_id)
+    url_for :controller => :bp_pic, :action => :list, :photo_id => photo_id, :popup => 1
   end
 
-  def url_for_rotate_photo(photoid, left_rotate, target_page, bp_pic_id = nil)
-    url_for :controller => :photos, :action => :rotate, :photoid => photoid , :left_rotate => left_rotate, :target_page => target_page, :bp_pic_id => bp_pic_id
+  def url_for_rotate_photo(photo_id, left_rotate, target_page, bp_pic_id = nil)
+    url_for :controller => :photos, :action => :rotate, :photo_id => photo_id , :left_rotate => left_rotate, :target_page => target_page, :bp_pic_id => bp_pic_id
   end
 
   def bp_pic_edit_icon(bp_pic)
@@ -506,10 +506,6 @@ EOS
 
   def popup?
     @popup_mode
-  end
-
-  def is_photo?
-    !@photo_id.nil?
   end
 
   def back_to

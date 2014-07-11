@@ -220,6 +220,7 @@ ActiveRecord::Schema.define(:version => 0) do
     t.integer  "owner_id",          :limit => 8
     t.string   "bp_pic_group_name",                              :null => false
     t.integer  "mail_template_id",  :limit => 8
+    t.string   "bp_pic_group_type", :limit => 40,                :null => false
     t.text     "memo"
     t.datetime "created_at",                                     :null => false
     t.datetime "updated_at",                                     :null => false
@@ -256,6 +257,7 @@ ActiveRecord::Schema.define(:version => 0) do
     t.float    "rating",                             :default => 0.0
     t.integer  "import_mail_id",       :limit => 8
     t.string   "tag_text"
+    t.integer  "plural_flg",                         :default => 0
     t.text     "memo"
     t.datetime "created_at",                                          :null => false
     t.datetime "updated_at",                                          :null => false
@@ -293,9 +295,6 @@ ActiveRecord::Schema.define(:version => 0) do
     t.string   "employee_number"
     t.string   "share_capital"
     t.integer  "self_flg",                                              :default => 0
-    t.integer  "eu_flg",                                                :default => 0
-    t.integer  "upper_flg",                                             :default => 0
-    t.integer  "down_flg",                                              :default => 0
     t.integer  "starred",                                               :default => 0
     t.float    "rating",                                                :default => 0.0
     t.integer  "import_mail_id",                          :limit => 8
@@ -473,17 +472,23 @@ ActiveRecord::Schema.define(:version => 0) do
   add_index "delivery_errors", ["id"], :name => "id", :unique => true
 
   create_table "delivery_mail_matches", :force => true do |t|
-    t.integer  "owner_id",         :limit => 8
-    t.integer  "delivery_mail_id", :limit => 8,                 :null => false
-    t.integer  "import_mail_id",   :limit => 8,                 :null => false
-    t.integer  "matching_user_id", :limit => 8,                 :null => false
-    t.datetime "created_at",                                    :null => false
-    t.datetime "updated_at",                                    :null => false
-    t.integer  "lock_version",     :limit => 8,  :default => 0
-    t.string   "created_user",     :limit => 80
-    t.string   "updated_user",     :limit => 80
+    t.integer  "owner_id",                 :limit => 8
+    t.integer  "delivery_mail_id",         :limit => 8,                  :null => false
+    t.integer  "import_mail_id",           :limit => 8,                  :null => false
+    t.string   "delivery_mail_match_type", :limit => 40,                 :null => false
+    t.integer  "matching_user_id",         :limit => 8,                  :null => false
+    t.string   "memo",                     :limit => 256
+    t.text     "tag_text"
+    t.float    "payment_gap"
+    t.integer  "age_gap"
+    t.integer  "starred",                                 :default => 0
+    t.datetime "created_at",                                             :null => false
+    t.datetime "updated_at",                                             :null => false
+    t.integer  "lock_version",             :limit => 8,   :default => 0
+    t.string   "created_user",             :limit => 80
+    t.string   "updated_user",             :limit => 80
     t.datetime "deleted_at"
-    t.integer  "deleted",                        :default => 0
+    t.integer  "deleted",                                 :default => 0
   end
 
   add_index "delivery_mail_matches", ["delivery_mail_id", "import_mail_id"], :name => "idx_delivery_mail_matches_24"
@@ -493,6 +498,7 @@ ActiveRecord::Schema.define(:version => 0) do
     t.integer  "owner_id",         :limit => 8
     t.integer  "delivery_mail_id", :limit => 8,                 :null => false
     t.integer  "bp_pic_id",        :limit => 8,                 :null => false
+    t.string   "in_reply_to"
     t.string   "message_id"
     t.datetime "created_at",                                    :null => false
     t.datetime "updated_at",                                    :null => false
@@ -524,6 +530,10 @@ ActiveRecord::Schema.define(:version => 0) do
     t.datetime "planned_setting_at",                                         :null => false
     t.string   "mail_send_status_type", :limit => 40,                        :null => false
     t.datetime "send_end_at"
+    t.text     "tag_text"
+    t.float    "payment"
+    t.integer  "age"
+    t.integer  "auto_matching_last_id", :limit => 8
     t.datetime "created_at",                                                 :null => false
     t.datetime "updated_at",                                                 :null => false
     t.integer  "lock_version",          :limit => 8,          :default => 0
@@ -677,6 +687,11 @@ ActiveRecord::Schema.define(:version => 0) do
     t.integer  "biz_offer_mail_id", :limit => 8,                 :null => false
     t.integer  "bp_member_mail_id", :limit => 8,                 :null => false
     t.integer  "mail_match_score",  :limit => 8,  :default => 0
+    t.text     "tag_text"
+    t.float    "payment_gap"
+    t.integer  "age_gap"
+    t.integer  "starred",                         :default => 0
+    t.datetime "received_at",                                    :null => false
     t.datetime "created_at",                                     :null => false
     t.datetime "updated_at",                                     :null => false
     t.integer  "lock_version",      :limit => 8,  :default => 0
@@ -689,6 +704,7 @@ ActiveRecord::Schema.define(:version => 0) do
   add_index "import_mail_matches", ["biz_offer_mail_id", "bp_member_mail_id"], :name => "idx_import_mail_matches_25"
   add_index "import_mail_matches", ["bp_member_mail_id", "biz_offer_mail_id"], :name => "idx_import_mail_matches_26"
   add_index "import_mail_matches", ["id"], :name => "id", :unique => true
+  add_index "import_mail_matches", ["received_at"], :name => "idx_import_mail_matches_27"
 
   create_table "import_mail_sources", :force => true do |t|
     t.integer  "owner_id",       :limit => 8
@@ -733,6 +749,7 @@ ActiveRecord::Schema.define(:version => 0) do
     t.string   "payment_text"
     t.string   "age_text"
     t.text     "nearest_station",     :limit => 2147483647
+    t.integer  "plural_flg",                                :default => 0
     t.datetime "created_at",                                               :null => false
     t.datetime "updated_at",                                               :null => false
     t.integer  "lock_version",        :limit => 8,          :default => 0

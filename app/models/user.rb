@@ -108,7 +108,7 @@ class User < ActiveRecord::Base
   end
 
   def User.pic_select_items
-    User.find(:all, :conditions => "deleted = 0").collect{|x| [x.employee.employee_short_name, x.id]}
+    User.joins(:employee).where("users.deleted = 0 and employees.resignation_date is null").collect{|x| [x.employee.employee_short_name, x.id]}
   end
 
 
