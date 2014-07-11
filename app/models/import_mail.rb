@@ -346,6 +346,7 @@ logger.info ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 3"
     self.payment = detect_payments_in(body)
     self.nearest_station = detect_nearest_station_in(body)
     self.tag_text = make_tags(body)
+    self.subject_tag_text = make_tags(Tag.pre_proc_body(mail_subject))
     self.proper_flg = detect_proper_in(body) ? 1 : 0
   end
 

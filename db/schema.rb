@@ -683,22 +683,23 @@ ActiveRecord::Schema.define(:version => 0) do
   add_index "human_resources", ["id"], :name => "id", :unique => true
 
   create_table "import_mail_matches", :force => true do |t|
-    t.integer  "owner_id",          :limit => 8
-    t.integer  "biz_offer_mail_id", :limit => 8,                 :null => false
-    t.integer  "bp_member_mail_id", :limit => 8,                 :null => false
-    t.integer  "mail_match_score",  :limit => 8,  :default => 0
+    t.integer  "owner_id",              :limit => 8
+    t.integer  "biz_offer_mail_id",     :limit => 8,                 :null => false
+    t.integer  "bp_member_mail_id",     :limit => 8,                 :null => false
+    t.integer  "mail_match_score",      :limit => 8,  :default => 0
     t.text     "tag_text"
+    t.integer  "subject_tag_match_flg",               :default => 0
     t.float    "payment_gap"
     t.integer  "age_gap"
-    t.integer  "starred",                         :default => 0
-    t.datetime "received_at",                                    :null => false
-    t.datetime "created_at",                                     :null => false
-    t.datetime "updated_at",                                     :null => false
-    t.integer  "lock_version",      :limit => 8,  :default => 0
-    t.string   "created_user",      :limit => 80
-    t.string   "updated_user",      :limit => 80
+    t.integer  "starred",                             :default => 0
+    t.datetime "received_at",                                        :null => false
+    t.datetime "created_at",                                         :null => false
+    t.datetime "updated_at",                                         :null => false
+    t.integer  "lock_version",          :limit => 8,  :default => 0
+    t.string   "created_user",          :limit => 80
+    t.string   "updated_user",          :limit => 80
     t.datetime "deleted_at"
-    t.integer  "deleted",                         :default => 0
+    t.integer  "deleted",                             :default => 0
   end
 
   add_index "import_mail_matches", ["biz_offer_mail_id", "bp_member_mail_id"], :name => "idx_import_mail_matches_25"
@@ -744,6 +745,7 @@ ActiveRecord::Schema.define(:version => 0) do
     t.integer  "outflow_mail_flg",                          :default => 0
     t.integer  "starred",                                   :default => 0
     t.text     "tag_text"
+    t.text     "subject_tag_text"
     t.float    "payment"
     t.integer  "age"
     t.string   "payment_text"
