@@ -38,9 +38,9 @@ class BusinessPartner < ActiveRecord::Base
 
   def BusinessPartner.export_to_csv
     csv_data = []
-    csv_data << "e-mail,Name,ZipCode,Prefecture,Address,Tel,Birthday,Occupation,案件,人材, bp_id, bp_pic_id,グループ"
+    csv_data << "e-mail,Name,ZipCode,Prefecture,Address,Tel,Birthday,Occupation,取引先Id,担当者Id,グループ"
     BpPic.all.each do |x|
-      csv_data << [x.email1, x.bp_pic_name,x.business_partner.business_partner_name, "", "", "", "", "", x.business_partner.down_flg, x.business_partner.upper_flg, x.business_partner.id, x.id].join(',')
+      csv_data << [x.email1, x.bp_pic_name,x.business_partner.business_partner_name, "", "", "", "", "", "", "", x.business_partner.id, x.id].join(',')
     end
     return NKF.nkf("-s", csv_data.join("\n"))
   end
@@ -48,7 +48,7 @@ class BusinessPartner < ActiveRecord::Base
     File.open(filename, "r"){|file| import_from_csv_data(file, prodmode)}
   end
 
-  def BusinessPartner.create_business_partner(companies, email, pic_name, company_name, upper_flg, down_flg)
+  def BusinessPartner.create_business_partner(companies, email, pic_name, company_name)
     unless companies[company_name.upcase]
       unless bp = BusinessPartner.where(:business_partner_name => company_name, :deleted => 0).first
         bp = BusinessPartner.new
@@ -58,8 +58,6 @@ class BusinessPartner < ActiveRecord::Base
         bp.sales_status_type = 'listup'
         bp.basic_contract_first_party_status_type ||= 'none'
         bp.basic_contract_second_party_status_type ||= 'none'
-        bp.upper_flg = upper_flg
-        bp.down_flg = down_flg
         if pic_name.include?('担当者')
           bp.email = email
         end
@@ -100,7 +98,7 @@ class BusinessPartner < ActiveRecord::Base
       bp_pic_id_cache = []
       CSV.parse(NKF.nkf("-w", readable_data)).each do |row|
         # Read email
-        email,pic_name,com,pref,address,tel,birth,occupa,down_flg,upper_flg,bp_id,bp_pic_id,group = row
+        email,pic_name,com,pref,address,tel,birth,occupa,bp_id,bp_pic_id,group = row
         next if email.to_s.strip.blank?
         next if email == 'e-mail'
         email = StringUtil.to_test_address(email) unless prodmode
@@ -114,7 +112,7 @@ class BusinessPartner < ActiveRecord::Base
         pic_name = StringUtil.strip_with_full_size_space(pic_name.to_s)
         if bp_id.blank?
           # bp新規登録
-          bp, names = create_business_partner(companies, email, pic_name, company_name, upper_flg, down_flg)
+          bp, names = create_business_partner(companies, email, pic_name, company_name)
           bp_id = bp.id
           bp_id_cache << bp.id
         else

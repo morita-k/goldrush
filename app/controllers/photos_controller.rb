@@ -32,7 +32,7 @@ class PhotosController < ApplicationController
   end
 
   def rotate
-    photo_id = params[:photoid]
+    photo_id = params[:photo_id]
     left_rotate = params[:left_rotate]
 
     Photo.rotate_photo(photo_id, left_rotate)

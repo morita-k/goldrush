@@ -2,7 +2,7 @@
 
 <%= accordion_around("取引先", "") do %>
         <% if @business_partner.new_record? %>
-          <input class="btn btn-info btn-midium" type=button value='登録済の取引先を選択' onClick="disp_wide('<%=url_for :controller => 'business_partner', :action => 'list', :popup =>1, :flg => 'eu,down,upper,self', :mail => 1 %>');return false;" />
+          <input class="btn btn-info btn-midium" type=button value='登録済の取引先を選択' onClick="disp_wide('<%=url_for :controller => 'business_partner', :action => 'list', :popup =>1, :mail => 1 %>');return false;" />
           <input class="btn btn-info btn-midium" type=button value='取引先情報クリア' onClick="clearBp();return false;" />
         <% end %>
         <table class="form_table">
@@ -67,9 +67,6 @@
           <tr>
             <th><label for="flg">フラグ</label></th><td>
               <%= check_box 'business_partner', 'self_flg'  %> 自社<br/>
-              <%= check_box 'business_partner', 'eu_flg'  %> エンドユーザー<br/>
-              <%= check_box 'business_partner', 'upper_flg'  %> 上位会社(人材メール送信対象)<br/>
-              <%= check_box 'business_partner', 'down_flg'  %> 下位会社(案件メール送信対象)
             </td>
           </tr>
           <tr>
@@ -127,9 +124,6 @@ document.setBpFull = function(bp) {
     document.getElementById("business_partner_employee_number").value = bp.employee_number
     document.getElementById("business_partner_share_capital").value = bp.share_capital
     document.getElementById("business_partner_self_flg").checked = (bp.self_flg==1)
-    document.getElementById("business_partner_eu_flg").checked = (bp.eu_flg==1)
-    document.getElementById("business_partner_upper_flg").checked = (bp.upper_flg==1)
-    document.getElementById("business_partner_down_flg").checked = (bp.down_flg==1)
     document.getElementById("business_partner_memo").value = bp.memo
 }
 
@@ -155,9 +149,6 @@ function clearBp(){
     document.getElementById("business_partner_employee_number").value = "";
     document.getElementById("business_partner_share_capital").value = "";
     document.getElementById("business_partner_self_flg").checked = false;
-    document.getElementById("business_partner_eu_flg").checked = false;
-    document.getElementById("business_partner_upper_flg").checked = false;
-    document.getElementById("business_partner_down_flg").checked = false;
     document.getElementById("business_partner_memo").value = "";
 }
 
