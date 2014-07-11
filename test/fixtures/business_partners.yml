@@ -21,9 +21,6 @@ business_partners_1:
   email: ""
   category: ""
   self_flg: 
-  eu_flg: 
-  upper_flg: 1
-  down_flg: 1
   starred: 
   rating: 
   import_mail_id: 
@@ -59,9 +56,6 @@ business_partners_2:
   email: ""
   category: ""
   self_flg: 
-  eu_flg: 
-  upper_flg: 
-  down_flg: 
   starred: 
   rating: 
   import_mail_id: 
@@ -97,9 +91,6 @@ business_partners_3:
   email: ""
   category: ""
   self_flg: 
-  eu_flg: 
-  upper_flg: 
-  down_flg: 
   starred: 
   rating: 
   import_mail_id: 
@@ -135,9 +126,6 @@ business_partners_4:
   email: ""
   category: ""
   self_flg: 
-  eu_flg: 
-  upper_flg: 1
-  down_flg: 1
   starred: 
   rating: 
   import_mail_id: 
