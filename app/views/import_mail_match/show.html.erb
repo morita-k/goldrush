@@ -52,3 +52,7 @@
     <%= render :partial => 'detail' %>
   </tr>
 </table>
+
+<% if !@attachment_files.blank? %>
+  <%= render :partial => 'attachment_file/list' %>
+<% end %>

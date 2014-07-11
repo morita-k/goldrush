@@ -85,7 +85,7 @@ EOS
   def detect_deliverty_mail(reply_mode)
     if dmt = self.in_reply_to && DeliveryMailTarget.where(message_id: self.in_reply_to).first
         detect_reply_mail(dmt.delivery_mail_id)
-    elsif first = detect_gr_biz_id(mail_body) 
+    elsif first = detect_gr_biz_id(mail_body)
 logger.info ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 1" + first
       return unless /.*GR-BIZ-ID:(\d+)-(\d+)/ =~ first
 logger.info ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 2"
@@ -265,7 +265,6 @@ logger.info ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 3"
 
   def attachment?
     AttachmentFile.count(:conditions => ["deleted = 0 and parent_table_name = 'import_mails' and parent_id = ?", self]) > 0
-#    !AttachmentFile.find(:first, :conditions => ["deleted = 0 and parent_table_name = 'import_mails' and parent_id = ?", self]).blank?
   end
 
   def pre_body

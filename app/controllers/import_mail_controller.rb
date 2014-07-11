@@ -61,7 +61,7 @@ class ImportMailController < ApplicationController
     @import_mail = ImportMail.find(params[:id])
     @biz_offers = BizOffer.find(:all, :conditions => ["deleted = 0 and import_mail_id = ?", params[:id]])
     @bp_members = BpMember.find(:all, :conditions => ["deleted = 0 and import_mail_id = ?", params[:id]])
-    @attachment_files = AttachmentFile.find(:all, :conditions => ["deleted = 0 and parent_table_name = 'import_mails' and parent_id = ?", @import_mail.id])
+    @attachment_files = AttachmentFile.get_attachment_files('import_mails', @import_mail.id)
   end
 
   def detail

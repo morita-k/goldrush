@@ -30,7 +30,7 @@ class BpPicGroupsController < ApplicationController
       @bp_pic_group_details = BpPicGroupDetail.includes(:bp_pic => :business_partner).where(cond).page(params[:page]).per(current_user.per_page)
     else
       @delivery_mail = DeliveryMail.find(params[:delivery_mail_id]).get_informations
-      @attachment_files = AttachmentFile.attachment_files("delivery_mails", @delivery_mail.id)
+      @attachment_files = AttachmentFile.get_attachment_files("delivery_mails", @delivery_mail.id)
       @bp_pic_group_details = BpPicGroupDetail.includes(:bp_pic => :business_partner).where(deleted: 0, bp_pic_group_id: @bp_pic_group)
     end
 
@@ -44,14 +44,14 @@ class BpPicGroupsController < ApplicationController
   # GET /bp_pic_groups/new.json
   def new
     @bp_pic_group = BpPicGroup.new
-    
+
     # コピーして新規作成
     if src_id = params[:src_id]
       source_group = BpPicGroup.find(src_id)
       @bp_pic_group.bp_pic_group_name = source_group.bp_pic_group_name
       @bp_pic_group.memo = source_group.memo
     end
-    
+
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @bp_pic_group }
@@ -72,15 +72,15 @@ class BpPicGroupsController < ApplicationController
   def create
     @bp_pic_group = BpPicGroup.new(params[:bp_pic_group])
     source_group_id = params[:src_id]
-    
+
     respond_to do |format|
       begin
         set_user_column(@bp_pic_group)
         @bp_pic_group.save!
-        
+
         # params[:src_id]があった場合、グループのコピーとみなす
         @bp_pic_group.create_clone_group(source_group_id) unless source_group_id.nil?
-        
+
         format.html { redirect_to back_to, notice: 'Bp pic group was successfully created.' }
         format.json { render json: @bp_pic_group, status: :created, location: @bp_pic_group }
       rescue ActiveRecord::RecordInvalid
@@ -106,24 +106,24 @@ class BpPicGroupsController < ApplicationController
       end
     end
   end
-  
+
   # GET /bp_pic_groups/new_details/1
   # GET /bp_pic_groups/new_details/1.json
   def new_details
-  
+
     @bp_pic_group_id = params[:id]
     @delivery_mail_id = params[:delivery_mail_id]
-    
+
     respond_to do |format|
       format.html # new_details.html.erb
     end
-  
+
   end
-  
+
   # POST /bp_pic_groups/create_details
   # POST /bp_pic_groups/create_details.json
   def create_details
-  
+
     @bp_pic_ids = params[:bp_pic_ids].split.uniq
     @bp_pic_group_id = params[:bp_pic_group_id]
     @delivery_mail_id = params[:delivery_mail_id]
@@ -159,9 +159,9 @@ class BpPicGroupsController < ApplicationController
         format.json { render json: @bp_pic_group.errors, status: :unprocessable_entity }
       end
     end
-  
+
   end
-  
+
   # DELETE /bp_pic_groups/1
   # DELETE /bp_pic_groups/1.json
   def destroy
@@ -195,7 +195,7 @@ class BpPicGroupsController < ApplicationController
   def make_conditions(search_param, bp_pic_group_id)
     param = [bp_pic_group_id]
     sql = "bp_pic_group_details.deleted = 0 and bp_pic_group_id = ? "
-    
+
     if !(x = search_param[:search_text]).blank?
       sql += " and (bp_pics.memo like ? or bp_pics.bp_pic_name like ? or bp_pics.email1 like ? or bp_pics.tel_direct like ? or bp_pics.tel_mobile like ? or business_partners.business_partner_name like ? or business_partners.business_partner_name_kana like ? or business_partners.tel like ? or business_partners.fax like ?)"
       param += Array.new(9).fill(al(x))
@@ -206,14 +206,14 @@ class BpPicGroupsController < ApplicationController
       sql += " and suspended = ?"
       param << x
     end
-    
+
     # 不達スコア
     if !(x = search_param[:nondelivery_score]).blank?
       sql += " and bp_pics.nondelivery_score >= ?"
       param << x
     end
-    
-    
+
+
     return param.unshift(sql)
   end
 end

@@ -32,7 +32,7 @@ class DeliveryMailsController < ApplicationController
       delivery_mail_target.get_import_mail_id.nil? ? 0 : - delivery_mail_target.get_import_mail_id
     end
 
-    @attachment_files = AttachmentFile.attachment_files("delivery_mails", @delivery_mail.id)
+    @attachment_files = AttachmentFile.get_attachment_files("delivery_mails", @delivery_mail.id)
 
     respond_to do |format|
       format.html # show.html.erb
@@ -59,7 +59,7 @@ class DeliveryMailsController < ApplicationController
     @src_mail_id = params[:id]
     src_mail = DeliveryMail.find(@src_mail_id)
     src_mail.setup_planned_setting_at(current_user.zone_at(src_mail.planned_setting_at))
-    @attachment_files = AttachmentFile.attachment_files("delivery_mails", src_mail.id)
+    @attachment_files = AttachmentFile.get_attachment_files("delivery_mails", src_mail.id)
     @delivery_mail = DeliveryMail.new
     @delivery_mail.attributes = src_mail.attributes.reject{|x| ["created_at", "updated_at", "created_user", "updated_user", "deleted_at", "deleted"].include?(x)}
 
@@ -522,7 +522,7 @@ private
 
   def copy_upload_files(src_mail_id, parent_id)
     unless params[:src_mail_id].blank?
-       AttachmentFile.attachment_files("delivery_mails", params[:src_mail_id]).each do |src|
+       AttachmentFile.get_attachment_files("delivery_mails", params[:src_mail_id]).each do |src|
          af = AttachmentFile.new
          af.parent_table_name = src.parent_table_name
          af.parent_id = parent_id
