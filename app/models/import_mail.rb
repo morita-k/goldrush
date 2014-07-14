@@ -66,6 +66,7 @@ class ImportMail < ActiveRecord::Base
     self.biz_offer_flg = 0
     self.bp_member_flg = 0
     self.matching_way_type = delivery_mail.matching_way_type
+    self.import_mail_match_id = delivery_mail.import_mail_match_id
     SystemNotifier.send_info_mail("[GoldRush] 配信メールに対して返信がありました ID:#{delivery_mail.id}", <<EOS).deliver
 
 #{SysConfig.get_system_notifier_url_prefix}/delivery_mails/#{delivery_mail.id}
