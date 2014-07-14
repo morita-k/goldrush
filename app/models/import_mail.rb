@@ -82,7 +82,7 @@ EOS
     StringUtil.detect_regex(body, /.*GR-BIZ-ID:\d+-\d+/).first
   end
 
-  def detect_deliverty_mail(reply_mode)
+  def detect_delivery_mail(reply_mode)
     if dmt = self.in_reply_to && DeliveryMailTarget.where(message_id: self.in_reply_to).first
         detect_reply_mail(dmt.delivery_mail_id)
     elsif first = detect_gr_biz_id(mail_body)
@@ -192,7 +192,7 @@ logger.info ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 3"
       #---------- mail_body ここまで ----------
 
       # 返信メールの判定
-      import_mail.detect_deliverty_mail(reply_mode)
+      import_mail.detect_delivery_mail(reply_mode)
 
       import_mail.created_user = 'import_mail'
       import_mail.updated_user = 'import_mail'
