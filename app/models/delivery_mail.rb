@@ -104,7 +104,7 @@ class DeliveryMail < ActiveRecord::Base
   end
 
   def attachment_files
-    AttachmentFile.attachment_files("delivery_mails", id)
+    AttachmentFile.get_attachment_files("delivery_mails", id)
   end
 
   def DeliveryMail.send_test_mail(mail)

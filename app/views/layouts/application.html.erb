@@ -43,7 +43,7 @@
 <!--headerここから-->
 <!--topmenuここから-->
 <nav class="navbar navbar-default" role="navigation">
-  <div class="container-fluid" style="<%#= get_background_color %>">
+  <div class="container-fluid" style="<%= get_background_color %>">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
       <% if popup? %>
@@ -79,11 +79,10 @@
           <li>メール送信</li>
           <li><%= link_to 'メールグループ', :controller => '/bp_pic_groups' %></li>
           <li><%= link_to 'メールテンプレート', :controller => '/mail_templates' %></li>
-          <li><%= link_to '即席メール一覧', :controller => '/delivery_mails' %></li>
+          <li><%= link_to 'その他のメール一覧', :controller => '/delivery_mails' %></li>
           <li class="divider"></li>
           <li>メール受信</li>
           <li><%= link_to '取り込みメール', :controller => '/import_mail' %></li>
-          <li><%= link_to '取り込みメールマッチング'.html_safe, :controller => '/import_mail', :action => :matching %></li>
           <li><%= link_to '取り込みメール自動マッチング'.html_safe, :controller => '/import_mail_match' %></li>
           <li><%= link_to '流出メール解析', :controller => '/outflow_mail', :action => 'new' %></li>
         </ul>

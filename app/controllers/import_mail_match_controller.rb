@@ -19,6 +19,7 @@ class ImportMailMatchController < ApplicationController
 
   def show
     @import_mail_match = ImportMailMatch.find(params[:id], :conditions => "deleted = 0 ")
+    @attachment_files  = AttachmentFile.get_attachment_files('import_mails', @import_mail_match.bp_member_mail_id)
   rescue
     flash[:err] = "対象のマッチングデータが見つかりません。削除された可能性があります。"
     redirect_to params[:back_to]

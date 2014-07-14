@@ -82,10 +82,10 @@ EOS
     StringUtil.detect_regex(body, /.*GR-BIZ-ID:\d+-\d+/).first
   end
 
-  def detect_deliverty_mail(reply_mode)
+  def detect_delivery_mail(reply_mode)
     if dmt = self.in_reply_to && DeliveryMailTarget.where(message_id: self.in_reply_to).first
         detect_reply_mail(dmt.delivery_mail_id)
-    elsif first = detect_gr_biz_id(mail_body) 
+    elsif first = detect_gr_biz_id(mail_body)
 logger.info ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 1" + first
       return unless /.*GR-BIZ-ID:(\d+)-(\d+)/ =~ first
 logger.info ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 2"
@@ -192,7 +192,7 @@ logger.info ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 3"
       #---------- mail_body ここまで ----------
 
       # 返信メールの判定
-      import_mail.detect_deliverty_mail(reply_mode)
+      import_mail.detect_delivery_mail(reply_mode)
 
       import_mail.created_user = 'import_mail'
       import_mail.updated_user = 'import_mail'
@@ -265,7 +265,6 @@ logger.info ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 3"
 
   def attachment?
     AttachmentFile.count(:conditions => ["deleted = 0 and parent_table_name = 'import_mails' and parent_id = ?", self]) > 0
-#    !AttachmentFile.find(:first, :conditions => ["deleted = 0 and parent_table_name = 'import_mails' and parent_id = ?", self]).blank?
   end
 
   def pre_body
@@ -346,6 +345,7 @@ logger.info ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 3"
     self.payment = detect_payments_in(body)
     self.nearest_station = detect_nearest_station_in(body)
     self.tag_text = make_tags(body)
+    self.subject_tag_text = make_tags(Tag.pre_proc_body(mail_subject))
     self.proper_flg = detect_proper_in(body) ? 1 : 0
   end
 

@@ -48,7 +48,7 @@ class BpMemberController < ApplicationController
         param << pids
       end
     end
-    
+
     if !(skill_tag = session[:bp_member_search][:skill_tag]).blank?
       sql += " and human_resources.skill_tag like ?"
       param << "%#{skill_tag}%"
@@ -96,7 +96,7 @@ class BpMemberController < ApplicationController
 
     # JIET_FLG
     if !(x = session[:bp_member_search][:jiet]).blank?
-      case x 
+      case x
       when "1"
         sql += " and human_resources.jiet = ?"
         param << 0
@@ -106,7 +106,7 @@ class BpMemberController < ApplicationController
       else
       end
     end
-    
+
     return {:conditions => param.unshift(sql), :include => include, :order => order_by, :per_page => current_user.per_page}
   end
 
@@ -127,7 +127,7 @@ class BpMemberController < ApplicationController
   def show
     @bp_member = BpMember.find(params[:id])
     @human_resource = @bp_member.human_resource
-    @attachment_files = AttachmentFile.find(:all, :conditions => ["deleted = 0 and parent_table_name = 'bp_members' and parent_id = ?", @bp_member.id])
+    @attachment_files = AttachmentFile.get_attachment_files('bp_members', @bp_member.id)
     @remarks = Remark.find(:all, :conditions => ["deleted = 0 and remark_key = ? and remark_target_id = ?", 'bp_members', params[:id]])
   end
 
@@ -171,14 +171,14 @@ class BpMemberController < ApplicationController
       set_user_column @human_resource
       @human_resource.save!
       @bp_member.human_resource = @human_resource
-      
+
       # タグを更新
       @human_resource.make_skill_tags!
       @human_resource.save!
-      
+
       set_user_column @bp_member
       @bp_member.save!
-      
+
       if !@bp_member.import_mail_id.blank?
         import_mail = ImportMail.find(@bp_member.import_mail_id)
         import_mail.registed = 1
@@ -188,7 +188,7 @@ class BpMemberController < ApplicationController
       end
     end
     flash_notice = 'BpMember was successfully created.'
-    
+
     if popup?
       # ポップアップウィンドウの場合、ポップアップ状態のまま通常の画面遷移
       flash[:notice] = flash_notice
@@ -240,10 +240,10 @@ class BpMemberController < ApplicationController
     @bp_member.deleted_at = Time.now
     set_user_column @bp_member
     @bp_member.save!
-    
+
     redirect_to :action => 'list'
   end
-  
+
   def initial_trim(initial)
     upcased_initial_list = initial.scan(/[(a-z)(A-Z)]/)
     upcased_initial = ""
@@ -252,5 +252,5 @@ class BpMemberController < ApplicationController
     end
     upcased_initial
   end
-  
+
 end
