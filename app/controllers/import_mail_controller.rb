@@ -114,18 +114,18 @@ class ImportMailController < ApplicationController
   def change_flg
     target_mail = ImportMail.find(params[:import_mail_id])
     if params[:type] == "biz_offer"
-      if target_mail.biz_offer_flg == 0
+      if target_mail.biz_offer_mail?
+        target_mail.biz_offer_flg = 0
+      else
         target_mail.biz_offer_flg = 1
         target_mail.unwanted = 0
-      else
-        target_mail.biz_offer_flg = 0
       end
     elsif params[:type] == "bp_member"
-      if target_mail.bp_member_flg == 0
+      if target_mail.bp_member_mail?
+        target_mail.bp_member_flg = 0
+      else
         target_mail.bp_member_flg = 1
         target_mail.unwanted = 0
-      else
-        target_mail.bp_member_flg = 0
       end
     elsif params[:type] == "unwanted"
       if target_mail.unwanted == 0
