@@ -205,7 +205,7 @@ module ApplicationHelper
     text_field(object_name, method, options)
   end
 
-  def currency_field_tag(name, value = nil, options = {}) 
+  def currency_field_tag(name, value = nil, options = {})
     options[:style] = options[:style].to_s + ";text-align: right;"
     options[:onblur] = "this.value=fnum(this.value);this.style.textAlign='right'"
     options[:onFocus] = "if(this.readOnly==false){this.value=ufnum(this.value);this.style.textAlign='left'}"
@@ -213,7 +213,7 @@ module ApplicationHelper
   end
 
   def date_field(object_name, method, options = {})
-    
+
     #date = Time.now.strftime("%Y/%m/%d")
     options['data-provide'] = "typeahead"
     options['class'] = [options['class'], "date-time-picker"].compact.join(" ")
@@ -232,7 +232,7 @@ module ApplicationHelper
         //テキストボックスにカレンダーをバインドする（パラメータは必要に応じて）
         jQuery("##{object_name}_#{method}").datepicker({
           firstDay: 1,    //週の先頭を月曜日にする（デフォルトは日曜日）
-          dateFormat: 'yy/mm/dd',        
+          dateFormat: 'yy/mm/dd',
 
        //年月をドロップダウンリストから選択できるようにする場合
        changeYear: false,
@@ -304,7 +304,7 @@ EOS
   def system_column?(column)
     SysConfig.system_column?(column)
   end
-  
+
   def getFlgName(flg)
     flg == 0 ? 'なし' : 'あり'
   end
@@ -341,11 +341,11 @@ EOS
   def put_paginates(pages, css_class = 'paginate', total_count = 0)
     "<div class='#{css_class}'>#{put_paginates_span(pages, css_class, total_count)}</div>"
   end
-  
+
   def put_paginates_prefix(pages, css_class = 'paginate', total_count = 0, urlstr = nil)
     "<div class='#{css_class}'>#{put_paginates_span_prefix(pages, css_class, total_count, urlstr)}</div>"
   end
-  
+
   def put_paginates_span(pages, css_class = 'paginate', total_count = 0)
     put_paginates_span_prefix(pages, css_class, total_count, request.env['REQUEST_URI'])
   end
@@ -388,7 +388,7 @@ EOS
     raw(text_area_tag(name, value, options))
   end
 
-  
+
   def money_format_i(num)
     money_format(num.to_i)
   end
@@ -396,7 +396,7 @@ EOS
   def money_format(num)
     return (num.to_s =~ /[-+]?\d{4,}/) ? (num.to_s.reverse.gsub(/\G((?:\d+\.)?\d{3})(?=\d)/, '\1,').reverse) : num.to_s
   end
-  
+
   def link_and_if(condition, name, options = {}, html_options = {}, &block)
     if condition
       link_to(name, options, html_options, &block)
@@ -521,31 +521,31 @@ EOS
   end
 
   def back_to_field_tag
-    params[:back_to].blank? ? "" : hidden_field_tag('back_to', params[:back_to]) 
+    params[:back_to].blank? ? "" : hidden_field_tag('back_to', params[:back_to])
   end
 
   def calHourMinuteFormat(sec)
     require 'date_time_util'
     DateTimeUtil.calHourMinuteFormat(sec)
   end
-  
+
   def star_links(target, title = "")
     icon_opt = { id: StarUtil.attr_id(target),
                  class: StarUtil.attr_class(target),
                  name: StarUtil.attr_name(target),
                  style: StarUtil.attr_style( target.starred ) }
-    
+
     link_opt = { controller: :home,
                  action: :change_star,
-                 id: target.id, 
+                 id: target.id,
                  model: target.class.name,
                  authenticity_token: form_authenticity_token }
-    
+
     content_tag(:span, class: "linked_star") do
       link_to( content_tag(:span, "★", icon_opt), link_opt, :title => title)
     end
   end
-  
+
   def popup_hidden_field
     if popup?
       return hidden_field_tag :popup, params[:popup]
@@ -553,24 +553,24 @@ EOS
       return ''
     end
   end
-  
+
   def disp_wide_link(text, url_option, option={})
     url = url_for(url_option)
     option[:onclick] = "disp_wide('#{url}');return false"
     link_to text, "#", option
   end
-  
+
   def disp_photo_link(text, url_option, option={})
     url = url_for(url_option)
     option[:onclick] = "disp_photo('#{url}');return false"
     link_to text, "#", option
   end
-  
+
   def popover(tag_name, text, content, option = {})
     if !option[:rel]
       option[:rel] = ( option[:title] ? "popover" : "popover-without-title" )
     end
-    
+
     # data-xxxx属性の設定
     option[:data] ||= {}
     data = option[:data]
@@ -578,7 +578,7 @@ EOS
     data[:trigger] = (data[:trigger] || "hover")
     data[:animation] = (data[:animation] || "false")
     data[:content] = content
-    
+
     if text
       content_tag(tag_name, text, option)
     else
@@ -601,7 +601,7 @@ EOS
   def get_nickname(login)
     User.get_nickname(login)
   end
-  
+
   def accordion_around(title, suffix, hide=false, &block)
     accordion_around_in(1, title, suffix, hide, &block)
   end
@@ -687,5 +687,15 @@ EOS
 EOS
     end
     raw "<div class='btn-group' data-toggle='buttons'>" + res.join + "</div>"
-  end 
+  end
+
+  def get_way_type(import_mail)
+    if import_mail.biz_offer_mail?
+      'biz_offer'
+    elsif import_mail.bp_member_mail?
+      'bp_member'
+    else
+      'other'
+    end
+  end
 end

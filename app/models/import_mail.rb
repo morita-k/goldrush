@@ -543,6 +543,14 @@ logger.info ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 3"
     plural_flg == 1
   end
 
+  def biz_offer_mail?
+    biz_offer_flg == 1
+  end
+
+  def bp_member_mail?
+    bp_member_flg == 1
+  end
+
 private
   def ImportMail.get_encode_body(mail, body)
     if mail.content_transfer_encoding == 'ISO-2022-JP'
@@ -555,17 +563,16 @@ private
     end
   end
 
-CTYPE_TO_EXT = {
-  'image/jpeg' => 'jpeg',
-  'image/gif'  => 'gif',
-  'image/png'  => 'png',
-  'image/tiff' => 'tiff',
-  'application/vnd.ms-excel' => 'xls',
-  'application/msword' => 'doc'
-}
+  CTYPE_TO_EXT = {
+    'image/jpeg' => 'jpeg',
+    'image/gif'  => 'gif',
+    'image/png'  => 'png',
+    'image/tiff' => 'tiff',
+    'application/vnd.ms-excel' => 'xls',
+    'application/msword' => 'doc'
+  }
 
-def ext( mail )
-  CTYPE_TO_EXT[mail.content_type] || 'txt'
-end
-
+  def ext( mail )
+    CTYPE_TO_EXT[mail.content_type] || 'txt'
+  end
 end

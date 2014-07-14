@@ -12,7 +12,7 @@ class DeliveryMail < ActiveRecord::Base
   has_many :import_mails, :conditions => "import_mails.deleted = 0"
   has_many :delivery_mail_matches, :conditions => "delivery_mail_matches.deleted = 0"
   belongs_to :bp_pic_group
-  attr_accessible :bp_pic_group_id, :content, :id, :mail_bcc, :mail_cc, :mail_from, :mail_from_name, :mail_send_status_type, :mail_status_type, :owner_id, :planned_setting_at, :send_end_at, :subject, :lock_version, :planned_setting_at_hour, :planned_setting_at_minute, :planned_setting_at_date, :delivery_mail_type, :biz_offer_id, :bp_member_id, :formated_mail_from, :age, :payment
+  attr_accessible :bp_pic_group_id, :content, :id, :mail_bcc, :mail_cc, :mail_from, :mail_from_name, :mail_send_status_type, :mail_status_type, :owner_id, :planned_setting_at, :send_end_at, :subject, :lock_version, :planned_setting_at_hour, :planned_setting_at_minute, :planned_setting_at_date, :delivery_mail_type, :biz_offer_id, :bp_member_id, :formated_mail_from, :age, :payment, :import_mail_match_id, :matching_way_type
 
   validates_presence_of :subject, :content, :mail_from_name, :mail_from, :planned_setting_at
 

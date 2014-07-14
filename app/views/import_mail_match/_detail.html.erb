@@ -7,7 +7,7 @@
             <% if action_name == 'show' %>
               <% if import_mail.bp_pic_id %>
                 <%= back_to_link("このメールに返信する",
-                                 { :controller => :delivery_mails, :action => :reply_mail_new, :import_mail_id => import_mail },
+                                 { :controller => :delivery_mails, :action => :reply_mail_new, :import_mail_id => import_mail, :import_mail_match_id => @import_mail_match.id, :matching_way_type => get_way_type(import_mail) },
                                  :class => "btn btn-primary btn-xs") %>
               <% else %>
                 <%= disp_wide_link('取引先/取引先担当作成',
