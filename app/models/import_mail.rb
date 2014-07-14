@@ -61,13 +61,14 @@ class ImportMail < ActiveRecord::Base
     self.in_reply_to = m.in_reply_to
   end
 
-  def detect_reply_mail(delivery_mail_id)
-    self.delivery_mail_id = delivery_mail_id
+  def detect_reply_mail(delivery_mail)
+    self.delivery_mail_id = delivery_mail.id
     self.biz_offer_flg = 0
     self.bp_member_flg = 0
-    SystemNotifier.send_info_mail("[GoldRush] 配信メールに対して返信がありました ID:#{delivery_mail_id}", <<EOS).deliver
+    self.matching_way_type = delivery_mail.matching_way_type
+    SystemNotifier.send_info_mail("[GoldRush] 配信メールに対して返信がありました ID:#{delivery_mail.id}", <<EOS).deliver
 
-#{SysConfig.get_system_notifier_url_prefix}/delivery_mails/#{delivery_mail_id}
+#{SysConfig.get_system_notifier_url_prefix}/delivery_mails/#{delivery_mail.id}
 
 件名: #{mail_subject}
 From: #{mail_sender_name}
@@ -82,18 +83,16 @@ EOS
     StringUtil.detect_regex(body, /.*GR-BIZ-ID:\d+-\d+/).first
   end
 
+  # TODO : reply_mode is unnecessary?
   def detect_delivery_mail(reply_mode)
     if dmt = self.in_reply_to && DeliveryMailTarget.where(message_id: self.in_reply_to).first
-        detect_reply_mail(dmt.delivery_mail_id)
+      detect_reply_mail(dmt.delivery_mail)
     elsif first = detect_gr_biz_id(mail_body)
-logger.info ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 1" + first
       return unless /.*GR-BIZ-ID:(\d+)-(\d+)/ =~ first
-logger.info ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 2"
       if Math.sqrt($1.to_i) % 1 == 0 && Math.sqrt($2.to_i) % 1 == 0
-logger.info ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 3"
         dmt = DeliveryMailTarget.find(Math.sqrt($2.to_i).to_i)
         self.in_reply_to = dmt.message_id
-        detect_reply_mail(dmt.delivery_mail_id)
+        detect_reply_mail(dmt.delivery_mail)
       else
         SystemLog.warn('import mail', "detect replay error invalid ID: #{$&}", self.inspect , 'import mail')
       end
