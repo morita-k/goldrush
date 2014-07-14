@@ -4,10 +4,24 @@
       <div class="col-md-6">
         <div class="panel panel-default">
           <div class="panel-heading">
-            <%= form_tag({:action => :destroy_mail, :id => import_mail}) do %>
-              <%= back_to_field_tag %>
-              <%= submit_tag 'このメールのマッチングをすべて削除する', :class => "btn btn-warning btn-xs" %>
+            <% if action_name == 'show' %>
+              <% if import_mail.bp_pic_id %>
+                <%= back_to_link("このメールに返信する",
+                                 { :controller => :delivery_mails, :action => :reply_mail_new, :import_mail_id => import_mail },
+                                 :class => "btn btn-primary btn-xs") %>
+              <% else %>
+                <%= disp_wide_link('取引先/取引先担当作成',
+                                   { :controller => :business_partner, :action => :new, :popup => 1, :import_mail_id => import_mail },
+                                   :class => "btn btn-primary btn-xs") %>
+              <% end %>
+              <br>
+            <% else %>
+              <%= form_tag({:action => :destroy_mail, :id => import_mail}) do %>
+                <%= back_to_field_tag %>
+                <%= submit_tag 'このメールのマッチングをすべて削除する', :class => "btn btn-warning btn-xs" %>
+              <% end %>
             <% end %>
+
             <%= getLongName('import_mails', 'mail_sender_name') %>: <%= import_mail.mail_sender_name %><br>
             <%= getLongName('import_mails', 'received_at') %>: <%= _time_long(import_mail.received_at) %><br>
             <%= getLongName('import_mails', 'mail_subject') %>: <%= import_mail.mail_subject %><br>
