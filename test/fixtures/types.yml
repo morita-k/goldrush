@@ -5521,7 +5521,7 @@ types_276:
 types_277:
   id: 277
   owner_id: 
-  type_section: "bp_pic_group_type"
+  type_section: "matching_way_type"
   type_key: "biz_offer"
   long_name: "案件"
   short_name: "案件"
@@ -5541,7 +5541,7 @@ types_277:
 types_278:
   id: 278
   owner_id: 
-  type_section: "bp_pic_group_type"
+  type_section: "matching_way_type"
   type_key: "bp_member"
   long_name: "人材"
   short_name: "人材"
@@ -5561,7 +5561,7 @@ types_278:
 types_279:
   id: 279
   owner_id: 
-  type_section: "bp_pic_group_type"
+  type_section: "matching_way_type"
   type_key: "other"
   long_name: "その他"
   short_name: "他"
