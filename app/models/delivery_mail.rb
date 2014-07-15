@@ -45,11 +45,11 @@ class DeliveryMail < ActiveRecord::Base
   end
 
   def biz_offer_mail?
-    self.bp_pic_group && self.bp_pic_group.bp_pic_group_type == 'biz_offer'
+    self.bp_pic_group && self.bp_pic_group.matching_way_type == 'biz_offer'
   end
 
   def bp_member_mail?
-    self.bp_pic_group && self.bp_pic_group.bp_pic_group_type == 'bp_member'
+    self.bp_pic_group && self.bp_pic_group.matching_way_type == 'bp_member'
   end
 
   def normalize_cc_bcc!
