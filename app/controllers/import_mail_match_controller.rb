@@ -20,7 +20,43 @@ class ImportMailMatchController < ApplicationController
   def show
     @import_mail_match = ImportMailMatch.find(params[:id], :conditions => "deleted = 0 ")
     @attachment_files  = AttachmentFile.get_attachment_files('import_mails', @import_mail_match.bp_member_mail_id)
-  rescue
+
+######## ATTENTION!!! #########
+    related_import_mails = ImportMail.where("created_at > ?", @import_mail_match.created_at)
+    related_delivery_mails = DeliveryMail.where("created_at > ?", @import_mail_match.created_at)
+######## ATTENTION!!! #########
+    # related_import_mails = ImportMail.where("import_mail_match_id = ? and created_at > ?", params[:id], @import_mail_match.created_at)
+    # related_delivery_mails = DeliveryMail.where("import_mail_match_id = ? and created_at > ?", params[:id], @import_mail_match.created_at)
+######## ATTENTION!!! #########
+
+    related_import_mail_data = related_import_mails.map do |import_mail|
+                                {
+                                  id:                import_mail.id,
+                                  mail_type:         'import_mail',
+                                  subject:           import_mail.mail_subject,
+                                  disp_time:         import_mail.received_at,
+                                  sender_name:       import_mail.mail_sender_name,
+                                  bp_pic_id:         import_mail.bp_pic_id,
+                                  matching_way_type: import_mail.matching_way_type
+                                }
+                              end
+
+    related_delivery_mail_data = related_delivery_mails.map do |delivery_mail|
+                                  {
+                                    id:                delivery_mail.id,
+                                    mail_type:         'delivery_mails',
+                                    subject:           delivery_mail.subject,
+                                    disp_time:         delivery_mail.send_end_at || delivery_mail.planned_setting_at ,
+                                    sender_name:       delivery_mail.mail_from_name,
+                                    matching_way_type: delivery_mail.matching_way_type
+                                  }
+                                end
+
+    @related_mail_data = (related_import_mail_data + related_delivery_mail_data).sort_by{ |mail_data| mail_data[:disp_time] }
+
+    @related_mails = (related_import_mails + related_delivery_mails).sort_by{ |mail| mail.created_at }
+  rescue => e
+    p ">>>>>>>>>>>>> [import_mail_match] error : #{e}"
     flash[:err] = "対象のマッチングデータが見つかりません。削除された可能性があります。"
     redirect_to params[:back_to]
   end

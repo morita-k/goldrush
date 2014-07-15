@@ -60,6 +60,8 @@
   <tr id="tr_detail_<%= @import_mail_match.id%>" class="detail_row">
     <%= render :partial => 'detail' %>
   </tr>
+
+  <%= render :partial => 'thread' %>
 </table>
 
 <% if !@attachment_files.blank? %>
