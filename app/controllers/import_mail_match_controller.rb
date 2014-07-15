@@ -17,6 +17,14 @@ class ImportMailMatchController < ApplicationController
     render :layout => false, :partial => 'detail'
   end
 
+  def thread_detail
+    case params[:mail_type]
+    when 'import_mail'   then @import_mail   = ImportMail.find(params[:mail_id])
+    when 'delivery_mail' then @delivery_mail = DeliveryMail.find(params[:mail_id])
+    end
+    render :layout => false, :partial => 'thread_detail'
+  end
+
   def show
     @import_mail_match = ImportMailMatch.find(params[:id], :conditions => "deleted = 0 ")
     @attachment_files  = AttachmentFile.get_attachment_files('import_mails', @import_mail_match.bp_member_mail_id)
@@ -44,7 +52,7 @@ class ImportMailMatchController < ApplicationController
     related_delivery_mail_data = related_delivery_mails.map do |delivery_mail|
                                   {
                                     id:                delivery_mail.id,
-                                    mail_type:         'delivery_mails',
+                                    mail_type:         'delivery_mail',
                                     subject:           delivery_mail.subject,
                                     disp_time:         delivery_mail.send_end_at || delivery_mail.planned_setting_at ,
                                     sender_name:       delivery_mail.mail_from_name,
