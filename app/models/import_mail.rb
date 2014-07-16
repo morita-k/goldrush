@@ -11,8 +11,17 @@ class ImportMail < ActiveRecord::Base
   has_many :tag_details, :foreign_key  => :parent_id, :conditions => "tag_details.tag_key = 'import_mails'"
   has_many :outflow_mails, :conditions => "outflow_mails.deleted = 0"
   has_many :delivery_mail_matches, :conditions => "delivery_mail_matches.deleted = 0"
-  has_many :auto_match_biz_offer_mails, :class_name => 'ImportMailMatch', :foreign_key => 'bp_member_mail_id', :conditions => 'import_mail_matches.created_at > DATE_SUB(CURTIME(),INTERVAL 3 DAY) and import_mail_matches.deleted = 0', :order => "mail_match_score desc"
-  has_many :auto_match_bp_member_mails, :class_name => 'ImportMailMatch', :foreign_key => 'biz_offer_mail_id', :conditions => 'import_mail_matches.created_at > DATE_SUB(CURTIME(),INTERVAL 3 DAY) and import_mail_matches.deleted = 0', :order => "mail_match_score desc"
+
+  # 一時的に参照元のimport_mail_match_idを保持(カラムとしてのimport_mail_match_idとは意味が違う)
+  attr_accessor :temp_imoprt_mail_match
+
+  def auto_match_biz_offer_mails
+    ImportMailMatch.where("deleted = 0 and bp_member_mail_id = ? and payment_gap > 0 and (age_gap is null or age_gap > 0) and subject_tag_match_flg > 0", self.id).order("received_at desc").limit(20)
+  end
+
+  def auto_match_bp_member_mails
+    ImportMailMatch.where("deleted = 0 and biz_offer_mail_id = ? and payment_gap > 0 and (age_gap is null or age_gap > 0) and subject_tag_match_flg > 0", self.id).order("received_at desc").limit(20)
+  end
 
   def ImportMail.tryConv(map, header_key, &block)
     begin

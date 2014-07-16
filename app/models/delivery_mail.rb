@@ -28,20 +28,22 @@ class DeliveryMail < ActiveRecord::Base
     self.delivery_mail_type == "group"
   end
 
-  def filtered_matches
-    delivery_mail_matches.map{|x| x.import_mail}.select{|im| matching_mail_filter(im)}.sort{|a,b| b.received_at - a.received_at}
+  def filtered_matches_in
+    [] if self.payment.blank? || self.age.blank?
+    if self.biz_offer_mail?
+      w = "delivery_mail_matches.deleted = 0 and payment <= ? and age <= ?"
+    else 
+      w = "delivery_mail_matches.deleted = 0 and payment >= ? and age >= ?"
+    end
+    DeliveryMailMatch.joins(:import_mail).where(w, payment, age)
   end
 
-  def matching_mail_filter(im)
-    return false if self.payment.blank?
-    return false if self.age.blank?
-    return false if im.payment.blank?
-    return false if im.age.blank?
-    if self.biz_offer_mail?
-      im.payment <= self.payment && im.age <= self.age
-    elsif self.bp_member_mail?
-      im.payment >= self.payment && im.age >= self.age
-    end
+  def filtered_matches
+    filtered_matches_in.order("received_at desc").limit(20).map{|x| x.import_mail}
+  end
+
+  def filtered_matches_count
+    filtered_matches_in.count
   end
 
   def biz_offer_mail?
