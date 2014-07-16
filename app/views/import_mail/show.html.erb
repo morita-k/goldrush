@@ -1,12 +1,12 @@
 
 <% if @import_mail.auto_match_biz_offer_mails.exists? %> 
-<% @import_mails = @import_mail.auto_match_biz_offer_mails.map{|x| x.biz_offer_mail} %>
+<% @import_mails = @import_mail.auto_match_biz_offer_mails.map{|x| matched_import_mail(x, x.biz_offer_mail)} %>
 <%= accordion_around_h2("自動マッチング候補案件メール一覧", "biz", @import_mails.empty?) do %>
   <%= render :partial => 'import_mail/list' %>
 <% end %>
 <% end %>
 <% if @import_mail.auto_match_bp_member_mails.exists? %> 
-<% @import_mails = @import_mail.auto_match_bp_member_mails.map{|x| x.bp_member_mail} %>
+<% @import_mails = @import_mail.auto_match_bp_member_mails.map{|x| matched_import_mail(x, x.bp_member_mail)} %>
 <%= accordion_around_h2("自動マッチング候補人材メール一覧", "bp", @import_mails.empty?) do %>
   <%= render :partial => 'import_mail/list' %>
 <% end %>

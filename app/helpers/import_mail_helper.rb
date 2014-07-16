@@ -143,5 +143,10 @@ module ImportMailHelper
   def order_select_conditions
     [["新着順", "id"],["単価高い順", "payment desc"],["単価安い順", "payment"],["年齢高い順", "age desc"],["年齢低い順","age"]]
   end
+
+  def matched_import_mail(import_mail_match, import_mail)
+    import_mail.temp_imoprt_mail_match = import_mail_match
+    import_mail
+  end
 end
 
