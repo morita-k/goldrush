@@ -1,6 +1,6 @@
 <table class="show_table">
 <tr><th>グループ</th><td><%= @bp_pic_group.bp_pic_group_name%></td></tr>
-<tr><th>グループ区分</th><td><%= @bp_pic_group.bp_pic_group_type_name %></td></tr>
+<tr><th>グループ区分</th><td><%= @bp_pic_group.matching_way_type_name %></td></tr>
 <% unless @bp_pic_group.mail_template_id.blank? %>
 <tr><th>メールテンプレート</th><td><%= get_mail_template_name.mail_template_name%></td></tr>
 <% end %>
