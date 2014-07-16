@@ -61,13 +61,15 @@ class ImportMail < ActiveRecord::Base
     self.in_reply_to = m.in_reply_to
   end
 
-  def detect_reply_mail(delivery_mail_id)
-    self.delivery_mail_id = delivery_mail_id
+  def detect_reply_mail(delivery_mail)
+    self.delivery_mail_id = delivery_mail.id
     self.biz_offer_flg = 0
     self.bp_member_flg = 0
-    SystemNotifier.send_info_mail("[GoldRush] 配信メールに対して返信がありました ID:#{delivery_mail_id}", <<EOS).deliver
+    self.matching_way_type = delivery_mail.matching_way_type
+    self.import_mail_match_id = delivery_mail.import_mail_match_id
+    SystemNotifier.send_info_mail("[GoldRush] 配信メールに対して返信がありました ID:#{delivery_mail.id}", <<EOS).deliver
 
-#{SysConfig.get_system_notifier_url_prefix}/delivery_mails/#{delivery_mail_id}
+#{SysConfig.get_system_notifier_url_prefix}/delivery_mails/#{delivery_mail.id}
 
 件名: #{mail_subject}
 From: #{mail_sender_name}
@@ -82,18 +84,16 @@ EOS
     StringUtil.detect_regex(body, /.*GR-BIZ-ID:\d+-\d+/).first
   end
 
+  # TODO : reply_mode is unnecessary?
   def detect_delivery_mail(reply_mode)
     if dmt = self.in_reply_to && DeliveryMailTarget.where(message_id: self.in_reply_to).first
-        detect_reply_mail(dmt.delivery_mail_id)
+      detect_reply_mail(dmt.delivery_mail)
     elsif first = detect_gr_biz_id(mail_body)
-logger.info ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 1" + first
       return unless /.*GR-BIZ-ID:(\d+)-(\d+)/ =~ first
-logger.info ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 2"
       if Math.sqrt($1.to_i) % 1 == 0 && Math.sqrt($2.to_i) % 1 == 0
-logger.info ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 3"
         dmt = DeliveryMailTarget.find(Math.sqrt($2.to_i).to_i)
         self.in_reply_to = dmt.message_id
-        detect_reply_mail(dmt.delivery_mail_id)
+        detect_reply_mail(dmt.delivery_mail)
       else
         SystemLog.warn('import mail', "detect replay error invalid ID: #{$&}", self.inspect , 'import mail')
       end
@@ -289,7 +289,7 @@ logger.info ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 3"
   def detect_payments_in(body)
     result_payments = StringUtil.detect_payments(body).map{|x| x.split("万")[0].to_f }.sort
     #案件だったら最大単価を取得、人材だったら最小単価を取得する。
-    self.biz_offer_flg == 1 ? result_payments.reverse.first : result_payments.first
+    self.biz_offer_mail? ? result_payments.reverse.first : result_payments.first
   end
 
   def detect_nearest_station
@@ -321,7 +321,7 @@ logger.info ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 3"
 
   # 人材判定用特別単語でbodyを検索して1件でもhitすれば、人材メールと判断
   def analyze_bp_member_flg(body)
-    if biz_offer_flg == 1
+    if biz_offer_mail?
       SpecialWord.bp_member_words.each do |word|
         unless StringUtil.detect_regex(body, word).empty?
           self.biz_offer_flg = 0
@@ -543,6 +543,14 @@ logger.info ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 3"
     plural_flg == 1
   end
 
+  def biz_offer_mail?
+    biz_offer_flg == 1
+  end
+
+  def bp_member_mail?
+    bp_member_flg == 1
+  end
+
 private
   def ImportMail.get_encode_body(mail, body)
     if mail.content_transfer_encoding == 'ISO-2022-JP'
@@ -555,17 +563,16 @@ private
     end
   end
 
-CTYPE_TO_EXT = {
-  'image/jpeg' => 'jpeg',
-  'image/gif'  => 'gif',
-  'image/png'  => 'png',
-  'image/tiff' => 'tiff',
-  'application/vnd.ms-excel' => 'xls',
-  'application/msword' => 'doc'
-}
+  CTYPE_TO_EXT = {
+    'image/jpeg' => 'jpeg',
+    'image/gif'  => 'gif',
+    'image/png'  => 'png',
+    'image/tiff' => 'tiff',
+    'application/vnd.ms-excel' => 'xls',
+    'application/msword' => 'doc'
+  }
 
-def ext( mail )
-  CTYPE_TO_EXT[mail.content_type] || 'txt'
-end
-
+  def ext( mail )
+    CTYPE_TO_EXT[mail.content_type] || 'txt'
+  end
 end
