@@ -321,7 +321,6 @@ EOS
   def reply_mail_create
     @import_mail = ImportMail.find(params[:import_mail_id])
     @delivery_mail = DeliveryMail.new(params[:delivery_mail])
-    @delivery_mail.matching_way_type = 'other'
     @delivery_mail.delivery_mail_type = "instant"
     @delivery_mail.setup_planned_setting_at(current_user.zone_now)
     @delivery_mail.mail_status_type = 'unsend'
