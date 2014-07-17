@@ -68,4 +68,13 @@
   <%= render :partial => 'attachment_file/list' %>
 <% end %>
 
+<%= accordion_around_h2("コメント一覧", "1", @remarks.empty?) do %>
+  <%= render :partial => 'remarks/list', :locals => {:remark_key => "import_mail_match", :remark_target_id => @import_mail_match} %>
+<% end %>
+
+<div class="submit_box">
+  <%= back_to_link 'コメント追加', {:controller => :remarks, :action => :new, :remark_target_id => @import_mail_match, :remark_key => "import_mail_match"}, {:class => "btn btn-info btn-medium"} %>
+</div>
+
+
 <%= render :partial => 'js' %>
