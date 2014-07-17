@@ -14,7 +14,7 @@
                             :action               => :reply_mail_new,
                             :import_mail_id       => @import_mail.id,
                             :import_mail_match_id => @import_mail.import_mail_match_id,
-                            :matching_way_type    => get_way_type(@import_mail),
+                            :matching_way_type    => @import_mail.matching_way_type,
                             :back_to              => params[:back_to] },
                           :class => "btn btn-primary btn-xs") %>
             <% else %>
