@@ -72,7 +72,6 @@ class ImportMail < ActiveRecord::Base
 
   def detect_reply_mail(delivery_mail)
     self.delivery_mail_id = delivery_mail.id
-    self.matching_way_type = delivery_mail.matching_way_type
     self.biz_offer_flg = 0
     self.bp_member_flg = 0
     self.matching_way_type = delivery_mail.matching_way_type
