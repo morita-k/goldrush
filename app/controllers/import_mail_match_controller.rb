@@ -17,10 +17,48 @@ class ImportMailMatchController < ApplicationController
     render :layout => false, :partial => 'detail'
   end
 
+  def thread_detail
+    case params[:mail_type]
+    when 'import_mail'   then @import_mail   = ImportMail.find(params[:mail_id])
+    when 'delivery_mail' then @delivery_mail = DeliveryMail.find(params[:mail_id])
+    end
+    render :layout => false, :partial => 'thread_detail'
+  end
+
   def show
     @import_mail_match = ImportMailMatch.find(params[:id], :conditions => "deleted = 0 ")
     @attachment_files  = AttachmentFile.get_attachment_files('import_mails', @import_mail_match.bp_member_mail_id)
-  rescue
+    @remarks = Remark.get_all('import_mail_match', params[:id])
+
+    related_import_mails = ImportMail.where("import_mail_match_id = ? and created_at > ?", params[:id], @import_mail_match.created_at)
+    related_delivery_mails = DeliveryMail.where("import_mail_match_id = ? and created_at > ?", params[:id], @import_mail_match.created_at)
+
+    related_import_mails_data = related_import_mails.map do |import_mail|
+                                  {
+                                    id:                import_mail.id,
+                                    mail_type:         'import_mail',
+                                    subject:           import_mail.mail_subject,
+                                    disp_time:         import_mail.received_at,
+                                    sender_name:       import_mail.mail_sender_name,
+                                    bp_pic_id:         import_mail.bp_pic_id,
+                                    matching_way_type: import_mail.matching_way_type
+                                  }
+                                end
+
+    related_delivery_mails_data = related_delivery_mails.map do |delivery_mail|
+                                    {
+                                      id:                delivery_mail.id,
+                                      mail_type:         'delivery_mail',
+                                      subject:           delivery_mail.subject,
+                                      disp_time:         delivery_mail.send_end_at || delivery_mail.planned_setting_at,
+                                      sender_name:       delivery_mail.mail_from_name,
+                                      matching_way_type: delivery_mail.matching_way_type
+                                    }
+                                  end
+
+    @related_mails_data = (related_import_mails_data + related_delivery_mails_data).sort_by{ |mail_data| mail_data[:disp_time] }
+  rescue => e
+    p ">>>>>>>>>>>>> [import_mail_match] error : #{e}"
     flash[:err] = "対象のマッチングデータが見つかりません。削除された可能性があります。"
     redirect_to params[:back_to]
   end

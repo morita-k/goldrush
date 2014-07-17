@@ -2,10 +2,8 @@
   <div>処理が完了しました</div>
 <% end %>
 
+<div>「閉じる」をクリックすると元画面が再読込されます</div>
+
 <div style="text-align:center">
-<% if @input_tag %>
-  <%= @input_tag %>
-<% else %>
-  <input type="button" value="閉じる" onclick="window.close();return;" style="margin-top:2em;margin-bottom:2em;width:8em;">
-<% end%>
+  <input type="button" value="閉じる" onclick="window.opener.location.reload();window.close();return;" style="margin-top:2em;margin-bottom:2em;width:8em;">
 </div>

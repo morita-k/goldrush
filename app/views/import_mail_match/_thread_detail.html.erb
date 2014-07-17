@@ -1,0 +1,67 @@
+<td colspan=10>
+  <div class="row">
+    <% if (@import_mail || @delivery_mail).matching_way_type == 'bp_member' %>
+      <div class="col-md-6"></div>
+    <% end %>
+
+    <% if @import_mail %>
+      <div class="col-md-6">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <% if @import_mail.bp_pic_id %>
+              <%= link_to("このメールに返信する",
+                          { :controller           => :delivery_mails,
+                            :action               => :reply_mail_new,
+                            :import_mail_id       => @import_mail.id,
+                            :import_mail_match_id => @import_mail.import_mail_match_id,
+                            :matching_way_type    => get_way_type(@import_mail),
+                            :back_to              => params[:back_to] },
+                          :class => "btn btn-primary btn-xs") %>
+            <% else %>
+              <%= disp_wide_link('取引先/取引先担当作成',
+                                 { :controller => :business_partner, :action => :new, :popup => 1, :import_mail_id => @import_mail },
+                                 :class => "btn btn-primary btn-xs") %>
+            <% end %>
+            <br>
+            <%= getLongName('import_mails', 'mail_sender_name') %>: <%= @import_mail.mail_sender_name %><br>
+            <%= getLongName('import_mails', 'received_at') %>:      <%= _time_long(@import_mail.received_at) %><br>
+            <%= getLongName('import_mails', 'mail_subject') %>:     <%= @import_mail.mail_subject %><br>
+          </div>
+          <div class="panel-body">
+            <%=simple_format (@import_mail.mail_body) %>
+          </div>
+        </div>
+      </div>
+    <% elsif @delivery_mail %>
+      <div class="col-md-6">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <%= link_to("このメールから対象者へ返信する",
+                        { :controller           => :delivery_mails,
+                          :action               => :reply_mail_new,
+                          :delivery_mail_id     => @delivery_mail.id,
+                          :import_mail_match_id => @delivery_mail.import_mail_match_id,
+                          :matching_way_type    => @delivery_mail.matching_way_type,
+                          :back_to              => params[:back_to] },
+                        :class => "btn btn-primary btn-xs") %>
+            <br>
+            <%= getLongName('delivery_mails', 'mail_from_name') %>:       <%= @delivery_mail.mail_from_name %><br>
+            <% if @delivery_mail.send_end_at %>
+              <%= getLongName('delivery_mails', 'send_end_at') %>:        <%= _time_long(@delivery_mail.send_end_at) %><br>
+            <% else %>
+              <%= getLongName('delivery_mails', 'planned_setting_at') %>: <%= _time_long(@delivery_mail.planned_setting_at) %><br>
+            <% end %>
+            <%= getLongName('delivery_mails', 'subject') %>:              <%= @delivery_mail.subject %><br>
+          </div>
+          <div class="panel-body">
+            <%=simple_format (@delivery_mail.content) %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
+    <% if (@import_mail || @delivery_mail).matching_way_type == 'biz_offer' %>
+      <div class="col-md-6"></div>
+    <% end %>
+  </div>
+</td>

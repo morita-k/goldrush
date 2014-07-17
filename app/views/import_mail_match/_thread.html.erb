@@ -1,0 +1,32 @@
+<% @related_mails_data.each do |mail_data| %>
+  <tr id="tr_thread_<%= mail_data[:mail_type] %>_<%= mail_data[:id] %>" class="thread_row" mail_id="<%= mail_data[:id] %>" mail_type="<%= mail_data[:mail_type] %>">
+    <td colspan=10>
+      <div class="row">
+        <% if mail_data[:matching_way_type] == 'bp_member' %>
+          <div class="col-md-5"></div>
+          <div class="col-md-2"><%=_timetoddmmhhmm(mail_data[:disp_time]) %></div>
+          <% if mail_data[:mail_type] == 'import_mail' %>
+            <div class="col-md-3"><%= back_to_link(mail_data[:subject], :controller => :import_mail, :action => :show, :id => mail_data[:id]) %></div>
+            <div class="col-md-2"><%= mail_data[:bp_pic_id] ? back_to_link(mail_data[:sender_name], :controller => :bp_pic, :action => :show, :id => mail_data[:bp_pic_id]) : mail_data[:sender_name] %></div>
+          <% else #mail_data[:mail_type] == 'delivery_mail' %>
+            <div class="col-md-3"><%= back_to_link(mail_data[:subject], :controller => :delivery_mails, :action => :show, :id => mail_data[:id]) %></div>
+            <div class="col-md-2"><%= mail_data[:sender_name] %></div>
+          <% end %>
+        <% else #mail_data[:matching_way_type] == 'biz_offer' %>
+          <% if mail_data[:mail_type] == 'import_mail' %>
+            <div class="col-md-2"><%= mail_data[:bp_pic_id] ? back_to_link(mail_data[:sender_name], :controller => :bp_pic, :action => :show, :id => mail_data[:bp_pic_id]) : mail_data[:sender_name] %></div>
+            <div class="col-md-3"><%= back_to_link(mail_data[:subject], :controller => :import_mail, :action => :show, :id => mail_data[:id]) %></div>
+          <% else #mail_data[:mail_type] == 'delivery_mail' %>
+            <div class="col-md-2"><%= mail_data[:sender_name] %></div>
+            <div class="col-md-3"><%= back_to_link(mail_data[:subject], :controller => :delivery_mails, :action => :show, :id => mail_data[:id]) %></div>
+          <% end %>
+          <div class="col-md-2"><%=_timetoddmmhhmm(mail_data[:disp_time]) %></div>
+          <div class="col-md-5"></div>
+        <% end %>
+      </div>
+    </td>
+  </tr>
+
+  <tr id="tr_thread_detail_<%= mail_data[:mail_type] %>_<%= mail_data[:id] %>" class="detail_row" style="display:none">
+  </tr>
+<% end %>

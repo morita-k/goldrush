@@ -21,9 +21,9 @@ class BpPicGroupsControllerTest < ActionController::TestCase
 
   test "should create bp_pic_group" do
     assert_difference('BpPicGroup.count') do
-      post :create, bp_pic_group: { bp_pic_group_name: "my test group!", bp_pic_group_type: "bp_member", memo: "my test group memo" }, id: @bp_pic_group.id, back_to: "/bp_pic_groups"
+      post :create, bp_pic_group: { bp_pic_group_name: "my test group!", matching_way_type: "bp_member", memo: "my test group memo" }, id: @bp_pic_group.id, back_to: "/bp_pic_groups"
     end
- 
+
     assert_redirected_to "/bp_pic_groups"
   end
 
@@ -45,23 +45,23 @@ class BpPicGroupsControllerTest < ActionController::TestCase
   test "should destroy bp_pic_group" do
     delete :destroy, id: @bp_pic_group
     assert(BpPicGroup.where(id: @bp_pic_group, deleted: 0).empty?)
-    
+
     assert_redirected_to bp_pic_groups_path
   end
-  
+
   test "should get copy(new)" do
     get :new, src_id: 1
-    
+
     assert_response :success
     assert !@bp_pic_group.bp_pic_group_name.blank?, "bp_pic_group_name is blank"
     assert !@bp_pic_group.memo.blank?, "memo is blank"
   end
-  
+
   test "should copy(create) bp_pic_group" do
     assert_difference('BpPicGroup.count') do
-      post :create, src_id: 1,  bp_pic_group: { bp_pic_group_name: @bp_pic_group.add_copy_string, bp_pic_group_type: @bp_pic_group.bp_pic_group_type, memo: @bp_pic_group.memo },  back_to: "/bp_pic_groups"
+      post :create, src_id: 1,  bp_pic_group: { bp_pic_group_name: @bp_pic_group.add_copy_string, matching_way_type: @bp_pic_group.matching_way_type, memo: @bp_pic_group.memo },  back_to: "/bp_pic_groups"
     end
-    
+
     assert_match(/のコピー/, @bp_pic_group.bp_pic_group_name)
     assert_redirected_to "/bp_pic_groups"
   end

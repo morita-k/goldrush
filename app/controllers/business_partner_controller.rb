@@ -4,7 +4,7 @@ class BusinessPartnerController < ApplicationController
     list
     render :action => 'list'
   end
-  
+
   # GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)
 #  verify :method => :post, :only => [ :destroy, :create, :update ],
 #         :redirect_to => { :action => :list }
@@ -36,7 +36,7 @@ class BusinessPartnerController < ApplicationController
 
   def make_conditions
     cond, incl = _make_conditions
-    
+
     if !(session[:business_partner_search][:self_flg]).blank?
       cond[0] += " and self_flg = 1"
     end
@@ -53,7 +53,7 @@ class BusinessPartnerController < ApplicationController
     elsif params[:clear_button]
       session[:business_partner_search] = {}
     end
-    
+
     cond, incl = make_conditions
     #@business_partner_pages, @business_partners = paginate(:business_partners, cond)
     @business_partners = BusinessPartner.includes(incl).where(cond).order("updated_at desc").page(params[:page]).per(current_user.per_page)
@@ -65,7 +65,7 @@ class BusinessPartnerController < ApplicationController
     @businesses = Business.find(:all, :conditions => ["deleted = 0 and eubp_id = ?", @business_partner], :order => "id desc", :limit => 50)
     @biz_offers = BizOffer.find(:all, :conditions => ["deleted = 0 and business_partner_id = ?", @business_partner], :order => "id desc", :limit => 50)
     @bp_members = BpMember.find(:all, :conditions => ["deleted = 0 and business_partner_id = ?", @business_partner], :order => "id desc", :limit => 50)
-    @remarks = Remark.find(:all, :conditions => ["deleted = 0 and remark_key = ? and remark_target_id = ?", 'business_partners', params[:id]])
+    @remarks = Remark.get_all('business_partners', params[:id])
   end
 
   def new
@@ -89,7 +89,7 @@ class BusinessPartnerController < ApplicationController
   def create
     @bp_pic = BpPic.new(params[:bp_pic])
     ActiveRecord::Base.transaction do
-      
+
       if params[:business_partner][:id].blank?
         @business_partner = BusinessPartner.new(params[:business_partner])
         @business_partner.basic_contract_first_party_status_type ||= 'none'
@@ -126,11 +126,11 @@ class BusinessPartnerController < ApplicationController
       if params[:photo_id]
         Photo.update_bp_pic(@bp_pic.id, params[:photo_id])
       end
-      
+
     end # transaction
-    
+
     flash_notice = 'BusinessPartner was successfully created.'
-    
+
     if popup?
       # ポップアップウィンドウの場合、共通リザルト画面を表示する
       flash.now[:notice] = flash_notice
@@ -177,10 +177,10 @@ class BusinessPartnerController < ApplicationController
     @business_partner.deleted_at = Time.now
     set_user_column @business_partner
     @business_partner.save!
-    
+
     redirect_to(back_to || {:action => 'list'})
   end
-  
+
   def space_trim(bp_name)
     bp_name_list = bp_name.split(/[\s　]/)
     trimed_bp_name = ""
@@ -189,7 +189,7 @@ class BusinessPartnerController < ApplicationController
     end
     trimed_bp_name
   end
-  
+
   def space_unify(bp_pic_name)
     bp_name_list = bp_pic_name.split(/[　]/)
     trimed_bp_name = ""
@@ -216,7 +216,7 @@ class BusinessPartnerController < ApplicationController
     flash[:notice] = 'インポートが完了しました'
     redirect_to(back_to || {:action => :list})
   end
-  
+
   def upload_google_csv
     unless file = params[:google_csv_upload_file]
       flash[:notice] = 'ファイルを選択してください'
@@ -233,7 +233,7 @@ class BusinessPartnerController < ApplicationController
     end
     redirect_to(back_to || {:action => :list})
   end
-  
+
   def change_star
     business_partner = BusinessPartner.find(params[:id])
     if business_partner.starred == 1
@@ -260,11 +260,11 @@ class BusinessPartnerController < ApplicationController
         @business_partner.save!
       end
       flash[:notice] = 'BusinessPartner was successfully updated.'
-    
+
     rescue ActiveRecord::RecordInvalid
       flash[:err] = '更新に失敗しました'
     end
-    
+
     redirect_to( params[:back_to] || {controller: 'bp_pic', action: 'index'})
   end
 end

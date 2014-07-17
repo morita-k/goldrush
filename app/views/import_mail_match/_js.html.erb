@@ -40,13 +40,43 @@ $(function(){
         detail.css("display", "none");
     }
   });
+
+  $('.head_row').click(function(){
+    var detail = $("#tr_main_detail");
+    if(detail.css("display") == "none") {
+      detail.css("display", "");
+    }else{
+      detail.css("display", "none");
+    }
+  });
+
+  $('.thread_row').click(function(){
+    var mail_id = $(this).attr("mail_id");
+    var mail_type = $(this).attr("mail_type");
+    var detail = $("#tr_thread_detail_" + mail_type + '_' + mail_id);
+    if(detail.css("display") == "none") {
+      if (detail.html().trim() == "") {
+        $.get('<%= url_for :controller => :import_mail_match, :action => :thread_detail %>?mail_id=' + mail_id + '&mail_type=' + mail_type + '&back_to=<%= request_url %>',
+          function(_thread_detail){return function(data) {
+            console.log(_thread_detail);
+            _thread_detail.html(data);
+            _thread_detail.css("display", "");
+          }}(detail));
+      }else{
+        detail.css("display", "");
+      }
+    }else{
+        detail.css("display", "none");
+    }
+  });
+
   $('.destroy_btn').click(function(){
     if(confirm("自動マッチングデータを削除します。よろしいですか？")){
       $.post("<%= url_for :controller => :import_mail_match, :action => :destroy %>/" + $(this).attr("import_mail_match_id"), {}, function(d){eval(d);});
     }
     return false;
   });
-        
+
 });
 
 // -->

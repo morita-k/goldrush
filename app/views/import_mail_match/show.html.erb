@@ -8,7 +8,7 @@
 </div>
 
 <table class="list_table table-bordered table-hover">
-  <tr class="head_row_auto">
+  <tr class="head_row">
     <td rowspan=2 sytle="text-align:center">
       <%= star_links @import_mail_match %>&nbsp;<span title="マッチングスコア" class='label label-default'><%= @import_mail_match.mail_match_score %></span>
     </td>
@@ -37,7 +37,7 @@
     <td><%=_time @import_mail_match.biz_offer_mail.received_at %></td>
   </tr>
 
-  <tr class="head_row_auto">
+  <tr class="head_row">
     <td>
       <div class="overflow_hidden" style="width:100%;">
         <%= star_links @import_mail_match.bp_member_mail%>
@@ -57,11 +57,23 @@
     <td><%=_time @import_mail_match.bp_member_mail.received_at %></td>
   </tr>
 
-  <tr id="tr_detail_<%= @import_mail_match.id%>" class="detail_row">
+  <tr id="tr_main_detail" class="detail_row">
     <%= render :partial => 'detail' %>
   </tr>
+
+  <%= render :partial => 'thread' %>
 </table>
 
 <% if !@attachment_files.blank? %>
   <%= render :partial => 'attachment_file/list' %>
 <% end %>
+
+<%= accordion_around_h2("コメント一覧", "1", @remarks.empty?) do %>
+  <%= render :partial => 'remarks/list' %>
+<% end %>
+
+<div class="submit_box">
+  <%= back_to_link('コメント追加', new_remark_path({:remark_key => "import_mail_match", :remark_target_id => @import_mail_match.id}), {:class => "btn btn-info btn-medium"}) %>
+</div>
+
+<%= render :partial => 'js' %>

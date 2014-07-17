@@ -110,13 +110,14 @@ EOS
   # POST /delivery_mails
   # POST /delivery_mails.json
   def create
-    unless params[:bp_pic_ids].blank?
+    if params[:bp_pic_ids].present?
       return contact_mail_create(params[:bp_pic_ids].split.uniq)
     end
-    if params[:import_mail_id]
+    if params[:source_bp_pic_id].present?
       return reply_mail_create
     end
     @delivery_mail = DeliveryMail.new(params[:delivery_mail])
+    @delivery_mail.matching_way_type = @delivery_mail.bp_pic_group.matching_way_type
     @delivery_mail.delivery_mail_type = "group"
     @delivery_mail.perse_planned_setting_at(current_user) # zone
 
@@ -298,14 +299,25 @@ EOS
 
   def reply_mail_new
     @bp_pics = []
-    @import_mail = ImportMail.find(params[:import_mail_id])
+    source_subject, source_content, @source_bp_pic_id, @source_message_id =
+      if params[:import_mail_id]
+        source_im = ImportMail.find(params[:import_mail_id])
+        [source_im.mail_subject, source_im.mail_body, source_im.bp_pic_id, source_im.message_id]
+      elsif params[:delivery_mail_id]
+        source_dm = DeliveryMail.find(params[:delivery_mail_id])
+        # こちらから送った配信メールに返信する形で配信するのは、現状、自動マッチングからのみの機能なので、
+        # 配信メールの持つ配信メール対象は一つしかない想定
+        source_dmt = source_dm.delivery_mail_targets.first
+        [source_dm.subject, source_dm.content, source_dmt.bp_pic_id, source_dmt.message_id]
+      end
+
     @delivery_mail = DeliveryMail.new
     @delivery_mail.mail_bcc = current_user.email
 
     new_proc
 
-    @delivery_mail.subject = "Re: " + @import_mail.mail_subject
-    @delivery_mail.content = <<EOS + "\n\n\n" + @import_mail.mail_body.lines.map{|x| "> " + x}.join
+    @delivery_mail.subject = "Re: #{source_subject}"
+    @delivery_mail.content = <<EOS + "\n\n\n" + source_content.lines.map{|x| "> " + x}.join
 %%business_partner_name%%
 %%bp_pic_name%%　様
 EOS
@@ -318,12 +330,12 @@ EOS
   end
 
   def reply_mail_create
-    @import_mail = ImportMail.find(params[:import_mail_id])
     @delivery_mail = DeliveryMail.new(params[:delivery_mail])
     @delivery_mail.delivery_mail_type = "instant"
     @delivery_mail.setup_planned_setting_at(current_user.zone_now)
     @delivery_mail.mail_status_type = 'unsend'
     set_user_column @delivery_mail
+
     respond_to do |format|
       begin
         ActiveRecord::Base.transaction do
@@ -335,8 +347,8 @@ EOS
           #配信メール対象作成
           delivery_mail_target = DeliveryMailTarget.new
           delivery_mail_target.delivery_mail_id = @delivery_mail.id
-          delivery_mail_target.bp_pic_id = @import_mail.bp_pic_id
-          delivery_mail_target.in_reply_to = @import_mail.message_id
+          delivery_mail_target.bp_pic_id = params[:source_bp_pic_id]
+          delivery_mail_target.in_reply_to = params[:source_message_id]
           set_user_column(delivery_mail_target)
           delivery_mail_target.save!
         end #transaction

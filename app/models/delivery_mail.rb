@@ -12,7 +12,7 @@ class DeliveryMail < ActiveRecord::Base
   has_many :import_mails, :conditions => "import_mails.deleted = 0"
   has_many :delivery_mail_matches, :conditions => "delivery_mail_matches.deleted = 0"
   belongs_to :bp_pic_group
-  attr_accessible :bp_pic_group_id, :content, :id, :mail_bcc, :mail_cc, :mail_from, :mail_from_name, :mail_send_status_type, :mail_status_type, :owner_id, :planned_setting_at, :send_end_at, :subject, :lock_version, :planned_setting_at_hour, :planned_setting_at_minute, :planned_setting_at_date, :delivery_mail_type, :biz_offer_id, :bp_member_id, :formated_mail_from, :age, :payment
+  attr_accessible :bp_pic_group_id, :content, :id, :mail_bcc, :mail_cc, :mail_from, :mail_from_name, :mail_send_status_type, :mail_status_type, :owner_id, :planned_setting_at, :send_end_at, :subject, :lock_version, :planned_setting_at_hour, :planned_setting_at_minute, :planned_setting_at_date, :delivery_mail_type, :biz_offer_id, :bp_member_id, :formated_mail_from, :age, :payment, :import_mail_match_id, :matching_way_type
 
   validates_presence_of :subject, :content, :mail_from_name, :mail_from, :planned_setting_at
 
@@ -28,28 +28,30 @@ class DeliveryMail < ActiveRecord::Base
     self.delivery_mail_type == "group"
   end
 
-  def filtered_matches
-    delivery_mail_matches.map{|x| x.import_mail}.select{|im| matching_mail_filter(im)}.sort{|a,b| b.received_at - a.received_at}
+  def filtered_matches_in
+    [] if self.payment.blank? || self.age.blank?
+    if self.biz_offer_mail?
+      w = "delivery_mail_matches.deleted = 0 and payment <= ? and age <= ?"
+    else 
+      w = "delivery_mail_matches.deleted = 0 and payment >= ? and age >= ?"
+    end
+    DeliveryMailMatch.joins(:import_mail).where(w, payment, age)
   end
 
-  def matching_mail_filter(im)
-    return false if self.payment.blank?
-    return false if self.age.blank?
-    return false if im.payment.blank?
-    return false if im.age.blank?
-    if self.biz_offer_mail?
-      im.payment <= self.payment && im.age <= self.age
-    elsif self.bp_member_mail?
-      im.payment >= self.payment && im.age >= self.age
-    end
+  def filtered_matches
+    filtered_matches_in.order("received_at desc").limit(20).map{|x| x.import_mail}
+  end
+
+  def filtered_matches_count
+    filtered_matches_in.count
   end
 
   def biz_offer_mail?
-    self.bp_pic_group && self.bp_pic_group.bp_pic_group_type == 'biz_offer'
+    self.bp_pic_group && self.bp_pic_group.matching_way_type == 'biz_offer'
   end
 
   def bp_member_mail?
-    self.bp_pic_group && self.bp_pic_group.bp_pic_group_type == 'bp_member'
+    self.bp_pic_group && self.bp_pic_group.matching_way_type == 'bp_member'
   end
 
   def normalize_cc_bcc!

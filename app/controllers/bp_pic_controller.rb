@@ -20,39 +20,39 @@ class BpPicController < ApplicationController
     incl = [:business_partner]
     sql = "business_partners.deleted = 0 and bp_pics.deleted = 0"
     order_by = ""
-    
+
     if !(x = session[:bp_pic_search][:sales_code]).blank?
       sql += " and (business_partner_code = ? or sales_code = ?)"
       param << x << x
     end
-    
+
     if !(x = session[:bp_pic_search][:business_partner_name]).blank?
       sql += " and (business_partner_name like ? or business_partner_name_kana like ?)"
       param << "%#{x}%" << "%#{x}%"
     end
-    
+
     if !(x = session[:bp_pic_search][:bp_pic_name]).blank?
       sql += " and (bp_pic_name like ? or bp_pic_name_kana like ? or bp_pic_short_name like ?)"
       param << "%#{x}%" << "%#{x}%" << "%#{x}%"
     end
-    
+
     if !(x = session[:bp_pic_search][:tel]).blank?
       x = x.gsub("-","")
       sql += " and (tel_direct like ? or tel_mobile like ?)"
       param << "%#{x}%" << "%#{x}%"
     end
-    
+
     if !(x = session[:bp_pic_search][:email]).blank?
       sql += " and (email1 like ? or email2 like ?)"
       param << "%#{x}%" << "%#{x}%"
     end
-    
+
     # 不達スコア
     if !(x = session[:bp_pic_search][:nondelivery_score]).blank?
       sql += " and nondelivery_score >= ?"
       param << x
     end
-    
+
     # 在職者以外
     if !(x = session[:bp_pic_search][:working_status_type]).blank?
       sql += " and working_status_type <> ?"
@@ -61,7 +61,7 @@ class BpPicController < ApplicationController
 
     # JIET_FLG
     if !(x = session[:bp_pic_search][:jiet]).blank?
-      case x 
+      case x
       when "1"
         sql += " and jiet = ?"
         param << 0
@@ -71,24 +71,24 @@ class BpPicController < ApplicationController
       else
       end
     end
-    
+
     # 取引先グループ
     if !(x = session[:bp_pic_search][:bp_pic_group_id]).blank?
       incl << :bp_pic_group_detail
       sql += " and bp_pic_group_details.deleted = 0"
-      
+
       if x != 'all'
         sql += " and bp_pic_group_details.bp_pic_group_id = ?"
         param << x
       end
     end
-    
+
     if params[:id]
       sql += " and business_partner_id = ?"
       param << params[:id]
       @business_partner = BusinessPartner.find(params[:id])
     end
-    
+
     # order by
     if (x = session[:bp_pic_search][:working_status_type]).blank?
       order_by = "bp_pics.updated_at desc"
@@ -111,7 +111,7 @@ class BpPicController < ApplicationController
 
     # 検索条件を処理
     cond, incl, order_by = make_conditions
-    
+
     @bp_pics = BpPic.includes(incl).where(cond).order(order_by).page(params[:page]).per(current_user.per_page)
 
 
@@ -144,7 +144,7 @@ class BpPicController < ApplicationController
 
   def show
     @bp_pic = BpPic.find(params[:id])
-    @remarks = Remark.find(:all, :conditions => ["deleted = 0 and remark_key = ? and remark_target_id = ?", 'bp_pics', params[:id]])
+    @remarks = Remark.get_all('bp_pics', params[:id])
     @delivery_mails = DeliveryMail.where(:deleted => 0 , :id => @bp_pic.delivery_mail_ids).order("id desc").page(params[:page]).per(20)
     @former_bp_pic = params[:former_bp_pic_id] ? BpPic.find(params[:former_bp_pic_id]) : @bp_pic.former_bp_pic
     @bp_pic_groups_details = BpPicGroupDetail.where(:deleted => 0, :bp_pic_id => params[:id], :suspended => 0)
@@ -162,14 +162,14 @@ class BpPicController < ApplicationController
   end
 
   def create
-    ActiveRecord::Base.transaction do 
+    ActiveRecord::Base.transaction do
       @bp_pic = BpPic.new(params[:bp_pic])
       set_user_column @bp_pic
       @bp_pic.save!
 
       @bp_pic.update_import_mails!(current_user.login)
 
-      
+
       BpPic.update_retired(@bp_pic.id, params[:retired_bp_pic_id]) unless params[:retired_bp_pic_id].blank? #退職登録
       BpPic.update_changed(@bp_pic.id, params[:former_bp_pic_id]) unless params[:former_bp_pic_id].blank? #転職登録
 
@@ -191,7 +191,7 @@ class BpPicController < ApplicationController
   end
 
   def update
-    ActiveRecord::Base.transaction do 
+    ActiveRecord::Base.transaction do
       @bp_pic = BpPic.find(params[:id], :conditions =>["deleted = 0"])
       old_email1 = @bp_pic.email1
       @bp_pic.attributes = params[:bp_pic]
@@ -208,7 +208,7 @@ class BpPicController < ApplicationController
   rescue ActiveRecord::RecordInvalid
     render :action => 'edit'
   end
-  
+
   def change_star
     bp_pic = BpPic.find(params[:id])
     if bp_pic.starred == 1
@@ -241,16 +241,16 @@ class BpPicController < ApplicationController
 
     # 取引先担当者に紐付くグループ詳細も削除する
     @bp_pic.out_of_group!
-    
+
     redirect_to(back_to || {:action => 'list'})
   end
-  
+
   def proc_bp_pic_ids
     if params[:add_group_button]
       add_bp_pic_into_selected_group
     else params[:contact_mail_new_button]
       redirect_to({:controller => 'delivery_mails', :action => 'contact_mail_new',:bp_pic_ids => params[:ids]})
-    end 
+    end
   end
 
   def add_bp_pic_into_selected_group
@@ -264,7 +264,7 @@ class BpPicController < ApplicationController
     end
 
     bp_pic_id_list = params[:ids]
-    
+
     if bp_pic_id_list && !selected_group.nil?
 
       selected_group.each do |groupId|
@@ -310,7 +310,7 @@ class BpPicController < ApplicationController
 
     render template: 'business_partner/quick_input', layout: 'blank'
   end
-  
+
   # 入力支援機能の次の取引先IDを生成し、再読み込みさせる
   def next_bp
     current_bp_id = params[:business_partner_id].to_i
@@ -365,7 +365,7 @@ private
       raise ValidationAbort.new("Invalid paramater.[business_partner_id is not null]")
     end
   end
-  
+
   def space_trim(bp_name)
     trimed_bp_name = ""
     bp_name_list.each do |bp_name_element|
@@ -386,7 +386,7 @@ private
     # 検索条件を処理
     cond, incl, order_by = make_conditions
     bp_pics = BpPic.includes(incl).where(cond).order(order_by).page(params[:page]).per(current_user.per_page)
-    
+
     bp_pics.map(&:business_partner).map(&:id).uniq
   end
 
