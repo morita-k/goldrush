@@ -28,7 +28,7 @@ class ImportMailMatchController < ApplicationController
   def show
     @import_mail_match = ImportMailMatch.find(params[:id], :conditions => "deleted = 0 ")
     @attachment_files  = AttachmentFile.get_attachment_files('import_mails', @import_mail_match.bp_member_mail_id)
-    @remarks = Remark.where("deleted = 0 and remark_key = ? and remark_target_id = ?", 'import_mail_match', params[:id])
+    @remarks = Remark.get_all('import_mail_match', params[:id])
 
     related_import_mails = ImportMail.where("import_mail_match_id = ? and created_at > ?", params[:id], @import_mail_match.created_at)
     related_delivery_mails = DeliveryMail.where("import_mail_match_id = ? and created_at > ?", params[:id], @import_mail_match.created_at)

@@ -48,7 +48,7 @@ class BizOfferController < ApplicationController
         param << pids
      end
     end
-    
+
     if !(payment_from = session[:biz_offer_search][:payment_from]).blank?
       sql += " and payment_max >= ?"
       param << (payment_from.to_i * 10000)
@@ -71,7 +71,7 @@ class BizOfferController < ApplicationController
 
     # JIET_FLG
     if !(x = session[:biz_offer_search][:jiet]).blank?
-      case x 
+      case x
       when "1"
         sql += " and bp_pics.jiet = ?"
         param << 0
@@ -81,7 +81,7 @@ class BizOfferController < ApplicationController
       else
       end
     end
-    
+
     return {:conditions => param.unshift(sql), :include => include, :order => order_by, :per_page => current_user.per_page}
   end
 
@@ -103,13 +103,13 @@ class BizOfferController < ApplicationController
     @biz_offer = BizOffer.find(params[:id])
     @business = @biz_offer.business
     @approach_pages, @approaches = paginate :approaches, :conditions =>["deleted = 0 and biz_offer_id = ?", @biz_offer.id], :per_page => current_user.per_page
-    @remarks = Remark.find(:all, :conditions => ["deleted = 0 and remark_key = ? and remark_target_id = ?", 'biz_offers', @business.id])
+    @remarks = Remark.get_all('biz_offers', @business.id)
   end
 
   def new
     @calendar = true
     now = Time.now
-    
+
     @biz_offer = BizOffer.new
     @biz_offer.biz_offered_at = Date.parse(now.strftime("%Y/%m/%d"))
     @biz_offered_at_hour = now.hour
@@ -127,7 +127,7 @@ class BizOfferController < ApplicationController
       @issue_datetime_min = (now.min / 10) * 10
     end
     params[:business_id] = @business.id
-    
+
     # メール取り込みからの遷移
     if params[:import_mail_id]# && params[:template_id]
       import_mail = ImportMail.find(params[:import_mail_id])
@@ -161,11 +161,11 @@ class BizOfferController < ApplicationController
         @business = Business.new
       end
       @business.attributes = params[:business]
-      
+
       if date = DateTimeUtil.str_to_date(params[:business][:issue_datetime])
         @business.issue_datetime = Time.local(date.year, date.month, date.day, params[:issue_datetime_hour].to_i, params[:issue_datetime_minute].to_i)
       end
-      
+
       @business.business_status_type = 'offered'
       set_user_column @business
       @business.save!
@@ -181,7 +181,7 @@ class BizOfferController < ApplicationController
       @biz_offer.biz_offer_status_type = 'open'
       set_user_column @biz_offer
       @biz_offer.save!
-      
+
       if !@biz_offer.import_mail_id.blank?
         import_mail = ImportMail.find(@biz_offer.import_mail_id)
         import_mail.registed = 1
@@ -190,9 +190,9 @@ class BizOfferController < ApplicationController
         import_mail.save!
       end
     end
-    
+
     flash_notice = 'BizOffer was successfully created.'
-    
+
     if popup?
       # ポップアップウィンドウの場合、ポップアップ状態のまま通常の画面遷移
       flash[:notice] = flash_notice
@@ -236,15 +236,15 @@ class BizOfferController < ApplicationController
       @business = Business.find(params[:business_id], :conditions =>["deleted = 0"])
       @biz_offer = BizOffer.find(params[:id], :conditions =>["deleted = 0"])
       @business.attributes = params[:business]
-      
+
       if date = DateTimeUtil.str_to_date(params[:business][:issue_datetime])
         @business.issue_datetime = Time.local(date.year, date.month, date.day, params[:issue_datetime_hour].to_i, params[:issue_datetime_minute].to_i)
       end
-      
+
       @business.make_skill_tags!
       set_user_column @business
       @business.save!
-      
+
       @biz_offer.attributes = params[:biz_offer]
 
       if date = DateTimeUtil.str_to_date(params[:biz_offer][:biz_offered_at])
@@ -266,7 +266,7 @@ class BizOfferController < ApplicationController
     @biz_offer.deleted_at = Time.now
     set_user_column @biz_offer
     @biz_offer.save!
-    
+
     redirect_to :action => 'list'
   end
 end
