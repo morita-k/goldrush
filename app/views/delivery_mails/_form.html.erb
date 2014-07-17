@@ -1,5 +1,5 @@
-<%#= hidden_field_tag 'bp_pic_id', @bp_pics %>
-<%= @import_mail && (hidden_field_tag 'import_mail_id', @import_mail.id) %>
+<%= hidden_field_tag 'source_bp_pic_id', @source_bp_pic_id %>
+<%= hidden_field_tag 'source_message_id', @source_message_id %>
 <%= hidden_field_tag 'delivery_mail[matching_way_type]', (params[:matching_way_type] || 'other') %>
 <%= hidden_field_tag 'delivery_mail[import_mail_match_id]', params[:import_mail_match_id] %>
 <%= back_to_field_tag %>
