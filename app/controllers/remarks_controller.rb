@@ -1,5 +1,4 @@
-# -*- encoding: utf-8 -*-
-
+# encoding: utf-8
 
 class RemarksController < ApplicationController
   # GET /remarks
@@ -51,7 +50,7 @@ class RemarksController < ApplicationController
       begin
         set_user_column @remark
         @remark.save!
-        format.html { redirect_to back_to, notice: 'Remark was successfully created.' }
+        format.html { redirect_to back_to, notice: 'コメントを追加しました' }
         format.json { render json: @remark, status: :created, location: @remark }
       rescue ActiveRecord::RecordInvalid
         format.html { render action: "new" }
@@ -70,7 +69,7 @@ class RemarksController < ApplicationController
     respond_to do |format|
       begin
         @remark.update_attributes!(params[:remark])
-        format.html { redirect_to back_to, notice: 'Remark was successfully updated.' }
+        format.html { redirect_to back_to, notice: 'コメントを更新しました' }
         format.json { head :no_content }
       rescue ActiveRecord::RecordInvalid
         format.html { render action: "edit" }
@@ -89,7 +88,7 @@ class RemarksController < ApplicationController
     @remark.save!
 
     respond_to do |format|
-      format.html { redirect_to url_for(:controller => params[:back].chop, :action => 'show', :id => params[:bk_id]), notice: 'Deleted Remark content' }
+      format.html { redirect_to params[:back_to], notice: 'コメントを削除しました' }
     end
   end
 end

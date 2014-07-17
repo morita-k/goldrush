@@ -27,9 +27,9 @@
 </div>
 
 <%= accordion_around_h2("コメント一覧", "6", @remarks.empty?) do %>
-  <%= render :partial => 'remarks/list', :locals => {:remark_key => "biz_offers", :remark_target_id => @business} %>
+  <%= render :partial => 'remarks/list' %>
 <% end %>
 
 <div class="submit_box">
-  <%= back_to_link 'コメント追加', {:controller => :remarks, :action => :new, :remark_target_id => @business, :remark_key => "biz_offers"}, {:class => "btn btn-info btn-medium"} %>
+  <%= back_to_link('コメント追加', new_remark_path({:remark_key => "biz_offers", :remark_target_id => @business.id}), {:class => "btn btn-info btn-medium"}) %>
 </div>

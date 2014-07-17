@@ -1,28 +1,28 @@
 <div class="submit_box">
-<%= form_for(@remark) do |f| %>
-<%= hidden_field_tag 'back_to', params[:back_to] %>
-<%= f.hidden_field :lock_version %>
-  <% if @remark.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@remark.errors.count, "error") %> prohibited this remark from being saved:</h2>
+  <%= form_for(@remark) do |f| %>
+    <%= hidden_field_tag 'back_to', params[:back_to] %>
+    <%= f.hidden_field :lock_version %>
 
-      <ul>
-      <% @remark.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+    <% if @remark.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@remark.errors.count, "error") %> prohibited this remark from being saved:</h2>
 
-<table class="show_table">
+        <ul>
+        <% @remark.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
 
-  <tr>
-    <th><%= f.label :remark_content, 'コメント' %></th>
-    <td><%= f.text_area :remark_content, :style => "width:80%" %></td>
-  </tr>
+    <table class="show_table">
+      <tr>
+        <th><%= f.label :remark_content, 'コメント' %></th>
+        <td><%= f.text_area :remark_content, :style => "width:80%" %></td>
+      </tr>
 
-  <tr>
-    <th><%= f.label :rating, 'レーティング' %></th>
+      <tr>
+        <th><%= f.label :rating, 'レーティング' %></th>
         <td>
           <%= f.radio_button 'rating', '1', {:class => 'star'} %>
           <%= f.radio_button 'rating', '2', {:class => 'star'} %>
@@ -30,13 +30,15 @@
           <%= f.radio_button 'rating', '4', {:class => 'star'} %>
           <%= f.radio_button 'rating', '5', {:class => 'star'} %>
         </td>
-  </tr>
-  
-  <%= hidden_field 'remark', 'remark_target_id' %>
-  <%= hidden_field 'remark', 'remark_key' %>
+      </tr>
 
-</table>
-<%= submit_tag "　登録　",  btn_primary %>
-<%= link_or_back '戻る', remarks_path %>
-<% end %>
+      <%= hidden_field 'remark', 'remark_target_id' %>
+      <%= hidden_field 'remark', 'remark_key' %>
+    </table>
+
+    <br>
+
+    <%= submit_tag "　登録　",  btn_primary %>
+    <%= link_or_back '戻る', remarks_path %>
+  <% end %>
 </div>
