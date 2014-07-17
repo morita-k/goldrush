@@ -56,7 +56,7 @@ $(function(){
     var detail = $("#tr_thread_detail_" + mail_type + '_' + mail_id);
     if(detail.css("display") == "none") {
       if (detail.html().trim() == "") {
-        $.get('<%= url_for :controller => :import_mail_match, :action => :thread_detail%>?mail_id=' + mail_id + '&mail_type=' + mail_type,
+        $.get('<%= url_for :controller => :import_mail_match, :action => :thread_detail %>?mail_id=' + mail_id + '&mail_type=' + mail_type + '&back_to=<%= request_url %>',
           function(_thread_detail){return function(data) {
             console.log(_thread_detail);
             _thread_detail.html(data);
