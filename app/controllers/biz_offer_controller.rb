@@ -103,7 +103,7 @@ class BizOfferController < ApplicationController
     @biz_offer = BizOffer.find(params[:id])
     @business = @biz_offer.business
     @approach_pages, @approaches = paginate :approaches, :conditions =>["deleted = 0 and biz_offer_id = ?", @biz_offer.id], :per_page => current_user.per_page
-    @remarks = Remark.get_all('biz_offers', @business.id)
+    @remarks = Remark.get_all('business', @business.id)
   end
 
   def new
