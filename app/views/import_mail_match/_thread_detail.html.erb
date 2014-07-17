@@ -10,7 +10,11 @@
           <div class="panel-heading">
             <% if @import_mail.bp_pic_id %>
               <%= back_to_link("このメールに返信する",
-                               { :controller => :delivery_mails, :action => :reply_mail_new, :import_mail_id => @import_mail, :import_mail_match_id => @import_mail.import_mail_match_id, :matching_way_type => get_way_type(@import_mail) },
+                               { :controller           => :delivery_mails,
+                                 :action               => :reply_mail_new,
+                                 :import_mail_id       => @import_mail.id,
+                                 :import_mail_match_id => @import_mail.import_mail_match_id,
+                                 :matching_way_type    => get_way_type(@import_mail) },
                                :class => "btn btn-primary btn-xs") %>
             <% else %>
               <%= disp_wide_link('取引先/取引先担当作成',
@@ -31,6 +35,17 @@
       <div class="col-md-6">
         <div class="panel panel-default">
           <div class="panel-heading">
+
+
+            <%= back_to_link("このメールから対象者へ返信する",
+                             { :controller           => :delivery_mails,
+                               :action               => :reply_mail_new,
+                               :delivery_mail_id     => @delivery_mail.id,
+                               :import_mail_match_id => @delivery_mail.import_mail_match_id,
+                               :matching_way_type    => get_way_type(@import_mail) },
+                             :class => "btn btn-primary btn-xs") %>
+
+
             <%= getLongName('delivery_mails', 'mail_from_name') %>:       <%= @delivery_mail.mail_from_name %><br>
             <% if @delivery_mail.send_end_at %>
               <%= getLongName('delivery_mails', 'send_end_at') %>:        <%= _time_long(@delivery_mail.send_end_at) %><br>
