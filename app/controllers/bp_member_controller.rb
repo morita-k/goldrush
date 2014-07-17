@@ -128,7 +128,7 @@ class BpMemberController < ApplicationController
     @bp_member = BpMember.find(params[:id])
     @human_resource = @bp_member.human_resource
     @attachment_files = AttachmentFile.get_attachment_files('bp_members', @bp_member.id)
-    @remarks = Remark.find(:all, :conditions => ["deleted = 0 and remark_key = ? and remark_target_id = ?", 'bp_members', params[:id]])
+    @remarks = Remark.get_all('bp_members', params[:id])
   end
 
   def new
