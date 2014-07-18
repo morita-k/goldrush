@@ -32,7 +32,7 @@ class DeliveryMail < ActiveRecord::Base
     [] if self.payment.blank? || self.age.blank?
     if self.biz_offer_mail?
       w = "delivery_mail_matches.deleted = 0 and payment <= ? and age <= ?"
-    else 
+    else
       w = "delivery_mail_matches.deleted = 0 and payment >= ? and age >= ?"
     end
     DeliveryMailMatch.joins(:import_mail).where(w, payment, age)
@@ -146,7 +146,6 @@ class DeliveryMail < ActiveRecord::Base
                 :business_partner_name => target.bp_pic.business_partner.business_partner_name }
 
         mail_content = mail.content + <<EOS
-案件コード(こちらのコードは消さずにそのままご返信ください)
 GR-BIZ-ID:#{mail.id ** 2}-#{target.id ** 2}
 EOS
 
