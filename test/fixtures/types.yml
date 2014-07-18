@@ -5578,3 +5578,203 @@ types_279:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
+types_280:
+  id: 280
+  owner_id: 
+  type_section: "imm_status_type"
+  type_key: "open"
+  long_name: "未対応"
+  short_name: "未"
+  other_name: "未対応"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 1
+  display_order2: 1
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_281:
+  id: 281
+  owner_id: 
+  type_section: "imm_status_type"
+  type_key: "candidate"
+  long_name: "提案候補"
+  short_name: "候補"
+  other_name: "提案候補"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 2
+  display_order2: 2
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_282:
+  id: 282
+  owner_id: 
+  type_section: "imm_status_type"
+  type_key: "self_reject"
+  long_name: "自己却下"
+  short_name: "却下"
+  other_name: "自己却下"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 3
+  display_order2: 3
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_283:
+  id: 283
+  owner_id: 
+  type_section: "imm_status_type"
+  type_key: "down_approach"
+  long_name: "所属側提案中"
+  short_name: "所属側中"
+  other_name: "所属側提案中"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 4
+  display_order2: 4
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_284:
+  id: 284
+  owner_id: 
+  type_section: "imm_status_type"
+  type_key: "down_reject"
+  long_name: "所属側却下"
+  short_name: "所属側却"
+  other_name: "所属側却下"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 5
+  display_order2: 5
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_285:
+  id: 285
+  owner_id: 
+  type_section: "imm_status_type"
+  type_key: "upper_approach"
+  long_name: "案件側提案中"
+  short_name: "案件側中"
+  other_name: "案件側提案中"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 6
+  display_order2: 6
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_286:
+  id: 286
+  owner_id: 
+  type_section: "imm_status_type"
+  type_key: "upper_reject"
+  long_name: "案件側却下"
+  short_name: "案件側却"
+  other_name: "案件側却下"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 7
+  display_order2: 7
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_287:
+  id: 287
+  owner_id: 
+  type_section: "imm_status_type"
+  type_key: "interview"
+  long_name: "面談中"
+  short_name: "面談中"
+  other_name: "面談中"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 8
+  display_order2: 8
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_288:
+  id: 288
+  owner_id: 
+  type_section: "imm_status_type"
+  type_key: "interview_reject"
+  long_name: "面談却下"
+  short_name: "面談却"
+  other_name: "面談却下"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 9
+  display_order2: 9
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_289:
+  id: 289
+  owner_id: 
+  type_section: "imm_status_type"
+  type_key: "contract"
+  long_name: "成約"
+  short_name: "成約"
+  other_name: "成約"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 10
+  display_order2: 10
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
