@@ -82,7 +82,7 @@ EOS
     destroy_in(import_mail_match)
 
     flash[:err] = "マッチングデータを削除しました。"
-    redirect_to(back_to || {:action => 'list'})
+    redirect_to(back_to || {:action => 'index'})
   end
 
   def destroy_mail
