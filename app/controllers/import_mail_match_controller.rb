@@ -95,6 +95,14 @@ EOS
     _redirect_or_back_to :action => :index
   end
 
+  def change_status
+    import_mail_match = ImportMailMatch.find(params[:id])
+    import_mail_match.imm_status_type = params[:next_status]
+    set_user_column import_mail_match
+    import_mail_match.save!
+    redirect_to :action => :show
+  end
+
 private
 
   def destroy_in(imm)

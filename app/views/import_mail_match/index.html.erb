@@ -76,6 +76,8 @@
       <td rowspan=2 sytle="text-align:center">
         <%= star_links matches %>&nbsp;<span title="マッチングスコア" class='label label-default'><%= matches.mail_match_score %></span>
         <br>
+        <%= imm_status_tag(matches.imm_status_type, matches.imm_status_type_name) %>
+        <br>
         <%= back_to_link(matches.id, import_mail_match_path(id: matches.id)) %>
       </td>
 
