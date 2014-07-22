@@ -11,6 +11,10 @@
         </td>
       </tr>
       <tr>
+        <th><i class="fa fa-angle-double-right"></i>ステータス</th>
+        <td><%= raw imm_status_check_box_tag(param) %></td>
+      </tr>
+      <tr>
         <th><i class="fa fa-angle-double-right"></i>タグ</th>
         <td><%= text_field_tag 'tag', param[:tag]%><br>
           <%= verygood_tags %>

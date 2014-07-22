@@ -116,6 +116,7 @@ private
     {
       :proper_flg => params[:proper_flg],
       :starred => params[:starred],
+      :imm_status_type => params[:imm_status_type],
       :tag => params[:tag],
       :payment_from => params[:payment_from],
       :payment_to => params[:payment_to],
@@ -150,6 +151,14 @@ private
 
     if !(cond_param[:starred]).blank?
       sql += " and (import_mail_matches.starred = 1 or import_mail_matches.starred = 2)"
+    end
+
+    if !(cond_param[:imm_status_type]).blank?
+      sql += ' and ('
+      sql += cond_param[:imm_status_type].keys.collect do |imm_status_type|
+               "import_mail_matches.imm_status_type = '#{imm_status_type}'"
+             end.join(' or ')
+      sql += ')'
     end
 
     unless (tag = cond_param[:tag]).blank?

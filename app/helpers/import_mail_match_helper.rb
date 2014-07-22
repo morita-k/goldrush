@@ -10,7 +10,7 @@ module ImportMailMatchHelper
   #                    |-> interview
   #                          |-> interview_reject(END)
   #                          |-> contract(END)
-  def get_next_imm_status_types(current_status)
+  def get_next_imm_status_list(current_status)
     case current_status
     when 'open'           then ['candidate']
     when 'candidate'      then ['down_approach',  'self_reject']
@@ -22,7 +22,7 @@ module ImportMailMatchHelper
   end
 
   def next_imm_status_tag_list
-    get_next_imm_status_types(@import_mail_match.imm_status_type).collect do |next_status|
+    get_next_imm_status_list(@import_mail_match.imm_status_type).collect do |next_status|
       link_to("#{getLongType(:imm_status_type, next_status)}へ変更する",
               imm_change_status_path(:id => @import_mail_match.id, :next_status => next_status),
               {:class => "btn btn-info btn-midium"})
@@ -38,5 +38,18 @@ module ImportMailMatchHelper
                  else                  'label label-primary'
                  end
     content_tag(:span, imm_status_name, {title: "ステータス", class: label_type})
+  end
+
+  def get_all_imm_status_list
+    Type.get_config_list('imm_status_type')
+  end
+
+  def imm_status_check_box_tag(session)
+    get_all_imm_status_list.collect do |imm_status|
+      check_box_name = "imm_status_type[#{imm_status.type_key}]"
+      content_tag(:label) do
+        check_box_tag(check_box_name, 1, session[:imm_status_type] && session[:imm_status_type][imm_status.type_key].to_i == 1) + imm_status.long_name
+      end
+    end.join('&nbsp;')
   end
 end
