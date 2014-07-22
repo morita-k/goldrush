@@ -22,6 +22,7 @@ $(function(){
       return false;
     });
   }
+
   $('.head_row_auto').click(function(){
     var import_mail_match_id = $(this).attr("import_mail_match_id");
     var detail =  $("#tr_detail_" + import_mail_match_id);
@@ -77,6 +78,34 @@ $(function(){
     return false;
   });
 
+  $('.check_all_btn').click(function(){
+    for( i=0; i<$('#check_boxes :checkbox').length; i++ ) {
+      $('#check_boxes :checkbox')[i].checked = true;
+    }
+    return false;
+  });
+
+  $('.check_approach_btn').click(function(){
+    $('#imm_status_type_down_approach').prop("checked", true);
+    $('#imm_status_type_upper_approach').prop("checked", true);
+    $('#imm_status_type_interview').prop("checked", true);
+    return false;
+  });
+
+  $('.uncheck_reject_btn').click(function(){
+    $('#imm_status_type_self_reject').prop("checked", false);
+    $('#imm_status_type_down_reject').prop("checked", false);
+    $('#imm_status_type_upper_reject').prop("checked", false);
+    $('#imm_status_type_interview_reject').prop("checked", false);
+    return false;
+  });
+
+  $('.uncheck_all_btn').click(function(){
+    for( i=0; i<$('#check_boxes :checkbox').length; i++ ) {
+      $('#check_boxes :checkbox')[i].checked = false;
+    }
+    return false;
+  });
 });
 
 // -->
