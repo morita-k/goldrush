@@ -7,6 +7,9 @@ GoldRush::Application.routes.draw do
     match '/show/:id' => :show
   end
 
+  get 'import_mail_match/change_status/:id' => 'import_mail_match#change_status', as: 'imm_change_status'
+
+
   resources :photos do
     collection do
       get 'list'
