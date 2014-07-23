@@ -4,6 +4,9 @@
 
 <div class="submit_box">
   <%= link_or_back '　戻　る　', {:action => 'index'}, {:class => "btn btn-default btn-midium"} %>
+</div>
+
+<div class="submit_box">
   <% next_imm_status_tag_list.each do |next_imm_status_tag| %>
     <%= next_imm_status_tag %>
   <% end %>

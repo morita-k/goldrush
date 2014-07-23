@@ -13,19 +13,24 @@ module ImportMailMatchHelper
   def get_next_imm_status_list(current_status)
     case current_status
     when 'open'           then ['candidate']
-    when 'candidate'      then ['down_approach',  'self_reject']
-    when 'down_approach'  then ['upper_approach', 'down_reject']
-    when 'upper_approach' then ['interview',      'upper_reject']
-    when 'interview'      then ['contract',       'interview_reject']
-    else                       []
+    when 'candidate'      then ['down_approach',  'self_reject',      'open']
+    when 'down_approach'  then ['upper_approach', 'down_reject',      'open']
+    when 'upper_approach' then ['interview',      'upper_reject',     'open']
+    when 'interview'      then ['contract',       'interview_reject', 'open']
+    else                       ['open']
     end
   end
 
   def next_imm_status_tag_list
     get_next_imm_status_list(@import_mail_match.imm_status_type).collect do |next_status|
-      link_to("#{getLongType(:imm_status_type, next_status)}へ変更する",
-              imm_change_status_path(:id => @import_mail_match.id, :next_status => next_status),
-              {:class => "btn btn-info btn-midium"})
+      btn_str, btn_style =if next_status == 'open'
+                             ["#{getLongType(:imm_status_type, next_status)}へ戻す", 'btn-warning']
+                           else
+                             ["#{getLongType(:imm_status_type, next_status)}へ変更する", 'btn-info']
+                           end
+      link_to(btn_str,
+              imm_change_status_path(id: @import_mail_match.id, next_status: next_status),
+              { class: "btn #{btn_style} btn-midium" })
     end
   end
 
