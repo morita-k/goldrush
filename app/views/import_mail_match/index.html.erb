@@ -13,14 +13,7 @@
       </tr>
       <tr>
         <th><i class="fa fa-angle-double-right"></i>ステータス</th>
-        <td id='check_boxes'>
-          <span class="check_all_btn"      title="全て">       <%= button_tag '全てにチェックする',       :class => "btn btn-warning btn-xs" %></span>
-          <span class="check_approach_btn" title="提案中・面接"><%= button_tag '進行中全てにチェックする', :class => "btn btn-warning btn-xs" %></span>
-          <span class="uncheck_reject_btn" title="却下以外">    <%= button_tag '却下のチェックを外す',     :class => "btn btn-warning btn-xs" %></span>
-          <span class="uncheck_all_btn"    title="全て">        <%= button_tag '全てのチェックを外す',     :class => "btn btn-warning btn-xs" %></span>
-          <br>
-          <%= raw imm_status_check_box_tag(param) %>
-        </td>
+        <td><%= raw imm_status_search_button_tag(param) %></td>
       </tr>
       <tr>
         <th><i class="fa fa-angle-double-right"></i>タグ</th>

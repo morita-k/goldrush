@@ -45,15 +45,16 @@ module ImportMailMatchHelper
     content_tag(:span, imm_status_name, {title: "ステータス", class: label_type})
   end
 
-  def get_all_imm_status_list
-    Type.get_config_list('imm_status_type')
-  end
+  def imm_status_search_button_tag(session)
+    radio_btn_set = [{value: 'all',      str: '全て',     title: '全ステータス'},
+                     {value: 'open',     str: '未対応',   title: '未対応のみ'},
+                     {value: 'progress', str: '進行中',   title: '候補・提案中・面談中'},
+                     {value: 'closed',   str: '終了',     title: '却下・成約'},
+                     {value: 'contract', str: '成約のみ', title: '成約のみ'}]
 
-  def imm_status_check_box_tag(session)
-    get_all_imm_status_list.collect do |imm_status|
-      check_box_name = "imm_status_type[#{imm_status.type_key}]"
-      content_tag(:label) do
-        check_box_tag(check_box_name, 1, session[:imm_status_type] && session[:imm_status_type][imm_status.type_key].to_i == 1) + imm_status.long_name
+    radio_btn_set.collect do |radio_btn_hash|
+      content_tag(:label, { title: radio_btn_hash[:title] }) do
+        radio_button_tag('imm_status_type_set', radio_btn_hash[:value], session[:imm_status_type_set] == radio_btn_hash[:value]) + radio_btn_hash[:str]
       end
     end.join('&nbsp;')
   end

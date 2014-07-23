@@ -116,7 +116,7 @@ private
     {
       :proper_flg => params[:proper_flg],
       :starred => params[:starred],
-      :imm_status_type => params[:imm_status_type],
+      :imm_status_type_set => params[:imm_status_type_set],
       :tag => params[:tag],
       :payment_from => params[:payment_from],
       :payment_to => params[:payment_to],
@@ -153,12 +153,19 @@ private
       sql += " and (import_mail_matches.starred = 1 or import_mail_matches.starred = 2)"
     end
 
-    if !(cond_param[:imm_status_type]).blank?
-      sql += ' and ('
-      sql += cond_param[:imm_status_type].keys.collect do |imm_status_type|
-               "import_mail_matches.imm_status_type = '#{imm_status_type}'"
-             end.join(' or ')
-      sql += ')'
+    if !(cond_param[:imm_status_type_set]).blank?
+      imm_status_type_list = case cond_param[:imm_status_type_set]
+                             when 'all'      then []
+                             when 'open'     then ['open']
+                             when 'progress' then ['candidate', 'down_approach', 'upper_approach', 'interview']
+                             when 'closed'   then ['self_reject', 'down_reject', 'upper_reject', 'interview_reject', 'contract']
+                             when 'contract' then ['contract']
+                             else                 []
+                             end
+      status_sql = imm_status_type_list.map do |imm_status_type|
+                     "import_mail_matches.imm_status_type = '#{imm_status_type}'"
+                   end.join(' or ')
+      sql += " and (#{status_sql})" if status_sql.present?
     end
 
     unless (tag = cond_param[:tag]).blank?
