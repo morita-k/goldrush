@@ -1,3 +1,4 @@
+
 <%= accordion_around(getLongName('table_name','import_mails')+"マッチング", "") do %>
   <% param = session[:import_mail_auto_match] %>
   <%= form_tag do %>
@@ -9,6 +10,10 @@
           &nbsp;
           <%= check_box_tag 'starred', 1, param[:starred].to_i == 1 %> スター
         </td>
+      </tr>
+      <tr>
+        <th><i class="fa fa-angle-double-right"></i>ステータス</th>
+        <td><%= raw imm_status_search_button_tag(param) %></td>
       </tr>
       <tr>
         <th><i class="fa fa-angle-double-right"></i>タグ</th>
@@ -75,6 +80,8 @@
     <tr id="tr_head_<%= matches.id %>" class="head_row_auto" import_mail_match_id="<%= matches.id %>">
       <td rowspan=2 sytle="text-align:center">
         <%= star_links matches %>&nbsp;<span title="マッチングスコア" class='label label-default'><%= matches.mail_match_score %></span>
+        <br>
+        <%= imm_status_tag(matches.imm_status_type, matches.imm_status_type_name) %>
         <br>
         <%= back_to_link(matches.id, import_mail_match_path(id: matches.id)) %>
       </td>

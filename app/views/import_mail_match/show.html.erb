@@ -4,13 +4,20 @@
 
 <div class="submit_box">
   <%= link_or_back '　戻　る　', {:action => 'index'}, {:class => "btn btn-default btn-midium"} %>
-  <%= delete_to '　削　除　', @import_mail_match, 'destroy_by_show', {:class => "btn btn-info btn-midium"} %>
+</div>
+
+<div class="submit_box">
+  <% next_imm_status_tag_list.each do |next_imm_status_tag| %>
+    <%= next_imm_status_tag %>
+  <% end %>
 </div>
 
 <table class="list_table table-bordered table-hover">
   <tr class="head_row">
     <td rowspan=2 sytle="text-align:center">
       <%= star_links @import_mail_match %>&nbsp;<span title="マッチングスコア" class='label label-default'><%= @import_mail_match.mail_match_score %></span>
+      <br>
+      <%= imm_status_tag(@import_mail_match.imm_status_type, @import_mail_match.imm_status_type_name) %>
     </td>
 
     <td rowspan=2>
@@ -74,6 +81,11 @@
 
 <div class="submit_box">
   <%= back_to_link('コメント追加', new_remark_path({:remark_key => "import_mail_match", :remark_target_id => @import_mail_match.id}), {:class => "btn btn-info btn-medium"}) %>
+</div>
+
+<div class="submit_box">
+  <%= link_or_back '　戻　る　', {:action => 'index'}, {:class => "btn btn-default btn-midium"} %>
+  <%= delete_to 'このマッチングを削除', @import_mail_match, 'destroy_by_show', {:class => "btn btn-warning btn-midium", :confirm => 'この情報を削除します。よろしいですか?'} %>
 </div>
 
 <%= render :partial => 'js' %>
