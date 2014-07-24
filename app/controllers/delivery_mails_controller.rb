@@ -24,12 +24,9 @@ class DeliveryMailsController < ApplicationController
   # GET /delivery_mails/1.json
   def show
     @delivery_mail = DeliveryMail.find(params[:id]).get_informations
-    @delivery_mail_targets = @delivery_mail.get_delivery_mail_targets(@target_limit || 20)
-    @delivery_mail_targets.each do |delivery_mail_target|
-      delivery_mail_target.get_reply_import_mail
-    end
+    @delivery_mail_targets = @delivery_mail.delivery_mail_targets
     @delivery_mail_targets.sort_by! do |delivery_mail_target|
-      delivery_mail_target.get_import_mail_id.nil? ? 0 : - delivery_mail_target.get_import_mail_id
+      delivery_mail_target.reply_mails.empty? ? 0 : - delivery_mail_target.id
     end
 
     @attachment_files = AttachmentFile.get_attachment_files("delivery_mails", @delivery_mail.id)
@@ -42,12 +39,9 @@ class DeliveryMailsController < ApplicationController
 
   def show_all
     @delivery_mail = DeliveryMail.find(params[:id]).get_informations
-    @delivery_mail_targets = @delivery_mail.get_delivery_mail_targets(2000)
-    @delivery_mail_targets.each do |delivery_mail_target|
-      delivery_mail_target.get_reply_import_mail
-    end
+    @delivery_mail_targets = @delivery_mail.delivery_mail_targets
     @delivery_mail_targets.sort_by! do |delivery_mail_target|
-      delivery_mail_target.get_import_mail_id.nil? ? 0 : - delivery_mail_target.get_import_mail_id
+      delivery_mail_target.reply_mails.empty? ? 0 : - delivery_mail_target.id
     end
     respond_to do |format|
       format.html { render layout: false } # show.html.erb
