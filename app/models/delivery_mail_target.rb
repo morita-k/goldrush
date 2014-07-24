@@ -1,6 +1,7 @@
 class DeliveryMailTarget < ActiveRecord::Base
   belongs_to :delivery_mail
   belongs_to :bp_pic
+  has_many :reply_mails, :class_name => 'ImportMail', :foreign_key => 'in_reply_to', :primary_key => 'message_id', :order => "import_mails.id"
   
   attr_accessible :bp_pic_id, :delivery_mail_id, :id, :owner_id
 
