@@ -9,6 +9,8 @@
           <%= check_box_tag 'proper_flg', 1, param[:proper_flg].to_i == 1 %> プロパー
           &nbsp;
           <%= check_box_tag 'starred', 1, param[:starred].to_i == 1 %> スター
+          &nbsp;
+          <%= check_box_tag 'title_match', 1, param[:title_match].to_i == 1 %> タイトル
         </td>
       </tr>
       <tr>
@@ -87,7 +89,7 @@
       </td>
 
       <td rowspan=2>
-        <%= raw format_only_major_tags(matches.tag_text) %>
+        <%= matches.subject_tag_match_flg == 2 ? "<span class='x1 label label-default tag'>タイトル</span> ".html_safe : "" %><%= raw format_only_major_tags(matches.tag_text) %>
       </td>
 
       <td>
