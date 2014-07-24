@@ -123,8 +123,8 @@ EOS
   def ImportMail.import_mail_in(m, src, reply_mode=false)
     attachment_flg = 0
     import_mail_id = nil
+    import_mail = ImportMail.new
     ActiveRecord::Base::transaction do
-      import_mail = ImportMail.new
       import_mail.make_import_mail(m)
 
       if import_mail.detect_system_mail
@@ -133,17 +133,19 @@ EOS
       end
 
       # プロセス間で同期をとるために何でもいいから存在するレコードをロック(users#1 => systemユーザー)
-      #User.find(1, :lock => true)
+      User.find(1, :lock => true)
 
-      if ImportMail.where(message_id: import_mail.message_id, deleted: 0).first || ImportMail.where(mail_from: import_mail.mail_from, mail_subject: import_mail.mail_subject,received_at: ((import_mail.received_at - 1.hour) .. import_mail.received_at + 1.hour), deleted: 0).first
+      if ImportMail.where(message_id: import_mail.message_id, deleted: 0).first
         puts "mail duplicated: see system_logs"
-        SystemLog.warn('import mail', 'mail duplicated', import_mail.inspect , 'import mail')
+        SystemLog.warn('import mail', 'mail id duplicated', import_mail.inspect , 'import mail')
         return
       end
 
       # attempt_fileのため(import_mail_idが必要)に一旦登録
       import_mail.matching_way_type = 'other'
       import_mail.save!
+    end
+    ActiveRecord::Base::transaction do
       import_mail_src = ImportMailSource.new
       import_mail_src.import_mail_id = import_mail.id
       import_mail_src.message_source = src
@@ -207,6 +209,17 @@ EOS
       import_mail.created_user = 'import_mail'
       import_mail.updated_user = 'import_mail'
       import_mail.save!
+
+      # 返信メールじゃなくてタイトルがダブってたら削除
+      if import_mail.delivery_mail_id.blank? &&  ImportMail.where("id != ?", import_mail.id).where(mail_from: import_mail.mail_from, mail_subject: import_mail.mail_subject,received_at: ((import_mail.received_at - 1.hour) .. import_mail.received_at + 1.hour), deleted: 0).first
+        puts "mail duplicated: see system_logs"
+        SystemLog.warn('import mail', 'mail title duplicated', import_mail.inspect , 'import mail')
+        import_mail.deleted = 9
+        import_mail.deleted_at = Time.now
+        import_mail.save!
+        return
+      end
+
       import_mail.analyze!
 
       import_mail_id = import_mail.id
