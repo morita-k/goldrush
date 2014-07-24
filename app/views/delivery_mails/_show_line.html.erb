@@ -23,15 +23,8 @@
       %></td>
     <% else %>
       <td>
-        <% if delivery_mail_target.get_import_mail_id != nil %>
-          <%=
-            back_to_link "詳細",
-            :controller => :import_mail,
-            :action => :show,
-            :id => delivery_mail_target.get_import_mail_id
-          %>
-        <% else %>
-          &nbsp;
+        <% delivery_mail_target.reply_mails.each_with_index do |import_mail, idx| %>
+          <%= back_to_link "詳細#{idx+1}", :controller => :import_mail, :action => :show, :id => import_mail.id %> 
         <% end %>
       </td>
     <% end %>
