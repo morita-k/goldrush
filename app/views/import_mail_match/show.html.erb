@@ -26,7 +26,13 @@
 
     <td>
       <div class="overflow_hidden" style="width:100%;">
-        <%= star_links @import_mail_match.biz_offer_mail %> <%= back_to_link @import_mail_match.biz_offer_mail.mail_subject, :controller => :import_mail, :action => :show, :id => @import_mail_match.biz_offer_mail %>
+        <%= star_links @import_mail_match.biz_offer_mail %>
+        <%= back_to_link(@import_mail_match.biz_offer_mail.mail_subject,
+                         { :controller           => :import_mail,
+                           :action               => :show,
+                           :id                   => @import_mail_match.biz_offer_mail,
+                           :import_mail_match_id => @import_mail_match.id,
+                           :matching_way_type    => 'biz_offer' }) %>
       </div>
     </td>
     <td>
@@ -48,7 +54,12 @@
     <td>
       <div class="overflow_hidden" style="width:100%;">
         <%= star_links @import_mail_match.bp_member_mail%>
-        <%= back_to_link @import_mail_match.bp_member_mail.mail_subject, :controller => :import_mail, :action => :show, :id => @import_mail_match.bp_member_mail%>
+        <%= back_to_link(@import_mail_match.bp_member_mail.mail_subject,
+                         { :controller           => :import_mail,
+                           :action               => :show,
+                           :id                   => @import_mail_match.bp_member_mail,
+                           :import_mail_match_id => @import_mail_match.id,
+                           :matching_way_type    => 'bp_member' }) %>
       </div>
     </td>
     <td>

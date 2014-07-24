@@ -39,7 +39,11 @@
 <% end %>
 
 <%= back_to_link("このメールに返信する",
-                 {:controller => :delivery_mails, :action => :reply_mail_new, :import_mail_id => @import_mail.id},
+                 { :controller           => :delivery_mails,
+                   :action               => :reply_mail_new,
+                   :import_mail_id       => @import_mail.id,
+                   :import_mail_match_id => params[:import_mail_match_id],
+                   :matching_way_type    => params[:matching_way_type] },
                  btn_primary(@import_mail.bp_pic ? {} : :onclick => "alert('メールに返信するためには、担当者登録が必要です。先に担当者登録を行ってください。');return false;")) %>
 
 <% if mm = mail_match_target %>
