@@ -116,6 +116,7 @@ private
     {
       :proper_flg => params[:proper_flg],
       :starred => params[:starred],
+      :title_match => params[:title_match],
       :imm_status_type_set => params[:imm_status_type_set],
       :tag => params[:tag],
       :payment_from => params[:payment_from],
@@ -151,6 +152,10 @@ private
 
     if !(cond_param[:starred]).blank?
       sql += " and (import_mail_matches.starred = 1 or import_mail_matches.starred = 2)"
+    end
+
+    if !(cond_param[:title_match]).blank?
+      sql += " and (import_mail_matches.subject_tag_match_flg = 2)"
     end
 
     if !(cond_param[:imm_status_type_set]).blank?
