@@ -248,6 +248,10 @@ private
       sql += " and proper_flg = 1"
     end
 
+    unless cond_param[:interviewing_count_one].blank?
+      sql += " and interviewing_count = 1 "
+    end
+
     unless cond_param[:tag].blank?
       last_import_mail = ImportMail.where("received_at > ?", date_before).order("id").first
       pids = make_conditions_for_tag(cond_param[:tag], last_import_mail)

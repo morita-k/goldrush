@@ -342,6 +342,23 @@ EOS
     return false
   end
 
+  def detect_interviewing_count
+    detect_interviewing_count_in(Tag.pre_proc_body(pre_body))
+  end
+
+  def detect_interviewing_count_in(body)
+    m = /面.\s*?談(\n*?(?<count1\d>)\s*?回|[^\n]*?\n[^\n]*?(?<count2\d>)\s*?回)/.match(body)
+    if m
+      # 1行目 or 2行目に面談回数が入る
+      if m[:count1]
+        return m[:count1]
+      elsif m[:count2]
+        return m[:count2]
+      end
+    end
+    return self.interviewing_count
+  end
+
   # 人材判定用特別単語でbodyを検索して1件でもhitすれば、人材メールと判断
   def analyze_bp_member_flg(body)
     if biz_offer_mail?
@@ -361,6 +378,9 @@ EOS
   # 単価解析
   # 最寄駅解析
   # タグ解析
+  # 件名解析
+  # プロパーかどうか
+  # 面談回数
   #
   def analyze(body = Tag.pre_proc_body(pre_body))
     analyze_bp_member_flg(body)
@@ -370,6 +390,7 @@ EOS
     self.tag_text = make_tags(body)
     self.subject_tag_text = make_tags(Tag.pre_proc_body(mail_subject))
     self.proper_flg = detect_proper_in(body) ? 1 : 0
+    self.interviewing_count = detect_interviewing_count(body) 
   end
 
   # 解析とともに保存を行う

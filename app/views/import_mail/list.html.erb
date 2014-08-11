@@ -46,6 +46,12 @@
       </td>
     </tr>
     <tr>
+      <th><i class="fa fa-angle-double-right "></i>面談回数</th>
+      <td>
+        <%= check_box_tag 'interviewing_count_one', 1, session[:import_mail_search][:interviewing_count_one] %> 面談1回
+      </td>
+    </tr>
+    <tr>
       <th><i class="fa fa-angle-double-right "></i>並び順</th>
       <td>
         <%= select_tag 'order_by', options_for_select(order_select_conditions, (session[:import_mail_search][:order_by]))%>
