@@ -203,6 +203,7 @@ private
       :age_to => params[:age_to],
       :free_word => params[:free_word],
       :days => params[:days],
+      :interviewing_count_one => params[:interviewing_count_one],
       :order_by => params[:order_by],
     }
   end
