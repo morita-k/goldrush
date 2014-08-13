@@ -203,6 +203,7 @@ private
       :age_to => params[:age_to],
       :free_word => params[:free_word],
       :days => params[:days],
+      :interviewing_count_one => params[:interviewing_count_one],
       :order_by => params[:order_by],
     }
   end
@@ -246,6 +247,10 @@ private
 
     if !(cond_param[:proper_flg]).blank?
       sql += " and proper_flg = 1"
+    end
+
+    unless cond_param[:interviewing_count_one].blank?
+      sql += " and interviewing_count = 1 "
     end
 
     unless cond_param[:tag].blank?
