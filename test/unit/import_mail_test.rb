@@ -51,7 +51,19 @@ EOS
   end
 
   test "detect_interviewing_count" do
-    # パターン1
+    ### 面談回数不明パターン  
+    #
+    im = ImportMail.new
+    im.mail_subject = ""
+    im.mail_body = <<"EOS"
+・面談回数　：
+・社員区分　：正社員,契約社員
+EOS
+    im.analyze
+    assert_equal(-1, im.interviewing_count)
+
+    ### 通常パターン
+    #
     im = ImportMail.new
     im.mail_subject = ""
     im.mail_body = <<"EOS"
@@ -61,6 +73,58 @@ EOS
 EOS
     im.analyze
     assert_equal(1, im.interviewing_count)
-  end
 
+    #
+    im = ImportMail.new
+    im.mail_subject = ""
+    im.mail_body = <<"EOS"
+・面　談　　：２回
+・備　考　　：外国籍可
+EOS
+    im.analyze
+    assert_equal(2, im.interviewing_count)
+
+    #
+    im = ImportMail.new
+    im.mail_subject = ""
+    im.mail_body = <<"EOS"
+　　　　　　　　　　■面談回数１回
+　　　　　　　　　　■単価６０万程度（固定）
+EOS
+    im.analyze
+    assert_equal(1, im.interviewing_count)
+    
+    #
+    im = ImportMail.new
+    im.mail_subject = ""
+    im.mail_body = <<"EOS"
+・面接回数　：1回
+・備　考　　：外国籍可
+EOS
+    im.analyze
+    assert_equal(1, im.interviewing_count)
+
+    ### 2行パターン
+    #
+    im = ImportMail.new
+    im.mail_subject = ""
+    im.mail_body = <<"EOS"
+■面談回数
+2回
+■年齢
+EOS
+    im.analyze
+    assert_equal(2, im.interviewing_count)
+    
+    ### 複数回数パターン
+    #
+    im = ImportMail.new
+    im.mail_subject = ""
+    im.mail_body = <<"EOS"
+　　■面談回数：　１〜２回
+　　■単価６０万程度（固定）
+EOS
+    im.analyze
+    assert_equal(2, im.interviewing_count)
+  end
 end

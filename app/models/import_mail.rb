@@ -343,7 +343,7 @@ EOS
   end
 
   def detect_interviewing_count_in(body)
-    m = /面\s*?談([^\n]*?(?<count1>\d)\s*?回|[^\n]*?\n[^\n]*?(?<count2>\d)\s*?回)/.match(body)
+    m = /面\s*?[談接]([^\n]*?(?<count1>\d)\s*?回|[^\n]*?\n[^\n]*?(?<count2>\d)\s*?回)/.match(body)
     if m
       # 1行目 or 2行目に面談回数が入る
       if m[:count1]
