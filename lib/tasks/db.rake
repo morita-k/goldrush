@@ -1,5 +1,4 @@
 # DBスキーマ作成をパスしたくなったら
-=begin
 Rake.application.remove_task 'db:test:prepare'
  
 namespace :db do
@@ -9,4 +8,3 @@ namespace :db do
     end
   end
 end
-=end

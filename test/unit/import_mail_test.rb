@@ -50,5 +50,17 @@ EOS
     assert_equal(1, im.delivery_mail_id)
   end
 
+  test "detect_interviewing_count" do
+    # パターン1
+    im = ImportMail.new
+    im.mail_subject = ""
+    im.mail_body = <<"EOS"
+    単価　@50（140-180、スキルにより柔軟に増額可）
+    面談　1回（弊社同席）　※即設定可能
+    人数　1名
+EOS
+    im.analyze
+    assert_equal(1, im.interviewing_count)
+  end
 
 end

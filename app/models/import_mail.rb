@@ -342,12 +342,8 @@ EOS
     return false
   end
 
-  def detect_interviewing_count
-    detect_interviewing_count_in(Tag.pre_proc_body(pre_body))
-  end
-
   def detect_interviewing_count_in(body)
-    m = /面.\s*?談(\n*?(?<count1\d>)\s*?回|[^\n]*?\n[^\n]*?(?<count2\d>)\s*?回)/.match(body)
+    m = /面\s*?談([^\n]*?(?<count1>\d)\s*?回|[^\n]*?\n[^\n]*?(?<count2>\d)\s*?回)/.match(body)
     if m
       # 1行目 or 2行目に面談回数が入る
       if m[:count1]
@@ -390,7 +386,7 @@ EOS
     self.tag_text = make_tags(body)
     self.subject_tag_text = make_tags(Tag.pre_proc_body(mail_subject))
     self.proper_flg = detect_proper_in(body) ? 1 : 0
-    self.interviewing_count = detect_interviewing_count(body) 
+    self.interviewing_count = detect_interviewing_count_in(body) 
   end
 
   # 解析とともに保存を行う
