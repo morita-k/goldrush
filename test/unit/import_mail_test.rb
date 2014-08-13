@@ -60,7 +60,7 @@ EOS
 ・社員区分　：正社員,契約社員
 EOS
     im.analyze
-    assert_equal(-1, im.interviewing_count)
+    assert_equal(0, im.interviewing_count)
 
     ### 通常パターン
     #
