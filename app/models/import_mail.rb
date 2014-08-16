@@ -3,6 +3,7 @@ require 'nkf'
 require 'string_util'
 require 'zen2han'
 class ImportMail < ActiveRecord::Base
+  INTERVIEWING_COUNT_LINE_LIMIT = 3
 
   belongs_to :business_partner
   belongs_to :bp_pic
@@ -343,13 +344,13 @@ EOS
   end
 
   def detect_interviewing_count_in(body)
-    m = /面\s*?[談接]([^\n]*?(?<count1>\d)\s*?回|[^\n]*?\n[^\n]*?(?<count2>\d)\s*?回)/.match(body)
-    if m
-      # 1行目 or 2行目に面談回数が入る
-      if m[:count1]
-        return m[:count1]
-      elsif m[:count2]
-        return m[:count2]
+    if (start_index = (body =~ /面\s*?[談接]|打ち?合わ?せ/))
+      count_pattern = /(?<count>\d)[^\n\d]*?回/
+      body[start_index..-1].lines().take(INTERVIEWING_COUNT_LINE_LIMIT)
+          .each do |line|
+        if (m = count_pattern.match(line))
+          return m[:count]
+        end
       end
     end
     return self.interviewing_count
