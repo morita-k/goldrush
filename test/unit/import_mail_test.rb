@@ -109,6 +109,15 @@ EOS
 ■年齢
 EOS
 
+    ### 4行パターン
+    assert_detect_interviewing_count(<<EOS, 3)
+■面談回数
+   
+   
+3回
+■年齢
+EOS
+
     ### 複数回数パターン
     assert_detect_interviewing_count(<<EOS, 2)
 　　■面談回数：　１〜２回
@@ -125,7 +134,21 @@ EOS
 　　■面談回数：　二回
 　　■単価６０万程度（固定）
 EOS
-  end
+ 
+    ### 複数「面談」文言パターン
+    assert_detect_interviewing_count(<<EOS, 1)
+※所属(御社or1社下)、雇用形態(社員or契約or個人)、並行営業状況(提案or面談or結果待ち)をお伝え下さい
+----------------------------------------------------------------------
+
+...
+
+■期間
+9月〜長期
+■面談回数
+1回
+----------------------------------------------------------------------
+EOS
+ end
 
   def assert_detect_interviewing_count(body, expected_count)
     im = ImportMail.new
