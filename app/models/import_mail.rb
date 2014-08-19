@@ -585,6 +585,10 @@ EOS
     bp_member_flg == 1
   end
 
+  def interview_count_one?
+    interview_count == 1
+  end
+
 private
   def ImportMail.get_encode_body(mail, body)
     if mail.content_transfer_encoding == 'ISO-2022-JP'

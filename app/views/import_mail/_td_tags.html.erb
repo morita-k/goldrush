@@ -1,5 +1,5 @@
     <td style="overflow: hidden">
       <div class="overflow_hidden">
-        <span style="line-height: 90%;"><% if import_mail.plural? %><span class="label label-danger tag">複数</span> <%end%><% if import_mail.delivery_mail_matches.exists? %><span class="label label-default tag">候補</span> <% end %><% if import_mail.proper? then %><span class="label label-danger tag">社員</span> <%end%><%= raw format_only_major_tags(import_mail.tag_text) %></span></div>
+        <span style="line-height: 90%;"><% if import_mail.interview_count_one? %><span class="label label-danger tag">一回</span> <% end %><% if import_mail.plural? %><span class="label label-danger tag">複数</span> <%end%><% if import_mail.delivery_mail_matches.exists? %><span class="label label-default tag">候補</span> <% end %><% if import_mail.proper? then %><span class="label label-danger tag">社員</span> <%end%><%= raw format_only_major_tags(import_mail.tag_text) %></span></div>
     </td>
 
