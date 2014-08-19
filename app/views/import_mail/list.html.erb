@@ -11,6 +11,7 @@
         <%= check_box_tag 'proper_flg', 1, session[:import_mail_search][:proper_flg].to_i == 1 %> プロパー
         <%= check_box_tag 'starred', 1, session[:import_mail_search][:starred].to_i == 1 %> スター
         <%= check_box_tag 'outflow_mail_flg', 1, session[:import_mail_search][:outflow_mail_flg].to_i == 1 %> 流出メール
+        <%= check_box_tag 'interview_count_one', 1, session[:import_mail_search][:interview_count_one].to_i == 1 %> 面談1回
       </td>
     </tr>
     <tr>
@@ -43,12 +44,6 @@
       <th><i class="fa fa-angle-double-right "></i>対象日数</th>
       <td>
         <%= select_tag 'days', options_for_select((1..4).to_a + (1..6).to_a.map{|x| x*5}.push("無制限"), (session[:import_mail_search][:days] || 5))%>
-      </td>
-    </tr>
-    <tr>
-      <th><i class="fa fa-angle-double-right "></i>面談回数</th>
-      <td>
-        <%= check_box_tag 'interviewing_count_one', 1, session[:import_mail_search][:interviewing_count_one].to_i == 1 %> 面談1回
       </td>
     </tr>
     <tr>
