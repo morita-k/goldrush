@@ -342,7 +342,7 @@ EOS
   end
 
   def detect_interview_count_in(body)
-    pattern = /(面\s*?[談接]|打ち?合わ?せ).*?(?<count>\d)[^\n\d]*?回/m
+    pattern = /(面\s*?[談接回会]|打ち?合わ?せ).*?(?<count>\d)[^\n\d]*?回/m
     if (m = pattern.match(body))
       return m[:count]
     end

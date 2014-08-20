@@ -94,6 +94,16 @@ EOS
 ・備　考　　：外国籍不可
 EOS
 
+    assert_detect_interview_count(<<EOS, 2)
+・面回数　：２ 回
+・備　考　：外国籍可
+EOS
+
+    assert_detect_interview_count(<<EOS, 1)
+・面会　：1回
+・備　考　：外国籍可
+EOS
+
     ### 2行パターン
     assert_detect_interview_count(<<EOS, 2)
 ■面談回数
