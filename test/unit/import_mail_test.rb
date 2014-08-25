@@ -170,13 +170,39 @@ EOS
  
     ### 外国籍可パターン
     assert_detect_biz_offer_foreign_type(<<EOS, 'foreign')
-外国籍：可
+・外国人O.K.
+※外国籍の方の場合事前打ち合わせをさせて頂きます。
+EOS
+
+    assert_detect_biz_offer_foreign_type(<<EOS, 'foreign')
+・国籍： 外国可
 備考：長期を見込んで参画出来る方を希望
 EOS
 
     assert_detect_biz_offer_foreign_type(<<EOS, 'foreign')
-・外国籍可能
-※外国籍の方の場合事前打ち合わせをさせて頂きます。
+面談：2回
+備考：長期を見込んで参画出来る方を希望
+　　　※外国人大丈夫です。
+EOS
+
+    assert_detect_biz_offer_foreign_type(<<EOS, 'foreign')
+外国籍：OK
+備考：長期を見込んで参画出来る方を希望
+EOS
+
+    assert_detect_biz_offer_foreign_type(<<EOS, 'foreign')
+・外国籍可
+備考：長期を見込んで参画出来る方を希望
+EOS
+
+    assert_detect_biz_offer_foreign_type(<<EOS, 'foreign')
+外国籍：不問
+備考　：長期を見込んで参画出来る方を希望
+EOS
+
+    assert_detect_biz_offer_foreign_type(<<EOS, 'foreign')
+備考：長期を見込んで参画出来る方を希望
+　　　※外国籍大丈夫です。
 EOS
 
     assert_detect_biz_offer_foreign_type(<<EOS, 'foreign')
@@ -244,8 +270,14 @@ EOS
     【年　齢】　　32歳 日本人
 EOS
 
-   ### 外国籍パターン
+    ### 外国籍パターン
     assert_detect_bp_member_foreign_type(<<EOS, 'foreign')
+    名　　前：YK
+    年　　齢：30歳・男性 
+    日本語　：日本語検定1級 
+EOS
+
+   assert_detect_bp_member_foreign_type(<<EOS, 'foreign')
     年　　齢：30歳・男性 
     国　　籍：中国 
     来日年数：来日3ヶ月　※日本のプロジェクトに入場中 

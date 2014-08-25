@@ -377,8 +377,8 @@ EOS
         (body =~ /外\s*?国\s*?籍.*?[\s\n]*?(ng|不可)/i)
       return 'internal'
     end
-    if (body =~ /外国人?(o\.?k\.?|可)/i) or
-        (body =~ /外\s*?国\s*?籍.*?[\s\n]*?(o\.?k\.?|可|大丈夫)/i)
+    if (body =~ /外国人?(o\.?k\.?|可|大丈夫)/i) or
+        (body =~ /外\s*?国\s*?籍.*?[\s\n]*?(o\.?k\.?|可|不問|大丈夫)/i)
       return 'foreign'
     end
     return 'unknown'
