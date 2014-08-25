@@ -50,5 +50,121 @@ EOS
     assert_equal(1, im.delivery_mail_id)
   end
 
+  test "detect_interview_count" do
+    ### 面談回数不明パターン  
+    assert_detect_interview_count(<<EOS, 0)
+・面談回数　：
+・社員区分　：正社員,契約社員
+EOS
 
+    ### 通常パターン
+    assert_detect_interview_count(<<EOS, 1)
+    単価　@50（140-180、スキルにより柔軟に増額可）
+    面談　1回（弊社同席）　※即設定可能
+    人数　1名
+EOS
+
+    assert_detect_interview_count(<<EOS, 2)
+・面　談　　：２回
+・備　考　　：外国籍可
+EOS
+
+    assert_detect_interview_count(<<EOS, 1)
+　　　　　　　　　　■面談回数１回
+　　　　　　　　　　■単価６０万程度（固定）
+EOS
+
+    assert_detect_interview_count(<<EOS, 1)
+　■面談・・・・・・１回
+　■単価・・・・・・６０万程度（固定）
+EOS
+
+    assert_detect_interview_count(<<EOS, 1)
+・面接回数　：1回
+・備　考　　：外国籍可
+EOS
+
+    assert_detect_interview_count(<<EOS, 3)
+・打ち合わせ：3回
+・備　考　　：外国籍可
+EOS
+
+    assert_detect_interview_count(<<EOS, 1)
+・打合せ　　：1回
+・備　考　　：外国籍不可
+EOS
+
+    assert_detect_interview_count(<<EOS, 2)
+・面回数　：２ 回
+・備　考　：外国籍可
+EOS
+
+    assert_detect_interview_count(<<EOS, 1)
+・面会　：1回
+・備　考　：外国籍可
+EOS
+
+    ### 2行パターン
+    assert_detect_interview_count(<<EOS, 2)
+■面談回数
+2回
+■年齢
+EOS
+
+    ### 3行パターン
+    assert_detect_interview_count(<<EOS, 1)
+■面談回数
+   
+1回
+■年齢
+EOS
+
+    ### 4行パターン
+    assert_detect_interview_count(<<EOS, 3)
+■面談回数
+   
+   
+3回
+■年齢
+EOS
+
+    ### 複数回数パターン
+    assert_detect_interview_count(<<EOS, 2)
+　　■面談回数：　１〜２回
+　　■単価６０万程度（固定）
+EOS
+
+    ### 漢数字パターン
+    assert_detect_interview_count(<<EOS, 1)
+　　■面談回数：　一回
+　　■単価６０万程度（固定）
+EOS
+
+    assert_detect_interview_count(<<EOS, 2)
+　　■面談回数：　二回
+　　■単価６０万程度（固定）
+EOS
+ 
+    ### 複数「面談」文言パターン
+    assert_detect_interview_count(<<EOS, 1)
+※所属(御社or1社下)、雇用形態(社員or契約or個人)、並行営業状況(提案or面談or結果待ち)をお伝え下さい
+----------------------------------------------------------------------
+
+...
+
+■期間
+9月〜長期
+■面談回数
+1回
+----------------------------------------------------------------------
+EOS
+ end
+
+  def assert_detect_interview_count(body, expected_count)
+    im = ImportMail.new
+    im.mail_subject = ""
+    im.mail_body = body
+    im.analyze
+    assert_equal(expected_count, im.interview_count)
+  end
 end

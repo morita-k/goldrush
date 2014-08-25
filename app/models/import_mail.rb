@@ -3,7 +3,6 @@ require 'nkf'
 require 'string_util'
 require 'zen2han'
 class ImportMail < ActiveRecord::Base
-
   belongs_to :business_partner
   belongs_to :bp_pic
   has_many :bp_members
@@ -342,6 +341,14 @@ EOS
     return false
   end
 
+  def detect_interview_count_in(body)
+    pattern = /(面\s*?[談接回会]|打ち?合わ?せ).*?(?<count>\d)[^\n\d]*?回/m
+    if (m = pattern.match(body))
+      return m[:count]
+    end
+    return self.interview_count
+  end
+
   # 人材判定用特別単語でbodyを検索して1件でもhitすれば、人材メールと判断
   def analyze_bp_member_flg(body)
     if biz_offer_mail?
@@ -361,6 +368,9 @@ EOS
   # 単価解析
   # 最寄駅解析
   # タグ解析
+  # 件名解析
+  # プロパーかどうか
+  # 面談回数
   #
   def analyze(body = Tag.pre_proc_body(pre_body))
     analyze_bp_member_flg(body)
@@ -370,6 +380,7 @@ EOS
     self.tag_text = make_tags(body)
     self.subject_tag_text = make_tags(Tag.pre_proc_body(mail_subject))
     self.proper_flg = detect_proper_in(body) ? 1 : 0
+    self.interview_count = detect_interview_count_in(body) 
   end
 
   # 解析とともに保存を行う
@@ -572,6 +583,10 @@ EOS
 
   def bp_member_mail?
     bp_member_flg == 1
+  end
+
+  def interview_count_one?
+    interview_count == 1
   end
 
 private

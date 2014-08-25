@@ -11,6 +11,7 @@
         <%= check_box_tag 'proper_flg', 1, session[:import_mail_search][:proper_flg].to_i == 1 %> プロパー
         <%= check_box_tag 'starred', 1, session[:import_mail_search][:starred].to_i == 1 %> スター
         <%= check_box_tag 'outflow_mail_flg', 1, session[:import_mail_search][:outflow_mail_flg].to_i == 1 %> 流出メール
+        <%= check_box_tag 'interview_count_one', 1, session[:import_mail_search][:interview_count_one].to_i == 1 %> 面談1回
       </td>
     </tr>
     <tr>
