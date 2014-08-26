@@ -142,6 +142,7 @@ EOS
 
       # attempt_fileのため(import_mail_idが必要)に一旦登録
       import_mail.matching_way_type = 'other'
+      import_mail.foreign_type = 'unknown'
       import_mail.save!
     end
     ActiveRecord::Base::transaction do
@@ -362,6 +363,46 @@ EOS
     end
   end
 
+  # 案件、人材に応じた国籍の解析を行う
+  def analyze_foreign_type(body)
+    if biz_offer_mail?
+      self.foreign_type = detect_biz_offer_foreign_type(body)
+    elsif bp_member_mail?
+      self.foreign_type = detect_bp_member_foreign_type(body)
+    end
+  end
+
+  def detect_biz_offer_foreign_type(body)
+    if (body =~ /日本人?のみ|外国人?(ng|不可)/i) or
+        (body =~ /外\s*?国\s*?籍.*?[\s\n]*?(ng|不可)/i)
+      return 'internal'
+    end
+    if (body =~ /外国人?(o\.?k\.?|可|大丈夫)/i) or
+        (body =~ /外\s*?国\s*?籍.*?[\s\n]*?(o\.?k\.?|可|不問|大丈夫)/i)
+      return 'foreign'
+    end
+    return 'unknown'
+  end
+
+  def detect_bp_member_foreign_type(body)
+    # 「日本語」のワードが出てきたら、外国籍とみなす
+    return 'foreign' if body =~ /日\s*?本\s*?語/
+
+    # 外国籍チェック
+    foreign_line_pattern = /国\s*?籍|氏\s*?名|名\s*?前|備\s*?考|※|年\s*?齢/
+    StringUtil.detect_lines(body, foreign_line_pattern) do |line|
+      return 'foreign' if SpecialWord.country_words_foreign.detect{|x| line.include?(x)}
+    end
+
+    # 日本国籍チェック
+    internal_line_pattern = /国\s*?籍|氏\s*?名|名\s*?前|年\s*?齢/
+    StringUtil.detect_lines(body, internal_line_pattern) do |line|
+      return 'internal' if line.include?('日本')
+    end
+
+    return 'unknown' 
+  end
+
   #
   # 以下の項目に関して、メールの解析を行う
   # 年齢解析
@@ -371,6 +412,7 @@ EOS
   # 件名解析
   # プロパーかどうか
   # 面談回数
+  # 国籍区分
   #
   def analyze(body = Tag.pre_proc_body(pre_body))
     analyze_bp_member_flg(body)
@@ -381,6 +423,7 @@ EOS
     self.subject_tag_text = make_tags(Tag.pre_proc_body(mail_subject))
     self.proper_flg = detect_proper_in(body) ? 1 : 0
     self.interview_count = detect_interview_count_in(body) 
+    analyze_foreign_type(body)
   end
 
   # 解析とともに保存を行う
