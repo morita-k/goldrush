@@ -204,6 +204,7 @@ private
       :age_to => params[:age_to],
       :free_word => params[:free_word],
       :foreign_type => params[:foreign_type],
+      :sex_type => params[:sex_type],
       :days => params[:days],
       :order_by => params[:order_by],
     }
@@ -300,6 +301,10 @@ private
 
     unless cond_param[:foreign_type].blank?
       sql += " and foreign_type = '#{cond_param[:foreign_type]}' "
+    end
+
+    unless cond_param[:sex_type].blank?
+      sql += " and sex_type = '#{cond_param[:sex_type]}' "
     end
 
     orderby = order_conditions(cond_param[:order_by])

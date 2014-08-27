@@ -143,6 +143,7 @@ EOS
       # attempt_fileのため(import_mail_idが必要)に一旦登録
       import_mail.matching_way_type = 'other'
       import_mail.foreign_type = 'unknown'
+      import_mail.sex_type = 'other'
       import_mail.save!
     end
     ActiveRecord::Base::transaction do
@@ -403,6 +404,20 @@ EOS
     return 'unknown' 
   end
 
+  def detect_sex_type_in(body)
+    return 'other' if body =~ /性\s*?別.*不問/
+    StringUtil.detect_lines(body, /性/) do |line|
+      unless line =~ /服\s*?装/
+        if line =~ /[男女]/
+          hitted_word = $&
+          disabled = (line =~ /ng|不可/i)
+          return convert_to_sex_type(hitted_word, disabled) 
+        end
+      end
+    end
+    return 'other'
+  end
+
   #
   # 以下の項目に関して、メールの解析を行う
   # 年齢解析
@@ -424,6 +439,7 @@ EOS
     self.proper_flg = detect_proper_in(body) ? 1 : 0
     self.interview_count = detect_interview_count_in(body) 
     analyze_foreign_type(body)
+    self.sex_type = detect_sex_type_in(body)
   end
 
   # 解析とともに保存を行う
@@ -655,5 +671,15 @@ private
 
   def ext( mail )
     CTYPE_TO_EXT[mail.content_type] || 'txt'
+  end
+
+  def convert_to_sex_type(word, disabled = nil)
+    if word == '男'
+      disabled.nil? ? 'man' : 'woman'
+    elsif word == '女'
+      disabled.nil? ? 'woman' : 'man'
+    else
+      'other'
+    end
   end
 end

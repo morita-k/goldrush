@@ -55,6 +55,20 @@
       </td>
     </tr>
     <tr>
+      <th><i class="fa fa-angle-double-right "></i>性別</th>
+      <td>
+        <label>
+          <%= radio_button_tag 'sex_type', '', session[:import_mail_search][:sex_type] == '' %> 不問 
+        </label>
+        <label>
+          <%= radio_button_tag 'sex_type', 'man', session[:import_mail_search][:sex_type] == 'man' %> 男性
+        </label>
+        <label>
+          <%= radio_button_tag 'sex_type', 'woman', session[:import_mail_search][:sex_type] == 'woman' %> 女性 
+        </label>
+      </td>
+    </tr>
+    <tr>
       <th><i class="fa fa-angle-double-right "></i>対象日数</th>
       <td>
         <%= select_tag 'days', options_for_select((1..4).to_a + (1..6).to_a.map{|x| x*5}.push("無制限"), (session[:import_mail_search][:days] || 5))%>
