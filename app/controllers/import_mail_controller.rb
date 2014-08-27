@@ -204,6 +204,7 @@ private
       :age_to => params[:age_to],
       :free_word => params[:free_word],
       :foreign_type => params[:foreign_type],
+      :sex_type => params[:sex_type],
       :days => params[:days],
       :order_by => params[:order_by],
     }
@@ -299,7 +300,21 @@ private
     end
 
     unless cond_param[:foreign_type].blank?
-      sql += " and foreign_type = '#{cond_param[:foreign_type]}' "
+      if cond_param[:foreign_type] == "internal"
+        sql += " and case "
+        sql += " when biz_offer_flg = 1 then foreign_type = 'internal' "
+        sql += " when bp_member_flg = 1 then foreign_type in ('unknown', 'internal') "
+        sql += " end "
+      elsif cond_param[:foreign_type] == "foreign"
+        sql += " and case "
+        sql += " when biz_offer_flg = 1 then foreign_type in ('unknown', 'foreign') "
+        sql += " when bp_member_flg = 1 then foreign_type = 'foreign' "
+        sql += " end "
+      end
+    end
+
+    unless cond_param[:sex_type].blank?
+      sql += " and sex_type = '#{cond_param[:sex_type]}' "
     end
 
     orderby = order_conditions(cond_param[:order_by])

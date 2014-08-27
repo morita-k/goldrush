@@ -50,7 +50,21 @@
           <%= radio_button_tag 'foreign_type', 'internal', session[:import_mail_search][:foreign_type] == 'internal' %> 外国籍以外(不可)
         </label>
         <label>
-          <%= radio_button_tag 'foreign_type', 'foreign', session[:import_mail_search][:foreign_type] == 'foreign' %> 外国籍
+          <%= radio_button_tag 'foreign_type', 'foreign', session[:import_mail_search][:foreign_type] == 'foreign' %> 外国籍(可)
+        </label>
+      </td>
+    </tr>
+    <tr>
+      <th><i class="fa fa-angle-double-right "></i>性別</th>
+      <td>
+        <label>
+          <%= radio_button_tag 'sex_type', '', session[:import_mail_search][:sex_type] == '' %> 不問 
+        </label>
+        <label>
+          <%= radio_button_tag 'sex_type', 'man', session[:import_mail_search][:sex_type] == 'man' %> 男性
+        </label>
+        <label>
+          <%= radio_button_tag 'sex_type', 'woman', session[:import_mail_search][:sex_type] == 'woman' %> 女性 
         </label>
       </td>
     </tr>

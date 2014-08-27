@@ -234,8 +234,20 @@ EOS
 　　　　自己管理が出来る方
 　　　　業務知識は特にいりません
 　　　　外国籍NG
-　　　　稼働は安定しています（平均150〜170ｈ）
-　　　　今後も増員予定の案件になります
+EOS
+
+    assert_detect_biz_offer_foreign_type(<<EOS, 'internal')
+備　考：勤怠・コミュニケーションに問題ない方
+　　　　自己管理が出来る方
+　　　　業務知識は特にいりません
+　　　　日本人のみ
+EOS
+
+    assert_detect_biz_offer_foreign_type(<<EOS, 'internal')
+備　考：勤怠・コミュニケーションに問題ない方
+　　　　自己管理が出来る方
+　　　　業務知識は特にいりません
+　　　　日本人限定
 EOS
 
     assert_detect_biz_offer_foreign_type(<<EOS, 'internal')
@@ -306,6 +318,67 @@ EOS
 EOS
   end
 
+  test "detect_sex_type" do
+    ### 記載なしパターン
+    assert_detect_sex_type(<<EOS, 'other')
+    名　前：KH(30歳)
+    性　別：
+EOS
+
+    ### 性別不問パターン
+    assert_detect_sex_type(<<EOS, 'other')
+    名　　前：KH(男性)
+    性　　別：不問
+    年　　齢：30歳 
+EOS
+
+    ### 性別不可パターン
+    assert_detect_sex_type(<<EOS, 'man')
+    単　価：〜55万
+    性　別：3交替、24h365日のシフト勤務になるので女性は不可
+    年　齢：40才まで 
+EOS
+
+    assert_detect_sex_type(<<EOS, 'woman')
+    単　価：〜55万
+    性　別：男性 不可
+    年　齢：40才まで 
+EOS
+
+
+    assert_detect_sex_type(<<EOS, 'other')
+    単　価：〜55万
+    服　装：男性->スーツ
+EOS
+
+    ### 性別行パターン
+    assert_detect_sex_type(<<EOS, 'man')
+    【性　別】　　男 
+    【年　齢】　　37歳 
+EOS
+
+    assert_detect_sex_type(<<EOS, 'woman')
+    【性　別】　　女 
+    【年　齢】　　32歳 日本人
+EOS
+
+    ### 性別以外の行パターン
+    assert_detect_sex_type(<<EOS, 'man')
+    【名　前】TH(37歳)　男性 日本人 
+    【スキル】html, css, JavaScript, PHP, mysql
+EOS
+
+    assert_detect_sex_type(<<EOS, 'woman')
+    【氏　名】RK(32歳)　日本人女性 
+    【スキル】haskell, agda, Nemerle, Coq
+EOS
+
+    assert_detect_sex_type(<<EOS, 'man')
+    年　　齢：30歳・男性 
+    国　　籍：中国 
+EOS
+  end
+
 private
   def assert_detect_interview_count(body, expected_count)
     im = ImportMail.new
@@ -331,5 +404,13 @@ private
     im.mail_body = body
     im.analyze
     assert_equal(expected_foreign_type, im.foreign_type)
+  end
+
+  def assert_detect_sex_type(body, expected_sex_type)
+    im = ImportMail.new
+    im.mail_subject = ""
+    im.mail_body = body
+    im.analyze
+    assert_equal(expected_sex_type, im.sex_type)
   end
 end
