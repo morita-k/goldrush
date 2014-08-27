@@ -374,7 +374,7 @@ EOS
   end
 
   def detect_biz_offer_foreign_type(body)
-    if (body =~ /日本人?のみ|外国人?(ng|不可)/i) or
+    if (body =~ /日本人?(のみ|限定)|外国人?(ng|不可)/i) or
         (body =~ /外\s*?国\s*?籍.*?[\s\n]*?(ng|不可)/i)
       return 'internal'
     end

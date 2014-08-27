@@ -234,8 +234,20 @@ EOS
 　　　　自己管理が出来る方
 　　　　業務知識は特にいりません
 　　　　外国籍NG
-　　　　稼働は安定しています（平均150〜170ｈ）
-　　　　今後も増員予定の案件になります
+EOS
+
+    assert_detect_biz_offer_foreign_type(<<EOS, 'internal')
+備　考：勤怠・コミュニケーションに問題ない方
+　　　　自己管理が出来る方
+　　　　業務知識は特にいりません
+　　　　日本人のみ
+EOS
+
+    assert_detect_biz_offer_foreign_type(<<EOS, 'internal')
+備　考：勤怠・コミュニケーションに問題ない方
+　　　　自己管理が出来る方
+　　　　業務知識は特にいりません
+　　　　日本人限定
 EOS
 
     assert_detect_biz_offer_foreign_type(<<EOS, 'internal')
