@@ -880,3 +880,367 @@ special_words_63:
   updated_user: initial
   deleted_at: 
   deleted: 0
+special_words_64:
+  id: 64
+  owner_id: 
+  special_word_type: country_word_foreign
+  target_word: アメリカ
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_65:
+  id: 65
+  owner_id: 
+  special_word_type: country_word_foreign
+  target_word: アフリカ
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_66:
+  id: 66
+  owner_id: 
+  special_word_type: country_word_foreign
+  target_word: イギリス
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_67:
+  id: 67
+  owner_id: 
+  special_word_type: country_word_foreign
+  target_word: インド
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_68:
+  id: 68
+  owner_id: 
+  special_word_type: country_word_foreign
+  target_word: インドネシア
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_69:
+  id: 69
+  owner_id: 
+  special_word_type: country_word_foreign
+  target_word: オーストラリア
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_70:
+  id: 70
+  owner_id: 
+  special_word_type: country_word_foreign
+  target_word: オランダ
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_71:
+  id: 71
+  owner_id: 
+  special_word_type: country_word_foreign
+  target_word: カナダ
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_72:
+  id: 72
+  owner_id: 
+  special_word_type: country_word_foreign
+  target_word: 韓国
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_73:
+  id: 73
+  owner_id: 
+  special_word_type: country_word_foreign
+  target_word: シンガポール
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_74:
+  id: 74
+  owner_id: 
+  special_word_type: country_word_foreign
+  target_word: スウェーデン
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_75:
+  id: 75
+  owner_id: 
+  special_word_type: country_word_foreign
+  target_word: タイ
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_76:
+  id: 76
+  owner_id: 
+  special_word_type: country_word_foreign
+  target_word: 台湾
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_77:
+  id: 77
+  owner_id: 
+  special_word_type: country_word_foreign
+  target_word: 中国
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_78:
+  id: 78
+  owner_id: 
+  special_word_type: country_word_foreign
+  target_word: チュニジア
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_79:
+  id: 79
+  owner_id: 
+  special_word_type: country_word_foreign
+  target_word: ドイツ
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_80:
+  id: 80
+  owner_id: 
+  special_word_type: country_word_foreign
+  target_word: ニュージーランド
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_81:
+  id: 81
+  owner_id: 
+  special_word_type: country_word_foreign
+  target_word: ノルウェー
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_82:
+  id: 82
+  owner_id: 
+  special_word_type: country_word_foreign
+  target_word: パキスタン
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_83:
+  id: 83
+  owner_id: 
+  special_word_type: country_word_foreign
+  target_word: フィンランド
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_84:
+  id: 84
+  owner_id: 
+  special_word_type: country_word_foreign
+  target_word: ブラジル
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_85:
+  id: 85
+  owner_id: 
+  special_word_type: country_word_foreign
+  target_word: フランス
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_86:
+  id: 86
+  owner_id: 
+  special_word_type: country_word_foreign
+  target_word: ベトナム
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_87:
+  id: 87
+  owner_id: 
+  special_word_type: country_word_foreign
+  target_word: ミャンマー
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_88:
+  id: 88
+  owner_id: 
+  special_word_type: country_word_foreign
+  target_word: メキシコ
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_89:
+  id: 89
+  owner_id: 
+  special_word_type: country_word_foreign
+  target_word: ロシア
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
