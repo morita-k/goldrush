@@ -306,10 +306,7 @@ private
         sql += " when bp_member_flg = 1 then foreign_type in ('unknown', 'internal') "
         sql += " end "
       elsif cond_param[:foreign_type] == "foreign"
-        sql += " and case "
-        sql += " when biz_offer_flg = 1 then foreign_type in ('unknown', 'foreign') "
-        sql += " when bp_member_flg = 1 then foreign_type = 'foreign' "
-        sql += " end "
+        sql += " and foreign_type = 'foreign' "
       end
     end
 
