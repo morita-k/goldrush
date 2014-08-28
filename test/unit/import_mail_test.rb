@@ -170,6 +170,11 @@ EOS
  
     ### 外国籍可パターン
     assert_detect_biz_offer_foreign_type(<<EOS, 'foreign')
+・外国人　：可
+・備考　　：長期を見込んで参画出来る方を希望
+EOS
+
+   assert_detect_biz_offer_foreign_type(<<EOS, 'foreign')
 ・外国人O.K.
 ※外国籍の方の場合事前打ち合わせをさせて頂きます。
 EOS
@@ -206,6 +211,21 @@ EOS
 EOS
 
     assert_detect_biz_offer_foreign_type(<<EOS, 'foreign')
+国籍　：不問
+備考　：長期を見込んで参画出来る方を希望
+EOS
+
+    assert_detect_biz_offer_foreign_type(<<EOS, 'foreign')
+国籍　：問わず
+備考　：長期を見込んで参画出来る方を希望
+EOS
+
+    assert_detect_biz_offer_foreign_type(<<EOS, 'foreign')
+備考　：長期を見込んで参画出来る方を希望
+　　　※国籍は特に問いません。
+EOS
+
+    assert_detect_biz_offer_foreign_type(<<EOS, 'foreign')
 【外国籍】
 　可
 【面談】
@@ -222,6 +242,11 @@ EOS
     assert_detect_biz_offer_foreign_type(<<EOS, 'internal')
 募集人数　　　2〜3名
 外国籍　　　　不可
+EOS
+
+    assert_detect_biz_offer_foreign_type(<<EOS, 'internal')
+・外国人　：不可
+・備考　　：長期を見込んで参画出来る方を希望
 EOS
 
     assert_detect_biz_offer_foreign_type(<<EOS, 'internal')
