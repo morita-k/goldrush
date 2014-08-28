@@ -5441,6 +5441,26 @@ types_272:
 types_273:
   id: 273
   owner_id: 
+  type_section: "special_word_type"
+  type_key: "country_word_foreign"
+  long_name: "国名(外国)"
+  short_name: "国名(外国)"
+  other_name: "国名(外国)"
+  type_description: ""
+  type_description_text: ""
+  display_order1: 5
+  display_order2: 5
+  logic_bind_type: "bind"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+types_274:
+  id: 274
+  owner_id: 
   type_section: "photo_status_type"
   type_key: "unfixed"
   long_name: "未登録"
@@ -5458,8 +5478,8 @@ types_273:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_274:
-  id: 274
+types_275:
+  id: 275
   owner_id: 
   type_section: "photo_status_type"
   type_key: "fixed"
@@ -5478,8 +5498,8 @@ types_274:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_275:
-  id: 275
+types_276:
+  id: 276
   owner_id: 
   type_section: "daily_report_input_type"
   type_key: "notinput"
@@ -5498,8 +5518,8 @@ types_275:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_276:
-  id: 276
+types_277:
+  id: 277
   owner_id: 
   type_section: "daily_report_input_type"
   type_key: "existinput"
@@ -5518,8 +5538,8 @@ types_276:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_277:
-  id: 277
+types_278:
+  id: 278
   owner_id: 
   type_section: "matching_way_type"
   type_key: "biz_offer"
@@ -5538,8 +5558,8 @@ types_277:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_278:
-  id: 278
+types_279:
+  id: 279
   owner_id: 
   type_section: "matching_way_type"
   type_key: "bp_member"
@@ -5558,8 +5578,8 @@ types_278:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_279:
-  id: 279
+types_280:
+  id: 280
   owner_id: 
   type_section: "matching_way_type"
   type_key: "other"
@@ -5578,8 +5598,8 @@ types_279:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_280:
-  id: 280
+types_281:
+  id: 281
   owner_id: 
   type_section: "imm_status_type"
   type_key: "open"
@@ -5598,8 +5618,8 @@ types_280:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_281:
-  id: 281
+types_282:
+  id: 282
   owner_id: 
   type_section: "imm_status_type"
   type_key: "candidate"
@@ -5618,8 +5638,8 @@ types_281:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_282:
-  id: 282
+types_283:
+  id: 283
   owner_id: 
   type_section: "imm_status_type"
   type_key: "self_reject"
@@ -5638,8 +5658,8 @@ types_282:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_283:
-  id: 283
+types_284:
+  id: 284
   owner_id: 
   type_section: "imm_status_type"
   type_key: "down_approach"
@@ -5658,8 +5678,8 @@ types_283:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_284:
-  id: 284
+types_285:
+  id: 285
   owner_id: 
   type_section: "imm_status_type"
   type_key: "down_reject"
@@ -5678,8 +5698,8 @@ types_284:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_285:
-  id: 285
+types_286:
+  id: 286
   owner_id: 
   type_section: "imm_status_type"
   type_key: "upper_approach"
@@ -5698,8 +5718,8 @@ types_285:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_286:
-  id: 286
+types_287:
+  id: 287
   owner_id: 
   type_section: "imm_status_type"
   type_key: "upper_reject"
@@ -5718,8 +5738,8 @@ types_286:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_287:
-  id: 287
+types_288:
+  id: 288
   owner_id: 
   type_section: "imm_status_type"
   type_key: "interview"
@@ -5738,8 +5758,8 @@ types_287:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_288:
-  id: 288
+types_289:
+  id: 289
   owner_id: 
   type_section: "imm_status_type"
   type_key: "interview_reject"
@@ -5758,8 +5778,8 @@ types_288:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-types_289:
-  id: 289
+types_290:
+  id: 290
   owner_id: 
   type_section: "imm_status_type"
   type_key: "contract"
