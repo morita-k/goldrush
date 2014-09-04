@@ -24,9 +24,15 @@
   <tr>
     <th><i class="fa fa-angle-double-right"></i>JIET</th>
     <td class="jiet_radio">
-      <%= radio_button_tag 'jiet', "0", search_value_biz_offer(:jiet) == "0" %> どちらも
-      <%= radio_button_tag 'jiet', "1", search_value_biz_offer(:jiet) == "1" %> JIET以外
-      <%= radio_button_tag 'jiet', "2", search_value_biz_offer(:jiet) == "2" %> JIETのみ
+      <label>
+        <%= radio_button_tag 'jiet', "0", search_value_biz_offer(:jiet) == "0" %> どちらも
+      </label>
+      <label>
+        <%= radio_button_tag 'jiet', "1", search_value_biz_offer(:jiet) == "1" %> JIET以外
+      </label>
+      <label>
+        <%= radio_button_tag 'jiet', "2", search_value_biz_offer(:jiet) == "2" %> JIETのみ
+      </label>
     </td>
   </tr>
   <tr>

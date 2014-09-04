@@ -20,6 +20,10 @@ class SpecialWordsTest < ActiveSupport::TestCase
     assert_not_equal(SpecialWord.ignore_word_propers.size, 0)
   end
 
+  test "国名(外国)が取得できていること" do
+    assert_not_equal(SpecialWord.country_words_foreign.size, 0)
+  end
+
   test "タイプが違う場合取得できないこと" do
     assert_empty SpecialWord.get_special_words("other")
   end
