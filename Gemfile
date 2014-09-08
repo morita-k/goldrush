@@ -75,7 +75,7 @@ group :development do
   gem 'hirb'
   gem 'hirb-unicode'
   gem 'pry-rails'
-  gem 'pry-debugger'
+#  gem 'pry-debugger'
 
   # renderファイル名をhtmlソース内にコメント表示
   gem 'rails_view_annotator'
