@@ -70,7 +70,7 @@ gem 'rmagick', :require => 'RMagick'
 
 group :development do
   # http://qiita.com/yusabana/items/8ce54577d959bb085b37
-  gem 'better_errors'
+  gem 'better_errors', '~> 1.1.0'
   gem 'binding_of_caller'
   gem 'hirb'
   gem 'hirb-unicode'
@@ -99,4 +99,3 @@ end
 gem 'rb-readline'
 
 gem 'dkim', :git => 'git://github.com/jhawthorn/dkim.git'
-
