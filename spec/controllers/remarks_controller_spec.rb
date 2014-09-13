@@ -13,7 +13,7 @@ describe RemarksReportController do
       
     end
     
-    it '@remarks‚ğ’è‹`‚µ‚ÄƒŠƒXƒg‚ğ•\¦‚·‚é' do
+    it '@remarksã‚’å®šç¾©ã—ã¦ãƒªã‚¹ãƒˆã‚’è¡¨ç¤ºã™ã‚‹' do
       expect(assigns(:remarks).size).to eq 2
       expect(assigns(:remarks).first).to eq @remark_1
       expect(response).to eq render_template('index')
@@ -27,7 +27,7 @@ describe RemarksReportController do
       get :new
     end
     
-     it 'V‹Kì¬‰æ–Ê‚ğ•\¦‚·‚é' do
+     it 'æ–°è¦ä½œæˆç”»é¢ã‚’è¡¨ç¤ºã™ã‚‹' do
        expect(response).to eq render_template('new')
      end
 
@@ -38,7 +38,7 @@ describe RemarksReportController do
         post :create, parameters
       end
       
-      it 'V‹Kì¬‚ğ‚µ‚Äˆê——‰æ–Ê‚É–ß‚é' do
+      it 'æ–°è¦ä½œæˆã‚’ã—ã¦ä¸€è¦§ç”»é¢ã«æˆ»ã‚‹' do
         expect(Remark.all.last.attributes).to include @remark_parameters
       end
       
@@ -52,7 +52,7 @@ describe RemarksReportController do
       get :show, {id => 1}
     end
     
-    it 'id=1‚Ìƒf[ƒ^‚ğ•\¦‚·‚é' do
+    it 'id=1ã®ãƒ‡ãƒ¼ã‚¿ã‚’è¡¨ç¤ºã™ã‚‹' do
       expect(assigns(:remark)).to eq @remark_1
       expect(response).to eq render_template('show')
     end
