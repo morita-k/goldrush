@@ -220,7 +220,7 @@ ActiveRecord::Schema.define(:version => 0) do
     t.integer  "owner_id",          :limit => 8
     t.string   "bp_pic_group_name",                              :null => false
     t.integer  "mail_template_id",  :limit => 8
-    t.string   "bp_pic_group_type", :limit => 40,                :null => false
+    t.string   "matching_way_type", :limit => 40,                :null => false
     t.text     "memo"
     t.datetime "created_at",                                     :null => false
     t.datetime "updated_at",                                     :null => false
@@ -534,6 +534,8 @@ ActiveRecord::Schema.define(:version => 0) do
     t.float    "payment"
     t.integer  "age"
     t.integer  "auto_matching_last_id", :limit => 8
+    t.integer  "import_mail_match_id",  :limit => 8
+    t.string   "matching_way_type",     :limit => 40,                        :null => false
     t.datetime "created_at",                                                 :null => false
     t.datetime "updated_at",                                                 :null => false
     t.integer  "lock_version",          :limit => 8,          :default => 0
@@ -689,6 +691,7 @@ ActiveRecord::Schema.define(:version => 0) do
     t.integer  "mail_match_score",      :limit => 8,  :default => 0
     t.text     "tag_text"
     t.integer  "subject_tag_match_flg",               :default => 0
+    t.string   "imm_status_type",       :limit => 40,                :null => false
     t.float    "payment_gap"
     t.integer  "age_gap"
     t.integer  "starred",                             :default => 0
@@ -721,44 +724,50 @@ ActiveRecord::Schema.define(:version => 0) do
   end
 
   add_index "import_mail_sources", ["id"], :name => "id", :unique => true
+  add_index "import_mail_sources", ["import_mail_id"], :name => "idx_import_mail_sources_28"
 
   create_table "import_mails", :force => true do |t|
-    t.integer  "owner_id",            :limit => 8
-    t.integer  "business_partner_id", :limit => 8
-    t.integer  "bp_pic_id",           :limit => 8
+    t.integer  "owner_id",             :limit => 8
+    t.integer  "business_partner_id",  :limit => 8
+    t.integer  "bp_pic_id",            :limit => 8
     t.string   "in_reply_to"
-    t.integer  "delivery_mail_id",    :limit => 8
-    t.datetime "received_at",                                              :null => false
-    t.string   "mail_subject",        :limit => 1024,                      :null => false
-    t.text     "mail_body",                                                :null => false
-    t.string   "mail_from",                                                :null => false
-    t.string   "mail_sender_name",                                         :null => false
+    t.integer  "delivery_mail_id",     :limit => 8
+    t.datetime "received_at",                                               :null => false
+    t.string   "mail_subject",         :limit => 1024,                      :null => false
+    t.text     "mail_body",                                                 :null => false
+    t.string   "mail_from",                                                 :null => false
+    t.string   "mail_sender_name",                                          :null => false
     t.text     "mail_to"
     t.text     "mail_cc"
-    t.string   "mail_bcc",            :limit => 1024
+    t.string   "mail_bcc",             :limit => 1024
     t.string   "message_id"
-    t.integer  "biz_offer_flg",                             :default => 0
-    t.integer  "bp_member_flg",                             :default => 0
-    t.integer  "registed",                                  :default => 0
-    t.integer  "unwanted",                                  :default => 0
-    t.integer  "proper_flg",                                :default => 0
-    t.integer  "outflow_mail_flg",                          :default => 0
-    t.integer  "starred",                                   :default => 0
+    t.integer  "biz_offer_flg",                              :default => 0
+    t.integer  "bp_member_flg",                              :default => 0
+    t.integer  "registed",                                   :default => 0
+    t.integer  "unwanted",                                   :default => 0
+    t.integer  "proper_flg",                                 :default => 0
+    t.integer  "outflow_mail_flg",                           :default => 0
+    t.integer  "starred",                                    :default => 0
     t.text     "tag_text"
     t.text     "subject_tag_text"
     t.float    "payment"
     t.integer  "age"
     t.string   "payment_text"
     t.string   "age_text"
-    t.text     "nearest_station",     :limit => 2147483647
-    t.integer  "plural_flg",                                :default => 0
-    t.datetime "created_at",                                               :null => false
-    t.datetime "updated_at",                                               :null => false
-    t.integer  "lock_version",        :limit => 8,          :default => 0
-    t.string   "created_user",        :limit => 80
-    t.string   "updated_user",        :limit => 80
+    t.text     "nearest_station",      :limit => 2147483647
+    t.integer  "plural_flg",                                 :default => 0
+    t.integer  "import_mail_match_id", :limit => 8
+    t.string   "matching_way_type",    :limit => 40,                        :null => false
+    t.integer  "interview_count",                            :default => 0
+    t.string   "foreign_type",         :limit => 40,                        :null => false
+    t.string   "sex_type",             :limit => 40,                        :null => false
+    t.datetime "created_at",                                                :null => false
+    t.datetime "updated_at",                                                :null => false
+    t.integer  "lock_version",         :limit => 8,          :default => 0
+    t.string   "created_user",         :limit => 80
+    t.string   "updated_user",         :limit => 80
     t.datetime "deleted_at"
-    t.integer  "deleted",                                   :default => 0
+    t.integer  "deleted",                                    :default => 0
   end
 
   add_index "import_mails", ["delivery_mail_id"], :name => "idx_import_mails_21"
@@ -982,8 +991,8 @@ ActiveRecord::Schema.define(:version => 0) do
     t.integer  "deleted",                               :default => 0
   end
 
-  add_index "sys_configs", ["config_section", "config_key"], :name => "idx_sys_configs_3", :unique => true
   add_index "sys_configs", ["id"], :name => "id", :unique => true
+  add_index "sys_configs", ["owner_id", "config_section", "config_key"], :name => "idx_sys_configs_3", :unique => true
 
   create_table "system_logs", :force => true do |t|
     t.integer  "owner_id",     :limit => 8
@@ -1023,6 +1032,7 @@ ActiveRecord::Schema.define(:version => 0) do
   end
 
   add_index "tag_details", ["id"], :name => "id", :unique => true
+  add_index "tag_details", ["owner_id", "tag_id", "parent_id"], :name => "idx_tag_details_7", :unique => true
   add_index "tag_details", ["parent_id", "tag_id"], :name => "idx_tag_details_10"
   add_index "tag_details", ["tag_id", "parent_id"], :name => "idx_tag_details_9"
 
@@ -1064,6 +1074,7 @@ ActiveRecord::Schema.define(:version => 0) do
   end
 
   add_index "tags", ["id"], :name => "id", :unique => true
+  add_index "tags", ["owner_id", "tag_key", "tag_text"], :name => "idx_tags_6", :unique => true
   add_index "tags", ["tag_key", "tag_text"], :name => "idx_tags_8"
 
   create_table "types", :force => true do |t|

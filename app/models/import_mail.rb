@@ -374,15 +374,14 @@ EOS
   end
 
   def detect_biz_offer_foreign_type(body)
-    if (body =~ /日本人?(のみ|限定)/i) or
-        (body =~ /外\s*?国\s*?[人籍]?(.*?[\s\n]*?)(ng|不可)/i)
-      return 'internal'
+    case body
+    when /日本人?(のみ|限定)/i, /外\s*?国\s*?[人籍]?(.*?[\s\n]*?)(ng|不可)/i
+      'internal'
+    when /外\s*?国\s*?[人籍]?(.*?[\s\n]*?)(o\.?k\.?|可|大丈夫)/i, /国\s*?籍.*?(不問|問わず|問いません)/
+      'foreign'
+    else
+      'unknown'
     end
-    if (body =~ /外\s*?国\s*?[人籍]?(.*?[\s\n]*?)(o\.?k\.?|可|大丈夫)/i) or
-        (body =~ /国\s*?籍.*?(不問|問わず|問いません)/)
-      return 'foreign'
-    end
-    return 'unknown'
   end
 
   def detect_bp_member_foreign_type(body)
@@ -407,12 +406,9 @@ EOS
   def detect_sex_type_in(body)
     return 'other' if body =~ /性\s*?別.*不問/
     StringUtil.detect_lines(body, /性/) do |line|
-      unless line =~ /服\s*?装/
-        if line =~ /[男女]/
-          hitted_word = $&
-          disabled = (line =~ /ng|不可/i)
-          return convert_to_sex_type(hitted_word, disabled) 
-        end
+      if line !~ /服\s*?装/ and
+          line =~ /[男女]/
+        return convert_to_sex_type($&, line =~ /ng|不可/i)
       end
     end
     return 'other'
@@ -674,9 +670,10 @@ private
   end
 
   def convert_to_sex_type(word, disabled = nil)
-    if word == '男'
+    case word
+    when '男'
       disabled.nil? ? 'man' : 'woman'
-    elsif word == '女'
+    when '女'
       disabled.nil? ? 'woman' : 'man'
     else
       'other'
