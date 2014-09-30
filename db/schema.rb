@@ -874,6 +874,8 @@ ActiveRecord::Schema.define(:version => 0) do
     t.string   "owner_shortname",      :limit => 80
     t.integer  "user_max_count",                     :default => 0
     t.integer  "available_user_count",               :default => 0
+    t.string   "owner_key",            :limit => 40,                :null => false
+    t.string   "company_name"
     t.datetime "created_at",                                        :null => false
     t.datetime "updated_at",                                        :null => false
     t.integer  "lock_version",         :limit => 8,  :default => 0
@@ -884,6 +886,7 @@ ActiveRecord::Schema.define(:version => 0) do
   end
 
   add_index "owners", ["id"], :name => "id", :unique => true
+  add_index "owners", ["owner_key"], :name => "idx_owners_29", :unique => true
 
   create_table "photos", :force => true do |t|
     t.integer  "owner_id",          :limit => 8
@@ -1032,7 +1035,7 @@ ActiveRecord::Schema.define(:version => 0) do
   end
 
   add_index "tag_details", ["id"], :name => "id", :unique => true
-  add_index "tag_details", ["owner_id", "tag_id", "parent_id"], :name => "idx_tag_details_7", :unique => true
+  add_index "tag_details", ["owner_id", "tag_id", "parent_id", "deleted_at", "deleted"], :name => "idx_tag_details_7", :unique => true
   add_index "tag_details", ["parent_id", "tag_id"], :name => "idx_tag_details_10"
   add_index "tag_details", ["tag_id", "parent_id"], :name => "idx_tag_details_9"
 
@@ -1106,7 +1109,7 @@ ActiveRecord::Schema.define(:version => 0) do
     t.string   "login",                                                 :null => false
     t.string   "fullname"
     t.string   "shortname"
-    t.string   "nickname"
+    t.string   "nickname",                                              :null => false
     t.string   "access_level_type",        :limit => 40,                :null => false
     t.integer  "per_page",                               :default => 0
     t.string   "email",                                                 :null => false
