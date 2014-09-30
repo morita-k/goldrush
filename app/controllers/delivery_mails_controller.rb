@@ -119,6 +119,8 @@ EOS
     end
 
     @delivery_mail = create_model(:delivery_mails, params[:delivery_mail])
+    @delivery_mail.mail_from = current_user.email
+    @delivery_mail.mail_from_name = current_user.nickname
     @delivery_mail.matching_way_type = @delivery_mail.bp_pic_group.matching_way_type
     @delivery_mail.delivery_mail_type = "group"
     @delivery_mail.perse_planned_setting_at(current_user) # zone
@@ -334,6 +336,8 @@ EOS
 
   def reply_mail_create
     @delivery_mail = create_model(:delivery_mails, params[:delivery_mail])
+    @delivery_mail.mail_from = current_user.email
+    @delivery_mail.mail_from_name = current_user.nickname
     @delivery_mail.delivery_mail_type = "instant"
     @delivery_mail.setup_planned_setting_at(current_user.zone_now)
     @delivery_mail.mail_status_type = 'unsend'
@@ -412,6 +416,8 @@ EOS
   def contact_mail_create(bp_pic_ids)
     @bp_pics = BpPic.find(bp_pic_ids)
     @delivery_mail = create_model(:delivery_mails, params[:delivery_mail])
+    @delivery_mail.mail_from = current_user.email
+    @delivery_mail.mail_from_name = current_user.nickname
     @delivery_mail.delivery_mail_type = "instant"
     @delivery_mail.setup_planned_setting_at(@bp_pics[0].sales_pic.zone_now)
     @delivery_mail.mail_status_type = 'unsend'

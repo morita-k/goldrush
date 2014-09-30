@@ -17,6 +17,10 @@ module DeliveryMailsHelper
     return !params[:bp_pic_group_id].blank?
   end
 
+  def mail_from
+    "#{current_user.nickname} <#{current_user.email}>"
+  end
+
   def mail_to(delivery_mail)
     if delivery_mail.group?
       #グループメールの場合
@@ -41,10 +45,5 @@ module DeliveryMailsHelper
 
   def get_bp_member_name
     BpMember.find(@delivery_mail.bp_member_id)
-  end
-
-  def mail_from_list
-    user_list = User.includes(:employee).where(["users.owner_id = ? and users.deleted = 0 and employees.resignation_date is null", current_user.owner_id]).map {|x| [x.formated_mail_from]}
-    user_list.unshift("#{SysConfig.get_value(:delivery_mails, :default_from_name)} <#{SysConfig.get_value(:delivery_mails, :default_from)}>")
   end
 end
