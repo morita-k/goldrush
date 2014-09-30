@@ -234,6 +234,19 @@ EOS
 　１回
 EOS
 
+    ### 特定の国籍のみ可パターン
+    assert_detect_biz_offer_foreign_type(<<EOS, 'foreign')
+・PL/SQL経験（必須）
+・中国籍可（日本語能力必須） 
+【場所】　品川、大崎 近辺
+EOS
+
+    assert_detect_biz_offer_foreign_type(<<EOS, 'foreign')
+・C++経験（必須）
+・中国人の方大丈夫です。（日本語能力必須） 
+【場所】　恵比寿 近辺
+EOS
+
     ### 外国籍不可パターン
     assert_detect_biz_offer_foreign_type(<<EOS, 'internal')
 ■国　籍：外国不可
