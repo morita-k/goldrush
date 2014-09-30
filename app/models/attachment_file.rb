@@ -105,7 +105,7 @@ class AttachmentFile < ActiveRecord::Base
     end
   end
 
-  def self.call_poi_modify_property(target_attachment_ids)
+  def self.call_poi_modify_property(target_attachment_ids, author = nil)
     java_dir = File.join(Rails.root, 'java')
     sep = ENV["OS"] ? ";" : ":" # Windows or UNIX??
     class_path = ["#{java_dir}","#{java_dir}/lib/*"].join(sep)
@@ -119,8 +119,6 @@ class AttachmentFile < ActiveRecord::Base
       password = '\"\"'
     end
     database = ActiveRecord::Base.configurations[ENV['RAILS_ENV']]['database']
-
-    author = SysConfig.get_company_name
 
     unless author.blank?
       command = "java -classpath #{class_path} gd/SetPoiProperty jdbc:mysql://#{host}:3306/#{database} #{username} #{password} #{target_attachment_ids.join(',')} #{Rails.root} #{author}"

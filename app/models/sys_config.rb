@@ -135,10 +135,6 @@ class SysConfig < ActiveRecord::Base
     get_configuration("outflow_mail", "outflow_criterion", owner_id).value1
   end
 
-  def self.get_company_name
-    get_configuration("poi_company_name", "company_name").value1
-  end
-
   def self.get_api_login
     get_configuration("api_login", "username_password")
   end
