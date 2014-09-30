@@ -3,7 +3,7 @@ class BpPicGroupDetailsController < ApplicationController
   # GET /bp_pic_group_details
   # GET /bp_pic_group_details.json
   def index
-    @bp_pic_group_details = BpPicGroupDetail.page(params[:page]).per(50)
+    @bp_pic_group_details = find_login_owner(:bp_pic_group_details).page(params[:page]).per(50)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -41,7 +41,7 @@ class BpPicGroupDetailsController < ApplicationController
   # POST /bp_pic_group_details
   # POST /bp_pic_group_details.json
   def create
-    @bp_pic_group_detail = BpPicGroupDetail.new(params[:bp_pic_group_detail])
+    @bp_pic_group_detail = create_model(:bp_pic_group_details, params[:bp_pic_group_detail])
 
     if @bp_pic_group_detail.bp_pic_id
       respond_to do |format|

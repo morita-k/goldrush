@@ -17,7 +17,7 @@ class DailyReportController < ApplicationController
     update_data = params[:target_daily_report]
     target_date = params[:date]
 
-    delivery_mails = DeliveryMail.where("mail_send_status_type = 'finished' and send_end_at like ?", "#{target_date}%").all
+    delivery_mails = find_login_owner(:deliverly_mails).where("mail_send_status_type = 'finished' and send_end_at like ?", "#{target_date}%").all
     DailyReport.update_daily_report(update_data, @target_user, delivery_mails)
     DailyReportSummary.update_daily_report_summary(target_date, @target_user.id)
 

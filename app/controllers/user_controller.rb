@@ -13,7 +13,7 @@ class UserController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    @user_pages, @users = paginate(:users, :per_page => 50, :conditions => ["deleted = 0", 1])
+    @user_pages, @users = paginate(:users, :per => 50, :conditions => ["deleted = 0", 1])
   end
 
   def fixmessage

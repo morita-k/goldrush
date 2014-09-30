@@ -127,7 +127,7 @@ class DailyReportSummary < ActiveRecord::Base
     def send_mail(target_daily_report_summary, target_date, target_user, domain_name)
       headers['Message-ID'] = "#{SecureRandom.uuid}@#{ActionMailer::Base.smtp_settings[:domain]}"
 
-      target_to = SysConfig.get_value(:daily_report, :send_mail)
+      target_to = SysConfig.get_value(:daily_report, :send_mail, target_user.owner_id)
       mail( to: target_to,
             cc: nil,
             bcc: nil,
@@ -136,7 +136,7 @@ class DailyReportSummary < ActiveRecord::Base
             body: get_body(target_daily_report_summary, target_date, target_user, domain_name) )
 
       # Return-path の設定
-      return_path = SysConfig.get_value(:delivery_mails, :return_path)
+      return_path = SysConfig.get_delivery_mails_return_path
       if return_path
         headers[:return_path] = return_path
       else

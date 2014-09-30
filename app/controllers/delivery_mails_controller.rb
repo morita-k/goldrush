@@ -12,7 +12,11 @@ class DeliveryMailsController < ApplicationController
       #即席メール
       cond  = ["delivery_mail_type = ? and deleted = 0",  "instant"]
     end
-    @delivery_mails = DeliveryMail.where(cond).order("id desc").page(params[:page]).per(50)
+    @delivery_mails = find_login_owner(:delivery_mails)
+                        .where(cond)
+                        .order("id desc")
+                        .page(params[:page])
+                        .per(50)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -51,9 +55,9 @@ class DeliveryMailsController < ApplicationController
 
   def copynew
     @src_mail_id = params[:id]
+    set_src_mail_attachment_files(@src_mail_id) if @src_mail_id.present?
     src_mail = DeliveryMail.find(@src_mail_id)
     src_mail.setup_planned_setting_at(current_user.zone_at(src_mail.planned_setting_at))
-    @attachment_files = AttachmentFile.get_attachment_files("delivery_mails", src_mail.id)
     @delivery_mail = DeliveryMail.new
     @delivery_mail.attributes = src_mail.attributes.reject{|x| ["created_at", "updated_at", "created_user", "updated_user", "deleted_at", "deleted"].include?(x)}
 
@@ -104,17 +108,20 @@ EOS
   # POST /delivery_mails
   # POST /delivery_mails.json
   def create
+    @src_mail_id = params[:src_mail_id]
+    set_src_mail_attachment_files(@src_mail_id) if @src_mail_id.present?
+
     if params[:bp_pic_ids].present?
       return contact_mail_create(params[:bp_pic_ids].split.uniq)
     end
     if params[:source_bp_pic_id].present?
       return reply_mail_create
     end
-    @delivery_mail = DeliveryMail.new(params[:delivery_mail])
+
+    @delivery_mail = create_model(:delivery_mails, params[:delivery_mail])
     @delivery_mail.matching_way_type = @delivery_mail.bp_pic_group.matching_way_type
     @delivery_mail.delivery_mail_type = "group"
     @delivery_mail.perse_planned_setting_at(current_user) # zone
-
     set_user_column @delivery_mail
 
     respond_to do |format|
@@ -127,8 +134,8 @@ EOS
           # 添付ファイルの保存
           store_upload_files(@delivery_mail.id)
 
-          # 添付ファイルのコピー
-          copy_upload_files(params[:src_mail_id], @delivery_mail.id)
+          # 配信メールコピーの場合、コピー元の添付ファイルもコピーする
+          copy_upload_files(@src_mail_id, @delivery_mail.id)
         end
 
         if params[:testmail]
@@ -166,6 +173,8 @@ EOS
   # PUT /delivery_mails/1
   # PUT /delivery_mails/1.json
   def update
+    set_src_mail_attachment_files(params[:id])
+
     @delivery_mail = DeliveryMail.find(params[:id])
     @delivery_mail.mail_status_type = 'editing'
 
@@ -230,9 +239,9 @@ EOS
     end
 
     if delivery_mail.planned_setting_at < Time.now.to_s
-      DeliveryMail.send_mails
+      DeliveryMail.send_mails(delivery_mail.owner_id)
 
-      error_count = DeliveryError.where(:delivery_mail_id => delivery_mail.id).size
+      error_count = DeliveryError.where(:owner_id => delivery_mail.owner_id, :delivery_mail_id => delivery_mail.id).size
       if error_count > 0
         flash.now[:warn] = "送信に失敗した宛先が存在します。<br>送信に失敗した宛先は配信メール詳細画面から確認できます。"
       end
@@ -257,7 +266,7 @@ EOS
   def add_targets(delivery_mail_id, bp_pic_ids)
     bp_pic_ids.each do |bp_pic_id|
       next if DeliveryMailTarget.where(:delivery_mail_id => delivery_mail_id, :bp_pic_id => bp_pic_id.to_i, :deleted => 0).first
-      delivery_mail_target = DeliveryMailTarget.new
+      delivery_mail_target = create_model(:delivery_mail_targets)
       delivery_mail_target.delivery_mail_id = delivery_mail_id
       delivery_mail_target.bp_pic_id = bp_pic_id.to_i
       set_user_column(delivery_mail_target)
@@ -324,7 +333,7 @@ EOS
   end
 
   def reply_mail_create
-    @delivery_mail = DeliveryMail.new(params[:delivery_mail])
+    @delivery_mail = create_model(:delivery_mails, params[:delivery_mail])
     @delivery_mail.delivery_mail_type = "instant"
     @delivery_mail.setup_planned_setting_at(current_user.zone_now)
     @delivery_mail.mail_status_type = 'unsend'
@@ -339,7 +348,7 @@ EOS
           store_upload_files(@delivery_mail.id)
 
           #配信メール対象作成
-          delivery_mail_target = DeliveryMailTarget.new
+          delivery_mail_target = create_model(:delivery_mail_targets)
           delivery_mail_target.delivery_mail_id = @delivery_mail.id
           delivery_mail_target.bp_pic_id = params[:source_bp_pic_id]
           delivery_mail_target.in_reply_to = params[:source_message_id]
@@ -348,8 +357,8 @@ EOS
         end #transaction
 
         # メール送信
-        DeliveryMail.send_mails
-        error_count = DeliveryError.where(:delivery_mail_id => @delivery_mail.id).size
+        DeliveryMail.send_mails(@delivery_mail.owner_id)
+        error_count = DeliveryError.where(:owner_id => @delivery_mail.owner_id, :delivery_mail_id => @delivery_mail.id).size
         if error_count > 0
           flash.now[:warn] = "送信に失敗した宛先が存在します。<br>送信に失敗した宛先は配信メール詳細画面から確認できます。"
         end
@@ -386,8 +395,6 @@ EOS
     end
     @delivery_mail.add_signature(sales_pic)
     @delivery_mail.mail_bcc = @delivery_mail.mail_bcc.to_s.split(",").push(sales_pic.email).join(",")
-    @delivery_mail.mail_from = sales_pic.email
-    @delivery_mail.mail_from_name =sales_pic.employee.employee_name
     @delivery_mail.setup_planned_setting_at(sales_pic.zone_now)
 
     respond_to do |format|
@@ -404,7 +411,7 @@ EOS
 
   def contact_mail_create(bp_pic_ids)
     @bp_pics = BpPic.find(bp_pic_ids)
-    @delivery_mail = DeliveryMail.new(params[:delivery_mail])
+    @delivery_mail = create_model(:delivery_mails, params[:delivery_mail])
     @delivery_mail.delivery_mail_type = "instant"
     @delivery_mail.setup_planned_setting_at(@bp_pics[0].sales_pic.zone_now)
     @delivery_mail.mail_status_type = 'unsend'
@@ -429,8 +436,8 @@ EOS
         end #transaction
 
         # メール送信
-        DeliveryMail.send_mails
-        error_count = DeliveryError.where(:delivery_mail_id => @delivery_mail.id).size
+        DeliveryMail.send_mails(@delivery_mail.owner_id)
+        error_count = DeliveryError.where(:owner_id => @delivery_mail.owner_id, :delivery_mail_id => @delivery_mail.id).size
         if error_count > 0
           flash.now[:warn] = "送信に失敗した宛先が存在します。<br>送信に失敗した宛先は配信メール詳細画面から確認できます。"
         end
@@ -466,7 +473,7 @@ EOS
     ActiveRecord::Base.transaction do
       dm = DeliveryMail.find(session[:mail_match_target_id])
       im = ImportMail.find(params[:id])
-      dmm = DeliveryMailMatch.new
+      dmm = create_model(:delivery_mail_matches)
       dmm.delivery_mail = dm
       dmm.import_mail = im
       dmm.delivery_mail_match_type = 'auto'
@@ -511,33 +518,30 @@ EOS
 
 private
   def new_proc
-    @delivery_mail.mail_from      = SysConfig.get_value(:delivery_mails, :default_from)
-    @delivery_mail.mail_from_name = SysConfig.get_value(:delivery_mails, :default_from_name)
-
     @delivery_mail.setup_planned_setting_at(current_user.zone_now)
   end
 
   def store_upload_files(parent_id)
     [1,2,3,4,5].each do |i|
       unless (upfile = params['attachment' + i.to_s]).blank?
-        af = AttachmentFile.new
+        af = create_model(:attachment_files)
         af.create_and_store!(upfile, parent_id, upfile.original_filename, "delivery_mails", current_user.login)
       end
     end
   end
 
   def copy_upload_files(src_mail_id, parent_id)
-    unless params[:src_mail_id].blank?
-       AttachmentFile.get_attachment_files("delivery_mails", params[:src_mail_id]).each do |src|
-         af = AttachmentFile.new
-         af.parent_table_name = src.parent_table_name
-         af.parent_id = parent_id
-         af.file_name = src.file_name
-         af.extention = src.extention
-         af.file_path = src.file_path
-         set_user_column af
-         af.save!
-       end
+    unless src_mail_id.blank?
+      AttachmentFile.get_attachment_files("delivery_mails", src_mail_id).each do |src|
+        af = create_model(:attachment_files)
+        af.parent_table_name = src.parent_table_name
+        af.parent_id = parent_id
+        af.file_name = src.file_name
+        af.extention = src.extention
+        af.file_path = src.file_path
+        set_user_column af
+        af.save!
+      end
     end
   end
 
@@ -545,5 +549,9 @@ private
     if @delivery_mail.bp_pic_group != nil && @delivery_mail.bp_pic_group.mail_template_id
       MailTemplate.find(@delivery_mail.bp_pic_group.mail_template_id)
     end
+  end
+
+  def set_src_mail_attachment_files(src_mail_id)
+    @attachment_files = AttachmentFile.get_attachment_files("delivery_mails", src_mail_id)
   end
 end

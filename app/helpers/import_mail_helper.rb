@@ -97,18 +97,18 @@ module ImportMailHelper
   end
   
   def verygood_tags
-    res = Tag.verygood_tags.map do |x|
+    res = Tag.verygood_tags(current_user.owner_id).map do |x|
       "<span class='label label-warning tag'>#{x}</span>"
     end.sort.join(" ")
     raw res
   end
   def format_tags(tag_text)
     tag_text.to_s.split(",").map do |x|
-      if Tag.verygood_tags.include?(x.downcase)
+      if Tag.verygood_tags(current_user.owner_id).include?(x.downcase)
         "<span class='x1 label label-warning tag'>#{x}</span>"
-      elsif Tag.good_tags.include?(x.downcase)
+      elsif Tag.good_tags(current_user.owner_id).include?(x.downcase)
         "<span class='x2 label label-info tag'>#{x}</span>"
-      elsif Tag.bad_tags.include?(x.downcase)
+      elsif Tag.bad_tags(current_user.owner_id).include?(x.downcase)
         nil
       else
         "<span class='x3 label label-default tag' title='このタグを削除' value='#{x.downcase}'>#{x} x</span>"
@@ -118,9 +118,9 @@ module ImportMailHelper
 
   def format_only_major_tags(tag_text)
     tag_text.to_s.split(",").map do |x|
-      if Tag.verygood_tags.include?(x.downcase)
+      if Tag.verygood_tags(current_user.owner_id).include?(x.downcase)
         "<span class='x1 label label-warning tag'>#{x}</span>"
-      elsif Tag.good_tags.include?(x.downcase)
+      elsif Tag.good_tags(current_user.owner_id).include?(x.downcase)
         "<span class='x2 label label-info tag'>#{x}</span>"
       else
         nil

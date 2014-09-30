@@ -39,11 +39,11 @@ class BpPic < ActiveRecord::Base
   end
   
   def sales_pic_name
-    sales_pic && sales_pic.employee.employee_short_name
+    sales_pic && sales_pic.employee.employee_name
   end
 
-  def BpPic.select_content_list
-    Employee.where(deleted: 0).map{|e| [e.employee_short_name, e.user_id]}
+  def BpPic.select_content_list(owner_id)
+    Employee.where(owner_id: owner_id, deleted: 0).map{|e| [e.employee_name, e.user_id]}
   end
   
   def contact_mail?
@@ -62,7 +62,7 @@ class BpPic < ActiveRecord::Base
     self.nondelivery_score >= NONDELIVERY_LIMIT
   end
   
-  def increse_nondelivery_score(reason)
+  def increase_nondelivery_score(reason)
     score = self.nondelivery_score + BpPic.score_nondelivery(reason)
     self.nondelivery_score = [score, NONDELIVERY_LIMIT].min
   end
@@ -73,7 +73,7 @@ class BpPic < ActiveRecord::Base
 
   def update_import_mails!(login="update_import_mails")
     email = SysConfig.email_prodmode? ? self.email1 : StringUtil.to_prod_address(self.email1)
-    ImportMail.where(:deleted => 0, :mail_from => email).each do |im|
+    ImportMail.where(:owner_id => self.owner_id, :deleted => 0, :mail_from => email).each do |im|
       im.bp_pic = self
       im.business_partner = self.business_partner
       im.updated_user = login
@@ -110,7 +110,7 @@ class BpPic < ActiveRecord::Base
   end
 
   def delivery_mail_ids
-    DeliveryMailTarget.where(:bp_pic_id => id, :deleted => 0).select(:delivery_mail_id).uniq
+    DeliveryMailTarget.where(:owner_id => owner_id, :bp_pic_id => id, :deleted => 0).select(:delivery_mail_id).uniq
   end
 
   def to_test
@@ -127,15 +127,15 @@ class BpPic < ActiveRecord::Base
   end
   
   def into_group(group_id)
-    if BpPicGroupDetail.where(bp_pic_group_id: group_id, bp_pic_id: self.id, deleted: 0).blank?
-      group = BpPicGroupDetail.new(bp_pic_group_id: group_id, bp_pic_id: self.id)
+    if BpPicGroupDetail.where(owner_id: owner_id, bp_pic_group_id: group_id, bp_pic_id: self.id, deleted: 0).blank?
+      group = BpPicGroupDetail.new(owner_id: owner_id, bp_pic_group_id: group_id, bp_pic_id: self.id)
       group.save!
     end
   end
-  
+
   def out_of_group!
     now = Time.now
-    group_details = BpPicGroupDetail.where(bp_pic_id: self.id, deleted: 0)
+    group_details = BpPicGroupDetail.where(owner_id: owner_id, bp_pic_id: self.id, deleted: 0)
     group_details.each{|detail|
       detail.deleted = 9
       detail.deleted_at = now

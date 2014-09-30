@@ -45,7 +45,7 @@
   </tr>
   <tr>
     <th><i class="fa fa-angle-double-right"></i>取引先グループ</th>
-    <td><label for="textfield6"><%= select_tag 'bp_pic_group_id', options_for_select( [ ['〈 全て 〉', 'all'] ] + BpPicGroup.available_group_list, search_value(:bp_pic_group_id)), include_blank: true %></label></td>
+    <td><label for="textfield6"><%= select_tag 'bp_pic_group_id', options_for_select( [ ['〈 全て 〉', 'all'] ] + BpPicGroup.available_group_list(current_user.owner_id), search_value(:bp_pic_group_id)), include_blank: true %></label></td>
   </tr>
   <tr>
     <th colspan="2">
@@ -75,7 +75,7 @@
   <table id="groupTable">
     <tr>
       <% groupcount = 0 %>
-      <% BpPicGroup.available_group_list.each do |groupId| %>
+      <% BpPicGroup.available_group_list(current_user.owner_id).each do |groupId| %>
         <td style="padding: 5px">
         <label><%= f.check_box :groupIds, {:name => "addGroup[groupIds][]", :title => groupId[0]}, groupId[1], -1 %><%= groupId[0] %></label>
       </td>

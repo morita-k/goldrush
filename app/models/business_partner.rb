@@ -13,7 +13,7 @@ class BusinessPartner < ActiveRecord::Base
   validates_uniqueness_of :business_partner_name, :case_sensitive => false, :scope => [:deleted, :deleted_at]
 
   def set_default
-    self.sales_code = "S" + SysConfig.get_seq_0('sales_code', 7)
+    self.sales_code = "S" + SysConfig.get_seq_0('sales_code', self.owner_id, 7)
   end
 
   def address
@@ -36,31 +36,30 @@ class BusinessPartner < ActiveRecord::Base
     basic_contract_concluded.blank? ? "" : "[#{basic_contract_concluded}]"
   end
 
-  def BusinessPartner.export_to_csv
+  def BusinessPartner.export_to_csv(owner_id)
     csv_data = []
     csv_data << "e-mail,Name,ZipCode,Prefecture,Address,Tel,Birthday,Occupation,取引先Id,担当者Id,グループ"
-    BpPic.all.each do |x|
+    BpPic.where(:owner_id => owner_id).each do |x|
       csv_data << [x.email1, x.bp_pic_name,x.business_partner.business_partner_name, "", "", "", "", "", "", "", x.business_partner.id, x.id].join(',')
     end
     return NKF.nkf("-s", csv_data.join("\n"))
   end
-  def BusinessPartner.import_from_csv(filename, prodmode=false)
-    File.open(filename, "r"){|file| import_from_csv_data(file, prodmode)}
+  def BusinessPartner.import_from_csv(filename, owner_id, prodmode=false)
+    File.open(filename, "r"){|file| import_from_csv_data(file, owner_id, prodmode)}
   end
 
-  def BusinessPartner.create_business_partner(companies, email, pic_name, company_name)
+  def BusinessPartner.create_business_partner(companies, owner_id, email, pic_name, company_name)
     unless companies[company_name.upcase]
-      unless bp = BusinessPartner.where(:business_partner_name => company_name, :deleted => 0).first
+      unless bp = BusinessPartner.where(:owner_id => owner_id, :business_partner_name => company_name, :deleted => 0).first
         bp = BusinessPartner.new
+        bp.owner_id = owner_id
         bp.business_partner_name = company_name
         bp.business_partner_short_name = company_name
         bp.business_partner_name_kana = company_name
         bp.sales_status_type = 'listup'
         bp.basic_contract_first_party_status_type ||= 'none'
         bp.basic_contract_second_party_status_type ||= 'none'
-        if pic_name.include?('担当者')
-          bp.email = email
-        end
+        bp.email = email if pic_name.include?('担当者')
         bp.created_user = 'import'
         bp.updated_user = 'import'
         bp.save!
@@ -70,9 +69,10 @@ class BusinessPartner < ActiveRecord::Base
     return companies[company_name.upcase]
   end
 
-  def BusinessPartner.create_bp_pic(companies, email, pic_name, company_name, memo = nil)
+  def BusinessPartner.create_bp_pic(companies, owner_id, email, pic_name, company_name, memo = nil)
     bp, pics = companies[company_name.upcase]
     pic = BpPic.new
+    pic.owner_id = bp.owner_id
     pic.business_partner_id = bp.id
     pic.bp_pic_name = pic_name
     pic.bp_pic_short_name = pic_name
@@ -90,7 +90,7 @@ class BusinessPartner < ActiveRecord::Base
     return pic
   end
 
-  def BusinessPartner.import_from_csv_data(readable_data, prodmode=false)
+  def BusinessPartner.import_from_csv_data(readable_data, owner_id, prodmode=false)
     ActiveRecord::Base.transaction do
       require 'csv'
       companies = {}
@@ -112,7 +112,7 @@ class BusinessPartner < ActiveRecord::Base
         pic_name = StringUtil.strip_with_full_size_space(pic_name.to_s)
         if bp_id.blank?
           # bp新規登録
-          bp, names = create_business_partner(companies, email, pic_name, company_name)
+          bp, names = create_business_partner(companies, owner_id, email, pic_name, company_name)
           bp_id = bp.id
           bp_id_cache << bp.id
         else
@@ -129,7 +129,7 @@ class BusinessPartner < ActiveRecord::Base
         end
         if bp_pic_id.blank?
           # bp_pic新規登録
-          pic = create_bp_pic(companies, email, pic_name, company_name, row[3..7].reject{|x| x.blank?}.join("\n"))
+          pic = create_bp_pic(companies, owner_id, email, pic_name, company_name, row[3..7].reject{|x| x.blank?}.join("\n"))
           bp_pic_id = pic.id
           bp_pic_id_cache << pic.id
         else
@@ -146,15 +146,17 @@ class BusinessPartner < ActiveRecord::Base
         end
         # グループ登録
         unless group.blank?
-          unless bp_pic_group = BpPicGroup.where(:deleted => 0, :bp_pic_group_name => group).first
+          unless bp_pic_group = BpPicGroup.where(:owner_id => owner_id, :deleted => 0, :bp_pic_group_name => group).first
             bp_pic_group = BpPicGroup.new
+            bp_pic_group.owner_id = owner_id
             bp_pic_group.bp_pic_group_name = group
             bp_pic_group.created_user = 'import'
             bp_pic_group.updated_user = 'import'
             bp_pic_group.save! 
           end
-          unless bp_pic_group_detail = BpPicGroupDetail.where(:bp_pic_group_id => :bp_pic_group_id, :bp_pic_id => bp_pic_id).first
+          unless bp_pic_group_detail = BpPicGroupDetail.where(:owner_id => owner_id, :bp_pic_group_id => bp_pic_group_id, :bp_pic_id => bp_pic_id).first
             bp_pic_group_detail = BpPicGroupDetail.new
+            bp_pic_group_detail.owner_id = owner_id
             bp_pic_group_detail.bp_pic_group_id = bp_pic_group.id
             bp_pic_group_detail.bp_pic_id = bp_pic_id
             bp_pic_group_detail.created_user = 'import'
@@ -167,7 +169,7 @@ class BusinessPartner < ActiveRecord::Base
   end
 
   # 名刺管理アカウントから出力されたCSVファイルをインポート(google.csv)
-  def BusinessPartner.import_google_csv_data(readable_file, userlogin, prodmode=false)
-    BusinessPartnerGoogleImporter.import_google_csv_data(readable_file, userlogin, prodmode)
+  def BusinessPartner.import_google_csv_data(readable_file, owner_id, userlogin, prodmode=false)
+    BusinessPartnerGoogleImporter.import_google_csv_data(readable_file, owner_id, userlogin, prodmode)
   end
 end

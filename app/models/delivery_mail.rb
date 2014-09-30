@@ -14,13 +14,13 @@ class DeliveryMail < ActiveRecord::Base
   has_many :delivery_mail_targets, :conditions => "delivery_mail_targets.deleted = 0"
 
   belongs_to :bp_pic_group
-  attr_accessible :bp_pic_group_id, :content, :id, :mail_bcc, :mail_cc, :mail_from, :mail_from_name, :mail_send_status_type, :mail_status_type, :owner_id, :planned_setting_at, :send_end_at, :subject, :lock_version, :planned_setting_at_hour, :planned_setting_at_minute, :planned_setting_at_date, :delivery_mail_type, :biz_offer_id, :bp_member_id, :formated_mail_from, :age, :payment, :import_mail_match_id, :matching_way_type
+  attr_accessible :bp_pic_group_id, :content, :id, :mail_bcc, :mail_cc, :mail_from, :mail_from_name, :mail_send_status_type, :mail_status_type, :owner_id, :planned_setting_at, :send_end_at, :subject, :lock_version, :planned_setting_at_hour, :planned_setting_at_minute, :planned_setting_at_date, :delivery_mail_type, :biz_offer_id, :bp_member_id, :formated_mail_from, :age, :payment, :import_mail_match_id, :matching_way_type, :tag_text, :auto_matching_last_id
 
   validates_presence_of :subject, :content, :mail_from_name, :mail_from, :planned_setting_at
 
   after_initialize :default_values
 
-  before_save :normalize_cc_bcc!
+  before_save :normalize_cc_bcc!, :set_default!
 
   def get_delivery_mail_targets(limit=20)
     DeliveryMailTarget.joins("left outer join import_mails on import_mails.in_reply_to = delivery_mail_targets.message_id").where("delivery_mail_targets.delivery_mail_id = ? and delivery_mail_targets.deleted = 0", self.id).order("import_mails.in_reply_to desc, delivery_mail_targets.delivery_mail_id").limit(limit)
@@ -33,11 +33,11 @@ class DeliveryMail < ActiveRecord::Base
   def filtered_matches_in
     [] if self.payment.blank? || self.age.blank?
     if self.biz_offer_mail?
-      w = "delivery_mail_matches.deleted = 0 and payment <= ? and age <= ?"
+      w = "delivery_mail_matches.owner_id = ? and delivery_mail_matches.deleted = 0 and payment <= ? and age <= ?"
     else
-      w = "delivery_mail_matches.deleted = 0 and payment >= ? and age >= ?"
+      w = "delivery_mail_matches.owner_id = ? and delivery_mail_matches.deleted = 0 and payment >= ? and age >= ?"
     end
-    DeliveryMailMatch.joins(:import_mail).where(w, payment, age)
+    DeliveryMailMatch.joins(:import_mail).where(w, owner_id, payment, age)
   end
 
   def filtered_matches
@@ -59,6 +59,10 @@ class DeliveryMail < ActiveRecord::Base
   def normalize_cc_bcc!
     self.mail_cc = mail_cc.to_s.split(/[ ,;]/).join(",")
     self.mail_bcc = mail_bcc.to_s.split(/[ ,;]/).join(",")
+  end
+
+  def set_default!
+    self.matching_way_type ||= 'other'
   end
 
   def formated_mail_from
@@ -166,7 +170,7 @@ EOS
         target.message_id = current_mail.header['Message-ID'].to_s
         target.save!
       rescue => e
-        DeliveryError.send_error(mail.id, target.bp_pic, e).save!
+        DeliveryError.send_error(mail.owner_id, mail.id, target.bp_pic, e).save!
 
         error_str = "Delivery Mail Send Error: " + e.message + "\n" + e.backtrace.join("\n")
         SystemLog.error('delivery mail', 'mail send error',  error_str, 'delivery mail')
@@ -175,20 +179,20 @@ EOS
   end
 
   # Broadcast Mails
-  def DeliveryMail.send_mails
+  def DeliveryMail.send_mails(owner_id)
     fetch_key = Time.now.to_s + " " + rand().to_s
 
-    DeliveryMail.
-      where("mail_status_type=? and mail_send_status_type=? and planned_setting_at<=?",
-             'unsend', 'ready', Time.now).
-      update_all(:mail_send_status_type => 'running', :created_user => fetch_key)
+    DeliveryMail
+      .where(:owner_id => owner_id)
+      .where("mail_status_type=? and mail_send_status_type=? and planned_setting_at<=?", 'unsend', 'ready', Time.now)
+      .update_all(:mail_send_status_type => 'running', :created_user => fetch_key)
 
-    DeliveryMail.where(:created_user => fetch_key).each {|mail|
+    DeliveryMail.where(:owner_id => owner_id, :created_user => fetch_key).each do |mail|
       self.send_mail_to_each_targets(mail)
-    }
+    end
 
     DeliveryMail.
-      where(:created_user => fetch_key).
+      where(:owner_id => owner_id, :created_user => fetch_key).
       update_all(:mail_status_type => 'send',:mail_send_status_type => 'finished',:send_end_at => Time.now)
   end
 
@@ -204,7 +208,7 @@ EOS
       headers["In-Rply-To"] = in_reply_to if in_reply_to
 
       # Return-path の設定
-      return_path = SysConfig.get_value(:delivery_mails, :return_path)
+      return_path = SysConfig.get_delivery_mails_return_path
       if return_path
         headers[:return_path] = return_path
       else
@@ -221,7 +225,6 @@ EOS
             from: from,
             subject: subject,
             body: body )
-
     end
   end
 
@@ -318,10 +321,10 @@ EOS
   end
 
   def tag_analyze!(body = Tag.pre_proc_body(pre_body))
-    analyzed_tag_text = Tag.analyze_skill_tags(body)
+    analyzed_tag_text = Tag.analyze_skill_tags(owner_id, body)
     self.tag_text = analyzed_tag_text
     self.save!
-    Tag.update_tags!("delivery_mails", id, analyzed_tag_text)
+    Tag.update_tags!(owner_id, "delivery_mails", id, analyzed_tag_text)
   end
 
   def add_signature(mail_sender)

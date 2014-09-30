@@ -41,7 +41,7 @@ class BusinessPartnerController < ApplicationController
       cond[0] += " and self_flg = 1"
     end
 
-    #return {:conditions => param.unshift(sql), :include => include, :per_page => current_user.per_page}
+    #return {:conditions => param.unshift(sql), :include => include, :per => current_user.per_page}
     return [cond, incl]
   end
 
@@ -56,7 +56,12 @@ class BusinessPartnerController < ApplicationController
 
     cond, incl = make_conditions
     #@business_partner_pages, @business_partners = paginate(:business_partners, cond)
-    @business_partners = BusinessPartner.includes(incl).where(cond).order("updated_at desc").page(params[:page]).per(current_user.per_page)
+    @business_partners = find_login_owner(:business_partners)
+                            .includes(incl)
+                            .where(cond)
+                            .order("updated_at desc")
+                            .page(params[:page])
+                            .per(current_user.per_page)
   end
 
   def show
@@ -87,11 +92,11 @@ class BusinessPartnerController < ApplicationController
   end
 
   def create
-    @bp_pic = BpPic.new(params[:bp_pic])
     ActiveRecord::Base.transaction do
+      @bp_pic = create_model(:bp_pics, params[:bp_pic])
 
       if params[:business_partner][:id].blank?
-        @business_partner = BusinessPartner.new(params[:business_partner])
+        @business_partner = create_model(:business_partners, params[:business_partner])
         @business_partner.basic_contract_first_party_status_type ||= 'none'
         @business_partner.basic_contract_second_party_status_type ||= 'none'
         @business_partner.tag_text = Tag.normalize_tag(@business_partner.tag_text).join(" ")
@@ -104,7 +109,7 @@ class BusinessPartnerController < ApplicationController
       set_user_column @business_partner
       @business_partner.save!
 
-      Tag.update_tags!('business_partners', @business_partner.id, @business_partner.tag_text)
+      Tag.update_tags!(@business_partner.owner_id, 'business_partners', @business_partner.id, @business_partner.tag_text)
 
       @bp_pic.business_partner_id = @business_partner.id
       @bp_pic.bp_pic_name = space_trim(params[:bp_pic][:bp_pic_name]).gsub(/　/," ")
@@ -159,7 +164,7 @@ class BusinessPartnerController < ApplicationController
       @business_partner.attributes = params[:business_partner]
       @business_partner.tag_text = Tag.normalize_tag(@business_partner.tag_text).join(" ")
       if old_tags != @business_partner.tag_text
-        Tag.update_tags!('business_partners', @business_partner.id, @business_partner.tag_text)
+        Tag.update_tags!(@business_partner.owner_id, 'business_partners', @business_partner.id, @business_partner.tag_text)
       end
       @business_partner.business_partner_name = space_trim(params[:business_partner][:business_partner_name])
       set_user_column @business_partner
@@ -201,7 +206,7 @@ class BusinessPartnerController < ApplicationController
   end
 
   def download_csv
-    send_data BusinessPartner.export_to_csv, :filename => "bpexport_#{Time.now.strftime("%Y%m%d_%H%M%S")}.csv", :type => "text/csv"
+    send_data BusinessPartner.export_to_csv(current_user.owner_id), :filename => "bpexport_#{Time.now.strftime("%Y%m%d_%H%M%S")}.csv", :type => "text/csv"
   end
 
   def upload_csv
@@ -212,7 +217,7 @@ class BusinessPartnerController < ApplicationController
     end
     ext = File.extname(file.original_filename.to_s).downcase
     raise ValidationAbort.new("インポートするファイルは、拡張子がcsvのファイルでなければなりません") if ext != '.csv'
-    BusinessPartner.import_from_csv_data(file.read, SysConfig.email_prodmode?)
+    BusinessPartner.import_from_csv_data(file.read, current_user.owner_id, SysConfig.email_prodmode?)
     flash[:notice] = 'インポートが完了しました'
     redirect_to(back_to || {:action => :list})
   end
@@ -225,7 +230,7 @@ class BusinessPartnerController < ApplicationController
     end
     ext = File.extname(file.original_filename.to_s).downcase
     raise ValidationAbort.new("インポートするファイルは、拡張子がcsvのファイルでなければなりません") if ext != '.csv'
-    cnt, errors = BusinessPartner.import_google_csv_data(file.read, current_user.login, SysConfig.email_prodmode?)
+    cnt, errors = BusinessPartner.import_google_csv_data(file.read, current_user.owner_id, current_user.login, SysConfig.email_prodmode?)
     unless errors.empty?
       flash[:warning] = errors.to_s.gsub(/[\[\]]/, "") + "行目のデータが取りこめませんでした"
     else

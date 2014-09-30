@@ -53,6 +53,7 @@ class ImportMail < ActiveRecord::Base
 
   def make_import_mail(m)
     now = Time.now
+    self.owner_id = ImportMail.get_owner_id(m)
     self.received_at = m.date.blank? ? now : m.date
     subject = ImportMail.tryConv(m, 'Subject') { m.subject }
     self.mail_subject = subject.blank? ? 'unknown subject' : subject
@@ -148,6 +149,7 @@ EOS
     end
     ActiveRecord::Base::transaction do
       import_mail_src = ImportMailSource.new
+      import_mail_src.owner_id = import_mail.owner_id
       import_mail_src.import_mail_id = import_mail.id
       import_mail_src.message_source = src
       import_mail_src.created_user = 'import_mail'
@@ -185,6 +187,7 @@ EOS
             file_name = part.filename.to_s
 
             attachment_file = AttachmentFile.new
+            attachment_file.owner_id = import_mail.owner_id
             attachment_file.create_by_import(upfile, import_mail.id, file_name)
             import_mail.biz_offer_flg = 0
             import_mail.bp_member_flg = 1
@@ -223,8 +226,6 @@ EOS
 
       import_mail.analyze!
 
-      import_mail_id = import_mail.id
-
       # JIETの案件・人材メールだった場合、案件照会・人材所属を作成
       if import_mail.jiet_ses_mail?
         if import_mail.mail_subject =~ /JIETメール配信サービス\[(..)情報\]/
@@ -247,7 +248,7 @@ EOS
     end # transaction
 
     if attachment_flg == 1
-      AttachmentFile.set_property_file(import_mail_id)
+      AttachmentFile.set_property_file(import_mail.owner_id, import_mail.id)
     end
   end
 
@@ -335,10 +336,10 @@ EOS
   def detect_proper_in(body)
     return false if bp_member_flg != 1
     StringUtil.detect_lines(body, /社員/) do |line|
-      return true unless SpecialWord.ignore_word_propers.detect{|x| line.include?(x)}
+      return true unless SpecialWord.ignore_word_propers(owner_id).detect{|x| line.include?(x)}
     end
     StringUtil.detect_lines(body, /ﾌﾟﾛﾊﾟｰ/) do |line|
-      return true unless SpecialWord.ignore_word_propers.detect{|x| line.include?(x)}
+      return true unless SpecialWord.ignore_word_propers(owner_id).detect{|x| line.include?(x)}
     end
     return false
   end
@@ -354,7 +355,7 @@ EOS
   # 人材判定用特別単語でbodyを検索して1件でもhitすれば、人材メールと判断
   def analyze_bp_member_flg(body)
     if biz_offer_mail?
-      SpecialWord.bp_member_words.each do |word|
+      SpecialWord.bp_member_words(owner_id).each do |word|
         unless StringUtil.detect_regex(body, word).empty?
           self.biz_offer_flg = 0
           self.bp_member_flg = 1
@@ -391,7 +392,7 @@ EOS
     # 外国籍チェック
     foreign_line_pattern = /国\s*?籍|氏\s*?名|名\s*?前|備\s*?考|※|年\s*?齢/
     StringUtil.detect_lines(body, foreign_line_pattern) do |line|
-      return 'foreign' if SpecialWord.country_words_foreign.detect{|x| line.include?(x)}
+      return 'foreign' if SpecialWord.country_words_foreign(owner_id).detect{|x| line.include?(x)}
     end
 
     # 日本国籍チェック
@@ -408,7 +409,7 @@ EOS
     StringUtil.detect_lines(body, /性/) do |line|
       if line !~ /服\s*?装/ and
           line =~ /[男女]/
-        return convert_to_sex_type($&, line =~ /ng|不可/i)
+        return ImportMail.convert_to_sex_type($&, line =~ /ng|不可/i)
       end
     end
     return 'other'
@@ -441,13 +442,13 @@ EOS
   # 解析とともに保存を行う
   def analyze!(body = Tag.pre_proc_body(pre_body))
     analyze(body)
-    Tag.update_tags!("import_mails", id, tag_text)
+    Tag.update_tags!(owner_id, "import_mails", id, tag_text)
     save!
   end
 
   # タグ生成の本体
   def make_tags(body)
-    Tag.analyze_skill_tags(body)
+    Tag.analyze_skill_tags(owner_id, body)
   end
 
   STATION_NAME_SEPARATOR = '/:】'
@@ -622,7 +623,7 @@ EOS
   end
 
   def outflow_mail?
-    criterion = SysConfig.get_outflow_criterion.to_i
+    criterion = SysConfig.get_outflow_criterion(self.owner_id).to_i
     mail_address_str = [self.mail_to.to_s, self.mail_cc.to_s].join(",")
 
     (criterion.nil? || mail_address_str.blank?) ? false : (mail_address_str.split(",").length >= criterion)
@@ -645,6 +646,11 @@ EOS
   end
 
 private
+  def ImportMail.get_owner_id(mail)
+    owner_key = self.tryConv(mail, 'X-Original-To').scan(/\w{4}@/)[0].delete('@')
+    Owner.where(:owner_key => owner_key).first.id
+  end
+
   def ImportMail.get_encode_body(mail, body)
     if mail.content_transfer_encoding == 'ISO-2022-JP'
       return NKF.nkf('-w -J', body)
@@ -653,6 +659,17 @@ private
     else
       # そのほかは
       return NKF.nkf('-w', body.to_s)
+    end
+  end
+
+  def ImportMail.convert_to_sex_type(word, disabled = nil)
+    case word
+    when '男'
+      disabled.nil? ? 'man' : 'woman'
+    when '女'
+      disabled.nil? ? 'woman' : 'man'
+    else
+      'other'
     end
   end
 
@@ -667,16 +684,5 @@ private
 
   def ext( mail )
     CTYPE_TO_EXT[mail.content_type] || 'txt'
-  end
-
-  def convert_to_sex_type(word, disabled = nil)
-    case word
-    when '男'
-      disabled.nil? ? 'man' : 'woman'
-    when '女'
-      disabled.nil? ? 'woman' : 'man'
-    else
-      'other'
-    end
   end
 end

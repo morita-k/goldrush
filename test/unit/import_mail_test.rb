@@ -7,6 +7,7 @@ class ImportMailTest < ActiveSupport::TestCase
   
   test "import mail" do
     im = ImportMail.new
+    im.owner_id = 1
     im.mail_subject = 'java,c++,oracle'
     im.analyze(<<EOS)
     java
@@ -26,6 +27,7 @@ EOS
 
   test "import reply mail" do
     src = <<EOS
+X-Original-To: im-b1fe@gr.applicative.jp
 Date: Wed, 11 Jun 2014 17:38:29 +0900
 From: system@gr.applicative.jp
 To: dummy@applicative.jp
@@ -407,6 +409,7 @@ EOS
 private
   def assert_detect_interview_count(body, expected_count)
     im = ImportMail.new
+    im.owner_id = 1
     im.mail_subject = ""
     im.mail_body = body
     im.analyze
@@ -415,6 +418,7 @@ private
 
   def assert_detect_biz_offer_foreign_type(body, expected_foreign_type)
     im = ImportMail.new
+    im.owner_id = 1
     im.biz_offer_flg = 1
     im.mail_subject = ""
     im.mail_body = body
@@ -424,6 +428,7 @@ private
 
   def assert_detect_bp_member_foreign_type(body, expected_foreign_type)
     im = ImportMail.new
+    im.owner_id = 1
     im.bp_member_flg = 1
     im.mail_subject = ""
     im.mail_body = body
@@ -433,6 +438,7 @@ private
 
   def assert_detect_sex_type(body, expected_sex_type)
     im = ImportMail.new
+    im.owner_id = 1
     im.mail_subject = ""
     im.mail_body = body
     im.analyze

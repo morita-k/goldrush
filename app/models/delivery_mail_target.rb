@@ -6,7 +6,7 @@ class DeliveryMailTarget < ActiveRecord::Base
   attr_accessible :bp_pic_id, :delivery_mail_id, :id, :owner_id
 
   def get_reply_import_mail
-    @import_mail = ImportMail.where(:in_reply_to => self.message_id).first if self.message_id
+    @import_mail = ImportMail.where(:owner_id => self.owner_id, :in_reply_to => self.message_id).first if self.message_id
   end
 
   def get_import_mail_id

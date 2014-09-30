@@ -7,6 +7,7 @@ class ScoreJournal < ActiveRecord::Base
     user.save!
 
     new({
+      :owner_id => user.owner_id,
       :user_id => user_id,
       :action => action,
       :target_id => target_id,

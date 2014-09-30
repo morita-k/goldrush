@@ -1,8 +1,23 @@
 delivery_errors_1:
   id: 1
-  owner_id: 
+  owner_id: 1
   business_partner_id: 1
   bp_pic_id: 1
+  email: ""
+  mail_error_type: "bounce"
+  mail_error_text: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+delivery_errors_2:
+  id: 2
+  owner_id: 2
+  business_partner_id: 5
+  bp_pic_id: 5
   email: ""
   mail_error_type: "bounce"
   mail_error_text: ""

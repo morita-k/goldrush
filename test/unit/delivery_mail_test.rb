@@ -23,7 +23,7 @@ class DeliveryMailTest < ActiveSupport::TestCase
   test "save message_id in delivery_mail_targets" do
     assert(ActionMailer::Base.delivery_method == :test)
     
-    DeliveryMail.send_mails
+    DeliveryMail.send_mails(1)
     target = DeliveryMailTarget.find(1)
     assert_match(/.*@#{ActionMailer::Base.smtp_settings[:domain]}/, target.message_id)
   end

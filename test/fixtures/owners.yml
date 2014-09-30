@@ -1,0 +1,40 @@
+owners_1:
+  id: 1
+  union_user_id: 2
+  union_user_login: user1@aaa.com
+  union_email: user1@aaa.com
+  init_password: $2a$10$ojHlby3zaA6ux5w8/1QINO9ALaPwYboB1eYxSXq4G6ZAaVmaTvadi
+  init_password_salt: dummy
+  owner_fullname: user1
+  owner_shortname: 
+  user_max_count: 50
+  available_user_count: 50
+  owner_key: b1fe
+  company_name: 株式会社テスト
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+owners_2:
+  id: 2
+  union_user_id: 16
+  union_user_login: user15@aaa.com
+  union_email: user15@aaa.com
+  init_password: $2a$10$ojHlby3zaA6ux5w8/1QINO9ALaPwYboB1eYxSXq4G6ZAaVmaTvadi
+  init_password_salt: dummy
+  owner_fullname: user15
+  owner_shortname: 
+  user_max_count: 50
+  available_user_count: 50
+  owner_key: a24f
+  company_name: 株式会社テスト
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0

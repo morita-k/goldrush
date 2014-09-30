@@ -30,7 +30,7 @@
           <%= biz_offer.bp_pic.jiet? ? raw('[<span title="JIET取り込み" style="font-weight:bold">J</span>]') : ''%>
         </td>
         <td>
-          <%= star_links(biz_offer.business) %> <%=back_to_link h(biz_offer.business.business_title), :action => :show, :id => biz_offer %>
+          <%= star_links(biz_offer.business) %> <%=back_to_link h(biz_offer.business.business_title), :controller => :biz_offer, :action => :show, :id => biz_offer %>
         </td>
         <td style="text-align:center;"><%= biz_offer_edit_icon(biz_offer) %></td>
     <% end%><td><div style="overflow: hidden;height:1.4em"><span style="line-height: 90%;"><%= raw format_only_major_tags(biz_offer.business.skill_tag) %></span></div></td>

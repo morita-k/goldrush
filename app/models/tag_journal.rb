@@ -1,8 +1,9 @@
 # -*- encoding: utf-8 -*-
 class TagJournal < ActiveRecord::Base
   belongs_to :tag
-  def TagJournal.put_journal!(tag_id, adjust)
+  def TagJournal.put_journal!(owner_id, tag_id, adjust)
     tj = TagJournal.new
+    tj.owner_id = owner_id
     tj.tag_id = tag_id
     tj.adjust = adjust
     tj.opened = 1
@@ -12,17 +13,17 @@ class TagJournal < ActiveRecord::Base
     tj.save!
   end
 
-  def TagJournal.summry_tags!
+  def TagJournal.summry_tags!(owner_id)
     fetch_key = "summry_tags " + Time.now.to_s + " " + rand().to_s
     # 他のプロセスと更新がかぶらないようにする
-    TagJournal.update_all("summary_status_type = 'fetched', updated_user = '#{fetch_key}' ", "summary_status_type = 'new'")
+    TagJournal.where(:owner_id => owner_id).update_all(:summary_status_type => 'fetched', :updated_user => fetch_key, :summary_status_type => 'new')
     
     ActiveRecord::Base.transaction do
       proc_count = 0
       # 個別集計(ユーザ／タグ別)
-      journals = TagJournal.find(:all , 
+      journals = TagJournal.find(:all,
                    :select => "tag_id, sum(adjust) sum_adj, max(updated_at) max_updated_at",
-                   :conditions => ["summary_status_type = 'fetched' and updated_user = ?", fetch_key],
+                   :conditions => {:owner_id => owner_id, :summary_status_type => 'fetched', :updated_user => fetch_key},
                    :group => "tag_id")
       logger.info "CLUB SUMMARY Fetch #{journals.size} records."
       journals.each{|x|
@@ -37,7 +38,7 @@ class TagJournal < ActiveRecord::Base
       logger.info "SUMMARY Proc #{proc_count} records."
 
       # ジャーナルを処理済みにする
-      TagJournal.update_all("summary_status_type = 'closed', updated_user = '#{fetch_key}' ", "summary_status_type = 'fetched'")
+      TagJournal.where(:owner_id => owner_id).update_all(:summary_status_type => 'closed', :updated_user => fetch_key, :summary_status_type => 'fetched')
     end # commit transaction
   end
 end

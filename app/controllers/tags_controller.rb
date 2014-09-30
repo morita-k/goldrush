@@ -15,7 +15,7 @@ class TagsController < ApplicationController
     # 検索条件を処理
     cond, order_by = make_conditions
     
-    @tags = Tag.where(cond).order(order_by).page(params[:page]).per(current_user.per_page)
+    @tags = find_login_owner(:tags).where(cond).order(order_by).page(params[:page]).per(current_user.per_page)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -53,7 +53,7 @@ class TagsController < ApplicationController
   # POST /tags
   # POST /tags.json
   def create
-    @tag = Tag.new(params[:tag])
+    @tag = create_model(:tags, params[:tag])
     set_user_column @tag
 
     respond_to do |format|
@@ -105,7 +105,7 @@ class TagsController < ApplicationController
     if params[:tag_id]
       tag = Tag.find(params[:tag_id])
     else
-      tag = Tag.where("deleted = 0 and tag_text = ?", params[:tag]).first
+      tag = find_login_owner(:tags).where("deleted = 0 and tag_text = ?", params[:tag]).first
     end
     tag.starred = params[:starred] || 3
     tag.save!

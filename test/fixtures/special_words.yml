@@ -1244,3 +1244,2495 @@ special_words_89:
   updated_user: initial
   deleted_at: 
   deleted: 0
+special_words_90:
+  id: 90
+  owner_id: 1
+  special_word_type: special_word
+  target_word: サーバー構築
+  convert_to_word: サーバー構築
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_91:
+  id: 91
+  owner_id: 1
+  special_word_type: special_word
+  target_word: 運用
+  convert_to_word: 運用
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_92:
+  id: 92
+  owner_id: 1
+  special_word_type: special_word
+  target_word: (^|[^a-zA-Z])(C)([^a-zA-Z#\+]|$)
+  convert_to_word: C
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_93:
+  id: 93
+  owner_id: 1
+  special_word_type: special_word
+  target_word: ((:?as|AS)\/400)
+  convert_to_word: AS400
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_94:
+  id: 94
+  owner_id: 1
+  special_word_type: special_word
+  target_word: インフラ
+  convert_to_word: インフラ
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_95:
+  id: 95
+  owner_id: 1
+  special_word_type: special_word
+  target_word: 仮想化
+  convert_to_word: 仮想化
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_96:
+  id: 96
+  owner_id: 1
+  special_word_type: special_word
+  target_word: ネットワーク接続
+  convert_to_word: ネットワーク接続
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_97:
+  id: 97
+  owner_id: 1
+  special_word_type: special_word
+  target_word: 環境設計
+  convert_to_word: 環境設計
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_98:
+  id: 98
+  owner_id: 1
+  special_word_type: special_word
+  target_word: データ分析
+  convert_to_word: データ分析
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_99:
+  id: 99
+  owner_id: 1
+  special_word_type: special_word
+  target_word: マーケティング
+  convert_to_word: マーケティング
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_100:
+  id: 100
+  owner_id: 1
+  special_word_type: special_word
+  target_word: サーバサイド
+  convert_to_word: サーバサイド
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_101:
+  id: 101
+  owner_id: 1
+  special_word_type: special_word
+  target_word: ソーシャルゲーム
+  convert_to_word: ソーシャルゲーム
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_102:
+  id: 102
+  owner_id: 1
+  special_word_type: special_word
+  target_word: システム開発
+  convert_to_word: システム開発
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_103:
+  id: 103
+  owner_id: 1
+  special_word_type: special_word
+  target_word: データ管理
+  convert_to_word: データ管理
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_104:
+  id: 104
+  owner_id: 1
+  special_word_type: special_word
+  target_word: フルスクラッチ
+  convert_to_word: フルスクラッチ
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_105:
+  id: 105
+  owner_id: 1
+  special_word_type: special_word
+  target_word: フレームワーク
+  convert_to_word: フレームワーク
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_106:
+  id: 106
+  owner_id: 1
+  special_word_type: special_word
+  target_word: プロジェクト管理
+  convert_to_word: プロジェクト管理
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_107:
+  id: 107
+  owner_id: 1
+  special_word_type: special_word
+  target_word: スマホアプリ開発
+  convert_to_word: スマホアプリ開発
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_108:
+  id: 108
+  owner_id: 1
+  special_word_type: special_word
+  target_word: アジャイル
+  convert_to_word: アジャイル
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_109:
+  id: 109
+  owner_id: 1
+  special_word_type: special_word
+  target_word: 仮想環境
+  convert_to_word: 仮想環境
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_110:
+  id: 110
+  owner_id: 1
+  special_word_type: special_word
+  target_word: 基幹システム
+  convert_to_word: 基幹システム
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_111:
+  id: 111
+  owner_id: 1
+  special_word_type: special_word
+  target_word: 保守
+  convert_to_word: 保守
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_112:
+  id: 112
+  owner_id: 1
+  special_word_type: ignore_word
+  target_word: as
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_113:
+  id: 113
+  owner_id: 1
+  special_word_type: ignore_word
+  target_word: e-mail
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_114:
+  id: 114
+  owner_id: 1
+  special_word_type: ignore_word
+  target_word: email
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_115:
+  id: 115
+  owner_id: 1
+  special_word_type: ignore_word
+  target_word: fax
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_116:
+  id: 116
+  owner_id: 1
+  special_word_type: ignore_word
+  target_word: jp
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_117:
+  id: 117
+  owner_id: 1
+  special_word_type: ignore_word
+  target_word: mail
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_118:
+  id: 118
+  owner_id: 1
+  special_word_type: ignore_word
+  target_word: mailto
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_119:
+  id: 119
+  owner_id: 1
+  special_word_type: ignore_word
+  target_word: new
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_120:
+  id: 120
+  owner_id: 1
+  special_word_type: ignore_word
+  target_word: ng
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_121:
+  id: 121
+  owner_id: 1
+  special_word_type: ignore_word
+  target_word: or
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_122:
+  id: 122
+  owner_id: 1
+  special_word_type: ignore_word
+  target_word: or2
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_123:
+  id: 123
+  owner_id: 1
+  special_word_type: ignore_word
+  target_word: or3
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_124:
+  id: 124
+  owner_id: 1
+  special_word_type: ignore_word
+  target_word: or4
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_125:
+  id: 125
+  owner_id: 1
+  special_word_type: ignore_word
+  target_word: os
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_126:
+  id: 126
+  owner_id: 1
+  special_word_type: ignore_word
+  target_word: pc
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_127:
+  id: 127
+  owner_id: 1
+  special_word_type: ignore_word
+  target_word: pg
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_128:
+  id: 128
+  owner_id: 1
+  special_word_type: ignore_word
+  target_word: phone
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_129:
+  id: 129
+  owner_id: 1
+  special_word_type: ignore_word
+  target_word: phs
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_130:
+  id: 130
+  owner_id: 1
+  special_word_type: ignore_word
+  target_word: pj
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_131:
+  id: 131
+  owner_id: 1
+  special_word_type: ignore_word
+  target_word: pmi
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_132:
+  id: 132
+  owner_id: 1
+  special_word_type: ignore_word
+  target_word: popteen
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_133:
+  id: 133
+  owner_id: 1
+  special_word_type: ignore_word
+  target_word: pr
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_134:
+  id: 134
+  owner_id: 1
+  special_word_type: ignore_word
+  target_word: pro
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_135:
+  id: 135
+  owner_id: 1
+  special_word_type: ignore_word
+  target_word: se
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_136:
+  id: 136
+  owner_id: 1
+  special_word_type: ignore_word
+  target_word: service
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_137:
+  id: 137
+  owner_id: 1
+  special_word_type: ignore_word
+  target_word: ses
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_138:
+  id: 138
+  owner_id: 1
+  special_word_type: ignore_word
+  target_word: tel
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_139:
+  id: 139
+  owner_id: 1
+  special_word_type: ignore_word
+  target_word: url
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_140:
+  id: 140
+  owner_id: 1
+  special_word_type: ignore_word
+  target_word: zip
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_141:
+  id: 141
+  owner_id: 1
+  special_word_type: ignore_word_proper
+  target_word: 契約社員
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_142:
+  id: 142
+  owner_id: 1
+  special_word_type: ignore_word_proper
+  target_word: 社下
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_143:
+  id: 143
+  owner_id: 1
+  special_word_type: ignore_word_proper
+  target_word: 社先
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_144:
+  id: 144
+  owner_id: 1
+  special_word_type: ignore_word_proper
+  target_word: BP
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_145:
+  id: 145
+  owner_id: 1
+  special_word_type: ignore_word_proper
+  target_word: パートナー
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_146:
+  id: 146
+  owner_id: 1
+  special_word_type: ignore_word_proper
+  target_word: グループ
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_147:
+  id: 147
+  owner_id: 1
+  special_word_type: ignore_word_proper
+  target_word: 貴社
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_148:
+  id: 148
+  owner_id: 1
+  special_word_type: ignore_word_proper
+  target_word: 御社
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_149:
+  id: 149
+  owner_id: 1
+  special_word_type: ignore_word_proper
+  target_word: 参画中
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_150:
+  id: 150
+  owner_id: 1
+  special_word_type: ignore_word_proper
+  target_word: プロパー出身
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_151:
+  id: 151
+  owner_id: 1
+  special_word_type: ignore_word_proper
+  target_word: と一緒
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_152:
+  id: 152
+  owner_id: 1
+  special_word_type: ignore_word_proper
+  target_word: 社員研修
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_153:
+  id: 153
+  owner_id: 1
+  special_word_type: country_word_foreign
+  target_word: アメリカ
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_154:
+  id: 154
+  owner_id: 1
+  special_word_type: country_word_foreign
+  target_word: アフリカ
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_155:
+  id: 155
+  owner_id: 1
+  special_word_type: country_word_foreign
+  target_word: イギリス
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_156:
+  id: 156
+  owner_id: 1
+  special_word_type: country_word_foreign
+  target_word: インド
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_157:
+  id: 157
+  owner_id: 1
+  special_word_type: country_word_foreign
+  target_word: インドネシア
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_158:
+  id: 158
+  owner_id: 1
+  special_word_type: country_word_foreign
+  target_word: オーストラリア
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_159:
+  id: 159
+  owner_id: 1
+  special_word_type: country_word_foreign
+  target_word: オランダ
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_160:
+  id: 160
+  owner_id: 1
+  special_word_type: country_word_foreign
+  target_word: カナダ
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_161:
+  id: 161
+  owner_id: 1
+  special_word_type: country_word_foreign
+  target_word: 韓国
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_162:
+  id: 162
+  owner_id: 1
+  special_word_type: country_word_foreign
+  target_word: シンガポール
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_163:
+  id: 163
+  owner_id: 1
+  special_word_type: country_word_foreign
+  target_word: スウェーデン
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_164:
+  id: 164
+  owner_id: 1
+  special_word_type: country_word_foreign
+  target_word: タイ
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_165:
+  id: 165
+  owner_id: 1
+  special_word_type: country_word_foreign
+  target_word: 台湾
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_166:
+  id: 166
+  owner_id: 1
+  special_word_type: country_word_foreign
+  target_word: 中国
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_167:
+  id: 167
+  owner_id: 1
+  special_word_type: country_word_foreign
+  target_word: チュニジア
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_168:
+  id: 168
+  owner_id: 1
+  special_word_type: country_word_foreign
+  target_word: ドイツ
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_169:
+  id: 169
+  owner_id: 1
+  special_word_type: country_word_foreign
+  target_word: ニュージーランド
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_170:
+  id: 170
+  owner_id: 1
+  special_word_type: country_word_foreign
+  target_word: ノルウェー
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_171:
+  id: 171
+  owner_id: 1
+  special_word_type: country_word_foreign
+  target_word: パキスタン
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_172:
+  id: 172
+  owner_id: 1
+  special_word_type: country_word_foreign
+  target_word: フィンランド
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_173:
+  id: 173
+  owner_id: 1
+  special_word_type: country_word_foreign
+  target_word: ブラジル
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_174:
+  id: 174
+  owner_id: 1
+  special_word_type: country_word_foreign
+  target_word: フランス
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_175:
+  id: 175
+  owner_id: 1
+  special_word_type: country_word_foreign
+  target_word: ベトナム
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_176:
+  id: 176
+  owner_id: 1
+  special_word_type: country_word_foreign
+  target_word: ミャンマー
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_177:
+  id: 177
+  owner_id: 1
+  special_word_type: country_word_foreign
+  target_word: メキシコ
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_178:
+  id: 178
+  owner_id: 1
+  special_word_type: country_word_foreign
+  target_word: ロシア
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_179:
+  id: 179
+  owner_id: 2
+  special_word_type: special_word
+  target_word: サーバー構築
+  convert_to_word: サーバー構築
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_180:
+  id: 180
+  owner_id: 2
+  special_word_type: special_word
+  target_word: 運用
+  convert_to_word: 運用
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_181:
+  id: 181
+  owner_id: 2
+  special_word_type: special_word
+  target_word: (^|[^a-zA-Z])(C)([^a-zA-Z#\+]|$)
+  convert_to_word: C
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_182:
+  id: 182
+  owner_id: 2
+  special_word_type: special_word
+  target_word: ((:?as|AS)\/400)
+  convert_to_word: AS400
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_183:
+  id: 183
+  owner_id: 2
+  special_word_type: special_word
+  target_word: インフラ
+  convert_to_word: インフラ
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_184:
+  id: 184
+  owner_id: 2
+  special_word_type: special_word
+  target_word: 仮想化
+  convert_to_word: 仮想化
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_185:
+  id: 185
+  owner_id: 2
+  special_word_type: special_word
+  target_word: ネットワーク接続
+  convert_to_word: ネットワーク接続
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_186:
+  id: 186
+  owner_id: 2
+  special_word_type: special_word
+  target_word: 環境設計
+  convert_to_word: 環境設計
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_187:
+  id: 187
+  owner_id: 2
+  special_word_type: special_word
+  target_word: データ分析
+  convert_to_word: データ分析
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_188:
+  id: 188
+  owner_id: 2
+  special_word_type: special_word
+  target_word: マーケティング
+  convert_to_word: マーケティング
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_189:
+  id: 189
+  owner_id: 2
+  special_word_type: special_word
+  target_word: サーバサイド
+  convert_to_word: サーバサイド
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_190:
+  id: 190
+  owner_id: 2
+  special_word_type: special_word
+  target_word: ソーシャルゲーム
+  convert_to_word: ソーシャルゲーム
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_191:
+  id: 191
+  owner_id: 2
+  special_word_type: special_word
+  target_word: システム開発
+  convert_to_word: システム開発
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_192:
+  id: 192
+  owner_id: 2
+  special_word_type: special_word
+  target_word: データ管理
+  convert_to_word: データ管理
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_193:
+  id: 193
+  owner_id: 2
+  special_word_type: special_word
+  target_word: フルスクラッチ
+  convert_to_word: フルスクラッチ
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_194:
+  id: 194
+  owner_id: 2
+  special_word_type: special_word
+  target_word: フレームワーク
+  convert_to_word: フレームワーク
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_195:
+  id: 195
+  owner_id: 2
+  special_word_type: special_word
+  target_word: プロジェクト管理
+  convert_to_word: プロジェクト管理
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_196:
+  id: 196
+  owner_id: 2
+  special_word_type: special_word
+  target_word: スマホアプリ開発
+  convert_to_word: スマホアプリ開発
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_197:
+  id: 197
+  owner_id: 2
+  special_word_type: special_word
+  target_word: アジャイル
+  convert_to_word: アジャイル
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_198:
+  id: 198
+  owner_id: 2
+  special_word_type: special_word
+  target_word: 仮想環境
+  convert_to_word: 仮想環境
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_199:
+  id: 199
+  owner_id: 2
+  special_word_type: special_word
+  target_word: 基幹システム
+  convert_to_word: 基幹システム
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_200:
+  id: 200
+  owner_id: 2
+  special_word_type: special_word
+  target_word: 保守
+  convert_to_word: 保守
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_201:
+  id: 201
+  owner_id: 2
+  special_word_type: ignore_word
+  target_word: as
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_202:
+  id: 202
+  owner_id: 2
+  special_word_type: ignore_word
+  target_word: e-mail
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_203:
+  id: 203
+  owner_id: 2
+  special_word_type: ignore_word
+  target_word: email
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_204:
+  id: 204
+  owner_id: 2
+  special_word_type: ignore_word
+  target_word: fax
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_205:
+  id: 205
+  owner_id: 2
+  special_word_type: ignore_word
+  target_word: jp
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_206:
+  id: 206
+  owner_id: 2
+  special_word_type: ignore_word
+  target_word: mail
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_207:
+  id: 207
+  owner_id: 2
+  special_word_type: ignore_word
+  target_word: mailto
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_208:
+  id: 208
+  owner_id: 2
+  special_word_type: ignore_word
+  target_word: new
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_209:
+  id: 209
+  owner_id: 2
+  special_word_type: ignore_word
+  target_word: ng
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_210:
+  id: 210
+  owner_id: 2
+  special_word_type: ignore_word
+  target_word: or
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_211:
+  id: 211
+  owner_id: 2
+  special_word_type: ignore_word
+  target_word: or2
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_212:
+  id: 212
+  owner_id: 2
+  special_word_type: ignore_word
+  target_word: or3
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_213:
+  id: 213
+  owner_id: 2
+  special_word_type: ignore_word
+  target_word: or4
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_214:
+  id: 214
+  owner_id: 2
+  special_word_type: ignore_word
+  target_word: os
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_215:
+  id: 215
+  owner_id: 2
+  special_word_type: ignore_word
+  target_word: pc
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_216:
+  id: 216
+  owner_id: 2
+  special_word_type: ignore_word
+  target_word: pg
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_217:
+  id: 217
+  owner_id: 2
+  special_word_type: ignore_word
+  target_word: phone
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_218:
+  id: 218
+  owner_id: 2
+  special_word_type: ignore_word
+  target_word: phs
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_219:
+  id: 219
+  owner_id: 2
+  special_word_type: ignore_word
+  target_word: pj
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_220:
+  id: 220
+  owner_id: 2
+  special_word_type: ignore_word
+  target_word: pmi
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_221:
+  id: 221
+  owner_id: 2
+  special_word_type: ignore_word
+  target_word: popteen
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_222:
+  id: 222
+  owner_id: 2
+  special_word_type: ignore_word
+  target_word: pr
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_223:
+  id: 223
+  owner_id: 2
+  special_word_type: ignore_word
+  target_word: pro
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_224:
+  id: 224
+  owner_id: 2
+  special_word_type: ignore_word
+  target_word: se
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_225:
+  id: 225
+  owner_id: 2
+  special_word_type: ignore_word
+  target_word: service
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_226:
+  id: 226
+  owner_id: 2
+  special_word_type: ignore_word
+  target_word: ses
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_227:
+  id: 227
+  owner_id: 2
+  special_word_type: ignore_word
+  target_word: tel
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_228:
+  id: 228
+  owner_id: 2
+  special_word_type: ignore_word
+  target_word: url
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_229:
+  id: 229
+  owner_id: 2
+  special_word_type: ignore_word
+  target_word: zip
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_230:
+  id: 230
+  owner_id: 2
+  special_word_type: ignore_word_proper
+  target_word: 契約社員
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_231:
+  id: 231
+  owner_id: 2
+  special_word_type: ignore_word_proper
+  target_word: 社下
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_232:
+  id: 232
+  owner_id: 2
+  special_word_type: ignore_word_proper
+  target_word: 社先
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_233:
+  id: 233
+  owner_id: 2
+  special_word_type: ignore_word_proper
+  target_word: BP
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_234:
+  id: 234
+  owner_id: 2
+  special_word_type: ignore_word_proper
+  target_word: パートナー
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_235:
+  id: 235
+  owner_id: 2
+  special_word_type: ignore_word_proper
+  target_word: グループ
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_236:
+  id: 236
+  owner_id: 2
+  special_word_type: ignore_word_proper
+  target_word: 貴社
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_237:
+  id: 237
+  owner_id: 2
+  special_word_type: ignore_word_proper
+  target_word: 御社
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_238:
+  id: 238
+  owner_id: 2
+  special_word_type: ignore_word_proper
+  target_word: 参画中
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_239:
+  id: 239
+  owner_id: 2
+  special_word_type: ignore_word_proper
+  target_word: プロパー出身
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_240:
+  id: 240
+  owner_id: 2
+  special_word_type: ignore_word_proper
+  target_word: と一緒
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_241:
+  id: 241
+  owner_id: 2
+  special_word_type: ignore_word_proper
+  target_word: 社員研修
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_242:
+  id: 242
+  owner_id: 2
+  special_word_type: country_word_foreign
+  target_word: アメリカ
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_243:
+  id: 243
+  owner_id: 2
+  special_word_type: country_word_foreign
+  target_word: アフリカ
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_244:
+  id: 244
+  owner_id: 2
+  special_word_type: country_word_foreign
+  target_word: イギリス
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_245:
+  id: 245
+  owner_id: 2
+  special_word_type: country_word_foreign
+  target_word: インド
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_246:
+  id: 246
+  owner_id: 2
+  special_word_type: country_word_foreign
+  target_word: インドネシア
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_247:
+  id: 247
+  owner_id: 2
+  special_word_type: country_word_foreign
+  target_word: オーストラリア
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_248:
+  id: 248
+  owner_id: 2
+  special_word_type: country_word_foreign
+  target_word: オランダ
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_249:
+  id: 249
+  owner_id: 2
+  special_word_type: country_word_foreign
+  target_word: カナダ
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_250:
+  id: 250
+  owner_id: 2
+  special_word_type: country_word_foreign
+  target_word: 韓国
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_251:
+  id: 251
+  owner_id: 2
+  special_word_type: country_word_foreign
+  target_word: シンガポール
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_252:
+  id: 252
+  owner_id: 2
+  special_word_type: country_word_foreign
+  target_word: スウェーデン
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_253:
+  id: 253
+  owner_id: 2
+  special_word_type: country_word_foreign
+  target_word: タイ
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_254:
+  id: 254
+  owner_id: 2
+  special_word_type: country_word_foreign
+  target_word: 台湾
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_255:
+  id: 255
+  owner_id: 2
+  special_word_type: country_word_foreign
+  target_word: 中国
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_256:
+  id: 256
+  owner_id: 2
+  special_word_type: country_word_foreign
+  target_word: チュニジア
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_257:
+  id: 257
+  owner_id: 2
+  special_word_type: country_word_foreign
+  target_word: ドイツ
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_258:
+  id: 258
+  owner_id: 2
+  special_word_type: country_word_foreign
+  target_word: ニュージーランド
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_259:
+  id: 259
+  owner_id: 2
+  special_word_type: country_word_foreign
+  target_word: ノルウェー
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_260:
+  id: 260
+  owner_id: 2
+  special_word_type: country_word_foreign
+  target_word: パキスタン
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_261:
+  id: 261
+  owner_id: 2
+  special_word_type: country_word_foreign
+  target_word: フィンランド
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_262:
+  id: 262
+  owner_id: 2
+  special_word_type: country_word_foreign
+  target_word: ブラジル
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_263:
+  id: 263
+  owner_id: 2
+  special_word_type: country_word_foreign
+  target_word: フランス
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_264:
+  id: 264
+  owner_id: 2
+  special_word_type: country_word_foreign
+  target_word: ベトナム
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_265:
+  id: 265
+  owner_id: 2
+  special_word_type: country_word_foreign
+  target_word: ミャンマー
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_266:
+  id: 266
+  owner_id: 2
+  special_word_type: country_word_foreign
+  target_word: メキシコ
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+special_words_267:
+  id: 267
+  owner_id: 2
+  special_word_type: country_word_foreign
+  target_word: ロシア
+  convert_to_word: 
+  memo: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0

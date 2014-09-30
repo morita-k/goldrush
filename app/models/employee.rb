@@ -128,9 +128,9 @@ class Employee < ActiveRecord::Base
     return years * 12 + monthes
   end
   
-  def Employee.map_for_googleimport
+  def Employee.map_for_googleimport(owner_id)
     res = {}
-    where(:deleted => 0).each do |emp|
+    where(:owner_id => owner_id, :deleted => 0).each do |emp|
       res[emp.employee_short_name] = emp.user_id
     end
     res

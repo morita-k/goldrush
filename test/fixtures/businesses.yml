@@ -1,6 +1,6 @@
 businesses_1:
   id: 1
-  owner_id: 
+  owner_id: 1
   eubp_id: 1
   eubp_pic_id: 1
   business_status_type: "offered"
@@ -8,6 +8,43 @@ businesses_1:
   due_date: <%= "2000/01/01 00:00:00" %>
   term_type: "suspense"
   business_title: "案件1"
+  business_point: "ポイント"
+  business_description: "説明"
+  member_change_flg: 0
+  place: ""
+  period: ""
+  phase: ""
+  need_count: 
+  skill_must: ""
+  skill_want: ""
+  skill_tag: ""
+  business_hours: ""
+  assumed_hour: 
+  career_years: ""
+  age_limit: ""
+  nationality_limit: ""
+  sex_limit: ""
+  communication: ""
+  starred: 0
+  rating: 0
+  memo: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+businesses_2:
+  id: 2
+  owner_id: 2
+  eubp_id: 5
+  eubp_pic_id: 5
+  business_status_type: "offered"
+  issue_datetime: <%= "2000/01/02 00:00:00" %>
+  due_date: <%= "2000/01/02 00:00:00" %>
+  term_type: "suspense"
+  business_title: "案件2"
   business_point: "ポイント"
   business_description: "説明"
   member_change_flg: 0

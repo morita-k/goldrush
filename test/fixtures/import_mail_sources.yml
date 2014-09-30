@@ -1,6 +1,6 @@
 import_mail_sources_1:
   id: 1
-  owner_id: 
+  owner_id: 1
   import_mail_id: 1
   message_source: "メールソース"
   created_at: <%= Time.now.to_s(:db) %>
@@ -12,7 +12,7 @@ import_mail_sources_1:
   deleted: 0
 import_mail_sources_2:
   id: 2
-  owner_id: 
+  owner_id: 1
   import_mail_id: 2
   message_source: "メールソース"
   created_at: <%= Time.now.to_s(:db) %>
@@ -24,7 +24,7 @@ import_mail_sources_2:
   deleted: 0
 import_mail_sources_3:
   id: 3
-  owner_id: 
+  owner_id: 1
   import_mail_id: 3
   message_source: "メールソース"
   created_at: <%= Time.now.to_s(:db) %>
@@ -36,7 +36,7 @@ import_mail_sources_3:
   deleted: 0
 import_mail_sources_4:
   id: 4
-  owner_id: 
+  owner_id: 1
   import_mail_id: 4
   message_source: "メールソース"
   created_at: <%= Time.now.to_s(:db) %>
@@ -48,7 +48,7 @@ import_mail_sources_4:
   deleted: 0
 import_mail_sources_5:
   id: 5
-  owner_id: 
+  owner_id: 1
   import_mail_id: 5
   message_source: "メールソース"
   created_at: <%= Time.now.to_s(:db) %>
@@ -60,8 +60,80 @@ import_mail_sources_5:
   deleted: 0
 import_mail_sources_6:
   id: 6
-  owner_id: 
+  owner_id: 1
   import_mail_id: 6
+  message_source: "メールソース"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+import_mail_sources_7:
+  id: 7
+  owner_id: 2
+  import_mail_id: 7
+  message_source: "メールソース"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+import_mail_sources_8:
+  id: 8
+  owner_id: 2
+  import_mail_id: 8
+  message_source: "メールソース"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+import_mail_sources_9:
+  id: 9
+  owner_id: 2
+  import_mail_id: 9
+  message_source: "メールソース"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+import_mail_sources_10:
+  id: 10
+  owner_id: 2
+  import_mail_id: 10
+  message_source: "メールソース"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+import_mail_sources_11:
+  id: 11
+  owner_id: 2
+  import_mail_id: 11
+  message_source: "メールソース"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+import_mail_sources_12:
+  id: 12
+  owner_id: 2
+  import_mail_id: 12
   message_source: "メールソース"
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>

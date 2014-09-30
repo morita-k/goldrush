@@ -3,9 +3,10 @@ require 'nkf'
 class Photo < ActiveRecord::Base
   include AutoTypeName
 
-  def Photo.import_photo(src, sender)
+  def Photo.import_photo(owner_id, src, sender)
 
     photo = Photo.new
+    photo.owner_id = owner_id
     photo.photo_sender = sender
     photo.photo_status_type = :unfixed
 

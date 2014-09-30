@@ -52,7 +52,7 @@ class ApiController < ApplicationController
   end
   
   def broadcast_mail
-    DeliveryMail.send_mails
+    DeliveryMail.send_mails(current_user.owner_id)
     
     render :text => 'REQUEST OK!'
   end
@@ -68,7 +68,7 @@ class ApiController < ApplicationController
   end
   
   def summry_tags
-    TagJournal.summry_tags!
+    TagJournal.summry_tags!(current_user.owner_id)
     
     if params[:back_to]
       redirect_to params[:back_to]
@@ -116,7 +116,7 @@ class ApiController < ApplicationController
   def import_photo
     src = params[:attachment]
     sender = params[:sender]
-    Photo.import_photo(src, sender)
+    Photo.import_photo(current_user.owner_id, src, sender)
     render :text => 'REQUEST OK!'
   end
 

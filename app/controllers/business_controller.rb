@@ -74,7 +74,7 @@ class BusinessController < ApplicationController
       param << age_limit
     end
 
-    return {:conditions => param.unshift(sql), :include => include, :per_page => current_user.per_page}
+    return {:conditions => param.unshift(sql), :include => include, :per => current_user.per_page}
   end
 
 
@@ -101,10 +101,11 @@ class BusinessController < ApplicationController
 
   def create
     Business.transaction {
-      @business = Business.new(params[:business])
+      @business = create_model(:businesses, params[:business])
       set_user_column @business
       @business.save!
       @biz_offer = @business.biz_offers.build
+      @biz_offer.owner_id = @business.owner_id
       @biz_offer.business_partner_id = @business.eubp_id
       @biz_offer.bp_pic_id = @business.eubp_pic_id
       @biz_offer.biz_offered_at = Time.now

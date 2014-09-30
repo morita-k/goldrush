@@ -72,7 +72,7 @@ class User < ActiveRecord::Base
     end
   end
 
-  def create_login             
+  def create_login
     self.login = self.email
   end
 
@@ -89,6 +89,7 @@ class User < ActiveRecord::Base
   has_one :employee, :conditions => "employees.deleted = 0"
   has_one :route_expense, :conditions => "route_expenses.deleted = 0"
   has_one :vacation, :conditions => "vacations.deleted = 0"
+  belongs_to :owner, :class_name => "Owner", :conditions => "owners.deleted = 0"
   belongs_to :contact_mail_template, :class_name => "MailTemplate", :conditions => "mail_templates.deleted = 0"
   has_many :employee_families, :conditions => "employee_families.deleted = 0"
   has_many :approval_authorities, :conditions => "approval_authorities.deleted = 0"
@@ -107,8 +108,8 @@ class User < ActiveRecord::Base
     employee.department_id == 1 # TODO: 固定でIDをみているのは危険
   end
 
-  def User.pic_select_items
-    User.joins(:employee).where("users.deleted = 0 and employees.resignation_date is null").collect{|x| [x.employee.employee_short_name, x.id]}
+  def User.pic_select_items(owner_id)
+    User.joins(:employee).where("users.owner_id = ? and users.deleted = 0 and employees.resignation_date is null", owner_id).collect{|x| [x.employee.employee_name, x.id]}
   end
 
 

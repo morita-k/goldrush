@@ -9,7 +9,13 @@ class ImportMailMatchController < ApplicationController
 
     cond, incl, joins = make_conditions(session[:import_mail_auto_match])
 
-    @import_mail_matches = ImportMailMatch.includes(incl).joins(joins).where(cond).order("import_mail_matches.received_at desc").page(params[:page]).per(current_user.per_page)
+    @import_mail_matches = find_login_owner(:import_mail_matches)
+                              .includes(incl)
+                              .joins(joins)
+                              .where(cond)
+                              .order("import_mail_matches.received_at desc")
+                              .page(params[:page])
+                              .per(current_user.per_page)
   end
 
   def detail

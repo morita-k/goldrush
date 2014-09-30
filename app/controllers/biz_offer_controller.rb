@@ -42,7 +42,7 @@ class BizOfferController < ApplicationController
     end
 
     unless session[:biz_offer_search][:skill_tag].blank?
-      pids = Tag.make_conditions_for_tag(session[:biz_offer_search][:skill_tag], "businesses")
+      pids = Tag.make_conditions_for_tag(current_user.owner_id, session[:biz_offer_search][:skill_tag], "businesses")
       unless pids.empty?
         sql += " and businesses.id in (?) "
         param << pids
@@ -82,7 +82,7 @@ class BizOfferController < ApplicationController
       end
     end
 
-    return {:conditions => param.unshift(sql), :include => include, :order => order_by, :per_page => current_user.per_page}
+    return {:conditions => param.unshift(sql), :include => include, :order => order_by, :per => current_user.per_page}
   end
 
   def list
@@ -102,7 +102,7 @@ class BizOfferController < ApplicationController
   def show
     @biz_offer = BizOffer.find(params[:id])
     @business = @biz_offer.business
-    @approach_pages, @approaches = paginate :approaches, :conditions =>["deleted = 0 and biz_offer_id = ?", @biz_offer.id], :per_page => current_user.per_page
+    @approach_pages, @approaches = paginate :approaches, :conditions =>["deleted = 0 and biz_offer_id = ?", @biz_offer.id], :per => current_user.per_page
     @remarks = Remark.get_all('business', @business.id)
   end
 
@@ -137,9 +137,10 @@ class BizOfferController < ApplicationController
 
       if !params[:template_id].blank?
         if params[:from].blank? || params[:end].blank?
-          AnalysisTemplate.analyze(params[:template_id], import_mail, [@biz_offer, @business])
+          AnalysisTemplate.analyze(current_user.owner_id, params[:template_id], import_mail, [@biz_offer, @business])
         else
           AnalysisTemplate.analyze_content(
+            current_user.owner_id,
             params[:template_id],
             import_mail.mail_body[params[:from].to_i .. params[:end].to_i],
             [@biz_offer, @business]
@@ -152,13 +153,13 @@ class BizOfferController < ApplicationController
 
   def create
     @calendar = true
-    @biz_offer = BizOffer.new(params[:biz_offer])
+    @biz_offer = create_model(:biz_offers, params[:biz_offer])
     if @biz_offer.business_id.blank?
       new_flg = true
     end
     ActiveRecord::Base.transaction do
       unless @business = @biz_offer.business
-        @business = Business.new
+        @business = create_model(:businesses)
       end
       @business.attributes = params[:business]
 
@@ -226,7 +227,7 @@ class BizOfferController < ApplicationController
     # メール取り込みからの遷移
     if params[:import_mail_id] && params[:template_id]
       import_mail = ImportMail.find(params[:import_mail_id])
-      AnalysisTemplate.analyze(params[:template_id], import_mail, [@biz_offer, @business])
+      AnalysisTemplate.analyze(current_user.owner_id, params[:template_id], import_mail, [@biz_offer, @business])
     end
   end
 

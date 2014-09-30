@@ -1,6 +1,6 @@
 users_1:
   id: 1
-  owner_id: 
+  owner_id: 1
   login: "system@aaa.com"
   fullname: ""
   shortname: ""
@@ -18,7 +18,7 @@ users_1:
   current_sign_in_ip: ""
   last_sign_in_ip: ""
   confirmation_token: ""
-  confirmed_at: 
+  confirmed_at: <%= Time.now.to_s(:db) %>
   confirmation_sent_at: 
   unconfirmed_email: ""
   failed_attempts: 0
@@ -34,7 +34,7 @@ users_1:
   deleted: 0
 users_2:
   id: 2
-  owner_id: 
+  owner_id: 1
   login: "user1@aaa.com"
   fullname: ""
   shortname: ""
@@ -52,7 +52,7 @@ users_2:
   current_sign_in_ip: ""
   last_sign_in_ip: ""
   confirmation_token: ""
-  confirmed_at: 
+  confirmed_at: <%= Time.now.to_s(:db) %>
   confirmation_sent_at: 
   unconfirmed_email: ""
   failed_attempts: 0
@@ -68,7 +68,7 @@ users_2:
   deleted: 0
 users_3:
   id: 3
-  owner_id: 
+  owner_id: 1
   login: "user2@aaa.com"
   fullname: ""
   shortname: ""
@@ -86,7 +86,7 @@ users_3:
   current_sign_in_ip: ""
   last_sign_in_ip: ""
   confirmation_token: ""
-  confirmed_at: 
+  confirmed_at: <%= Time.now.to_s(:db) %>
   confirmation_sent_at: 
   unconfirmed_email: ""
   failed_attempts: 0
@@ -102,7 +102,7 @@ users_3:
   deleted: 0
 users_4:
   id: 4
-  owner_id: 
+  owner_id: 1
   login: "user3@aaa.com"
   fullname: ""
   shortname: ""
@@ -120,7 +120,7 @@ users_4:
   current_sign_in_ip: ""
   last_sign_in_ip: ""
   confirmation_token: ""
-  confirmed_at: 
+  confirmed_at: <%= Time.now.to_s(:db) %>
   confirmation_sent_at: 
   unconfirmed_email: ""
   failed_attempts: 0
@@ -136,7 +136,7 @@ users_4:
   deleted: 0
 users_5:
   id: 5
-  owner_id: 
+  owner_id: 1
   login: "user4@aaa.com"
   fullname: ""
   shortname: ""
@@ -154,7 +154,7 @@ users_5:
   current_sign_in_ip: ""
   last_sign_in_ip: ""
   confirmation_token: ""
-  confirmed_at: 
+  confirmed_at: <%= Time.now.to_s(:db) %>
   confirmation_sent_at: 
   unconfirmed_email: ""
   failed_attempts: 0
@@ -170,7 +170,7 @@ users_5:
   deleted: 0
 users_6:
   id: 6
-  owner_id: 
+  owner_id: 1
   login: "user5@aaa.com"
   fullname: ""
   shortname: ""
@@ -188,7 +188,7 @@ users_6:
   current_sign_in_ip: ""
   last_sign_in_ip: ""
   confirmation_token: ""
-  confirmed_at: 
+  confirmed_at: <%= Time.now.to_s(:db) %>
   confirmation_sent_at: 
   unconfirmed_email: ""
   failed_attempts: 0
@@ -204,7 +204,7 @@ users_6:
   deleted: 0
 users_7:
   id: 7
-  owner_id: 
+  owner_id: 1
   login: "user6@aaa.com"
   fullname: ""
   shortname: ""
@@ -222,7 +222,7 @@ users_7:
   current_sign_in_ip: ""
   last_sign_in_ip: ""
   confirmation_token: ""
-  confirmed_at: 
+  confirmed_at: <%= Time.now.to_s(:db) %>
   confirmation_sent_at: 
   unconfirmed_email: ""
   failed_attempts: 0
@@ -238,7 +238,7 @@ users_7:
   deleted: 0
 users_8:
   id: 8
-  owner_id: 
+  owner_id: 1
   login: "user7@aaa.com"
   fullname: ""
   shortname: ""
@@ -256,7 +256,7 @@ users_8:
   current_sign_in_ip: ""
   last_sign_in_ip: ""
   confirmation_token: ""
-  confirmed_at: 
+  confirmed_at: <%= Time.now.to_s(:db) %>
   confirmation_sent_at: 
   unconfirmed_email: ""
   failed_attempts: 0
@@ -272,7 +272,7 @@ users_8:
   deleted: 0
 users_9:
   id: 9
-  owner_id: 
+  owner_id: 1
   login: "user8@aaa.com"
   fullname: ""
   shortname: ""
@@ -290,7 +290,7 @@ users_9:
   current_sign_in_ip: ""
   last_sign_in_ip: ""
   confirmation_token: ""
-  confirmed_at: 
+  confirmed_at: <%= Time.now.to_s(:db) %>
   confirmation_sent_at: 
   unconfirmed_email: ""
   failed_attempts: 0
@@ -306,7 +306,7 @@ users_9:
   deleted: 0
 users_10:
   id: 10
-  owner_id: 
+  owner_id: 1
   login: "user9@aaa.com"
   fullname: ""
   shortname: ""
@@ -324,7 +324,7 @@ users_10:
   current_sign_in_ip: ""
   last_sign_in_ip: ""
   confirmation_token: ""
-  confirmed_at: 
+  confirmed_at: <%= Time.now.to_s(:db) %>
   confirmation_sent_at: 
   unconfirmed_email: ""
   failed_attempts: 0
@@ -340,7 +340,7 @@ users_10:
   deleted: 0
 users_11:
   id: 11
-  owner_id: 
+  owner_id: 1
   login: "user10@aaa.com"
   fullname: ""
   shortname: ""
@@ -358,7 +358,7 @@ users_11:
   current_sign_in_ip: ""
   last_sign_in_ip: ""
   confirmation_token: ""
-  confirmed_at: 
+  confirmed_at: <%= Time.now.to_s(:db) %>
   confirmation_sent_at: 
   unconfirmed_email: ""
   failed_attempts: 0
@@ -374,7 +374,7 @@ users_11:
   deleted: 0
 users_12:
   id: 12
-  owner_id: 
+  owner_id: 1
   login: "user11@aaa.com"
   fullname: ""
   shortname: ""
@@ -392,7 +392,7 @@ users_12:
   current_sign_in_ip: ""
   last_sign_in_ip: ""
   confirmation_token: ""
-  confirmed_at: 
+  confirmed_at: <%= Time.now.to_s(:db) %>
   confirmation_sent_at: 
   unconfirmed_email: ""
   failed_attempts: 0
@@ -408,7 +408,7 @@ users_12:
   deleted: 0
 users_13:
   id: 13
-  owner_id: 
+  owner_id: 1
   login: "user12@aaa.com"
   fullname: ""
   shortname: ""
@@ -426,7 +426,7 @@ users_13:
   current_sign_in_ip: ""
   last_sign_in_ip: ""
   confirmation_token: ""
-  confirmed_at: 
+  confirmed_at: <%= Time.now.to_s(:db) %>
   confirmation_sent_at: 
   unconfirmed_email: ""
   failed_attempts: 0
@@ -442,7 +442,7 @@ users_13:
   deleted: 0
 users_14:
   id: 14
-  owner_id: 
+  owner_id: 1
   login: "user13@aaa.com"
   fullname: ""
   shortname: ""
@@ -460,7 +460,7 @@ users_14:
   current_sign_in_ip: ""
   last_sign_in_ip: ""
   confirmation_token: ""
-  confirmed_at: 
+  confirmed_at: <%= Time.now.to_s(:db) %>
   confirmation_sent_at: 
   unconfirmed_email: ""
   failed_attempts: 0
@@ -476,7 +476,7 @@ users_14:
   deleted: 0
 users_15:
   id: 15
-  owner_id: 
+  owner_id: 1
   login: "user14@aaa.com"
   fullname: ""
   shortname: ""
@@ -494,7 +494,41 @@ users_15:
   current_sign_in_ip: ""
   last_sign_in_ip: ""
   confirmation_token: ""
-  confirmed_at: 
+  confirmed_at: <%= Time.now.to_s(:db) %>
+  confirmation_sent_at: 
+  unconfirmed_email: ""
+  failed_attempts: 0
+  unlock_token: ""
+  locked_at: 
+  authentication_token: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+users_16:
+  id: 16
+  owner_id: 2
+  login: "user15@aaa.com"
+  fullname: ""
+  shortname: ""
+  nickname: "OWNER_TEST_USER1"
+  access_level_type: "normal"
+  per_page: 50
+  email: "user15@aaa.com"
+  encrypted_password: "$2a$10$ojHlby3zaA6ux5w8/1QINO9ALaPwYboB1eYxSXq4G6ZAaVmaTvadi"
+  reset_password_token: "NULL"
+  reset_password_sent_at: NULL
+  remember_created_at: NULL
+  sign_in_count: 0
+  current_sign_in_at: 
+  last_sign_in_at: 
+  current_sign_in_ip: ""
+  last_sign_in_ip: ""
+  confirmation_token: ""
+  confirmed_at: <%= Time.now.to_s(:db) %>
   confirmation_sent_at: 
   unconfirmed_email: ""
   failed_attempts: 0

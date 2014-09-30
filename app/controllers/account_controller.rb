@@ -11,11 +11,11 @@ class AccountController < ApplicationController
     @employee.init_default_working_times
 
     @calendar = true
-    @departments = Department.find(:all, :order => "display_order")     
+    @departments = find_login_owner(:departments).order("display_order")
   end
 
   def create
-    @user = User.new(params[:user])
+    @user = create_model(:users, params[:user])
     @user.email = @user.login
 
     ActiveRecord::Base.transaction do
@@ -23,7 +23,7 @@ class AccountController < ApplicationController
       @user.per_page = 50
 
       parseTimes(params)
-      @employee = Employee.new(params[:employee])
+      @employee = create_model(:employees, params[:employee])
       @employee.set_regular_working_hour
       set_user_column @user
       set_user_column @employee
@@ -50,12 +50,12 @@ class AccountController < ApplicationController
     end
   rescue ValidationAbort
     @calendar = true
-    @departments = Department.find(:all, :order => "display_order") 
+    @departments = find_login_owner(:departments).order("display_order")
     flash[:err] = $!.to_s
     render :action => 'new'
   rescue ActiveRecord::RecordInvalid
     @calendar = true
-    @departments = Department.find(:all, :order => "display_order") 
+    @departments = find_login_owner(:departments).order("display_order")
     render :action => 'new'
   end
   
@@ -75,7 +75,7 @@ class AccountController < ApplicationController
     # ただし、登録済のデータも上書きされてしまうので注意。
     # ・・・というか、SQLで直接入れた方がいいかもねー。
     # @employee.init_default_working_times
-    @departments = Department.find(:all, :order => "display_order") 
+    @departments = find_login_owner(:departments).order("display_order")
     
     if request.post?
       parseTimes(params)
@@ -122,7 +122,7 @@ class AccountController < ApplicationController
   def index
     @calendar = true
     @edit_type = params[:edit_type] || 'list_all'
-    @departments = Department.find(:all, :conditions => "deleted = 0 ")
+    @departments = find_login_owner(:departments).where("deleted = 0")
 
     cond = make_conditions
     @employee_pages, @employees = paginate(:employees, cond)
