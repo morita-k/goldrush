@@ -33,11 +33,11 @@ class DeliveryMail < ActiveRecord::Base
   def filtered_matches_in
     [] if self.payment.blank? || self.age.blank?
     if self.biz_offer_mail?
-      w = "delivery_mail_matches.owner_id = ? and delivery_mail_matches.deleted = 0 and payment <= ? and age <= ?"
+      w = "delivery_mail_matches.owner_id = ? and delivery_mail_matches.delivery_mail_id = ? and delivery_mail_matches.deleted = 0 and payment <= ? and age <= ?"
     else
-      w = "delivery_mail_matches.owner_id = ? and delivery_mail_matches.deleted = 0 and payment >= ? and age >= ?"
+      w = "delivery_mail_matches.owner_id = ? and delivery_mail_matches.delivery_mail_id = ? and delivery_mail_matches.deleted = 0 and payment >= ? and age >= ?"
     end
-    DeliveryMailMatch.joins(:import_mail).where(w, owner_id, payment, age)
+    DeliveryMailMatch.joins(:import_mail).where(w, self.owner_id, self.id, self.payment, self.age)
   end
 
   def filtered_matches
