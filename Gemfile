@@ -70,12 +70,12 @@ gem 'rmagick', :require => 'RMagick'
 
 group :development do
   # http://qiita.com/yusabana/items/8ce54577d959bb085b37
-  gem 'better_errors'
+  gem 'better_errors', '~> 1.1.0'
   gem 'binding_of_caller'
   gem 'hirb'
   gem 'hirb-unicode'
   gem 'pry-rails'
-  gem 'pry-debugger'
+#  gem 'pry-debugger'
 
   # renderファイル名をhtmlソース内にコメント表示
   gem 'rails_view_annotator'
@@ -84,7 +84,7 @@ end
 group :test do
   gem 'simplecov', :require => false
   gem 'simplecov-rcov', :require => false
-  gem "rspec"
+  gem "rspec", '2.14.1'
   gem "rspec-rails"
   gem "factory_girl_rails", "~> 3.0"
   gem "database_cleaner"
@@ -99,4 +99,3 @@ end
 gem 'rb-readline'
 
 gem 'dkim', :git => 'git://github.com/jhawthorn/dkim.git'
-
