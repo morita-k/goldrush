@@ -18,7 +18,7 @@ module DeliveryMailsHelper
   end
 
   def mail_from
-    "#{current_user.nickname} <#{current_user.email}>"
+    "\"#{current_user.nickname}\" <#{current_user.email}>"
   end
 
   def mail_to(delivery_mail)

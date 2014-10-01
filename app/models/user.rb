@@ -20,7 +20,7 @@ class User < ActiveRecord::Base
   after_save :purge_cache
 
   def formated_mail_from
-    "#{nickname} <#{email}>"
+    "\"#{nickname}\" <#{email}>"
   end
 
   def purge_cache

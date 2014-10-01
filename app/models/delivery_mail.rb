@@ -66,11 +66,11 @@ class DeliveryMail < ActiveRecord::Base
   end
 
   def formated_mail_from
-    "#{mail_from_name} <#{mail_from}>"
+    "\"#{mail_from_name}\" <#{mail_from}>"
   end
 
   def formated_mail_from=(str)
-    str =~ /(.*) <(.*)>/
+    str =~ /\"(.*)\" <(.*)>/
     self.mail_from_name = $1
     self.mail_from = $2
   end
@@ -122,7 +122,7 @@ class DeliveryMail < ActiveRecord::Base
       mail.mail_from,
       nil,
       nil,
-      "#{mail.mail_from_name} <#{mail.mail_from}>",
+      "\"#{mail.mail_from_name}\" <#{mail.mail_from}>",
       DeliveryMail.tags_replacement(mail.subject, opt),
       DeliveryMail.tags_replacement(mail.content, opt),
       attachment_files
@@ -136,7 +136,7 @@ class DeliveryMail < ActiveRecord::Base
       bp_pic.email1,
       mail.mail_cc,
       mail.mail_bcc,
-      "#{mail.mail_from_name} <#{mail.mail_from}>",
+      "\"#{mail.mail_from_name}\" <#{mail.mail_from}>",
       DeliveryMail.tags_replacement(mail.subject, opt),
       DeliveryMail.tags_replacement(mail.content, opt),
       attachment_files
@@ -159,7 +159,7 @@ EOS
           target.bp_pic.email1,
           mail.mail_cc,
           mail.mail_bcc,
-          "#{mail.mail_from_name} <#{mail.mail_from}>",
+          "\"#{mail.mail_from_name}\" <#{mail.mail_from}>",
           DeliveryMail.tags_replacement(mail.subject, opt),
           DeliveryMail.tags_replacement(mail_content, opt),
           mail.attachment_files,

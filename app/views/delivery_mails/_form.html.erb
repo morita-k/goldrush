@@ -27,7 +27,7 @@
   <% @bp_pics.each do |bp_pic| %>
     <tr>
       <%= content_tag(:th, content_tag(:label, "対象"), :rowspan => @bp_pics.length) if bp_pic.id == @bp_pics[0].id %>
-      <td><%= "#{bp_pic.business_partner.business_partner_name} #{bp_pic.bp_pic_name} <#{bp_pic.email1}>" %></td>
+      <td><%= "\"#{bp_pic.business_partner.business_partner_name} #{bp_pic.bp_pic_name}\" <#{bp_pic.email1}>" %></td>
     </tr>
   <% end %>
 <% end %>
