@@ -146,7 +146,7 @@ class DailyReportSummary < ActiveRecord::Base
 
     def get_body(target_daily_report_summary, target_date, target_user, domain_name)
       <<EOS
-#{target_user.employee.employee_name}の日報更新をお知らせします。
+#{target_user.nickname}の日報更新をお知らせします。
 
 成約数
 #{target_daily_report_summary.succeed_count}

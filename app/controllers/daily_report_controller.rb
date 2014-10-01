@@ -69,7 +69,7 @@ class DailyReportController < ApplicationController
       target_summary_individual = Hash.new
 
       target_summary_individual[:user_id] = target_user.user.id
-      target_summary_individual[:user_name] = target_user.user.employee.employee_name
+      target_summary_individual[:user_name] = target_user.user.nickname
       target_summary_individual[:target_summary_report] = Array.new
 
       target_summary_individuals.push(target_summary_individual)

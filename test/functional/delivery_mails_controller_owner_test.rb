@@ -11,7 +11,6 @@ class DeliveryMailsControllerOwnerTest < ActionController::TestCase
     @delivery_mail_params = {
       bp_pic_group_id: 2,
       subject: "test mail",
-      formated_mail_from: "#{@delivery_mail.mail_from_name} <#{@delivery_mail.mail_from}>",
       content: "test",
       planned_setting_at: DateTime.now.strftime("%Y/%m/%d"),
       planned_setting_at_hour: DateTime.now.hour,

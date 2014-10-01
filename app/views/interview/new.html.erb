@@ -4,7 +4,7 @@
   <h1>次回<%=getLongName('table_name','interviews')%>作成</h1>
   <%= form_tag  do %>
     <%= hidden_field 'interview', 'approach_id', :value => params[:approach] %>
-    <%= submit_tag '　　これ以上面談を作成しない　　', :name => 'interview_end', :onclick=>"return #{confirm_javascript_function("続けて契約を作成してくださいね。")}" %> 
+    <%# submit_tag '　　これ以上面談を作成しない　　', :name => 'interview_end', :onclick=>"return #{confirm_javascript_function("続けて契約を作成してくださいね。")}" %> 
   <% end %>
 <% end %>
 

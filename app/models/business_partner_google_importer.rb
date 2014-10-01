@@ -4,7 +4,7 @@ class BusinessPartnerGoogleImporter < BusinessPartner
   def BusinessPartnerGoogleImporter.import_google_csv_data(readable_file, owner_id, userlogin, prodmode=false)
     data_total = 0 # ヘッダーを含まないデータの総数
     error_list = [] # ヘッダーを含めた行番号リスト
-    employees = Employee.map_for_googleimport(owner_id)
+    sales_pic_list = User.map_for_googleimport(owner_id)
 
     ActiveRecord::Base.transaction do
       require 'csv'
@@ -76,7 +76,7 @@ class BusinessPartnerGoogleImporter < BusinessPartner
 
         tags = BusinessPartnerGoogleImporter.mysplit(r["Group Membership"])
         tags.each do |tag|
-          if sales_pic_id = employees[tag]
+          if sales_pic_id = sales_pic_list[tag]
             bp_pic.sales_pic_id = sales_pic_id
             break
           end

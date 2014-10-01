@@ -32,6 +32,10 @@ module ApplicationHelper
     cond ? around_b(str) : str
   end
 
+  def url_for_pic_popup(mode, callback = :setPic)
+    url_for :controller => :user, :action => :list, :popup => 1, :callback => callback, :mode => mode
+  end
+
   def url_for_bp_pic_popup(callback = :setBpPic)
     url_for :controller => :bp_pic, :action => :list, :popup =>1, :callback => callback
   end

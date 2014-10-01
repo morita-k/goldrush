@@ -42,11 +42,7 @@ class Interview < ActiveRecord::Base
     ])
   end
 
-  def interview_employee_name
-   if self.interview_pic_id
-     employee = Employee.find(self.interview_pic_id)
-     employee ? employee.employee_name : ""
-   end
+  def interview_pic_name
+   interview_pic.blank? ? "" : interview_pic.nickname
   end
-  
 end

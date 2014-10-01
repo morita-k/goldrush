@@ -39,11 +39,11 @@ class BpPic < ActiveRecord::Base
   end
   
   def sales_pic_name
-    sales_pic && sales_pic.employee.employee_name
+    sales_pic && sales_pic.nickname
   end
 
   def BpPic.select_content_list(owner_id)
-    Employee.where(owner_id: owner_id, deleted: 0).map{|e| [e.employee_name, e.user_id]}
+    User.where(owner_id: owner_id, deleted: 0).map{|x| [x.nickname, x.id]}
   end
   
   def contact_mail?

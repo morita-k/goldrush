@@ -20,7 +20,7 @@ class User < ActiveRecord::Base
   after_save :purge_cache
 
   def formated_mail_from
-    "#{employee.employee_name} <#{email}>"
+    "#{nickname} <#{email}>"
   end
 
   def purge_cache
@@ -95,6 +95,7 @@ class User < ActiveRecord::Base
   has_many :approval_authorities, :conditions => "approval_authorities.deleted = 0"
   has_many :annual_vacations, :conditions => "annual_vacations.deleted = 0", :order => "year"
   has_many :project_members, :conditions => "project_members.deleted = 0"
+  validates_presence_of :nickname
   
   def super?
     ["super"].include?(self.access_level_type)
@@ -109,9 +110,16 @@ class User < ActiveRecord::Base
   end
 
   def User.pic_select_items(owner_id)
-    User.joins(:employee).where("users.owner_id = ? and users.deleted = 0 and employees.resignation_date is null", owner_id).collect{|x| [x.employee.employee_name, x.id]}
+    User.joins(:employee).where("users.owner_id = ? and users.deleted = 0 and employees.resignation_date is null", owner_id).collect{|x| [x.nickname, x.id]}
   end
-
+ 
+  def User.map_for_googleimport(owner_id)
+    res = {}
+    where(:owner_id => owner_id, :deleted => 0).each do |u|
+      res[u.nickname] = u.id
+    end
+    res
+  end
 
   def User.get_prefs
     [

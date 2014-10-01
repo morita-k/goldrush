@@ -154,7 +154,7 @@ class Contract < ActiveRecord::Base
   end
 
   def contract_pic_name
-    contract_pic && contract_pic.employee.employee_name
+    contract_pic.blank? ? "" : contract_pic.nickname
   end
   
   def payment_diff

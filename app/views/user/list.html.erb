@@ -4,8 +4,13 @@
 
 <table class="list_table">
   <tr>
-    <th>Login</th>
-    <th>Nickname</th>
+    <% if popup? %>
+    <th>ログインID</th>
+    <th>名前</th>
+    <th style="width:100px">&nbsp;</th>
+    <% else %>
+    <th>ログインID</th>
+    <th>名前</th>
     <th>Access level type</th>
     <th>Per page</th>
     <th>Sign in count</th>
@@ -15,10 +20,16 @@
     <th>Last sign in ip</th>
     <th>Locked at</th>
     <th>Employee</th>
+    <% end %>
   </tr>
 
-<% @users.each do |user| %>
+  <% @users.each do |user| %>
   <tr>
+    <% if popup? %>
+    <td><%= link_to user.login, '#', :onClick => "setUserToParentWindow(#{user.id}, '#{user.nickname}');return false;" %></td>
+    <td><%= user.nickname %></td>
+    <td>&nbsp;</td>
+    <% else %>
 	  <td><%= back_to_link user.login, :action => :show , :id => user %></td>
     <td><%= user.nickname %></td>
     <td><%= user.access_level_type %></td>
@@ -30,13 +41,30 @@
     <td><%= user.last_sign_in_ip %></td>
     <td><%= user.locked_at %></td>
     <td><%= link_to (user.employee ? 'Y' : ''), :controller => :account, :action => :show, :id => user %></td>
+    <% end %>
   </tr>
-<% end %>
+  <% end %>
 </table>
 
 <%= paginate @users %>
 
 <br />
 
+<% unless popup? %>
 <%= back_to_link (getLongName('table_name','users')+'の新規作成'), :action => :new %>
+<% end %>
+
+<% if popup? %>
+<script type="text/javascript">
+<!--
+function setUserToParentWindow(id, nickname) {
+  var user = new Object();
+  user.pic_id = id;
+  user.pic_name = nickname;
+  window.opener.document.<%=params[:callback]%>("<%=params[:mode]%>", user);
+  window.close();
+}
+// -->
+</script>
+<% end %>
 
