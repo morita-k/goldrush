@@ -6,7 +6,7 @@ class Owner < ActiveRecord::Base
 
   def set_default
     self.init_password_salt ||= 'salt'
-    self.user_max_count ||= 50
-    self.available_user_count ||= 50
+    self.user_max_count = 50 if self.user_max_count.nil? || self.user_max_count == 0
+    self.available_user_count = 50 if self.available_user_count.nil? || self.available_user_count == 0
   end
 end
