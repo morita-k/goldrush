@@ -3,13 +3,18 @@
   <%= devise_error_messages! %>
 <table class="form_table">
   <tr>
-  <th><%= f.label :email, 'Eメール' %></th>
+  <th><%= f.label :email, 'Eメール(*)' %></th>
   <td><%= f.email_field :email, :autofocus => true %></td>
   </tr>
 
   <tr>
-  <th><%= f.label :current_password, '現在のパスワード' %></th>
-  <td><%= f.password_field :current_password %><br/><i>(登録内容を変更する場合、現在のパスワードが必要です)</i></td>
+  <th><%= f.label :nickname, '名前(*)' %></th>
+  <td><%= f.text_field :nickname %></td>
+  </tr>
+
+  <tr>
+  <th><%= f.label :current_password, '現在のパスワード(*)' %></th>
+  <td><%= f.password_field :current_password %></td>
   </tr>
 
   <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
@@ -30,13 +35,18 @@
   </tr>
 
   <tr>
+  <th><%= label_tag :auth_company_name, '会社名' %></th>
+  <td><%= text_field_tag :auth_company_name, params[:auth_company_name] %></td>
+  </tr>
+
+  <tr>
   <th><%= f.label :mail_signature, 'メール署名' %></th>
   <td><%= f.text_area :mail_signature %></td>
   </tr>
 
   <tr>
   <th><%= f.label :contact_mail_template_id, 'あいさつメールテンプレート' %></th>
-  <td><%= f.select :contact_mail_template_id, MailTemplate.all.collect {|x| [ x.mail_template_name, x.id ] }, { :include_blank => true } %></td>
+  <td><%= f.select :contact_mail_template_id, MailTemplate.where(:owner_id => current_user.owner_id, :deleted => 0).collect {|x| [ x.mail_template_name, x.id ] }, { :include_blank => true } %></td>
   </tr>
 
 </table>

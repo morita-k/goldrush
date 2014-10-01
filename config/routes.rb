@@ -76,7 +76,10 @@ GoldRush::Application.routes.draw do
     end
   end
 
-  devise_for :auth, :class_name => User, :controllers => {:sessions => 'auth/sessions'}
+  devise_for :auth, :class_name => User, :controllers => {
+    :sessions => 'auth/sessions',
+    :registrations => 'auth/registrations'
+  }
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
