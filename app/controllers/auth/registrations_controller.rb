@@ -93,7 +93,7 @@ protected
         .gsub(/owner_id/, "#{user.owner_id} as owner_id")
         .gsub(/created_user|updated_user/, "'#{user.login}' as \\&")
         .gsub(/created_at|updated_at/, "'#{user.created_at}' as \\&")
-    import_init_data(:sys_configs, column, select_column, "owner_id is null")
+    import_init_data(:sys_configs, column, select_column, "deleted = 0 and owner_id is null")
   end
 
   def import_special_words_init_data(user)
@@ -102,7 +102,7 @@ protected
         .gsub(/owner_id/, "#{user.owner_id} as owner_id")
         .gsub(/created_user|updated_user/, "'#{user.login}' as \\&")
         .gsub(/created_at|updated_at/, "'#{user.created_at}' as \\&")
-    import_init_data(:special_words, column, select_column, "owner_id is null")
+    import_init_data(:special_words, column, select_column, "deleted = 0 and owner_id is null")
   end
 
   def import_tags_init_data(user)
@@ -112,7 +112,7 @@ protected
         .gsub(/tag_count|inc_count/, "0 as \\&")
         .gsub(/created_user|updated_user/, "'#{user.login}' as \\&")
         .gsub(/created_at|updated_at/, "'#{user.created_at}' as \\&")
-    import_init_data(:tags, column, select_column, "owner_id is null and tag_key = 'import_mails' and starred <> 0")
+    import_init_data(:tags, column, select_column, "deleted = 0 and owner_id is null and tag_key = 'import_mails' and starred <> 0")
   end
 end
 
