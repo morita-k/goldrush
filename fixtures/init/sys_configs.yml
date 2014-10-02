@@ -133,7 +133,7 @@ sys_configs_8:
   deleted: 0
 sys_configs_9:
   id: 9
-  owner_id: 0
+  owner_id: 
   config_section: "outflow_mail"
   config_key: "outflow_criterion"
   value1: "50"
