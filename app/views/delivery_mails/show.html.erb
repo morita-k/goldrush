@@ -87,7 +87,8 @@ $(function() {
   });
   $('#show_all').on('ajax:success', function(data, res, xhr){
       spinner.stop();
-      $('#delivery_mail_target').html(res);
+      $('#delivery_mail_target .target_tr').remove();
+      $('#delivery_mail_target tbody').append(res);
       $('#show_all').hide();
   });
 });
