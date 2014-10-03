@@ -60,7 +60,7 @@ protected
   # (ja.devise.failure.unauthenticated)となってしまうので、
   # このメソッドをオーバーライドして回避
   def after_inactive_sign_up_path_for(resource)
-    "/auth/sign_in"
+    new_auth_session_path
   end
 
   def get_last_created_user
