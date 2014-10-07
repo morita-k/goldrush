@@ -135,7 +135,7 @@ EOS
         end
 
         if params[:testmail]
-          DeliveryMail.send_test_mail(@delivery_mail.get_informations)
+          DeliveryMail.send_test_mail(current_user, @delivery_mail.get_informations)
           format.html {
             redirect_to({
               :controller => 'delivery_mails',
@@ -191,7 +191,7 @@ EOS
        end
 
         if params[:testmail]
-          DeliveryMail.send_test_mail(@delivery_mail.get_informations)
+          DeliveryMail.send_test_mail(current_user, @delivery_mail.get_informations)
           format.html {
             redirect_to({
               :controller => 'delivery_mails',
@@ -235,7 +235,7 @@ EOS
     end
 
     if delivery_mail.planned_setting_at < Time.now.to_s
-      DeliveryMail.send_mails(delivery_mail.owner_id)
+      DeliveryMail.send_mails(current_user)
 
       error_count = DeliveryError.where(:owner_id => delivery_mail.owner_id, :delivery_mail_id => delivery_mail.id).size
       if error_count > 0
@@ -355,7 +355,7 @@ EOS
         end #transaction
 
         # メール送信
-        DeliveryMail.send_mails(@delivery_mail.owner_id)
+        DeliveryMail.send_mails(current_user)
         error_count = DeliveryError.where(:owner_id => @delivery_mail.owner_id, :delivery_mail_id => @delivery_mail.id).size
         if error_count > 0
           flash.now[:warn] = "送信に失敗した宛先が存在します。<br>送信に失敗した宛先は配信メール詳細画面から確認できます。"
@@ -436,7 +436,7 @@ EOS
         end #transaction
 
         # メール送信
-        DeliveryMail.send_mails(@delivery_mail.owner_id)
+        DeliveryMail.send_mails(current_user)
         error_count = DeliveryError.where(:owner_id => @delivery_mail.owner_id, :delivery_mail_id => @delivery_mail.id).size
         if error_count > 0
           flash.now[:warn] = "送信に失敗した宛先が存在します。<br>送信に失敗した宛先は配信メール詳細画面から確認できます。"

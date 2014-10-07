@@ -1,0 +1,41 @@
+<%= form_for(resource, :as => resource_name, :url => {:action => :update_smtp_setting}, :html => { :method => :put }) do |f| %>
+<%= accordion_around "メール配信設定の変更", "" do %>
+<%= error_messages_for :user %>
+<table class="form_table">
+  <tr>
+  <th><%= f.label :smtp_settings_enable_starttls_auto, 'SMTP自動TLS' %></th>
+  <td><label><%= f.check_box :smtp_settings_enable_starttls_auto %> チェックされた場合、ON</label></td>
+  </tr>
+
+  <tr>
+  <th><%= f.label :smtp_settings_address, 'SMTPサーバーアドレス' %></th>
+  <td><%= f.text_field :smtp_settings_address, :autofocus => true, :style => 'width: 30%' %></td>
+  </tr>
+
+  <tr>
+  <th><%= f.label :smtp_settings_port, 'SMTPポート' %></th>
+  <td><%= f.select :smtp_settings_port, available_port_list %></td>
+  </tr>
+
+  <tr>
+  <th><%= f.label :smtp_settings_domain, 'SMTPドメイン' %></th>
+  <td><%= resource.smtp_settings_domain %></td>
+  </tr>
+
+  <tr>
+  <th><%= f.label :smtp_settings_user_name, 'SMTPユーザー' %></th>
+  <td><%= f.text_field :smtp_settings_user_name, :style => 'width: 30%' %></td>
+  </tr>
+
+  <tr>
+  <th><%= f.label :smtp_settings_password, 'SMTPパスワード' %></th>
+  <td><%= f.password_field :smtp_settings_password, :style => 'width: 30%' %><br/><i>(変更しない場合はブランクにしてください)</i></td>
+  </tr>
+</table>
+<% end %>
+<div class="submit_box">
+  <%= f.submit "変更する", btn_primary %>
+  <%= link_or_back "戻る", root_path %>
+</div>
+<% end %>
+

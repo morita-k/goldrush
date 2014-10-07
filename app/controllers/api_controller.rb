@@ -52,7 +52,7 @@ class ApiController < ApplicationController
   end
   
   def broadcast_mail
-    DeliveryMail.send_mails(current_user.owner_id)
+    DeliveryMail.send_mails(current_user)
     
     render :text => 'REQUEST OK!'
   end

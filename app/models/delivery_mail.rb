@@ -115,10 +115,11 @@ class DeliveryMail < ActiveRecord::Base
     AttachmentFile.get_attachment_files("delivery_mails", id)
   end
 
-  def DeliveryMail.send_test_mail(mail)
+  def DeliveryMail.send_test_mail(mail_sender, mail)
     opt = {:bp_pic_name => "ご担当者", :business_partner_name => "株式会社テストメール"}
     attachment_files = mail.attachment_files
-    MyMailer.send_del_mail(
+    NoticeMailer.send_mail(
+      mail_sender,
       mail.mail_from,
       nil,
       nil,
@@ -126,13 +127,14 @@ class DeliveryMail < ActiveRecord::Base
       DeliveryMail.tags_replacement(mail.subject, opt),
       DeliveryMail.tags_replacement(mail.content, opt),
       attachment_files
-    ).deliver
+    )
   end
 
-  def DeliveryMail.send_contact_mail(mail, bp_pic)
+  def DeliveryMail.send_contact_mail(mail_sender, mail, bp_pic)
     opt = {:bp_pic_name => bp_pic.bp_pic_short_name, :business_partner_name => bp_pic.business_partner.business_partner_name}
     attachment_files = mail.attachment_files
-    MyMailer.send_del_mail(
+    NoticeMailer.send_mail(
+      mail_sender,
       bp_pic.email1,
       mail.mail_cc,
       mail.mail_bcc,
@@ -140,10 +142,10 @@ class DeliveryMail < ActiveRecord::Base
       DeliveryMail.tags_replacement(mail.subject, opt),
       DeliveryMail.tags_replacement(mail.content, opt),
       attachment_files
-    ).deliver
+    )
   end
 
-  def DeliveryMail.send_mail_to_each_targets(mail)
+  def DeliveryMail.send_mail_to_each_targets(mail_sender, mail)
     mail.delivery_mail_targets.each do |target|
       begin
         next if target.bp_pic.nondelivery?
@@ -155,7 +157,8 @@ class DeliveryMail < ActiveRecord::Base
 GR-BIZ-ID:#{mail.id ** 2}-#{target.id ** 2}
 EOS
 
-        current_mail = MyMailer.send_del_mail(
+        sent_mail = NoticeMailer.send_mail(
+          mail_sender,
           target.bp_pic.email1,
           mail.mail_cc,
           mail.mail_bcc,
@@ -165,9 +168,7 @@ EOS
           mail.attachment_files,
           target.in_reply_to
         )
-
-        current_mail.deliver
-        target.message_id = current_mail.header['Message-ID'].to_s
+        target.message_id = sent_mail.header['Message-ID'].to_s
         target.save!
       rescue => e
         DeliveryError.send_error(mail.owner_id, mail.id, target.bp_pic, e).save!
@@ -179,21 +180,20 @@ EOS
   end
 
   # Broadcast Mails
-  def DeliveryMail.send_mails(owner_id)
+  def DeliveryMail.send_mails(mail_sender)
     fetch_key = Time.now.to_s + " " + rand().to_s
 
     DeliveryMail
-      .where(:owner_id => owner_id)
-      .where("mail_status_type=? and mail_send_status_type=? and planned_setting_at<=?", 'unsend', 'ready', Time.now)
+      .where("owner_id=? and mail_status_type=? and mail_send_status_type=? and planned_setting_at<=?", mail_sender.owner_id, 'unsend', 'ready', Time.now)
       .update_all(:mail_send_status_type => 'running', :created_user => fetch_key)
 
-    DeliveryMail.where(:owner_id => owner_id, :created_user => fetch_key).each do |mail|
-      self.send_mail_to_each_targets(mail)
+    DeliveryMail.where(:owner_id => mail_sender.owner_id, :created_user => fetch_key).each do |mail|
+      self.send_mail_to_each_targets(mail_sender, mail)
     end
 
-    DeliveryMail.
-      where(:owner_id => owner_id, :created_user => fetch_key).
-      update_all(:mail_status_type => 'send',:mail_send_status_type => 'finished',:send_end_at => Time.now)
+    DeliveryMail
+      .where(:owner_id => mail_sender.owner_id, :created_user => fetch_key)
+      .update_all(:mail_status_type => 'send',:mail_send_status_type => 'finished',:send_end_at => Time.now)
   end
 
   # === Private ===
@@ -201,37 +201,9 @@ EOS
     option.inject(tag){|str, k| str.gsub("%%#{k[0].to_s}%%", k[1])}
   end
 
-  # Private Mailer
-  class MyMailer < ActionMailer::Base
-    def send_del_mail(destination, cc, bcc, from, subject, body, attachment_files, in_reply_to=nil)
-      headers['Message-ID'] = "#{SecureRandom.uuid}@#{ActionMailer::Base.smtp_settings[:domain]}"
-      headers["In-Rply-To"] = in_reply_to if in_reply_to
-
-      # Return-path の設定
-      return_path = SysConfig.get_delivery_mails_return_path
-      if return_path
-        headers[:return_path] = return_path
-      else
-        logger.warn '"Return-Path"が設定されていません。'
-      end
-
-      attachment_files.each do |file|
-        attachments[file.file_name] = file.read_file
-      end
-
-      mail( to: destination,
-            cc: cc,
-            bcc: bcc,
-            from: from,
-            subject: subject,
-            body: body )
-    end
-  end
-
   def get_informations
     self.subject = get_information(self.subject)
     self.content = get_information(self.content)
-
     self
   end
 

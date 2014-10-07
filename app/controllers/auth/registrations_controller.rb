@@ -1,6 +1,7 @@
 # -*- encoding: utf-8 -*-
 class Auth::RegistrationsController < Devise::RegistrationsController
   require 'digest/md5'
+  require 'smtp_password_encryptor'
 
   def create
     ActiveRecord::Base.transaction do
@@ -50,6 +51,21 @@ class Auth::RegistrationsController < Devise::RegistrationsController
         )
       end
     end
+  end
+
+  def edit_smtp_setting
+    build_resource(current_user.attributes)
+  end
+
+  def update_smtp_setting
+    ActiveRecord::Base.transaction do
+      set_smtp_setting(current_user, params[:auth])
+      current_user.save!
+    end
+    flash[:notice] = 'SMTP settings was successfully updated.'
+    redirect_to :root
+  rescue ActiveRecord::RecordInvalid => e
+    render :action => 'edit_smtp_setting'
   end
 
 protected
@@ -113,6 +129,18 @@ protected
         .gsub(/created_user|updated_user/, "'#{user.login}' as \\&")
         .gsub(/created_at|updated_at/, "'#{user.created_at}' as \\&")
     import_init_data(:tags, column, select_column, "deleted = 0 and owner_id is null and tag_key = 'import_mails' and starred <> 0")
+  end
+
+  def set_smtp_setting(user, smtp_setting)
+    user.smtp_settings_enable_starttls_auto = smtp_setting[:smtp_settings_enable_starttls_auto]
+    user.smtp_settings_address = smtp_setting[:smtp_settings_address]
+    user.smtp_settings_port = smtp_setting[:smtp_settings_port]
+    user.smtp_settings_domain = smtp_setting[:smtp_settings_domain]
+    user.smtp_settings_user_name = smtp_setting[:smtp_settings_user_name]
+    if smtp_setting[:smtp_settings_password]
+      user.smtp_settings_password = SmtpPasswordEncryptor.encrypt(smtp_setting[:smtp_settings_password])
+    end
+    user.updated_user = user.login
   end
 end
 

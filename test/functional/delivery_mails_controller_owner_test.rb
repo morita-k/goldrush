@@ -3,6 +3,7 @@ require 'test_helper'
 
 class DeliveryMailsControllerOwnerTest < ActionController::TestCase
   setup do
+    ENV['SMTP_SECRET_KEY'] = '12345678901234567890123456789012'
     @controller = DeliveryMailsController.new
     login_user = users(:users_16)
   	sign_in login_user

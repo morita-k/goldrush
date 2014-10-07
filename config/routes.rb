@@ -80,6 +80,12 @@ GoldRush::Application.routes.draw do
     :sessions => 'auth/sessions',
     :registrations => 'auth/registrations'
   }
+
+  devise_scope :auth do
+    get 'auth/edit_smtp_setting' => 'auth/registrations#edit_smtp_setting'
+    put 'auth/update_smtp_setting' => 'auth/registrations#update_smtp_setting'
+  end
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

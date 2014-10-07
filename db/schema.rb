@@ -1105,19 +1105,19 @@ ActiveRecord::Schema.define(:version => 0) do
   add_index "types", ["type_section", "type_key"], :name => "idx_types_2", :unique => true
 
   create_table "users", :force => true do |t|
-    t.integer  "owner_id",                 :limit => 8
-    t.string   "login",                                                 :null => false
+    t.integer  "owner_id",                           :limit => 8
+    t.string   "login",                                                           :null => false
     t.string   "fullname"
     t.string   "shortname"
-    t.string   "nickname",                                              :null => false
-    t.string   "access_level_type",        :limit => 40,                :null => false
-    t.integer  "per_page",                               :default => 0
-    t.string   "email",                                                 :null => false
-    t.string   "encrypted_password",                                    :null => false
+    t.string   "nickname",                                                        :null => false
+    t.string   "access_level_type",                  :limit => 40,                :null => false
+    t.integer  "per_page",                                         :default => 0
+    t.string   "email",                                                           :null => false
+    t.string   "encrypted_password",                                              :null => false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                          :default => 0
+    t.integer  "sign_in_count",                                    :default => 0
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
@@ -1126,20 +1126,27 @@ ActiveRecord::Schema.define(:version => 0) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string   "unconfirmed_email"
-    t.integer  "failed_attempts",                        :default => 0
+    t.integer  "failed_attempts",                                  :default => 0
     t.string   "unlock_token"
     t.datetime "locked_at"
     t.string   "authentication_token"
     t.text     "mail_signature"
-    t.integer  "contact_mail_template_id", :limit => 8
-    t.integer  "score",                    :limit => 8
-    t.datetime "created_at",                                            :null => false
-    t.datetime "updated_at",                                            :null => false
-    t.integer  "lock_version",             :limit => 8,  :default => 0
-    t.string   "created_user",             :limit => 80
-    t.string   "updated_user",             :limit => 80
+    t.integer  "contact_mail_template_id",           :limit => 8
+    t.integer  "score",                              :limit => 8
+    t.integer  "smtp_settings_enable_starttls_auto",               :default => 0
+    t.text     "smtp_settings_address"
+    t.integer  "smtp_settings_port"
+    t.text     "smtp_settings_domain"
+    t.text     "smtp_settings_authentication"
+    t.text     "smtp_settings_user_name"
+    t.text     "smtp_settings_password"
+    t.datetime "created_at",                                                      :null => false
+    t.datetime "updated_at",                                                      :null => false
+    t.integer  "lock_version",                       :limit => 8,  :default => 0
+    t.string   "created_user",                       :limit => 80
+    t.string   "updated_user",                       :limit => 80
     t.datetime "deleted_at"
-    t.integer  "deleted",                                :default => 0
+    t.integer  "deleted",                                          :default => 0
   end
 
   add_index "users", ["email"], :name => "idx_users_5"

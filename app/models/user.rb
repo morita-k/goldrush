@@ -74,8 +74,13 @@ class User < ActiveRecord::Base
 
   def create_login
     self.login = self.email
-    self.access_level_type = 'normal' if access_level_type.blank?
-    self.per_page = 50
+    self.access_level_type ||= 'normal'
+    self.per_page ||= 50
+
+    self.smtp_settings_domain ||= self.email.split("@")[1]
+    self.smtp_settings_port ||= 587
+    self.smtp_settings_authentication ||= 'plain'
+    self.smtp_settings_user_name ||= self.email.split("@")[0]
   end
 
   def self.find_for_database_authentication(conditions)
@@ -98,9 +103,13 @@ class User < ActiveRecord::Base
   has_many :annual_vacations, :conditions => "annual_vacations.deleted = 0", :order => "year"
   has_many :project_members, :conditions => "project_members.deleted = 0"
   validates_presence_of :nickname
-  
+
   def super?
     ["super"].include?(self.access_level_type)
+  end
+
+  def smtp_settings_enable_starttls_auto?
+    self.smtp_settings_enable_starttls_auto == 1
   end
 
   def User.pic_select_items(owner_id)

@@ -25,6 +25,13 @@ users_1:
   unlock_token: ""
   locked_at: 
   authentication_token: ""
+  smtp_settings_enable_starttls_auto: 0
+  smtp_settings_address: localhost
+  smtp_settings_port: 25
+  smtp_settings_domain: aaa.com
+  smtp_settings_authentication: plain
+  smtp_settings_user_name: system
+  smtp_settings_password: dHlSVThFWmVNVDl0ZVBFUWMrNDdIRzVQL2MxTFNpa01DYWlXSWU0UHFYbz0tLVRaZndJUlJnUTcyL1FHa1JadGR1Z2c9PQ==--ec9445913fb943824b2f1a877872d7a4e59bafc8
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -59,6 +66,13 @@ users_2:
   unlock_token: ""
   locked_at: 
   authentication_token: ""
+  smtp_settings_enable_starttls_auto: 0
+  smtp_settings_address: localhost
+  smtp_settings_port: 25
+  smtp_settings_domain: aaa.com
+  smtp_settings_authentication: plain
+  smtp_settings_user_name: user1
+  smtp_settings_password: dHlSVThFWmVNVDl0ZVBFUWMrNDdIRzVQL2MxTFNpa01DYWlXSWU0UHFYbz0tLVRaZndJUlJnUTcyL1FHa1JadGR1Z2c9PQ==--ec9445913fb943824b2f1a877872d7a4e59bafc8
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -93,6 +107,13 @@ users_3:
   unlock_token: ""
   locked_at: 
   authentication_token: ""
+  smtp_settings_enable_starttls_auto: 0
+  smtp_settings_address: localhost
+  smtp_settings_port: 25
+  smtp_settings_domain: aaa.com
+  smtp_settings_authentication: plain
+  smtp_settings_user_name: user2
+  smtp_settings_password: dHlSVThFWmVNVDl0ZVBFUWMrNDdIRzVQL2MxTFNpa01DYWlXSWU0UHFYbz0tLVRaZndJUlJnUTcyL1FHa1JadGR1Z2c9PQ==--ec9445913fb943824b2f1a877872d7a4e59bafc8
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -127,6 +148,13 @@ users_4:
   unlock_token: ""
   locked_at: 
   authentication_token: ""
+  smtp_settings_enable_starttls_auto: 0
+  smtp_settings_address: localhost
+  smtp_settings_port: 25
+  smtp_settings_domain: aaa.com
+  smtp_settings_authentication: plain
+  smtp_settings_user_name: user3
+  smtp_settings_password: dHlSVThFWmVNVDl0ZVBFUWMrNDdIRzVQL2MxTFNpa01DYWlXSWU0UHFYbz0tLVRaZndJUlJnUTcyL1FHa1JadGR1Z2c9PQ==--ec9445913fb943824b2f1a877872d7a4e59bafc8
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -161,6 +189,13 @@ users_5:
   unlock_token: ""
   locked_at: 
   authentication_token: ""
+  smtp_settings_enable_starttls_auto: 0
+  smtp_settings_address: localhost
+  smtp_settings_port: 25
+  smtp_settings_domain: aaa.com
+  smtp_settings_authentication: plain
+  smtp_settings_user_name: user4
+  smtp_settings_password: dHlSVThFWmVNVDl0ZVBFUWMrNDdIRzVQL2MxTFNpa01DYWlXSWU0UHFYbz0tLVRaZndJUlJnUTcyL1FHa1JadGR1Z2c9PQ==--ec9445913fb943824b2f1a877872d7a4e59bafc8
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -195,6 +230,13 @@ users_6:
   unlock_token: ""
   locked_at: 
   authentication_token: ""
+  smtp_settings_enable_starttls_auto: 0
+  smtp_settings_address: localhost
+  smtp_settings_port: 25
+  smtp_settings_domain: aaa.com
+  smtp_settings_authentication: plain
+  smtp_settings_user_name: user5
+  smtp_settings_password: dHlSVThFWmVNVDl0ZVBFUWMrNDdIRzVQL2MxTFNpa01DYWlXSWU0UHFYbz0tLVRaZndJUlJnUTcyL1FHa1JadGR1Z2c9PQ==--ec9445913fb943824b2f1a877872d7a4e59bafc8
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -229,6 +271,13 @@ users_7:
   unlock_token: ""
   locked_at: 
   authentication_token: ""
+  smtp_settings_enable_starttls_auto: 0
+  smtp_settings_address: localhost
+  smtp_settings_port: 25
+  smtp_settings_domain: aaa.com
+  smtp_settings_authentication: plain
+  smtp_settings_user_name: user6
+  smtp_settings_password: dHlSVThFWmVNVDl0ZVBFUWMrNDdIRzVQL2MxTFNpa01DYWlXSWU0UHFYbz0tLVRaZndJUlJnUTcyL1FHa1JadGR1Z2c9PQ==--ec9445913fb943824b2f1a877872d7a4e59bafc8
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -263,6 +312,13 @@ users_8:
   unlock_token: ""
   locked_at: 
   authentication_token: ""
+  smtp_settings_enable_starttls_auto: 0
+  smtp_settings_address: localhost
+  smtp_settings_port: 25
+  smtp_settings_domain: aaa.com
+  smtp_settings_authentication: plain
+  smtp_settings_user_name: user7
+  smtp_settings_password: dHlSVThFWmVNVDl0ZVBFUWMrNDdIRzVQL2MxTFNpa01DYWlXSWU0UHFYbz0tLVRaZndJUlJnUTcyL1FHa1JadGR1Z2c9PQ==--ec9445913fb943824b2f1a877872d7a4e59bafc8
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -297,6 +353,13 @@ users_9:
   unlock_token: ""
   locked_at: 
   authentication_token: ""
+  smtp_settings_enable_starttls_auto: 0
+  smtp_settings_address: localhost
+  smtp_settings_port: 25
+  smtp_settings_domain: aaa.com
+  smtp_settings_authentication: plain
+  smtp_settings_user_name: user8
+  smtp_settings_password: dHlSVThFWmVNVDl0ZVBFUWMrNDdIRzVQL2MxTFNpa01DYWlXSWU0UHFYbz0tLVRaZndJUlJnUTcyL1FHa1JadGR1Z2c9PQ==--ec9445913fb943824b2f1a877872d7a4e59bafc8
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -331,6 +394,13 @@ users_10:
   unlock_token: ""
   locked_at: 
   authentication_token: ""
+  smtp_settings_enable_starttls_auto: 0
+  smtp_settings_address: localhost
+  smtp_settings_port: 25
+  smtp_settings_domain: aaa.com
+  smtp_settings_authentication: plain
+  smtp_settings_user_name: user9
+  smtp_settings_password: dHlSVThFWmVNVDl0ZVBFUWMrNDdIRzVQL2MxTFNpa01DYWlXSWU0UHFYbz0tLVRaZndJUlJnUTcyL1FHa1JadGR1Z2c9PQ==--ec9445913fb943824b2f1a877872d7a4e59bafc8
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -365,6 +435,13 @@ users_11:
   unlock_token: ""
   locked_at: 
   authentication_token: ""
+  smtp_settings_enable_starttls_auto: 0
+  smtp_settings_address: localhost
+  smtp_settings_port: 25
+  smtp_settings_domain: aaa.com
+  smtp_settings_authentication: plain
+  smtp_settings_user_name: user10
+  smtp_settings_password: dHlSVThFWmVNVDl0ZVBFUWMrNDdIRzVQL2MxTFNpa01DYWlXSWU0UHFYbz0tLVRaZndJUlJnUTcyL1FHa1JadGR1Z2c9PQ==--ec9445913fb943824b2f1a877872d7a4e59bafc8
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -399,6 +476,13 @@ users_12:
   unlock_token: ""
   locked_at: 
   authentication_token: ""
+  smtp_settings_enable_starttls_auto: 0
+  smtp_settings_address: localhost
+  smtp_settings_port: 25
+  smtp_settings_domain: aaa.com
+  smtp_settings_authentication: plain
+  smtp_settings_user_name: user11
+  smtp_settings_password: dHlSVThFWmVNVDl0ZVBFUWMrNDdIRzVQL2MxTFNpa01DYWlXSWU0UHFYbz0tLVRaZndJUlJnUTcyL1FHa1JadGR1Z2c9PQ==--ec9445913fb943824b2f1a877872d7a4e59bafc8
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -433,6 +517,13 @@ users_13:
   unlock_token: ""
   locked_at: 
   authentication_token: ""
+  smtp_settings_enable_starttls_auto: 0
+  smtp_settings_address: localhost
+  smtp_settings_port: 25
+  smtp_settings_domain: aaa.com
+  smtp_settings_authentication: plain
+  smtp_settings_user_name: user12
+  smtp_settings_password: dHlSVThFWmVNVDl0ZVBFUWMrNDdIRzVQL2MxTFNpa01DYWlXSWU0UHFYbz0tLVRaZndJUlJnUTcyL1FHa1JadGR1Z2c9PQ==--ec9445913fb943824b2f1a877872d7a4e59bafc8
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -467,6 +558,13 @@ users_14:
   unlock_token: ""
   locked_at: 
   authentication_token: ""
+  smtp_settings_enable_starttls_auto: 0
+  smtp_settings_address: localhost
+  smtp_settings_port: 25
+  smtp_settings_domain: aaa.com
+  smtp_settings_authentication: plain
+  smtp_settings_user_name: user13
+  smtp_settings_password: dHlSVThFWmVNVDl0ZVBFUWMrNDdIRzVQL2MxTFNpa01DYWlXSWU0UHFYbz0tLVRaZndJUlJnUTcyL1FHa1JadGR1Z2c9PQ==--ec9445913fb943824b2f1a877872d7a4e59bafc8
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -501,6 +599,13 @@ users_15:
   unlock_token: ""
   locked_at: 
   authentication_token: ""
+  smtp_settings_enable_starttls_auto: 0
+  smtp_settings_address: localhost
+  smtp_settings_port: 25
+  smtp_settings_domain: aaa.com
+  smtp_settings_authentication: plain
+  smtp_settings_user_name: user14
+  smtp_settings_password: dHlSVThFWmVNVDl0ZVBFUWMrNDdIRzVQL2MxTFNpa01DYWlXSWU0UHFYbz0tLVRaZndJUlJnUTcyL1FHa1JadGR1Z2c9PQ==--ec9445913fb943824b2f1a877872d7a4e59bafc8
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -535,6 +640,13 @@ users_16:
   unlock_token: ""
   locked_at: 
   authentication_token: ""
+  smtp_settings_enable_starttls_auto: 0
+  smtp_settings_address: localhost
+  smtp_settings_port: 25
+  smtp_settings_domain: aaa.com
+  smtp_settings_authentication: plain
+  smtp_settings_user_name: user15
+  smtp_settings_password: dHlSVThFWmVNVDl0ZVBFUWMrNDdIRzVQL2MxTFNpa01DYWlXSWU0UHFYbz0tLVRaZndJUlJnUTcyL1FHa1JadGR1Z2c9PQ==--ec9445913fb943824b2f1a877872d7a4e59bafc8
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
