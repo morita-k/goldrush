@@ -19,6 +19,7 @@
     <th><%= getLongName('bp_pics', 'bp_pic_name') %></th>
   </tr>
   <% @delivery_mail.delivery_errors.each do |error| %>
+  <tr>
     <td><%= back_to_link error.bp_pic.business_partner.business_partner_name,
                          :controller => :business_partner,
                          :action => :show,
@@ -29,6 +30,7 @@
                          :action => :show,
                          :id => error.bp_pic_id
     %></td>
+  </tr>
   <% end %>
 </table>
 <% end %>
