@@ -157,7 +157,7 @@ class DeliveryMail < ActiveRecord::Base
 GR-BIZ-ID:#{mail.id ** 2}-#{target.id ** 2}
 EOS
 
-        sent_mail = NoticeMailer.send_mail(
+        NoticeMailer.send_mail(
           mail_sender,
           target.bp_pic.email1,
           mail.mail_cc,
@@ -167,9 +167,10 @@ EOS
           DeliveryMail.tags_replacement(mail_content, opt),
           mail.attachment_files,
           target.in_reply_to
-        )
-        target.message_id = sent_mail.header['Message-ID'].to_s
-        target.save!
+        ) do |sending_mail|
+          target.message_id = sending_mail.header['Message-ID'].to_s
+          target.save!
+        end
       rescue => e
         DeliveryError.send_error(mail.owner_id, mail.id, target.bp_pic, e).save!
 
