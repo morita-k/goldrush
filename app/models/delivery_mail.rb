@@ -148,6 +148,8 @@ class DeliveryMail < ActiveRecord::Base
                 :business_partner_name => target.bp_pic.business_partner.business_partner_name }
 
         mail_content = mail.content + <<EOS
+
+
 GR-BIZ-ID:#{mail.id ** 2}-#{target.id ** 2}
 EOS
 
