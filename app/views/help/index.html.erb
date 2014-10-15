@@ -1,13 +1,14 @@
-<style type="text/css">
-<!--
-p {
-  width: 80%;
-  padding-left: 1em;
-}
--->
-</style>
+<div class="help_area">
+  <h1><%= @application_name %></h1>
 
-<h1><%= link_to "#{$APPLICATION_NAME}って?", :controller => '/' %></h1>
-<p>
-アプリケーションの説明書
-</p>
+  <% if @first_confirmation %>
+    <p>初期登録にヘルプ説明見せる</p>
+  <% end %>
+
+  <p>アプリケーションの説明書</p>
+
+  <ul>
+    <li>メルマガ機能の使い方</li>
+    <li>取り込みメールの設定方法</li>
+  </ul>
+</div>

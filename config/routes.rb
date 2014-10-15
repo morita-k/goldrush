@@ -1,6 +1,13 @@
 # -*- encoding: utf-8 -*-
 GoldRush::Application.routes.draw do
 
+  resources :help do
+    collection do
+      get 'privacy'
+      get 'terms'
+    end
+  end
+
   resources :special_words
 
   namespace :import_mail_match do
@@ -78,7 +85,8 @@ GoldRush::Application.routes.draw do
 
   devise_for :auth, :class_name => User, :controllers => {
     :sessions => 'auth/sessions',
-    :registrations => 'auth/registrations'
+    :registrations => 'auth/registrations',
+    :confirmations => 'auth/confirmations'
   }
 
   devise_scope :auth do

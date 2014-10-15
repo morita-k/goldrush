@@ -12,6 +12,9 @@
  *= require_self
  */
 
+/*
+ * login
+ */
 .login_left {
   float: left;
   width: 28%;
@@ -33,9 +36,26 @@
   width: auto;
   margin-top: 9px;
 }
-}
 .login_area img {
   margin-top: 5%;
+}
+
+/*
+ * help
+ */
+.help_area {
+  width: 96%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.help_area h1,
+.help_area h2,
+.help_area h3,
+.help_area h4,
+.help_area h5,
+.help_area h6 {
+  width: 100%;
 }
 
 div.overflow_hidden {
