@@ -15,11 +15,11 @@ class ImportMail < ActiveRecord::Base
   attr_accessor :temp_imoprt_mail_match
 
   def auto_match_biz_offer_mails
-    ImportMailMatch.where("deleted = 0 and bp_member_mail_id = ? and payment_gap > 0 and (age_gap is null or age_gap > 0) and subject_tag_match_flg > 0", self.id).order("received_at desc").limit(20)
+    ImportMailMatch.where("deleted = 0 and owner_id = ? and bp_member_mail_id = ? and payment_gap > 0 and (age_gap is null or age_gap > 0) and subject_tag_match_flg > 0", self.owner_id, self.id).order("received_at desc").limit(20)
   end
 
   def auto_match_bp_member_mails
-    ImportMailMatch.where("deleted = 0 and biz_offer_mail_id = ? and payment_gap > 0 and (age_gap is null or age_gap > 0) and subject_tag_match_flg > 0", self.id).order("received_at desc").limit(20)
+    ImportMailMatch.where("deleted = 0 and owner_id = ? and biz_offer_mail_id = ? and payment_gap > 0 and (age_gap is null or age_gap > 0) and subject_tag_match_flg > 0", self.owner_id, self.id).order("received_at desc").limit(20)
   end
 
   def ImportMail.tryConv(map, header_key, &block)
@@ -95,7 +95,7 @@ EOS
 
   # TODO : reply_mode is unnecessary?
   def detect_delivery_mail(reply_mode)
-    if dmt = self.in_reply_to && DeliveryMailTarget.where(message_id: self.in_reply_to).first
+    if dmt = self.in_reply_to && DeliveryMailTarget.where(owner_id: self.owner_id, message_id: self.in_reply_to).first
       detect_reply_mail(dmt.delivery_mail)
     elsif first = detect_gr_biz_id(mail_body)
       return unless /.*GR-BIZ-ID:(\d+)-(\d+)/ =~ first
@@ -135,7 +135,7 @@ EOS
       # プロセス間で同期をとるために何でもいいから存在するレコードをロック(users#1 => systemユーザー)
       User.find(1, :lock => true)
 
-      if ImportMail.where(message_id: import_mail.message_id, deleted: 0).first
+      if ImportMail.where(owner_id: import_mail.owner_id, message_id: import_mail.message_id, deleted: 0).first
         puts "mail duplicated: see system_logs"
         SystemLog.warn('import mail', 'mail id duplicated', import_mail.inspect , 'import mail')
         return
@@ -215,7 +215,7 @@ EOS
       import_mail.save!
 
       # 返信メールじゃなくてタイトルがダブってたら削除
-      if import_mail.delivery_mail_id.blank? &&  ImportMail.where("id != ?", import_mail.id).where(mail_from: import_mail.mail_from, mail_subject: import_mail.mail_subject,received_at: ((import_mail.received_at - 1.hour) .. import_mail.received_at + 1.hour), deleted: 0).first
+      if import_mail.delivery_mail_id.blank? &&  ImportMail.where("id != ?", import_mail.id).where(owner_id: import_mail.owner_id, mail_from: import_mail.mail_from, mail_subject: import_mail.mail_subject,received_at: ((import_mail.received_at - 1.hour) .. import_mail.received_at + 1.hour), deleted: 0).first
         puts "mail duplicated: see system_logs"
         SystemLog.warn('import mail', 'mail title duplicated', import_mail.inspect , 'import mail')
         import_mail.deleted = 9
@@ -265,9 +265,9 @@ EOS
 
   def set_bp
     mail_from = self.mail_from
-    mail_bp_pic = BpPic.find(:first, :conditions => ["deleted = 0 and email1 = ? or email2 = ?", mail_from, mail_from])
+    mail_bp_pic = BpPic.find(:first, :conditions => ["deleted = 0 and owner_id = ? and (email1 = ? or email2 = ?)", owner_id, mail_from, mail_from])
     if mail_bp_pic.blank?
-      mail_business_partner = BusinessPartner.find(:first, :conditions => ["deleted = 0 and email = ?", mail_from])
+      mail_business_partner = BusinessPartner.find(:first, :conditions => ["deleted = 0 and owner_id = ? and email = ?", owner_id, mail_from])
       if !mail_business_partner.blank?
         self.business_partner_id = mail_business_partner.id
       end
