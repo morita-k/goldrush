@@ -7,10 +7,6 @@ class DeliveryMailTest < ActiveSupport::TestCase
   #   assert true
   # end
 
-  def setup
-    ENV['SMTP_SECRET_KEY'] = '12345678901234567890123456789012'
-  end
-
   test "message_id format" do
     domain = "test_domain.com"
     message_id = NoticeMailer.create_mail(domain, "destination@aaatttest.com", "", "", "from <destination@aaatttest.com>", "subject", "body", []).header['Message-ID']

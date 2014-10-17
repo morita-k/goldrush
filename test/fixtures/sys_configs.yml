@@ -245,6 +245,22 @@ sys_configs_15:
   deleted: 0
 sys_configs_16:
   id: 16
+  owner_id: 0
+  config_section: "smtp"
+  config_key: "secret_key"
+  value1: "12345678901234567890123456789012"
+  value2: ""
+  value3: ""
+  config_description_text: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+sys_configs_17:
+  id: 17
   owner_id: 1
   config_section: "seq"
   config_key: "sales_management_code"
@@ -259,8 +275,8 @@ sys_configs_16:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-sys_configs_17:
-  id: 17
+sys_configs_18:
+  id: 18
   owner_id: 1
   config_section: "seq"
   config_key: "sales_code"
@@ -275,8 +291,8 @@ sys_configs_17:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-sys_configs_18:
-  id: 18
+sys_configs_19:
+  id: 19
   owner_id: 1
   config_section: "analysis_templates"
   config_key: "indent"
@@ -294,28 +310,12 @@ sys_configs_18:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-sys_configs_19:
-  id: 19
+sys_configs_20:
+  id: 20
   owner_id: 1
   config_section: "outflow_mail"
   config_key: "outflow_criterion"
   value1: "50"
-  value2: ""
-  value3: ""
-  config_description_text: ""
-  created_at: <%= Time.now.to_s(:db) %>
-  updated_at: <%= Time.now.to_s(:db) %>
-  lock_version: 0
-  created_user: "initial"
-  updated_user: "initial"
-  deleted_at: 
-  deleted: 0
-sys_configs_20:
-  id: 20
-  owner_id: 1
-  config_section: "import_mail_matches"
-  config_key: "target_days"
-  value1: "10"
   value2: ""
   value3: ""
   config_description_text: ""
@@ -330,8 +330,8 @@ sys_configs_21:
   id: 21
   owner_id: 1
   config_section: "import_mail_matches"
-  config_key: "last_id"
-  value1: "109131"
+  config_key: "target_days"
+  value1: "10"
   value2: ""
   value3: ""
   config_description_text: ""
@@ -344,6 +344,22 @@ sys_configs_21:
   deleted: 0
 sys_configs_22:
   id: 22
+  owner_id: 1
+  config_section: "import_mail_matches"
+  config_key: "last_id"
+  value1: "109131"
+  value2: ""
+  value3: ""
+  config_description_text: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+sys_configs_23:
+  id: 23
   owner_id: 1
   config_section: "delivery_mail_matches"
   config_key: "target_days"
@@ -358,8 +374,8 @@ sys_configs_22:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-sys_configs_23:
-  id: 23
+sys_configs_24:
+  id: 24
   owner_id: 2
   config_section: "seq"
   config_key: "sales_management_code"
@@ -374,8 +390,8 @@ sys_configs_23:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-sys_configs_24:
-  id: 24
+sys_configs_25:
+  id: 25
   owner_id: 2
   config_section: "seq"
   config_key: "sales_code"
@@ -390,8 +406,8 @@ sys_configs_24:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-sys_configs_25:
-  id: 25
+sys_configs_26:
+  id: 26
   owner_id: 2
   config_section: "analysis_templates"
   config_key: "indent"
@@ -409,8 +425,8 @@ sys_configs_25:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-sys_configs_26:
-  id: 26
+sys_configs_27:
+  id: 27
   owner_id: 2
   config_section: "outflow_mail"
   config_key: "outflow_criterion"
@@ -425,8 +441,8 @@ sys_configs_26:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-sys_configs_27:
-  id: 27
+sys_configs_28:
+  id: 28
   owner_id: 2
   config_section: "import_mail_matches"
   config_key: "target_days"
@@ -441,8 +457,8 @@ sys_configs_27:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-sys_configs_28:
-  id: 28
+sys_configs_29:
+  id: 29
   owner_id: 2
   config_section: "import_mail_matches"
   config_key: "last_id"
@@ -457,8 +473,8 @@ sys_configs_28:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-sys_configs_29:
-  id: 29
+sys_configs_30:
+  id: 30
   owner_id: 2
   config_section: "delivery_mail_matches"
   config_key: "target_days"

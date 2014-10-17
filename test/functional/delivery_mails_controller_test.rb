@@ -3,7 +3,6 @@ require 'test_helper'
 
 class DeliveryMailsControllerTest < ActionController::TestCase
   setup do
-    ENV['SMTP_SECRET_KEY'] = '12345678901234567890123456789012'
     sign_in users(:users_1)
     @delivery_mail = delivery_mails(:delivery_mails_1)
     request.env['REQUEST_URI'] = ""

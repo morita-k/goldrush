@@ -151,4 +151,7 @@ class SysConfig < ActiveRecord::Base
     get_value("system_notifier", "url_prefix")
   end
 
+  def self.get_smtp_secret_key
+    get_value("smtp", "secret_key")
+  end
 end

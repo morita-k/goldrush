@@ -10,6 +10,6 @@ module SmtpPasswordEncryptor
 
 private
   def self._new_encryptor
-    ActiveSupport::MessageEncryptor.new(ENV['SMTP_SECRET_KEY'], cipher: 'aes-256-cbc')
+    ActiveSupport::MessageEncryptor.new(SysConfig.get_smtp_secret_key, cipher: 'aes-256-cbc')
   end
 end
