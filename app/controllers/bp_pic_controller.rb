@@ -366,14 +366,6 @@ private
     end
   end
 
-  def space_trim(bp_name)
-    trimed_bp_name = ""
-    bp_name_list.each do |bp_name_element|
-      trimed_bp_name << bp_name_element
-    end
-    trimed_bp_name
-  end
-
   def get_current_uniquely_bp_ids
     session[:bp_pic_search] ||= {}
     incl = []

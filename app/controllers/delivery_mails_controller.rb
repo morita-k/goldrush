@@ -400,7 +400,8 @@ EOS
     @bp_pics = BpPic.find(bp_pic_ids)
     @delivery_mail = DeliveryMail.new(params[:delivery_mail])
     @delivery_mail.delivery_mail_type = "instant"
-    @delivery_mail.setup_planned_setting_at(@bp_pics[0].sales_pic.zone_now)
+    @delivery_mail.setup_planned_setting_at(
+        (@bp_pics[0].sales_pic.blank? ? current_user : @bp_pics[0].sales_pic).zone_now)
     @delivery_mail.mail_status_type = 'unsend'
     set_user_column @delivery_mail
     respond_to do |format|
