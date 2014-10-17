@@ -30,7 +30,7 @@ class AnalysisTemplate < ActiveRecord::Base
 
   def AnalysisTemplate.analyze_content(owner_id, analysis_template_id, content, models)
     items = AnalysisTemplateItem.where("deleted = 0 and analysis_template_id = ?", analysis_template_id)
-    mail_parser = MailParser.new(content).add_indent_pattern(SysConfig.get_indent_pattern(owner_id))
+    mail_parser = MailParser.new(content).add_indent_pattern(SysConfig.get_indent_pattern)
 
     items.each{ |item|
       models.each{ |model|

@@ -106,8 +106,8 @@ class SysConfig < ActiveRecord::Base
     get_configuration("business_partners", "prodmode")
   end
 
-  def self.get_indent_pattern(owner_id)
-    get_configuration("analysis_templates", "indent", owner_id).value1.gsub(/[\s　]/, "").split(",").reject{|s| s == ""}
+  def self.get_indent_pattern
+    get_configuration("analysis_templates", "indent").value1.gsub(/[\s　]/, "").split(",").reject{|s| s == ""}
   end
   def self.star_color
     {
@@ -131,8 +131,8 @@ class SysConfig < ActiveRecord::Base
     end
   end
 
-  def self.get_outflow_criterion(owner_id)
-    get_configuration("outflow_mail", "outflow_criterion", owner_id).value1
+  def self.get_outflow_criterion
+    get_configuration("outflow_mail", "outflow_criterion").value1
   end
 
   def self.get_api_login
