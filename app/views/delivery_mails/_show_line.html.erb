@@ -1,5 +1,5 @@
 <% @delivery_mail_targets.each do |delivery_mail_target| %>
-  <tr id="table_header">
+  <tr id="target_tr_<%= delivery_mail_target.id %>" class="target_tr">
     <td><%=
       back_to_link delivery_mail_target.bp_pic.business_partner.business_partner_name,
         :controller => :business_partner,

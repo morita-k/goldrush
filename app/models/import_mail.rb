@@ -377,9 +377,15 @@ EOS
     case body
     when /日本人?(のみ|限定)/i, /外\s*?国\s*?[人籍]?(.*?[\s\n]*?)(ng|不可)/i
       'internal'
-    when /外\s*?国\s*?[人籍]?(.*?[\s\n]*?)(o\.?k\.?|可|大丈夫)/i, /国\s*?籍.*?(不問|問わず|問いません)/
+    when /(外\s*?国|国\s*?籍)(.*?[\s\n]*?)(o\.?k\.?|可|大丈夫)/i, /国\s*?籍.*?(不問|問わず|問いません)/
       'foreign'
     else
+      # 特定の国籍可チェック
+      foreign_line_pattern = /.+人.*?(o\.?k\.?|[^不]可|大丈夫)/
+      StringUtil.detect_lines(body, foreign_line_pattern) do |line|
+        return 'foreign' if SpecialWord.country_words_foreign.detect{|x| line.include?(x)}
+      end
+
       'unknown'
     end
   end

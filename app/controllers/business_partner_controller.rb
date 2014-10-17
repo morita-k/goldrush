@@ -100,7 +100,7 @@ class BusinessPartnerController < ApplicationController
         @business_partner = BusinessPartner.find(params[:business_partner][:id])
       end
 
-      @business_partner.business_partner_name = space_trim(params[:business_partner][:business_partner_name])
+      trim_company_name!(@business_partner)
       set_user_column @business_partner
       @business_partner.save!
 
@@ -161,7 +161,7 @@ class BusinessPartnerController < ApplicationController
       if old_tags != @business_partner.tag_text
         Tag.update_tags!('business_partners', @business_partner.id, @business_partner.tag_text)
       end
-      @business_partner.business_partner_name = space_trim(params[:business_partner][:business_partner_name])
+      trim_company_name!(@business_partner)
       set_user_column @business_partner
       @business_partner.save!
     end
@@ -181,23 +181,21 @@ class BusinessPartnerController < ApplicationController
     redirect_to(back_to || {:action => 'list'})
   end
 
-  def space_trim(bp_name)
-    bp_name_list = bp_name.split(/[\s　]/)
-    trimed_bp_name = ""
-    bp_name_list.each do |bp_name_element|
-      trimed_bp_name << bp_name_element
+  def space_trim(name)
+    name_list = name.split(/[\s　]/)
+    trimed_name = ""
+    name_list.each do |n|
+      trimed_name << n
     end
-    trimed_bp_name
+    trimed_name
   end
 
-  def space_unify(bp_pic_name)
-    bp_name_list = bp_pic_name.split(/[　]/)
-    trimed_bp_name = ""
-    bp_name_list.each do |bp_name_element|
-      trimed_bp_name << bp_name_element
-      trimed_bp_name << /\s/
+  # " 株式会社 abc def"の前後スペースを除去する。 => "株式会社abc def"
+  # 会社名の英語表記も可能になった為、会社名内のスペースは除去しない。
+  def trim_company_name!(bp)
+    [bp.business_partner_name, bp.business_partner_short_name, bp.business_partner_name_kana].each do |name|
+      name.gsub!(/[\s　]*株式会社[\s　]*/, '株式会社')
     end
-    trimed_bp_name
   end
 
   def download_csv

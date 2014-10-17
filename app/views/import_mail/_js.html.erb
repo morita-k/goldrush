@@ -70,7 +70,10 @@ $(function(){
       return false;
     });
   }
-  $('.head_row').click(function(){
+  $('.head_row').click(function(e){
+    if ($(e.target).is('a,div.flag,.glyphicon')) {
+      return true;
+    }
     var import_mail_id = $(this).attr("import_mail_id");
     var detail =  $("#tr_detail_" + import_mail_id);
     if(detail.css("display") == "none") {
