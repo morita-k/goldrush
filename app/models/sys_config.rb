@@ -154,4 +154,12 @@ class SysConfig < ActiveRecord::Base
   def self.get_smtp_secret_key
     get_value("smtp", "secret_key")
   end
+
+  def self.get_application_name
+    get_value("system_setting", "application_name")
+  end
+
+  def self.get_contact_address
+    get_value("system_setting", "contact_address")
+  end
 end

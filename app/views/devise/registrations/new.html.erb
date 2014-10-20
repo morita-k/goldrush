@@ -30,7 +30,7 @@
 <% end %>
 <div class="submit_box">
   <p><input type="checkbox" id="agreement_terms_checkbox" />
-    <label for='agreement_terms_checkbox'>※GoldRush<%=@application_name%>を使用するにあたり、こちらの<%= link_to '利用規約', :controller => '/help', :action => :terms %>に同意します。</label>
+    <label for='agreement_terms_checkbox'>※<%=get_application_name%>を利用するにあたり、こちらの<%= link_to '利用規約', :controller => '/help', :action => :terms %>に同意します。</label>
   </p>
   <p><%= submit_tag "ユーザー登録", :id => 'signup_submit_button', :class => 'btn btn-primary' %></p>
 </div>
