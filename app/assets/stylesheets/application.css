@@ -40,6 +40,35 @@
   margin-top: 5%;
 }
 
+.login_area .enter_links {
+  margin-top: 1.0em;
+  text-align: center;
+  font-size: 115%;
+  overflow: hidden;
+}
+
+.login_area .enter_links p {
+  line-height: 1.2em;
+}
+
+.login_area .enter_links a.getting_started {
+  margin-left: 8.9em;
+}
+
+.login_area .enter_links a.getting_started:after {
+  content: '（今すぐ始める！）';
+  position: relative;
+  opacity: 0;
+  left: -10px;
+  transition: all 0.3s;
+}
+
+.login_area .enter_links a.getting_started:focus:after,
+.login_area .enter_links a.getting_started:hover:after {
+  opacity: 1;
+  left: 0px;
+}
+
 /*
  * help
  */
@@ -128,6 +157,10 @@ div.flag {
 /*
  * footer
  */
+.modal-footer {
+  padding-bottom: 0;
+}
+
 .footer_centered {
   text-align: center;
 }
@@ -141,5 +174,6 @@ div.flag {
   display: inline-block;
   margin-left: .2em;
   margin-right: .2em;
+  font-size: 95%;
 }
 

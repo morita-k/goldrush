@@ -1,5 +1,5 @@
 <%= form_for(resource, :as => resource_name, :url => confirmation_path(resource_name), :html => { :method => :post }) do |f| %>
-<%= accordion_around "登録確認メール 再送信", "" do %>
+<%= accordion_around "登録確認メールの再送信", "" do %>
 <%= devise_error_messages! %>
 <div><%= f.label :email, 'Eメール(*)' %><br/>
   <%= f.email_field :email, :autofocus => true %></div>
