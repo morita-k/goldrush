@@ -29,8 +29,20 @@
 </table>
 <% end %>
 <div class="submit_box">
-  <p>※GoldRush<%=@application_name%>を使用するにあたり、こちらの<%= link_to '利用規約', :controller => '/help', :action => :terms %>に同意します。</p>
-  <p><%= submit_tag "ユーザー登録", :class => "btn btn-primary" %></p>
+  <p><input type="checkbox" id="agreement_terms_checkbox" />
+    <label for='agreement_terms_checkbox'>※GoldRush<%=@application_name%>を使用するにあたり、こちらの<%= link_to '利用規約', :controller => '/help', :action => :terms %>に同意します。</label>
+  </p>
+  <p><%= submit_tag "ユーザー登録", :id => 'signup_submit_button', :class => 'btn btn-primary' %></p>
 </div>
 <% end %>
+
+<script type="text/javascript">
+<!--
+$(function() {
+    $('#agreement_terms_checkbox').on('change', function() {
+        $('#signup_submit_button').prop('disabled', !$(this).prop('checked'));
+    }).trigger('change');
+});
+// -->
+</script>
 
