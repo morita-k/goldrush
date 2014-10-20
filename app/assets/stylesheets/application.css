@@ -58,6 +58,9 @@
   width: 100%;
 }
 
+/*
+ * contents
+ */
 div.overflow_hidden {
   overflow: hidden;
   height:1.5em;
@@ -121,3 +124,22 @@ div.flag {
   font-size: inherit;
   margin-right: 5px;
 }
+
+/*
+ * footer
+ */
+.footer_centered {
+  text-align: center;
+}
+
+.footer_centered ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.footer_centered ul li {
+  display: inline-block;
+  margin-left: .2em;
+  margin-right: .2em;
+}
+
