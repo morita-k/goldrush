@@ -2,6 +2,10 @@
 require 'smtp_password_encryptor'
 
 module Auth::RegistrationsHelper
+  def available_import_mail_forwarding_address
+    "import_mail#{current_user.owner.owner_key}@applicative.co.jp"
+  end
+
   def available_port_list
     [25, 465, 587]
   end
