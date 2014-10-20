@@ -8,6 +8,14 @@ module ApplicationHelper
   include NameUtil
   include TypeUtil
 
+  def get_application_name
+    SysConfig.get_application_name
+  end
+
+  def get_contact_address
+    SysConfig.get_contact_address
+  end
+
   def mail_match_target
     DeliveryMail.find(session[:mail_match_target_id]) if session[:mail_match_target_id]
   end

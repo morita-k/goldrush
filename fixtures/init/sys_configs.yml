@@ -243,3 +243,35 @@ sys_configs_15:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
+sys_configs_16:
+  id: 16
+  owner_id: 0
+  config_section: "system_setting"
+  config_key: "application_name"
+  value1: "GoldRush"
+  value2: ""
+  value3: ""
+  config_description_text: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+sys_configs_17:
+  id: 17
+  owner_id: 0
+  config_section: "system_setting"
+  config_key: "contact_address"
+  value1: "staff@dev.applicative.jp"
+  value2: ""
+  value3: ""
+  config_description_text: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0

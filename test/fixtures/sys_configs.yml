@@ -245,10 +245,10 @@ sys_configs_15:
   deleted: 0
 sys_configs_16:
   id: 16
-  owner_id: 1
-  config_section: "seq"
-  config_key: "sales_code"
-  value1: "0"
+  owner_id: 0
+  config_section: "system_setting"
+  config_key: "application_name"
+  value1: "GoldRush"
   value2: ""
   value3: ""
   config_description_text: ""
@@ -261,10 +261,10 @@ sys_configs_16:
   deleted: 0
 sys_configs_17:
   id: 17
-  owner_id: 1
-  config_section: "import_mail_matches"
-  config_key: "last_id"
-  value1: "109131"
+  owner_id: 0
+  config_section: "system_setting"
+  config_key: "contact_address"
+  value1: "staff@dev.applicative.jp"
   value2: ""
   value3: ""
   config_description_text: ""
@@ -277,7 +277,7 @@ sys_configs_17:
   deleted: 0
 sys_configs_18:
   id: 18
-  owner_id: 2
+  owner_id: 1
   config_section: "seq"
   config_key: "sales_code"
   value1: "0"
@@ -293,6 +293,38 @@ sys_configs_18:
   deleted: 0
 sys_configs_19:
   id: 19
+  owner_id: 1
+  config_section: "import_mail_matches"
+  config_key: "last_id"
+  value1: "109131"
+  value2: ""
+  value3: ""
+  config_description_text: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+sys_configs_20:
+  id: 20
+  owner_id: 2
+  config_section: "seq"
+  config_key: "sales_code"
+  value1: "0"
+  value2: ""
+  value3: ""
+  config_description_text: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+sys_configs_21:
+  id: 21
   owner_id: 2
   config_section: "import_mail_matches"
   config_key: "last_id"
