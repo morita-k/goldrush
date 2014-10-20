@@ -55,6 +55,9 @@ class Auth::RegistrationsController < Devise::RegistrationsController
 
   def edit_smtp_setting
     build_resource(current_user.attributes)
+    resource.smtp_settings_port ||= 587
+    resource.smtp_settings_domain ||= current_user.email.split('@')[1]
+    resource.smtp_settings_user_name ||= current_user.email.split('@')[0]
   end
 
   def update_smtp_setting
@@ -136,8 +139,9 @@ protected
     user.smtp_settings_address = smtp_setting[:smtp_settings_address]
     user.smtp_settings_port = smtp_setting[:smtp_settings_port]
     user.smtp_settings_domain = smtp_setting[:smtp_settings_domain]
+    user.smtp_settings_authentication = 'plain' # plain固定
     user.smtp_settings_user_name = smtp_setting[:smtp_settings_user_name]
-    if smtp_setting[:smtp_settings_password]
+    if smtp_setting[:smtp_settings_password].present?
       user.smtp_settings_password = SmtpPasswordEncryptor.encrypt(smtp_setting[:smtp_settings_password])
     end
     user.updated_user = user.login

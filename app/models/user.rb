@@ -76,11 +76,6 @@ class User < ActiveRecord::Base
     self.login = self.email
     self.access_level_type ||= 'normal'
     self.per_page ||= 50
-
-    self.smtp_settings_domain ||= self.email.split("@")[1]
-    self.smtp_settings_port ||= 587
-    self.smtp_settings_authentication ||= 'plain'
-    self.smtp_settings_user_name ||= self.email.split("@")[0]
   end
 
   def self.find_for_database_authentication(conditions)
