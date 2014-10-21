@@ -29,7 +29,7 @@
 </table>
 <% end %>
 <div class="submit_box">
-  <p><input type="checkbox" id="agreement_terms_checkbox" />
+  <p><%= check_box_tag :agreement_terms_checkbox, true, params[:agreement_terms_checkbox].present? %>
     <label for='agreement_terms_checkbox'>※<%=get_application_name%>を利用するにあたり、こちらの<%= link_to '利用規約', :controller => '/help', :action => :terms %>に同意します。</label>
   </p>
   <p><%= submit_tag "ユーザー登録", :id => 'signup_submit_button', :class => 'btn btn-primary' %></p>
