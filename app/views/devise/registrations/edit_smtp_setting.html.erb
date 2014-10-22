@@ -44,7 +44,7 @@
 </table>
 <% end %>
 <div class="submit_box">
-  <%= f.submit "変更する", btn_primary %>
+  <%= f.submit "変更する", btn_primary(:confirm => "設定を変更する際、自分宛てにテストメールを送信します。") %>
   <%= link_or_back "戻る", root_path %>
 </div>
 <% end %>

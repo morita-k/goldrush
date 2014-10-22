@@ -107,6 +107,10 @@ class User < ActiveRecord::Base
     self.smtp_settings_enable_starttls_auto == 1
   end
 
+  def smtp_settings_authenticated?
+    self.smtp_settings_authenticated_flg == 1
+  end
+
   def User.pic_select_items(owner_id)
     User.joins(:employee).where("users.owner_id = ? and users.deleted = 0 and employees.resignation_date is null", owner_id).collect{|x| [x.nickname, x.id]}
   end

@@ -1,5 +1,7 @@
 # -*- encoding: utf-8 -*-
 class DeliveryMailsController < ApplicationController
+  before_filter :check_smtp_settings_authentication, :only => [:new, :copynew, :contact_mail_new, :reply_mail_new, :edit]
+
   # GET /delivery_mails
   # GET /delivery_mails.json
   def index
@@ -157,7 +159,6 @@ EOS
           ),
           notice: 'Delivery mail was successfully created.'
         }
-
         format.json { render json: @delivery_mail, status: :created, location: @delivery_mail }
       rescue ActiveRecord::RecordInvalid
         format.html { render action: "new" }
@@ -210,7 +211,7 @@ EOS
             :delivery_mail_id => @delivery_mail.id,
             :back_to => back_to
           ),
-        notice: 'Delivery mail was successfully updated.' }
+          notice: 'Delivery mail was successfully updated.' }
         format.json { head :no_content }
       rescue ActiveRecord::RecordInvalid
         format.html { render action: "edit" }
@@ -518,7 +519,18 @@ EOS
 
 
 private
-  def new_proc
+ def check_smtp_settings_authentication
+    unless current_user.smtp_settings_authenticated?
+      flash[:err] = "メール配信設定に誤りがあります。設定内容を変更して下さい。"
+      redirect_to({
+        :controller => 'auth/registrations',
+        :action => 'edit_smtp_setting',
+        :back_to => back_to
+      }) and return
+    end
+ end
+
+ def new_proc
     @delivery_mail.setup_planned_setting_at(current_user.zone_now)
   end
 

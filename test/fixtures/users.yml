@@ -32,6 +32,7 @@ users_1:
   smtp_settings_authentication: plain
   smtp_settings_user_name: system
   smtp_settings_password: dHlSVThFWmVNVDl0ZVBFUWMrNDdIRzVQL2MxTFNpa01DYWlXSWU0UHFYbz0tLVRaZndJUlJnUTcyL1FHa1JadGR1Z2c9PQ==--ec9445913fb943824b2f1a877872d7a4e59bafc8
+  smtp_settings_authenticated_flg: 1
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -73,6 +74,7 @@ users_2:
   smtp_settings_authentication: plain
   smtp_settings_user_name: user1
   smtp_settings_password: dHlSVThFWmVNVDl0ZVBFUWMrNDdIRzVQL2MxTFNpa01DYWlXSWU0UHFYbz0tLVRaZndJUlJnUTcyL1FHa1JadGR1Z2c9PQ==--ec9445913fb943824b2f1a877872d7a4e59bafc8
+  smtp_settings_authenticated_flg: 1
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -114,6 +116,7 @@ users_3:
   smtp_settings_authentication: plain
   smtp_settings_user_name: user2
   smtp_settings_password: dHlSVThFWmVNVDl0ZVBFUWMrNDdIRzVQL2MxTFNpa01DYWlXSWU0UHFYbz0tLVRaZndJUlJnUTcyL1FHa1JadGR1Z2c9PQ==--ec9445913fb943824b2f1a877872d7a4e59bafc8
+  smtp_settings_authenticated_flg: 1
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -155,6 +158,7 @@ users_4:
   smtp_settings_authentication: plain
   smtp_settings_user_name: user3
   smtp_settings_password: dHlSVThFWmVNVDl0ZVBFUWMrNDdIRzVQL2MxTFNpa01DYWlXSWU0UHFYbz0tLVRaZndJUlJnUTcyL1FHa1JadGR1Z2c9PQ==--ec9445913fb943824b2f1a877872d7a4e59bafc8
+  smtp_settings_authenticated_flg: 1
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -196,6 +200,7 @@ users_5:
   smtp_settings_authentication: plain
   smtp_settings_user_name: user4
   smtp_settings_password: dHlSVThFWmVNVDl0ZVBFUWMrNDdIRzVQL2MxTFNpa01DYWlXSWU0UHFYbz0tLVRaZndJUlJnUTcyL1FHa1JadGR1Z2c9PQ==--ec9445913fb943824b2f1a877872d7a4e59bafc8
+  smtp_settings_authenticated_flg: 1
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -237,6 +242,7 @@ users_6:
   smtp_settings_authentication: plain
   smtp_settings_user_name: user5
   smtp_settings_password: dHlSVThFWmVNVDl0ZVBFUWMrNDdIRzVQL2MxTFNpa01DYWlXSWU0UHFYbz0tLVRaZndJUlJnUTcyL1FHa1JadGR1Z2c9PQ==--ec9445913fb943824b2f1a877872d7a4e59bafc8
+  smtp_settings_authenticated_flg: 1
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -278,6 +284,7 @@ users_7:
   smtp_settings_authentication: plain
   smtp_settings_user_name: user6
   smtp_settings_password: dHlSVThFWmVNVDl0ZVBFUWMrNDdIRzVQL2MxTFNpa01DYWlXSWU0UHFYbz0tLVRaZndJUlJnUTcyL1FHa1JadGR1Z2c9PQ==--ec9445913fb943824b2f1a877872d7a4e59bafc8
+  smtp_settings_authenticated_flg: 1
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -319,6 +326,7 @@ users_8:
   smtp_settings_authentication: plain
   smtp_settings_user_name: user7
   smtp_settings_password: dHlSVThFWmVNVDl0ZVBFUWMrNDdIRzVQL2MxTFNpa01DYWlXSWU0UHFYbz0tLVRaZndJUlJnUTcyL1FHa1JadGR1Z2c9PQ==--ec9445913fb943824b2f1a877872d7a4e59bafc8
+  smtp_settings_authenticated_flg: 1
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -360,6 +368,7 @@ users_9:
   smtp_settings_authentication: plain
   smtp_settings_user_name: user8
   smtp_settings_password: dHlSVThFWmVNVDl0ZVBFUWMrNDdIRzVQL2MxTFNpa01DYWlXSWU0UHFYbz0tLVRaZndJUlJnUTcyL1FHa1JadGR1Z2c9PQ==--ec9445913fb943824b2f1a877872d7a4e59bafc8
+  smtp_settings_authenticated_flg: 1
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -401,6 +410,7 @@ users_10:
   smtp_settings_authentication: plain
   smtp_settings_user_name: user9
   smtp_settings_password: dHlSVThFWmVNVDl0ZVBFUWMrNDdIRzVQL2MxTFNpa01DYWlXSWU0UHFYbz0tLVRaZndJUlJnUTcyL1FHa1JadGR1Z2c9PQ==--ec9445913fb943824b2f1a877872d7a4e59bafc8
+  smtp_settings_authenticated_flg: 1
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -442,6 +452,7 @@ users_11:
   smtp_settings_authentication: plain
   smtp_settings_user_name: user10
   smtp_settings_password: dHlSVThFWmVNVDl0ZVBFUWMrNDdIRzVQL2MxTFNpa01DYWlXSWU0UHFYbz0tLVRaZndJUlJnUTcyL1FHa1JadGR1Z2c9PQ==--ec9445913fb943824b2f1a877872d7a4e59bafc8
+  smtp_settings_authenticated_flg: 1
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -483,6 +494,7 @@ users_12:
   smtp_settings_authentication: plain
   smtp_settings_user_name: user11
   smtp_settings_password: dHlSVThFWmVNVDl0ZVBFUWMrNDdIRzVQL2MxTFNpa01DYWlXSWU0UHFYbz0tLVRaZndJUlJnUTcyL1FHa1JadGR1Z2c9PQ==--ec9445913fb943824b2f1a877872d7a4e59bafc8
+  smtp_settings_authenticated_flg: 1
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -524,6 +536,7 @@ users_13:
   smtp_settings_authentication: plain
   smtp_settings_user_name: user12
   smtp_settings_password: dHlSVThFWmVNVDl0ZVBFUWMrNDdIRzVQL2MxTFNpa01DYWlXSWU0UHFYbz0tLVRaZndJUlJnUTcyL1FHa1JadGR1Z2c9PQ==--ec9445913fb943824b2f1a877872d7a4e59bafc8
+  smtp_settings_authenticated_flg: 1
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -565,6 +578,7 @@ users_14:
   smtp_settings_authentication: plain
   smtp_settings_user_name: user13
   smtp_settings_password: dHlSVThFWmVNVDl0ZVBFUWMrNDdIRzVQL2MxTFNpa01DYWlXSWU0UHFYbz0tLVRaZndJUlJnUTcyL1FHa1JadGR1Z2c9PQ==--ec9445913fb943824b2f1a877872d7a4e59bafc8
+  smtp_settings_authenticated_flg: 1
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -606,6 +620,7 @@ users_15:
   smtp_settings_authentication: plain
   smtp_settings_user_name: user14
   smtp_settings_password: dHlSVThFWmVNVDl0ZVBFUWMrNDdIRzVQL2MxTFNpa01DYWlXSWU0UHFYbz0tLVRaZndJUlJnUTcyL1FHa1JadGR1Z2c9PQ==--ec9445913fb943824b2f1a877872d7a4e59bafc8
+  smtp_settings_authenticated_flg: 1
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -647,6 +662,7 @@ users_16:
   smtp_settings_authentication: plain
   smtp_settings_user_name: user15
   smtp_settings_password: dHlSVThFWmVNVDl0ZVBFUWMrNDdIRzVQL2MxTFNpa01DYWlXSWU0UHFYbz0tLVRaZndJUlJnUTcyL1FHa1JadGR1Z2c9PQ==--ec9445913fb943824b2f1a877872d7a4e59bafc8
+  smtp_settings_authenticated_flg: 1
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0

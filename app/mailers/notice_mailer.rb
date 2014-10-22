@@ -9,16 +9,20 @@ class NoticeMailer < ActionMailer::Base
   #
 
   # test送信用メソッド
+  # 送信に失敗した場合、例外を送出する。
+  # 成功した場合、trueを返す。
   def sendmail_confirm(mail_sender, destination)
-    @greeting="hi!"
-
-    old_settings = ActionMailer::Base.smtp_settings
-    begin
-      NoticeMailer.setup(mail_sender)
-      (mail from: "noticemailer_test@aaa.com", to: destination).deliver
-    ensure
-      ActionMailer::Base.smtp_settings = old_settings
-    end
+    NoticeMailer.send_mail(
+      mail_sender,
+      destination,
+      nil,
+      nil,
+      "\"#{mail_sender.nickname}\" <#{mail_sender.email}>",
+      "#{SysConfig.get_application_name} メール配信テスト",
+      "テスト",
+      []
+    )
+    true
   end
 
   # mail配信メソッド

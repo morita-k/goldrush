@@ -63,12 +63,24 @@ class Auth::RegistrationsController < Devise::RegistrationsController
   def update_smtp_setting
     ActiveRecord::Base.transaction do
       set_smtp_setting(current_user, params[:auth])
-      current_user.save!
+      build_resource(current_user.attributes)
+
+      # 接続確認テストメール送信
+      begin
+        NoticeMailer.sendmail_confirm(current_user, current_user.email)
+      rescue => e
+        flash.now[:err] = "テストメールを送信できませんでした。設定内容を確認して下さい。"
+        flash.now[:err] << "#{e.class.to_s}: #{e.message}"
+        current_user.update_attributes!(:smtp_settings_authenticated_flg => 0)
+        render :action => 'edit_smtp_setting' and return
+      end
+
+      current_user.update_attributes!(:smtp_settings_authenticated_flg => 1)
+      flash[:notice] = 'SMTP settings was successfully updated.'
+      redirect_to :root
     end
-    flash[:notice] = 'SMTP settings was successfully updated.'
-    redirect_to :root
   rescue ActiveRecord::RecordInvalid => e
-    render :action => 'edit_smtp_setting'
+    redirect_to :action => 'edit_smtp_setting'
   end
 
 protected
@@ -138,7 +150,7 @@ protected
     user.smtp_settings_enable_starttls_auto = smtp_setting[:smtp_settings_enable_starttls_auto]
     user.smtp_settings_address = smtp_setting[:smtp_settings_address]
     user.smtp_settings_port = smtp_setting[:smtp_settings_port]
-    user.smtp_settings_domain = smtp_setting[:smtp_settings_domain]
+    user.smtp_settings_domain = user.email.split('@')[1]
     user.smtp_settings_authentication = 'plain' # plain固定
     user.smtp_settings_user_name = smtp_setting[:smtp_settings_user_name]
     if smtp_setting[:smtp_settings_password].present?
