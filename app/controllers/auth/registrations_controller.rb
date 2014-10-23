@@ -69,8 +69,7 @@ class Auth::RegistrationsController < Devise::RegistrationsController
       begin
         NoticeMailer.sendmail_confirm(current_user, current_user.email)
       rescue => e
-        flash.now[:err] = "テストメールを送信できませんでした。設定内容を確認して下さい。"
-        flash.now[:err] << "#{e.class.to_s}: #{e.message}"
+        flash.now[:err] = format_smtp_connection_error_message(e)
         current_user.update_attributes!(:smtp_settings_authenticated_flg => 0)
         render :action => 'edit_smtp_setting' and return
       end
@@ -157,6 +156,30 @@ protected
       user.smtp_settings_password = SmtpPasswordEncryptor.encrypt(smtp_setting[:smtp_settings_password])
     end
     user.updated_user = user.login
+  end
+
+  def format_smtp_connection_error_message(err)
+    error_message = ''
+
+    case err
+    when SocketError
+      if /getaddrinfo: name or service not known/i =~ err.message
+        error_message = 'SMTPサーバーアドレスが正しくありません。'
+      end
+    when Net::SMTPAuthenticationError
+      if /starttls command first/i =~ err.message
+        error_message = 'SMTP自動TLSをONにして下さい。'
+      elsif /username and password not accepted/i =~ err.message
+        error_message = 'ユーザーかパスワードが違います。'
+      elsif /authorization failed/i =~ err.message
+        error_message = 'SMTPサーバーの接続認証に失敗しました。'
+      end
+    when Timeout::Error
+      error_message = '接続がタイムアウトしました。'
+    end
+    error_message = '設定内容を確認して下さい。' if error_message.empty?
+
+    "テストメールの送信に失敗しました。 #{error_message}"
   end
 end
 

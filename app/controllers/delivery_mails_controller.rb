@@ -521,7 +521,7 @@ EOS
 private
  def check_smtp_settings_authentication
     unless current_user.smtp_settings_authenticated?
-      flash[:err] = "メール配信設定に誤りがあります。設定内容を変更して下さい。"
+      flash[:warning] = "メール配信設定に誤りがあります。 設定内容を変更して下さい。"
       redirect_to({
         :controller => 'auth/registrations',
         :action => 'edit_smtp_setting',
