@@ -22,9 +22,11 @@
         <label>
           <%= check_box_tag 'starred', 1, session[:import_mail_search][:starred].to_i == 1 %> スター
         </label>
+        <% if current_user.enable_outflow_mail? %>
         <label>
           <%= check_box_tag 'outflow_mail_flg', 1, session[:import_mail_search][:outflow_mail_flg].to_i == 1 %> 流出メール
         </label>
+        <% end %>
         <label>
           <%= check_box_tag 'interview_count_one', 1, session[:import_mail_search][:interview_count_one].to_i == 1 %> 面談1回
         </label>

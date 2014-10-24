@@ -33,6 +33,7 @@
     <th><i class="fa fa-angle-double-right"></i>ステータス</th>
     <td><%= select_tag 'human_resource_status_type', options_for_select([[]] + getTypes('human_resource_status_type'), search_value_bp_member(:human_resource_status_type)) %></td>
   </tr>
+  <% if current_user.enable_jiet? %>
   <tr>
     <th><i class="fa fa-angle-double-right"></i>JIET</th>
     <td class="jiet_radio">
@@ -47,6 +48,7 @@
       </label>
     </td>
   </tr>
+  <% end %>
   <tr>
     <th colspan="2">
       <%= submit_tag '　　検索　　', :name => 'search_button', :class => 'btn btn-warning btn-midium' %>

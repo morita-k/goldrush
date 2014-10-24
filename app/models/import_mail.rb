@@ -5,6 +5,7 @@ require 'zen2han'
 class ImportMail < ActiveRecord::Base
   belongs_to :business_partner
   belongs_to :bp_pic
+  belongs_to :owner, :conditions => "owners.deleted = 0"
   has_many :bp_members
   has_many :biz_offers
   has_many :tag_details, :foreign_key  => :parent_id, :conditions => "tag_details.tag_key = 'import_mails'"
@@ -227,7 +228,7 @@ EOS
       import_mail.analyze!
 
       # JIETの案件・人材メールだった場合、案件照会・人材所属を作成
-      if import_mail.jiet_ses_mail?
+      if import_mail.owner.enable_jiet? && import_mail.jiet_ses_mail?
         if import_mail.mail_subject =~ /JIETメール配信サービス\[(..)情報\]/
           case $1
             when "案件"
@@ -241,7 +242,7 @@ EOS
       end
 
       # 流出メールだった場合、OutflowMailを作成する
-      if import_mail.outflow_mail?
+      if import_mail.owner.enable_outflow_mail? && import_mail.outflow_mail?
         OutflowMail.create_outflow_mails(import_mail)
       end
 

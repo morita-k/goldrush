@@ -29,6 +29,7 @@
     <th><i class="fa fa-angle-double-right"></i>在職者以外</th>
     <td><label for="textfield6"><%= check_box_tag 'working_status_type', 'working', !search_value(:working_status_type).blank? %></label></td>
   </tr>
+  <% if current_user.enable_jiet? %>
   <tr>
     <th><i class="fa fa-angle-double-right"></i>JIET</th>
     <td>
@@ -43,6 +44,7 @@
       </label>
     </td>
   </tr>
+  <% end %>
   <tr>
     <th><i class="fa fa-angle-double-right"></i>取引先グループ</th>
     <td><label for="textfield6"><%= select_tag 'bp_pic_group_id', options_for_select( [ ['〈 全て 〉', 'all'] ] + BpPicGroup.available_group_list(current_user.owner_id), search_value(:bp_pic_group_id)), include_blank: true %></label></td>
