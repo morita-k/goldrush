@@ -103,6 +103,34 @@ class User < ActiveRecord::Base
     ["super"].include?(self.access_level_type)
   end
 
+  def enable_photo?
+    owner.enable_photo?
+  end
+
+  def enable_jiet?
+    owner.enable_jiet?
+  end
+
+  def enable_daily_report?
+    owner.enable_daily_report?
+  end
+
+  def enable_bp_member?
+    owner.enable_bp_member?
+  end
+
+  def enable_biz_offer?
+    owner.enable_biz_offer?
+  end
+
+  def enable_contract?
+    owner.enable_contract?
+  end
+
+  def enable_outflow_mail?
+    owner.enable_outflow_mail?
+  end
+
   def smtp_settings_enable_starttls_auto?
     self.smtp_settings_enable_starttls_auto == 1
   end

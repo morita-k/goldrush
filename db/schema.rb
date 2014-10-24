@@ -876,6 +876,7 @@ ActiveRecord::Schema.define(:version => 0) do
     t.integer  "available_user_count",               :default => 0
     t.string   "owner_key",            :limit => 40,                :null => false
     t.string   "company_name"
+    t.string   "additional_option"
     t.datetime "created_at",                                        :null => false
     t.datetime "updated_at",                                        :null => false
     t.integer  "lock_version",         :limit => 8,  :default => 0

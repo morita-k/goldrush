@@ -1,6 +1,6 @@
 special_words_1:
   id: 1
-  owner_id: 
+  owner_id: 1
   special_word_type: special_word
   target_word: サーバー構築
   convert_to_word: サーバー構築
@@ -14,7 +14,7 @@ special_words_1:
   deleted: 0
 special_words_2:
   id: 2
-  owner_id: 
+  owner_id: 1
   special_word_type: special_word
   target_word: 運用
   convert_to_word: 運用
@@ -28,7 +28,7 @@ special_words_2:
   deleted: 0
 special_words_3:
   id: 3
-  owner_id: 
+  owner_id: 1
   special_word_type: special_word
   target_word: (^|[^a-zA-Z])(C)([^a-zA-Z#\+]|$)
   convert_to_word: C
@@ -42,7 +42,7 @@ special_words_3:
   deleted: 0
 special_words_4:
   id: 4
-  owner_id: 
+  owner_id: 1
   special_word_type: special_word
   target_word: ((:?as|AS)\/400)
   convert_to_word: AS400
@@ -56,7 +56,7 @@ special_words_4:
   deleted: 0
 special_words_5:
   id: 5
-  owner_id: 
+  owner_id: 1
   special_word_type: special_word
   target_word: インフラ
   convert_to_word: インフラ
@@ -70,7 +70,7 @@ special_words_5:
   deleted: 0
 special_words_6:
   id: 6
-  owner_id: 
+  owner_id: 1
   special_word_type: special_word
   target_word: 仮想化
   convert_to_word: 仮想化
@@ -84,7 +84,7 @@ special_words_6:
   deleted: 0
 special_words_7:
   id: 7
-  owner_id: 
+  owner_id: 1
   special_word_type: special_word
   target_word: ネットワーク接続
   convert_to_word: ネットワーク接続
@@ -98,7 +98,7 @@ special_words_7:
   deleted: 0
 special_words_8:
   id: 8
-  owner_id: 
+  owner_id: 1
   special_word_type: special_word
   target_word: 環境設計
   convert_to_word: 環境設計
@@ -112,7 +112,7 @@ special_words_8:
   deleted: 0
 special_words_9:
   id: 9
-  owner_id: 
+  owner_id: 1
   special_word_type: special_word
   target_word: データ分析
   convert_to_word: データ分析
@@ -126,7 +126,7 @@ special_words_9:
   deleted: 0
 special_words_10:
   id: 10
-  owner_id: 
+  owner_id: 1
   special_word_type: special_word
   target_word: マーケティング
   convert_to_word: マーケティング
@@ -140,7 +140,7 @@ special_words_10:
   deleted: 0
 special_words_11:
   id: 11
-  owner_id: 
+  owner_id: 1
   special_word_type: special_word
   target_word: サーバサイド
   convert_to_word: サーバサイド
@@ -154,7 +154,7 @@ special_words_11:
   deleted: 0
 special_words_12:
   id: 12
-  owner_id: 
+  owner_id: 1
   special_word_type: special_word
   target_word: ソーシャルゲーム
   convert_to_word: ソーシャルゲーム
@@ -168,7 +168,7 @@ special_words_12:
   deleted: 0
 special_words_13:
   id: 13
-  owner_id: 
+  owner_id: 1
   special_word_type: special_word
   target_word: システム開発
   convert_to_word: システム開発
@@ -182,7 +182,7 @@ special_words_13:
   deleted: 0
 special_words_14:
   id: 14
-  owner_id: 
+  owner_id: 1
   special_word_type: special_word
   target_word: データ管理
   convert_to_word: データ管理
@@ -196,7 +196,7 @@ special_words_14:
   deleted: 0
 special_words_15:
   id: 15
-  owner_id: 
+  owner_id: 1
   special_word_type: special_word
   target_word: フルスクラッチ
   convert_to_word: フルスクラッチ
@@ -210,7 +210,7 @@ special_words_15:
   deleted: 0
 special_words_16:
   id: 16
-  owner_id: 
+  owner_id: 1
   special_word_type: special_word
   target_word: フレームワーク
   convert_to_word: フレームワーク
@@ -224,7 +224,7 @@ special_words_16:
   deleted: 0
 special_words_17:
   id: 17
-  owner_id: 
+  owner_id: 1
   special_word_type: special_word
   target_word: プロジェクト管理
   convert_to_word: プロジェクト管理
@@ -238,7 +238,7 @@ special_words_17:
   deleted: 0
 special_words_18:
   id: 18
-  owner_id: 
+  owner_id: 1
   special_word_type: special_word
   target_word: スマホアプリ開発
   convert_to_word: スマホアプリ開発
@@ -252,7 +252,7 @@ special_words_18:
   deleted: 0
 special_words_19:
   id: 19
-  owner_id: 
+  owner_id: 1
   special_word_type: special_word
   target_word: アジャイル
   convert_to_word: アジャイル
@@ -266,7 +266,7 @@ special_words_19:
   deleted: 0
 special_words_20:
   id: 20
-  owner_id: 
+  owner_id: 1
   special_word_type: special_word
   target_word: 仮想環境
   convert_to_word: 仮想環境
@@ -280,7 +280,7 @@ special_words_20:
   deleted: 0
 special_words_21:
   id: 21
-  owner_id: 
+  owner_id: 1
   special_word_type: special_word
   target_word: 基幹システム
   convert_to_word: 基幹システム
@@ -294,7 +294,7 @@ special_words_21:
   deleted: 0
 special_words_22:
   id: 22
-  owner_id: 
+  owner_id: 1
   special_word_type: special_word
   target_word: 保守
   convert_to_word: 保守
@@ -308,7 +308,7 @@ special_words_22:
   deleted: 0
 special_words_23:
   id: 23
-  owner_id: 
+  owner_id: 1
   special_word_type: ignore_word
   target_word: as
   convert_to_word: 
@@ -322,7 +322,7 @@ special_words_23:
   deleted: 0
 special_words_24:
   id: 24
-  owner_id: 
+  owner_id: 1
   special_word_type: ignore_word
   target_word: e-mail
   convert_to_word: 
@@ -336,7 +336,7 @@ special_words_24:
   deleted: 0
 special_words_25:
   id: 25
-  owner_id: 
+  owner_id: 1
   special_word_type: ignore_word
   target_word: email
   convert_to_word: 
@@ -350,7 +350,7 @@ special_words_25:
   deleted: 0
 special_words_26:
   id: 26
-  owner_id: 
+  owner_id: 1
   special_word_type: ignore_word
   target_word: fax
   convert_to_word: 
@@ -364,7 +364,7 @@ special_words_26:
   deleted: 0
 special_words_27:
   id: 27
-  owner_id: 
+  owner_id: 1
   special_word_type: ignore_word
   target_word: jp
   convert_to_word: 
@@ -378,7 +378,7 @@ special_words_27:
   deleted: 0
 special_words_28:
   id: 28
-  owner_id: 
+  owner_id: 1
   special_word_type: ignore_word
   target_word: mail
   convert_to_word: 
@@ -392,7 +392,7 @@ special_words_28:
   deleted: 0
 special_words_29:
   id: 29
-  owner_id: 
+  owner_id: 1
   special_word_type: ignore_word
   target_word: mailto
   convert_to_word: 
@@ -406,7 +406,7 @@ special_words_29:
   deleted: 0
 special_words_30:
   id: 30
-  owner_id: 
+  owner_id: 1
   special_word_type: ignore_word
   target_word: new
   convert_to_word: 
@@ -420,7 +420,7 @@ special_words_30:
   deleted: 0
 special_words_31:
   id: 31
-  owner_id: 
+  owner_id: 1
   special_word_type: ignore_word
   target_word: ng
   convert_to_word: 
@@ -434,7 +434,7 @@ special_words_31:
   deleted: 0
 special_words_32:
   id: 32
-  owner_id: 
+  owner_id: 1
   special_word_type: ignore_word
   target_word: or
   convert_to_word: 
@@ -448,7 +448,7 @@ special_words_32:
   deleted: 0
 special_words_33:
   id: 33
-  owner_id: 
+  owner_id: 1
   special_word_type: ignore_word
   target_word: or2
   convert_to_word: 
@@ -462,7 +462,7 @@ special_words_33:
   deleted: 0
 special_words_34:
   id: 34
-  owner_id: 
+  owner_id: 1
   special_word_type: ignore_word
   target_word: or3
   convert_to_word: 
@@ -476,7 +476,7 @@ special_words_34:
   deleted: 0
 special_words_35:
   id: 35
-  owner_id: 
+  owner_id: 1
   special_word_type: ignore_word
   target_word: or4
   convert_to_word: 
@@ -490,7 +490,7 @@ special_words_35:
   deleted: 0
 special_words_36:
   id: 36
-  owner_id: 
+  owner_id: 1
   special_word_type: ignore_word
   target_word: os
   convert_to_word: 
@@ -504,7 +504,7 @@ special_words_36:
   deleted: 0
 special_words_37:
   id: 37
-  owner_id: 
+  owner_id: 1
   special_word_type: ignore_word
   target_word: pc
   convert_to_word: 
@@ -518,7 +518,7 @@ special_words_37:
   deleted: 0
 special_words_38:
   id: 38
-  owner_id: 
+  owner_id: 1
   special_word_type: ignore_word
   target_word: pg
   convert_to_word: 
@@ -532,7 +532,7 @@ special_words_38:
   deleted: 0
 special_words_39:
   id: 39
-  owner_id: 
+  owner_id: 1
   special_word_type: ignore_word
   target_word: phone
   convert_to_word: 
@@ -546,7 +546,7 @@ special_words_39:
   deleted: 0
 special_words_40:
   id: 40
-  owner_id: 
+  owner_id: 1
   special_word_type: ignore_word
   target_word: phs
   convert_to_word: 
@@ -560,7 +560,7 @@ special_words_40:
   deleted: 0
 special_words_41:
   id: 41
-  owner_id: 
+  owner_id: 1
   special_word_type: ignore_word
   target_word: pj
   convert_to_word: 
@@ -574,7 +574,7 @@ special_words_41:
   deleted: 0
 special_words_42:
   id: 42
-  owner_id: 
+  owner_id: 1
   special_word_type: ignore_word
   target_word: pmi
   convert_to_word: 
@@ -588,7 +588,7 @@ special_words_42:
   deleted: 0
 special_words_43:
   id: 43
-  owner_id: 
+  owner_id: 1
   special_word_type: ignore_word
   target_word: popteen
   convert_to_word: 
@@ -602,7 +602,7 @@ special_words_43:
   deleted: 0
 special_words_44:
   id: 44
-  owner_id: 
+  owner_id: 1
   special_word_type: ignore_word
   target_word: pr
   convert_to_word: 
@@ -616,7 +616,7 @@ special_words_44:
   deleted: 0
 special_words_45:
   id: 45
-  owner_id: 
+  owner_id: 1
   special_word_type: ignore_word
   target_word: pro
   convert_to_word: 
@@ -630,7 +630,7 @@ special_words_45:
   deleted: 0
 special_words_46:
   id: 46
-  owner_id: 
+  owner_id: 1
   special_word_type: ignore_word
   target_word: se
   convert_to_word: 
@@ -644,7 +644,7 @@ special_words_46:
   deleted: 0
 special_words_47:
   id: 47
-  owner_id: 
+  owner_id: 1
   special_word_type: ignore_word
   target_word: service
   convert_to_word: 
@@ -658,7 +658,7 @@ special_words_47:
   deleted: 0
 special_words_48:
   id: 48
-  owner_id: 
+  owner_id: 1
   special_word_type: ignore_word
   target_word: ses
   convert_to_word: 
@@ -672,7 +672,7 @@ special_words_48:
   deleted: 0
 special_words_49:
   id: 49
-  owner_id: 
+  owner_id: 1
   special_word_type: ignore_word
   target_word: tel
   convert_to_word: 
@@ -686,7 +686,7 @@ special_words_49:
   deleted: 0
 special_words_50:
   id: 50
-  owner_id: 
+  owner_id: 1
   special_word_type: ignore_word
   target_word: url
   convert_to_word: 
@@ -700,7 +700,7 @@ special_words_50:
   deleted: 0
 special_words_51:
   id: 51
-  owner_id: 
+  owner_id: 1
   special_word_type: ignore_word
   target_word: zip
   convert_to_word: 
@@ -714,7 +714,7 @@ special_words_51:
   deleted: 0
 special_words_52:
   id: 52
-  owner_id: 
+  owner_id: 1
   special_word_type: ignore_word_proper
   target_word: 契約社員
   convert_to_word: 
@@ -728,7 +728,7 @@ special_words_52:
   deleted: 0
 special_words_53:
   id: 53
-  owner_id: 
+  owner_id: 1
   special_word_type: ignore_word_proper
   target_word: 社下
   convert_to_word: 
@@ -742,7 +742,7 @@ special_words_53:
   deleted: 0
 special_words_54:
   id: 54
-  owner_id: 
+  owner_id: 1
   special_word_type: ignore_word_proper
   target_word: 社先
   convert_to_word: 
@@ -756,7 +756,7 @@ special_words_54:
   deleted: 0
 special_words_55:
   id: 55
-  owner_id: 
+  owner_id: 1
   special_word_type: ignore_word_proper
   target_word: BP
   convert_to_word: 
@@ -770,7 +770,7 @@ special_words_55:
   deleted: 0
 special_words_56:
   id: 56
-  owner_id: 
+  owner_id: 1
   special_word_type: ignore_word_proper
   target_word: パートナー
   convert_to_word: 
@@ -784,7 +784,7 @@ special_words_56:
   deleted: 0
 special_words_57:
   id: 57
-  owner_id: 
+  owner_id: 1
   special_word_type: ignore_word_proper
   target_word: グループ
   convert_to_word: 
@@ -798,7 +798,7 @@ special_words_57:
   deleted: 0
 special_words_58:
   id: 58
-  owner_id: 
+  owner_id: 1
   special_word_type: ignore_word_proper
   target_word: 貴社
   convert_to_word: 
@@ -812,7 +812,7 @@ special_words_58:
   deleted: 0
 special_words_59:
   id: 59
-  owner_id: 
+  owner_id: 1
   special_word_type: ignore_word_proper
   target_word: 御社
   convert_to_word: 
@@ -826,7 +826,7 @@ special_words_59:
   deleted: 0
 special_words_60:
   id: 60
-  owner_id: 
+  owner_id: 1
   special_word_type: ignore_word_proper
   target_word: 参画中
   convert_to_word: 
@@ -840,7 +840,7 @@ special_words_60:
   deleted: 0
 special_words_61:
   id: 61
-  owner_id: 
+  owner_id: 1
   special_word_type: ignore_word_proper
   target_word: プロパー出身
   convert_to_word: 
@@ -854,7 +854,7 @@ special_words_61:
   deleted: 0
 special_words_62:
   id: 62
-  owner_id: 
+  owner_id: 1
   special_word_type: ignore_word_proper
   target_word: と一緒
   convert_to_word: 
@@ -868,7 +868,7 @@ special_words_62:
   deleted: 0
 special_words_63:
   id: 63
-  owner_id: 
+  owner_id: 1
   special_word_type: ignore_word_proper
   target_word: 社員研修
   convert_to_word: 
@@ -882,7 +882,7 @@ special_words_63:
   deleted: 0
 special_words_64:
   id: 64
-  owner_id: 
+  owner_id: 1
   special_word_type: country_word_foreign
   target_word: アメリカ
   convert_to_word: 
@@ -896,7 +896,7 @@ special_words_64:
   deleted: 0
 special_words_65:
   id: 65
-  owner_id: 
+  owner_id: 1
   special_word_type: country_word_foreign
   target_word: アフリカ
   convert_to_word: 
@@ -910,7 +910,7 @@ special_words_65:
   deleted: 0
 special_words_66:
   id: 66
-  owner_id: 
+  owner_id: 1
   special_word_type: country_word_foreign
   target_word: イギリス
   convert_to_word: 
@@ -924,7 +924,7 @@ special_words_66:
   deleted: 0
 special_words_67:
   id: 67
-  owner_id: 
+  owner_id: 1
   special_word_type: country_word_foreign
   target_word: インド
   convert_to_word: 
@@ -938,7 +938,7 @@ special_words_67:
   deleted: 0
 special_words_68:
   id: 68
-  owner_id: 
+  owner_id: 1
   special_word_type: country_word_foreign
   target_word: インドネシア
   convert_to_word: 
@@ -952,7 +952,7 @@ special_words_68:
   deleted: 0
 special_words_69:
   id: 69
-  owner_id: 
+  owner_id: 1
   special_word_type: country_word_foreign
   target_word: オーストラリア
   convert_to_word: 
@@ -966,7 +966,7 @@ special_words_69:
   deleted: 0
 special_words_70:
   id: 70
-  owner_id: 
+  owner_id: 1
   special_word_type: country_word_foreign
   target_word: オランダ
   convert_to_word: 
@@ -980,7 +980,7 @@ special_words_70:
   deleted: 0
 special_words_71:
   id: 71
-  owner_id: 
+  owner_id: 1
   special_word_type: country_word_foreign
   target_word: カナダ
   convert_to_word: 
@@ -994,7 +994,7 @@ special_words_71:
   deleted: 0
 special_words_72:
   id: 72
-  owner_id: 
+  owner_id: 1
   special_word_type: country_word_foreign
   target_word: 韓国
   convert_to_word: 
@@ -1008,7 +1008,7 @@ special_words_72:
   deleted: 0
 special_words_73:
   id: 73
-  owner_id: 
+  owner_id: 1
   special_word_type: country_word_foreign
   target_word: シンガポール
   convert_to_word: 
@@ -1022,7 +1022,7 @@ special_words_73:
   deleted: 0
 special_words_74:
   id: 74
-  owner_id: 
+  owner_id: 1
   special_word_type: country_word_foreign
   target_word: スウェーデン
   convert_to_word: 
@@ -1036,7 +1036,7 @@ special_words_74:
   deleted: 0
 special_words_75:
   id: 75
-  owner_id: 
+  owner_id: 1
   special_word_type: country_word_foreign
   target_word: タイ
   convert_to_word: 
@@ -1050,7 +1050,7 @@ special_words_75:
   deleted: 0
 special_words_76:
   id: 76
-  owner_id: 
+  owner_id: 1
   special_word_type: country_word_foreign
   target_word: 台湾
   convert_to_word: 
@@ -1064,7 +1064,7 @@ special_words_76:
   deleted: 0
 special_words_77:
   id: 77
-  owner_id: 
+  owner_id: 1
   special_word_type: country_word_foreign
   target_word: 中国
   convert_to_word: 
@@ -1078,7 +1078,7 @@ special_words_77:
   deleted: 0
 special_words_78:
   id: 78
-  owner_id: 
+  owner_id: 1
   special_word_type: country_word_foreign
   target_word: チュニジア
   convert_to_word: 
@@ -1092,7 +1092,7 @@ special_words_78:
   deleted: 0
 special_words_79:
   id: 79
-  owner_id: 
+  owner_id: 1
   special_word_type: country_word_foreign
   target_word: ドイツ
   convert_to_word: 
@@ -1106,7 +1106,7 @@ special_words_79:
   deleted: 0
 special_words_80:
   id: 80
-  owner_id: 
+  owner_id: 1
   special_word_type: country_word_foreign
   target_word: ニュージーランド
   convert_to_word: 
@@ -1120,7 +1120,7 @@ special_words_80:
   deleted: 0
 special_words_81:
   id: 81
-  owner_id: 
+  owner_id: 1
   special_word_type: country_word_foreign
   target_word: ノルウェー
   convert_to_word: 
@@ -1134,7 +1134,7 @@ special_words_81:
   deleted: 0
 special_words_82:
   id: 82
-  owner_id: 
+  owner_id: 1
   special_word_type: country_word_foreign
   target_word: パキスタン
   convert_to_word: 
@@ -1148,7 +1148,7 @@ special_words_82:
   deleted: 0
 special_words_83:
   id: 83
-  owner_id: 
+  owner_id: 1
   special_word_type: country_word_foreign
   target_word: フィンランド
   convert_to_word: 
@@ -1162,7 +1162,7 @@ special_words_83:
   deleted: 0
 special_words_84:
   id: 84
-  owner_id: 
+  owner_id: 1
   special_word_type: country_word_foreign
   target_word: ブラジル
   convert_to_word: 
@@ -1176,7 +1176,7 @@ special_words_84:
   deleted: 0
 special_words_85:
   id: 85
-  owner_id: 
+  owner_id: 1
   special_word_type: country_word_foreign
   target_word: フランス
   convert_to_word: 
@@ -1190,7 +1190,7 @@ special_words_85:
   deleted: 0
 special_words_86:
   id: 86
-  owner_id: 
+  owner_id: 1
   special_word_type: country_word_foreign
   target_word: ベトナム
   convert_to_word: 
@@ -1204,7 +1204,7 @@ special_words_86:
   deleted: 0
 special_words_87:
   id: 87
-  owner_id: 
+  owner_id: 1
   special_word_type: country_word_foreign
   target_word: ミャンマー
   convert_to_word: 
@@ -1218,7 +1218,7 @@ special_words_87:
   deleted: 0
 special_words_88:
   id: 88
-  owner_id: 
+  owner_id: 1
   special_word_type: country_word_foreign
   target_word: メキシコ
   convert_to_word: 
@@ -1232,7 +1232,7 @@ special_words_88:
   deleted: 0
 special_words_89:
   id: 89
-  owner_id: 
+  owner_id: 1
   special_word_type: country_word_foreign
   target_word: ロシア
   convert_to_word: 
