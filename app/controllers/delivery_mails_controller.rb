@@ -359,11 +359,13 @@ EOS
         end #transaction
 
         # メール送信はcronのジョブに任せて、ここでは送信しない。
+=begin
         DeliveryMail.send_mails(current_user)
         error_count = DeliveryError.where(:owner_id => @delivery_mail.owner_id, :delivery_mail_id => @delivery_mail.id).size
         if error_count > 0
           flash[:warning] = "送信に失敗した宛先が存在します。<br>送信に失敗した宛先は配信メール詳細画面から確認できます。"
         end
+=end
 
         format.html {
           redirect_to url_for(
@@ -441,6 +443,7 @@ EOS
         end #transaction
 
         # メール送信はcronのジョブに任せて、ここでは送信しない。
+=begin
         DeliveryMail.send_mails(current_user)
         error_count = DeliveryError.where(:owner_id => @delivery_mail.owner_id, :delivery_mail_id => @delivery_mail.id).size
         if error_count > 0
