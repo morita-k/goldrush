@@ -235,14 +235,17 @@ EOS
       add_targets(params[:delivery_mail_id], params[:bp_pic_ids])
     end
 
+    # メール送信はcronのジョブに任せて、ここでは送信しない。
+=begin
     if delivery_mail.planned_setting_at < Time.now.to_s
       DeliveryMail.send_mails(current_user)
 
       error_count = DeliveryError.where(:owner_id => delivery_mail.owner_id, :delivery_mail_id => delivery_mail.id).size
       if error_count > 0
-        flash.now[:warn] = "送信に失敗した宛先が存在します。<br>送信に失敗した宛先は配信メール詳細画面から確認できます。"
+        flash[:warning] = "送信に失敗した宛先が存在します。<br>送信に失敗した宛先は配信メール詳細画面から確認できます。"
       end
     end
+=end
 
     SystemNotifier.send_info_mail("[GoldRush] 配信メールがセットされました ID:#{delivery_mail.id}", <<EOS).deliver
 
@@ -355,11 +358,11 @@ EOS
           delivery_mail_target.save!
         end #transaction
 
-        # メール送信
+        # メール送信はcronのジョブに任せて、ここでは送信しない。
         DeliveryMail.send_mails(current_user)
         error_count = DeliveryError.where(:owner_id => @delivery_mail.owner_id, :delivery_mail_id => @delivery_mail.id).size
         if error_count > 0
-          flash.now[:warn] = "送信に失敗した宛先が存在します。<br>送信に失敗した宛先は配信メール詳細画面から確認できます。"
+          flash[:warning] = "送信に失敗した宛先が存在します。<br>送信に失敗した宛先は配信メール詳細画面から確認できます。"
         end
 
         format.html {
@@ -437,12 +440,13 @@ EOS
           add_targets(@delivery_mail.id, bp_pic_ids)
         end #transaction
 
-        # メール送信
+        # メール送信はcronのジョブに任せて、ここでは送信しない。
         DeliveryMail.send_mails(current_user)
         error_count = DeliveryError.where(:owner_id => @delivery_mail.owner_id, :delivery_mail_id => @delivery_mail.id).size
         if error_count > 0
-          flash.now[:warn] = "送信に失敗した宛先が存在します。<br>送信に失敗した宛先は配信メール詳細画面から確認できます。"
+          flash[:warning] = "送信に失敗した宛先が存在します。<br>送信に失敗した宛先は配信メール詳細画面から確認できます。"
         end
+=end
 
         format.html {
           redirect_to url_for(
