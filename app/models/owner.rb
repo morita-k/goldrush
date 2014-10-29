@@ -1,13 +1,11 @@
 # -*- encoding: utf-8 -*-
 class Owner < ActiveRecord::Base
   has_many :users
+  validates_presence_of :sender_email
   validates_uniqueness_of :owner_key, :scope => [:deleted, :deleted_at]
   before_save :set_default
 
   def set_default
-    self.init_password_salt ||= 'salt'
-    self.user_max_count = 50 if self.user_max_count.nil? || self.user_max_count == 0
-    self.available_user_count = 50 if self.available_user_count.nil? || self.available_user_count == 0
     self.additional_option ||= ''
   end
 
@@ -30,5 +28,17 @@ class Owner < ActiveRecord::Base
 
   def enable_outflow_mail?
     self.additional_option.present? && self.additional_option.split(',').include?('outflow_mail')
+  end
+
+  def advanced_smtp_mode_on?
+    self.additional_option.present? && self.additional_option.split(',').include?('advanced_smtp_mode')
+  end
+
+  def change_smtp_mode(advanced_smtp_mode)
+    if advanced_smtp_mode.present? && advanced_smtp_mode.to_s == '1'
+      self.additional_option = self.additional_option.split(',').push('advanced_smtp_mode').uniq.join(',')
+    else
+      self.additional_option = self.additional_option.split(',').reject{|o| o == 'advanced_smtp_mode'}.join(',')
+    end
   end
 end

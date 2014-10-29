@@ -103,6 +103,17 @@
           </ul>
         </li>
         <% end %><%# if current_user.enable_daily_report? %>
+        <% if current_user.manager? %>
+        <li class="divider-vertical"></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-home"></i> 組織<b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li><%= link_to 'ユーザー一覧', :controller => '/owner', :action => :list_user %></li>
+            <li><%= link_to 'ユーザー招待', :controller => '/invite', :action => :new %></li>
+            <li><%= link_to '組織設定変更', :controller => '/owner', :action => :edit, :id => current_user.owner.id %></li>
+          </ul>
+        </li>
+        <% end %><%# if current_user.manager? %>
         <% if current_user.super? %>
         <li class="divider-vertical"></li>
         <li class="dropdown">

@@ -91,6 +91,7 @@ GoldRush::Application.routes.draw do
 
   devise_scope :auth do
     get 'auth/edit_smtp_setting' => 'auth/registrations#edit_smtp_setting'
+    get 'auth/show_smtp_setting' => 'auth/registrations#show_smtp_setting'
     put 'auth/update_smtp_setting' => 'auth/registrations#update_smtp_setting'
   end
 

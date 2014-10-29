@@ -1,0 +1,10 @@
+<%= form_tag :action => :update do %>
+<%= hidden_field_tag 'id', params[:id] %>
+<%= accordion_around "組織設定の変更", "" do %>
+  <%= render :partial => 'form' %>
+<% end %>
+<div class="submit_box">
+  <%= submit_tag "変更する", btn_primary %>
+  <%= link_or_back '戻る', root_path %>
+</div>
+<% end %>

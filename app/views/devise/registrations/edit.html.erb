@@ -17,13 +17,6 @@
   <td><%= f.password_field :current_password %></td>
   </tr>
 
-  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-    <tr>
-    <th>Currently waiting confirmation for</th>
-    <td><%= resource.unconfirmed_email %></td>
-    </tr>
-  <% end %>
-
   <tr>
   <th><%= f.label :password, 'パスワード' %></th>
   <td><%= f.password_field :password %> <i>(変更しない場合はブランクにしてください)</i></td>
@@ -35,8 +28,8 @@
   </tr>
 
   <tr>
-  <th><%= label_tag :auth_company_name, '会社名' %></th>
-  <td><%= text_field_tag :auth_company_name, params[:auth_company_name] %></td>
+  <th><%= label_tag :company_name, '会社名' %></th>
+  <td><%= resource.owner.company_name %></td>
   </tr>
 
   <tr>

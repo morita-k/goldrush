@@ -20,7 +20,7 @@ class User < ActiveRecord::Base
   after_save :purge_cache
 
   def formated_mail_from
-    "\"#{nickname}\" <#{email}>"
+    "\"#{mail_from_name}\" <#{mail_from}>"
   end
 
   def purge_cache
@@ -131,12 +131,24 @@ class User < ActiveRecord::Base
     owner.enable_outflow_mail?
   end
 
+  def advanced_smtp_mode_on?
+    owner.advanced_smtp_mode_on?
+  end
+
   def smtp_settings_enable_starttls_auto?
     self.smtp_settings_enable_starttls_auto == 1
   end
 
   def smtp_settings_authenticated?
     self.smtp_settings_authenticated_flg == 1
+  end
+
+  def mail_from
+    advanced_smtp_mode_on? ? owner.sender_email : email
+  end
+
+  def mail_from_name
+    advanced_smtp_mode_on? ? owner.company_name : nickname
   end
 
   def User.pic_select_items(owner_id)

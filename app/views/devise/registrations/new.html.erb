@@ -1,10 +1,22 @@
 <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
+<%= hidden_field_tag 'auth_activation_code', params[:auth_activation_code] %>
 <%= accordion_around "ユーザー登録", "" do %>
 <%= devise_error_messages! %>
 <table class="form_table">
+  <% if params[:auth_activation_code].present? %>
+  <tr>
+  <th><%= label_tag :auth_company_name, '会社名' %></th>
+  <td><%= label_tag :auth_company_name, @invite.owner.company_name %></td>
+  </tr>
+  <% end %>
+
   <tr>
   <th><%= f.label :email, 'Eメール(*)' %></th>
+  <% if params[:auth_activation_code].present? %>
+  <td><%= f.label :email, @invite.email %></td>
+  <% else %>
   <td><%= f.email_field :email, :autofocus => true %></td>
+  <% end %>
   </tr>
 
   <tr>
@@ -22,10 +34,12 @@
   <td><%= f.password_field :password_confirmation %></td>
   </tr>
 
+  <% if params[:auth_activation_code].blank? %>
   <tr>
   <th><%= label_tag :auth_company_name, '会社名' %></th>
   <td><%= text_field_tag :auth_company_name, params[:auth_company_name] %></td>
   </tr>
+  <% end %>
 </table>
 <% end %>
 <div class="submit_box">

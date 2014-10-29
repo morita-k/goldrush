@@ -802,6 +802,21 @@ ActiveRecord::Schema.define(:version => 0) do
 
   add_index "interviews", ["id"], :name => "id", :unique => true
 
+  create_table "invites", :force => true do |t|
+    t.integer  "owner_id",        :limit => 8
+    t.string   "email",                                        :null => false
+    t.string   "activation_code",                              :null => false
+    t.datetime "created_at",                                   :null => false
+    t.datetime "updated_at",                                   :null => false
+    t.integer  "lock_version",    :limit => 8,  :default => 0
+    t.string   "created_user",    :limit => 80
+    t.string   "updated_user",    :limit => 80
+    t.datetime "deleted_at"
+    t.integer  "deleted",                       :default => 0
+  end
+
+  add_index "invites", ["id"], :name => "id", :unique => true
+
   create_table "mail_templates", :force => true do |t|
     t.integer  "owner_id",               :limit => 8
     t.string   "mail_template_category",                              :null => false
@@ -865,25 +880,17 @@ ActiveRecord::Schema.define(:version => 0) do
   add_index "outflow_mails", ["id"], :name => "id", :unique => true
 
   create_table "owners", :force => true do |t|
-    t.integer  "union_user_id",        :limit => 8,                 :null => false
-    t.string   "union_user_login",     :limit => 80,                :null => false
-    t.string   "union_email",          :limit => 60,                :null => false
-    t.string   "init_password",        :limit => 40,                :null => false
-    t.string   "init_password_salt",   :limit => 40,                :null => false
-    t.string   "owner_fullname",       :limit => 80,                :null => false
-    t.string   "owner_shortname",      :limit => 80
-    t.integer  "user_max_count",                     :default => 0
-    t.integer  "available_user_count",               :default => 0
-    t.string   "owner_key",            :limit => 40,                :null => false
+    t.string   "sender_email",                                   :null => false
+    t.string   "owner_key",         :limit => 40,                :null => false
     t.string   "company_name"
     t.string   "additional_option"
-    t.datetime "created_at",                                        :null => false
-    t.datetime "updated_at",                                        :null => false
-    t.integer  "lock_version",         :limit => 8,  :default => 0
-    t.string   "created_user",         :limit => 80
-    t.string   "updated_user",         :limit => 80
+    t.datetime "created_at",                                     :null => false
+    t.datetime "updated_at",                                     :null => false
+    t.integer  "lock_version",      :limit => 8,  :default => 0
+    t.string   "created_user",      :limit => 80
+    t.string   "updated_user",      :limit => 80
     t.datetime "deleted_at"
-    t.integer  "deleted",                            :default => 0
+    t.integer  "deleted",                         :default => 0
   end
 
   add_index "owners", ["id"], :name => "id", :unique => true

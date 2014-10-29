@@ -1,0 +1,45 @@
+<style type="text/css">
+  .show_table #import_mail_forwarding_address {
+    width: 17em;
+  }
+</style>
+<%= accordion_around "メール配信設定#{current_user.advanced_smtp_mode_on? ? '(組織内共通設定: ON)' : ''}", "smtp_setting" do %>
+<table class="show_table">
+  <tr>
+  <th><%= label_tag :smtp_settings_enable_starttls_auto, 'SMTP自動TLS' %></th>
+  <td><%= resource.smtp_settings_enable_starttls_auto == 1 ? 'ON' : 'OFF' %></td>
+  </tr>
+
+  <tr>
+  <th><%= label_tag :smtp_settings_address, 'SMTPサーバーアドレス' %></th>
+  <td><%= resource.smtp_settings_address %></td>
+  </tr>
+
+  <tr>
+  <th><%= label_tag :smtp_settings_port, 'SMTPポート' %></th>
+  <td><%= resource.smtp_settings_port %></td>
+  </tr>
+
+  <tr>
+  <th><%= label_tag :smtp_settings_domain, 'SMTPドメイン' %></th>
+  <td><%= resource.smtp_settings_domain %></td>
+  </tr>
+
+  <tr>
+  <th><%= label_tag :smtp_settings_user_name, 'SMTPユーザー' %></th>
+  <td><%= resource.smtp_settings_user_name %></td>
+  </tr>
+</table>
+<% end %>
+<div class="submit_box">
+  <%= link_or_back "戻る", root_path %>
+</div>
+
+<%= accordion_around "取り込みメール設定", "import_mail_setting" do %>
+<table class="show_table">
+  <tr>
+  <th><%= label_tag :import_mail_forwarding_address, '転送先メールアドレス' %></th>
+  <td><%= text_field_tag :import_mail_forwarding_address, available_import_mail_forwarding_address, :class => "form-control", :readonly => true, :onclick => 'this.select();' %> <i>(メール取り込み機能を使用する場合、こちらのアドレスを使用して下さい)</i></td>
+  </tr>
+</table>
+<% end %>

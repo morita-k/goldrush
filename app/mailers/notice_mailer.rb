@@ -17,7 +17,7 @@ class NoticeMailer < ActionMailer::Base
       destination,
       nil,
       nil,
-      "\"#{mail_sender.nickname}\" <#{mail_sender.email}>",
+      mail_sender.formated_mail_from,
       "#{SysConfig.get_application_name} メール配信テスト",
       "テスト",
       []
@@ -64,14 +64,22 @@ class NoticeMailer < ActionMailer::Base
 
 private
   def NoticeMailer.setup(mail_sender)
-    ActionMailer::Base.smtp_settings = {
-      :enable_starttls_auto => mail_sender.smtp_settings_enable_starttls_auto?,
-      :address => mail_sender.smtp_settings_address,
-      :port => mail_sender.smtp_settings_port,
-      :domain => mail_sender.smtp_settings_domain,
-      :authentication => mail_sender.smtp_settings_authentication,
-      :user_name => mail_sender.smtp_settings_user_name,
-      :password => SmtpPasswordEncryptor.decrypt(mail_sender.smtp_settings_password)
-    }
+    if mail_sender.advanced_smtp_mode_on?
+      ActionMailer::Base.smtp_settings = {
+        :address => 'localhost',
+        :port => 25,
+        :domain => mail_sender.mail_from.split('@')[1]
+      }
+    else
+      ActionMailer::Base.smtp_settings = {
+        :enable_starttls_auto => mail_sender.smtp_settings_enable_starttls_auto?,
+        :address => mail_sender.smtp_settings_address,
+        :port => mail_sender.smtp_settings_port,
+        :domain => mail_sender.smtp_settings_domain,
+        :authentication => mail_sender.smtp_settings_authentication,
+        :user_name => mail_sender.smtp_settings_user_name,
+        :password => SmtpPasswordEncryptor.decrypt(mail_sender.smtp_settings_password)
+      }
+    end
   end
 end

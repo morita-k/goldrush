@@ -145,6 +145,17 @@ module ApplicationHelper
     end
   end
 
+  def _timetoyyyymmddhhmm(time)
+    if time.blank?
+      ""
+    elsif [ActiveSupport::TimeWithZone, Time, Date].include?(time.class)
+      t = time.to_time.getlocal
+      t.strftime("%Y/%m/%d %H:%M")
+    else
+      time
+    end
+  end
+
   def _timetoddmmhhmm(time)
     if time.blank?
       ""

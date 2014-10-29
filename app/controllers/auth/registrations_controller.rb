@@ -3,57 +3,64 @@ class Auth::RegistrationsController < Devise::RegistrationsController
   require 'digest/md5'
   require 'smtp_password_encryptor'
 
+  prepend_before_filter :authenticate_scope!, only: [:edit, :update, :edit_smtp_setting, :update_smtp_setting, :destroy]
+
+  def new
+    if params[:auth_activation_code].present?
+      @invite = Invite.where(:deleted => 0, :activation_code => params[:auth_activation_code]).order(:created_at).first
+      if @invite.blank?
+        flash.now[:err] = "アクティベーションコードに誤りがあります。URLを再確認して下さい。"
+        params.delete(:auth_activation_code)
+      end
+    end
+    super
+  end
+
   def create
     ActiveRecord::Base.transaction do
-      # ユーザー登録
-      super
-
-      if resource.errors.empty?
-        created_user = get_last_created_user
-
-        # オーナー登録
-        owner = new_owner(created_user, params[:auth_company_name])
-        owner.save!
-
-        # ユーザー情報更新
-        created_user.update_attributes!(:owner_id => owner.id, :access_level_type => "owner", :created_user => "initial", :updated_user => "initial")
-
-        # sys_configs, special_words, tags 初期データインポート
-        import_sys_configs_init_data(created_user)
-        import_special_words_init_data(created_user)
-        import_tags_init_data(created_user)
+      if params[:auth_activation_code].present?
+        create_invited_user(params[:auth_activation_code])
+      else
+        super
+        init_user_data(get_last_created_user, params[:auth_company_name]) if resource.errors.empty?
       end
     end
   end
 
   def edit
-    params[:auth_company_name] = current_user.owner.company_name
     super
   end
 
   def update
     ActiveRecord::Base.transaction do
-      # ユーザー更新
       super
-
       if resource.errors.empty?
         resource.update_attributes!(:updated_user => resource.login)
-
-        # (current_user)この時点で更新されないので、手動で更新
         current_user = resource
-
-        # オーナー更新 
-        current_user.owner.update_attributes!(
-          :union_user_login => current_user.login,
-          :union_email => current_user.email,
-          :company_name => params[:auth_company_name],
-          :updated_user => current_user.login
-        )
       end
     end
   end
 
+  def show_smtp_setting
+    build_resource(current_user.attributes)
+    if current_user.advanced_smtp_mode_on?
+      resource.smtp_settings_enable_starttls_auto = 0
+      resource.smtp_settings_address = 'localhost'
+      resource.smtp_settings_port = 25
+      resource.smtp_settings_domain = current_user.owner.sender_email.split('@')[1]
+      resource.smtp_settings_user_name = current_user.owner.company_name
+    else
+      resource.smtp_settings_port ||= 587
+      resource.smtp_settings_domain ||= current_user.email.split('@')[1]
+      resource.smtp_settings_user_name ||= current_user.email.split('@')[0]
+    end
+  end
+
   def edit_smtp_setting
+    if current_user.advanced_smtp_mode_on?
+      redirect_to :controller => '/auth/registrations', :action => :show_smtp_setting and return
+    end
+
     build_resource(current_user.attributes)
     resource.smtp_settings_port ||= 587
     resource.smtp_settings_domain ||= current_user.email.split('@')[1]
@@ -93,23 +100,54 @@ protected
     new_auth_session_path
   end
 
+
   def get_last_created_user
     User.order('id desc').first
   end
 
+  # 招待ユーザー作成
+  def create_invited_user(activation_code)
+    @invite = Invite.where(:deleted => 0, :activation_code => activation_code).order(:created_at).first
+
+    build_resource(sign_up_params.merge(:owner_id => @invite.owner_id, :email => @invite.email, :created_user => "initial", :updated_user => "initial"))
+    resource.skip_confirmation_notification!
+
+    if resource.save
+      # トークン認証 && ログイン
+      redirect_to :controller => '/auth/confirmations', :action => :show, :confirmation_token => resource.confirmation_token
+    else
+      clean_up_passwords resource
+      @validatable = devise_mapping.validatable?
+      @minimum_password_length = resource_class.password_length.min if @validatable
+      respond_with resource
+    end
+  end
+
+  # ユーザー関連データ初期化
+  def init_user_data(user, company_name)
+    # オーナー登録
+    owner = new_owner(user, company_name)
+    owner.save!
+
+    # ユーザー情報更新
+    user.update_attributes!(:owner_id => owner.id, :access_level_type => "owner", :created_user => "initial", :updated_user => "initial")
+
+    # sys_configs, special_words, tags 初期データインポート
+    import_sys_configs_init_data(user)
+    import_special_words_init_data(user)
+    import_tags_init_data(user)
+  end
+
   def new_owner(user, company_name)
     Owner.new({
-      :union_user_id => user.id,
-      :union_user_login => user.login,
-      :union_email => user.email,
-      :init_password => user.encrypted_password,
-      :owner_fullname => user.nickname,
+      :sender_email => user.email,
       :owner_key => Digest::MD5.hexdigest("#{user.id}_#{user.email}").to_s[0..3],
       :company_name => company_name,
       :created_user => user.login,
       :updated_user => user.login
     })
   end
+
 
   def import_init_data(table_name, column, select_column, condition)
     ActiveRecord::Base.connection.execute("insert into #{table_name.to_s} (#{column}) select #{select_column} from #{table_name.to_s} where #{condition};")
@@ -144,6 +182,7 @@ protected
         .gsub(/created_at|updated_at/, "'#{user.created_at}' as \\&")
     import_init_data(:tags, column, select_column, "deleted = 0 and owner_id is null and tag_key = 'import_mails' and starred <> 0")
   end
+
 
   def set_smtp_setting(user, smtp_setting)
     user.smtp_settings_enable_starttls_auto = smtp_setting[:smtp_settings_enable_starttls_auto]

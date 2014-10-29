@@ -24,4 +24,15 @@ class UserController < ApplicationController
       format.js {render :text => ";"}
     end
   end
+
+  def destroy
+    @user = User.find(params[:id], :conditions => {:deleted => 0})
+    @user.deleted = 9
+    @user.deleted_at = Time.now
+    set_user_column @user
+    @user.save!
+
+    flash[:notice] = 'User was successfully deleted.'
+    redirect_to back_to
+  end
 end
