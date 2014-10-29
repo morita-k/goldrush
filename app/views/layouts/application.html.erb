@@ -68,13 +68,9 @@
             <li><%= link_to '取引先', :controller => '/bp_pic' %></li>
             <% if current_user.enable_contract? %>
             <li><%= link_to '契約', :controller => '/contract' %></li>
-            <% end %>
-            <% if current_user.enable_biz_offer? %>
             <li><%= link_to '案件照会', :controller => '/biz_offer' %></li>
-            <% end %>
-            <% if current_user.enable_bp_member? %>
             <li><%= link_to '人材所属', :controller => '/bp_member' %></li>
-            <% end %>
+            <% end %><%# if current_user.enable_contract? %>
             <% if current_user.enable_photo? %>
             <li><%= link_to '名刺取込', :controller => '/photos' %></li>
             <% end %>

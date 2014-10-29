@@ -16,7 +16,7 @@ class Auth::RegistrationsController < Devise::RegistrationsController
         owner.save!
 
         # ユーザー情報更新
-        created_user.update_attributes!(:owner_id => owner.id, :created_user => "initial", :updated_user => "initial")
+        created_user.update_attributes!(:owner_id => owner.id, :access_level_type => "owner", :created_user => "initial", :updated_user => "initial")
 
         # sys_configs, special_words, tags 初期データインポート
         import_sys_configs_init_data(created_user)

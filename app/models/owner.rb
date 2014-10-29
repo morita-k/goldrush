@@ -8,6 +8,7 @@ class Owner < ActiveRecord::Base
     self.init_password_salt ||= 'salt'
     self.user_max_count = 50 if self.user_max_count.nil? || self.user_max_count == 0
     self.available_user_count = 50 if self.available_user_count.nil? || self.available_user_count == 0
+    self.additional_option ||= ''
   end
 
   def enable_photo?
@@ -22,14 +23,7 @@ class Owner < ActiveRecord::Base
     self.additional_option.present? && self.additional_option.split(',').include?('daily_report')
   end
 
-  def enable_bp_member?
-    self.additional_option.present? && self.additional_option.split(',').include?('bp_member')
-  end
-
-  def enable_biz_offer?
-    self.additional_option.present? && self.additional_option.split(',').include?('biz_offer')
-  end
-
+  # "契約","案件照会","人材所属" 3機能を1つとした"contract"なので注意
   def enable_contract?
     self.additional_option.present? && self.additional_option.split(',').include?('contract')
   end

@@ -103,6 +103,14 @@ class User < ActiveRecord::Base
     ["super"].include?(self.access_level_type)
   end
 
+  def manager?
+    ["super", "owner"].include?(self.access_level_type)
+  end
+
+  def owner?
+    ["owner"].include?(self.access_level_type)
+  end
+
   def enable_photo?
     owner.enable_photo?
   end
@@ -113,14 +121,6 @@ class User < ActiveRecord::Base
 
   def enable_daily_report?
     owner.enable_daily_report?
-  end
-
-  def enable_bp_member?
-    owner.enable_bp_member?
-  end
-
-  def enable_biz_offer?
-    owner.enable_biz_offer?
   end
 
   def enable_contract?
