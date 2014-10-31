@@ -12,16 +12,17 @@ class InviteController < ApplicationController
   end
 
   def create
-    if find_login_owner(:users).exists?(:deleted => 0, :email => params[:email])
+    if User.exists?(:deleted => 0, :email => params[:email])
       raise ValidationAbort.new("メールアドレスのユーザーは既に存在します。")
     end
 
     ActiveRecord::Base.transaction do
-      # 既に招待しているメールアドレスの場合、過去のデータを無効にする
-      Invite.delete_old_invitation!(params[:email], current_user.login)
-
       @invite = create_model(:invites, :email => params[:email])
       @invite.activation_code = @invite.calculate_activation_code
+
+      # 招待データがダブる場合、過去のデータを無効にする
+      Invite.delete_old_invitation!(params[:email], @invite.activation_code, current_user.login)
+
       set_user_column @invite
       @invite.save!
 

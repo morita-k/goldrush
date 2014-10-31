@@ -9,9 +9,9 @@ class Invite < ActiveRecord::Base
     return Digest::SHA1.hexdigest("#{owner_id}_#{email}_#{DateTime.now.to_s}")
   end
 
-  def Invite.delete_old_invitation!(email, updated_user)
+  def Invite.delete_old_invitation!(email, activation_code, updated_user)
     deleted_at = Time.now
-    where(:email => email, :deleted => 0).each do |invite|
+    where("deleted = 0 and (email = ? or activation_code = ?)", email, activation_code).each do |invite|
       invite.deleted = 9
       invite.deleted_at = deleted_at
       invite.updated_user = updated_user
