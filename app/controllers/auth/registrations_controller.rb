@@ -3,7 +3,7 @@ class Auth::RegistrationsController < Devise::RegistrationsController
   require 'digest/md5'
   require 'smtp_password_encryptor'
 
-  prepend_before_filter :authenticate_scope!, only: [:edit, :update, :edit_smtp_setting, :update_smtp_setting, :destroy]
+  prepend_before_filter :authenticate_scope!, only: [:edit, :update, :show_smtp_setting, :edit_smtp_setting, :update_smtp_setting, :destroy]
 
   def new
     if params[:auth_activation_code].present?
@@ -140,7 +140,6 @@ protected
 
   def new_owner(user, company_name)
     Owner.new({
-      :sender_email => user.email,
       :owner_key => Digest::MD5.hexdigest("#{user.id}_#{user.email}").to_s[0..3],
       :company_name => company_name,
       :created_user => user.login,

@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 class Owner < ActiveRecord::Base
   has_many :users
-  validates_presence_of :sender_email
+  validates_presence_of :sender_email, :if => :advanced_smtp_mode_on?
   validates_uniqueness_of :owner_key, :scope => [:deleted, :deleted_at]
   before_save :set_default
 

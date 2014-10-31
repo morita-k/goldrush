@@ -14,7 +14,7 @@ class OwnerController < ApplicationController
   def update
     @owner = Owner.find(params[:id], :conditions => {:deleted => 0})
     @owner.attributes = params[:owner]
-    @owner.change_smtp_mode(params[:advanced_smtp_mode])
+    @owner.change_smtp_mode(params[:advanced_smtp_mode]) if current_user.super?
     set_user_column @owner
 
     ActiveRecord::Base.transaction do
