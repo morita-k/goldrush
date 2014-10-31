@@ -111,6 +111,10 @@ class User < ActiveRecord::Base
     ["owner"].include?(self.access_level_type)
   end
 
+  def normal?
+    ["normal"].include?(self.access_level_type)
+  end
+
   def enable_photo?
     owner.enable_photo?
   end

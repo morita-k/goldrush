@@ -25,6 +25,18 @@ class UserController < ApplicationController
     end
   end
 
+  def change_access_level
+    # ここでシステム管理者になることはないので、'super'が来たらスキップ
+    if params[:access_level_type] != 'super'
+      @user = User.find(params[:id], :conditions => {:deleted => 0})
+      @user.access_level_type = params[:access_level_type]
+      set_user_column @user
+      @user.save!
+    end
+    flash[:notice] = 'User access level was successfully updated.'
+    redirect_to back_to
+  end
+
   def destroy
     @user = User.find(params[:id], :conditions => {:deleted => 0})
     @user.deleted = 9
