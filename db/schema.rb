@@ -776,6 +776,7 @@ ActiveRecord::Schema.define(:version => 0) do
   add_index "import_mails", ["mail_from", "received_at"], :name => "idx_import_mails_12"
   add_index "import_mails", ["message_id"], :name => "idx_import_mails_11"
   add_index "import_mails", ["outflow_mail_flg"], :name => "idx_import_mails_25"
+  add_index "import_mails", ["owner_id", "id"], :name => "idx_import_mails_30"
   add_index "import_mails", ["received_at"], :name => "idx_import_mails_24"
   add_index "import_mails", ["starred"], :name => "idx_import_mails_22"
 
@@ -880,7 +881,7 @@ ActiveRecord::Schema.define(:version => 0) do
   add_index "outflow_mails", ["id"], :name => "id", :unique => true
 
   create_table "owners", :force => true do |t|
-    t.string   "sender_email",                                   :null => false
+    t.string   "sender_email"
     t.string   "owner_key",         :limit => 40,                :null => false
     t.string   "company_name"
     t.string   "additional_option"
