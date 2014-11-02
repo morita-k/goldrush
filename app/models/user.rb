@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable, :confirmable
+         :recoverable, :rememberable, :trackable, :confirmable#, :validatable
 
   # Setup accessible (or protected) attributes for your model
 #  attr_accessible :email, :password, :password_confirmation, :remember_me
@@ -78,8 +78,9 @@ class User < ActiveRecord::Base
     self.per_page ||= 50
   end
 
+  # customize devise login condition
   def self.find_for_database_authentication(conditions)
-    self.where(:login => conditions[:email]).first || self.where(:email => conditions[:email]).first
+    self.where(:login => conditions[:email], :deleted => 0).first || self.where(:email => conditions[:email], :deleted => 0).first
   end
 
   include AutoTypeName
@@ -98,6 +99,26 @@ class User < ActiveRecord::Base
   has_many :annual_vacations, :conditions => "annual_vacations.deleted = 0", :order => "year"
   has_many :project_members, :conditions => "project_members.deleted = 0"
   validates_presence_of :nickname
+
+  # customize devise :validatable attribute
+  module Validatable
+    def self.included(base)
+      base.extend ClassMethods
+      base.class_eval do
+        validates_presence_of     :email, if: :email_required?
+        validates_uniqueness_of   :email, allow_blank: true, scope: [:deleted, :deleted_at]
+        validates_format_of       :email, with: email_regexp, allow_blank: true, if: :email_changed?
+        validates_presence_of     :password, if: :password_required?
+        validates_confirmation_of :password, if: :password_required?
+        validates_length_of       :password, within: password_length, allow_blank: true
+      end
+    end
+  protected
+    def password_required?; !persisted? || !password.nil? || !password_confirmation.nil? end
+    def email_required?; true end
+    module ClassMethods; Devise::Models.config(self, :email_regexp, :password_length) end
+  end
+  include Validatable
 
   def super?
     ["super"].include?(self.access_level_type)
