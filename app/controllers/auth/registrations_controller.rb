@@ -1,6 +1,5 @@
 # -*- encoding: utf-8 -*-
 class Auth::RegistrationsController < Devise::RegistrationsController
-  require 'digest/md5'
   require 'smtp_password_encryptor'
 
   prepend_before_filter :authenticate_scope!, only: [:edit, :update, :show_smtp_setting, :edit_smtp_setting, :update_smtp_setting, :destroy]
@@ -140,7 +139,7 @@ protected
 
   def new_owner(user, company_name)
     Owner.new({
-      :owner_key => Digest::MD5.hexdigest("#{user.id}_#{user.email}").to_s[0..3],
+      :owner_key => Owner.calculate_owner_key(user.id, user.email),
       :company_name => company_name,
       :created_user => user.login,
       :updated_user => user.login

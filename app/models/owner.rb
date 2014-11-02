@@ -1,5 +1,7 @@
 # -*- encoding: utf-8 -*-
 class Owner < ActiveRecord::Base
+  require 'digest/md5'
+
   has_many :users
   validates_presence_of :sender_email, :if => :advanced_smtp_mode_on?
   validates_uniqueness_of :owner_key, :scope => [:deleted, :deleted_at]
@@ -40,5 +42,14 @@ class Owner < ActiveRecord::Base
     else
       self.additional_option = self.additional_option.split(',').reject{|o| o == 'advanced_smtp_mode'}.join(',')
     end
+  end
+
+  def Owner.calculate_owner_key(initial_user_id, initial_user_email)
+    owner_key = ''
+    # owner_keyは4桁固定、ダブらないようにする
+    begin
+      owner_key = Digest::MD5.hexdigest("#{initial_user_id}_#{initial_user_email}").to_s[0..3]
+    end while self.where(:deleted => 0, :owner_key => owner_key).any?
+    owner_key
   end
 end

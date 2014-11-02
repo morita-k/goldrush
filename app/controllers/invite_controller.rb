@@ -18,7 +18,7 @@ class InviteController < ApplicationController
 
     ActiveRecord::Base.transaction do
       @invite = create_model(:invites, :email => params[:email])
-      @invite.activation_code = @invite.calculate_activation_code
+      @invite.activation_code = Invite.calculate_activation_code(@invite.owner_id, @invite.email)
 
       # 招待データがダブる場合、過去のデータを無効にする
       Invite.delete_old_invitation!(params[:email], @invite.activation_code, current_user.login)

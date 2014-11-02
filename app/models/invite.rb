@@ -5,8 +5,8 @@ class Invite < ActiveRecord::Base
   belongs_to :owner, :conditions => "owners.deleted = 0"
   validates_presence_of :email, :activation_code
 
-  def calculate_activation_code
-    return Digest::SHA1.hexdigest("#{owner_id}_#{email}_#{DateTime.now.to_s}")
+  def Invite.calculate_activation_code(owner_id, email)
+    Digest::SHA1.hexdigest("#{owner_id}_#{email}_#{DateTime.now.to_s}")
   end
 
   def Invite.delete_old_invitation!(email, activation_code, updated_user)
