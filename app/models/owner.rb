@@ -48,8 +48,8 @@ class Owner < ActiveRecord::Base
     owner_key = ''
     # owner_keyは4桁固定、ダブらないようにする
     begin
-      owner_key = Digest::MD5.hexdigest("#{initial_user_id}_#{initial_user_email}").to_s[0..3]
-    end while self.where(:deleted => 0, :owner_key => owner_key).any?
+      owner_key = Digest::MD5.hexdigest("#{initial_user_id}_#{initial_user_email}_#{DateTime.now.to_s}").to_s[0..3]
+    end while self.where(:deleted => 0, :owner_key => owner_key).exists?
     owner_key
   end
 end
