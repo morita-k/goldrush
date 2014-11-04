@@ -78,7 +78,12 @@ class User < ActiveRecord::Base
     self.per_page ||= 50
   end
 
-  # customize devise login condition
+  # (devise) customize condition for finding user
+  def self.find_first_by_auth_conditions(conditions, opts={})
+    super(conditions, opts.merge(:deleted => 0))
+  end
+
+  # (devise) customize condition for login
   def self.find_for_database_authentication(conditions)
     self.where(:login => conditions[:email], :deleted => 0).first || self.where(:email => conditions[:email], :deleted => 0).first
   end
