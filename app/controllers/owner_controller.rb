@@ -1,10 +1,26 @@
 # -*- encoding: utf-8 -*-
 class OwnerController < ApplicationController
+  def index
+    list
+    render :action => :list
+  end
+
+  def list
+    @owners = Owner.where(deleted: 0).page(params[:page]).per(current_user.per_page)
+  end
+
   def list_user
     @users = find_login_owner(:users).where(deleted: 0).page(params[:page]).per(10)
     @invites = find_login_owner(:invites).where(deleted: 0)
 
     render action: :list_user
+  end
+
+  def change_current_owner
+    @owner = Owner.find(params[:id], :conditions => {:deleted => 0})
+    current_user.update_attributes!(:owner_id => @owner.id)
+    flash[:notice] = 'Owner of current user was successfully changed.'
+    redirect_to back_to
   end
 
   def edit
@@ -24,5 +40,14 @@ class OwnerController < ApplicationController
     end
   rescue ActiveRecord::RecordInvalid
     render :action => :edit
+  end
+
+  def destroy
+    @owner = Owner.find(params[:id], :conditions => {:deleted => 0})
+    ActiveRecord::Base.transaction do
+      Owner.delete_owner(@owner.id, current_user.login)
+    end
+    flash[:notice] = 'Owner was successfully deleted.'
+    redirect_to back_to
   end
 end

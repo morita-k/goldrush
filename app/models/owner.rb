@@ -52,4 +52,16 @@ class Owner < ActiveRecord::Base
     end while self.where(:deleted => 0, :owner_key => owner_key).exists?
     owner_key
   end
+
+  def Owner.delete_owner(id, deleted_user)
+    now = Time.now
+
+    # オーナー配下のユーザー削除
+    User
+        .where(:owner_id => id, :deleted => 0)
+        .update_all(["deleted = 9, deleted_at = :now, updated_user = :deleted_user, lock_version = lock_version + 1, updated_at = :now", {:now => now, :deleted_user => deleted_user}])
+
+    # オーナー削除
+    Owner.find(id).update_attributes!(:deleted => 9, :deleted_at => now, :updated_user => deleted_user)
+  end
 end
