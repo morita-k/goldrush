@@ -2,6 +2,8 @@
 
 
 class TagsController < ApplicationController
+  before_filter :only_super_user
+
   # GET /tags
   # GET /tags.json
   def index

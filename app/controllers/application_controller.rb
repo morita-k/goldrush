@@ -72,6 +72,30 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  # システム管理者フィルターメソッド
+  def only_super_user
+    unless current_user.super?
+      if block_given?
+        yield
+      else
+        redirect_to root_path
+        #render :file => 'public/404.html', :status => :not_found, :layout => false
+      end
+    end
+  end
+
+  # 管理者フィルターメソッド
+  def only_manager
+    unless current_user.manager?
+      if block_given?
+        yield
+      else
+        redirect_to root_path
+        #render :file => 'public/404.html', :status => :not_found, :layout => false
+      end
+    end
+  end
+
   # ----------------------------------------------------------------------------
   # ----------------------------------------------------------------------------
   def rescue_action_locally(exception)

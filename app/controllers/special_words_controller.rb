@@ -1,5 +1,7 @@
 # -*- encoding: utf-8 -*-
 class SpecialWordsController < ApplicationController
+  before_filter :only_super_user
+
   # GET /special_words
   # GET /special_words.json
   def index

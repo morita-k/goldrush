@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
 class DepartmentController < ApplicationController
+  before_filter :only_super_user
 
   def index
     list

@@ -1,5 +1,7 @@
 # -*- encoding: utf-8 -*-
 class UserController < ApplicationController
+  before_filter :only_manager, :only => [:change_access_level, :destroy]
+
   def index
     list
     render :action => 'list'

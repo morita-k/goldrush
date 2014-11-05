@@ -1,5 +1,8 @@
 # -*- encoding: utf-8 -*-
 class OwnerController < ApplicationController
+  before_filter :only_super_user, :only => [:index, :list, :change_current_owner, :destroy]
+  before_filter :only_manager, :only => [:list_user, :edit, :update]
+
   def index
     list
     render :action => :list

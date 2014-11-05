@@ -1,5 +1,7 @@
 # -*- encoding: utf-8 -*-
 class InviteController < ApplicationController
+  before_filter :only_manager
+
   def index
     redirect_to :action => :list
   end

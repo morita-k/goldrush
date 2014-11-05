@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
 class SysConfigController < ApplicationController
+  before_filter :only_super_user
 
   def index
     list
