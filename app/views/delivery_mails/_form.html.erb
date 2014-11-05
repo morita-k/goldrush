@@ -72,11 +72,11 @@
     <td><%= f.text_field :mail_bcc %></td>
   </tr>
   <tr>
-    <th><%= f.label :payment, getLongName('delivery_mails', 'payment') %></th>
+    <th><%= f.label :payment, "解析用#{getLongName('delivery_mails', 'payment')}(送信されません)" %></th>
     <td class="number_text"><%= f.text_field :payment %>万</td>
   </tr>
   <tr>
-    <th><%= f.label :age, getLongName('delivery_mails', 'age') %></th>
+    <th><%= f.label :age, "解析用#{getLongName('delivery_mails', 'age')}(送信されません)" %></th>
     <td class="number_text"><%= f.text_field :age %>歳</td>
   </tr>
   <tr>
