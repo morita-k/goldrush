@@ -109,7 +109,7 @@
           <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-home"></i> 組織<b class="caret"></b></a>
           <ul class="dropdown-menu">
             <% if current_user.super? %>
-            <li><%= link_to 'オーナー一覧', :controller => '/owner' %></li>
+            <li><%= link_to '組織一覧', :controller => '/owner' %></li>
             <% end %>
             <li><%= link_to 'ユーザー一覧', :controller => '/owner', :action => :list_user %></li>
             <li><%= link_to 'ユーザー招待', :controller => '/invite', :action => :new %></li>
