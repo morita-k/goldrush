@@ -142,23 +142,23 @@ class User < ActiveRecord::Base
   end
 
   def enable_photo?
-    owner.enable_photo?
+    super? || owner.enable_photo?
   end
 
   def enable_jiet?
-    owner.enable_jiet?
+    super? || owner.enable_jiet?
   end
 
   def enable_daily_report?
-    owner.enable_daily_report?
+    super? || owner.enable_daily_report?
   end
 
   def enable_contract?
-    owner.enable_contract?
+    super? || owner.enable_contract?
   end
 
   def enable_outflow_mail?
-    owner.enable_outflow_mail?
+    super? || owner.enable_outflow_mail?
   end
 
   def advanced_smtp_mode_on?
