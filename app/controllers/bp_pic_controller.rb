@@ -164,6 +164,7 @@ class BpPicController < ApplicationController
   def create
     ActiveRecord::Base.transaction do
       @bp_pic = BpPic.new(params[:bp_pic])
+      trim_bp_pic_name @bp_pic
       set_user_column @bp_pic
       @bp_pic.save!
 
@@ -195,7 +196,7 @@ class BpPicController < ApplicationController
       @bp_pic = BpPic.find(params[:id], :conditions =>["deleted = 0"])
       old_email1 = @bp_pic.email1
       @bp_pic.attributes = params[:bp_pic]
-      @bp_pic.bp_pic_name = params[:bp_pic][:bp_pic_name].gsub(/　/," ")
+      trim_bp_pic_name @bp_pic
       set_user_column @bp_pic
       @bp_pic.save!
 
@@ -366,14 +367,6 @@ private
     end
   end
 
-  def space_trim(bp_name)
-    trimed_bp_name = ""
-    bp_name_list.each do |bp_name_element|
-      trimed_bp_name << bp_name_element
-    end
-    trimed_bp_name
-  end
-
   def get_current_uniquely_bp_ids
     session[:bp_pic_search] ||= {}
     incl = []
@@ -390,4 +383,9 @@ private
     bp_pics.map(&:business_partner).map(&:id).uniq
   end
 
+  def trim_bp_pic_name(bp_pic)
+    [bp_pic.bp_pic_name, bp_pic.bp_pic_short_name, bp_pic.bp_pic_name_kana].each do |name|
+      name.gsub!('　', ' ')
+    end
+  end
 end

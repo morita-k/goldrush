@@ -19,6 +19,7 @@
     <th><%= getLongName('bp_pics', 'bp_pic_name') %></th>
   </tr>
   <% @delivery_mail.delivery_errors.each do |error| %>
+  <tr>
     <td><%= back_to_link error.bp_pic.business_partner.business_partner_name,
                          :controller => :business_partner,
                          :action => :show,
@@ -29,6 +30,7 @@
                          :action => :show,
                          :id => error.bp_pic_id
     %></td>
+  </tr>
   <% end %>
 </table>
 <% end %>
@@ -87,7 +89,8 @@ $(function() {
   });
   $('#show_all').on('ajax:success', function(data, res, xhr){
       spinner.stop();
-      $('#delivery_mail_target').html(res);
+      $('#delivery_mail_target .target_tr').remove();
+      $('#delivery_mail_target tbody').append(res);
       $('#show_all').hide();
   });
 });

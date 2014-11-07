@@ -23,7 +23,10 @@ $(function(){
     });
   }
 
-  $('.head_row_auto').click(function(){
+  $('.head_row_auto').click(function(e){
+    if ($(e.target).is('a,.glyphicon')) {
+      return true;
+    }
     var import_mail_match_id = $(this).attr("import_mail_match_id");
     var detail =  $("#tr_detail_" + import_mail_match_id);
     if(detail.css("display") == "none") {
@@ -42,7 +45,10 @@ $(function(){
     }
   });
 
-  $('.head_row').click(function(){
+  $('.head_row').click(function(e){
+    if ($(e.target).is('a,.glyphicon')) {
+      return true;
+    }
     var detail = $("#tr_main_detail");
     if(detail.css("display") == "none") {
       detail.css("display", "");

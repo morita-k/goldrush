@@ -96,3 +96,8 @@ div.flag {
 .detail_row {
     background-color: lavender;
 }
+
+.form_table td label {
+  font-size: inherit;
+  margin-right: 5px;
+}

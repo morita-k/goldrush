@@ -33,11 +33,11 @@ class DeliveryMail < ActiveRecord::Base
   def filtered_matches_in
     [] if self.payment.blank? || self.age.blank?
     if self.biz_offer_mail?
-      w = "delivery_mail_matches.deleted = 0 and payment <= ? and age <= ?"
+      w = "delivery_mail_matches.delivery_mail_id = ? and delivery_mail_matches.deleted = 0 and payment <= ? and age <= ?"
     else
-      w = "delivery_mail_matches.deleted = 0 and payment >= ? and age >= ?"
+      w = "delivery_mail_matches.delivery_mail_id = ? and delivery_mail_matches.deleted = 0 and payment >= ? and age >= ?"
     end
-    DeliveryMailMatch.joins(:import_mail).where(w, payment, age)
+    DeliveryMailMatch.joins(:import_mail).where(w, self.id, payment, age)
   end
 
   def filtered_matches
@@ -148,6 +148,8 @@ class DeliveryMail < ActiveRecord::Base
                 :business_partner_name => target.bp_pic.business_partner.business_partner_name }
 
         mail_content = mail.content + <<EOS
+
+
 GR-BIZ-ID:#{mail.id ** 2}-#{target.id ** 2}
 EOS
 

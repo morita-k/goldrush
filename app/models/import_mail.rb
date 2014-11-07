@@ -3,7 +3,6 @@ require 'nkf'
 require 'string_util'
 require 'zen2han'
 class ImportMail < ActiveRecord::Base
-
   belongs_to :business_partner
   belongs_to :bp_pic
   has_many :bp_members
@@ -123,8 +122,8 @@ EOS
   def ImportMail.import_mail_in(m, src, reply_mode=false)
     attachment_flg = 0
     import_mail_id = nil
+    import_mail = ImportMail.new
     ActiveRecord::Base::transaction do
-      import_mail = ImportMail.new
       import_mail.make_import_mail(m)
 
       if import_mail.detect_system_mail
@@ -133,17 +132,21 @@ EOS
       end
 
       # プロセス間で同期をとるために何でもいいから存在するレコードをロック(users#1 => systemユーザー)
-      #User.find(1, :lock => true)
+      User.find(1, :lock => true)
 
-      if ImportMail.where(message_id: import_mail.message_id, deleted: 0).first || ImportMail.where(mail_from: import_mail.mail_from, mail_subject: import_mail.mail_subject,received_at: ((import_mail.received_at - 1.hour) .. import_mail.received_at + 1.hour), deleted: 0).first
+      if ImportMail.where(message_id: import_mail.message_id, deleted: 0).first
         puts "mail duplicated: see system_logs"
-        SystemLog.warn('import mail', 'mail duplicated', import_mail.inspect , 'import mail')
+        SystemLog.warn('import mail', 'mail id duplicated', import_mail.inspect , 'import mail')
         return
       end
 
       # attempt_fileのため(import_mail_idが必要)に一旦登録
       import_mail.matching_way_type = 'other'
+      import_mail.foreign_type = 'unknown'
+      import_mail.sex_type = 'other'
       import_mail.save!
+    end
+    ActiveRecord::Base::transaction do
       import_mail_src = ImportMailSource.new
       import_mail_src.import_mail_id = import_mail.id
       import_mail_src.message_source = src
@@ -207,6 +210,17 @@ EOS
       import_mail.created_user = 'import_mail'
       import_mail.updated_user = 'import_mail'
       import_mail.save!
+
+      # 返信メールじゃなくてタイトルがダブってたら削除
+      if import_mail.delivery_mail_id.blank? &&  ImportMail.where("id != ?", import_mail.id).where(mail_from: import_mail.mail_from, mail_subject: import_mail.mail_subject,received_at: ((import_mail.received_at - 1.hour) .. import_mail.received_at + 1.hour), deleted: 0).first
+        puts "mail duplicated: see system_logs"
+        SystemLog.warn('import mail', 'mail title duplicated', import_mail.inspect , 'import mail')
+        import_mail.deleted = 9
+        import_mail.deleted_at = Time.now
+        import_mail.save!
+        return
+      end
+
       import_mail.analyze!
 
       import_mail_id = import_mail.id
@@ -329,6 +343,14 @@ EOS
     return false
   end
 
+  def detect_interview_count_in(body)
+    pattern = /(面\s*?[談接回会]|打ち?合わ?せ).*?(?<count>\d)[^\n\d]*?回/m
+    if (m = pattern.match(body))
+      return m[:count]
+    end
+    return self.interview_count
+  end
+
   # 人材判定用特別単語でbodyを検索して1件でもhitすれば、人材メールと判断
   def analyze_bp_member_flg(body)
     if biz_offer_mail?
@@ -342,12 +364,72 @@ EOS
     end
   end
 
+  # 案件、人材に応じた国籍の解析を行う
+  def analyze_foreign_type(body)
+    if biz_offer_mail?
+      self.foreign_type = detect_biz_offer_foreign_type(body)
+    elsif bp_member_mail?
+      self.foreign_type = detect_bp_member_foreign_type(body)
+    end
+  end
+
+  def detect_biz_offer_foreign_type(body)
+    case body
+    when /日本人?(のみ|限定)/i, /外\s*?国\s*?[人籍]?(.*?[\s\n]*?)(ng|不可)/i
+      'internal'
+    when /(外\s*?国|国\s*?籍)(.*?[\s\n]*?)(o\.?k\.?|可|大丈夫)/i, /国\s*?籍.*?(不問|問わず|問いません)/
+      'foreign'
+    else
+      # 特定の国籍可チェック
+      foreign_line_pattern = /.+人.*?(o\.?k\.?|[^不]可|大丈夫)/
+      StringUtil.detect_lines(body, foreign_line_pattern) do |line|
+        return 'foreign' if SpecialWord.country_words_foreign.detect{|x| line.include?(x)}
+      end
+
+      'unknown'
+    end
+  end
+
+  def detect_bp_member_foreign_type(body)
+    # 「日本語」のワードが出てきたら、外国籍とみなす
+    return 'foreign' if body =~ /日\s*?本\s*?語/
+
+    # 外国籍チェック
+    foreign_line_pattern = /国\s*?籍|氏\s*?名|名\s*?前|備\s*?考|※|年\s*?齢/
+    StringUtil.detect_lines(body, foreign_line_pattern) do |line|
+      return 'foreign' if SpecialWord.country_words_foreign.detect{|x| line.include?(x)}
+    end
+
+    # 日本国籍チェック
+    internal_line_pattern = /国\s*?籍|氏\s*?名|名\s*?前|年\s*?齢/
+    StringUtil.detect_lines(body, internal_line_pattern) do |line|
+      return 'internal' if line.include?('日本')
+    end
+
+    return 'unknown' 
+  end
+
+  def detect_sex_type_in(body)
+    return 'other' if body =~ /性\s*?別.*不問/
+    StringUtil.detect_lines(body, /性/) do |line|
+      if line !~ /服\s*?装/ and
+          line =~ /[男女]/
+        return convert_to_sex_type($&, line =~ /ng|不可/i)
+      end
+    end
+    return 'other'
+  end
+
   #
   # 以下の項目に関して、メールの解析を行う
   # 年齢解析
   # 単価解析
   # 最寄駅解析
   # タグ解析
+  # 件名解析
+  # プロパーかどうか
+  # 面談回数
+  # 国籍区分
   #
   def analyze(body = Tag.pre_proc_body(pre_body))
     analyze_bp_member_flg(body)
@@ -357,6 +439,9 @@ EOS
     self.tag_text = make_tags(body)
     self.subject_tag_text = make_tags(Tag.pre_proc_body(mail_subject))
     self.proper_flg = detect_proper_in(body) ? 1 : 0
+    self.interview_count = detect_interview_count_in(body) 
+    analyze_foreign_type(body)
+    self.sex_type = detect_sex_type_in(body)
   end
 
   # 解析とともに保存を行う
@@ -561,6 +646,10 @@ EOS
     bp_member_flg == 1
   end
 
+  def interview_count_one?
+    interview_count == 1
+  end
+
 private
   def ImportMail.get_encode_body(mail, body)
     if mail.content_transfer_encoding == 'ISO-2022-JP'
@@ -584,5 +673,16 @@ private
 
   def ext( mail )
     CTYPE_TO_EXT[mail.content_type] || 'txt'
+  end
+
+  def convert_to_sex_type(word, disabled = nil)
+    case word
+    when '男'
+      disabled.nil? ? 'man' : 'woman'
+    when '女'
+      disabled.nil? ? 'woman' : 'man'
+    else
+      'other'
+    end
   end
 end

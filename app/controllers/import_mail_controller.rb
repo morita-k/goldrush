@@ -197,11 +197,14 @@ private
       :tag => params[:tag],
       :starred => params[:starred],
       :outflow_mail_flg => params[:outflow_mail_flg],
+      :interview_count_one => params[:interview_count_one],
       :payment_from => params[:payment_from],
       :payment_to => params[:payment_to],
       :age_from => params[:age_from],
       :age_to => params[:age_to],
       :free_word => params[:free_word],
+      :foreign_type => params[:foreign_type],
+      :sex_type => params[:sex_type],
       :days => params[:days],
       :order_by => params[:order_by],
     }
@@ -248,6 +251,10 @@ private
       sql += " and proper_flg = 1"
     end
 
+    unless cond_param[:interview_count_one].blank?
+      sql += " and interview_count = 1 "
+    end
+
     unless cond_param[:tag].blank?
       last_import_mail = ImportMail.where("received_at > ?", date_before).order("id").first
       pids = make_conditions_for_tag(cond_param[:tag], last_import_mail)
@@ -290,6 +297,21 @@ private
         sql += " and (concat(mail_subject, '-', mail_body) like ?) "
         sql_params << '%' + word + '%'
       end
+    end
+
+    unless cond_param[:foreign_type].blank?
+      if cond_param[:foreign_type] == "internal"
+        sql += " and case "
+        sql += " when biz_offer_flg = 1 then foreign_type = 'internal' "
+        sql += " when bp_member_flg = 1 then foreign_type in ('unknown', 'internal') "
+        sql += " end "
+      elsif cond_param[:foreign_type] == "foreign"
+        sql += " and foreign_type = 'foreign' "
+      end
+    end
+
+    unless cond_param[:sex_type].blank?
+      sql += " and sex_type = '#{cond_param[:sex_type]}' "
     end
 
     orderby = order_conditions(cond_param[:order_by])

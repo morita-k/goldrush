@@ -24,10 +24,7 @@ class DeliveryMailsController < ApplicationController
   # GET /delivery_mails/1.json
   def show
     @delivery_mail = DeliveryMail.find(params[:id]).get_informations
-    @delivery_mail_targets = @delivery_mail.delivery_mail_targets
-    @delivery_mail_targets.sort_by! do |delivery_mail_target|
-      delivery_mail_target.reply_mails.empty? ? 0 : - delivery_mail_target.id
-    end
+    @delivery_mail_targets = @delivery_mail.get_delivery_mail_targets(@target_limit || 20)
 
     @attachment_files = AttachmentFile.get_attachment_files("delivery_mails", @delivery_mail.id)
 
@@ -39,10 +36,7 @@ class DeliveryMailsController < ApplicationController
 
   def show_all
     @delivery_mail = DeliveryMail.find(params[:id]).get_informations
-    @delivery_mail_targets = @delivery_mail.delivery_mail_targets
-    @delivery_mail_targets.sort_by! do |delivery_mail_target|
-      delivery_mail_target.reply_mails.empty? ? 0 : - delivery_mail_target.id
-    end
+    @delivery_mail_targets = @delivery_mail.get_delivery_mail_targets(3000)
     respond_to do |format|
       format.html { render layout: false } # show.html.erb
       format.json { render json: @delivery_mail }
@@ -229,14 +223,17 @@ EOS
       add_targets(params[:delivery_mail_id], params[:bp_pic_ids])
     end
 
+    # メール送信はcronのジョブに任せて、ここでは送信しない。
+=begin
     if delivery_mail.planned_setting_at < Time.now.to_s
       DeliveryMail.send_mails
 
       error_count = DeliveryError.where(:delivery_mail_id => delivery_mail.id).size
       if error_count > 0
-        flash.now[:warn] = "送信に失敗した宛先が存在します。<br>送信に失敗した宛先は配信メール詳細画面から確認できます。"
+        flash[:warning] = "送信に失敗した宛先が存在します。<br>送信に失敗した宛先は配信メール詳細画面から確認できます。"
       end
     end
+=end
 
     SystemNotifier.send_info_mail("[GoldRush] 配信メールがセットされました ID:#{delivery_mail.id}", <<EOS).deliver
 
@@ -347,12 +344,14 @@ EOS
           delivery_mail_target.save!
         end #transaction
 
-        # メール送信
+        # メール送信はcronのジョブに任せて、ここでは送信しない。
+=begin
         DeliveryMail.send_mails
         error_count = DeliveryError.where(:delivery_mail_id => @delivery_mail.id).size
         if error_count > 0
-          flash.now[:warn] = "送信に失敗した宛先が存在します。<br>送信に失敗した宛先は配信メール詳細画面から確認できます。"
+          flash[:warning] = "送信に失敗した宛先が存在します。<br>送信に失敗した宛先は配信メール詳細画面から確認できます。"
         end
+=end
 
         format.html {
           redirect_to url_for(
@@ -406,7 +405,8 @@ EOS
     @bp_pics = BpPic.find(bp_pic_ids)
     @delivery_mail = DeliveryMail.new(params[:delivery_mail])
     @delivery_mail.delivery_mail_type = "instant"
-    @delivery_mail.setup_planned_setting_at(@bp_pics[0].sales_pic.zone_now)
+    @delivery_mail.setup_planned_setting_at(
+        (@bp_pics[0].sales_pic.blank? ? current_user : @bp_pics[0].sales_pic).zone_now)
     @delivery_mail.mail_status_type = 'unsend'
     set_user_column @delivery_mail
     respond_to do |format|
@@ -428,12 +428,14 @@ EOS
           add_targets(@delivery_mail.id, bp_pic_ids)
         end #transaction
 
-        # メール送信
+        # メール送信はcronのジョブに任せて、ここでは送信しない。
+=begin
         DeliveryMail.send_mails
         error_count = DeliveryError.where(:delivery_mail_id => @delivery_mail.id).size
         if error_count > 0
-          flash.now[:warn] = "送信に失敗した宛先が存在します。<br>送信に失敗した宛先は配信メール詳細画面から確認できます。"
+          flash[:warning] = "送信に失敗した宛先が存在します。<br>送信に失敗した宛先は配信メール詳細画面から確認できます。"
         end
+=end
 
         format.html {
           redirect_to url_for(
