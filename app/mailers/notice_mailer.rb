@@ -39,7 +39,7 @@ class NoticeMailer < ActionMailer::Base
   end
 
   def create_mail(domain, destination, cc, bcc, from, subject, body, attachment_files, in_reply_to=nil)
-    headers['Message-ID'] = "#{SecureRandom.uuid}@#{domain}"
+    headers['Message-ID'] = "<#{SecureRandom.uuid}@#{domain}>"
     headers["In-Reply-To"] = in_reply_to if in_reply_to
 
     # Return-path の設定
