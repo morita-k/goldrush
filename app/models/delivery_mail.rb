@@ -202,7 +202,7 @@ EOS
   # Private Mailer
   class MyMailer < ActionMailer::Base
     def send_del_mail(destination, cc, bcc, from, subject, body, attachment_files, in_reply_to=nil)
-      headers['Message-ID'] = "#{SecureRandom.uuid}@#{ActionMailer::Base.smtp_settings[:domain]}"
+      headers['Message-ID'] = "<#{SecureRandom.uuid}@#{ActionMailer::Base.smtp_settings[:domain]}>"
       headers["In-Rply-To"] = in_reply_to if in_reply_to
 
       # Return-path の設定
