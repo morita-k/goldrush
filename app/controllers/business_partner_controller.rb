@@ -200,6 +200,10 @@ class BusinessPartnerController < ApplicationController
     end
   end
 
+  def download_template_csv
+    send_data BusinessPartner.create_template_csv, :filename => "bptemplate_#{Time.now.strftime("%Y%m%d_%H%M%S")}.csv", :type => "text/csv"
+  end
+
   def download_csv
     send_data BusinessPartner.export_to_csv(current_user.owner_id), :filename => "bpexport_#{Time.now.strftime("%Y%m%d_%H%M%S")}.csv", :type => "text/csv"
   end
@@ -213,7 +217,7 @@ class BusinessPartnerController < ApplicationController
     ext = File.extname(file.original_filename.to_s).downcase
     raise ValidationAbort.new("インポートするファイルは、拡張子がcsvのファイルでなければなりません") if ext != '.csv'
     BusinessPartner.import_from_csv_data(file.read, current_user.owner_id, SysConfig.email_prodmode?)
-    flash[:notice] = 'インポートが完了しました'
+    flash[:notice] = 'インポートが完了しました。'
     redirect_to(back_to || {:action => :list})
   end
 

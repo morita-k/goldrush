@@ -164,22 +164,41 @@
 
 
 <% unless popup? %>
-  <table class="table2">
+<%= form_tag ({:controller => :business_partner, :action => 'download_template_csv'}) do %>
+<%= hidden_field_tag 'back_to', request_url %>
+<table class="table2">
   <tr>
-    <td>
-      <%= form_tag ({:controller => :business_partner, :action => 'download_csv'}) do %>
-        <%= hidden_field_tag 'back_to', request_url %>
-      <i class="fa fa-angle-double-right "></i> 担当者のリストをエクスポート<br> <%= submit_tag 'エクスポート', :confirm => "すべての担当者のリストをエクスポートします。よろしいですか？", :class => "btn btn-info btn-midium" %>
-  <% end %>
-      <%= form_tag({:controller => :business_partner, :action => 'upload_csv'} , {:multipart => true}) do %>
-        <%= hidden_field_tag 'back_to', request_url %>
-      <i class="fa fa-angle-double-right "></i> 担当者のリストをインポート<br>
-      <%= file_field_tag 'csv_upload_file' %>
-      <%= submit_tag 'インポート', :class => "btn btn-info btn-midium", :onclick => "if($('#csv_upload_file').val()==''){alert('ファイルを選択してください');return false;}else{if(!confirm('リストをインポートします。よろしいですか？')){return false;}}" %>
-    <% end %>
-    </td>
+    <td><i class="fa fa-angle-double-right "></i> 担当者リストの雛形CSVをダウンロード</td>
+  </tr>
+  <tr>
+    <td><%= submit_tag '雛形ダウンロード', :confirm => "雛形CSVをダウンロードします。よろしいですか？", :class => "btn btn-info btn-midium" %></td>
   </tr>
 </table>
+<% end %>
+
+<%= form_tag ({:controller => :business_partner, :action => 'download_csv'}) do %>
+<%= hidden_field_tag 'back_to', request_url %>
+<table class="table2">
+  <tr>
+    <td><i class="fa fa-angle-double-right "></i> 担当者のリストをエクスポート</td>
+  </tr>
+  <tr>
+    <td><%= submit_tag 'エクスポート', :confirm => "すべての担当者のリストをエクスポートします。よろしいですか？", :class => "btn btn-info btn-midium" %></td>
+  </tr>
+</table>
+<% end %>
+
+<%= form_tag({:controller => :business_partner, :action => 'upload_csv'} , {:multipart => true}) do %>
+<%= hidden_field_tag 'back_to', request_url %>
+<table class="table2">
+  <tr>
+    <td><i class="fa fa-angle-double-right "></i> 担当者のリストをインポート</td>
+  </tr>
+  <tr>
+    <td><%= file_field_tag 'csv_upload_file' %> <%= submit_tag 'インポート', :class => "btn btn-info btn-midium", :onclick => "if($('#csv_upload_file').val()==''){alert('ファイルを選択してください');return false;}else{if(!confirm('リストをインポートします。よろしいですか？')){return false;}}" %></td>
+  </tr>
+</table>
+<% end %>
 <% end %><%# unless popup? %>
 
 <% if popup? %>
