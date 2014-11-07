@@ -164,7 +164,7 @@ class BusinessPartner < ActiveRecord::Base
               bp_pic_group_detail = BpPicGroupDetail.new
               bp_pic_group_detail.owner_id = owner_id
               bp_pic_group_detail.bp_pic_group_id = bp_pic_group.id
-              bp_pic_group_detail.bp_pic_id = bp_pic_id
+              bp_pic_group_detail.bp_pic_id = pic.id
               bp_pic_group_detail.created_user = 'import'
               bp_pic_group_detail.updated_user = 'import'
               bp_pic_group_detail.save!
