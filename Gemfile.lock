@@ -244,7 +244,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  better_errors
+  better_errors (~> 1.1.0)
   binding_of_caller
   coffee-rails (~> 3.2.1)
   database_cleaner
@@ -270,7 +270,7 @@ DEPENDENCIES
   rb-fsevent
   rb-readline
   rmagick
-  rspec
+  rspec (= 2.14.1)
   rspec-rails
   ruby_parser
   simplecov
