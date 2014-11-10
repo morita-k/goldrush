@@ -38,6 +38,12 @@ class BusinessPartner < ActiveRecord::Base
     basic_contract_concluded.blank? ? "" : "[#{basic_contract_concluded}]"
   end
 
+  def BusinessPartner.create_template_csv
+    csv_data = [CSV_HEADER]
+    csv_data << ["sample01@example.com", "テスト 太郎", "株式会社テスト", "999-1234", "東京都サンプル区テスト町99-9-99", "03-9999-9999", "1990/1/1", "代表取締役", 1, 1, "テストグループ"].join(',')
+    csv_data << ["sample02@example.com", "テスト 次郎", "サンプル株式会社", "", "", "", "", "", "", "", ""].join(',')
+    NKF.nkf("-s", csv_data.join("\n"))
+  end
   def BusinessPartner.export_to_csv
     csv_data = "#{CSV_HEADER}\n"
     BpPic.where(:deleted => 0).each do |x|

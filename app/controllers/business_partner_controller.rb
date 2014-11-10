@@ -195,6 +195,11 @@ class BusinessPartnerController < ApplicationController
     end
   end
 
+
+  def download_template_csv
+    send_data BusinessPartner.create_template_csv, :filename => "bptemplate_#{Time.now.strftime("%Y%m%d_%H%M%S")}.csv", :type => "text/csv"
+  end
+
   def download_csv
     send_data BusinessPartner.export_to_csv, :filename => "bpexport_#{Time.now.strftime("%Y%m%d_%H%M%S")}.csv", :type => "text/csv"
   end
