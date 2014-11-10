@@ -31,8 +31,7 @@ class BusinessPartner < ActiveRecord::Base
     resultConclude = ""
     resultConclude += "甲" if basic_contract_first_party_status_type == 'concluded'
     resultConclude += "乙" if basic_contract_second_party_status_type == 'concluded'
-
-    return resultConclude
+    resultConclude
   end
 
   def basic_contract_concluded_format
@@ -44,7 +43,7 @@ class BusinessPartner < ActiveRecord::Base
     BpPic.where(:deleted => 0).each do |x|
       csv_data << CSV.generate(:col_sep => ',', :quote_char => '"') {|row| row << [x.email1, x.bp_pic_name,x.business_partner.business_partner_name, "", "", "", "", "", x.business_partner.id, x.id, ""]}
     end
-    return NKF.nkf("-s", csv_data)
+    NKF.nkf("-s", csv_data)
   end
   def BusinessPartner.import_from_csv(filename, prodmode=false)
     File.open(filename, "r"){|file| import_from_csv_data(file, prodmode)}
@@ -60,16 +59,14 @@ class BusinessPartner < ActiveRecord::Base
         bp.sales_status_type = 'listup'
         bp.basic_contract_first_party_status_type ||= 'none'
         bp.basic_contract_second_party_status_type ||= 'none'
-        if pic_name.include?('担当者')
-          bp.email = email
-        end
+        bp.email = email if pic_name.include?('担当者')
         bp.created_user = 'import'
         bp.updated_user = 'import'
         bp.save!
       end
       companies[company_name.upcase] = [bp, {}]
     end
-    return companies[company_name.upcase]
+    companies[company_name.upcase]
   end
 
   def BusinessPartner.create_bp_pic(companies, email, pic_name, company_name, memo = nil)
@@ -88,8 +85,9 @@ class BusinessPartner < ActiveRecord::Base
       pic.save!
     rescue ActiveRecord::RecordInvalid => e
       Rails.logger.error e.message + e.backtrace.join("\n") + pic.inspect
+      pic = nil
     end
-    return pic
+    pic
   end
 
   def BusinessPartner.import_from_csv_data(readable_data, prodmode=false)
@@ -131,8 +129,10 @@ class BusinessPartner < ActiveRecord::Base
         if bp_pic_id.blank?
           # bp_pic新規登録
           pic = create_bp_pic(companies, email, pic_name, company_name, row[3..7].reject{|x| x.blank?}.join("\n"))
-          bp_pic_id = pic.id
-          bp_pic_id_cache << pic.id unless bp_pic_id_cache.include? pic.id
+          if pic.present?
+            bp_pic_id = pic.id
+            bp_pic_id_cache << pic.id unless bp_pic_id_cache.include? pic.id
+          end
         else
           if bp_pic_id_cache.include? bp_pic_id.to_i
             bp_pic_id = bp_pic_id.to_i
