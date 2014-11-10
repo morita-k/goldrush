@@ -13,7 +13,7 @@ class BusinessPartner < ActiveRecord::Base
   validates_uniqueness_of :business_partner_code, :case_sensitive => false, :allow_blank => true, :scope => [:owner_id, :deleted, :deleted_at]
   validates_uniqueness_of :business_partner_name, :case_sensitive => false, :scope => [:owner_id, :deleted, :deleted_at]
 
-  CSV_HEADER="e-mail(*),Name(*),CompanyName(*),メモ1,メモ2,メモ3,メモ4,メモ5,取引先Id,担当者Id,グループ"
+  CSV_HEADER = "e-mail(*),Name(*),CompanyName(*),メモ1,メモ2,メモ3,メモ4,メモ5,取引先Id,担当者Id,グループ"
 
   def set_default
     self.sales_code = "S" + SysConfig.get_seq_0('sales_code', self.owner_id, 7)
@@ -31,8 +31,7 @@ class BusinessPartner < ActiveRecord::Base
     resultConclude = ""
     resultConclude += "甲" if basic_contract_first_party_status_type == 'concluded'
     resultConclude += "乙" if basic_contract_second_party_status_type == 'concluded'
-
-    return resultConclude
+    resultConclude
   end
 
   def basic_contract_concluded_format
@@ -74,7 +73,7 @@ class BusinessPartner < ActiveRecord::Base
       end
       companies[company_name.upcase] = [bp, {}]
     end
-    return companies[company_name.upcase]
+    companies[company_name.upcase]
   end
 
   def BusinessPartner.create_bp_pic(companies, email, pic_name, company_name, memo = nil)
@@ -96,7 +95,7 @@ class BusinessPartner < ActiveRecord::Base
       Rails.logger.error e.message + e.backtrace.join("\n") + pic.inspect
       pic = nil
     end
-    return pic
+    pic
   end
 
   def BusinessPartner.import_from_csv_data(readable_data, owner_id, prodmode=false)
@@ -104,7 +103,7 @@ class BusinessPartner < ActiveRecord::Base
       companies = {}
       bp_id_cache = []
       bp_pic_id_cache = []
-      CSV.parse(NKF.nkf("-w", readable_data)).each do |row|
+      CSV.parse(NKF.nkf("-w", readable_data).gsub(/\r\n/, "\n").gsub(/\r/, "\n"), :row_sep => "\n").each do |row|
         # Read email
         email,pic_name,com,memo1,memo2,memo3,memo4,memo5,bp_id,bp_pic_id,group_name = row.map{|c| (c || '').gsub(/[\r\n]/, '')}
         next if email.to_s.strip.blank?
@@ -121,11 +120,15 @@ class BusinessPartner < ActiveRecord::Base
         if bp_id.blank?
           # bp新規登録
           bp, names = create_business_partner(companies, owner_id, email, pic_name, company_name)
-          bp_id_cache << bp.id
+          bp_id = bp.id
+          bp_id_cache << bp.id unless bp_id_cache.include? bp.id
         else
-          unless bp_id_cache.include? bp_id.to_i
+          if bp_id_cache.include? bp_id.to_i
+            bp_id = bp_id.to_i
+          else
             bp = self.where(id: bp_id.to_i, deleted: 0).first
             if bp.present?
+              bp_id = bp.id
               bp_id_cache << bp.id
               companies[company_name.upcase] = [bp, {}] unless companies[company_name.upcase]
             end
@@ -134,11 +137,19 @@ class BusinessPartner < ActiveRecord::Base
         if bp_pic_id.blank?
           # bp_pic新規登録
           pic = create_bp_pic(companies, email, pic_name, company_name, row[3..7].reject{|x| x.blank?}.join("\n"))
-          bp_pic_id_cache << pic.id if pic.present? && bp_pic_id_cache.include?(pic.id)
+          if pic.present?
+            bp_pic_id = pic.id
+            bp_pic_id_cache << pic.id unless bp_pic_id_cache.include? pic.id
+          end
         else
-          unless bp_pic_id_cache.include? bp_pic_id.to_i
+          if bp_pic_id_cache.include? bp_pic_id.to_i
+            bp_pic_id = bp_pic_id.to_i
+          else
             pic = BpPic.where(id: bp_pic_id.to_i, deleted: 0).first
-            bp_pic_id_cache << pic.id if pic.present?
+            if pic.present?
+              bp_pic_id = pic.id
+              bp_pic_id_cache << pic.id
+            end
           end
 =begin
         unless bp_pic_id_cache.include? bp_pic_id.to_i
@@ -149,6 +160,7 @@ class BusinessPartner < ActiveRecord::Base
         end
 =end
         end
+
         # グループ登録
         unless group_name.blank?
           unless bp_pic_group = BpPicGroup.where(:owner_id => owner_id, :deleted => 0, :bp_pic_group_name => group_name).first
@@ -159,12 +171,12 @@ class BusinessPartner < ActiveRecord::Base
             bp_pic_group.updated_user = 'import'
             bp_pic_group.save!
           end
-          unless pic.blank?  # 担当者が存在しない場合、グループへ追加しない
-            unless bp_pic_group_detail = BpPicGroupDetail.where(:owner_id => owner_id, :bp_pic_group_id => bp_pic_group.id, :bp_pic_id => pic.id).first
+          unless bp_pic_id.blank?
+            unless bp_pic_group_detail = BpPicGroupDetail.where(:owner_id => owner_id, :bp_pic_group_id => bp_pic_group.id, :bp_pic_id => bp_pic_id).first
               bp_pic_group_detail = BpPicGroupDetail.new
               bp_pic_group_detail.owner_id = owner_id
               bp_pic_group_detail.bp_pic_group_id = bp_pic_group.id
-              bp_pic_group_detail.bp_pic_id = pic.id
+              bp_pic_group_detail.bp_pic_id = bp_pic_id
               bp_pic_group_detail.created_user = 'import'
               bp_pic_group_detail.updated_user = 'import'
               bp_pic_group_detail.save!
