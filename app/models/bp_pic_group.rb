@@ -7,6 +7,11 @@ class BpPicGroup < ActiveRecord::Base
 
   validates_presence_of :bp_pic_group_name
   validates_uniqueness_of :bp_pic_group_name, :case_sensitive => false, :scope => [:deleted, :deleted_at]
+  before_save :set_default
+
+  def set_default
+    self.matching_way_type ||= 'other'
+  end
 
   def detail_count
     BpPicGroupDetail.where(:bp_pic_group_id => id, :deleted => 0).count
