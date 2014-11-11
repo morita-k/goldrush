@@ -5,7 +5,7 @@ class Auth::RegistrationsController < Devise::RegistrationsController
   prepend_before_filter :authenticate_scope!, only: [:edit, :update, :show_smtp_setting, :edit_smtp_setting, :update_smtp_setting, :destroy]
 
   def new
-    if params[:auth_activation_code].present?
+    if invite_action?
       @invite = Invite.where(:deleted => 0, :activation_code => params[:auth_activation_code]).order(:created_at).first
       if @invite.blank?
         flash.now[:err] = "アクティベーションコードに誤りがあります。URLを再確認して下さい。"
@@ -16,11 +16,22 @@ class Auth::RegistrationsController < Devise::RegistrationsController
   end
 
   def create
+    build_resource(sign_up_params)
     ActiveRecord::Base.transaction do
-      if params[:auth_activation_code].present?
-        create_invited_user(params[:auth_activation_code])
+      if invite_action?
+        create_invited_user(resource, params[:auth_activation_code])
       else
+        # 同一組織 存在チェック(※最初1回だけ警告表示)
+        if resource.valid? && owner_already_exists?
+          flash.now[:warning] = "同名の会社が既に存在します。登録を続けたい場合は、お手数ですがもう一度パスワードを入力して登録して下さい。"
+          params[:skip_owner_check] = 1
+          render :action => :new and return
+        end
+
+        # ユーザー登録
         super
+
+        # ユーザー関連初期データ登録
         init_user_data(get_last_created_user, params[:auth_company_name]) if resource.errors.empty?
       end
     end
@@ -100,15 +111,23 @@ protected
   end
 
 
+  def invite_action?
+    params[:auth_activation_code].present?
+  end
+
+  def owner_already_exists?
+    params[:skip_owner_check].blank? && params[:auth_company_name].present? && Owner.exists?(:deleted => 0, :company_name => params[:auth_company_name])
+  end
+
   def get_last_created_user
     User.order('id desc').first
   end
 
   # 招待ユーザー作成
-  def create_invited_user(activation_code)
+  def create_invited_user(resource, activation_code)
     @invite = Invite.where(:deleted => 0, :activation_code => activation_code).order(:created_at).first
 
-    build_resource(sign_up_params.merge(:owner_id => @invite.owner_id, :email => @invite.email, :created_user => "initial", :updated_user => "initial"))
+    resource.assign_attributes(:owner_id => @invite.owner_id, :email => @invite.email, :created_user => "initial", :updated_user => "initial")
     resource.skip_confirmation_notification!
 
     if resource.save
