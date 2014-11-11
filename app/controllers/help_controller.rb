@@ -5,6 +5,8 @@ class HelpController < ApplicationController
 
   def index
     @first_confirmation = flash[:first_confirmation].present?
+    @application_name = SysConfig.get_application_name
+    @contact_address = SysConfig.get_contact_address
   end
 
   def terms

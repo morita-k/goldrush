@@ -87,6 +87,21 @@
   width: 100%;
 }
 
+.explanation {
+  margin: 10px 15px;
+}
+.explanation .section {
+  margin-bottom: 30px;
+}
+.explanation .image-line {
+  margin: 5px 15px 15px 15px;
+  max-width: 600px;
+}
+.explanation .icon-next-step {
+  text-align: center;
+  max-width: 600px;
+}
+
 /*
  * contents
  */
