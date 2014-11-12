@@ -23,7 +23,7 @@ class Auth::RegistrationsController < Devise::RegistrationsController
       else
         # 同一組織 存在チェック(※最初1回だけ警告表示)
         if resource.valid? && owner_already_exists?
-          flash.now[:warning] = "同名の会社が既に存在します。登録を続けたい場合は、お手数ですがもう一度パスワードを入力して登録して下さい。"
+          flash.now[:warning] = "同名の会社が既に存在します。会社の管理者からの招待を受けるようにして下さい。"
           params[:skip_owner_check] = 1
           render :action => :new and return
         end
