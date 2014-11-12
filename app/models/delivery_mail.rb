@@ -184,11 +184,12 @@ EOS
 
   # Broadcast Mails
   def DeliveryMail.send_mails(mail_sender)
-    fetch_key = Time.now.to_s + " " + rand().to_s
+    now = Time.now
+    fetch_key = now.to_s + " " + rand().to_s
 
     DeliveryMail
-      .where("owner_id=? and mail_status_type=? and mail_send_status_type=? and planned_setting_at<=?", mail_sender.owner_id, 'unsend', 'ready', Time.now)
-      .update_all(:mail_send_status_type => 'running', :created_user => fetch_key)
+      .where("owner_id=? and mail_status_type=? and mail_send_status_type=? and planned_setting_at<=?", mail_sender.owner_id, 'unsend', 'ready', now)
+      .update_all(["mail_send_status_type='running', created_user=?, lock_version=lock_version+1, updated_at=?", fetch_key, now])
 
     DeliveryMail.where(:owner_id => mail_sender.owner_id, :created_user => fetch_key).each do |mail|
       self.send_mail_to_each_targets(mail_sender, mail)
@@ -196,7 +197,7 @@ EOS
 
     DeliveryMail
       .where(:owner_id => mail_sender.owner_id, :created_user => fetch_key)
-      .update_all(:mail_status_type => 'send',:mail_send_status_type => 'finished',:send_end_at => Time.now)
+      .update_all(["mail_status_type='send', mail_send_status_type='finished', send_end_at=?, lock_version=lock_version+1, updated_at=?", now, now])
   end
 
   # === Private ===

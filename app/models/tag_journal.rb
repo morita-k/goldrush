@@ -14,9 +14,10 @@ class TagJournal < ActiveRecord::Base
   end
 
   def TagJournal.summry_tags!(owner_id)
-    fetch_key = "summry_tags " + Time.now.to_s + " " + rand().to_s
+    now = Time.now
+    fetch_key = "summry_tags " + now.to_s + " " + rand().to_s
     # 他のプロセスと更新がかぶらないようにする
-    TagJournal.where(:owner_id => owner_id).update_all(:summary_status_type => 'fetched', :updated_user => fetch_key, :summary_status_type => 'new')
+    TagJournal.where(:owner_id => owner_id).update_all(["summary_status_type = 'fetched', summary_status_type = 'new', updated_user = ?, lock_version = lock_version + 1, updated_at = ?", fetch_key, now])
     
     ActiveRecord::Base.transaction do
       proc_count = 0
@@ -38,7 +39,7 @@ class TagJournal < ActiveRecord::Base
       logger.info "SUMMARY Proc #{proc_count} records."
 
       # ジャーナルを処理済みにする
-      TagJournal.where(:owner_id => owner_id).update_all(:summary_status_type => 'closed', :updated_user => fetch_key, :summary_status_type => 'fetched')
+      TagJournal.where(:owner_id => owner_id).update_all(["summary_status_type = 'closed', summary_status_type = 'fetched', updated_user = ?, lock_version = lock_version + 1, updated_at = ?", fetch_key, now])
     end # commit transaction
   end
 end
