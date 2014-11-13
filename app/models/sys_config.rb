@@ -30,7 +30,7 @@ class SysConfig < ActiveRecord::Base
   end
 
   def SysConfig.get_value(section, key, owner_id = 0)
-    config = SysConfig.get_config(section, key, owner_id)
+    config = SysConfig.get_configuration(section, key, owner_id)
     if config
       return config.value1
     else
