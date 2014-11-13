@@ -216,6 +216,6 @@ class ApplicationController < ActionController::Base
     else
       @target_user = current_user
     end
-    @target_employee = @target_user.employee
+    #@target_employee = @target_user.employee
   end
 end
