@@ -14,6 +14,7 @@ class DeliveryMail < ActiveRecord::Base
   has_many :delivery_mail_targets, :conditions => "delivery_mail_targets.deleted = 0"
 
   belongs_to :bp_pic_group
+  belongs_to :delivery_user, :class_name => "User", :foreign_key => :delivery_user_id, :conditions => "users.deleted = 0"
   attr_accessible :bp_pic_group_id, :content, :id, :mail_bcc, :mail_cc, :mail_from, :mail_from_name, :mail_send_status_type, :mail_status_type, :owner_id, :planned_setting_at, :send_end_at, :subject, :lock_version, :planned_setting_at_hour, :planned_setting_at_minute, :planned_setting_at_date, :delivery_mail_type, :biz_offer_id, :bp_member_id, :formated_mail_from, :age, :payment, :import_mail_match_id, :matching_way_type, :tag_text, :auto_matching_last_id
 
   validates_presence_of :subject, :content, :mail_from_name, :mail_from, :planned_setting_at
@@ -183,20 +184,20 @@ EOS
   end
 
   # Broadcast Mails
-  def DeliveryMail.send_mails(mail_sender)
+  def DeliveryMail.send_mails
     now = Time.now
     fetch_key = now.to_s + " " + rand().to_s
 
     DeliveryMail
-      .where("owner_id=? and mail_status_type=? and mail_send_status_type=? and planned_setting_at<=?", mail_sender.owner_id, 'unsend', 'ready', now)
+      .where("mail_status_type=? and mail_send_status_type=? and planned_setting_at<=?", 'unsend', 'ready', now)
       .update_all(["mail_send_status_type='running', created_user=?, lock_version=lock_version+1, updated_at=?", fetch_key, now])
 
-    DeliveryMail.where(:owner_id => mail_sender.owner_id, :created_user => fetch_key).each do |mail|
-      self.send_mail_to_each_targets(mail_sender, mail)
+    DeliveryMail.where(:created_user => fetch_key).each do |mail|
+      self.send_mail_to_each_targets(mail.delivery_user, mail)
     end
 
     DeliveryMail
-      .where(:owner_id => mail_sender.owner_id, :created_user => fetch_key)
+      .where(:created_user => fetch_key)
       .update_all(["mail_status_type='send', mail_send_status_type='finished', send_end_at=?, lock_version=lock_version+1, updated_at=?", now, now])
   end
 

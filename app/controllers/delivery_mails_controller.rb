@@ -115,6 +115,7 @@ EOS
     end
 
     @delivery_mail = create_model(:delivery_mails, params[:delivery_mail])
+    @delivery_mail.delivery_user = current_user
     @delivery_mail.mail_from = current_user.mail_from
     @delivery_mail.mail_from_name = current_user.mail_from_name
     @delivery_mail.matching_way_type = @delivery_mail.bp_pic_group.matching_way_type
@@ -173,6 +174,7 @@ EOS
     set_src_mail_attachment_files(params[:id])
 
     @delivery_mail = DeliveryMail.find(params[:id])
+    @delivery_mail.delivery_user = current_user
     @delivery_mail.mail_status_type = 'editing'
 
     respond_to do |format|
@@ -238,9 +240,9 @@ EOS
     # メール送信はcronのジョブに任せて、ここでは送信しない。
 =begin
     if delivery_mail.planned_setting_at < Time.now.to_s
-      DeliveryMail.send_mails(current_user)
+      DeliveryMail.send_mails
 
-      error_count = DeliveryError.where(:owner_id => delivery_mail.owner_id, :delivery_mail_id => delivery_mail.id).size
+      error_count = DeliveryError.where(:delivery_mail_id => delivery_mail.id).size
       if error_count > 0
         flash[:warning] = "送信に失敗した宛先が存在します。<br>送信に失敗した宛先は配信メール詳細画面から確認できます。"
       end
@@ -334,6 +336,7 @@ EOS
 
   def reply_mail_create
     @delivery_mail = create_model(:delivery_mails, params[:delivery_mail])
+    @delivery_mail.delivery_user = current_user
     @delivery_mail.mail_from = current_user.mail_from
     @delivery_mail.mail_from_name = current_user.mail_from_name
     @delivery_mail.delivery_mail_type = "instant"
@@ -360,8 +363,8 @@ EOS
 
         # メール送信はcronのジョブに任せて、ここでは送信しない。
 =begin
-        DeliveryMail.send_mails(current_user)
-        error_count = DeliveryError.where(:owner_id => @delivery_mail.owner_id, :delivery_mail_id => @delivery_mail.id).size
+        DeliveryMail.send_mails
+        error_count = DeliveryError.where(:delivery_mail_id => @delivery_mail.id).size
         if error_count > 0
           flash[:warning] = "送信に失敗した宛先が存在します。<br>送信に失敗した宛先は配信メール詳細画面から確認できます。"
         end
@@ -416,6 +419,7 @@ EOS
   def contact_mail_create(bp_pic_ids)
     @bp_pics = BpPic.find(bp_pic_ids)
     @delivery_mail = create_model(:delivery_mails, params[:delivery_mail])
+    @delivery_mail.delivery_user = current_user
     @delivery_mail.mail_from = current_user.mail_from
     @delivery_mail.mail_from_name = current_user.mail_from_name
     @delivery_mail.delivery_mail_type = "instant"
@@ -444,8 +448,8 @@ EOS
 
         # メール送信はcronのジョブに任せて、ここでは送信しない。
 =begin
-        DeliveryMail.send_mails(current_user)
-        error_count = DeliveryError.where(:owner_id => @delivery_mail.owner_id, :delivery_mail_id => @delivery_mail.id).size
+        DeliveryMail.send_mails
+        error_count = DeliveryError.where(:delivery_mail_id => @delivery_mail.id).size
         if error_count > 0
           flash[:warning] = "送信に失敗した宛先が存在します。<br>送信に失敗した宛先は配信メール詳細画面から確認できます。"
         end

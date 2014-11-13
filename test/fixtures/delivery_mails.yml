@@ -13,6 +13,7 @@ delivery_mails_1:
   planned_setting_at: <%= "2000/01/01 00:00:00" %>
   mail_send_status_type: "ready"
   send_end_at: 
+  delivery_user_id: 1
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -35,6 +36,7 @@ delivery_mails_2:
   planned_setting_at: <%= (Time.now + 60 * 60 * 24).to_s(:db) %>
   mail_send_status_type: "ready"
   send_end_at: 
+  delivery_user_id: 1
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -57,6 +59,7 @@ delivery_mails_3:
   planned_setting_at: <%= "2000/01/01 00:00:00" %>
   mail_send_status_type: "ready"
   send_end_at: 
+  delivery_user_id: 1
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -79,6 +82,7 @@ delivery_mails_4:
   planned_setting_at: <%= (Time.now + 60 * 60 * 24).to_s(:db) %>
   mail_send_status_type: "ready"
   send_end_at: 
+  delivery_user_id: 16
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
