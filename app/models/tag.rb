@@ -50,7 +50,7 @@ class Tag < ActiveRecord::Base
       # TODO: 利用者が少ないため、ここで集計しているが本来cronで定期的に集計する
       # 利用者が増えたら対応
     end
-    #TagJournal.summry_tags!(owner_id)
+    #TagJournal.summry_tags!
   end
 
   def Tag.update_tags!(owner_id, key, parent_id, tag_string)

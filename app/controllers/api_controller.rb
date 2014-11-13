@@ -50,7 +50,7 @@ class ApiController < ApplicationController
     ImportMail.import_reply_mail(Mail.new(src), src)
     render :text => 'REQUEST OK!'
   end
-  
+
   def broadcast_mail
     DeliveryMail.send_mails(current_user)
     
@@ -68,7 +68,7 @@ class ApiController < ApplicationController
   end
   
   def summry_tags
-    TagJournal.summry_tags!(current_user.owner_id)
+    TagJournal.summry_tags!
     
     if params[:back_to]
       redirect_to params[:back_to]

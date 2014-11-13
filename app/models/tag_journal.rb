@@ -13,18 +13,18 @@ class TagJournal < ActiveRecord::Base
     tj.save!
   end
 
-  def TagJournal.summry_tags!(owner_id)
+  def TagJournal.summry_tags!
     now = Time.now
     fetch_key = "summry_tags " + now.to_s + " " + rand().to_s
     # 他のプロセスと更新がかぶらないようにする
-    TagJournal.where(:owner_id => owner_id).update_all(["summary_status_type = 'fetched', summary_status_type = 'new', updated_user = ?, lock_version = lock_version + 1, updated_at = ?", fetch_key, now])
+    TagJournal.where("summary_status_type = 'new'").update_all(["summary_status_type = 'fetched', updated_user = ?, lock_version = lock_version + 1, updated_at = ?", fetch_key, now])
     
     ActiveRecord::Base.transaction do
       proc_count = 0
       # 個別集計(ユーザ／タグ別)
       journals = TagJournal.find(:all,
                    :select => "tag_id, sum(adjust) sum_adj, max(updated_at) max_updated_at",
-                   :conditions => {:owner_id => owner_id, :summary_status_type => 'fetched', :updated_user => fetch_key},
+                   :conditions => {:summary_status_type => 'fetched', :updated_user => fetch_key},
                    :group => "tag_id")
       logger.info "CLUB SUMMARY Fetch #{journals.size} records."
       journals.each{|x|
@@ -39,7 +39,7 @@ class TagJournal < ActiveRecord::Base
       logger.info "SUMMARY Proc #{proc_count} records."
 
       # ジャーナルを処理済みにする
-      TagJournal.where(:owner_id => owner_id).update_all(["summary_status_type = 'closed', summary_status_type = 'fetched', updated_user = ?, lock_version = lock_version + 1, updated_at = ?", fetch_key, now])
+      TagJournal.where("summary_status_type = 'fetched'").update_all(["summary_status_type = 'closed', updated_user = ?, lock_version = lock_version + 1, updated_at = ?", fetch_key, now])
     end # commit transaction
   end
 end
