@@ -30,7 +30,7 @@ class SysConfig < ActiveRecord::Base
   end
 
   def SysConfig.get_value(section, key, owner_id = 0)
-    config = SysConfig.get_configuration(section, key, owner_id)
+    config = SysConfig.get_config(section, key, owner_id)
     if config
       return config.value1
     else
@@ -140,26 +140,26 @@ class SysConfig < ActiveRecord::Base
   end
 
   def self.get_system_notifier_destination
-    get_value("system_notifier", "destination")
+    get_configuration("system_notifier", "destination").value1
   end
 
   def self.get_system_notifier_from
-    get_value("system_notifier", "from")
+    get_configuration("system_notifier", "from").value1
   end
 
   def self.get_system_notifier_url_prefix
-    get_value("system_notifier", "url_prefix")
+    get_configuration("system_notifier", "url_prefix").value1
   end
 
   def self.get_smtp_secret_key
-    get_value("smtp", "secret_key")
+    get_configuration("smtp", "secret_key").value1
   end
 
   def self.get_application_name
-    get_value("system_setting", "application_name")
+    get_configuration("system_setting", "application_name").value1
   end
 
   def self.get_contact_address
-    get_value("system_setting", "contact_address")
+    get_configuration("system_setting", "contact_address").value1
   end
 end
