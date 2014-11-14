@@ -1,17 +1,18 @@
 #!/bin/sh -f
 
-# 第一引数：環境設定ファイル
-#  以下の変数が定義されている事
-#    RAILS_ROOT  : railsアプリケーションのルートディレクトリへの絶対パス
-#    RUBY        : rubyの実行ファイルへの絶対パス
-. $1
+# 第1引数：rubyへのパス
+
+RUBY=$1
+shift 1
+MAILBOX_PARSER=$1
 shift 1
 
-# 第二引数以降：Rubyスクリプトのパラメータ
+# 第2引数以降：Rubyスクリプトのパラメータ
 
 umask 002
 
-cd ${RAILS_ROOT}
+cd $(dirname $0)
+cd ..
 
 BOUNCE_DATA=`tee -a /tmp/bounce.log | ${MAILBOX_PARSER} |tee -a /tmp/bounce_yaml.log | ${RUBY} tools/yaml_reader.rb -k 0,recipient -k 0,reason`
 BOUNCE_RECIPENT=`echo ${BOUNCE_DATA} | cut -f1 -d' '`
