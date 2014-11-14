@@ -1,5 +1,5 @@
-<%= hidden_field_tag 'source_bp_pic_id', @source_bp_pic_id %>
-<%= hidden_field_tag 'source_message_id', @source_message_id %>
+<%= hidden_field_tag 'source_bp_pic_id', params[:source_bp_pic_id] %>
+<%= hidden_field_tag 'source_message_id', params[:source_message_id] %>
 <%= hidden_field_tag 'delivery_mail[matching_way_type]', (params[:matching_way_type] || 'other') %>
 <%= hidden_field_tag 'delivery_mail[import_mail_match_id]', params[:import_mail_match_id] %>
 <%= back_to_field_tag %>
@@ -101,7 +101,7 @@
       <%= f.text_area :content, :style => "width:90%" , :onFocus => "xtarget = this;" %>
     </td>
   </tr>
-  <% unless @bp_pics %>
+  <% unless @delivery_mail.instant? %>
   <tr>
     <th><%= f.label :planned_setting_at, getLongName('delivery_mails', 'planned_setting_at') %></th>
     <td>
@@ -114,13 +114,13 @@
 </table>
 
 <div class="actions">
-  <%= hidden_field_tag 'src_mail_id', @src_mail_id %>
+  <%= hidden_field_tag 'src_mail_id', params[:src_mail_id] %>
   <%= hidden_field 'delivery_mail', 'bp_pic_group_id' %>
   <%= hidden_field_tag 'bp_pic_ids', params[:bp_pic_ids] %>
-  <% unless @bp_pics %>
-    <%= f.submit(:value => 'メールを作成し、対象者選択へ進む', :class => "btn btn-primary btn-medium") %> <%= f.submit(:name => 'testmail', :value => 'テストメールを送信する', :confirm => "一旦メールを保存し、送信者宛てにテストメールを送信してこの画面に戻ります。", :class => "btn btn-info btn-medium") %>
+  <% if @delivery_mail.instant? %>
+    <%= f.submit(:value => 'メールを送信する', :class => "btn btn-info btn-medium") %>
   <% else %>
-    <%= f.submit(:value => 'メールを送信する') %>
+    <%= f.submit(:value => 'メールを作成し、対象者選択へ進む', :class => "btn btn-primary btn-medium") %> <%= f.submit(:name => 'testmail', :value => 'テストメールを送信する', :confirm => "一旦メールを保存し、送信者宛てにテストメールを送信してこの画面に戻ります。", :class => "btn btn-info btn-medium") %>
   <% end %>
 </div>
 

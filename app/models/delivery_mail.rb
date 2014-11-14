@@ -14,7 +14,7 @@ class DeliveryMail < ActiveRecord::Base
   has_many :delivery_mail_targets, :conditions => "delivery_mail_targets.deleted = 0"
 
   belongs_to :bp_pic_group
-  attr_accessible :bp_pic_group_id, :content, :id, :mail_bcc, :mail_cc, :mail_from, :mail_from_name, :mail_send_status_type, :mail_status_type, :owner_id, :planned_setting_at, :send_end_at, :subject, :lock_version, :planned_setting_at_hour, :planned_setting_at_minute, :planned_setting_at_date, :delivery_mail_type, :biz_offer_id, :bp_member_id, :formated_mail_from, :age, :payment, :import_mail_match_id, :matching_way_type
+  attr_accessible :bp_pic_group_id, :content, :id, :mail_bcc, :mail_cc, :mail_from, :mail_from_name, :mail_send_status_type, :mail_status_type, :owner_id, :planned_setting_at, :send_end_at, :subject, :lock_version, :planned_setting_at_hour, :planned_setting_at_minute, :planned_setting_at_date, :delivery_mail_type, :biz_offer_id, :bp_member_id, :formated_mail_from, :age, :payment, :import_mail_match_id, :matching_way_type, :tag_text, :auto_matching_last_id
 
   validates_presence_of :subject, :content, :mail_from_name, :mail_from, :planned_setting_at
 
@@ -24,6 +24,10 @@ class DeliveryMail < ActiveRecord::Base
 
   def get_delivery_mail_targets(limit=20)
     DeliveryMailTarget.joins("left outer join import_mails on import_mails.in_reply_to = delivery_mail_targets.message_id").where("delivery_mail_targets.delivery_mail_id = ? and delivery_mail_targets.deleted = 0", self.id).order("import_mails.in_reply_to desc, delivery_mail_targets.delivery_mail_id").limit(limit)
+  end
+
+  def instant?
+    self.delivery_mail_type == "instant"
   end
 
   def group?
