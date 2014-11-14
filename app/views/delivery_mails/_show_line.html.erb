@@ -23,8 +23,13 @@
       %></td>
     <% else %>
       <td>
-        <% delivery_mail_target.reply_mails.each_with_index do |import_mail, idx| %>
-          <%= back_to_link "詳細#{idx+1}", :controller => :import_mail, :action => :show, :id => import_mail.id %> 
+        <%# 外部キーがnilだとdelivery_mail_target.reply_mailsが全件取れてしまうので、blank判定を入れている %>
+        <% if delivery_mail_target.message_id.blank? %>
+          &nbsp;
+        <% else %>
+          <% delivery_mail_target.reply_mails.each_with_index do |import_mail, idx| %>
+            <%= back_to_link "詳細#{idx+1}", :controller => :import_mail, :action => :show, :id => import_mail.id %>
+          <% end %>
         <% end %>
       </td>
     <% end %>
