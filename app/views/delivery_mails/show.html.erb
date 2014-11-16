@@ -1,13 +1,21 @@
 
+<!-- マッチング候補一覧  -->
 <% if @delivery_mail.delivery_mail_matches.exists? %>
   <% @import_mails = @delivery_mail.filtered_matches.take(10) %>
 <h2>マッチング候補</h2>
 <%= render :partial => 'import_mail/list' %>
 <% end %>
 
+<!-- 配信メール詳細 -->
 <%= accordion_around(getLongName('table_name','delivery_mails'), "") do %>
   <%= link_to "メールマッチングを開始する", {:controller => :delivery_mails, :action => :start_matching, :id => @delivery_mail, :back_to => back_to}, :class => "btn btn-info btn-medium" %>
   <%= render 'show' %>
+<% end %>
+
+<!-- 添付ファイル一覧  -->
+<% if !@attachment_files.blank? %>
+  <h2>添付ファイル一覧</h2>
+  <%= render :partial => 'attachment_file/list' %>
 <% end %>
 
 <!-- 配信エラー一覧  -->
@@ -37,7 +45,6 @@
 
 <!-- 配信メール対象一覧  -->
 <h2><%= getLongName('table_name','delivery_mail_targets')%> 一覧</h2>
-
 <table class="list_table table-bordered table-hover" id="delivery_mail_target">
   <tr>
     <th><%= getLongName('business_partners', 'business_partner_name') %></th>

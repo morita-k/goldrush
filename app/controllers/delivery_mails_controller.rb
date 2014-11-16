@@ -104,11 +104,14 @@ EOS
     if params[:source_bp_pic_id].present?
       return reply_mail_create
     end
+
+    if params[:src_mail_id]
+      @attachment_files = AttachmentFile.get_attachment_files("delivery_mails", params[:src_mail_id])
+    end
     @delivery_mail = DeliveryMail.new(params[:delivery_mail])
     @delivery_mail.matching_way_type = @delivery_mail.bp_pic_group.matching_way_type
     @delivery_mail.delivery_mail_type = "group"
     @delivery_mail.perse_planned_setting_at(current_user) # zone
-
     set_user_column @delivery_mail
 
     respond_to do |format|
@@ -161,6 +164,7 @@ EOS
   # PUT /delivery_mails/1.json
   def update
     @delivery_mail = DeliveryMail.find(params[:id])
+    @attachment_files =  @delivery_mail.attachment_files
     @delivery_mail.mail_status_type = 'editing'
 
     respond_to do |format|
