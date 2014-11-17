@@ -50,10 +50,10 @@ class DeliveryMailsController < ApplicationController
   end
 
   def copynew
-    @src_mail_id = params[:id]
-    set_src_mail_attachment_files(@src_mail_id) if @src_mail_id.present?
-    src_mail = DeliveryMail.find(@src_mail_id)
+    params[:src_mail_id] = params[:id]
+    src_mail = DeliveryMail.find(params[:src_mail_id])
     src_mail.setup_planned_setting_at(current_user.zone_at(src_mail.planned_setting_at))
+    @attachment_files = AttachmentFile.get_attachment_files("delivery_mails", src_mail.id)
     @delivery_mail = DeliveryMail.new
     @delivery_mail.attributes = src_mail.attributes.reject{|x| ["created_at", "updated_at", "created_user", "updated_user", "deleted_at", "deleted"].include?(x)}
 
@@ -104,9 +104,6 @@ EOS
   # POST /delivery_mails
   # POST /delivery_mails.json
   def create
-    @src_mail_id = params[:src_mail_id]
-    set_src_mail_attachment_files(@src_mail_id) if @src_mail_id.present?
-
     if params[:bp_pic_ids].present?
       return contact_mail_create(params[:bp_pic_ids].split.uniq)
     end
@@ -114,6 +111,9 @@ EOS
       return reply_mail_create
     end
 
+    if params[:src_mail_id]
+      @attachment_files = AttachmentFile.get_attachment_files("delivery_mails", params[:src_mail_id])
+    end
     @delivery_mail = create_model(:delivery_mails, params[:delivery_mail])
     @delivery_mail.delivery_user = current_user
     @delivery_mail.mail_from = current_user.mail_from
@@ -171,9 +171,8 @@ EOS
   # PUT /delivery_mails/1
   # PUT /delivery_mails/1.json
   def update
-    set_src_mail_attachment_files(params[:id])
-
     @delivery_mail = DeliveryMail.find(params[:id])
+    @attachment_files =  @delivery_mail.attachment_files
     @delivery_mail.delivery_user = current_user
     @delivery_mail.mail_status_type = 'editing'
 
@@ -205,15 +204,22 @@ EOS
             notice: 'Delivery mail was successfully created.')
           }
         end
-        format.html {
-          redirect_to url_for(
-            :controller => 'bp_pic_groups',
-            :action => 'show',
-            :id => @delivery_mail.bp_pic_group_id,
-            :delivery_mail_id => @delivery_mail.id,
-            :back_to => back_to
-          ),
-          notice: 'Delivery mail was successfully updated.' }
+
+        if @delivery_mail.instant?
+          format.html {
+            redirect_to back_to,
+            notice: 'Delivery mail was successfully updated.' }
+        else
+          format.html {
+            redirect_to url_for(
+              :controller => 'bp_pic_groups',
+              :action => 'show',
+              :id => @delivery_mail.bp_pic_group_id,
+              :delivery_mail_id => @delivery_mail.id,
+              :back_to => back_to
+            ),
+            notice: 'Delivery mail was successfully updated.' }
+        end
         format.json { head :no_content }
       rescue ActiveRecord::RecordInvalid
         format.html { render action: "edit" }
@@ -304,7 +310,7 @@ EOS
 
   def reply_mail_new
     @bp_pics = []
-    source_subject, source_content, @source_bp_pic_id, @source_message_id =
+    source_subject, source_content, params[:source_bp_pic_id], params[:source_message_id] =
       if params[:import_mail_id]
         source_im = ImportMail.find(params[:import_mail_id])
         [source_im.mail_subject, source_im.mail_body, source_im.bp_pic_id, source_im.message_id]
@@ -317,6 +323,7 @@ EOS
       end
 
     @delivery_mail = DeliveryMail.new
+    @delivery_mail.delivery_mail_type = "instant"
     @delivery_mail.mail_bcc = current_user.email
 
     new_proc
@@ -371,14 +378,7 @@ EOS
 =end
 
         format.html {
-          redirect_to url_for(
-            :controller => 'delivery_mails',
-            :action => 'show',
-            :id => @delivery_mail.id,
-            :back_to => back_to
-          ),
-          notice: 'Delivery mail was successfully sent.'
-#          redirect_to(back_to , notice: 'Delivery mail was successfully created.')
+          redirect_to(back_to , notice: 'Delivery mail was successfully sent.')
         }
       rescue ActiveRecord::RecordInvalid
         format.html { render action: "new" }
@@ -389,6 +389,7 @@ EOS
   def contact_mail_new
     @bp_pics = BpPic.find(params[:bp_pic_ids])
     @delivery_mail = DeliveryMail.new
+    @delivery_mail.delivery_mail_type = "instant"
     #@delivery_mail.bp_pic_group_id = params[:id]
     unless sales_pic = BpPic.find(params[:bp_pic_ids][0]).sales_pic
       sales_pic = current_user
@@ -456,14 +457,7 @@ EOS
 =end
 
         format.html {
-          redirect_to url_for(
-            :controller => 'delivery_mails',
-            :action => 'show',
-            :id => @delivery_mail.id,
-            :back_to => back_to
-          ),
-          notice: 'Delivery mail was successfully sent.'
-#          redirect_to(back_to , notice: 'Delivery mail was successfully created.')
+          redirect_to(back_to , notice: 'Delivery mail was successfully sent.')
         }
       rescue ActiveRecord::RecordInvalid
         format.html { render action: "new" }
@@ -573,9 +567,5 @@ private
     if @delivery_mail.bp_pic_group != nil && @delivery_mail.bp_pic_group.mail_template_id
       MailTemplate.find(@delivery_mail.bp_pic_group.mail_template_id)
     end
-  end
-
-  def set_src_mail_attachment_files(src_mail_id)
-    @attachment_files = AttachmentFile.get_attachment_files("delivery_mails", src_mail_id)
   end
 end

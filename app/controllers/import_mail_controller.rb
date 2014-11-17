@@ -262,7 +262,7 @@ private
     end
 
     unless cond_param[:tag].blank?
-      last_import_mail = ImportMail.where("received_at > ?", date_before).order("id").first
+      last_import_mail = ImportMail.where("received_at > ?", date_before).order("received_at").first
       pids = make_conditions_for_tag(cond_param[:tag], last_import_mail)
       unless pids.empty?
         sql += " and import_mails.id in (?) "
