@@ -15,7 +15,7 @@ class DeliveryMail < ActiveRecord::Base
 
   belongs_to :bp_pic_group
   belongs_to :delivery_user, :class_name => "User", :foreign_key => :delivery_user_id, :conditions => "users.deleted = 0"
-  attr_accessible :bp_pic_group_id, :content, :id, :mail_bcc, :mail_cc, :mail_from, :mail_from_name, :mail_send_status_type, :mail_status_type, :owner_id, :planned_setting_at, :send_end_at, :subject, :lock_version, :planned_setting_at_hour, :planned_setting_at_minute, :planned_setting_at_date, :delivery_mail_type, :biz_offer_id, :bp_member_id, :formated_mail_from, :age, :payment, :import_mail_match_id, :matching_way_type, :tag_text, :auto_matching_last_id
+  attr_accessible :bp_pic_group_id, :content, :id, :mail_bcc, :mail_cc, :mail_from, :mail_from_name, :mail_send_status_type, :mail_status_type, :owner_id, :planned_setting_at, :send_end_at, :subject, :lock_version, :planned_setting_at_hour, :planned_setting_at_minute, :planned_setting_at_date, :delivery_mail_type, :biz_offer_id, :bp_member_id, :formated_mail_from, :age, :payment, :import_mail_match_id, :matching_way_type, :tag_text, :auto_matching_last_id, :delivery_user_id
 
   validates_presence_of :subject, :content, :mail_from_name, :mail_from, :planned_setting_at
 
