@@ -52,9 +52,9 @@ function dynamicResize() {
     timer = setTimeout(function() {
       heightResize();
     }, 200);
-  })
+  });
 }
-window.onresize = dynamicResize;
+window.onresize = dynamicResize();
 
 function getNextBP(id, page, url) {
   // 新しい取引先を取得して再描画
