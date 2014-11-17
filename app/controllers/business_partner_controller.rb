@@ -265,6 +265,6 @@ class BusinessPartnerController < ApplicationController
       flash[:err] = '更新に失敗しました'
     end
 
-    redirect_to( params[:back_to] || {controller: 'bp_pic', action: 'index'})
+    redirect_to( back_to || {controller: 'bp_pic', action: 'index'})
   end
 end
