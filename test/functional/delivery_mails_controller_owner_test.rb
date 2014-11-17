@@ -59,14 +59,13 @@ class DeliveryMailsControllerOwnerTest < ActionController::TestCase
       assert_difference("AttachmentFile.where(:owner_id => #{@owner_id}).count", +1) do
         assert_difference("DeliveryMailTarget.where(:owner_id => #{@owner_id}).count", bp_pic_ids.size) do
           assert_no_difference("DeliveryError.count") do
-            post :create, bp_pic_ids: bp_pic_ids.join(' '), delivery_mail: @delivery_mail_params, attachment1: @attachment1, back_to: "/bp_pic_groups"
+            post :create, bp_pic_ids: bp_pic_ids.join(' '), delivery_mail: @delivery_mail_params, attachment1: @attachment1, back_to: "/bp_pic"
           end
         end
       end
     end
 
-    created_delivery_mail = DeliveryMail.order("id desc").first
-    assert_redirected_to "/delivery_mails/#{created_delivery_mail.id}?back_to=%2Fbp_pic_groups"
+    assert_redirected_to "/bp_pic"
   end
 
   test "should create delivery_mail(reply_mail_create)" do
@@ -76,14 +75,13 @@ class DeliveryMailsControllerOwnerTest < ActionController::TestCase
       assert_difference("AttachmentFile.where(:owner_id => #{@owner_id}).count", +1) do
         assert_difference("DeliveryMailTarget.where(:owner_id => #{@owner_id}).count", +1) do
           assert_no_difference("DeliveryError.count") do
-            post :create, source_bp_pic_id: source_bp_pic.id, delivery_mail: @delivery_mail_params, attachment1: @attachment1, back_to: "/bp_pic_groups"
+            post :create, source_bp_pic_id: source_bp_pic.id, delivery_mail: @delivery_mail_params, attachment1: @attachment1, back_to: "/import_mail/show/1"
           end
         end
       end
     end
 
-    created_delivery_mail = DeliveryMail.order("id desc").first
-    assert_redirected_to "/delivery_mails/#{created_delivery_mail.id}?back_to=%2Fbp_pic_groups"
+    assert_redirected_to "/import_mail/show/1"
   end
 
   test "should get index by another owner" do
