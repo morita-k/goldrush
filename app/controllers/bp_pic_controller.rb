@@ -310,7 +310,7 @@ class BpPicController < ApplicationController
     params[:page] ||= "1"
 
     # idがnilだった場合、@business_partnerをnilにしたいのでwhere
-    @business_partner ||= BusinessPartner.where(id: params[:business_partner_id]).first
+    @business_partner ||= BusinessPartner.where(id: params[:business_partner_id], deleted: 0).first
 
     render template: 'business_partner/quick_input', layout: 'blank'
   end
@@ -335,12 +335,12 @@ class BpPicController < ApplicationController
       end
     end
 
-    redirect_to action: 'quick_input', popup: params[:popup], page: page, back_to: params[:back_to], business_partner_id: next_bp_id, only_path: false, protocol: "http://"
+    redirect_to action: 'quick_input', popup: params[:popup], page: page, back_to: back_to, business_partner_id: next_bp_id, only_path: false, protocol: "http://"
   end
 
   # 混在コンテンツによるブロック回避の為、Formのみiframeで呼ぶ
   def quick_input_form
-    @business_partner = BusinessPartner.find(params[:business_partner_id])
+    @business_partner = BusinessPartner.find(params[:business_partner_id], :conditions => ["deleted = 0"])
     render template: 'business_partner/quick_input_form', layout: 'blank'
   end
 
