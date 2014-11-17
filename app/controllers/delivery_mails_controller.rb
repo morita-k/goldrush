@@ -134,7 +134,7 @@ EOS
           store_upload_files(@delivery_mail.id)
 
           # 配信メールコピーの場合、コピー元の添付ファイルもコピーする
-          copy_upload_files(@src_mail_id, @delivery_mail.id)
+          copy_upload_files(params[:src_mail_id], @delivery_mail.id)
         end
 
         if params[:testmail]
