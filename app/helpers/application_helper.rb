@@ -168,23 +168,6 @@ module ApplicationHelper
     current_auth
   end
 
-  def show_default_initial_amount(x)
-    over_super? ? x : '※ 表示できません'
-  end
-
-  def over_super?
-    logged_in? && ['super'].include?(current_user.access_level_type)
-  end
-
-  def over_account?
-    logged_in? && ['super','account'].include?(current_user.access_level_type)
-  end
-
-  def over_normal?
-    logged_in? && ['super','account','normal'].include?(current_user.access_level_type)
-  end
-
-
   def edit?
     ["edit","update"].include?(controller.action_name)
   end
