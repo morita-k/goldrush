@@ -182,7 +182,7 @@ class User < ActiveRecord::Base
   end
 
   def User.pic_select_items(owner_id)
-    User.joins(:employee).where("users.owner_id = ? and users.deleted = 0 and employees.resignation_date is null", owner_id).collect{|x| [x.nickname, x.id]}
+    User.where("users.owner_id = ? and users.deleted = 0", owner_id).collect{|x| [x.nickname, x.id]}
   end
  
   def User.map_for_googleimport(owner_id)
