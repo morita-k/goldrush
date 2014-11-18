@@ -12,7 +12,7 @@ class UserController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    @user_pages, @users = paginate(:users, :per => 50, :conditions => "deleted = 0")
+    @user_pages, @users = paginate(:users, :per => 50, :conditions => "deleted = 0 and access_level_type <> 'super'")
 
     if params[:popup] && params[:mode].blank?
       flash[:warning] = 'ポップアップのパラメータが不正です'

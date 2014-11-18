@@ -43,7 +43,7 @@ class BpPic < ActiveRecord::Base
   end
 
   def BpPic.select_content_list(owner_id)
-    User.where(owner_id: owner_id, deleted: 0).map{|x| [x.nickname, x.id]}
+    User.where("owner_id=? and deleted=0 and access_level_type<>'super'", owner_id).map{|x| [x.nickname, x.id]}
   end
   
   def contact_mail?

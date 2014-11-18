@@ -13,7 +13,7 @@ class OwnerController < ApplicationController
   end
 
   def list_user
-    @users = find_login_owner(:users).where(deleted: 0).page(params[:page]).per(10)
+    @users = find_login_owner(:users).where("deleted=0 and access_level_type<>'super'").page(params[:page]).per(10)
     @invites = find_login_owner(:invites).where(deleted: 0)
 
     render action: :list_user
