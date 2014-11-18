@@ -536,6 +536,7 @@ ActiveRecord::Schema.define(:version => 0) do
     t.integer  "auto_matching_last_id", :limit => 8
     t.integer  "import_mail_match_id",  :limit => 8
     t.string   "matching_way_type",     :limit => 40,                        :null => false
+    t.integer  "delivery_user_id",      :limit => 8
     t.datetime "created_at",                                                 :null => false
     t.datetime "updated_at",                                                 :null => false
     t.integer  "lock_version",          :limit => 8,          :default => 0
@@ -1161,7 +1162,7 @@ ActiveRecord::Schema.define(:version => 0) do
 
   add_index "users", ["email"], :name => "idx_users_5"
   add_index "users", ["id"], :name => "id", :unique => true
-  add_index "users", ["login"], :name => "idx_users_4", :unique => true
+  add_index "users", ["login", "deleted", "deleted_at"], :name => "idx_users_4", :unique => true
 
   create_table "working_logs", :force => true do |t|
     t.integer  "owner_id",         :limit => 8
