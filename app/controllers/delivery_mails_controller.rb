@@ -115,9 +115,7 @@ EOS
       @attachment_files = AttachmentFile.get_attachment_files("delivery_mails", params[:src_mail_id])
     end
     @delivery_mail = create_model(:delivery_mails, params[:delivery_mail])
-    @delivery_mail.delivery_user = current_user
-    @delivery_mail.mail_from = current_user.mail_from
-    @delivery_mail.mail_from_name = current_user.mail_from_name
+    set_mail_sender @delivery_mail
     @delivery_mail.matching_way_type = @delivery_mail.bp_pic_group.matching_way_type
     @delivery_mail.delivery_mail_type = "group"
     @delivery_mail.perse_planned_setting_at(current_user) # zone
@@ -173,7 +171,7 @@ EOS
   def update
     @delivery_mail = DeliveryMail.find(params[:id])
     @attachment_files =  @delivery_mail.attachment_files
-    @delivery_mail.delivery_user = current_user
+    set_mail_sender @delivery_mail
     @delivery_mail.mail_status_type = 'editing'
 
     respond_to do |format|
@@ -343,9 +341,7 @@ EOS
 
   def reply_mail_create
     @delivery_mail = create_model(:delivery_mails, params[:delivery_mail])
-    @delivery_mail.delivery_user = current_user
-    @delivery_mail.mail_from = current_user.mail_from
-    @delivery_mail.mail_from_name = current_user.mail_from_name
+    set_mail_sender @delivery_mail
     @delivery_mail.delivery_mail_type = "instant"
     @delivery_mail.setup_planned_setting_at(current_user.zone_now)
     @delivery_mail.mail_status_type = 'unsend'
@@ -420,9 +416,7 @@ EOS
   def contact_mail_create(bp_pic_ids)
     @bp_pics = BpPic.find(bp_pic_ids)
     @delivery_mail = create_model(:delivery_mails, params[:delivery_mail])
-    @delivery_mail.delivery_user = current_user
-    @delivery_mail.mail_from = current_user.mail_from
-    @delivery_mail.mail_from_name = current_user.mail_from_name
+    set_mail_sender @delivery_mail
     @delivery_mail.delivery_mail_type = "instant"
     @delivery_mail.setup_planned_setting_at(
         (@bp_pics[0].sales_pic.blank? ? current_user : @bp_pics[0].sales_pic).zone_now)
@@ -524,7 +518,7 @@ EOS
 
 
 private
- def check_smtp_settings_authentication
+  def check_smtp_settings_authentication
     if !current_user.advanced_smtp_mode_on? && !current_user.smtp_settings_authenticated?
       flash[:warning] = "メール配信設定に誤りがあります。 設定内容を変更して下さい。"
       redirect_to({
@@ -533,10 +527,26 @@ private
         :back_to => back_to
       })
     end
- end
+  end
 
- def new_proc
+  def new_proc
+    set_mail_sender @delivery_mail
     @delivery_mail.setup_planned_setting_at(current_user.zone_now)
+  end
+
+  def set_mail_sender(dm)
+    if current_user.advanced_smtp_mode_on?
+      if params[:delivery_mail].blank? || params[:delivery_mail][:formated_mail_from].blank?
+        # アドバンストSMTPモード かつ 新規作成時は組織共通アドレスを初期選択
+        o = current_user.owner
+        dm.formated_mail_from = "\"#{o.company_name}\" <#{o.sender_email}>"
+      else
+        dm.formated_mail_from = params[:delivery_mail][:formated_mail_from]
+      end
+    else
+      dm.formated_mail_from = "\"#{current_user.nickname}\" <#{current_user.email}>"
+    end
+    dm.delivery_user = current_user
   end
 
   def store_upload_files(parent_id)

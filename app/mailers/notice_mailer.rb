@@ -68,7 +68,7 @@ private
       ActionMailer::Base.smtp_settings = {
         :address => 'localhost',
         :port => 25,
-        :domain => mail_sender.mail_from.split('@')[1]
+        :domain => mail_sender.email.split('@')[1]
       }
     else
       ActionMailer::Base.smtp_settings = {

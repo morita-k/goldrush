@@ -60,7 +60,11 @@
   <tr>
     <th><%= f.label :mail_from, getLongName('delivery_mails', 'mail_from') %></th>
     <td>
+      <% if current_user.advanced_smtp_mode_on? %>
+      <%= f.select :formated_mail_from, mail_from_list %>
+      <% else %>
       <%= f.label :formated_mail_from, mail_from %>
+      <% end %>
     </td>
   </tr>
   <tr>

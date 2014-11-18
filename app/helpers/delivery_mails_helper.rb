@@ -21,6 +21,15 @@ module DeliveryMailsHelper
     current_user.formated_mail_from
   end
 
+  def mail_from_list
+    user_list = find_login_owner(:users).where(deleted: 0).map {|u| [u.formated_mail_from]}
+    if current_user.advanced_smtp_mode_on?
+      o = current_user.owner
+      user_list.unshift("\"#{o.company_name}\" <#{o.sender_email}>")
+    end
+    user_list
+  end
+
   def mail_to(delivery_mail)
     if delivery_mail.group?
       #グループメールの場合
