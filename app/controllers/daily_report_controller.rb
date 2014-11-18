@@ -17,7 +17,8 @@ class DailyReportController < ApplicationController
     update_data = params[:target_daily_report]
     target_date = params[:date]
 
-    delivery_mails = find_login_owner(:deliverly_mails).where("mail_send_status_type = 'finished' and send_end_at like ?", "#{target_date}%").all
+    delivery_mails = find_login_owner(:delivery_mails).where("mail_send_status_type = 'finished' and send_end_at like ?", "#{target_date}%").all
+
     DailyReport.update_daily_report(update_data, @target_user, delivery_mails)
     DailyReportSummary.update_daily_report_summary(target_date, @target_user.id)
 
@@ -32,7 +33,7 @@ class DailyReportController < ApplicationController
     session[:daily_report_summary] ||= {}
     set_date
 
-    @target_user = DailyReport.get_distinct_user
+    @target_user = DailyReport.get_distinct_user(current_user.owner_id)
 
     if params[:clear_button]
       session[:daily_report_summary] = {}
@@ -41,9 +42,9 @@ class DailyReportController < ApplicationController
     else
       set_conditions
       if session[:daily_report_summary][:summary_term_flg] == 'day'
-        @target_summary = DailyReport.get_summary_report(session[:daily_report_summary], @target_date)
+        @target_summary = DailyReport.get_summary_report(current_user.owner_id, session[:daily_report_summary], @target_date)
       else
-        @target_summary = DailyReportSummary.get_summary_report(session[:daily_report_summary], @target_date)
+        @target_summary = DailyReportSummary.get_summary_report(current_user.owner_id, session[:daily_report_summary], @target_date)
       end
 
       if session[:daily_report_summary][:summary_method_flg] == 'individual'

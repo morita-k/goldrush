@@ -18,6 +18,7 @@ class DailyReportSummary < ActiveRecord::Base
       if target_daily_report_summary.nil?
         target_daily_report_summary = self.new
         target_daily_report_summary.user_id = target_user_id
+        target_daily_report_summary.owner_id = User.find(target_user_id).owner_id
         target_daily_report_summary.report_date = target_date + '-01'
       end
 
@@ -48,7 +49,7 @@ class DailyReportSummary < ActiveRecord::Base
     end
   end
 
-  def self.get_summary_report(daily_report_summary, target_date)
+  def self.get_summary_report(owner_id, daily_report_summary, target_date)
     term_flg = daily_report_summary[:summary_term_flg]
     target_flg = daily_report_summary[:summary_target_flg]
     method_flg = daily_report_summary[:summary_method_flg]
@@ -58,10 +59,12 @@ class DailyReportSummary < ActiveRecord::Base
         if target_flg.nil?
           if method_flg == 'summary'
             self.group(:target_date)
+                .where(:owner_id => owner_id)
                 .select("DATE_FORMAT(report_date, '%Y') AS target_date, " + SELECT_SUMMARY_COLUMNS)
                 .order(:target_date).reverse_order
           else
             self.group(:target_date, :user_id)
+                .where(:owner_id => owner_id)
                 .select("DATE_FORMAT(report_date, '%Y') AS target_date, user_id," + SELECT_SUMMARY_COLUMNS)
                 .order(:target_date).reverse_order
           end
@@ -69,12 +72,12 @@ class DailyReportSummary < ActiveRecord::Base
           if method_flg == 'summary'
             self.group(:target_date)
                 .select("DATE_FORMAT(report_date, '%Y') AS target_date, " + SELECT_SUMMARY_COLUMNS)
-                .where(:user_id => target_flg)
+                .where(:owner_id => owner_id, :user_id => target_flg)
                 .order(:target_date).reverse_order
           else
             self.group(:target_date, :user_id)
                 .select("DATE_FORMAT(report_date, '%Y') AS target_date, user_id, " + SELECT_SUMMARY_COLUMNS)
-                .where(:user_id => target_flg)
+                .where(:owner_id => owner_id, :user_id => target_flg)
                 .order(:target_date).reverse_order
           end
         end
@@ -84,25 +87,25 @@ class DailyReportSummary < ActiveRecord::Base
           if method_flg == 'summary'
             self.group(:target_date)
                 .select("DATE_FORMAT(report_date, '%Y-%m') AS target_date, " + SELECT_SUMMARY_COLUMNS)
-                .where("DATE_FORMAT(report_date, '%Y') = '#{current_date}'")
+                .where("owner_id = ? and DATE_FORMAT(report_date, '%Y') = ?", owner_id, current_date)
                 .order(:target_date)
           else
             self.group(:target_date, :user_id)
                 .select("DATE_FORMAT(report_date, '%Y-%m') AS target_date, user_id, " + SELECT_SUMMARY_COLUMNS)
-                .where("DATE_FORMAT(report_date, '%Y') = '#{current_date}'")
+                .where("owner_id = ? and DATE_FORMAT(report_date, '%Y') = ?", owner_id, current_date)
                 .order(:target_date)
           end
         else
           if method_flg == 'summary'
             self.group(:target_date)
                 .select("DATE_FORMAT(report_date, '%Y-%m') AS target_date, " + SELECT_SUMMARY_COLUMNS)
-                .where("DATE_FORMAT(report_date, '%Y') = '#{current_date}'")
+                .where("owner_id = ? and DATE_FORMAT(report_date, '%Y') = ?", owner_id, current_date)
                 .where(:user_id => target_flg)
                 .order(:target_date)
           else
             self.group(:target_date, :user_id)
                 .select("DATE_FORMAT(report_date, '%Y-%m') AS target_date, user_id, " + SELECT_SUMMARY_COLUMNS)
-                .where("DATE_FORMAT(report_date, '%Y') = '#{current_date}'")
+                .where("owner_id = ? and DATE_FORMAT(report_date, '%Y') = ?", owner_id, current_date)
                 .where(:user_id => target_flg)
                 .order(:target_date)
           end
@@ -125,8 +128,9 @@ class DailyReportSummary < ActiveRecord::Base
   # Private Mailer
   class DailyReportMailer < ActionMailer::Base
     def send_mail(target_daily_report_summary, target_date, target_user, domain_name)
-      headers['Message-ID'] = "#{SecureRandom.uuid}@#{ActionMailer::Base.smtp_settings[:domain]}"
+      headers['Message-ID'] = "<#{SecureRandom.uuid}@#{ActionMailer::Base.smtp_settings[:domain]}>"
 
+      # FIXME SysConfig.get_value(:daily_report, :send_mail, target_user.owner_id) は存在しないので、別のアドレスを設定
       target_to = SysConfig.get_value(:daily_report, :send_mail, target_user.owner_id)
       mail( to: target_to,
             cc: nil,
