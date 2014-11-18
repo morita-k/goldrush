@@ -191,6 +191,10 @@ module ApplicationHelper
     current_auth
   end
 
+  def find_login_owner(table_name)
+    eval(table_name.to_s.classify).where(:owner_id => current_user.owner_id)
+  end
+
   def show_default_initial_amount(x)
     over_super? ? x : '※ 表示できません'
   end
