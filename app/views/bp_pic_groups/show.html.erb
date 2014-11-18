@@ -56,9 +56,9 @@
         <tr>
           <th><i class="fa fa-angle-double-right"></i> 状態</th>
           <td>
-            <%= radio_button_tag 'suspended', "", session[:search_bp_pic_group_details][:suspended] == "" %> どちらも
-            <%= radio_button_tag 'suspended', "0", session[:search_bp_pic_group_details][:suspended] == "0" %> ON
-            <%= radio_button_tag 'suspended', "1", session[:search_bp_pic_group_details][:suspended] == "1" %> OFF
+            <label><%= radio_button_tag 'suspended', "", session[:search_bp_pic_group_details][:suspended] == "" %> どちらも</label>
+            <label><%= radio_button_tag 'suspended', "0", session[:search_bp_pic_group_details][:suspended] == "0" %> ON</label>
+            <label><%= radio_button_tag 'suspended', "1", session[:search_bp_pic_group_details][:suspended] == "1" %> OFF</label>
           </td>
         </tr>
         <tr>
