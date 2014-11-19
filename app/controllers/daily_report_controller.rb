@@ -19,13 +19,14 @@ class DailyReportController < ApplicationController
 
     delivery_mails = find_login_owner(:delivery_mails).where("mail_send_status_type = 'finished' and send_end_at like ?", "#{target_date}%").all
 
-    DailyReport.update_daily_report(update_data, @target_user, delivery_mails)
-    DailyReportSummary.update_daily_report_summary(target_date, @target_user.id)
+    ActiveRecord::Base.transaction do
+      DailyReport.update_daily_report(update_data, @target_user, delivery_mails)
+      DailyReportSummary.update_daily_report_summary(target_date, @target_user.id)
 
-    DailyReportSummary.send_mail(target_date, @target_user, request.raw_host_with_port)
+      DailyReportSummary.send_mail(target_date, @target_user, request.raw_host_with_port)
+    end
 
     flash[:notice] = '日報を更新しました。'
-
     redirect_to :action => 'index', :date => target_date
   end
 

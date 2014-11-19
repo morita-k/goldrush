@@ -5,24 +5,24 @@
     <tr>
       <th>集計期間</th>
       <td>
-        <%= radio_button_tag :summary_term_flg, :year, session[:daily_report_summary][:summary_term_flg].nil? || session[:daily_report_summary][:summary_term_flg] == 'year' %> 年次
-        <%= radio_button_tag :summary_term_flg, :month, session[:daily_report_summary][:summary_term_flg] == 'month' %> 月次
-        <%= radio_button_tag :summary_term_flg, :day, session[:daily_report_summary][:summary_term_flg] == 'day' %> 日次
+        <label><%= radio_button_tag :summary_term_flg, :year, session[:daily_report_summary][:summary_term_flg].nil? || session[:daily_report_summary][:summary_term_flg] == 'year' %> 年次</label>
+        <label><%= radio_button_tag :summary_term_flg, :month, session[:daily_report_summary][:summary_term_flg] == 'month' %> 月次</label>
+        <label><%= radio_button_tag :summary_term_flg, :day, session[:daily_report_summary][:summary_term_flg] == 'day' %> 日次</label>
       </td>
     </tr>
     <tr>
       <th>対象</th>
       <td>
         <% @target_user.includes(:user).each do |target_user| %>
-        <%= check_box_tag 'summary_target_flg[]', target_user.user.id, session[:daily_report_summary][:summary_target_flg] != nil && session[:daily_report_summary][:summary_target_flg].include?(target_user.user.id.to_s) %><%= target_user.user.nickname %>
+        <label><%= check_box_tag 'summary_target_flg[]', target_user.user.id, session[:daily_report_summary][:summary_target_flg] != nil && session[:daily_report_summary][:summary_target_flg].include?(target_user.user.id.to_s) %> <%= target_user.user.nickname %></label>
         <% end %>
       </td>
     </tr>
     <tr>
       <th>集計方法</th>
       <td>
-        <%= radio_button_tag :summary_method_flg, :summary, session[:daily_report_summary][:summary_method_flg].nil? || session[:daily_report_summary][:summary_method_flg] == 'summary' %> 全体
-        <%= radio_button_tag :summary_method_flg, :individual, session[:daily_report_summary][:summary_method_flg] == 'individual' %> 個別
+        <label><%= radio_button_tag :summary_method_flg, :summary, session[:daily_report_summary][:summary_method_flg].nil? || session[:daily_report_summary][:summary_method_flg] == 'summary' %> 全体</label>
+        <label><%= radio_button_tag :summary_method_flg, :individual, session[:daily_report_summary][:summary_method_flg] == 'individual' %> 個別</label>
       </td>
     </tr>
   </table>
@@ -105,10 +105,10 @@
             <td><%= h target_daily_report["contact_matter"] %></td>
             <% end %>
           </tr>
-        <% end  %>
+        <% end %>
         </table>
         <br/>
-      <% end  %>
-    <% end  %>
-  <% end  %>
-<% end  %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>
