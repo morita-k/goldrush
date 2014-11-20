@@ -7,13 +7,15 @@ class DailyReportSummary < ActiveRecord::Base
   SELECT_SUMMARY_COLUMNS = "SUM(succeed_count) AS succeed_count, SUM(gross_profit_count) AS gross_profit_count, SUM(interview_count) AS interview_count, SUM(new_meeting_count) AS new_meeting_count, SUM(exist_meeting_count) AS exist_meeting_count, SUM(send_delivery_mail_count) AS send_delivery_mail_count "
 
   def self.update_daily_report_summary(target_date, target_user_id)
-    target_daily_reports = DailyReport.where("user_id = :target_id AND report_date LIKE :target_date", {:target_id => "#{target_user_id}",:target_date => "#{target_date}%"})
-                                      .order(:report_date)
+    target_daily_reports = DailyReport
+        .where("user_id = :target_id AND report_date LIKE :target_date", {:target_id => "#{target_user_id}",:target_date => "#{target_date}%"})
+        .order(:report_date)
 
     unless target_daily_reports.size == 0
-      target_daily_report_summary = self.where("user_id = :target_id AND report_date LIKE :target_date", {:target_id => "#{target_user_id}",:target_date => "#{target_date}%"})
-                                        .order(:report_date)
-                                        .first
+      target_daily_report_summary = self
+          .where("user_id = :target_id AND report_date LIKE :target_date", {:target_id => "#{target_user_id}",:target_date => "#{target_date}%"})
+          .order(:report_date)
+          .first
 
       if target_daily_report_summary.nil?
         target_daily_report_summary = self.new
@@ -116,40 +118,33 @@ class DailyReportSummary < ActiveRecord::Base
   end
 
   def self.send_mail(target_date, target_user, domain_name)
-    target_daily_report_summary = DailyReportSummary.where("user_id = :target_id AND report_date LIKE :target_date", {:target_id => "#{target_user.id}",:target_date => "#{target_date}%"})
-                                                    .first
+    target_daily_report_summary = self
+        .where("user_id = :target_id AND report_date LIKE :target_date", {:target_id => "#{target_user.id}",:target_date => "#{target_date}%"})
+        .first
     unless target_daily_report_summary.nil?
-      daily_report_mailer = DailyReportMailer.send_mail(target_daily_report_summary, target_date, target_user, domain_name)
-      daily_report_mailer.deliver
+      self.send_daily_report_mail(target_daily_report_summary, target_date, target_user, domain_name)
     end
   end
 
-
-  # Private Mailer
-  class DailyReportMailer < ActionMailer::Base
-    def send_mail(target_daily_report_summary, target_date, target_user, domain_name)
-      headers['Message-ID'] = "<#{SecureRandom.uuid}@#{ActionMailer::Base.smtp_settings[:domain]}>"
-
-      # FIXME SysConfig.get_value(:daily_report, :send_mail, target_user.owner_id) は存在しないので、別のアドレスを設定
-      target_to = SysConfig.get_value(:daily_report, :send_mail, target_user.owner_id)
-      mail( to: target_to,
-            cc: nil,
-            bcc: nil,
-            from: target_user.email,
-            subject: "【AP営業部】営業日報 #{target_date}の更新",
-            body: get_body(target_daily_report_summary, target_date, target_user, domain_name) )
-
-      # Return-path の設定
-      return_path = SysConfig.get_delivery_mails_return_path
-      if return_path
-        headers[:return_path] = return_path
-      else
-        logger.warn '"Return-Path"が設定されていません。'
-      end
+private
+  def self.send_daily_report_mail(target_daily_report_summary, target_date, target_user, domain_name)
+    # 組織管理者に集計結果を通知
+    User.where(owner_id: target_user.owner_id, deleted: 0, access_level_type: :owner).each do |owner_user|
+      NoticeMailer.send_mail(
+        target_user,
+        owner_user.email,
+        nil,
+        nil,
+        target_user.formated_mail_from,
+        "[#{SysConfig.get_application_name}] 営業日報 #{target_date}の更新",
+        self.get_daily_report_mail_body(target_daily_report_summary, target_date, target_user, domain_name),
+        []
+      )
     end
+  end
 
-    def get_body(target_daily_report_summary, target_date, target_user, domain_name)
-      <<EOS
+  def self.get_daily_report_mail_body(target_daily_report_summary, target_date, target_user, domain_name)
+    <<EOS
 #{target_user.nickname}の日報更新をお知らせします。
 
 成約数
@@ -169,7 +164,7 @@ class DailyReportSummary < ActiveRecord::Base
 
 詳細は以下のURLから確認できます。
 https://#{domain_name}/daily_report/summary?date=#{target_date}&summary_method_flg=individual&summary_target_flg%5B%5D=#{target_user.id}&summary_term_flg=day
+
 EOS
-    end
   end
 end
