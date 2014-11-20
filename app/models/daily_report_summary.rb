@@ -137,8 +137,7 @@ private
         nil,
         target_user.formated_mail_from,
         "[#{SysConfig.get_application_name}] 営業日報 #{target_date}の更新",
-        self.get_daily_report_mail_body(target_daily_report_summary, target_date, target_user, domain_name),
-        []
+        self.get_daily_report_mail_body(target_daily_report_summary, target_date, target_user, domain_name)
       )
     end
   end

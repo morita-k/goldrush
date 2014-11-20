@@ -19,14 +19,13 @@ class NoticeMailer < ActionMailer::Base
       nil,
       mail_sender.formated_mail_from,
       "#{SysConfig.get_application_name} メール配信テスト",
-      "テスト",
-      []
+      "テスト"
     )
     true
   end
 
   # mail配信メソッド
-  def NoticeMailer.send_mail(mail_sender, destination, cc, bcc, from, subject, body, attachment_files, in_reply_to=nil)
+  def NoticeMailer.send_mail(mail_sender, destination, cc, bcc, from, subject, body, attachment_files=nil, in_reply_to=nil)
     old_settings = ActionMailer::Base.smtp_settings
     begin
       NoticeMailer.setup(mail_sender)
@@ -38,7 +37,7 @@ class NoticeMailer < ActionMailer::Base
     end
   end
 
-  def create_mail(domain, destination, cc, bcc, from, subject, body, attachment_files, in_reply_to=nil)
+  def create_mail(domain, destination, cc, bcc, from, subject, body, attachment_files=nil, in_reply_to=nil)
     headers['Message-ID'] = "<#{SecureRandom.uuid}@#{domain}>"
     headers["In-Reply-To"] = in_reply_to if in_reply_to
 
@@ -52,7 +51,7 @@ class NoticeMailer < ActionMailer::Base
 
     attachment_files.each do |file|
       attachments[file.file_name] = file.read_file
-    end
+    end if attachment_files.present?
 
     mail( to: destination,
           cc: cc,
