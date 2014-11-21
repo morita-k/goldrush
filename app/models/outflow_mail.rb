@@ -19,6 +19,7 @@ class OutflowMail < ActiveRecord::Base
     OutflowMail.mail_address_parser(import_mail.mail_to + import_mail.mail_cc).each do |text, address|
       outflow_mail = OutflowMail.new
 
+      outflow_mail.owner_id       = import_mail.owner_id
       outflow_mail.import_mail_id = import_mail.id
       outflow_mail.email          = address
       outflow_mail.email_text     = text
@@ -55,6 +56,7 @@ class OutflowMail < ActiveRecord::Base
   def create_bp_and_pic(outflow_mail_form)
     form_bp = outflow_mail_form[:business_partner_attributes]
     bp = BusinessPartner.new(form_bp)
+    bp.owner_id = self.owner_id
     bp.business_partner_short_name = form_bp[:business_partner_name]
     bp.business_partner_name_kana  = form_bp[:business_partner_name]
     bp.sales_status_type           = "prospect"
@@ -65,6 +67,7 @@ class OutflowMail < ActiveRecord::Base
 
     form_pic = outflow_mail_form[:bp_pic_attributes]
     pic = BpPic.new(form_pic)
+    pic.owner_id = self.owner_id
     pic.business_partner_id = bp.id
     pic.bp_pic_name         = "ご担当者"
     pic.bp_pic_short_name   = "ご担当者"
@@ -147,8 +150,8 @@ class OutflowMail < ActiveRecord::Base
       at = "@"
     end
     new_domain_like = "%" + at + mail_address.split(at).second
-    exist_pic_mail_domain = BpPic.where("deleted = 0 and email1 like ?", new_domain_like).first
-    exist_outflow_mail_domain = OutflowMail.where("deleted = 0 and import_mail_id != ? and email like ? and outflow_mail_status_type != 'unwanted'", self.import_mail_id, new_domain_like).first
+    exist_pic_mail_domain = BpPic.where("owner_id = ? and deleted = 0 and email1 like ?", self.owner_id, new_domain_like).first
+    exist_outflow_mail_domain = OutflowMail.where("owner_id = ? and deleted = 0 and import_mail_id != ? and email like ? and outflow_mail_status_type != 'unwanted'", self.owner_id, self.import_mail_id, new_domain_like).first
     
     exist_pic_mail_domain || exist_outflow_mail_domain
   end

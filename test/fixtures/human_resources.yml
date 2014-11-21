@@ -1,6 +1,6 @@
 human_resources_1:
   id: 1
-  owner_id: 
+  owner_id: 1
   human_resource_name: ""
   human_resource_short_name: ""
   human_resource_name_kana: ""
@@ -33,7 +33,7 @@ human_resources_1:
   deleted: 0
 human_resources_2:
   id: 2
-  owner_id: 
+  owner_id: 1
   human_resource_name: ""
   human_resource_short_name: ""
   human_resource_name_kana: ""
@@ -66,7 +66,7 @@ human_resources_2:
   deleted: 0
 human_resources_3:
   id: 3
-  owner_id: 
+  owner_id: 1
   human_resource_name: ""
   human_resource_short_name: ""
   human_resource_name_kana: ""
@@ -99,7 +99,7 @@ human_resources_3:
   deleted: 0
 human_resources_4:
   id: 4
-  owner_id: 
+  owner_id: 1
   human_resource_name: ""
   human_resource_short_name: ""
   human_resource_name_kana: ""
@@ -132,7 +132,7 @@ human_resources_4:
   deleted: 0
 human_resources_5:
   id: 5
-  owner_id: 
+  owner_id: 1
   human_resource_name: ""
   human_resource_short_name: ""
   human_resource_name_kana: ""
@@ -165,11 +165,209 @@ human_resources_5:
   deleted: 0
 human_resources_6:
   id: 6
-  owner_id: 
+  owner_id: 1
   human_resource_name: ""
   human_resource_short_name: ""
   human_resource_name_kana: ""
   initial: "FF"
+  email: ""
+  tel1: ""
+  tel2: ""
+  age: "その他"
+  birthday_date: 
+  sex_type: ""
+  nationality: ""
+  railroad: ""
+  near_station: ""
+  max_move_time: ""
+  skill: ""
+  skill_tag: ""
+  qualification: ""
+  communication_type: "level5"
+  attendance: ""
+  human_resource_status_type: ""
+  starred: 
+  rating: 
+  memo: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+human_resources_7:
+  id: 7
+  owner_id: 2
+  human_resource_name: ""
+  human_resource_short_name: ""
+  human_resource_name_kana: ""
+  initial: "GG"
+  email: ""
+  tel1: ""
+  tel2: ""
+  age: ""
+  birthday_date: 
+  sex_type: ""
+  nationality: ""
+  railroad: ""
+  near_station: ""
+  max_move_time: ""
+  skill: ""
+  skill_tag: ""
+  qualification: ""
+  communication_type: "level5"
+  attendance: ""
+  human_resource_status_type: ""
+  starred: 
+  rating: 
+  memo: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+human_resources_8:
+  id: 8
+  owner_id: 2
+  human_resource_name: ""
+  human_resource_short_name: ""
+  human_resource_name_kana: ""
+  initial: "HH"
+  email: ""
+  tel1: ""
+  tel2: ""
+  age: "20才"
+  birthday_date: 
+  sex_type: ""
+  nationality: ""
+  railroad: ""
+  near_station: ""
+  max_move_time: ""
+  skill: ""
+  skill_tag: ""
+  qualification: ""
+  communication_type: "level5"
+  attendance: ""
+  human_resource_status_type: ""
+  starred: 
+  rating: 
+  memo: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+human_resources_9:
+  id: 9
+  owner_id: 2
+  human_resource_name: ""
+  human_resource_short_name: ""
+  human_resource_name_kana: ""
+  initial: "II"
+  email: ""
+  tel1: ""
+  tel2: ""
+  age: "３0才"
+  birthday_date: 
+  sex_type: ""
+  nationality: ""
+  railroad: ""
+  near_station: ""
+  max_move_time: ""
+  skill: ""
+  skill_tag: ""
+  qualification: ""
+  communication_type: "level5"
+  attendance: ""
+  human_resource_status_type: ""
+  starred: 
+  rating: 
+  memo: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+human_resources_10:
+  id: 10
+  owner_id: 2
+  human_resource_name: ""
+  human_resource_short_name: ""
+  human_resource_name_kana: ""
+  initial: "JJ"
+  email: ""
+  tel1: ""
+  tel2: ""
+  age: "4０歳"
+  birthday_date: 
+  sex_type: ""
+  nationality: ""
+  railroad: ""
+  near_station: ""
+  max_move_time: ""
+  skill: ""
+  skill_tag: ""
+  qualification: ""
+  communication_type: "level5"
+  attendance: ""
+  human_resource_status_type: ""
+  starred: 
+  rating: 
+  memo: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+human_resources_11:
+  id: 11
+  owner_id: 2
+  human_resource_name: ""
+  human_resource_short_name: ""
+  human_resource_name_kana: ""
+  initial: "KK"
+  email: ""
+  tel1: ""
+  tel2: ""
+  age: "５０歳"
+  birthday_date: 
+  sex_type: ""
+  nationality: ""
+  railroad: ""
+  near_station: ""
+  max_move_time: ""
+  skill: ""
+  skill_tag: ""
+  qualification: ""
+  communication_type: "level5"
+  attendance: ""
+  human_resource_status_type: ""
+  starred: 
+  rating: 
+  memo: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+human_resources_12:
+  id: 12
+  owner_id: 2
+  human_resource_name: ""
+  human_resource_short_name: ""
+  human_resource_name_kana: ""
+  initial: "LL"
   email: ""
   tel1: ""
   tel2: ""

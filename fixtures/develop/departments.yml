@@ -1,6 +1,6 @@
 departments_1:
   id: 1
-  owner_id: 
+  owner_id: 1
   department_code: "01"
   department_name: "経営室"
   department_shortname: "経営"
@@ -13,7 +13,7 @@ departments_1:
   deleted: 0
 departments_2:
   id: 2
-  owner_id: 
+  owner_id: 1
   department_code: "02"
   department_name: "営業部"
   department_shortname: "営業"
@@ -26,7 +26,7 @@ departments_2:
   deleted: 0
 departments_3:
   id: 3
-  owner_id:  
+  owner_id: 1
   department_code: "03"
   department_name: "開発部"
   department_shortname: "開発"

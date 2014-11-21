@@ -17,6 +17,19 @@ module DeliveryMailsHelper
     return !params[:bp_pic_group_id].blank?
   end
 
+  def mail_from
+    current_user.formated_mail_from
+  end
+
+  def mail_from_list
+    user_list = find_login_owner(:users).where("deleted=0 and access_level_type<>'super'").map {|u| [u.formated_mail_from]}
+    if current_user.advanced_smtp_mode_on?
+      o = current_user.owner
+      user_list.unshift("\"#{o.company_name}\" <#{o.sender_email}>")
+    end
+    user_list
+  end
+
   def mail_to(delivery_mail)
     if delivery_mail.group?
       #グループメールの場合
@@ -42,10 +55,4 @@ module DeliveryMailsHelper
   def get_bp_member_name
     BpMember.find(@delivery_mail.bp_member_id)
   end
-
-  def mail_from_list
-    user_list = User.includes(:employee).where("users.deleted = 0 and employees.resignation_date is null").map {|x| [x.formated_mail_from]}
-    user_list.unshift("#{SysConfig.get_value(:delivery_mails, :default_from_name)} <#{SysConfig.get_value(:delivery_mails, :default_from)}>")
-  end
-
 end

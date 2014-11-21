@@ -48,7 +48,15 @@ class ApplicationController < ActionController::Base
   end 
 
   def paginate(table_name, param_map)
-    [[], eval(table_name.to_s.classify).select(param_map[:select]).includes(param_map[:include]).where(param_map[:conditions]).order(param_map[:order]).page(params[:page]).per(param_map[:per])]
+    [[], find_login_owner(table_name).where(param_map[:conditions]).select(param_map[:select]).includes(param_map[:include]).order(param_map[:order]).page(params[:page]).per(param_map[:per])]
+  end
+
+  def find_login_owner(table_name)
+    eval(table_name.to_s.classify).where(:owner_id => current_user.owner_id)
+  end
+
+  def create_model(table_name, param_map = {})
+    eval(table_name.to_s.classify).new((param_map || {}).merge({:owner_id => current_user.owner_id}))
   end
 
   def rescue_action_in_public(exception)
@@ -61,6 +69,30 @@ class ApplicationController < ActionController::Base
         redirect_to :controller => '/'
       else
         super
+    end
+  end
+
+  # システム管理者フィルターメソッド
+  def only_super_user
+    unless current_user.super?
+      if block_given?
+        yield
+      else
+        redirect_to root_path
+        #render :file => 'public/404.html', :status => :not_found, :layout => false
+      end
+    end
+  end
+
+  # 管理者フィルターメソッド
+  def only_manager
+    unless current_user.manager?
+      if block_given?
+        yield
+      else
+        redirect_to root_path
+        #render :file => 'public/404.html', :status => :not_found, :layout => false
+      end
     end
   end
 
@@ -180,10 +212,10 @@ class ApplicationController < ActionController::Base
 
   def set_target_user
     if target_user_id = params[:user_id]
-      @target_user = User.find(target_user_id, :conditions => "deleted = 0")
+      @target_user = User.find(target_user_id, :conditions => {:owner_id => current_user.owner_id, :deleted => 0})
     else
       @target_user = current_user
     end
-    @target_employee = @target_user.employee
+    #@target_employee = @target_user.employee
   end
 end

@@ -536,6 +536,7 @@ ActiveRecord::Schema.define(:version => 0) do
     t.integer  "auto_matching_last_id", :limit => 8
     t.integer  "import_mail_match_id",  :limit => 8
     t.string   "matching_way_type",     :limit => 40,                        :null => false
+    t.integer  "delivery_user_id",      :limit => 8
     t.datetime "created_at",                                                 :null => false
     t.datetime "updated_at",                                                 :null => false
     t.integer  "lock_version",          :limit => 8,          :default => 0
@@ -776,6 +777,7 @@ ActiveRecord::Schema.define(:version => 0) do
   add_index "import_mails", ["mail_from", "received_at"], :name => "idx_import_mails_12"
   add_index "import_mails", ["message_id"], :name => "idx_import_mails_11"
   add_index "import_mails", ["outflow_mail_flg"], :name => "idx_import_mails_25"
+  add_index "import_mails", ["owner_id", "id"], :name => "idx_import_mails_30"
   add_index "import_mails", ["received_at"], :name => "idx_import_mails_24"
   add_index "import_mails", ["starred"], :name => "idx_import_mails_22"
 
@@ -801,6 +803,21 @@ ActiveRecord::Schema.define(:version => 0) do
   end
 
   add_index "interviews", ["id"], :name => "id", :unique => true
+
+  create_table "invites", :force => true do |t|
+    t.integer  "owner_id",        :limit => 8
+    t.string   "email",                                        :null => false
+    t.string   "activation_code",                              :null => false
+    t.datetime "created_at",                                   :null => false
+    t.datetime "updated_at",                                   :null => false
+    t.integer  "lock_version",    :limit => 8,  :default => 0
+    t.string   "created_user",    :limit => 80
+    t.string   "updated_user",    :limit => 80
+    t.datetime "deleted_at"
+    t.integer  "deleted",                       :default => 0
+  end
+
+  add_index "invites", ["id"], :name => "id", :unique => true
 
   create_table "mail_templates", :force => true do |t|
     t.integer  "owner_id",               :limit => 8
@@ -865,25 +882,21 @@ ActiveRecord::Schema.define(:version => 0) do
   add_index "outflow_mails", ["id"], :name => "id", :unique => true
 
   create_table "owners", :force => true do |t|
-    t.integer  "union_user_id",        :limit => 8,                 :null => false
-    t.string   "union_user_login",     :limit => 80,                :null => false
-    t.string   "union_email",          :limit => 60,                :null => false
-    t.string   "init_password",        :limit => 40,                :null => false
-    t.string   "init_password_salt",   :limit => 40,                :null => false
-    t.string   "owner_fullname",       :limit => 80,                :null => false
-    t.string   "owner_shortname",      :limit => 80
-    t.integer  "user_max_count",                     :default => 0
-    t.integer  "available_user_count",               :default => 0
-    t.datetime "created_at",                                        :null => false
-    t.datetime "updated_at",                                        :null => false
-    t.integer  "lock_version",         :limit => 8,  :default => 0
-    t.string   "created_user",         :limit => 80
-    t.string   "updated_user",         :limit => 80
+    t.string   "sender_email"
+    t.string   "owner_key",         :limit => 40,                :null => false
+    t.string   "company_name"
+    t.string   "additional_option"
+    t.datetime "created_at",                                     :null => false
+    t.datetime "updated_at",                                     :null => false
+    t.integer  "lock_version",      :limit => 8,  :default => 0
+    t.string   "created_user",      :limit => 80
+    t.string   "updated_user",      :limit => 80
     t.datetime "deleted_at"
-    t.integer  "deleted",                            :default => 0
+    t.integer  "deleted",                         :default => 0
   end
 
   add_index "owners", ["id"], :name => "id", :unique => true
+  add_index "owners", ["owner_key"], :name => "idx_owners_29", :unique => true
 
   create_table "photos", :force => true do |t|
     t.integer  "owner_id",          :limit => 8
@@ -1032,7 +1045,7 @@ ActiveRecord::Schema.define(:version => 0) do
   end
 
   add_index "tag_details", ["id"], :name => "id", :unique => true
-  add_index "tag_details", ["owner_id", "tag_id", "parent_id"], :name => "idx_tag_details_7", :unique => true
+  add_index "tag_details", ["owner_id", "tag_id", "parent_id", "deleted_at", "deleted"], :name => "idx_tag_details_7", :unique => true
   add_index "tag_details", ["parent_id", "tag_id"], :name => "idx_tag_details_10"
   add_index "tag_details", ["tag_id", "parent_id"], :name => "idx_tag_details_9"
 
@@ -1102,19 +1115,19 @@ ActiveRecord::Schema.define(:version => 0) do
   add_index "types", ["type_section", "type_key"], :name => "idx_types_2", :unique => true
 
   create_table "users", :force => true do |t|
-    t.integer  "owner_id",                 :limit => 8
-    t.string   "login",                                                 :null => false
+    t.integer  "owner_id",                           :limit => 8
+    t.string   "login",                                                           :null => false
     t.string   "fullname"
     t.string   "shortname"
-    t.string   "nickname"
-    t.string   "access_level_type",        :limit => 40,                :null => false
-    t.integer  "per_page",                               :default => 0
-    t.string   "email",                                                 :null => false
-    t.string   "encrypted_password",                                    :null => false
+    t.string   "nickname",                                                        :null => false
+    t.string   "access_level_type",                  :limit => 40,                :null => false
+    t.integer  "per_page",                                         :default => 0
+    t.string   "email",                                                           :null => false
+    t.string   "encrypted_password",                                              :null => false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                          :default => 0
+    t.integer  "sign_in_count",                                    :default => 0
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
@@ -1123,25 +1136,33 @@ ActiveRecord::Schema.define(:version => 0) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string   "unconfirmed_email"
-    t.integer  "failed_attempts",                        :default => 0
+    t.integer  "failed_attempts",                                  :default => 0
     t.string   "unlock_token"
     t.datetime "locked_at"
     t.string   "authentication_token"
     t.text     "mail_signature"
-    t.integer  "contact_mail_template_id", :limit => 8
-    t.integer  "score",                    :limit => 8
-    t.datetime "created_at",                                            :null => false
-    t.datetime "updated_at",                                            :null => false
-    t.integer  "lock_version",             :limit => 8,  :default => 0
-    t.string   "created_user",             :limit => 80
-    t.string   "updated_user",             :limit => 80
+    t.integer  "contact_mail_template_id",           :limit => 8
+    t.integer  "score",                              :limit => 8
+    t.integer  "smtp_settings_enable_starttls_auto",               :default => 0
+    t.text     "smtp_settings_address"
+    t.integer  "smtp_settings_port"
+    t.text     "smtp_settings_domain"
+    t.text     "smtp_settings_authentication"
+    t.text     "smtp_settings_user_name"
+    t.text     "smtp_settings_password"
+    t.integer  "smtp_settings_authenticated_flg",                  :default => 0
+    t.datetime "created_at",                                                      :null => false
+    t.datetime "updated_at",                                                      :null => false
+    t.integer  "lock_version",                       :limit => 8,  :default => 0
+    t.string   "created_user",                       :limit => 80
+    t.string   "updated_user",                       :limit => 80
     t.datetime "deleted_at"
-    t.integer  "deleted",                                :default => 0
+    t.integer  "deleted",                                          :default => 0
   end
 
   add_index "users", ["email"], :name => "idx_users_5"
   add_index "users", ["id"], :name => "id", :unique => true
-  add_index "users", ["login"], :name => "idx_users_4", :unique => true
+  add_index "users", ["login", "deleted", "deleted_at"], :name => "idx_users_4", :unique => true
 
   create_table "working_logs", :force => true do |t|
     t.integer  "owner_id",         :limit => 8

@@ -5,6 +5,7 @@ require 'zen2han'
 class ImportMail < ActiveRecord::Base
   belongs_to :business_partner
   belongs_to :bp_pic
+  belongs_to :owner, :conditions => "owners.deleted = 0"
   has_many :bp_members
   has_many :biz_offers
   has_many :tag_details, :foreign_key  => :parent_id, :conditions => "tag_details.tag_key = 'import_mails'"
@@ -15,11 +16,11 @@ class ImportMail < ActiveRecord::Base
   attr_accessor :temp_imoprt_mail_match
 
   def auto_match_biz_offer_mails
-    ImportMailMatch.where("deleted = 0 and bp_member_mail_id = ? and payment_gap > 0 and (age_gap is null or age_gap > 0) and subject_tag_match_flg > 0", self.id).order("received_at desc").limit(20)
+    ImportMailMatch.where("deleted = 0 and owner_id = ? and bp_member_mail_id = ? and payment_gap > 0 and (age_gap is null or age_gap > 0) and subject_tag_match_flg > 0", self.owner_id, self.id).order("received_at desc").limit(20)
   end
 
   def auto_match_bp_member_mails
-    ImportMailMatch.where("deleted = 0 and biz_offer_mail_id = ? and payment_gap > 0 and (age_gap is null or age_gap > 0) and subject_tag_match_flg > 0", self.id).order("received_at desc").limit(20)
+    ImportMailMatch.where("deleted = 0 and owner_id = ? and biz_offer_mail_id = ? and payment_gap > 0 and (age_gap is null or age_gap > 0) and subject_tag_match_flg > 0", self.owner_id, self.id).order("received_at desc").limit(20)
   end
 
   def ImportMail.tryConv(map, header_key, &block)
@@ -53,6 +54,7 @@ class ImportMail < ActiveRecord::Base
 
   def make_import_mail(m)
     now = Time.now
+    self.owner_id = ImportMail.get_owner_id(m)
     self.received_at = m.date.blank? ? now : m.date
     subject = ImportMail.tryConv(m, 'Subject') { m.subject }
     self.mail_subject = subject.blank? ? 'unknown subject' : subject
@@ -94,7 +96,7 @@ EOS
 
   # TODO : reply_mode is unnecessary?
   def detect_delivery_mail(reply_mode)
-    if dmt = self.in_reply_to && DeliveryMailTarget.where(message_id: self.in_reply_to).first
+    if dmt = self.in_reply_to && DeliveryMailTarget.where(owner_id: self.owner_id, message_id: self.in_reply_to).first
       detect_reply_mail(dmt.delivery_mail)
     elsif first = detect_gr_biz_id(mail_body)
       return unless /.*GR-BIZ-ID:(\d+)-(\d+)/ =~ first
@@ -134,7 +136,7 @@ EOS
       # プロセス間で同期をとるために何でもいいから存在するレコードをロック(users#1 => systemユーザー)
       User.find(1, :lock => true)
 
-      if ImportMail.where(message_id: import_mail.message_id, deleted: 0).first
+      if ImportMail.where(owner_id: import_mail.owner_id, message_id: import_mail.message_id, deleted: 0).first
         puts "mail duplicated: see system_logs"
         SystemLog.warn('import mail', 'mail id duplicated', import_mail.inspect , 'import mail')
         return
@@ -148,6 +150,7 @@ EOS
     end
     ActiveRecord::Base::transaction do
       import_mail_src = ImportMailSource.new
+      import_mail_src.owner_id = import_mail.owner_id
       import_mail_src.import_mail_id = import_mail.id
       import_mail_src.message_source = src
       import_mail_src.created_user = 'import_mail'
@@ -185,6 +188,7 @@ EOS
             file_name = part.filename.to_s
 
             attachment_file = AttachmentFile.new
+            attachment_file.owner_id = import_mail.owner_id
             attachment_file.create_by_import(upfile, import_mail.id, file_name)
             import_mail.biz_offer_flg = 0
             import_mail.bp_member_flg = 1
@@ -212,7 +216,7 @@ EOS
       import_mail.save!
 
       # 返信メールじゃなくてタイトルがダブってたら削除
-      if import_mail.delivery_mail_id.blank? &&  ImportMail.where("id != ?", import_mail.id).where(mail_from: import_mail.mail_from, mail_subject: import_mail.mail_subject,received_at: ((import_mail.received_at - 1.hour) .. import_mail.received_at + 1.hour), deleted: 0).first
+      if import_mail.delivery_mail_id.blank? &&  ImportMail.where("id != ?", import_mail.id).where(owner_id: import_mail.owner_id, mail_from: import_mail.mail_from, mail_subject: import_mail.mail_subject,received_at: ((import_mail.received_at - 1.hour) .. import_mail.received_at + 1.hour), deleted: 0).first
         puts "mail duplicated: see system_logs"
         SystemLog.warn('import mail', 'mail title duplicated', import_mail.inspect , 'import mail')
         import_mail.deleted = 9
@@ -223,10 +227,8 @@ EOS
 
       import_mail.analyze!
 
-      import_mail_id = import_mail.id
-
       # JIETの案件・人材メールだった場合、案件照会・人材所属を作成
-      if import_mail.jiet_ses_mail?
+      if import_mail.owner.enable_jiet? && import_mail.jiet_ses_mail?
         if import_mail.mail_subject =~ /JIETメール配信サービス\[(..)情報\]/
           case $1
             when "案件"
@@ -240,14 +242,14 @@ EOS
       end
 
       # 流出メールだった場合、OutflowMailを作成する
-      if import_mail.outflow_mail?
+      if import_mail.owner.enable_outflow_mail? && import_mail.outflow_mail?
         OutflowMail.create_outflow_mails(import_mail)
       end
 
     end # transaction
 
     if attachment_flg == 1
-      AttachmentFile.set_property_file(import_mail_id)
+      AttachmentFile.set_property_file(import_mail.owner_id, import_mail.id)
     end
   end
 
@@ -264,9 +266,9 @@ EOS
 
   def set_bp
     mail_from = self.mail_from
-    mail_bp_pic = BpPic.find(:first, :conditions => ["deleted = 0 and email1 = ? or email2 = ?", mail_from, mail_from])
+    mail_bp_pic = BpPic.find(:first, :conditions => ["deleted = 0 and owner_id = ? and (email1 = ? or email2 = ?)", owner_id, mail_from, mail_from])
     if mail_bp_pic.blank?
-      mail_business_partner = BusinessPartner.find(:first, :conditions => ["deleted = 0 and email = ?", mail_from])
+      mail_business_partner = BusinessPartner.find(:first, :conditions => ["deleted = 0 and owner_id = ? and email = ?", owner_id, mail_from])
       if !mail_business_partner.blank?
         self.business_partner_id = mail_business_partner.id
       end
@@ -335,10 +337,10 @@ EOS
   def detect_proper_in(body)
     return false if bp_member_flg != 1
     StringUtil.detect_lines(body, /社員/) do |line|
-      return true unless SpecialWord.ignore_word_propers.detect{|x| line.include?(x)}
+      return true unless SpecialWord.ignore_word_propers(owner_id).detect{|x| line.include?(x)}
     end
     StringUtil.detect_lines(body, /ﾌﾟﾛﾊﾟｰ/) do |line|
-      return true unless SpecialWord.ignore_word_propers.detect{|x| line.include?(x)}
+      return true unless SpecialWord.ignore_word_propers(owner_id).detect{|x| line.include?(x)}
     end
     return false
   end
@@ -354,7 +356,7 @@ EOS
   # 人材判定用特別単語でbodyを検索して1件でもhitすれば、人材メールと判断
   def analyze_bp_member_flg(body)
     if biz_offer_mail?
-      SpecialWord.bp_member_words.each do |word|
+      SpecialWord.bp_member_words(owner_id).each do |word|
         unless StringUtil.detect_regex(body, word).empty?
           self.biz_offer_flg = 0
           self.bp_member_flg = 1
@@ -383,7 +385,7 @@ EOS
       # 特定の国籍可チェック
       foreign_line_pattern = /.+人.*?(o\.?k\.?|[^不]可|大丈夫)/
       StringUtil.detect_lines(body, foreign_line_pattern) do |line|
-        return 'foreign' if SpecialWord.country_words_foreign.detect{|x| line.include?(x)}
+        return 'foreign' if SpecialWord.country_words_foreign(owner_id).detect{|x| line.include?(x)}
       end
 
       'unknown'
@@ -397,7 +399,7 @@ EOS
     # 外国籍チェック
     foreign_line_pattern = /国\s*?籍|氏\s*?名|名\s*?前|備\s*?考|※|年\s*?齢/
     StringUtil.detect_lines(body, foreign_line_pattern) do |line|
-      return 'foreign' if SpecialWord.country_words_foreign.detect{|x| line.include?(x)}
+      return 'foreign' if SpecialWord.country_words_foreign(owner_id).detect{|x| line.include?(x)}
     end
 
     # 日本国籍チェック
@@ -414,7 +416,7 @@ EOS
     StringUtil.detect_lines(body, /性/) do |line|
       if line !~ /服\s*?装/ and
           line =~ /[男女]/
-        return convert_to_sex_type($&, line =~ /ng|不可/i)
+        return ImportMail.convert_to_sex_type($&, line =~ /ng|不可/i)
       end
     end
     return 'other'
@@ -447,13 +449,13 @@ EOS
   # 解析とともに保存を行う
   def analyze!(body = Tag.pre_proc_body(pre_body))
     analyze(body)
-    Tag.update_tags!("import_mails", id, tag_text)
+    Tag.update_tags!(owner_id, "import_mails", id, tag_text)
     save!
   end
 
   # タグ生成の本体
   def make_tags(body)
-    Tag.analyze_skill_tags(body)
+    Tag.analyze_skill_tags(owner_id, body)
   end
 
   STATION_NAME_SEPARATOR = '/:】'
@@ -651,6 +653,11 @@ EOS
   end
 
 private
+  def ImportMail.get_owner_id(mail)
+    owner_key = self.tryConv(mail, 'X-Original-To').scan(/\w{4}@/)[0].delete('@')
+    Owner.where(:owner_key => owner_key).first.id
+  end
+
   def ImportMail.get_encode_body(mail, body)
     if mail.content_transfer_encoding == 'ISO-2022-JP'
       return NKF.nkf('-w -J', body)
@@ -659,6 +666,17 @@ private
     else
       # そのほかは
       return NKF.nkf('-w', body.to_s)
+    end
+  end
+
+  def ImportMail.convert_to_sex_type(word, disabled = nil)
+    case word
+    when '男'
+      disabled.nil? ? 'man' : 'woman'
+    when '女'
+      disabled.nil? ? 'woman' : 'man'
+    else
+      'other'
     end
   end
 
@@ -673,16 +691,5 @@ private
 
   def ext( mail )
     CTYPE_TO_EXT[mail.content_type] || 'txt'
-  end
-
-  def convert_to_sex_type(word, disabled = nil)
-    case word
-    when '男'
-      disabled.nil? ? 'man' : 'woman'
-    when '女'
-      disabled.nil? ? 'woman' : 'man'
-    else
-      'other'
-    end
   end
 end

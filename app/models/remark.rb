@@ -6,7 +6,7 @@ class Remark < ActiveRecord::Base
   validates_presence_of :remark_content
 
   def get_created_user
-    User.find(:first, :conditions => ["deleted = 0 and login = ?", created_user])
+    User.find(:first, :conditions => ["owner_id = ? and deleted = 0 and login = ?", owner_id, created_user])
   end
 
   def self.get_all(key, target_id)

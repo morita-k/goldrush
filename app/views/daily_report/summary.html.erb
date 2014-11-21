@@ -14,7 +14,7 @@
       <th>対象</th>
       <td>
         <% @target_user.includes(:user).each do |target_user| %>
-        <label><%= check_box_tag 'summary_target_flg[]', target_user.user.id, session[:daily_report_summary][:summary_target_flg] != nil && session[:daily_report_summary][:summary_target_flg].include?(target_user.user.id.to_s) %><%= target_user.user.employee.employee_name %></label>
+        <label><%= check_box_tag 'summary_target_flg[]', target_user.user.id, session[:daily_report_summary][:summary_target_flg] != nil && session[:daily_report_summary][:summary_target_flg].include?(target_user.user.id.to_s) %> <%= target_user.user.nickname %></label>
         <% end %>
       </td>
     </tr>

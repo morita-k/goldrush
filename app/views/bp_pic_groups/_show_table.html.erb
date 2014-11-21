@@ -5,6 +5,6 @@
 <tr><th>メールテンプレート</th><td><%= get_mail_template_name.mail_template_name%></td></tr>
 <% end %>
 <% unless @bp_pic_group.memo.blank? %>
-<tr><td colspan="2"><%= simple_format @bp_pic_group.memo%></td></tr>
+  <tr><td colspan="2"><%= simple_format @bp_pic_group.memo%></td></tr>
 <% end %>
 </table>

@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
 class DepartmentController < ApplicationController
+  before_filter :only_super_user
 
   def index
     list
@@ -13,7 +14,7 @@ class DepartmentController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    @department_pages, @departments = paginate :departments, :per_page => 10, :conditions => "deleted = 0 "
+    @department_pages, @departments = paginate :departments, :per => 10, :conditions => "deleted = 0 "
   end
 
   def show
@@ -25,7 +26,7 @@ class DepartmentController < ApplicationController
   end
 
   def create
-    @department = Department.new(params[:department])
+    @department = create_model(:departments, params[:department])
     if @department.save
       flash[:notice] = 'Department was successfully created.'
       redirect_to :action => 'list'

@@ -1,7 +1,27 @@
 interviews_1:
   id: 1
-  owner_id: 
+  owner_id: 1
   approach_id: 1
+  interview_status_type: "interview_waiting"
+  interview_number: 
+  interview_appoint_at: 
+  interview_prace: ""
+  interview_pic_id: 1
+  interview_bp_id: 1
+  interview_bp_pic_id: 1
+  succeed: 
+  memo: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+interviews_2:
+  id: 2
+  owner_id: 2
+  approach_id: 2
   interview_status_type: "interview_waiting"
   interview_number: 
   interview_appoint_at: 

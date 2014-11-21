@@ -24,15 +24,14 @@ class AnalysisTemplate < ActiveRecord::Base
   #   AnalysisTemplateItemより、対象のテンプレートを取得
   #   インデントによって内容をまとめ、整形して出力する
   #
-  def AnalysisTemplate.analyze(analysis_template_id, import_mail, models)#biz_offer, business
-    AnalysisTemplate.analyze_content(analysis_template_id, import_mail.mail_body, models)
+  def AnalysisTemplate.analyze(owner_id, analysis_template_id, import_mail, models)#biz_offer, business
+    AnalysisTemplate.analyze_content(owner_id, analysis_template_id, import_mail.mail_body, models)
   end
 
-  def AnalysisTemplate.analyze_content(analysis_template_id, content, models)
-    items = AnalysisTemplateItem.find(:all, 
-      :conditions => ["deleted = 0 and analysis_template_id = ?", analysis_template_id])
+  def AnalysisTemplate.analyze_content(owner_id, analysis_template_id, content, models)
+    items = AnalysisTemplateItem.where("deleted = 0 and analysis_template_id = ?", analysis_template_id)
     mail_parser = MailParser.new(content).add_indent_pattern(SysConfig.get_indent_pattern)
-    
+
     items.each{ |item|
       models.each{ |model|
         next unless model.class.name == item.target_table_name.classify
@@ -47,10 +46,10 @@ class AnalysisTemplate < ActiveRecord::Base
           EOS
           before_set(model, item, $1)
         end
-        
+ 
         match_str = mail_parser.conditions_body(item.pattern)
         model.send("#{item.target_column_name}=", match_str) unless match_str.blank?
-        
+ 
         unless item.after_set_code.blank?
           eval <<-EOS
             def AnalysisTemplate.after_set(model, item, str)
@@ -113,5 +112,4 @@ class AnalysisTemplate::MailParser
     @indtent_pattern.any?{ |regex| regex =~ str}
   end
   private :indent_judge
-  
 end

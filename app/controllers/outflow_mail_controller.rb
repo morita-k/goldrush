@@ -33,13 +33,13 @@ class OutflowMailController < ApplicationController
 
     cond = make_conditons(@import_mail)
 
-    @outflow_mails = OutflowMail.where(cond)
+    @outflow_mails = find_login_owner(:outflow_mails).where(cond)
   end
 
   def quick_input
     import_mail_id = params[:import_mail_id]
     if params[:outflow_mail_id].nil?
-      @outflow_mail = OutflowMail.where(outflow_mail_status_type: "non_correspondence", import_mail_id: import_mail_id, deleted: 0).first
+      @outflow_mail = find_login_owner(:outflow_mails).where(outflow_mail_status_type: "non_correspondence", import_mail_id: import_mail_id, deleted: 0).first
     else
       @outflow_mail = OutflowMail.where(id: params[:outflow_mail_id], import_mail_id: import_mail_id, deleted: 0).first
     end
@@ -49,7 +49,7 @@ class OutflowMailController < ApplicationController
 
   def next_address
     import_mail_id = params[:import_mail_id]
-    outflow_mail_ids = OutflowMail.where(outflow_mail_status_type: "non_correspondence", import_mail_id: import_mail_id, deleted: 0).map(&:id)
+    outflow_mail_ids = find_login_owner(:outflow_mails).where(outflow_mail_status_type: "non_correspondence", import_mail_id: import_mail_id, deleted: 0).map(&:id)
     # idが"要素が一意かつ昇順に整列された配列"であることを利用してnext_idを算出
     next_id = outflow_mail_ids.reject{|id| id <= params[:outflow_mail_id].to_i}.first
 
@@ -64,7 +64,7 @@ class OutflowMailController < ApplicationController
       begin
         bp_name = params[:outflow_mail][:business_partner_attributes][:business_partner_name]
 
-        if outflow_mail.business_partner_id.nil? && BusinessPartner.where(business_partner_name: bp_name, deleted: 0).first.nil?
+        if outflow_mail.business_partner_id.nil? && find_login_owner(:business_partners).where(business_partner_name: bp_name, deleted: 0).first.nil?
           outflow_mail.create_bp_and_pic(params[:outflow_mail])
           flash[:notice] = "Business Partner and BP Pic was successfully created."
         else
@@ -112,14 +112,17 @@ class OutflowMailController < ApplicationController
       end
 
       now = Time.now
-      import_mail = ImportMail.new
-      import_mail.mail_from = 'outflow_maril@applicative.jp'
+      import_mail = create_model(:import_mails) 
+      import_mail.mail_from = 'outflow_mail@applicative.jp'
       import_mail.mail_sender_name = '流出メール解析'
       import_mail.received_at = now
       import_mail.mail_cc = outflow_mail_list_raw
       mail_name = '流出メール解析' + " [#{now.strftime("%Y/%m/%d/ %H:%M:%S")}] "
       import_mail.mail_subject = mail_name + '解析中'
       import_mail.outflow_mail_flg = '1'
+      import_mail.matching_way_type = 'other'
+      import_mail.foreign_type = 'unknown'
+      import_mail.sex_type = 'other'
 
       import_mail.save!
 
@@ -141,11 +144,11 @@ class OutflowMailController < ApplicationController
   def new
       @outflow_mail_list_raw = params[:outflow_mail_list_raw]
 
-      @import_mails = ImportMail.includes([]).joins([])
-      .where("outflow_mail_flg = 1")
-      .order("id desc")
-      .page(params[:page])
-      .per(current_user.per_page)
+      @import_mails = find_login_owner(:import_mails).includes([]).joins([])
+                        .where("outflow_mail_flg = 1")
+                        .order("id desc")
+                        .page(params[:page])
+                        .per(current_user.per_page)
   end
 
 private

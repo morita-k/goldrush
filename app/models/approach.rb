@@ -9,7 +9,7 @@ class Approach < ActiveRecord::Base
   belongs_to :bp_member
   belongs_to :approach_upper_contract_term, :class_name => 'ContractTerm'
   belongs_to :approach_down_contract_term, :class_name => 'ContractTerm'
-  belongs_to :approach_pic, :class_name => 'User'
+  belongs_to :approach_pic, :class_name => 'User', :conditions => ["deleted = 0"]
   has_many :interviews, :conditions => ["interviews.deleted = 0"]
   has_one :contract
   has_many :contracts, :conditions => ["contracts.deleted = 0"], :order => "contracts.contract_start_date desc"
@@ -48,7 +48,7 @@ class Approach < ActiveRecord::Base
   end
 
   def approach_pic_name
-   approach_pic.employee.employee_name
+   approach_pic.blank? ? "" : approach_pic.nickname
   end
   
   def process_interview

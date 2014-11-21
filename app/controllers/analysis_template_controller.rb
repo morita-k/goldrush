@@ -20,9 +20,9 @@ class AnalysisTemplateController < ApplicationController
         order_by << "business_partner_id = #{import_mail.business_partner_id} desc" if !import_mail.business_partner_id.blank?
       end
       order_by << "id desc"
-      @analysis_templates = AnalysisTemplate.find(:all, :conditions => "deleted = 0", :order => order_by.join(","))
+      @analysis_templates = find_login_owner(:analysis_templates).where("deleted = 0").order(order_by.join(","))
     else
-      @analysis_template_pages, @analysis_templates = paginate :analysis_templates, :conditions => "deleted = 0", :per_page => current_user.per_page
+      @analysis_template_pages, @analysis_templates = paginate :analysis_templates, :conditions => "deleted = 0", :per => current_user.per_page
     end
   end
 
@@ -51,7 +51,7 @@ class AnalysisTemplateController < ApplicationController
 
   def create
     ActiveRecord::Base.transaction do
-      @analysis_template = AnalysisTemplate.new(params[:analysis_template])
+      @analysis_template = create_model(:analysis_templates, params[:analysis_template])
       @analysis_template.analysis_template_type = params[:mode]
       set_user_column @analysis_template
       @analysis_template.save!
@@ -65,7 +65,7 @@ class AnalysisTemplateController < ApplicationController
         item.save!
       end
     end # transaction
-    
+
     flash[:notice] = 'AnalysisTemplate was successfully created.'
     redirect_to(params[:back_to] || {:action => 'list'})
   rescue ActiveRecord::RecordInvalid
@@ -142,12 +142,12 @@ class AnalysisTemplateController < ApplicationController
   end
 
   def popup_list
-     @analysis_template_pages, @analysis_templates = paginate :analysis_templates, :conditions => "deleted = 0", :per_page => current_user.per_page
+     @analysis_template_pages, @analysis_templates = paginate :analysis_templates, :conditions => "deleted = 0", :per => current_user.per_page
      render :layout => 'popup'
   end
   
 private
-  
+
   def get_column_names(target_table_name)
     column_names = Array.new
     target_column_names = AnalysisTemplateItem.get_target_column_names(target_table_name)
@@ -184,8 +184,8 @@ private
 
       if !_params["analysis_template_item_#{target_table_name}_#{target_column_name}_pattern"].blank?
         # パターンが入力されてたら保存対象
-        analysis_template_item = AnalysisTemplateItem.new #(_params["analysis_template_item_#{target_table_name}_#{target_column_name}"])
-        
+        analysis_template_item = create_model(:analysis_template_item) #, _params["analysis_template_item_#{target_table_name}_#{target_column_name}"])
+ 
 #        analysis_template_item.analysis_template_id = analysis_template_id
         analysis_template_item.analysis_template_item_name =
             _params["analysis_template_item_#{target_table_name}_#{target_column_name}_analysis_template_item_name"]

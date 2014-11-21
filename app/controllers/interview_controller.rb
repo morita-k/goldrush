@@ -13,7 +13,7 @@ class InterviewController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    @interview_pages, @interviews = paginate :interviews, :conditions =>["deleted = 0"], :per_page => current_user.per_page
+    @interview_pages, @interviews = paginate :interviews, :conditions =>["deleted = 0"], :per => current_user.per_page
   end
 
   def show
@@ -33,7 +33,7 @@ class InterviewController < ApplicationController
 
   def create
     @calendar = true
-    @interview = Interview.new(params[:interview])
+    @interview = create_model(:interviews, params[:interview])
     
     if date = DateTimeUtil.str_to_date(params[:interview][:interview_appoint_at])
       @interview.interview_appoint_at = Time.local(date.year, date.month, date.day, params[:interview_appoint_at_hour].to_i, params[:interview_appoint_at_minute].to_i)

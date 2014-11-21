@@ -18,11 +18,13 @@ class ImportMailController < ApplicationController
     end
     cond, incl, joins, orderby = make_conditions(session[:import_mail_search])
 
-    @import_mails = ImportMail.includes(incl).joins(joins)
-                                             .where(cond)
-                                             .order(orderby)
-                                             .page(params[:page])
-                                             .per(current_user.per_page)
+    @import_mails = find_login_owner(:import_mails)
+                        .includes(incl)
+                        .joins(joins)
+                        .where(cond)
+                        .order(orderby)
+                        .page(params[:page])
+                        .per(current_user.per_page)
   end
 
   def matching
@@ -35,20 +37,24 @@ class ImportMailController < ApplicationController
     param.delete(:proper_flg)
     param[:biz_offer_flg] = 1
     cond, incl, joins = make_conditions(param)
-    @biz_mails = ImportMail.includes(incl).joins(joins)
-                                             .where(cond)
-                                             .order("payment desc")
-                                             .page(params[:page])
-                                             .per(current_user.per_page)
+    @biz_mails = find_login_owner(:import_mails)
+                      .includes(incl)
+                      .joins(joins)
+                      .where(cond)
+                      .order("payment desc")
+                      .page(params[:page])
+                      .per(current_user.per_page)
     param = session[:import_mail_match].dup
     param.delete(:biz_offer_flg)
     param[:bp_member_flg] = 1
     cond, incl, joins = make_conditions(param)
-    @hr_mails = ImportMail.includes(incl).joins(joins)
-                                             .where(cond)
-                                             .order("payment")
-                                             .page(params[:page])
-                                             .per(current_user.per_page)
+    @hr_mails = find_login_owner(:import_mails)
+                    .includes(incl)
+                    .joins(joins)
+                    .where(cond)
+                    .order("payment")
+                    .page(params[:page])
+                    .per(current_user.per_page)
   end
 
   def set_order
@@ -59,8 +65,8 @@ class ImportMailController < ApplicationController
 
   def show
     @import_mail = ImportMail.find(params[:id])
-    @biz_offers = BizOffer.find(:all, :conditions => ["deleted = 0 and import_mail_id = ?", params[:id]])
-    @bp_members = BpMember.find(:all, :conditions => ["deleted = 0 and import_mail_id = ?", params[:id]])
+    @biz_offers = find_login_owner(:biz_offers).where(["deleted = 0 and import_mail_id = ?", params[:id]])
+    @bp_members = find_login_owner(:bp_members).where(["deleted = 0 and import_mail_id = ?", params[:id]])
     @attachment_files = AttachmentFile.get_attachment_files('import_mails', @import_mail.id)
   end
 
@@ -75,7 +81,7 @@ class ImportMailController < ApplicationController
   end
 
   def create
-    @import_mail = ImportMail.new(params[:import_mail])
+    @import_mail = create_model(:import_mails, params[:import_mail])
     set_user_column @import_mail
     @import_mail.save!
     flash[:notice] = 'ImportMail was successfully created.'
@@ -156,7 +162,7 @@ class ImportMailController < ApplicationController
 
   def analysis_test
     max = ( params[:max] ? params[:max] : 50 )
-    mails = ImportMail.find(:all, :limit => max)
+    mails = find_login_owner(:import_mails).limit(max)
 
     text = "";
     delta = []
@@ -211,7 +217,7 @@ private
   end
 
   def make_conditions_for_tag(tags, min_id)
-    Tag.make_conditions_for_tag(tags, "import_mails", min_id)
+    Tag.make_conditions_for_tag(current_user.owner_id, tags, "import_mails", min_id)
   end
 
   def make_conditions(cond_param, incl = [])

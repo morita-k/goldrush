@@ -1,6 +1,6 @@
 users_1:
   id: 1
-  owner_id: 
+  owner_id: 1
   login: "system@aaa.com"
   fullname: ""
   shortname: ""
@@ -34,7 +34,7 @@ users_1:
   deleted: 0
 users_2:
   id: 2
-  owner_id: 
+  owner_id: 1
   login: "user1@aaa.com"
   fullname: ""
   shortname: ""
@@ -68,7 +68,7 @@ users_2:
   deleted: 0
 users_3:
   id: 3
-  owner_id: 
+  owner_id: 1
   login: "user2@aaa.com"
   fullname: ""
   shortname: ""
@@ -102,7 +102,7 @@ users_3:
   deleted: 0
 users_4:
   id: 4
-  owner_id: 
+  owner_id: 1
   login: "user3@aaa.com"
   fullname: ""
   shortname: ""
@@ -136,7 +136,7 @@ users_4:
   deleted: 0
 users_5:
   id: 5
-  owner_id: 
+  owner_id: 1
   login: "user4@aaa.com"
   fullname: ""
   shortname: ""
@@ -170,7 +170,7 @@ users_5:
   deleted: 0
 users_6:
   id: 6
-  owner_id: 
+  owner_id: 1
   login: "user5@aaa.com"
   fullname: ""
   shortname: ""
@@ -204,7 +204,7 @@ users_6:
   deleted: 0
 users_7:
   id: 7
-  owner_id: 
+  owner_id: 1
   login: "user6@aaa.com"
   fullname: ""
   shortname: ""
@@ -238,7 +238,7 @@ users_7:
   deleted: 0
 users_8:
   id: 8
-  owner_id: 
+  owner_id: 1
   login: "user7@aaa.com"
   fullname: ""
   shortname: ""
@@ -272,7 +272,7 @@ users_8:
   deleted: 0
 users_9:
   id: 9
-  owner_id: 
+  owner_id: 1
   login: "user8@aaa.com"
   fullname: ""
   shortname: ""
@@ -306,7 +306,7 @@ users_9:
   deleted: 0
 users_10:
   id: 10
-  owner_id: 
+  owner_id: 1
   login: "user9@aaa.com"
   fullname: ""
   shortname: ""
@@ -340,7 +340,7 @@ users_10:
   deleted: 0
 users_11:
   id: 11
-  owner_id: 
+  owner_id: 1
   login: "user10@aaa.com"
   fullname: ""
   shortname: ""

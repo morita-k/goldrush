@@ -8,7 +8,7 @@ class SysConfig < ActiveRecord::Base
   validates_length_of :value1, :maximum=>255, :allow_blank => true
   validates_length_of :value2, :maximum=>255, :allow_blank => true
   validates_length_of :value3, :maximum=>255, :allow_blank => true
-  
+
   after_save :purge_cache
   
   def purge_cache
@@ -25,12 +25,12 @@ class SysConfig < ActiveRecord::Base
     system_columns.include?(column)
   end
 
-  def SysConfig.get_config(section, key)
-    find(:first, :conditions => ["deleted = 0 and config_section = ? and config_key = ?", section, key])
+  def SysConfig.get_config(section, key, owner_id = 0)
+    find(:first, :conditions => ["deleted = 0 and config_section = ? and config_key = ? and owner_id = ?", section, key, owner_id])
   end
 
-  def SysConfig.get_value(section, key)
-    config = SysConfig.get_config(section, key)
+  def SysConfig.get_value(section, key, owner_id = 0)
+    config = SysConfig.get_config(section, key, owner_id)
     if config
       return config.value1
     else
@@ -38,12 +38,13 @@ class SysConfig < ActiveRecord::Base
     end
   end
 
-  def SysConfig.init_seq(key, seq)
-    x = find(:first, :conditions => ["deleted = 0 and config_section = 'seq' and config_key = ?", key], :lock => true)
+  def SysConfig.init_seq(key, seq, owner_id)
+    x = find(:first, :conditions => ["deleted = 0 and config_section = 'seq' and config_key = ? and owner_id = ?", key, owner_id], :lock => true)
     if x
       x.value1 = seq
     else
       x = SysConfig.new
+      x.owner_id = owner_id
       x.config_section = 'seq'
       x.config_key = key
       x.value1 = seq
@@ -54,17 +55,18 @@ class SysConfig < ActiveRecord::Base
     return x
   end
 
-  def SysConfig.get_seq_0(key, col)
-    seq = SysConfig.get_seq(key)
+  def SysConfig.get_seq_0(key, owner_id, col)
+    seq = SysConfig.get_seq(key, owner_id)
     sprintf("%.#{col}d", seq)
   end
 
-  def SysConfig.get_seq(key)
-    x = find(:first, :conditions => ["deleted = 0 and config_section = 'seq' and config_key = ?", key], :lock => true)
+  def SysConfig.get_seq(key, owner_id)
+    x = where(:owner_id => owner_id).find(:first, :conditions => ["deleted = 0 and config_section = 'seq' and config_key = ?", key], :lock => true)
     if x
       x.value1 = x.value1.to_i + 1
     else
       x = SysConfig.new
+      x.owner_id = owner_id
       x.config_section = 'seq'
       x.config_key = key
       x.value1 = 1
@@ -83,151 +85,27 @@ class SysConfig < ActiveRecord::Base
     @@cache = nil
   end
 
-  def self.get_configuration(section, key)
+  def self.get_configuration(section, key, owner_id = 0)
     load_cache unless @@cache
     @@cache.each do |conf|
-      return conf if conf.config_section == section and conf.config_key == key
+      return conf if conf.config_section == section and conf.config_key == key and conf.owner_id == owner_id
     end
     return nil
-#    SysConfig.find(:first, :conditions => ["deleted = 0 and config_section = ? and config_key = ?", section, key])
-  end
-
-  def self.get_vacation_half_year(half_year)
-    x = SysConfig.find(:first, :conditions => ["deleted = 0 and config_section = ? and config_key <= ?", 'vacation_half_year', half_year], :order => 'config_key desc')
-    x && x.value1 || 0
-  end
-
-  def self.get_vacation_month(month)
-    get_configuration('vacation_month', month.to_s)
+#    SysConfig.find(:first, :conditions => ["deleted = 0 and config_section = ? and config_key = ? and owner_id = ?", section, key, owner_id])
   end
 
   def self.get_per_page_count
     if c = get_configuration('per_page_count', 'default')
-      return c.value1.to_i
+      c.value1.to_i
     else
-      return 40
+      40
     end
-  end
-  
-  def self.get_regular_in_time_regular
-    get_configuration('regular_in_time', 'regular')
-  end
-  
-  def self.get_regular_in_time_defact
-    get_configuration('regular_in_time', 'defact')
-  end
-  
-  def self.get_regular_in_time_pm
-    get_configuration('regular_in_time', 'pm')
-  end
-  
-  def self.get_regular_out_time_regular
-    get_configuration('regular_out_time', 'regular')
-  end
-  
-  def self.get_regular_out_time_early_am
-    get_configuration('regular_out_time', 'early_am')
-  end
-  
-  def self.get_regular_out_time_early_full
-    get_configuration('regular_out_time', 'early_full')
-  end
-  
-  def self.get_max_out_time
-    get_configuration('max_out_time', 'regular')
-  end
-  
-  def self.get_regular_over_time_meel
-    get_configuration('regular_over_time', 'meel')
-  end
-  
-  def self.get_regular_over_time_taxi
-    get_configuration('regular_over_time', 'taxi')
-  end
-  
-  def self.get_rest_hour_regular
-    get_configuration('rest_hour', 'regular')
-  end
-  
-  def self.get_rest_hour_half
-    get_configuration('rest_hour', 'half')
-  end
-  
-  def self.get_hour_total_full
-    get_configuration('hour_total', 'full')
-  end
-  
-  def self.get_hour_total_none
-    get_configuration('hour_total', 'none')
-  end
-  
-  def self.get_month_start_date
-    get_configuration('month_start_date', 'regular')
-  end
-  
-  def self.get_year_start_date
-    get_configuration('year_start_date', 'regular')
-  end
-
-  def self.get_life_plan_day_max
-    get_configuration('life_plan_day_count', 'total_max').value1.to_i
-  end
-
-  def self.get_life_plan_behavior_max
-    get_configuration('life_plan_day_count', 'behavior_max').value1.to_i
-  end
-  
-  def self.get_day_max
-    get_configuration('annual_day_count', 'total_max').value1.to_i
-  end
-  
-  def self.get_before_year_count
-    get_configuration('before_year_count', 'regular').value1.to_i
-  end
-
-  def self.get_before_month_count
-    get_configuration('before_month_count', 'regular').value1.to_i
-  end
-
-  def self.get_directory_path(dir_type)
-    get_configuration('directory_path', dir_type).value1
-  end
-
-  def self.get_summer_vacation_day_total
-    get_configuration('summer_vacation', 'day_total')
-  end
-
-  def self.get_summer_vacation_start_date
-    get_configuration('summer_vacation', 'start_date')
-  end
-
-  def self.get_summer_vacation_end_date
-    get_configuration('summer_vacation', 'end_date')
-  end
-
-  def self.get_calculate_vacation_year
-    get_configuration('calculate_vacation', 'year')
-  end
-
-  def self.get_color_approval_status_type_entry
-    get_configuration('color_approval_status_type', 'entry')
-  end
-  
-  def self.get_color_approval_status_type_approved
-    get_configuration('color_approval_status_type', 'approved')
-  end
-  
-  def self.get_color_approval_status_type_reject
-    get_configuration('color_approval_status_type', 'reject')
   end
 
   def self.email_prodmode?
     get_configuration("business_partners", "prodmode")
   end
-  
-  def self.get_skill_major_words
-    get_configuration("skill", "major_words").config_description_text.downcase.split
-  end
+
   def self.get_indent_pattern
     get_configuration("analysis_templates", "indent").value1.gsub(/[\s　]/, "").split(",").reject{|s| s == ""}
   end
@@ -240,37 +118,48 @@ class SysConfig < ActiveRecord::Base
       4 => 'dimgray'
     }
   end
-  
+
   def self.get_jiet_analysis_target_address
     get_configuration("import_mail", "jiet").value1
+  end
+
+  def self.get_delivery_mails_return_path
+    if config = get_configuration("delivery_mails", "return_path")
+      config.value1
+    else
+      nil
+    end
   end
 
   def self.get_outflow_criterion
     get_configuration("outflow_mail", "outflow_criterion").value1
   end
 
-  def self.get_pop3_mail_login
-    get_configuration("pop3_mail_login", "username_password")
-  end
-
   def self.get_api_login
     get_configuration("api_login", "username_password")
   end
 
-  def self.get_company_name
-    get_configuration("poi_company_name", "company_name").value1
-  end
-
   def self.get_system_notifier_destination
-    get_value("system_notifier", "destination")
+    get_configuration("system_notifier", "destination").value1
   end
 
   def self.get_system_notifier_from
-    get_value("system_notifier", "from")
+    get_configuration("system_notifier", "from").value1
   end
 
   def self.get_system_notifier_url_prefix
-    get_value("system_notifier", "url_prefix")
+    get_configuration("system_notifier", "url_prefix").value1
   end
 
+  def self.get_smtp_secret_key
+    get_configuration("smtp", "secret_key").value1
+  end
+
+  def self.get_application_name
+    get_configuration("system_setting", "application_name").value1
+  end
+
+  def self.get_contact_address
+    get_configuration("system_setting", "contact_address").value1
+  end
 end

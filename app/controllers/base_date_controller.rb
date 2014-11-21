@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
 class BaseDateController < ApplicationController
+  before_filter :only_super_user
 
   def index
     list
@@ -13,7 +14,7 @@ class BaseDateController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    @base_date_pages, @base_dates = paginate(:base_dates, :conditions => ["holiday_flg = 1"], :per_page => 30, :order => 'calendar_date DESC')
+    @base_dates = BaseDate.where("holiday_flg = 1").order('calendar_date DESC').page(params[:page]).per(30)
   end
 
   def show

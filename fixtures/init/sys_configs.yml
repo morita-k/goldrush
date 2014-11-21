@@ -1,0 +1,309 @@
+sys_configs_1:
+  id: 1
+  owner_id: 0
+  config_section: "per_page_count"
+  config_key: "default"
+  value1: "50"
+  value2: ""
+  value3: ""
+  config_description_text: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+sys_configs_2:
+  id: 2
+  owner_id: 
+  config_section: "seq"
+  config_key: "sales_code"
+  value1: "0"
+  value2: ""
+  value3: ""
+  config_description_text: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+sys_configs_3:
+  id: 3
+  owner_id: 0
+  config_section: "business_partners"
+  config_key: "prodmode"
+  value1: "1"
+  value2: ""
+  value3: ""
+  config_description_text: |-
+    本番環境では1。それ以外はレコードなしか1以外。
+    データ取り込み時にメールアドレスをテスト用に変換するロジックをOFFにする
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+sys_configs_4:
+  id: 4
+  owner_id: 0
+  config_section: "analysis_templates"
+  config_key: "indent"
+  value1: "※"
+  value2: ""
+  value3: ""
+  config_description_text: |-
+    カンマ区切りで指定
+    全半角空白は無視される
+    正規表現でない
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+sys_configs_5:
+  id: 5
+  owner_id: 0
+  config_section: "delivery_mails"
+  config_key: "return_path"
+  value1: "error@gr.applicative.jp"
+  value2: ""
+  value3: ""
+  config_description_text: "エラーメールの返送先アドレス"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+sys_configs_6:
+  id: 6
+  owner_id: 0
+  config_section: "import_mail"
+  config_key: "jiet"
+  value1: "office@jiet.or.jp"
+  value2: ""
+  value3: ""
+  config_description_text: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+sys_configs_7:
+  id: 7
+  owner_id: 0
+  config_section: "api_login"
+  config_key: "username_password"
+  value1: "goldrush"
+  value2: "furuponpon"
+  value3: ""
+  config_description_text: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+sys_configs_8:
+  id: 8
+  owner_id: 0
+  config_section: "outflow_mail"
+  config_key: "outflow_criterion"
+  value1: "50"
+  value2: ""
+  value3: ""
+  config_description_text: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+sys_configs_9:
+  id: 9
+  owner_id: 0
+  config_section: "system_notifier"
+  config_key: "destination"
+  value1: "staff@applicative.jp"
+  value2: ""
+  value3: ""
+  config_description_text: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+sys_configs_10:
+  id: 10
+  owner_id: 0
+  config_section: "system_notifier"
+  config_key: "from"
+  value1: "system@gr.applicative.jp"
+  value2: ""
+  value3: ""
+  config_description_text: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+sys_configs_11:
+  id: 11
+  owner_id: 0
+  config_section: "system_notifier"
+  config_key: "url_prefix"
+  value1: "https://gr.applicative.jp"
+  value2: ""
+  value3: ""
+  config_description_text: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+sys_configs_12:
+  id: 12
+  owner_id: 0
+  config_section: "import_mail_matches"
+  config_key: "target_days"
+  value1: "10"
+  value2: ""
+  value3: ""
+  config_description_text: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+sys_configs_13:
+  id: 13
+  owner_id: 
+  config_section: "import_mail_matches"
+  config_key: "last_id"
+  value1: "109131"
+  value2: ""
+  value3: ""
+  config_description_text: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+sys_configs_14:
+  id: 14
+  owner_id: 0
+  config_section: "delivery_mail_matches"
+  config_key: "target_days"
+  value1: "5"
+  value2: ""
+  value3: ""
+  config_description_text: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+sys_configs_15:
+  id: 15
+  owner_id: 0
+  config_section: "smtp"
+  config_key: "secret_key"
+  value1: "juaf9moo7Mies5shul7Ijai9Ec3aizao"
+  value2: ""
+  value3: ""
+  config_description_text: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+sys_configs_16:
+  id: 16
+  owner_id: 0
+  config_section: "system_setting"
+  config_key: "application_name"
+  value1: "GoldRush"
+  value2: ""
+  value3: ""
+  config_description_text: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+sys_configs_17:
+  id: 17
+  owner_id: 0
+  config_section: "system_setting"
+  config_key: "contact_address"
+  value1: "staff@dev.applicative.jp"
+  value2: ""
+  value3: ""
+  config_description_text: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+sys_configs_18:
+  id: 18
+  owner_id: 1
+  config_section: "seq"
+  config_key: "sales_code"
+  value1: "0"
+  value2: ""
+  value3: ""
+  config_description_text: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+sys_configs_19:
+  id: 19
+  owner_id: 1
+  config_section: "import_mail_matches"
+  config_key: "last_id"
+  value1: "109131"
+  value2: ""
+  value3: ""
+  config_description_text: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0

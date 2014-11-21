@@ -44,15 +44,15 @@
 <th><label for="biz_offer_sales_route"><%=getLongName('biz_offers','sales_route')%></label></th><td><%= text_field 'biz_offer', 'sales_route'  %></td>
 </tr>
 <tr>
-<th><label for="biz_offer_contact_pic_name">窓口担当</label></th><td><%= text_field_tag 'contact_pic_name', @biz_offer.contact_pic.blank? ? "" : @biz_offer.contact_pic.employee.employee_name, :readonly => true, :style => "background-color: silver;", :size => 30 %>
-    <input type=button value='...' onClick="disp_wide('<%=url_for :controller => 'employee', :action => 'list', :popup =>1, :mode => 'Contact' %>');return false;" />
-    <input type=button value='クリア' onClick="clearContactUser();return false;" />
+<th><label for="biz_offer_contact_pic_name">窓口担当</label></th><td><%= text_field_tag 'contact_pic_name', @biz_offer.contact_pic_name, :readonly => true, :style => "background-color: silver;", :size => 30 %>
+    <input type=button value='...' onClick="disp_wide('<%= url_for_pic_popup "contact" %>');return false;" />
+    <input type=button value='クリア' onClick="clearPic('contact');return false;" />
     <%= hidden_field 'biz_offer', 'contact_pic_id' %></td>
 </tr>
 <tr>
-<th><label for="biz_offer_sales_pic_name">営業担当</label></th><td><%= text_field_tag 'sales_pic_name', @biz_offer.sales_pic.blank? ? "" : @biz_offer.sales_pic.employee.employee_name, :readonly => true, :style => "background-color: silver;", :size => 30 %>
-    <input type=button value='...' onClick="disp_wide('<%=url_for :controller => 'employee', :action => 'list', :popup =>1, :mode => 'Sales' %>');return false;" />
-    <input type=button value='クリア' onClick="clearSalesUser();return false;" />
+<th><label for="biz_offer_sales_pic_name">営業担当</label></th><td><%= text_field_tag 'sales_pic_name', @biz_offer.sales_pic_name, :readonly => true, :style => "background-color: silver;", :size => 30 %>
+<input type=button value='...' onClick="disp_wide('<%= url_for_pic_popup "sales" %>');return false;" />
+    <input type=button value='クリア' onClick="clearPic('sales');return false;" />
     <%= hidden_field 'biz_offer', 'sales_pic_id' %></td>
 </tr>
 <tr>
@@ -93,18 +93,26 @@
 
 <script type="text/javascript">
 <!--
-
 document.setBpPic = function(bp_pic){
-    document.getElementById("business_partner_name").value = bp_pic.business_partner_name;
-    document.getElementById("biz_offer_bp_pic_id").value = bp_pic.id;
-    document.getElementById("bp_pic_name").value = bp_pic.bp_pic_name;
-}
+  document.getElementById("business_partner_name").value = bp_pic.business_partner_name;
+  document.getElementById("biz_offer_bp_pic_id").value = bp_pic.id;
+  document.getElementById("bp_pic_name").value = bp_pic.bp_pic_name;
+};
 
 function clearBpPic(){
-    document.getElementById("business_partner_name").value = "";
-    document.getElementById("biz_offer_bp_pic_id").value = "";
-    document.getElementById("bp_pic_name").value = "";
+  document.getElementById("business_partner_name").value = "";
+  document.getElementById("biz_offer_bp_pic_id").value = "";
+  document.getElementById("bp_pic_name").value = "";
 }
 
+document.setPic = function(mode, user) {
+  document.getElementById(mode + "_pic_name").value = user.pic_name;
+  document.getElementById("biz_offer_" + mode + "_pic_id").value = user.pic_id;
+};
+
+function clearPic(mode) {
+  document.getElementById(mode + "_pic_name").value = "";
+  document.getElementById("biz_offer_" + mode + "_pic_id").value = "";
+}
 //-->
 </script>

@@ -14,13 +14,14 @@ class DeliveryMail < ActiveRecord::Base
   has_many :delivery_mail_targets, :conditions => "delivery_mail_targets.deleted = 0"
 
   belongs_to :bp_pic_group
-  attr_accessible :bp_pic_group_id, :content, :id, :mail_bcc, :mail_cc, :mail_from, :mail_from_name, :mail_send_status_type, :mail_status_type, :owner_id, :planned_setting_at, :send_end_at, :subject, :lock_version, :planned_setting_at_hour, :planned_setting_at_minute, :planned_setting_at_date, :delivery_mail_type, :biz_offer_id, :bp_member_id, :formated_mail_from, :age, :payment, :import_mail_match_id, :matching_way_type, :tag_text, :auto_matching_last_id
+  belongs_to :delivery_user, :class_name => "User", :foreign_key => :delivery_user_id, :conditions => "users.deleted = 0"
+  attr_accessible :bp_pic_group_id, :content, :id, :mail_bcc, :mail_cc, :mail_from, :mail_from_name, :mail_send_status_type, :mail_status_type, :owner_id, :planned_setting_at, :send_end_at, :subject, :lock_version, :planned_setting_at_hour, :planned_setting_at_minute, :planned_setting_at_date, :delivery_mail_type, :biz_offer_id, :bp_member_id, :formated_mail_from, :age, :payment, :import_mail_match_id, :matching_way_type, :tag_text, :auto_matching_last_id, :delivery_user_id
 
   validates_presence_of :subject, :content, :mail_from_name, :mail_from, :planned_setting_at
 
   after_initialize :default_values
 
-  before_save :normalize_cc_bcc!
+  before_save :normalize_cc_bcc!, :set_default!
 
   def get_delivery_mail_targets(limit=20)
     DeliveryMailTarget.joins("left outer join import_mails on import_mails.in_reply_to = delivery_mail_targets.message_id").where("delivery_mail_targets.delivery_mail_id = ? and delivery_mail_targets.deleted = 0", self.id).order("import_mails.in_reply_to desc, delivery_mail_targets.delivery_mail_id").limit(limit)
@@ -37,11 +38,11 @@ class DeliveryMail < ActiveRecord::Base
   def filtered_matches_in
     [] if self.payment.blank? || self.age.blank?
     if self.biz_offer_mail?
-      w = "delivery_mail_matches.delivery_mail_id = ? and delivery_mail_matches.deleted = 0 and payment <= ? and age <= ?"
+      w = "delivery_mail_matches.owner_id = ? and delivery_mail_matches.delivery_mail_id = ? and delivery_mail_matches.deleted = 0 and payment <= ? and age <= ?"
     else
-      w = "delivery_mail_matches.delivery_mail_id = ? and delivery_mail_matches.deleted = 0 and payment >= ? and age >= ?"
+      w = "delivery_mail_matches.owner_id = ? and delivery_mail_matches.delivery_mail_id = ? and delivery_mail_matches.deleted = 0 and payment >= ? and age >= ?"
     end
-    DeliveryMailMatch.joins(:import_mail).where(w, self.id, payment, age)
+    DeliveryMailMatch.joins(:import_mail).where(w, self.owner_id, self.id, self.payment, self.age)
   end
 
   def filtered_matches
@@ -65,12 +66,16 @@ class DeliveryMail < ActiveRecord::Base
     self.mail_bcc = mail_bcc.to_s.split(/[ ,;]/).join(",")
   end
 
+  def set_default!
+    self.matching_way_type ||= 'other'
+  end
+
   def formated_mail_from
-    "#{mail_from_name} <#{mail_from}>"
+    "\"#{mail_from_name}\" <#{mail_from}>"
   end
 
   def formated_mail_from=(str)
-    str =~ /(.*) <(.*)>/
+    str =~ /\"(.*)\" <(.*)>/
     self.mail_from_name = $1
     self.mail_from = $2
   end
@@ -115,35 +120,37 @@ class DeliveryMail < ActiveRecord::Base
     AttachmentFile.get_attachment_files("delivery_mails", id)
   end
 
-  def DeliveryMail.send_test_mail(mail)
+  def DeliveryMail.send_test_mail(mail_sender, mail)
     opt = {:bp_pic_name => "ご担当者", :business_partner_name => "株式会社テストメール"}
     attachment_files = mail.attachment_files
-    MyMailer.send_del_mail(
+    NoticeMailer.send_mail(
+      mail_sender,
       mail.mail_from,
       nil,
       nil,
-      "#{mail.mail_from_name} <#{mail.mail_from}>",
+      "\"#{mail.mail_from_name}\" <#{mail.mail_from}>",
       DeliveryMail.tags_replacement(mail.subject, opt),
       DeliveryMail.tags_replacement(mail.content, opt),
       attachment_files
-    ).deliver
+    )
   end
 
-  def DeliveryMail.send_contact_mail(mail, bp_pic)
+  def DeliveryMail.send_contact_mail(mail_sender, mail, bp_pic)
     opt = {:bp_pic_name => bp_pic.bp_pic_short_name, :business_partner_name => bp_pic.business_partner.business_partner_name}
     attachment_files = mail.attachment_files
-    MyMailer.send_del_mail(
+    NoticeMailer.send_mail(
+      mail_sender,
       bp_pic.email1,
       mail.mail_cc,
       mail.mail_bcc,
-      "#{mail.mail_from_name} <#{mail.mail_from}>",
+      "\"#{mail.mail_from_name}\" <#{mail.mail_from}>",
       DeliveryMail.tags_replacement(mail.subject, opt),
       DeliveryMail.tags_replacement(mail.content, opt),
       attachment_files
-    ).deliver
+    )
   end
 
-  def DeliveryMail.send_mail_to_each_targets(mail)
+  def DeliveryMail.send_mail_to_each_targets(mail_sender, mail)
     mail.delivery_mail_targets.each do |target|
       begin
         next if target.bp_pic.nondelivery?
@@ -157,22 +164,22 @@ class DeliveryMail < ActiveRecord::Base
 GR-BIZ-ID:#{mail.id ** 2}-#{target.id ** 2}
 EOS
 
-        current_mail = MyMailer.send_del_mail(
+        NoticeMailer.send_mail(
+          mail_sender,
           target.bp_pic.email1,
           mail.mail_cc,
           mail.mail_bcc,
-          "#{mail.mail_from_name} <#{mail.mail_from}>",
+          "\"#{mail.mail_from_name}\" <#{mail.mail_from}>",
           DeliveryMail.tags_replacement(mail.subject, opt),
           DeliveryMail.tags_replacement(mail_content, opt),
           mail.attachment_files,
           target.in_reply_to
-        )
-
-        current_mail.deliver
-        target.message_id = current_mail.header['Message-ID'].to_s
-        target.save!
+        ) do |sending_mail|
+          target.message_id = sending_mail.header['Message-ID'].to_s
+          target.save!
+        end
       rescue => e
-        DeliveryError.send_error(mail.id, target.bp_pic, e).save!
+        DeliveryError.send_error(mail.owner_id, mail.id, target.bp_pic, e).save!
 
         error_str = "Delivery Mail Send Error: " + e.message + "\n" + e.backtrace.join("\n")
         SystemLog.error('delivery mail', 'mail send error',  error_str, 'delivery mail')
@@ -182,20 +189,20 @@ EOS
 
   # Broadcast Mails
   def DeliveryMail.send_mails
-    fetch_key = Time.now.to_s + " " + rand().to_s
+    now = Time.now
+    fetch_key = now.to_s + " " + rand().to_s
 
-    DeliveryMail.
-      where("mail_status_type=? and mail_send_status_type=? and planned_setting_at<=?",
-             'unsend', 'ready', Time.now).
-      update_all(:mail_send_status_type => 'running', :created_user => fetch_key)
+    DeliveryMail
+      .where("mail_status_type=? and mail_send_status_type=? and planned_setting_at<=?", 'unsend', 'ready', now)
+      .update_all(["mail_send_status_type='running', created_user=?, lock_version=lock_version+1, updated_at=?", fetch_key, now])
 
-    DeliveryMail.where(:created_user => fetch_key).each {|mail|
-      self.send_mail_to_each_targets(mail)
-    }
+    DeliveryMail.where(:created_user => fetch_key).each do |mail|
+      self.send_mail_to_each_targets(mail.delivery_user, mail)
+    end
 
-    DeliveryMail.
-      where(:created_user => fetch_key).
-      update_all(:mail_status_type => 'send',:mail_send_status_type => 'finished',:send_end_at => Time.now)
+    DeliveryMail
+      .where(:created_user => fetch_key)
+      .update_all(["mail_status_type='send', mail_send_status_type='finished', send_end_at=?, lock_version=lock_version+1, updated_at=?", now, now])
   end
 
   # === Private ===
@@ -203,38 +210,9 @@ EOS
     option.inject(tag){|str, k| str.gsub("%%#{k[0].to_s}%%", k[1])}
   end
 
-  # Private Mailer
-  class MyMailer < ActionMailer::Base
-    def send_del_mail(destination, cc, bcc, from, subject, body, attachment_files, in_reply_to=nil)
-      headers['Message-ID'] = "<#{SecureRandom.uuid}@#{ActionMailer::Base.smtp_settings[:domain]}>"
-      headers["In-Rply-To"] = in_reply_to if in_reply_to
-
-      # Return-path の設定
-      return_path = SysConfig.get_value(:delivery_mails, :return_path)
-      if return_path
-        headers[:return_path] = return_path
-      else
-        logger.warn '"Return-Path"が設定されていません。'
-      end
-
-      attachment_files.each do |file|
-        attachments[file.file_name] = file.read_file
-      end
-
-      mail( to: destination,
-            cc: cc,
-            bcc: bcc,
-            from: from,
-            subject: subject,
-            body: body )
-
-    end
-  end
-
   def get_informations
     self.subject = get_information(self.subject)
     self.content = get_information(self.content)
-
     self
   end
 
@@ -324,10 +302,10 @@ EOS
   end
 
   def tag_analyze!(body = Tag.pre_proc_body(pre_body))
-    analyzed_tag_text = Tag.analyze_skill_tags(body)
+    analyzed_tag_text = Tag.analyze_skill_tags(owner_id, body)
     self.tag_text = analyzed_tag_text
     self.save!
-    Tag.update_tags!("delivery_mails", id, analyzed_tag_text)
+    Tag.update_tags!(owner_id, "delivery_mails", id, analyzed_tag_text)
   end
 
   def add_signature(mail_sender)

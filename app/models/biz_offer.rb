@@ -47,11 +47,11 @@ class BizOffer < ActiveRecord::Base
   end
 
   def contact_pic_name
-    contact_pic && contact_pic.employee.employee_name
+    contact_pic.blank? ? "" : contact_pic.nickname
   end
   
   def sales_pic_name
-    sales_pic && sales_pic.employee.employee_name
+    sales_pic.blank? ? "" : sales_pic.nickname
   end
   
   def change_status_type

@@ -1,8 +1,9 @@
 # -*- encoding: utf-8 -*-
 class TagDetail < ActiveRecord::Base
   belongs_to :tag
-  def TagDetail.create_tags!(tag_id, parent_id, tag_text, key)
+  def TagDetail.create_tags!(owner_id, tag_id, parent_id, tag_text, key)
     td = TagDetail.new
+    td.owner_id = owner_id
     td.tag_id = tag_id
     td.parent_id = parent_id
     td.tag_key = key

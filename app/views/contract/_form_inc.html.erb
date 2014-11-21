@@ -36,7 +36,7 @@
 <tr>
   <th class="must"><label for="contract_contract_pic_name">契約担当(*)</label></th>
   <td>
-    <%= select 'contract', 'contract_pic_id', User.pic_select_items %></td>
+    <%= select 'contract', 'contract_pic_id', User.pic_select_items(current_user.owner_id) %></td>
 </tr>
 <%if false %>
 <tr>

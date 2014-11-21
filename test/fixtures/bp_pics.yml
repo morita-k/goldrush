@@ -1,6 +1,6 @@
 bp_pics_1:
   id: 1
-  owner_id: 
+  owner_id: 1
   business_partner_id: 1
   bp_pic_name: "佐藤 一郎"
   bp_pic_short_name: "佐藤"
@@ -33,7 +33,7 @@ bp_pics_1:
   deleted: 0
 bp_pics_2:
   id: 2
-  owner_id: 
+  owner_id: 1
   business_partner_id: 2
   bp_pic_name: "斉藤 五郎"
   bp_pic_short_name: "斉藤"
@@ -66,7 +66,7 @@ bp_pics_2:
   deleted: 0
 bp_pics_3:
   id: 3
-  owner_id: 
+  owner_id: 1
   business_partner_id: 3
   bp_pic_name: "加藤 次郎"
   bp_pic_short_name: "加藤"
@@ -99,7 +99,7 @@ bp_pics_3:
   deleted: 0
 bp_pics_4:
   id: 4
-  owner_id: 
+  owner_id: 1
   business_partner_id: 1
   bp_pic_name: "送信エラー取引先"
   bp_pic_short_name: "エラー"
@@ -109,6 +109,138 @@ bp_pics_4:
   tel_direct: ""
   tel_mobile: ""
   email1: "hogehoge"
+  email2: ""
+  contact_date: 
+  sales_pic_id: 
+  contact_mail_flg: 
+  nondelivery_score: 0
+  working_status_type: ""
+  change_to_bp_pic_id: 
+  substitute_bp_pic_id: 
+  jiet: 
+  starred: 
+  rating: 
+  import_mail_id: 
+  tag_text: ""
+  memo: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+bp_pics_5:
+  id: 5
+  owner_id: 2
+  business_partner_id: 5
+  bp_pic_name: "佐藤 一郎"
+  bp_pic_short_name: "佐藤"
+  bp_pic_name_kana: "佐藤"
+  depertment: ""
+  position: ""
+  tel_direct: ""
+  tel_mobile: ""
+  email1: "sixth_john_doe@tttest.co.jp"
+  email2: ""
+  contact_date: 
+  sales_pic_id: 16
+  contact_mail_flg: 
+  nondelivery_score: 0
+  working_status_type: ""
+  change_to_bp_pic_id: 
+  substitute_bp_pic_id: 
+  jiet: 
+  starred: 
+  rating: 
+  import_mail_id: 
+  tag_text: ""
+  memo: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+bp_pics_6:
+  id: 6
+  owner_id: 2
+  business_partner_id: 6
+  bp_pic_name: "斉藤 五郎"
+  bp_pic_short_name: "斉藤"
+  bp_pic_name_kana: "斉藤"
+  depertment: ""
+  position: ""
+  tel_direct: ""
+  tel_mobile: ""
+  email1: "seventh_john_doe@tttest.co.jp"
+  email2: ""
+  contact_date: 
+  sales_pic_id: 
+  contact_mail_flg: 
+  nondelivery_score: 0
+  working_status_type: ""
+  change_to_bp_pic_id: 
+  substitute_bp_pic_id: 
+  jiet: 
+  starred: 
+  rating: 
+  import_mail_id: 
+  tag_text: ""
+  memo: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+bp_pics_7:
+  id: 7
+  owner_id: 2
+  business_partner_id: 7
+  bp_pic_name: "加藤 次郎"
+  bp_pic_short_name: "加藤"
+  bp_pic_name_kana: "加藤"
+  depertment: ""
+  position: ""
+  tel_direct: ""
+  tel_mobile: ""
+  email1: "eighth_john_doe@tttest.co.jp"
+  email2: ""
+  contact_date: 
+  sales_pic_id: 17
+  contact_mail_flg: 
+  nondelivery_score: 0
+  working_status_type: ""
+  change_to_bp_pic_id: 
+  substitute_bp_pic_id: 
+  jiet: 
+  starred: 
+  rating: 
+  import_mail_id: 
+  tag_text: ""
+  memo: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+bp_pics_8:
+  id: 8
+  owner_id: 2
+  business_partner_id: 5
+  bp_pic_name: "送信エラー取引先"
+  bp_pic_short_name: "エラー"
+  bp_pic_name_kana: "エラー"
+  depertment: ""
+  position: ""
+  tel_direct: ""
+  tel_mobile: ""
+  email1: "fugafuga"
   email2: ""
   contact_date: 
   sales_pic_id: 

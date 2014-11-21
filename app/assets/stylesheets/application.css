@@ -12,6 +12,9 @@
  *= require_self
  */
 
+/*
+ * login
+ */
 .login_left {
   float: left;
   width: 28%;
@@ -33,11 +36,75 @@
   width: auto;
   margin-top: 9px;
 }
-}
 .login_area img {
   margin-top: 5%;
 }
 
+.login_area .enter_links {
+  margin-top: 1.0em;
+  text-align: center;
+  font-size: 115%;
+  overflow: hidden;
+}
+
+.login_area .enter_links p {
+  line-height: 1.2em;
+}
+
+.login_area .enter_links a.getting_started {
+  margin-left: 8.9em;
+}
+
+.login_area .enter_links a.getting_started:after {
+  content: '（今すぐ始める！）';
+  position: relative;
+  opacity: 0;
+  left: -10px;
+  transition: all 0.3s;
+}
+
+.login_area .enter_links a.getting_started:focus:after,
+.login_area .enter_links a.getting_started:hover:after {
+  opacity: 1;
+  left: 0px;
+}
+
+/*
+ * help
+ */
+.help_area {
+  width: 96%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.help_area h1,
+.help_area h2,
+.help_area h3,
+.help_area h4,
+.help_area h5,
+.help_area h6 {
+  width: 100%;
+}
+
+.explanation {
+  margin: 10px 15px;
+}
+.explanation .section {
+  margin-bottom: 30px;
+}
+.explanation .image-line {
+  margin: 5px 15px 15px 15px;
+  max-width: 800px;
+}
+.explanation .icon-next-step {
+  text-align: center;
+  max-width: 800px;
+}
+
+/*
+ * contents
+ */
 div.overflow_hidden {
   overflow: hidden;
   height:1.5em;
@@ -101,3 +168,27 @@ div.flag {
   font-size: inherit;
   margin-right: 5px;
 }
+
+/*
+ * footer
+ */
+.modal-footer {
+  padding-bottom: 0;
+}
+
+.footer_centered {
+  text-align: center;
+}
+
+.footer_centered ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.footer_centered ul li {
+  display: inline-block;
+  margin-left: .2em;
+  margin-right: .2em;
+  font-size: 95%;
+}
+

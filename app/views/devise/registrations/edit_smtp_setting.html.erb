@@ -1,0 +1,59 @@
+<style type="text/css">
+  .form_table input[type="text"],
+  .form_table input[type="password"] {
+    width: 17em;
+  }
+
+  .show_table #import_mail_forwarding_address {
+    width: 17em;
+  }
+</style>
+<%= form_for(resource, :as => resource_name, :url => {:action => :update_smtp_setting}, :html => { :method => :put }) do |f| %>
+<%= accordion_around "メール配信設定の変更", "smtp_setting" do %>
+<%= error_messages_for :user %>
+<table class="form_table">
+  <tr>
+  <th><%= f.label :smtp_settings_enable_starttls_auto, 'SMTP自動TLS' %></th>
+  <td><label><%= f.check_box :smtp_settings_enable_starttls_auto %> チェックされた場合、ON</label></td>
+  </tr>
+
+  <tr>
+  <th><%= f.label :smtp_settings_address, 'SMTPサーバーアドレス' %></th>
+  <td><%= f.text_field :smtp_settings_address, :autofocus => true %></td>
+  </tr>
+
+  <tr>
+  <th><%= f.label :smtp_settings_port, 'SMTPポート' %></th>
+  <td><%= f.select :smtp_settings_port, available_port_list %></td>
+  </tr>
+
+  <tr>
+  <th><%= f.label :smtp_settings_domain, 'SMTPドメイン' %></th>
+  <td><%= resource.smtp_settings_domain %></td>
+  </tr>
+
+  <tr>
+  <th><%= f.label :smtp_settings_user_name, 'SMTPユーザー' %></th>
+  <td><%= f.text_field :smtp_settings_user_name %></td>
+  </tr>
+
+  <tr>
+  <th><%= f.label :smtp_settings_password, 'SMTPパスワード' %></th>
+  <td><%= f.password_field :smtp_settings_password %> <i>(変更しない場合はブランクにしてください)</i></td>
+  </tr>
+</table>
+<% end %>
+<div class="submit_box">
+  <%= f.submit "変更する", btn_primary(:confirm => "設定を変更する際、自分宛てにテストメールを送信します。") %>
+  <%= link_or_back "戻る", root_path %>
+</div>
+<% end %>
+
+<%= accordion_around "取り込みメール設定", "import_mail_setting" do %>
+<table class="show_table">
+  <tr>
+  <th><%= label_tag :import_mail_forwarding_address, '転送先メールアドレス' %></th>
+  <td><%= text_field_tag :import_mail_forwarding_address, available_import_mail_forwarding_address, :class => "form-control", :readonly => true, :onclick => 'this.select();' %> <i>(メール取り込み機能を使用する場合、こちらのアドレスを使用して下さい)</i></td>
+  </tr>
+</table>
+<% end %>
