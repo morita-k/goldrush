@@ -13,7 +13,7 @@ class ContractTermController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    @contract_term_pages, @contract_terms = paginate :contract_terms, :conditions =>["deleted = 0"], :per_page => current_user.per_page
+    @contract_term_pages, @contract_terms = paginate :contract_terms, :conditions =>["deleted = 0"], :per => current_user.per_page
   end
 
   def show
@@ -25,7 +25,7 @@ class ContractTermController < ApplicationController
   end
 
   def create
-    @contract_term = ContractTerm.new(params[:contract_term])
+    @contract_term = create_model(:contract_terms, params[:contract_term])
     set_user_column @contract_term
     @contract_term.save!
     flash[:notice] = 'ContractTerm was successfully created.'

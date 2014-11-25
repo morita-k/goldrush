@@ -1,0 +1,11 @@
+<%= form_tag :action => :create do %>
+<%= accordion_around "招待メールの送信", "" do %>
+<%= error_messages_for :invite %>
+<div><%= label_tag :email, 'Eメール(*)' %><br/>
+  <%= email_field_tag :email, params[:email], :autofocus => true, :size => 30 %></div>
+<% end %>
+<div class="submit_box">
+  <%= submit_tag "招待メールを送信する", btn_primary %>
+  <%= link_or_back '戻る', root_path %>
+</div>
+<% end %>

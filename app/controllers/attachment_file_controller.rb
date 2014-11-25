@@ -19,7 +19,7 @@ class AttachmentFileController < ApplicationController
     end
     
     Contract.transaction do
-      attachment_file = AttachmentFile.new
+      attachment_file = create_model(:attachment_files)
       attachment_file.create_and_store!(upfile, params[:parent_id], upfile.original_filename, params[:parent_table], current_user.login)
     end
     
@@ -36,7 +36,7 @@ class AttachmentFileController < ApplicationController
     attachment_file.deleted_at = Time.now
     set_user_column attachment_file
     attachment_file.save!
-    
+
     redirect_to back_to
   end
 

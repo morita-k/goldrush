@@ -1,6 +1,6 @@
 delivery_mails_1:
   id: 1
-  owner_id: 
+  owner_id: 1
   delivery_mail_type: "group"
   bp_pic_group_id: 1
   mail_status_type: "unsend"
@@ -13,6 +13,7 @@ delivery_mails_1:
   planned_setting_at: <%= "2000/01/01 00:00:00" %>
   mail_send_status_type: "ready"
   send_end_at: 
+  delivery_user_id: 1
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0
@@ -22,7 +23,53 @@ delivery_mails_1:
   deleted: 0
 delivery_mails_2:
   id: 2
-  owner_id: 
+  owner_id: 1
+  delivery_mail_type: "group"
+  bp_pic_group_id: 1
+  mail_status_type: "unsend"
+  subject: "テスト"
+  content: "送信エラーとなる取引先担当を一つだけもつメール"
+  mail_from_name: "aaa <aaaaa@aaatttest.com>"
+  mail_from: "aaaaa@aaatttest.com"
+  mail_cc: ""
+  mail_bcc: ""
+  planned_setting_at: <%= (Time.now + 60 * 60 * 24).to_s(:db) %>
+  mail_send_status_type: "ready"
+  send_end_at: 
+  delivery_user_id: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+delivery_mails_3:
+  id: 3
+  owner_id: 2
+  delivery_mail_type: "group"
+  bp_pic_group_id: 2
+  mail_status_type: "unsend"
+  subject: "どうも"
+  content: "こんにちは"
+  mail_from_name: "aaa <aaaaa@aaatttest.com>"
+  mail_from: "aaaaa@aaatttest.com"
+  mail_cc: ""
+  mail_bcc: ""
+  planned_setting_at: <%= "2000/01/01 00:00:00" %>
+  mail_send_status_type: "ready"
+  send_end_at: 
+  delivery_user_id: 1
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+delivery_mails_4:
+  id: 4
+  owner_id: 2
   delivery_mail_type: "group"
   bp_pic_group_id: 2
   mail_status_type: "unsend"
@@ -35,6 +82,7 @@ delivery_mails_2:
   planned_setting_at: <%= (Time.now + 60 * 60 * 24).to_s(:db) %>
   mail_send_status_type: "ready"
   send_end_at: 
+  delivery_user_id: 16
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>
   lock_version: 0

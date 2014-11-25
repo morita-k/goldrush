@@ -40,8 +40,10 @@
   </tr>
 
   <tr>
-    <td colspan=2>
+    <td colspan=2 style="<%= current_user.enable_contract? ? '' : 'padding-top:10px;' %>">
+      <% if current_user.enable_contract? %>
       <%= render :partial => 'delivery_mails/insertcursorlist' %>
+      <% end %>
       <%= f.text_area :content, :onFocus => "xtarget = this;" %><br/>
       ※ 署名はテンプレート選択時のユーザーの物が自動的に挿入されます
     </td>

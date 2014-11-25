@@ -13,15 +13,15 @@ class Tag < ActiveRecord::Base
     tags && tags.split(",").size > 1
   end
 
-  def Tag.make_conditions_for_tag(tags, tag_key, min_id=0)
+  def Tag.make_conditions_for_tag(owner_id, tags, tag_key, min_id=0)
     sqls = []
-    sql_params = [tag_key, min_id]
+    sql_params = [owner_id, tag_key, min_id]
     tags.split(",").each do |tag|
       sqls << "tag_details.tag_text = ?"
       sql_params << tag.strip.downcase
     end
 
-    my_sql = "select parent_id, count(parent_id) as cnt from tag_details where tag_key = ? and parent_id > ? and (#{sqls.join(' or ')}) group by parent_id having count(parent_id) > ?"
+    my_sql = "select parent_id, count(parent_id) as cnt from tag_details where owner_id = ? and tag_key = ? and parent_id > ? and (#{sqls.join(' or ')}) group by parent_id having count(parent_id) > ?"
     sql_params << (sqls.size - 1)
     parent_ids = TagDetail.find_by_sql(sql_params.unshift(my_sql)).map{|x| x.parent_id}
     return parent_ids
@@ -33,40 +33,41 @@ class Tag < ActiveRecord::Base
     return tag_string.to_s.downcase.split(",").delete_if{|x| x.blank? }.sort.uniq
   end
 
-  def Tag.create_tags!(key, parent_id, tag_string)
+  def Tag.create_tags!(owner_id, key, parent_id, tag_string)
     splited_tags = Tag.normalize_tag(tag_string)
     splited_tags.each do |tag_text|
-      unless t = Tag.find(:first, :conditions => ["tag_text = ? and tag_key = ? and deleted = 0", tag_text, key])
+      unless t = Tag.find(:first, :conditions => ["owner_id = ? and tag_text = ? and tag_key = ? and deleted = 0", owner_id, tag_text, key])
         t = Tag.new
+        t.owner_id = owner_id
         t.tag_text = tag_text
         t.tag_key = key
 #        t.created_user = self.updated_user
 #        t.updated_user = self.updated_user
         t.save!
       end
-      TagDetail.create_tags!(t.id, parent_id, tag_text, key)
-      TagJournal.put_journal!(t.id, 1)
+      TagDetail.create_tags!(owner_id, t.id, parent_id, tag_text, key)
+      TagJournal.put_journal!(owner_id, t.id, 1)
       # TODO: 利用者が少ないため、ここで集計しているが本来cronで定期的に集計する
       # 利用者が増えたら対応
     end
     #TagJournal.summry_tags!
   end
 
-  def Tag.update_tags!(key, parent_id, tag_string)
+  def Tag.update_tags!(owner_id, key, parent_id, tag_string)
      # 旧Tagに対する処理
-    details = TagDetail.find(:all, :joins => :tag, :readonly => false, :conditions => ["tags.tag_key = ? and parent_id = ? and tags.deleted = 0 and tag_details.deleted = 0", key, parent_id])
+    details = TagDetail.find(:all, :joins => :tag, :readonly => false, :conditions => ["tags.owner_id = ? and tags.tag_key = ? and parent_id = ? and tags.deleted = 0 and tag_details.deleted = 0", owner_id, key, parent_id])
     details.each do |detail|
       detail.deleted = 9
       detail.deleted_at = Time.now
 #      deteled_user = '???'
       detail.save!
-      TagJournal.put_journal!(detail.tag_id, -1)
+      TagJournal.put_journal!(owner_id, detail.tag_id, -1)
     end
-    Tag.create_tags!(key, parent_id, tag_string)
+    Tag.create_tags!(owner_id, key, parent_id, tag_string)
   end
 
-  def Tag.delete_tags!(key, parent_id)
-    Tag.update_tags!(key, parent_id, "")
+  def Tag.delete_tags!(owner_id, key, parent_id)
+    Tag.update_tags!(owner_id, key, parent_id, "")
   end
   
   def Tag.clear_tag_cache
@@ -74,28 +75,28 @@ class Tag < ActiveRecord::Base
   end
   Tag.clear_tag_cache
   
-  def Tag.verygood_tags
-    starred_tags(2)
+  def Tag.verygood_tags(owner_id)
+    starred_tags(owner_id, 2)
   end
 
-  def Tag.good_tags
-    starred_tags(1)
+  def Tag.good_tags(owner_id)
+    starred_tags(owner_id, 1)
   end
 
-  def Tag.even_tags
-    starred_tags(0)
+  def Tag.even_tags(owner_id)
+    starred_tags(owner_id, 0)
   end
 
-  def Tag.notbad_tags
-    starred_tags(4)
+  def Tag.notbad_tags(owner_id)
+    starred_tags(owner_id, 4)
   end
 
-  def Tag.bad_tags
-    starred_tags(3)
+  def Tag.bad_tags(owner_id)
+    starred_tags(owner_id, 3)
   end
 
-  def Tag.starred_tags(star)
-    @@starred_tags_cache[star] || (@@starred_tags_cache[star] = where(deleted: 0, tag_key: "import_mails", starred: star).map{|x| x.tag_text})
+  def Tag.starred_tags(owner_id, star)
+    (@@starred_tags_cache[star] || @@starred_tags_cache[star] = where(deleted: 0, tag_key: "import_mails", starred: star).select{|x| x.owner_id == owner_id}.map{|x| x.tag_text})
   end
   
   # strに対して、全角半角変換を行い、不要な文字列(メアド、URL)を削除する
@@ -104,7 +105,7 @@ class Tag < ActiveRecord::Base
     Zen2Han.toHan(str).gsub(/[\_\-\+\.\w]+@[\-a-z0-9]+(\.[\-a-z0-9]+)*\.[a-z]{2,6}/i, "").gsub(/https?:\/\/\w[\w\.\-\/]+/i,"")
   end
 
-  def Tag.analyze_skill_tags(body)
+  def Tag.analyze_skill_tags(owner_id, body)
     require 'string_util'
     require 'special_word'
     words = StringUtil.detect_words(body).inject([]) do |r,item|
@@ -121,10 +122,10 @@ class Tag < ActiveRecord::Base
     end
 
     words = words.uniq.reject{|w|
-      SpecialWord.ignore_words.include?(w.downcase) || w =~ /^\d/ || w.length == 1 # 辞書に存在するか、数字で始まる単語、1文字
+      SpecialWord.ignore_words(owner_id).include?(w.downcase) || w =~ /^\d/ || w.length == 1 # 辞書に存在するか、数字で始まる単語、1文字
     }
 
-    SpecialWord.special_words.each do |word|
+    SpecialWord.special_words(owner_id).each do |word|
       if body =~ Regexp.new(word.target_word, Regexp::IGNORECASE)
         words << word.convert_to_word
       end

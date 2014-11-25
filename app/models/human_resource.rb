@@ -32,12 +32,12 @@ class HumanResource < ActiveRecord::Base
   
   # タグ生成の本体
   def make_tags(body)
-    Tag.analyze_skill_tags(Tag.pre_proc_body(body))
+    Tag.analyze_skill_tags(owner_id, Tag.pre_proc_body(body))
   end
 
   def make_skill_tags!
     self.skill_tag = make_tags(skill)
-    Tag.update_tags!("human_resources", id, skill_tag)
+    Tag.update_tags!(owner_id, "human_resources", id, skill_tag)
   end
 
   # 年齢はDBに入れる前に半角数字(String)のみにする

@@ -154,7 +154,7 @@ class Contract < ActiveRecord::Base
   end
 
   def contract_pic_name
-    contract_pic && contract_pic.employee.employee_name
+    contract_pic.blank? ? "" : contract_pic.nickname
   end
   
   def payment_diff
@@ -186,7 +186,7 @@ class Contract < ActiveRecord::Base
   end
 
   def next_term
-    Contract.where("deleted = 0 and approach_id = ? and contract_start_date > ? and contract_status_type != ?", approach_id, contract_end_date, 'finished').order("contract_start_date").first
+    Contract.where("owner_id = ? and deleted = 0 and approach_id = ? and contract_start_date > ? and contract_status_type != ?", owner_id, approach_id, contract_end_date, 'finished').order("contract_start_date").first
   end
 
   def in_term?(term_start, term_end)
@@ -288,6 +288,7 @@ class Contract < ActiveRecord::Base
     down.save!
 
     n = Contract.new
+    n.owner_id = c.owner_id
     n.contract_status_type = 'open'
     n.approach_id = c.approach_id
     n.contract_pic_id = c.contract_pic_id

@@ -1,0 +1,72 @@
+photos_1:
+  id: 1
+  owner_id: 1
+  parent_table_name: bp_pics
+  parent_id: 1
+  file_name: file_name
+  extention: .jpg
+  file_path: files/dummy
+  thumbnail_path: files/dummy
+  photo_status_type: fixed
+  photo_sender: テスト送信
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+photos_2:
+  id: 2
+  owner_id: 1
+  parent_table_name: bp_pics
+  parent_id: 2
+  file_name: file_name
+  extention: .png
+  file_path: files/dummy
+  thumbnail_path: files/dummy
+  photo_status_type: unfixed
+  photo_sender: テスト送信
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+photos_3:
+  id: 3
+  owner_id: 2
+  parent_table_name: bp_pics
+  parent_id: 5
+  file_name: file_name
+  extention: .jpg
+  file_path: files/dummy
+  thumbnail_path: files/dummy
+  photo_status_type: fixed
+  photo_sender: テスト送信
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+photos_4:
+  id: 4
+  owner_id: 2
+  parent_table_name: bp_pics
+  parent_id: 6
+  file_name: file_name
+  extention: .png
+  file_path: files/dummy
+  thumbnail_path: files/dummy
+  photo_status_type: unfixed
+  photo_sender: テスト送信
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0

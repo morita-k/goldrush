@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
 class SysConfigController < ApplicationController
+  before_filter :only_super_user
 
   def index
     list
@@ -13,7 +14,8 @@ class SysConfigController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    @sys_config_pages, @sys_configs = paginate :sys_configs, :per_page => 100, :conditions => "deleted = 0 ", :order => "id"
+    # owner_id == 0 のデータは各owner間で共通
+    @sys_configs = SysConfig.where(:deleted => 0, :owner_id => [0, current_user.owner_id]).order("id").page(params[:page]).per(100)
   end
 
   def show
@@ -25,7 +27,7 @@ class SysConfigController < ApplicationController
   end
 
   def create
-    @sys_config = SysConfig.new(params[:sys_config])
+    @sys_config = create_model(:sys_configs, params[:sys_config])
     if @sys_config.save
       flash[:notice] = 'SysConfig was successfully created.'
       redirect_to :action => 'list'

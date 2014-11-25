@@ -13,6 +13,7 @@ require 'rails/test_help'
 
 class ActionController::TestCase
   include Devise::TestHelpers
+  include ActionDispatch::TestProcess
 end
 
 class ActiveSupport::TestCase

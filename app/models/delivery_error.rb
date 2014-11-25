@@ -2,8 +2,9 @@ class DeliveryError < ActiveRecord::Base
   belongs_to :delivery_mail
   belongs_to :bp_pic
   
-  def DeliveryError.build(delivery_mail_id, bp_pic, error_type, error_text)
-    error = DeliveryError.new()
+  def DeliveryError.build(owner_id, delivery_mail_id, bp_pic, error_type, error_text)
+    error = DeliveryError.new
+    error.owner_id = owner_id
     error.delivery_mail_id = delivery_mail_id
     error.business_partner_id = bp_pic.business_partner_id
     error.bp_pic_id = bp_pic.id
@@ -13,11 +14,11 @@ class DeliveryError < ActiveRecord::Base
     return error
   end
   
-  def DeliveryError.send_error(delivery_mail_id, bp_pic, exception)
+  def DeliveryError.send_error(owner_id, delivery_mail_id, bp_pic, exception)
     error_type = :send_error
     error_text = ([exception.class.to_s, exception.message] + exception.backtrace).join("\n")
     
-    return self.build(delivery_mail_id, bp_pic, error_type, error_text)
+    return self.build(owner_id, delivery_mail_id, bp_pic, error_type, error_text)
   end
   
 end

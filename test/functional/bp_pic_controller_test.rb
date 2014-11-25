@@ -9,10 +9,10 @@ class BpPicControllerTest < ActionController::TestCase
   end
 
   test "delete group_detail in all mail groups then destroy bp_pic" do
-   	before_details_count = BpPicGroupDetail.where(id: @bp_pic.id, deleted: 0).count
+   	before_details_count = BpPicGroupDetail.where(bp_pic_id: @bp_pic.id, deleted: 0).count
     assert_difference('BpPicGroupDetail.where(deleted: 0).count', -before_details_count) do
       delete :destroy, id: @bp_pic.id
-	end
+    end
   end
 
 end

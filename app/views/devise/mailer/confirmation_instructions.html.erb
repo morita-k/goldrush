@@ -1,5 +1,5 @@
 <p>Welcome <%= @email %>!</p>
 
-<p>You can confirm your account email through the link below:</p>
+<p>下記のリンクからアカウント登録を完了して下さい:</p>
 
-<p><%= link_to 'Confirm my account', confirmation_url(@resource, :confirmation_token => @resource.confirmation_token) %></p>
+<p><%= link_to 'アカウント登録完了', confirmation_url(@resource, :confirmation_token => @resource.confirmation_token), :only_path => false, :protocol => 'https' %></p>

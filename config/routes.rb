@@ -1,6 +1,13 @@
 # -*- encoding: utf-8 -*-
 GoldRush::Application.routes.draw do
 
+  resources :help do
+    collection do
+      get 'privacy'
+      get 'terms'
+    end
+  end
+
   resources :special_words
 
   namespace :import_mail_match do
@@ -76,7 +83,18 @@ GoldRush::Application.routes.draw do
     end
   end
 
-  devise_for :auth, :class_name => User, :controllers => {:sessions => 'auth/sessions'}
+  devise_for :auth, :class_name => User, :controllers => {
+    :sessions => 'auth/sessions',
+    :registrations => 'auth/registrations',
+    :confirmations => 'auth/confirmations'
+  }
+
+  devise_scope :auth do
+    get 'auth/edit_smtp_setting' => 'auth/registrations#edit_smtp_setting'
+    get 'auth/show_smtp_setting' => 'auth/registrations#show_smtp_setting'
+    put 'auth/update_smtp_setting' => 'auth/registrations#update_smtp_setting'
+  end
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

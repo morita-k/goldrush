@@ -17,3 +17,41 @@ tags_1:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
+tags_2:
+  id: 2
+  owner_id: 1
+  tag_key: "owner_1_tag_key"
+  tag_text: "owner_1_tag_text"
+  tag_count: 0
+  inc_count: 0
+  tag_level: 0
+  display_order1: 
+  display_order2: 
+  display_order3: 
+  starred: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+tags_3:
+  id: 3
+  owner_id: 2
+  tag_key: "owner_2_tag_key"
+  tag_text: "owner_2_tag_text"
+  tag_count: 0
+  inc_count: 0
+  tag_level: 0
+  display_order1: 
+  display_order2: 
+  display_order3: 
+  starred: 
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0

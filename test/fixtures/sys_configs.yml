@@ -1,6 +1,6 @@
 sys_configs_1:
   id: 1
-  owner_id: 
+  owner_id: 0
   config_section: "per_page_count"
   config_key: "default"
   value1: "50"
@@ -17,822 +17,6 @@ sys_configs_1:
 sys_configs_2:
   id: 2
   owner_id: 
-  config_section: "vacation_half_year"
-  config_key: "00"
-  value1: ""
-  value2: ""
-  value3: ""
-  config_description_text: "N*6ヶ月勤務(1～6ヶ月は半年計算で)"
-  created_at: <%= Time.now.to_s(:db) %>
-  updated_at: <%= Time.now.to_s(:db) %>
-  lock_version: 0
-  created_user: "initial"
-  updated_user: "initial"
-  deleted_at: 
-  deleted: 0
-sys_configs_3:
-  id: 3
-  owner_id: 
-  config_section: "vacation_half_year"
-  config_key: "01"
-  value1: "10"
-  value2: ""
-  value3: ""
-  config_description_text: "N*6ヶ月勤務"
-  created_at: <%= Time.now.to_s(:db) %>
-  updated_at: <%= Time.now.to_s(:db) %>
-  lock_version: 0
-  created_user: "initial"
-  updated_user: "initial"
-  deleted_at: 
-  deleted: 0
-sys_configs_4:
-  id: 4
-  owner_id: 
-  config_section: "vacation_half_year"
-  config_key: "02"
-  value1: "10"
-  value2: ""
-  value3: ""
-  config_description_text: "N*6ヶ月勤務"
-  created_at: <%= Time.now.to_s(:db) %>
-  updated_at: <%= Time.now.to_s(:db) %>
-  lock_version: 0
-  created_user: "initial"
-  updated_user: "initial"
-  deleted_at: 
-  deleted: 0
-sys_configs_5:
-  id: 5
-  owner_id: 
-  config_section: "vacation_half_year"
-  config_key: "03"
-  value1: "11"
-  value2: ""
-  value3: ""
-  config_description_text: "N*6ヶ月勤務"
-  created_at: <%= Time.now.to_s(:db) %>
-  updated_at: <%= Time.now.to_s(:db) %>
-  lock_version: 0
-  created_user: "initial"
-  updated_user: "initial"
-  deleted_at: 
-  deleted: 0
-sys_configs_6:
-  id: 6
-  owner_id: 
-  config_section: "vacation_half_year"
-  config_key: "04"
-  value1: "11"
-  value2: ""
-  value3: ""
-  config_description_text: "N*6ヶ月勤務"
-  created_at: <%= Time.now.to_s(:db) %>
-  updated_at: <%= Time.now.to_s(:db) %>
-  lock_version: 0
-  created_user: "initial"
-  updated_user: "initial"
-  deleted_at: 
-  deleted: 0
-sys_configs_7:
-  id: 7
-  owner_id: 
-  config_section: "vacation_half_year"
-  config_key: "05"
-  value1: "12"
-  value2: ""
-  value3: ""
-  config_description_text: "N*6ヶ月勤務"
-  created_at: <%= Time.now.to_s(:db) %>
-  updated_at: <%= Time.now.to_s(:db) %>
-  lock_version: 0
-  created_user: "initial"
-  updated_user: "initial"
-  deleted_at: 
-  deleted: 0
-sys_configs_8:
-  id: 8
-  owner_id: 
-  config_section: "vacation_half_year"
-  config_key: "06"
-  value1: "12"
-  value2: ""
-  value3: ""
-  config_description_text: "N*6ヶ月勤務"
-  created_at: <%= Time.now.to_s(:db) %>
-  updated_at: <%= Time.now.to_s(:db) %>
-  lock_version: 0
-  created_user: "initial"
-  updated_user: "initial"
-  deleted_at: 
-  deleted: 0
-sys_configs_9:
-  id: 9
-  owner_id: 
-  config_section: "vacation_half_year"
-  config_key: "07"
-  value1: "14"
-  value2: ""
-  value3: ""
-  config_description_text: "N*6ヶ月勤務"
-  created_at: <%= Time.now.to_s(:db) %>
-  updated_at: <%= Time.now.to_s(:db) %>
-  lock_version: 0
-  created_user: "initial"
-  updated_user: "initial"
-  deleted_at: 
-  deleted: 0
-sys_configs_10:
-  id: 10
-  owner_id: 
-  config_section: "vacation_half_year"
-  config_key: "08"
-  value1: "14"
-  value2: ""
-  value3: ""
-  config_description_text: "N*6ヶ月勤務"
-  created_at: <%= Time.now.to_s(:db) %>
-  updated_at: <%= Time.now.to_s(:db) %>
-  lock_version: 0
-  created_user: "initial"
-  updated_user: "initial"
-  deleted_at: 
-  deleted: 0
-sys_configs_11:
-  id: 11
-  owner_id: 
-  config_section: "vacation_half_year"
-  config_key: "09"
-  value1: "16"
-  value2: ""
-  value3: ""
-  config_description_text: "N*6ヶ月勤務"
-  created_at: <%= Time.now.to_s(:db) %>
-  updated_at: <%= Time.now.to_s(:db) %>
-  lock_version: 0
-  created_user: "initial"
-  updated_user: "initial"
-  deleted_at: 
-  deleted: 0
-sys_configs_12:
-  id: 12
-  owner_id: 
-  config_section: "vacation_half_year"
-  config_key: "10"
-  value1: "16"
-  value2: ""
-  value3: ""
-  config_description_text: "N*6ヶ月勤務"
-  created_at: <%= Time.now.to_s(:db) %>
-  updated_at: <%= Time.now.to_s(:db) %>
-  lock_version: 0
-  created_user: "initial"
-  updated_user: "initial"
-  deleted_at: 
-  deleted: 0
-sys_configs_13:
-  id: 13
-  owner_id: 
-  config_section: "vacation_half_year"
-  config_key: "11"
-  value1: "18"
-  value2: ""
-  value3: ""
-  config_description_text: "N*6ヶ月勤務"
-  created_at: <%= Time.now.to_s(:db) %>
-  updated_at: <%= Time.now.to_s(:db) %>
-  lock_version: 0
-  created_user: "initial"
-  updated_user: "initial"
-  deleted_at: 
-  deleted: 0
-sys_configs_14:
-  id: 14
-  owner_id: 
-  config_section: "vacation_half_year"
-  config_key: "12"
-  value1: "18"
-  value2: ""
-  value3: ""
-  config_description_text: "N*6ヶ月勤務"
-  created_at: <%= Time.now.to_s(:db) %>
-  updated_at: <%= Time.now.to_s(:db) %>
-  lock_version: 0
-  created_user: "initial"
-  updated_user: "initial"
-  deleted_at: 
-  deleted: 0
-sys_configs_15:
-  id: 15
-  owner_id: 
-  config_section: "vacation_half_year"
-  config_key: "13"
-  value1: "20"
-  value2: ""
-  value3: ""
-  config_description_text: "N*6ヶ月勤務"
-  created_at: <%= Time.now.to_s(:db) %>
-  updated_at: <%= Time.now.to_s(:db) %>
-  lock_version: 0
-  created_user: "initial"
-  updated_user: "initial"
-  deleted_at: 
-  deleted: 0
-sys_configs_16:
-  id: 16
-  owner_id: 
-  config_section: "vacation_half_year"
-  config_key: "14"
-  value1: "20"
-  value2: ""
-  value3: ""
-  config_description_text: "N*6ヶ月勤務(14*半年以上経過(8年目))"
-  created_at: <%= Time.now.to_s(:db) %>
-  updated_at: <%= Time.now.to_s(:db) %>
-  lock_version: 0
-  created_user: "initial"
-  updated_user: "initial"
-  deleted_at: 
-  deleted: 0
-sys_configs_17:
-  id: 17
-  owner_id: 
-  config_section: "vacation_month"
-  config_key: "1"
-  value1: "2"
-  value2: ""
-  value3: ""
-  config_description_text: "1ヶ月勤務"
-  created_at: <%= Time.now.to_s(:db) %>
-  updated_at: <%= Time.now.to_s(:db) %>
-  lock_version: 0
-  created_user: "initial"
-  updated_user: "initial"
-  deleted_at: 
-  deleted: 0
-sys_configs_18:
-  id: 18
-  owner_id: 
-  config_section: "vacation_month"
-  config_key: "2"
-  value1: "3"
-  value2: ""
-  value3: ""
-  config_description_text: "1ヶ月勤務"
-  created_at: <%= Time.now.to_s(:db) %>
-  updated_at: <%= Time.now.to_s(:db) %>
-  lock_version: 0
-  created_user: "initial"
-  updated_user: "initial"
-  deleted_at: 
-  deleted: 0
-sys_configs_19:
-  id: 19
-  owner_id: 
-  config_section: "vacation_month"
-  config_key: "3"
-  value1: "4"
-  value2: ""
-  value3: ""
-  config_description_text: "1ヶ月勤務"
-  created_at: <%= Time.now.to_s(:db) %>
-  updated_at: <%= Time.now.to_s(:db) %>
-  lock_version: 0
-  created_user: "initial"
-  updated_user: "initial"
-  deleted_at: 
-  deleted: 0
-sys_configs_20:
-  id: 20
-  owner_id: 
-  config_section: "vacation_month"
-  config_key: "4"
-  value1: "5"
-  value2: ""
-  value3: ""
-  config_description_text: "1ヶ月勤務"
-  created_at: <%= Time.now.to_s(:db) %>
-  updated_at: <%= Time.now.to_s(:db) %>
-  lock_version: 0
-  created_user: "initial"
-  updated_user: "initial"
-  deleted_at: 
-  deleted: 0
-sys_configs_21:
-  id: 21
-  owner_id: 
-  config_section: "vacation_month"
-  config_key: "5"
-  value1: "6"
-  value2: ""
-  value3: ""
-  config_description_text: "1ヶ月勤務"
-  created_at: <%= Time.now.to_s(:db) %>
-  updated_at: <%= Time.now.to_s(:db) %>
-  lock_version: 0
-  created_user: "initial"
-  updated_user: "initial"
-  deleted_at: 
-  deleted: 0
-sys_configs_22:
-  id: 22
-  owner_id: 
-  config_section: "vacation_month"
-  config_key: "6"
-  value1: "8"
-  value2: ""
-  value3: ""
-  config_description_text: "1ヶ月勤務"
-  created_at: <%= Time.now.to_s(:db) %>
-  updated_at: <%= Time.now.to_s(:db) %>
-  lock_version: 0
-  created_user: "initial"
-  updated_user: "initial"
-  deleted_at: 
-  deleted: 0
-sys_configs_23:
-  id: 23
-  owner_id: 
-  config_section: "annual_day_count"
-  config_key: "total_max"
-  value1: "40"
-  value2: ""
-  value3: ""
-  config_description_text: ""
-  created_at: <%= Time.now.to_s(:db) %>
-  updated_at: <%= Time.now.to_s(:db) %>
-  lock_version: 0
-  created_user: "initial"
-  updated_user: "initial"
-  deleted_at: 
-  deleted: 0
-sys_configs_24:
-  id: 24
-  owner_id: 
-  config_section: "life_plan_day_count"
-  config_key: "total_max"
-  value1: "40"
-  value2: ""
-  value3: ""
-  config_description_text: ""
-  created_at: <%= Time.now.to_s(:db) %>
-  updated_at: <%= Time.now.to_s(:db) %>
-  lock_version: 0
-  created_user: "initial"
-  updated_user: "initial"
-  deleted_at: 
-  deleted: 0
-sys_configs_25:
-  id: 25
-  owner_id: 
-  config_section: "life_plan_day_count"
-  config_key: "behavior_max"
-  value1: "3"
-  value2: ""
-  value3: ""
-  config_description_text: ""
-  created_at: <%= Time.now.to_s(:db) %>
-  updated_at: <%= Time.now.to_s(:db) %>
-  lock_version: 0
-  created_user: "initial"
-  updated_user: "initial"
-  deleted_at: 
-  deleted: 0
-sys_configs_26:
-  id: 26
-  owner_id: 
-  config_section: "regular_in_time"
-  config_key: "regular"
-  value1: "9:30"
-  value2: ""
-  value3: ""
-  config_description_text: "始業時間"
-  created_at: <%= Time.now.to_s(:db) %>
-  updated_at: <%= Time.now.to_s(:db) %>
-  lock_version: 0
-  created_user: "initial"
-  updated_user: "initial"
-  deleted_at: 
-  deleted: 0
-sys_configs_27:
-  id: 27
-  owner_id: 
-  config_section: "regular_in_time"
-  config_key: "defact"
-  value1: "10:30"
-  value2: ""
-  value3: ""
-  config_description_text: "事実上の始業時間(これ以降遅刻)"
-  created_at: <%= Time.now.to_s(:db) %>
-  updated_at: <%= Time.now.to_s(:db) %>
-  lock_version: 0
-  created_user: "initial"
-  updated_user: "initial"
-  deleted_at: 
-  deleted: 0
-sys_configs_28:
-  id: 28
-  owner_id: 
-  config_section: "regular_in_time"
-  config_key: "pm"
-  value1: "13:30"
-  value2: ""
-  value3: ""
-  config_description_text: "PM出勤の場合の始業時間"
-  created_at: <%= Time.now.to_s(:db) %>
-  updated_at: <%= Time.now.to_s(:db) %>
-  lock_version: 0
-  created_user: "initial"
-  updated_user: "initial"
-  deleted_at: 
-  deleted: 0
-sys_configs_29:
-  id: 29
-  owner_id: 
-  config_section: "regular_out_time"
-  config_key: "regular"
-  value1: "17:30"
-  value2: ""
-  value3: ""
-  config_description_text: "就業時間"
-  created_at: <%= Time.now.to_s(:db) %>
-  updated_at: <%= Time.now.to_s(:db) %>
-  lock_version: 0
-  created_user: "initial"
-  updated_user: "initial"
-  deleted_at: 
-  deleted: 0
-sys_configs_30:
-  id: 30
-  owner_id: 
-  config_section: "regular_out_time"
-  config_key: "early_am"
-  value1: "12:30"
-  value2: ""
-  value3: ""
-  config_description_text: "AM出勤の場合の早退時間"
-  created_at: <%= Time.now.to_s(:db) %>
-  updated_at: <%= Time.now.to_s(:db) %>
-  lock_version: 0
-  created_user: "initial"
-  updated_user: "initial"
-  deleted_at: 
-  deleted: 0
-sys_configs_31:
-  id: 31
-  owner_id: 
-  config_section: "regular_out_time"
-  config_key: "early_full"
-  value1: "15:30"
-  value2: ""
-  value3: ""
-  config_description_text: "全日出勤の場合の早退時間"
-  created_at: <%= Time.now.to_s(:db) %>
-  updated_at: <%= Time.now.to_s(:db) %>
-  lock_version: 0
-  created_user: "initial"
-  updated_user: "initial"
-  deleted_at: 
-  deleted: 0
-sys_configs_32:
-  id: 32
-  owner_id: 
-  config_section: "max_out_time"
-  config_key: "regular"
-  value1: "29:00"
-  value2: ""
-  value3: ""
-  config_description_text: "退勤時間の最大値"
-  created_at: <%= Time.now.to_s(:db) %>
-  updated_at: <%= Time.now.to_s(:db) %>
-  lock_version: 0
-  created_user: "initial"
-  updated_user: "initial"
-  deleted_at: 
-  deleted: 0
-sys_configs_33:
-  id: 33
-  owner_id: 
-  config_section: "rest_hour"
-  config_key: "regular"
-  value1: "1:00"
-  value2: ""
-  value3: ""
-  config_description_text: "基本休憩時間"
-  created_at: <%= Time.now.to_s(:db) %>
-  updated_at: <%= Time.now.to_s(:db) %>
-  lock_version: 0
-  created_user: "initial"
-  updated_user: "initial"
-  deleted_at: 
-  deleted: 0
-sys_configs_34:
-  id: 34
-  owner_id: 
-  config_section: "rest_hour"
-  config_key: "half"
-  value1: "0:00"
-  value2: ""
-  value3: ""
-  config_description_text: "半休時の休憩時間"
-  created_at: <%= Time.now.to_s(:db) %>
-  updated_at: <%= Time.now.to_s(:db) %>
-  lock_version: 0
-  created_user: "initial"
-  updated_user: "initial"
-  deleted_at: 
-  deleted: 0
-sys_configs_35:
-  id: 35
-  owner_id: 
-  config_section: "hour_total"
-  config_key: "full"
-  value1: "7:00"
-  value2: ""
-  value3: ""
-  config_description_text: "基準労働時間"
-  created_at: <%= Time.now.to_s(:db) %>
-  updated_at: <%= Time.now.to_s(:db) %>
-  lock_version: 0
-  created_user: "initial"
-  updated_user: "initial"
-  deleted_at: 
-  deleted: 0
-sys_configs_36:
-  id: 36
-  owner_id: 
-  config_section: "hour_total"
-  config_key: "none"
-  value1: "0:00"
-  value2: ""
-  value3: ""
-  config_description_text: "労働時間なしの場合(未使用)"
-  created_at: <%= Time.now.to_s(:db) %>
-  updated_at: <%= Time.now.to_s(:db) %>
-  lock_version: 0
-  created_user: "initial"
-  updated_user: "initial"
-  deleted_at: 
-  deleted: 0
-sys_configs_37:
-  id: 37
-  owner_id: 
-  config_section: "regular_over_time"
-  config_key: "meel"
-  value1: "20:00"
-  value2: ""
-  value3: ""
-  config_description_text: "これ以降、残業夜食代が出る"
-  created_at: <%= Time.now.to_s(:db) %>
-  updated_at: <%= Time.now.to_s(:db) %>
-  lock_version: 0
-  created_user: "initial"
-  updated_user: "initial"
-  deleted_at: 
-  deleted: 0
-sys_configs_38:
-  id: 38
-  owner_id: 
-  config_section: "regular_over_time"
-  config_key: "taxi"
-  value1: "22:00"
-  value2: ""
-  value3: ""
-  config_description_text: "これ以降、タクシーの利用が認められる"
-  created_at: <%= Time.now.to_s(:db) %>
-  updated_at: <%= Time.now.to_s(:db) %>
-  lock_version: 0
-  created_user: "initial"
-  updated_user: "initial"
-  deleted_at: 
-  deleted: 0
-sys_configs_39:
-  id: 39
-  owner_id: 
-  config_section: "month_start_date"
-  config_key: "regular"
-  value1: "1"
-  value2: ""
-  value3: ""
-  config_description_text: "作業月の開始日-1日"
-  created_at: <%= Time.now.to_s(:db) %>
-  updated_at: <%= Time.now.to_s(:db) %>
-  lock_version: 0
-  created_user: "initial"
-  updated_user: "initial"
-  deleted_at: 
-  deleted: 0
-sys_configs_40:
-  id: 40
-  owner_id: 
-  config_section: "year_start_date"
-  config_key: "regular"
-  value1: "04/01"
-  value2: ""
-  value3: ""
-  config_description_text: "有給休暇の付与タイミング"
-  created_at: <%= Time.now.to_s(:db) %>
-  updated_at: <%= Time.now.to_s(:db) %>
-  lock_version: 0
-  created_user: "initial"
-  updated_user: "initial"
-  deleted_at: 
-  deleted: 0
-sys_configs_41:
-  id: 41
-  owner_id: 
-  config_section: "before_year_count"
-  config_key: "regular"
-  value1: "2"
-  value2: ""
-  value3: ""
-  config_description_text: "有給休暇→ライフプランする年数"
-  created_at: <%= Time.now.to_s(:db) %>
-  updated_at: <%= Time.now.to_s(:db) %>
-  lock_version: 0
-  created_user: "initial"
-  updated_user: "initial"
-  deleted_at: 
-  deleted: 0
-sys_configs_42:
-  id: 42
-  owner_id: 
-  config_section: "before_month_count"
-  config_key: "regular"
-  value1: "2"
-  value2: ""
-  value3: ""
-  config_description_text: "代休休暇が無効になる月数"
-  created_at: <%= Time.now.to_s(:db) %>
-  updated_at: <%= Time.now.to_s(:db) %>
-  lock_version: 0
-  created_user: "initial"
-  updated_user: "initial"
-  deleted_at: 
-  deleted: 0
-sys_configs_43:
-  id: 43
-  owner_id: 
-  config_section: "directory_path"
-  config_key: "image_dir"
-  value1: "C:/tmp/picture/"
-  value2: ""
-  value3: ""
-  config_description_text: ""
-  created_at: <%= Time.now.to_s(:db) %>
-  updated_at: <%= Time.now.to_s(:db) %>
-  lock_version: 0
-  created_user: "initial"
-  updated_user: "initial"
-  deleted_at: 
-  deleted: 0
-sys_configs_44:
-  id: 44
-  owner_id: 
-  config_section: "directory_path"
-  config_key: "history_dir"
-  value1: "C:/tmp/history/"
-  value2: ""
-  value3: ""
-  config_description_text: ""
-  created_at: <%= Time.now.to_s(:db) %>
-  updated_at: <%= Time.now.to_s(:db) %>
-  lock_version: 0
-  created_user: "initial"
-  updated_user: "initial"
-  deleted_at: 
-  deleted: 0
-sys_configs_45:
-  id: 45
-  owner_id: 
-  config_section: "summer_vacation"
-  config_key: "start_date"
-  value1: "2009/07/01"
-  value2: ""
-  value3: ""
-  config_description_text: "夏期休暇取得開始日"
-  created_at: <%= Time.now.to_s(:db) %>
-  updated_at: <%= Time.now.to_s(:db) %>
-  lock_version: 0
-  created_user: "initial"
-  updated_user: "initial"
-  deleted_at: 
-  deleted: 0
-sys_configs_46:
-  id: 46
-  owner_id: 
-  config_section: "summer_vacation"
-  config_key: "end_date"
-  value1: "2009/09/30"
-  value2: ""
-  value3: ""
-  config_description_text: "夏期休暇取得終了日"
-  created_at: <%= Time.now.to_s(:db) %>
-  updated_at: <%= Time.now.to_s(:db) %>
-  lock_version: 0
-  created_user: "initial"
-  updated_user: "initial"
-  deleted_at: 
-  deleted: 0
-sys_configs_47:
-  id: 47
-  owner_id: 
-  config_section: "summer_vacation"
-  config_key: "day_total"
-  value1: "3"
-  value2: ""
-  value3: ""
-  config_description_text: "夏期休暇日数"
-  created_at: <%= Time.now.to_s(:db) %>
-  updated_at: <%= Time.now.to_s(:db) %>
-  lock_version: 0
-  created_user: "initial"
-  updated_user: "initial"
-  deleted_at: 
-  deleted: 0
-sys_configs_48:
-  id: 48
-  owner_id: 
-  config_section: "calculate_vacation"
-  config_key: "year"
-  value1: "2008"
-  value2: ""
-  value3: ""
-  config_description_text: "年次バッチ実行ログ"
-  created_at: <%= Time.now.to_s(:db) %>
-  updated_at: <%= Time.now.to_s(:db) %>
-  lock_version: 0
-  created_user: "initial"
-  updated_user: "initial"
-  deleted_at: 
-  deleted: 0
-sys_configs_49:
-  id: 49
-  owner_id: 
-  config_section: "color_approval_status_type"
-  config_key: "entry"
-  value1: "#90ee90"
-  value2: ""
-  value3: ""
-  config_description_text: "申請中のカラー"
-  created_at: <%= Time.now.to_s(:db) %>
-  updated_at: <%= Time.now.to_s(:db) %>
-  lock_version: 0
-  created_user: "initial"
-  updated_user: "initial"
-  deleted_at: 
-  deleted: 0
-sys_configs_50:
-  id: 50
-  owner_id: 
-  config_section: "color_approval_status_type"
-  config_key: "approved"
-  value1: "#add8e6"
-  value2: ""
-  value3: ""
-  config_description_text: "承認済のカラー"
-  created_at: <%= Time.now.to_s(:db) %>
-  updated_at: <%= Time.now.to_s(:db) %>
-  lock_version: 0
-  created_user: "initial"
-  updated_user: "initial"
-  deleted_at: 
-  deleted: 0
-sys_configs_51:
-  id: 51
-  owner_id: 
-  config_section: "color_approval_status_type"
-  config_key: "reject"
-  value1: "#ff0000"
-  value2: ""
-  value3: ""
-  config_description_text: "却下済のカラー"
-  created_at: <%= Time.now.to_s(:db) %>
-  updated_at: <%= Time.now.to_s(:db) %>
-  lock_version: 0
-  created_user: "initial"
-  updated_user: "initial"
-  deleted_at: 
-  deleted: 0
-sys_configs_52:
-  id: 52
-  owner_id: 
-  config_section: "seq"
-  config_key: "sales_management_code"
-  value1: "50100"
-  value2: ""
-  value3: ""
-  config_description_text: "販売管理システムのコード"
-  created_at: <%= Time.now.to_s(:db) %>
-  updated_at: <%= Time.now.to_s(:db) %>
-  lock_version: 0
-  created_user: "initial"
-  updated_user: "initial"
-  deleted_at: 
-  deleted: 0
-sys_configs_53:
-  id: 53
-  owner_id: 
   config_section: "seq"
   config_key: "sales_code"
   value1: "0"
@@ -846,9 +30,9 @@ sys_configs_53:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-sys_configs_54:
-  id: 54
-  owner_id: 
+sys_configs_3:
+  id: 3
+  owner_id: 0
   config_section: "business_partners"
   config_key: "prodmode"
   value1: "0"
@@ -864,9 +48,9 @@ sys_configs_54:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-sys_configs_55:
-  id: 55
-  owner_id: 
+sys_configs_4:
+  id: 4
+  owner_id: 0
   config_section: "analysis_templates"
   config_key: "indent"
   value1: "※"
@@ -883,9 +67,9 @@ sys_configs_55:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-sys_configs_56:
-  id: 56
-  owner_id: 
+sys_configs_5:
+  id: 5
+  owner_id: 0
   config_section: "delivery_mails"
   config_key: "return_path"
   value1: "dev.error@gr.applicative.jp"
@@ -899,9 +83,9 @@ sys_configs_56:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-sys_configs_57:
-  id: 57
-  owner_id: 
+sys_configs_6:
+  id: 6
+  owner_id: 0
   config_section: "import_mail"
   config_key: "jiet"
   value1: "office@jiet.or.jp"
@@ -915,41 +99,9 @@ sys_configs_57:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-sys_configs_58:
-  id: 58
-  owner_id: 
-  config_section: "import_mail"
-  config_key: "date_limit"
-  value1: "14"
-  value2: ""
-  value3: ""
-  config_description_text: ""
-  created_at: <%= Time.now.to_s(:db) %>
-  updated_at: <%= Time.now.to_s(:db) %>
-  lock_version: 0
-  created_user: "initial"
-  updated_user: "initial"
-  deleted_at: 
-  deleted: 0
-sys_configs_59:
-  id: 59
-  owner_id: 
-  config_section: "pop3_mail_login"
-  config_key: "username_password"
-  value1: "ses_dev2@i.applicative.jp"
-  value2: "applicative**ses"
-  value3: ""
-  config_description_text: ""
-  created_at: <%= Time.now.to_s(:db) %>
-  updated_at: <%= Time.now.to_s(:db) %>
-  lock_version: 0
-  created_user: "initial"
-  updated_user: "initial"
-  deleted_at: 
-  deleted: 0
-sys_configs_60:
-  id: 60
-  owner_id: 
+sys_configs_7:
+  id: 7
+  owner_id: 0
   config_section: "api_login"
   config_key: "username_password"
   value1: "goldrush"
@@ -963,9 +115,9 @@ sys_configs_60:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-sys_configs_61:
-  id: 61
-  owner_id: 
+sys_configs_8:
+  id: 8
+  owner_id: 0
   config_section: "outflow_mail"
   config_key: "outflow_criterion"
   value1: "50"
@@ -979,41 +131,9 @@ sys_configs_61:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-sys_configs_62:
-  id: 62
-  owner_id: 
-  config_section: "poi_company_name"
-  config_key: "company_name"
-  value1: "アプリカティブ株式会社"
-  value2: ""
-  value3: ""
-  config_description_text: ""
-  created_at: <%= Time.now.to_s(:db) %>
-  updated_at: <%= Time.now.to_s(:db) %>
-  lock_version: 0
-  created_user: "initial"
-  updated_user: "initial"
-  deleted_at: 
-  deleted: 0
-sys_configs_63:
-  id: 63
-  owner_id: 
-  config_section: "daily_report"
-  config_key: "send_mail"
-  value1: "planning@applicative.jp"
-  value2: ""
-  value3: ""
-  config_description_text: ""
-  created_at: <%= Time.now.to_s(:db) %>
-  updated_at: <%= Time.now.to_s(:db) %>
-  lock_version: 0
-  created_user: "initial"
-  updated_user: "initial"
-  deleted_at: 
-  deleted: 0
-sys_configs_64:
-  id: 64
-  owner_id: 
+sys_configs_9:
+  id: 9
+  owner_id: 0
   config_section: "system_notifier"
   config_key: "destination"
   value1: "staff@dev.applicative.jp"
@@ -1027,9 +147,9 @@ sys_configs_64:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-sys_configs_65:
-  id: 65
-  owner_id: 
+sys_configs_10:
+  id: 10
+  owner_id: 0
   config_section: "system_notifier"
   config_key: "from"
   value1: "system@dev.applicative.jp"
@@ -1043,12 +163,172 @@ sys_configs_65:
   updated_user: "initial"
   deleted_at: 
   deleted: 0
-sys_configs_66:
-  id: 66
-  owner_id: 
+sys_configs_11:
+  id: 11
+  owner_id: 0
   config_section: "system_notifier"
   config_key: "url_prefix"
   value1: "https://dev.applicative.jp/goldrush"
+  value2: ""
+  value3: ""
+  config_description_text: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+sys_configs_12:
+  id: 12
+  owner_id: 0
+  config_section: "import_mail_matches"
+  config_key: "target_days"
+  value1: "10"
+  value2: ""
+  value3: ""
+  config_description_text: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+sys_configs_13:
+  id: 13
+  owner_id: 
+  config_section: "import_mail_matches"
+  config_key: "last_id"
+  value1: "109131"
+  value2: ""
+  value3: ""
+  config_description_text: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+sys_configs_14:
+  id: 14
+  owner_id: 0
+  config_section: "delivery_mail_matches"
+  config_key: "target_days"
+  value1: "5"
+  value2: ""
+  value3: ""
+  config_description_text: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+sys_configs_15:
+  id: 15
+  owner_id: 0
+  config_section: "smtp"
+  config_key: "secret_key"
+  value1: "12345678901234567890123456789012"
+  value2: ""
+  value3: ""
+  config_description_text: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+sys_configs_16:
+  id: 16
+  owner_id: 0
+  config_section: "system_setting"
+  config_key: "application_name"
+  value1: "GoldRush"
+  value2: ""
+  value3: ""
+  config_description_text: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+sys_configs_17:
+  id: 17
+  owner_id: 0
+  config_section: "system_setting"
+  config_key: "contact_address"
+  value1: "staff@dev.applicative.jp"
+  value2: ""
+  value3: ""
+  config_description_text: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+sys_configs_18:
+  id: 18
+  owner_id: 1
+  config_section: "seq"
+  config_key: "sales_code"
+  value1: "0"
+  value2: ""
+  value3: ""
+  config_description_text: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+sys_configs_19:
+  id: 19
+  owner_id: 1
+  config_section: "import_mail_matches"
+  config_key: "last_id"
+  value1: "109131"
+  value2: ""
+  value3: ""
+  config_description_text: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+sys_configs_20:
+  id: 20
+  owner_id: 2
+  config_section: "seq"
+  config_key: "sales_code"
+  value1: "0"
+  value2: ""
+  value3: ""
+  config_description_text: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+sys_configs_21:
+  id: 21
+  owner_id: 2
+  config_section: "import_mail_matches"
+  config_key: "last_id"
+  value1: "109131"
   value2: ""
   value3: ""
   config_description_text: ""

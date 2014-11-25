@@ -4,7 +4,7 @@ class RemarksController < ApplicationController
   # GET /remarks
   # GET /remarks.json
   def index
-    @remarks = Remark.page(params[:page]).per(50)
+    @remarks = find_login_owner(:remarks).page(params[:page]).per(50)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -44,7 +44,7 @@ class RemarksController < ApplicationController
   # POST /remarks
   # POST /remarks.json
   def create
-    @remark = Remark.new(params[:remark])
+    @remark = create_model(:remarks, params[:remark])
 
     respond_to do |format|
       begin

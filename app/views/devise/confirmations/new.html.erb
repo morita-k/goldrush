@@ -1,12 +1,13 @@
-<h2>Resend confirmation instructions</h2>
-
 <%= form_for(resource, :as => resource_name, :url => confirmation_path(resource_name), :html => { :method => :post }) do |f| %>
-  <%= devise_error_messages! %>
-
-  <div><%= f.label :email %><br />
+<%= accordion_around "登録確認メールの再送信", "" do %>
+<%= devise_error_messages! %>
+<div><%= f.label :email, 'Eメール(*)' %><br/>
   <%= f.email_field :email, :autofocus => true %></div>
-
-  <div><%= f.submit "Resend confirmation instructions" %></div>
+<div>
+</div>
+<% end %>
+<div class="submit_box">
+  <p><%= f.submit "登録確認メールを再送信", :class => "btn btn-primary" %></p>
+</div>
 <% end %>
 
-<%= render "devise/shared/links" %>

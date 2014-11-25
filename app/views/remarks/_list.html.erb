@@ -2,7 +2,7 @@
   <% @remarks.each do |remark| %>
     <div class="list-group-item">
       <div class="list-group-item-heading remark_header">
-        <%= remark.get_created_user.employee.employee_name %>&nbsp;
+        <%= remark.get_created_user.nickname %>&nbsp;
         <% if remark.created_user == current_user.login %>
           <div class="btn-group btn-group-xs">
             <%= back_to_link('　編集　', edit_remark_path({:id => remark.id}), {:class => "btn btn-primary"}) %>

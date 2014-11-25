@@ -15,7 +15,9 @@ class AttachmentFileTest < ActiveSupport::TestCase
      im.mail_from = "aaa@aaa.jp"
      im.mail_sender_name = "aaaa"
      im.mail_to = "aaa@aaa.jp"
-     #im.message_source = "aaa"
+     im.matching_way_type = "other"
+     im.foreign_type = "unknown"
+     im.sex_type = "other"
      im.save!
      upfile = ActionDispatch::Http::UploadedFile.new(:tempfile => Readable.new)
      a = AttachmentFile.new

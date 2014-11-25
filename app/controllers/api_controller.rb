@@ -50,7 +50,7 @@ class ApiController < ApplicationController
     ImportMail.import_reply_mail(Mail.new(src), src)
     render :text => 'REQUEST OK!'
   end
-  
+
   def broadcast_mail
     DeliveryMail.send_mails
     
@@ -116,7 +116,7 @@ class ApiController < ApplicationController
   def import_photo
     src = params[:attachment]
     sender = params[:sender]
-    Photo.import_photo(src, sender)
+    Photo.import_photo(current_user.owner_id, src, sender)
     render :text => 'REQUEST OK!'
   end
 

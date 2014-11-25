@@ -5,7 +5,11 @@ class MailTemplatesController < ApplicationController
   # GET /mail_templates
   # GET /mail_templates.json
   def index
-    @mail_templates = MailTemplate.where(deleted: 0).order("mail_template_category, id desc").page(params[:page]).per(50)
+    @mail_templates = find_login_owner(:mail_templates)
+                        .where(deleted: 0)
+                        .order("mail_template_category, id desc")
+                        .page(params[:page])
+                        .per(50)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -47,7 +51,7 @@ EOS
   # POST /mail_templates
   # POST /mail_templates.json
   def create
-    @mail_template = MailTemplate.new(params[:mail_template])
+    @mail_template = create_model(:mail_templates, params[:mail_template])
     set_user_column @mail_template
 
     respond_to do |format|

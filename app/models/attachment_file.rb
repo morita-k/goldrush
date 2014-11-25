@@ -89,8 +89,8 @@ class AttachmentFile < ActiveRecord::Base
     end
   end
 
-  def self.set_property_file(import_mail_id)
-    target_files = AttachmentFile.where(:parent_id => import_mail_id)
+  def self.set_property_file(owner_id, import_mail_id)
+    target_files = AttachmentFile.where(:owner_id => owner_id, :parent_id => import_mail_id)
 
     target_attachment_ids = []
     p target_files
@@ -101,11 +101,11 @@ class AttachmentFile < ActiveRecord::Base
     end
 
     unless target_attachment_ids.blank?
-      call_poi_modify_property(target_attachment_ids)
+      call_poi_modify_property(target_attachment_ids, Owner.find(owner_id).company_name)
     end
   end
 
-  def self.call_poi_modify_property(target_attachment_ids)
+  def self.call_poi_modify_property(target_attachment_ids, author = nil)
     java_dir = File.join(Rails.root, 'java')
     sep = ENV["OS"] ? ";" : ":" # Windows or UNIX??
     class_path = ["#{java_dir}","#{java_dir}/lib/*"].join(sep)
@@ -120,9 +120,7 @@ class AttachmentFile < ActiveRecord::Base
     end
     database = ActiveRecord::Base.configurations[ENV['RAILS_ENV']]['database']
 
-    author = SysConfig.get_company_name
-
-    unless author.nil? || author.size == 0
+    unless author.blank?
       command = "java -classpath #{class_path} gd/SetPoiProperty jdbc:mysql://#{host}:3306/#{database} #{username} #{password} #{target_attachment_ids.join(',')} #{Rails.root} #{author}"
       logger.debug(command)
       result = `#{command}`

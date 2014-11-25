@@ -30,8 +30,10 @@
 <% end %>
 
 <%= accordion_around("取り込みメール詳細", "") do %>
+<% if current_user.enable_contract? %>
 <%= link_to_biz_create "案件照会作成", @import_mail  %>
 <%= link_to_hresource_create "人材所属作成", @import_mail  %>
+<% end %>
 <% if !@import_mail.business_partner_id %>
   <%= link_to_bp_create "取引先/取引先担当作成", @import_mail %>
 <% elsif !@import_mail.bp_pic_id %>

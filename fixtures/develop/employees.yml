@@ -1,6 +1,6 @@
 employees_1:
   id: 1
-  owner_id: 
+  owner_id: 1
   user_id: 1
   department_id: 1
   employee_type: "regular"
@@ -75,7 +75,7 @@ employees_1:
   deleted: 0
 employees_2:
   id: 2
-  owner_id: 
+  owner_id: 1
   user_id: 2
   department_id: 1
   employee_type: "regular"
@@ -150,7 +150,7 @@ employees_2:
   deleted: 0
 employees_3:
   id: 3
-  owner_id: 
+  owner_id: 1
   user_id: 3
   department_id: 1
   employee_type: "regular"
@@ -225,7 +225,7 @@ employees_3:
   deleted: 0
 employees_4:
   id: 4
-  owner_id: 
+  owner_id: 1
   user_id: 4
   department_id: 1
   employee_type: "regular"
@@ -300,7 +300,7 @@ employees_4:
   deleted: 0
 employees_5:
   id: 5
-  owner_id: 
+  owner_id: 1
   user_id: 5
   department_id: 1
   employee_type: "regular"
@@ -375,7 +375,7 @@ employees_5:
   deleted: 0
 employees_6:
   id: 6
-  owner_id: 
+  owner_id: 1
   user_id: 6
   department_id: 1
   employee_type: "regular"
@@ -450,7 +450,7 @@ employees_6:
   deleted: 0
 employees_7:
   id: 7
-  owner_id: 
+  owner_id: 1
   user_id: 7
   department_id: 1
   employee_type: "regular"
@@ -525,7 +525,7 @@ employees_7:
   deleted: 0
 employees_8:
   id: 8
-  owner_id: 
+  owner_id: 1
   user_id: 8
   department_id: 1
   employee_type: "regular"
@@ -600,7 +600,7 @@ employees_8:
   deleted: 0
 employees_9:
   id: 9
-  owner_id: 
+  owner_id: 1
   user_id: 9
   department_id: 1
   employee_type: "regular"
@@ -675,7 +675,7 @@ employees_9:
   deleted: 0
 employees_10:
   id: 10
-  owner_id: 
+  owner_id: 1
   user_id: 10
   department_id: 1
   employee_type: "regular"
@@ -750,7 +750,7 @@ employees_10:
   deleted: 0
 employees_11:
   id: 11
-  owner_id: 
+  owner_id: 1
   user_id: 11
   department_id: 1
   employee_type: "regular"

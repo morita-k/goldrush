@@ -1,17 +1,20 @@
 <%= form_tag({controller: 'business_partner', action: 'update_quick_input'}, class: "form-inline") do %>
-  <fieldset id="quickcheck_form">
-    <legend>企業情報入力</legend>
-    <%= hidden_field 'business_partner', 'id' %>
-    <label><%=getLongName('business_partners','establishment_year') + ': '%></label>
-    <%= text_field 'business_partner', 'establishment_year', placeholder: getLongName('business_partners','establishment_year'), style: "width: 5em;" %>
-    <label><%=getLongName('business_partners','employee_number') + ': '%></label>
-    <%= text_field 'business_partner', 'employee_number', placeholder: getLongName('business_partners','employee_number') , style: "width: 5em;"%>
-    <label><%=getLongName('business_partners','share_capital') + ': '%></label>
-    <%= text_field 'business_partner', 'share_capital', placeholder: getLongName('business_partners','share_capital') , style: "width: 5em;"%>
-    <label><%=getLongName('business_partners','email') + ': '%></label>
-    <%= text_field 'business_partner', 'email', placeholder: getLongName('business_partners','email'), style: "width: 10em;" %>
+<fieldset id="quick_input_form">
+  <legend>企業情報入力</legend>
+  <%= hidden_field 'business_partner', 'id' %>
+  <div style="margin-bottom:10px;">
+    <label><%=getLongName('business_partners','establishment_year') + ': '%>
+    <%= text_field 'business_partner', 'establishment_year', placeholder: "#{Time.now.year}", style: "width: 4em;" %>年</label>&nbsp;
+    <label><%=getLongName('business_partners','employee_number') + ': '%>
+    <%= text_field 'business_partner', 'employee_number', placeholder: "100", style: "width: 4em;"%>人</label>&nbsp;
+    <label><%=getLongName('business_partners','share_capital') + ': '%>
+    <%= text_field 'business_partner', 'share_capital', placeholder: "1000", style: "width: 4em;"%>万円</label>&nbsp;
+    <label><%=getLongName('business_partners','email') + ': '%>
+    <%= text_field 'business_partner', 'email', placeholder: "sample@example.inc.com", style: "width: 15em;" %></label>
     <%= hidden_field_tag 'back_to', request_url %>
-    <br/>
-    <%= submit_tag '更新', class: "btn btn-success", confirm: @business_partner.business_partner_name + 'の情報を更新します。よろしいですか？' %>
-  </fieldset>
+  </div>
+  <div>
+    <%= submit_tag '更新する', class: "btn btn-primary", confirm: @business_partner.business_partner_name + 'の情報を更新します。よろしいですか？' %>
+  </div>
+</fieldset>
 <% end %>

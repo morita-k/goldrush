@@ -13,7 +13,7 @@ class BaseMonthController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    @base_month_pages, @base_months = paginate(:base_months, :per_page => 50, :conditions => ["deleted = 0"], :order => 'start_date')
+    @base_months = BaseMonth.where("delete = 0").order("start_date").page(params[:page]).per(50)
   end
 
   def show

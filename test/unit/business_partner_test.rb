@@ -20,8 +20,8 @@ class BusinessPartnerTest < ActiveSupport::TestCase
     # assert_equal(1, ContactHistory.find(1).business_partner_id, "ContactHistoryの事前データがおかしい")
     # assert_equal(1, Interview.find(1).interview_bp_id, "Interviewの事前データがおかしい")
     # assert_equal(1, DeliveryError.find(1).business_partner_id, "ImportMailの事前データがおかしい")
-   
-    BusinessPartnerGoogleImporter.import_google_csv_data(import_data, "testuser", true)
+
+    BusinessPartnerGoogleImporter.import_google_csv_data(import_data, 1, "testuser", true)
 
     # 名寄せが発生
     assert_equal(2, BpPic.find(1).business_partner_id, "BpPicが名寄せ出来ていない")
@@ -65,7 +65,7 @@ class BusinessPartnerTest < ActiveSupport::TestCase
   
   # 営業担当の変更
   test "sales_pic" do
-    BusinessPartnerGoogleImporter.import_google_csv_data(import_data, "testuser", true)
+    BusinessPartnerGoogleImporter.import_google_csv_data(import_data, 1, "testuser", true)
     pic_satou = BpPic.where(:email1 => "first_john_doe@tttest.co.jp", :deleted => 0).first
     pic_katou = BpPic.where(:email1 => "second_john_doe@tttest.co.jp", :deleted => 0).first
     pic_itou = BpPic.where(:email1 => "third_john_doe@tttest.co.jp", :deleted => 0).first
@@ -78,19 +78,19 @@ class BusinessPartnerTest < ActiveSupport::TestCase
   
   # メールアドレスがエスケープ出来ているか
   test "prodmode_on" do
-    BusinessPartnerGoogleImporter.import_google_csv_data(import_data, "testuser")
+    BusinessPartnerGoogleImporter.import_google_csv_data(import_data, 1, "testuser")
     assert(BpPic.where(:email1 => "test+fourth_john_doe_tttest.co.jp@i.applicative.jp", :deleted => 0), 
       "エスケープされていない")
   end
   
   # メールアドレスがエスケープされていないか
   test "prodmode_off" do
-     BusinessPartnerGoogleImporter.import_google_csv_data(import_data, "testuser", true)
+     BusinessPartnerGoogleImporter.import_google_csv_data(import_data, 1, "testuser", true)
      assert(BpPic.where(:email1 => "fourth_john_doe@tttest.co.jp", :deleted => 0), "エスケープされていない")
   end
   
   test "required_fields_are_empty" do
-     cnt, errors = BusinessPartnerGoogleImporter.import_google_csv_data(import_error_data, "testuser", true)
+     cnt, errors = BusinessPartnerGoogleImporter.import_google_csv_data(import_error_data, 1, "testuser", true)
      
      assert_nil(BpPic.where(:bp_pic_name => "大山", :deleted => 0).first)
      assert_nil(BusinessPartner.where(:business_partner_name => "株式会社小山システム", :deleted => 0).first)

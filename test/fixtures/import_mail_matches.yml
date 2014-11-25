@@ -1,0 +1,120 @@
+import_mail_matches_1:
+  id: 1
+  owner_id: 1
+  biz_offer_mail_id: 1
+  bp_member_mail_id: 2
+  mail_match_score: 1
+  tag_text: java
+  subject_tag_match_flg: 0
+  imm_status_type: open
+  payment_gap: 0
+  age_gap: 0
+  starred: 0
+  received_at: <%= Time.now.to_s(:db) %>
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+import_mail_matches_2:
+  id: 2
+  owner_id: 1
+  biz_offer_mail_id: 3
+  bp_member_mail_id: 4
+  mail_match_score: 2
+  tag_text: php
+  subject_tag_match_flg: 0
+  imm_status_type: open
+  payment_gap: 1
+  age_gap: 1
+  starred: 1
+  received_at: <%= Time.now.to_s(:db) %>
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+import_mail_matches_3:
+  id: 3
+  owner_id: 1
+  biz_offer_mail_id: 5
+  bp_member_mail_id: 6
+  mail_match_score: 3
+  tag_text: bcc,nw
+  subject_tag_match_flg: 0
+  imm_status_type: open
+  payment_gap: -2
+  age_gap: -2
+  starred: 0
+  received_at: <%= Time.now.to_s(:db) %>
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+import_mail_matches_4:
+  id: 4
+  owner_id: 2
+  biz_offer_mail_id: 7
+  bp_member_mail_id: 8
+  mail_match_score: 4
+  tag_text: java,spring,struts
+  subject_tag_match_flg: 0
+  imm_status_type: open
+  payment_gap: 3
+  age_gap: 3
+  starred: 1
+  received_at: <%= Time.now.to_s(:db) %>
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+import_mail_matches_5:
+  id: 5
+  owner_id: 2
+  biz_offer_mail_id: 9
+  bp_member_mail_id: 10
+  mail_match_score: 5
+  tag_text: nw,運用
+  subject_tag_match_flg: 0
+  imm_status_type: open
+  payment_gap: -4
+  age_gap: -4
+  starred: 0
+  received_at: <%= Time.now.to_s(:db) %>
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+import_mail_matches_6:
+  id: 6
+  owner_id: 2
+  biz_offer_mail_id: 11
+  bp_member_mail_id: 12
+  mail_match_score: 6
+  tag_text: pm
+  subject_tag_match_flg: 0
+  imm_status_type: open
+  payment_gap: 5
+  age_gap: 5
+  starred: 1
+  received_at: <%= Time.now.to_s(:db) %>
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0

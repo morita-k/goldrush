@@ -111,9 +111,12 @@ class BpPicController < ApplicationController
 
     # 検索条件を処理
     cond, incl, order_by = make_conditions
-
-    @bp_pics = BpPic.includes(incl).where(cond).order(order_by).page(params[:page]).per(current_user.per_page)
-
+    @bp_pics = find_login_owner(:bp_pics)
+                  .includes(incl)
+                  .where(cond)
+                  .order(order_by)
+                  .page(params[:page])
+                  .per(current_user.per_page)
 
     if params[:popup] && !(params[:callback].blank? || params[:photo_id].blank?)
       flash[:warning] = 'ポップアップのパラメータが不正です'
@@ -139,7 +142,7 @@ class BpPicController < ApplicationController
 #      condition = ["deleted = 0 and business_partner_id = ?", params[:id]]
 #      @business_partner = BusinessPartner.find(params[:id])
 #    end
-#    @bp_pic_pages, @bp_pics = paginate :bp_pics, :conditions => condition, :per_page => current_user.per_page
+#    @bp_pic_pages, @bp_pics = paginate :bp_pics, :conditions => condition, :per => current_user.per_page
 #  end
 
   def show
@@ -163,7 +166,7 @@ class BpPicController < ApplicationController
 
   def create
     ActiveRecord::Base.transaction do
-      @bp_pic = BpPic.new(params[:bp_pic])
+      @bp_pic = create_model(:bp_pics, params[:bp_pic])
       trim_bp_pic_name @bp_pic
       set_user_column @bp_pic
       @bp_pic.save!
@@ -307,7 +310,7 @@ class BpPicController < ApplicationController
     params[:page] ||= "1"
 
     # idがnilだった場合、@business_partnerをnilにしたいのでwhere
-    @business_partner ||= BusinessPartner.where(id: params[:business_partner_id]).first
+    @business_partner ||= BusinessPartner.where(id: params[:business_partner_id], deleted: 0).first
 
     render template: 'business_partner/quick_input', layout: 'blank'
   end
@@ -332,12 +335,12 @@ class BpPicController < ApplicationController
       end
     end
 
-    redirect_to action: 'quick_input', popup: params[:popup], page: page, back_to: params[:back_to], business_partner_id: next_bp_id, only_path: false, protocol: "http://"
+    redirect_to action: 'quick_input', popup: params[:popup], page: page, back_to: back_to, business_partner_id: next_bp_id, only_path: false, protocol: "http://"
   end
 
   # 混在コンテンツによるブロック回避の為、Formのみiframeで呼ぶ
   def quick_input_form
-    @business_partner = BusinessPartner.find(params[:business_partner_id])
+    @business_partner = BusinessPartner.find(params[:business_partner_id], :conditions => ["deleted = 0"])
     render template: 'business_partner/quick_input_form', layout: 'blank'
   end
 
@@ -378,7 +381,12 @@ private
 
     # 検索条件を処理
     cond, incl, order_by = make_conditions
-    bp_pics = BpPic.includes(incl).where(cond).order(order_by).page(params[:page]).per(current_user.per_page)
+    bp_pics = find_login_owner(:bp_pics)
+                  .includes(incl)
+                  .where(cond)
+                  .order(order_by)
+                  .page(params[:page])
+                  .per(current_user.per_page)
 
     bp_pics.map(&:business_partner).map(&:id).uniq
   end
