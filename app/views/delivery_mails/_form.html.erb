@@ -4,33 +4,35 @@
 <%= hidden_field_tag 'delivery_mail[import_mail_match_id]', params[:import_mail_match_id] %>
 <%= back_to_field_tag %>
 <%= f.hidden_field :lock_version %>
-  <% if @delivery_mail.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@delivery_mail.errors.count, "error") %> prohibited this delivery_mail from being saved:</h2>
+<% if @delivery_mail.errors.any? %>
+<div id="error_explanation">
+  <h2><%= pluralize(@delivery_mail.errors.count, "error") %> prohibited this delivery_mail from being saved:</h2>
 
-      <ul>
-      <% @delivery_mail.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
+  <ul>
+  <% @delivery_mail.errors.full_messages.each do |msg| %>
+    <li><%= msg %></li>
   <% end %>
+  </ul>
+</div>
+<% end %>
 
-  <%= disp_wide_link "テンプレートからメールを作成する", {:controller => :mail_templates, :action => :index, :popup => 1}, :class => "btn btn-info btn-medium" %>
+<%= disp_wide_link "テンプレートからメールを作成する", {:controller => :mail_templates, :action => :index, :popup => 1}, :class => "btn btn-info btn-medium" %>
 <table class="show_table" style="margin-top: 0em;">
-<%if  @delivery_mail.bp_pic_group %>
+  <%if  @delivery_mail.bp_pic_group %>
   <tr>
     <th><label>対象グループ</label></th>
     <td><%= @delivery_mail.bp_pic_group.bp_pic_group_name%></td>
   </tr>
-<% elsif !@bp_pics.blank? %>
+  <% elsif !@bp_pics.blank? %>
   <% @bp_pics.each do |bp_pic| %>
     <tr>
       <%= content_tag(:th, content_tag(:label, "対象"), :rowspan => @bp_pics.length) if bp_pic.id == @bp_pics[0].id %>
-      <td><%= "#{bp_pic.business_partner.business_partner_name} #{bp_pic.bp_pic_name}<#{bp_pic.email1}>" %></td>
+      <td><%= "\"#{bp_pic.business_partner.business_partner_name} #{bp_pic.bp_pic_name}\" <#{bp_pic.email1}>" %></td>
     </tr>
   <% end %>
-<% end %>
+  <% end %>
+
+  <% if current_user.enable_contract? %>
   <tr>
     <th><label>案件照会</label></th>
     <td>
@@ -49,6 +51,8 @@
       <%= f.hidden_field :bp_member_id %>
     </td>
   </tr>
+  <% end %>
+
   <tr>
     <th><%= f.label :subject, getLongName('delivery_mails', 'subject') + "(*)" %></th>
     <td><%= f.text_field :subject, :onFocus => "xtarget = this;" %></td>
@@ -56,7 +60,11 @@
   <tr>
     <th><%= f.label :mail_from, getLongName('delivery_mails', 'mail_from') %></th>
     <td>
+      <% if current_user.advanced_smtp_mode_on? %>
       <%= f.select :formated_mail_from, mail_from_list %>
+      <% else %>
+      <%= f.label :formated_mail_from, mail_from %>
+      <% end %>
     </td>
   </tr>
   <tr>
@@ -97,7 +105,9 @@
   </tr>
   <tr>
     <td colspan="2">
+      <% if current_user.enable_contract? %>
       <%= render :partial => 'insertcursorlist' %>
+      <% end %>
       <%= f.text_area :content, :style => "width:90%" , :onFocus => "xtarget = this;" %>
     </td>
   </tr>

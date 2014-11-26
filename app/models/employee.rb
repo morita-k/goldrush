@@ -127,15 +127,7 @@ class Employee < ActiveRecord::Base
     monthes = base_date.month - enday.month
     return years * 12 + monthes
   end
-  
-  def Employee.map_for_googleimport
-    res = {}
-    where(:deleted => 0).each do |emp|
-      res[emp.employee_short_name] = emp.user_id
-    end
-    res
-  end
-
+ 
   def init_default_working_times
     self.regular_in_time             = SysConfig.get_regular_in_time_regular.value1
     self.regular_in_time_defact      = SysConfig.get_regular_in_time_defact.value1

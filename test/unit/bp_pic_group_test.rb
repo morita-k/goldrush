@@ -17,7 +17,7 @@ class BpPicGroupTest < ActiveSupport::TestCase
   end
 
   test "create clone bp_pic_group" do
-    clone = BpPicGroup.new(bp_pic_group_name: "test_group", matching_way_type: "other")
+    clone = BpPicGroup.new(owner_id: 1, bp_pic_group_name: "test_group", matching_way_type: "other")
     source = BpPicGroup.where(id: 1, deleted: 0)
 
     assert_difference('BpPicGroupDetail.count') do

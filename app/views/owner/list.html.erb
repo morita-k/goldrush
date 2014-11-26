@@ -1,0 +1,40 @@
+<h1>組織一覧</h1>
+
+<%= paginate(@owners) %>
+
+<table class="table list_table table-bordered table-hover">
+  <thead>
+    <tr>
+      <th style="width:5%">id</th>
+      <th style="width:8%"><%= getLongName('owners', 'owner_key') %></th>
+      <th style="width:20%"><%= getLongName('owners', 'company_name') %></th>
+      <th style="width:20%"><%= getLongName('owners', 'sender_email') %></th>
+      <th style="width:37%"><%= getLongName('owners', 'additional_option') %></th>
+      <th style="width:5%">切替</th>
+      <th style="width:5%">削除</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @owners.each do |owner| %>
+    <tr <% if owner.id == current_user.owner_id %>class="info"<% end %>>
+      <td><%= owner.id %></td>
+      <td><%= owner.owner_key %></td>
+      <td><%= owner.company_name %></td>
+      <td><%= owner.sender_email %></td>
+      <td><%= (owner.additional_option || '').gsub(',', ', ') %></td>
+      <% if owner.id == current_user.owner_id %>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <% else %>
+      <td><span title="オーナーを切り替え"><%= back_to_link '切替', {:action => :change_current_owner, :id => owner.id, :authenticity_token => form_authenticity_token}, :method => :put, :data => {:confirm => 'ログインユーザーのオーナーを選択したオーナーに切り替えます。よろしいですか？'} %></span></td>
+      <td><%= back_to_link '削除', {:action => :destroy, :id => owner.id, :authenticity_token => form_authenticity_token}, :method => :delete, :data => {:confirm => '選択したオーナーを削除します。よろしいですか？'} %></td>
+      <% end %>
+    </tr>
+    <% end %>
+  <tbody>
+</table>
+
+<br />
+
+<%= paginate(@owners) %>
+

@@ -44,6 +44,7 @@ class DailyReport < ActiveRecord::Base
 
       if value[:id].nil? || value[:id] == ""
         target_daily_report = DailyReport.new
+        target_daily_report.owner_id = target_user.owner_id
         target_daily_report.report_date = target_date
         target_daily_report.user_id = target_user.id
         target_daily_report.daily_report_input_type = 'notinput'
@@ -77,11 +78,11 @@ class DailyReport < ActiveRecord::Base
     end
   end
 
-  def self.get_distinct_user
-    self.select(:user_id).uniq
+  def self.get_distinct_user(owner_id)
+    self.where(owner_id: owner_id).select(:user_id).uniq
   end
 
-  def self.get_summary_report(daily_report_summary, target_date)
+  def self.get_summary_report(owner_id, daily_report_summary, target_date)
     term_flg = daily_report_summary[:summary_term_flg]
     target_flg = daily_report_summary[:summary_target_flg]
     method_flg = daily_report_summary[:summary_method_flg]
@@ -93,25 +94,25 @@ class DailyReport < ActiveRecord::Base
           if method_flg == 'summary'
             self.group(:target_date)
                 .select("report_date AS target_date, " + SELECT_SUMMARY_COLUMNS)
-                .where("DATE_FORMAT(report_date, '%Y-%m') = '#{current_date}'")
+                .where("owner_id = ? and DATE_FORMAT(report_date, '%Y-%m') = ?", owner_id, current_date)
                 .order(:target_date)
           else
             self.group(:target_date, :user_id)
                 .select("report_date AS target_date, user_id, " + SELECT_SUMMARY_COLUMNS + ", contact_matter")
-                .where("DATE_FORMAT(report_date, '%Y-%m') = '#{current_date}'")
+                .where("owner_id = ? and DATE_FORMAT(report_date, '%Y-%m') = ?", owner_id, current_date)
                 .order(:user_id, :target_date)
           end
         else
           if method_flg == 'summary'
             self.group(:target_date)
                 .select("report_date AS target_date, " + SELECT_SUMMARY_COLUMNS)
-                .where("DATE_FORMAT(report_date, '%Y-%m') = '#{current_date}'")
+                .where("owner_id = ? and DATE_FORMAT(report_date, '%Y-%m') = ?", owner_id, current_date)
                 .where(:user_id => target_flg)
                 .order(:target_date)
           else
             self.group(:target_date, :user_id)
                 .select("report_date AS target_date, user_id, " + SELECT_SUMMARY_COLUMNS + ", contact_matter")
-                .where("DATE_FORMAT(report_date, '%Y-%m') = '#{current_date}'")
+                .where("owner_id = ? and DATE_FORMAT(report_date, '%Y-%m') = ?", owner_id, current_date)
                 .where(:user_id => target_flg)
                 .order(:user_id, :target_date)
           end

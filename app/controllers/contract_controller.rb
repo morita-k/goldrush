@@ -46,7 +46,7 @@ class ContractController < ApplicationController
     end
     sum
   end
-    
+
   def list
     if params[:clear]
       params[:year] = params[:month] = nil
@@ -55,13 +55,15 @@ class ContractController < ApplicationController
     end
 
     target_date params[:year], params[:month], lambda {|st, ed|
-      #@contracts = Contract.where("deleted = 0 and contract_status_type in ('contract','finished') and contract_end_date >= ? and contract_start_date <= ? ", st, ed).order("contract_start_date")
-      @contracts = Contract.where("deleted = 0 and contract_end_date >= ? and contract_start_date <= ? ", st, ed).order("contract_start_date")
+      #@contracts = find_login_owner(:contracts).where("deleted = 0 and contract_status_type in ('contract','finished') and contract_end_date >= ? and contract_start_date <= ? ", st, ed).order("contract_start_date")
+      @contracts = find_login_owner(:contracts)
+                      .where("deleted = 0 and contract_end_date >= ? and contract_start_date <= ? ", st, ed)
+                      .order("contract_start_date")
       @summary = summary(st, ed, @contracts) {true}
       @summary_prop = summary(st, ed, @contracts) {|c| c.proper? }
       @summary_non_prop = summary(st, ed, @contracts) {|c| !c.proper? }
     }, lambda {
-      @contract_pages, @contracts = paginate :contracts, :conditions =>["deleted = 0"], :per_page => current_user.per_page, :order => "contract_start_date desc"
+      @contract_pages, @contracts = paginate :contracts, :conditions =>["deleted = 0"], :per => current_user.per_page, :order => "contract_start_date desc"
     }
     return true
   end
@@ -70,7 +72,9 @@ class ContractController < ApplicationController
     date = params[:target_date] && params[:target_date].to_date || Date.today
     @target_start = (date - 2.month).beginning_of_month
     @target_end = (date + 9.month).end_of_month
-    @contracts = Contract.where("contract_end_date >= ? and contract_start_date <= ? and deleted = 0", @target_start, @target_end).order("(upper_contract_status_type = 'closed' or upper_contract_status_type = 'abort'), approach_id, contract_start_date")
+    @contracts = find_login_owner(:contracts)
+                    .where("contract_end_date >= ? and contract_start_date <= ? and deleted = 0", @target_start, @target_end)
+                    .order("(upper_contract_status_type = 'closed' or upper_contract_status_type = 'abort'), approach_id, contract_start_date")
     @works = Hash.new
     @contracts.each do |c|
       @works[c.approach.bp_member.human_resource] ||= []
@@ -121,9 +125,9 @@ class ContractController < ApplicationController
 
   def create
     Contract.transaction do
-      @contract = Contract.new(params[:contract])
-      @contract.upper_contract_term = ContractTerm.new(params[:upper_contract_term])
-      @contract.down_contract_term = ContractTerm.new(params[:down_contract_term])
+      @contract = create_model(:contracts, params[:contract])
+      @contract.upper_contract_term = create_model(:contract_terms, params[:upper_contract_term])
+      @contract.down_contract_term = create_model(:contract_terms, params[:down_contract_term])
       set_user_column @contract
       set_user_column @contract.upper_contract_term
       set_user_column @contract.down_contract_term
@@ -204,21 +208,21 @@ class ContractController < ApplicationController
 private
   def contract_objects_new
     # 案件
-    @business = Business.new
+    @business = create_model(:businesses)
     # 照会
-    @biz_offer = BizOffer.new
+    @biz_offer = create_model(:biz_offers)
     @biz_offer.business = @business
     # 提案
-    @approach = Approach.new
+    @approach = create_model(:approaches)
     @approach.biz_offer = @biz_offer
-    @approach_upper_contract_term = ContractTerm.new
-    @approach_down_contract_term = ContractTerm.new
+    @approach_upper_contract_term = create_model(:contract_terms)
+    @approach_down_contract_term = create_model(:contract_terms)
     @approach.approach_upper_contract_term = @approach_upper_contract_term
     @approach.approach_down_contract_term = @approach_down_contract_term
     # 契約
-    @contract = Contract.new
-    @upper_contract_term = ContractTerm.new
-    @down_contract_term = ContractTerm.new
+    @contract = create_model(:contracts)
+    @upper_contract_term = create_model(:contract_terms)
+    @down_contract_term = create_model(:contract_terms)
     @contract.approach = @approach
     @contract.upper_contract_term = @upper_contract_term
     @contract.down_contract_term = @down_contract_term

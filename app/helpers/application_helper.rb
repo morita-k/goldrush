@@ -8,6 +8,14 @@ module ApplicationHelper
   include NameUtil
   include TypeUtil
 
+  def get_application_name
+    SysConfig.get_application_name
+  end
+
+  def get_contact_address
+    SysConfig.get_contact_address
+  end
+
   def mail_match_target
     DeliveryMail.find(session[:mail_match_target_id]) if session[:mail_match_target_id]
   end
@@ -30,6 +38,10 @@ module ApplicationHelper
 
   def around_b_if(cond, str)
     cond ? around_b(str) : str
+  end
+
+  def url_for_pic_popup(mode, callback = :setPic)
+    url_for :controller => :user, :action => :list, :popup => 1, :callback => callback, :mode => mode
   end
 
   def url_for_bp_pic_popup(callback = :setBpPic)
@@ -133,6 +145,17 @@ module ApplicationHelper
     end
   end
 
+  def _timetoyyyymmddhhmm(time)
+    if time.blank?
+      ""
+    elsif [ActiveSupport::TimeWithZone, Time, Date].include?(time.class)
+      t = time.to_time.getlocal
+      t.strftime("%Y/%m/%d %H:%M")
+    else
+      time
+    end
+  end
+
   def _timetoddmmhhmm(time)
     if time.blank?
       ""
@@ -168,22 +191,9 @@ module ApplicationHelper
     current_auth
   end
 
-  def show_default_initial_amount(x)
-    over_super? ? x : '※ 表示できません'
+  def find_login_owner(table_name)
+    eval(table_name.to_s.classify).where(:owner_id => current_user.owner_id)
   end
-
-  def over_super?
-    logged_in? && ['super'].include?(current_user.access_level_type)
-  end
-
-  def over_account?
-    logged_in? && ['super','account'].include?(current_user.access_level_type)
-  end
-
-  def over_normal?
-    logged_in? && ['super','account','normal'].include?(current_user.access_level_type)
-  end
-
 
   def edit?
     ["edit","update"].include?(controller.action_name)

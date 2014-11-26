@@ -1,0 +1,59 @@
+<h1>ユーザー一覧</h1>
+
+<%= paginate users %>
+
+<table class="list_table table-bordered table-hover">
+  <tr>
+    <% if popup? %>
+    <th style="width:50%">メールアドレス</th>
+    <th style="width:50%">名前</th>
+    <% else %>
+    <th style="width:35%">メールアドレス</th>
+    <th style="width:30%">名前</th>
+    <th style="width:25%">権限</th>
+    <th style="width:10%">削除</th>
+    <% end %>
+  </tr>
+  <% users.each do |user| %>
+  <tr>
+    <% if popup? %>
+    <td><%= link_to user.email, '#', :onClick => "setUserToParentWindow(#{user.id}, '#{user.nickname}');return false;" %></td>
+    <td><%= user.nickname %></td>
+    <% else %>
+    <td><%= user.email %></td>
+    <td><%= user.nickname %></td>
+    <td>
+      <%= user.manager? ? '管理' : '一般' %>&nbsp;&nbsp;&nbsp;&nbsp;
+      <% if user.normal? %>
+      <%= back_to_link '管理者にする', {:controller => '/user', :action => :change_access_level, :id => user, :access_level_type => 'owner', :authenticity_token => form_authenticity_token }, :method => :put, data: {:confirm => '選択したユーザーを管理者にします。よろしいですか?'} %>
+      <% end %>
+      <% if user.owner? && user.id != current_user.id %>
+      <%= back_to_link '管理者から外す', {:controller => '/user', :action => :change_access_level, :id => user, :access_level_type => 'normal', :authenticity_token => form_authenticity_token }, :method => :put, data: {:confirm => '選択したユーザーを管理者から外します。よろしいですか?'} %>
+      <% end %>
+    </td>
+    <% if user.manager? %>
+    <td>&nbsp;</td>
+    <% else %>
+    <td><%= back_to_link '削除', {:controller => '/user', :action => :destroy, :id => user, :authenticity_token => form_authenticity_token }, :method => :delete, data: {:confirm => '選択したユーザーを削除します。よろしいですか?'} %></td>
+    <% end %><%# if user.manager? %>
+    <% end %><%# if popup? %>
+  </tr>
+  <% end %>
+</table>
+
+<%= paginate users %>
+
+<% if popup? %>
+<script type="text/javascript">
+<!--
+function setUserToParentWindow(id, nickname) {
+  var user = new Object();
+  user.pic_id = id;
+  user.pic_name = nickname;
+  window.opener.document.<%=params[:callback]%>("<%=params[:mode]%>", user);
+  window.close();
+}
+// -->
+</script>
+<% end %>
+

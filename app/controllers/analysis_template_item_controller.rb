@@ -13,7 +13,7 @@ class AnalysisTemplateItemController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    @analysis_template_item_pages, @analysis_template_items = paginate :analysis_template_items, :conditions =>["deleted = 0"], :per_page => current_user.per_page
+    @analysis_template_item_pages, @analysis_template_items = paginate :analysis_template_items, :conditions =>["deleted = 0"], :per => current_user.per_page
   end
 
   def show
@@ -26,7 +26,7 @@ class AnalysisTemplateItemController < ApplicationController
   end
 
   def create
-    @analysis_template_item = AnalysisTemplateItem.new(params[:analysis_template_item])
+    @analysis_template_item = create_model(:analysis_template_items, params[:analysis_template_item])
     set_user_column @analysis_template_item
     @analysis_template_item.save!
     flash[:notice] = 'AnalysisTemplateItem was successfully created.'

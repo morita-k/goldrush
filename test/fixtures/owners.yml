@@ -1,0 +1,26 @@
+owners_1:
+  id: 1
+  sender_email: user1@aaa.com
+  owner_key: b1fe
+  company_name: 株式会社テスト
+  additional_option: photo,jiet,daily_report,bp_member,biz_offer,contract,outflow_mail
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0
+owners_2:
+  id: 2
+  sender_email: user15@aaa.com
+  owner_key: a24f
+  company_name: 株式会社テスト
+  additional_option: photo,jiet,daily_report,bp_member,biz_offer,contract,outflow_mail
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: initial
+  updated_user: initial
+  deleted_at: 
+  deleted: 0

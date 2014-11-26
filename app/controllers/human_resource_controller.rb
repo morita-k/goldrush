@@ -10,7 +10,7 @@ class HumanResourceController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    @human_resource_pages, @human_resources = paginate :human_resources, :conditions =>["deleted = 0"], :per_page => current_user.per_page
+    @human_resource_pages, @human_resources = paginate :human_resources, :conditions =>["deleted = 0"], :per => current_user.per_page
   end
 
   def show
@@ -23,7 +23,7 @@ class HumanResourceController < ApplicationController
   end
 
   def create
-    @human_resource = HumanResource.new(params[:human_resource])
+    @human_resource = create_model(:human_resources, params[:human_resource])
     set_user_column @human_resource
     @human_resource.save!
     flash[:notice] = 'HumanResource was successfully created.'

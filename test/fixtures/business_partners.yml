@@ -1,6 +1,6 @@
 business_partners_1:
   id: 1
-  owner_id: 
+  owner_id: 1
   sales_code: ""
   business_partner_code: ""
   sales_management_code: ""
@@ -35,7 +35,7 @@ business_partners_1:
   deleted: 0
 business_partners_2:
   id: 2
-  owner_id: 
+  owner_id: 1
   sales_code: ""
   business_partner_code: ""
   sales_management_code: ""
@@ -70,7 +70,7 @@ business_partners_2:
   deleted: 0
 business_partners_3:
   id: 3
-  owner_id: 
+  owner_id: 1
   sales_code: ""
   business_partner_code: ""
   sales_management_code: ""
@@ -105,13 +105,153 @@ business_partners_3:
   deleted: 0
 business_partners_4:
   id: 4
-  owner_id: 
+  owner_id: 1
   sales_code: ""
   business_partner_code: ""
   sales_management_code: ""
   business_partner_name: "株式会社ボールコミュニケーションズ"
   business_partner_short_name: "株式会社ボールコミュニケーションズ"
   business_partner_name_kana: "株式会社ボールコミュニケーションズ"
+  business_partner_name_en: ""
+  sales_status_type: "prospect"
+  basic_contract_first_party_status_type: ""
+  basic_contract_second_party_status_type: ""
+  ceo_name: ""
+  url: ""
+  zip: ""
+  address1: ""
+  address2: ""
+  tel: ""
+  fax: ""
+  email: ""
+  category: ""
+  self_flg: 
+  starred: 
+  rating: 
+  import_mail_id: 
+  tag_text: ""
+  memo: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+business_partners_5:
+  id: 5
+  owner_id: 2
+  sales_code: ""
+  business_partner_code: ""
+  sales_management_code: ""
+  business_partner_name: "株式会社アサヒシステム"
+  business_partner_short_name: "株式会社アサヒシステム"
+  business_partner_name_kana: "株式会社アサヒシステム"
+  business_partner_name_en: ""
+  sales_status_type: "prospect"
+  basic_contract_first_party_status_type: ""
+  basic_contract_second_party_status_type: ""
+  ceo_name: ""
+  url: ""
+  zip: ""
+  address1: ""
+  address2: ""
+  tel: ""
+  fax: ""
+  email: ""
+  category: ""
+  self_flg: 
+  starred: 
+  rating: 
+  import_mail_id: 
+  tag_text: ""
+  memo: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+business_partners_6:
+  id: 6
+  owner_id: 2
+  sales_code: ""
+  business_partner_code: ""
+  sales_management_code: ""
+  business_partner_name: "株式会社ニシシステム"
+  business_partner_short_name: "株式会社ニシシステム"
+  business_partner_name_kana: "株式会社ニシシステム"
+  business_partner_name_en: ""
+  sales_status_type: "prospect"
+  basic_contract_first_party_status_type: ""
+  basic_contract_second_party_status_type: ""
+  ceo_name: ""
+  url: ""
+  zip: ""
+  address1: ""
+  address2: ""
+  tel: ""
+  fax: ""
+  email: ""
+  category: ""
+  self_flg: 
+  starred: 
+  rating: 
+  import_mail_id: 
+  tag_text: ""
+  memo: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+business_partners_7:
+  id: 7
+  owner_id: 2
+  sales_code: ""
+  business_partner_code: ""
+  sales_management_code: ""
+  business_partner_name: "株式会社ヨコハマデザイン"
+  business_partner_short_name: "株式会社ヨコハマデザイン"
+  business_partner_name_kana: "株式会社ヨコハマデザイン"
+  business_partner_name_en: ""
+  sales_status_type: "prospect"
+  basic_contract_first_party_status_type: ""
+  basic_contract_second_party_status_type: ""
+  ceo_name: ""
+  url: ""
+  zip: ""
+  address1: ""
+  address2: ""
+  tel: ""
+  fax: ""
+  email: ""
+  category: ""
+  self_flg: 
+  starred: 
+  rating: 
+  import_mail_id: 
+  tag_text: ""
+  memo: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+business_partners_8:
+  id: 8
+  owner_id: 2
+  sales_code: ""
+  business_partner_code: ""
+  sales_management_code: ""
+  business_partner_name: "株式会社ポールコミュニケーションズ"
+  business_partner_short_name: "株式会社ポールコミュニケーションズ"
+  business_partner_name_kana: "株式会社ポールコミュニケーションズ"
   business_partner_name_en: ""
   sales_status_type: "prospect"
   basic_contract_first_party_status_type: ""

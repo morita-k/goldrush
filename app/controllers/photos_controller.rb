@@ -3,7 +3,7 @@ class PhotosController < ApplicationController
 
   # GET /photos/
   def index
-    @photos = Photo.where(deleted: 0, photo_status_type: :unfixed).order('created_at desc')
+    @photos = find_login_owner(:photos).where(deleted: 0, photo_status_type: :unfixed).order('created_at desc')
   end
 
   def get_image

@@ -1,6 +1,6 @@
 delivery_mail_targets_1:
   id: 1
-  owner_id: 
+  owner_id: 1
   delivery_mail_id: 1
   bp_pic_id: 1
   message_id: "aaa"
@@ -13,7 +13,7 @@ delivery_mail_targets_1:
   deleted: 0
 delivery_mail_targets_2:
   id: 2
-  owner_id: 
+  owner_id: 1
   delivery_mail_id: 2
   bp_pic_id: 1
   message_id: ""
@@ -26,7 +26,7 @@ delivery_mail_targets_2:
   deleted: 0
 delivery_mail_targets_3:
   id: 3
-  owner_id: 
+  owner_id: 1
   delivery_mail_id: 2
   bp_pic_id: 4
   message_id: ""
@@ -39,7 +39,7 @@ delivery_mail_targets_3:
   deleted: 0
 delivery_mail_targets_4:
   id: 4
-  owner_id: 
+  owner_id: 1
   delivery_mail_id: 2
   bp_pic_id: 2
   message_id: ""
@@ -52,9 +52,74 @@ delivery_mail_targets_4:
   deleted: 0
 delivery_mail_targets_5:
   id: 5
-  owner_id: 
+  owner_id: 1
   delivery_mail_id: 2
   bp_pic_id: 3
+  message_id: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+delivery_mail_targets_6:
+  id: 6
+  owner_id: 2
+  delivery_mail_id: 3
+  bp_pic_id: 5
+  message_id: "aaa"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+delivery_mail_targets_7:
+  id: 7
+  owner_id: 2
+  delivery_mail_id: 4
+  bp_pic_id: 5
+  message_id: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+delivery_mail_targets_8:
+  id: 8
+  owner_id: 2
+  delivery_mail_id: 4
+  bp_pic_id: 8
+  message_id: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+delivery_mail_targets_9:
+  id: 9
+  owner_id: 2
+  delivery_mail_id: 4
+  bp_pic_id: 6
+  message_id: ""
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+  lock_version: 0
+  created_user: "initial"
+  updated_user: "initial"
+  deleted_at: 
+  deleted: 0
+delivery_mail_targets_10:
+  id: 10
+  owner_id: 2
+  delivery_mail_id: 4
+  bp_pic_id: 7
   message_id: ""
   created_at: <%= Time.now.to_s(:db) %>
   updated_at: <%= Time.now.to_s(:db) %>

@@ -3,7 +3,7 @@ class DepartmentsController < ApplicationController
   # GET /departments
   # GET /departments.json
   def index
-    @departments = Department.all
+    @departments = find_login_owner(:departments) 
 
     respond_to do |format|
       format.html # index.html.erb
@@ -41,7 +41,7 @@ class DepartmentsController < ApplicationController
   # POST /departments
   # POST /departments.json
   def create
-    @department = Department.new(params[:department])
+    @department = create_model(:demartments, params[:department])
 
     respond_to do |format|
       if @department.save

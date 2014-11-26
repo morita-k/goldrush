@@ -1,0 +1,19 @@
+<%= error_messages_for :owner %>
+<table class="form_table">
+  <% if current_user.super? %>
+  <tr>
+    <th><%= label_tag 'owner[advanced_smtp_mode]', '共通SMTP設定に切り替え' %></th>
+    <td><label><%= check_box_tag :advanced_smtp_mode, 1, @owner.advanced_smtp_mode_on? %> チェックされた場合、ON</label></td>
+  </tr>
+
+  <tr>
+    <th><%= label_tag 'owner[sender_email]', '共通Eメール' %></th>
+    <td><%= email_field_tag 'owner[sender_email]', @owner.sender_email, :autofocus => true, :size => 30 %></td>
+  </tr>
+  <% end %>
+
+  <tr>
+    <th><%= label_tag 'owner[company_name]', '会社名' %></th>
+    <td><%= text_field_tag 'owner[company_name]', @owner.company_name %></td>
+  </tr>
+</table>

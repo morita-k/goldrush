@@ -13,7 +13,7 @@ class NameController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    @name_pages, @names = paginate :names, :per_page => 10, :conditions => "deleted = 0 "
+    @names = Name.where("deleted = 0").page(params[:page]).per(10)
   end
 
   def show

@@ -16,7 +16,7 @@
         <label>問い合わせメール: </label>
         <%= f_pic.text_field :email1, :style => "width: 10em;" %>
         <label><%=getLongName('bp_pics','sales_pic_id') + ': '%></label>
-        <%= f_pic.select :sales_pic_id, options_for_select(BpPic.select_content_list, get_sales_pic_id(@outflow_mail.bp_pic)), :include_blank => true, :style => "width: 5em;" %>
+        <%= f_pic.select :sales_pic_id, options_for_select(BpPic.select_content_list(current_user.owner_id), get_sales_pic_id(@outflow_mail.bp_pic)), :include_blank => true, :style => "width: 5em;" %>
       <%end%>
 
       <%= hidden_field_tag 'outflow_mail_id', @outflow_mail.id %>

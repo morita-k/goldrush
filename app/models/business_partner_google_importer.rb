@@ -1,11 +1,11 @@
 class BusinessPartnerGoogleImporter < BusinessPartner
 
   # 名刺管理アカウントから出力されたCSVファイルをインポート(google.csv)
-  def BusinessPartnerGoogleImporter.import_google_csv_data(readable_file, userlogin, prodmode=false)
+  def BusinessPartnerGoogleImporter.import_google_csv_data(readable_file, owner_id, userlogin, prodmode=false)
     data_total = 0 # ヘッダーを含まないデータの総数
     error_list = [] # ヘッダーを含めた行番号リスト
-    employees = Employee.map_for_googleimport
-    
+    sales_pic_list = User.map_for_googleimport(owner_id)
+
     ActiveRecord::Base.transaction do
       require 'csv'
       header = nil
@@ -32,11 +32,11 @@ class BusinessPartnerGoogleImporter < BusinessPartner
           error_list.push(data_total + 1)
           next
         end
-        
-        if bp_pic = BpPic.where(:email1 => email1, :deleted => 0).first
+ 
+        if bp_pic = BpPic.where(:owner_id => owner_id, :email1 => email1, :deleted => 0).first
           bp = bp_pic.business_partner
           if bp.business_partner_name != bp_name
-            if other_bp = BusinessPartner.where(:business_partner_name => bp_name, :deleted => 0).first
+            if other_bp = BusinessPartner.where(:owner_id => owner_id, :business_partner_name => bp_name, :deleted => 0).first
               # 担当者から得られる取引先と、インポートで得られた取引先名が一致していなかった場合の処理
               BusinessPartnerGoogleImporter.change_bp(bp, other_bp)
               bp.deleted = 9
@@ -46,22 +46,24 @@ class BusinessPartnerGoogleImporter < BusinessPartner
               bp.save!
               bp = other_bp
               BpPic.uncached do
-                bp_pic = BpPic.where(:email1 => email1, :deleted => 0).first
+                bp_pic = BpPic.where(:owner_id => owner_id, :email1 => email1, :deleted => 0).first
               end
             end
           end
         else
           bp_pic = BpPic.new
-          if bp = BusinessPartner.where(:business_partner_name => r["Organization 1 - Name"], :deleted => 0).first
+          bp_pic.owner_id = owner_id
+          if bp = BusinessPartner.where(:owner_id => owner_id, :business_partner_name => r["Organization 1 - Name"], :deleted => 0).first
             bp_pic.business_partner = bp
           else
             bp = BusinessPartner.new
+            bp.owner_id = owner_id
             bp.basic_contract_first_party_status_type ||= 'none'
             bp.basic_contract_second_party_status_type ||= 'none'
             bp_pic.business_partner = bp
           end
         end
-        
+ 
         bp_pic.attributes = {
           :bp_pic_name => r["Name"],
           :bp_pic_short_name => r["Family Name"],
@@ -74,7 +76,7 @@ class BusinessPartnerGoogleImporter < BusinessPartner
 
         tags = BusinessPartnerGoogleImporter.mysplit(r["Group Membership"])
         tags.each do |tag|
-          if sales_pic_id = employees[tag]
+          if sales_pic_id = sales_pic_list[tag]
             bp_pic.sales_pic_id = sales_pic_id
             break
           end
@@ -93,13 +95,13 @@ class BusinessPartnerGoogleImporter < BusinessPartner
           :sales_status_type => 'listup'
         }.reject{|k,v| v.blank?}
 
-        bp.created_user = 'import'
-        bp.updated_user = 'import' if bp.new_record?
+        bp.created_user = 'import' if bp.new_record?
+        bp.updated_user = 'import'
         bp.save!
 
         bp_pic.working_status_type = 'working'
-        bp_pic.created_user = 'import'
-        bp_pic.updated_user = 'import' if bp_pic.new_record?
+        bp_pic.created_user = 'import' if bp_pic.new_record?
+        bp_pic.updated_user = 'import'
         bp_pic.save!
       }
     end
@@ -140,17 +142,17 @@ class BusinessPartnerGoogleImporter < BusinessPartner
     # 既存の取引先と紐づくデータを新しく取り込む取引先に紐付け
     # 他にContactHistory, DeliveryError, Interview(interview_bp_id)があるが、利用していない。
     [BpPic, AnalysisTemplate, BizOffer, BpMember, ImportMail].each do |sym|
-      sym.where(:business_partner_id => bp.id, :deleted => 0).each do |target|
+      sym.where(:owner_id => bp.owner_id, :business_partner_id => bp.id, :deleted => 0).each do |target|
         target.business_partner = other_bp
         target.save!
       end
     end
-    Business.where(:eubp_id => bp.id, :deleted => 0).each do |target|
+    Business.where(:owner_id => bp.owner_id, :eubp_id => bp.id, :deleted => 0).each do |target|
       target.eubp_id = other_bp.id
       target.save!
     end
   end
-  
+
   COLUMN_NAMES = [
     "Name",
     "Given Name",

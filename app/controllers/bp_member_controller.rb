@@ -42,7 +42,7 @@ class BpMemberController < ApplicationController
     end
 
     unless session[:bp_member_search][:skill_tag].blank?
-      pids = Tag.make_conditions_for_tag(session[:bp_member_search][:skill_tag], "human_resources")
+      pids = Tag.make_conditions_for_tag(current_user.owner_id, session[:bp_member_search][:skill_tag], "human_resources")
       unless pids.empty?
         sql += " and human_resources.id in (?) "
         param << pids
@@ -107,7 +107,7 @@ class BpMemberController < ApplicationController
       end
     end
 
-    return {:conditions => param.unshift(sql), :include => include, :order => order_by, :per_page => current_user.per_page}
+    return {:conditions => param.unshift(sql), :include => include, :order => order_by, :per => current_user.per_page}
   end
 
 
@@ -147,9 +147,10 @@ class BpMemberController < ApplicationController
       @bp_member.bp_pic_id = import_mail.bp_pic_id
 
       if params[:from].blank? || params[:end].blank?
-        AnalysisTemplate.analyze(params[:template_id], import_mail, [@bp_member, @human_resource])
+        AnalysisTemplate.analyze(current_user.owner_id, params[:template_id], import_mail, [@bp_member, @human_resource])
       else
         AnalysisTemplate.analyze_content(
+          current_user.owner_id,
           params[:template_id],
           import_mail.mail_body[params[:from].to_i .. params[:end].to_i],
           [@bp_member, @human_resource]
@@ -161,10 +162,10 @@ class BpMemberController < ApplicationController
 
   def create
     @calendar = true
-    @bp_member = BpMember.new(params[:bp_member])
+    @bp_member = create_model(:bp_members, params[:bp_member])
     ActiveRecord::Base.transaction do
       unless @human_resource = @bp_member.human_resource
-        @human_resource = HumanResource.new
+        @human_resource = create_model(:human_resources)
       end
       @human_resource.attributes = params[:human_resource]
       @human_resource.initial = initial_trim(params[:human_resource][:initial])
@@ -209,7 +210,7 @@ class BpMemberController < ApplicationController
 # メール取り込みからの遷移
     if params[:import_mail_id] && params[:template_id]
       import_mail = ImportMail.find(params[:import_mail_id])
-      AnalysisTemplate.analyze(params[:template_id], import_mail, [@bp_member, @human_resource])
+      AnalysisTemplate.analyze(current_user.owner_id, params[:template_id], import_mail, [@bp_member, @human_resource])
     end
   end
 

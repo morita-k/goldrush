@@ -1,0 +1,5 @@
+<p>Welcome <%= @email %>!</p>
+
+<p>下記のリンクからアカウントを登録できます:</p>
+
+<p><%= link_to 'アカウント登録', :controller => :auth, :action => :sign_up, :auth_activation_code => @activation_code, :only_path => false, :protocol => 'https' %></p>

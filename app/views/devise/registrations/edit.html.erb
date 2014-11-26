@@ -3,30 +3,33 @@
   <%= devise_error_messages! %>
 <table class="form_table">
   <tr>
-  <th><%= f.label :email, 'Eメール' %></th>
+  <th><%= f.label :email, 'Eメール(*)' %></th>
   <td><%= f.email_field :email, :autofocus => true %></td>
   </tr>
 
   <tr>
-  <th><%= f.label :current_password, '現在のパスワード' %></th>
-  <td><%= f.password_field :current_password %><br/><i>(登録内容を変更する場合、現在のパスワードが必要です)</i></td>
+  <th><%= f.label :nickname, '名前(*)' %></th>
+  <td><%= f.text_field :nickname %></td>
   </tr>
 
-  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-    <tr>
-    <th>Currently waiting confirmation for</th>
-    <td><%= resource.unconfirmed_email %></td>
-    </tr>
-  <% end %>
+  <tr>
+  <th><%= f.label :current_password, '現在のパスワード(*)' %></th>
+  <td><%= f.password_field :current_password %></td>
+  </tr>
 
   <tr>
   <th><%= f.label :password, 'パスワード' %></th>
-  <td><%= f.password_field :password, :autocomplete => "off" %><br/><i>(変更しない場合はブランクにしてください)</i></td>
+  <td><%= f.password_field :password %> <i>(変更しない場合はブランクにしてください)</i></td>
   </tr>
 
   <tr>
   <th><%= f.label :password_confirmation, 'パスワード確認' %></th>
   <td><%= f.password_field :password_confirmation %></td>
+  </tr>
+
+  <tr>
+  <th><%= label_tag :company_name, '会社名' %></th>
+  <td><%= resource.owner.company_name %></td>
   </tr>
 
   <tr>
@@ -36,14 +39,14 @@
 
   <tr>
   <th><%= f.label :contact_mail_template_id, 'あいさつメールテンプレート' %></th>
-  <td><%= f.select :contact_mail_template_id, MailTemplate.all.collect {|x| [ x.mail_template_name, x.id ] }, { :include_blank => true } %></td>
+  <td><%= f.select :contact_mail_template_id, available_contact_mail_template_list, { :include_blank => true } %></td>
   </tr>
 
 </table>
 <% end %>
 <div class="submit_box">
   <%= f.submit "変更する", btn_primary %>
-  <%= link_or_back "戻る", :back %>
+  <%= link_or_back "戻る", root_path %>
 </div>
 <% end %>
 

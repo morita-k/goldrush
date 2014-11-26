@@ -21,7 +21,7 @@ class BpPicGroupsControllerTest < ActionController::TestCase
 
   test "should create bp_pic_group" do
     assert_difference('BpPicGroup.count') do
-      post :create, bp_pic_group: { bp_pic_group_name: "my test group!", matching_way_type: "bp_member", memo: "my test group memo" }, id: @bp_pic_group.id, back_to: "/bp_pic_groups"
+      post :create, bp_pic_group: { bp_pic_group_name: "my test group!", matching_way_type: "bp_member", mail_template_id: '1', memo: "my test group memo" }, id: @bp_pic_group.id, back_to: "/bp_pic_groups"
     end
 
     assert_redirected_to "/bp_pic_groups"
@@ -38,7 +38,7 @@ class BpPicGroupsControllerTest < ActionController::TestCase
   end
 
   test "should update bp_pic_group" do
-    put :update, id: @bp_pic_group, bp_pic_group: { bp_pic_group_name: @bp_pic_group.bp_pic_group_name, memo: @bp_pic_group.memo }, id: @bp_pic_group.id, back_to: "/bp_pic_groups"
+    put :update, bp_pic_group: { bp_pic_group_name: @bp_pic_group.bp_pic_group_name, matching_way_type: 'biz_offer', mail_template_id: '2', memo: @bp_pic_group.memo }, id: @bp_pic_group.id, back_to: "/bp_pic_groups"
     assert_redirected_to "/bp_pic_groups"
   end
 

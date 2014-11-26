@@ -3,7 +3,7 @@ class BpPicGroupsController < ApplicationController
   # GET /bp_pic_groups
   # GET /bp_pic_groups.json
   def index
-    @bp_pic_groups = BpPicGroup.page(params[:page]).per(50)
+    @bp_pic_groups = find_login_owner(:bp_pic_groups).page(params[:page]).per(50)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -27,11 +27,17 @@ class BpPicGroupsController < ApplicationController
     cond = make_conditions(session[:search_bp_pic_group_details], @bp_pic_group.id)
 
     if params[:delivery_mail_id].blank?
-      @bp_pic_group_details = BpPicGroupDetail.includes(:bp_pic => :business_partner).where(cond).page(params[:page]).per(current_user.per_page)
+      @bp_pic_group_details = find_login_owner(:bp_pic_group_details)
+                                .includes(:bp_pic => :business_partner)
+                                .where(cond)
+                                .page(params[:page])
+                                .per(current_user.per_page)
     else
       @delivery_mail = DeliveryMail.find(params[:delivery_mail_id]).get_informations
       @attachment_files = AttachmentFile.get_attachment_files("delivery_mails", @delivery_mail.id)
-      @bp_pic_group_details = BpPicGroupDetail.includes(:bp_pic => :business_partner).where(deleted: 0, bp_pic_group_id: @bp_pic_group)
+      @bp_pic_group_details = find_login_owner(:bp_pic_group_details)
+                                .includes(:bp_pic => :business_partner)
+                                .where(deleted: 0, bp_pic_group_id: @bp_pic_group)
     end
 
     respond_to do |format|
@@ -70,7 +76,7 @@ class BpPicGroupsController < ApplicationController
   # POST /bp_pic_groups
   # POST /bp_pic_groups.json
   def create
-    @bp_pic_group = BpPicGroup.new(params[:bp_pic_group])
+    @bp_pic_group = create_model(:bp_pic_groups, params[:bp_pic_group])
     source_group_id = params[:src_id]
 
     respond_to do |format|
@@ -142,7 +148,7 @@ class BpPicGroupsController < ApplicationController
           end
 
           # add detail
-          bp_pic_group_detail = BpPicGroupDetail.new()
+          bp_pic_group_detail = create_model(:bp_pic_group_details)
           bp_pic_group_detail.bp_pic_group_id = @bp_pic_group_id
           bp_pic_group_detail.bp_pic_id = bp_pic_id
           set_user_column(bp_pic_group_detail)

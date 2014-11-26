@@ -1,13 +1,80 @@
-<style type="text/css">
-<!--
-p {
-  width: 80%;
-  padding-left: 1em;
-}
--->
-</style>
+<div class="help_area">
+  <% if @first_confirmation %>
+  <p>初期登録にヘルプ説明見せる</p>
+  <% end %>
 
-<h1><%= link_to "#{$APPLICATION_NAME}って?", :controller => '/' %></h1>
-<p>
-アプリケーションの説明書
-</p>
+  <h1><%= @application_name %>とは</h1>
+  <div class="explanation">
+    <p class="lead">SESに特化した、最高にクールな営業支援アプリです。</p>
+  </div>
+
+  <%= accordion_around("顧客データインポート機能", "bp_pic_import") do %>
+    <div class="explanation">
+      <div class="section">
+        <p class="lead">「取引先」メニューから、顧客データをCSVインポートできます。</p>
+        <p class="image-line"><%= image_tag 'sample_bp_pic_import_01.png', :alt => "顧客データインポート手順01", :class => "img-responsive" %></p>
+      </div>
+
+      <div class="section">
+        <p class="lead">インポート時のCSVフォーマットはこちらからダウンロードできます。</p>
+        <p class="image-line"><%= image_tag 'sample_bp_pic_import_02.png', :alt => "顧客データインポート手順02", :class => "img-responsive" %></p>
+      </div>
+    </div>
+  <% end %>
+
+  <br />
+
+  <%= accordion_around("メルマガ機能", "delivery_mail") do %>
+    <div class="explanation">
+      <div class="section">
+        <p class="lead">※あらかじめ「メール配信設定」メニューにて配信設定を行って下さい。</p>
+        <p class="image-line"><%= image_tag 'sample_smtp_setting_01.png', :alt => "配信メール設定(SMTP設定)手順01", :class => "img-responsive" %></p>
+      </div>
+
+      <div class="section">
+        <p class="lead">「配信メール」メニューから、メールを一斉送信できます。</p>
+        <p class="image-line"><%= image_tag 'sample_delivery_mail_01.png', :alt => "配信メール設定手順01", :class => "img-responsive" %></p>
+
+        <p class="icon-next-step"><%= image_tag 'icon-arrow-down.png', :width => "50px" %></p>
+        <p class="image-line"><%= image_tag 'sample_delivery_mail_02_01.png', :alt => "配信メール設定手順02 その1", :class => "img-responsive" %></p>
+        <p class="image-line"><%= image_tag 'sample_delivery_mail_02_02.png', :alt => "配信メール設定手順02 その2", :class => "img-responsive" %></p>
+        <p>※送信日時が過去の場合、10分間隔で送信されます。</p>
+
+        <p class="icon-next-step"><%= image_tag 'icon-arrow-down.png', :width => "50px" %></p>
+        <p class="lead">送信対象者を選択し、送信ボタンを押して送信します。</p>
+        <p class="image-line"><%= image_tag 'sample_delivery_mail_03.png', :alt => "配信メール設定手順03", :class => "img-responsive" %></p>
+      </div>
+    </div>
+  <% end %>
+
+  <br />
+
+  <%= accordion_around("メール取り込み && 解析 機能", "import_mail") do %>
+    <div class="explanation">
+      <div class="section">
+        <p class="lead">取り込みたいメールの宛先に、表示される転送先アドレスを追加して下さい。</p>
+        <p class="image-line"><%= image_tag 'sample_import_mail_01.png', :alt => "メール取り込み機能01", :class => 'img-responsive' %></p>
+      </div>
+
+      <div class="section">
+        <p class="lead">取り込み対象のメール解析結果が<%= @application_name %>に取り込まれ、検索できます。</p>
+        <p class="image-line"><%= image_tag 'sample_import_mail_02.png', :alt => "メール取り込み機能02", :class => 'img-responsive' %></p>
+        <p class="icon-next-step"><%= image_tag 'icon-arrow-down.png', :width => "50px" %></p>
+        <p class="image-line"><%= image_tag 'sample_import_mail_03_01.png', :alt => "メール取り込み機能03その1", :class => 'img-responsive' %></p>
+        <p class="image-line"><%= image_tag 'sample_import_mail_03_02.png', :alt => "メール取り込み機能03その2", :class => 'img-responsive' %></p>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<script type="text/javascript">
+<!--
+
+$(function() {
+  //$('#collapseFormbp_pic_import').collapse('hide');
+  $('#collapseFormdelivery_mail').collapse('hide');
+  $('#collapseFormimport_mail').collapse('hide');
+});
+
+// -->
+</script>

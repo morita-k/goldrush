@@ -1,5 +1,7 @@
 # -*- encoding: utf-8 -*-
 class SpecialWordsController < ApplicationController
+  before_filter :only_super_user
+
   # GET /special_words
   # GET /special_words.json
   def index
@@ -13,7 +15,11 @@ class SpecialWordsController < ApplicationController
     # 検索条件を処理
     cond, order_by = make_conditions
     
-    @special_words = SpecialWord.where(cond).order(order_by).page(params[:page]).per(current_user.per_page)
+    @special_words = find_login_owner(:special_words)
+                        .where(cond)
+                        .order(order_by)
+                        .page(params[:page])
+                        .per(current_user.per_page)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -51,7 +57,7 @@ class SpecialWordsController < ApplicationController
   # POST /special_words
   # POST /special_words.json
   def create
-    @special_word = SpecialWord.new(params[:special_word])
+    @special_word = create_model(:special_words, params[:special_word])
     set_user_column @special_word
 
     respond_to do |format|

@@ -13,7 +13,7 @@ class TypeController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    @type_pages, @types = paginate(:types, :per_page => 100, :conditions => "deleted = 0 ", :order => "type_section, display_order1")
+    @types = Type.where("deleted = 0").order("type_section, display_order1").page(params[:page]).per(100)
   end
 
   def show

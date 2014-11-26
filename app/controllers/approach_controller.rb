@@ -10,7 +10,7 @@ class ApproachController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    @approach_pages, @approaches = paginate :approaches, :conditions =>["deleted = 0"], :per_page => current_user.per_page
+    @approach_pages, @approaches = paginate :approaches, :conditions =>["deleted = 0"], :per => current_user.per_page
   end
 
   def show
@@ -121,10 +121,10 @@ class ApproachController < ApplicationController
 
   def create
     Approach.transaction do
-      @approach = Approach.new(params[:approach])
+      @approach = create_model(:approaches, params[:approach])
       @approach.approach_status_type = 'approaching'
-      @approach.approach_upper_contract_term = ContractTerm.new(params[:approach_upper_contract_term])
-      @approach.approach_down_contract_term = ContractTerm.new(params[:approach_down_contract_term])
+      @approach.approach_upper_contract_term = create_model(:contract_terms, params[:approach_upper_contract_term])
+      @approach.approach_down_contract_term = create_model(:contract_terms, params[:approach_down_contract_term])
       set_user_column @approach
       set_user_column @approach.approach_upper_contract_term
       set_user_column @approach.approach_down_contract_term

@@ -47,79 +47,104 @@
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
       <% if popup? %>
-        <span class="navbar-brand"><%=image_tag('logo2.png', :size => "120x27") %></span>
+      <span class="navbar-brand"><%=image_tag('logo2.png', :size => "120x27") %></span>
       <% else %>
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#global-manu-navbar-collapse">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <%=link_to image_tag('logo2.png', :size => "120x27"), root_path, :class => "navbar-brand" %>
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#global-manu-navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <%=link_to image_tag('logo2.png', :size => "120x27"), root_path, :class => "navbar-brand" %>
       <% end %>
     </div>
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="global-manu-navbar-collapse">
       <% if logged_in? && !popup? %>
-        <ul class="nav navbar-nav">
+      <ul class="nav navbar-nav">
         <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-briefcase"></i> 案件管理<b class="caret"></b></a>
-        <ul class="dropdown-menu">
-          <li><%= link_to '取引先', :controller => '/bp_pic' %></li>
-          <li><%= link_to '契約', :controller => '/contract' %></li>
-          <li><%= link_to '案件照会', :controller => '/biz_offer' %></li>
-          <li><%= link_to '人材所属', :controller => '/bp_member' %></li>
-          <li><%= link_to '名刺取込', :controller => '/photos' %></li>
-        </ul>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-briefcase"></i> 案件管理<b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li><%= link_to '取引先', :controller => '/bp_pic' %></li>
+            <% if current_user.enable_contract? %>
+            <li><%= link_to '契約', :controller => '/contract' %></li>
+            <li><%= link_to '案件照会', :controller => '/biz_offer' %></li>
+            <li><%= link_to '人材所属', :controller => '/bp_member' %></li>
+            <% end %><%# if current_user.enable_contract? %>
+            <% if current_user.enable_photo? %>
+            <li><%= link_to '名刺取込', :controller => '/photos' %></li>
+            <% end %>
+          </ul>
         </li>
         <li class="divider-vertical"></li>
         <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-envelope"></i> メール<b class="caret"></b></a>
-        <ul class="dropdown-menu">
-          <li>メール送信</li>
-          <li><%= link_to 'メールグループ', :controller => '/bp_pic_groups' %></li>
-          <li><%= link_to 'メールテンプレート', :controller => '/mail_templates' %></li>
-          <li><%= link_to 'その他のメール一覧', :controller => '/delivery_mails' %></li>
-          <li class="divider"></li>
-          <li>メール受信</li>
-          <li><%= link_to '取り込みメール', :controller => '/import_mail' %></li>
-          <li><%= link_to '取り込みメール自動マッチング'.html_safe, :controller => '/import_mail_match' %></li>
-          <li><%= link_to '流出メール解析', :controller => '/outflow_mail', :action => 'new' %></li>
-        </ul>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-envelope"></i> メール<b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li>メール送信</li>
+            <li><%= link_to 'メールグループ', :controller => '/bp_pic_groups' %></li>
+            <li><%= link_to 'メールテンプレート', :controller => '/mail_templates' %></li>
+            <li><%= link_to 'その他のメール一覧', :controller => '/delivery_mails' %></li>
+            <li class="divider"></li>
+            <li>メール受信</li>
+            <li><%= link_to '取り込みメール', :controller => '/import_mail' %></li>
+            <li><%= link_to '取り込みメール自動マッチング'.html_safe, :controller => '/import_mail_match' %></li>
+            <% if current_user.enable_outflow_mail? %>
+            <li><%= link_to '流出メール解析', :controller => '/outflow_mail', :action => 'new' %></li>
+            <% end %>
+          </ul>
         </li>
+        <% if current_user.enable_daily_report? %>
         <li class="divider-vertical"></li>
         <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-book"></i> 日報<b class="caret"></b></a>
-        <ul class="dropdown-menu">
-          <li><%= link_to '日報', :controller => '/daily_report' %></li>
-          <li><%= link_to '日報集計', :controller => '/daily_report', :action => :summary %></li>
-        </ul>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-book"></i> 日報<b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li><%= link_to '日報', :controller => '/daily_report' %></li>
+            <li><%= link_to '日報集計', :controller => '/daily_report', :action => :summary %></li>
+          </ul>
         </li>
-          <li class="divider-vertical"></li>
+        <% end %><%# if current_user.enable_daily_report? %>
+        <% if current_user.manager? %>
+        <li class="divider-vertical"></li>
         <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-cog"></i> マスター<b class="caret"></b></a>
-        <ul class="dropdown-menu">
-          <% if current_user.super? %>
-          <li><%= link_to '社員情報一覧', :controller => '/account' %></li>
-          <% end %><%# if current_user.super? %>
-          <li><%= link_to '部署', :controller => '/department' %></li>
-          <li><%= link_to '祝日設定', :controller => '/base_date' %></li>
-          <li><%= link_to 'システム設定', :controller => '/sys_config' %></li>
-          <li><%= link_to '特別単語設定', :controller => '/special_words' %></li>
-          <li><%= link_to 'タグ管理', :controller => '/tags' %></li>
-        </ul>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-home"></i> 組織<b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li><%= link_to 'ユーザー一覧', :controller => '/owner', :action => :list_user %></li>
+            <li><%= link_to 'ユーザー招待', :controller => '/invite', :action => :new %></li>
+            <li><%= link_to '組織設定変更', :controller => '/owner', :action => :edit, :id => current_user.owner.id %></li>
+          </ul>
         </li>
+        <% end %><%# if current_user.manager? %>
+        <% if current_user.super? %>
+        <li class="divider-vertical"></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-cog"></i> マスター<b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li><%= link_to '組織管理', :controller => '/owner' %></li>
+            <li><%# link_to '部署', :controller => '/department' %></li>
+            <li><%= link_to '祝日設定', :controller => '/base_date' %></li>
+            <li><%= link_to 'システム設定', :controller => '/sys_config' %></li>
+            <li><%= link_to '特別単語設定', :controller => '/special_words' %></li>
+            <li><%= link_to 'タグ管理', :controller => '/tags' %></li>
+          </ul>
+        </li>
+        <% end %><%# if current_user.super? %>
       </ul>
+      <% end %><%# logged_in? && !popup? %>
       <ul class="nav navbar-nav navbar-right">
+        <% if logged_in? && !popup? %>
         <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i> <%= "#{current_user.employee && current_user.employee.employee_name} <#{current_user.login}>" %></a>
-        <ul class="dropdown-menu">
-          <li><%= link_to "ユーザー設定変更", edit_auth_registration_path %></li>
-          <li><%= link_to "ログアウト", destroy_auth_session_path, :method => :delete %></li>
-        </ul>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i> <%= "#{current_user.nickname} <#{current_user.login}>" %></a>
+          <ul class="dropdown-menu">
+            <li><%= link_to "ユーザー設定変更", edit_auth_registration_path %></li>
+            <li><%= link_to "メール配信設定", :controller => '/auth/registrations', :action => :edit_smtp_setting  %></li>
+            <li><%= link_to "ログアウト", destroy_auth_session_path, :method => :delete %></li>
+          </ul>
         </li>
-      </ul>    
-    <% end %><%# logged_in? %>
+        <% end %><%# logged_in? && !popup? %>
+        <% if !popup? %>
+        <li><%= link_to "<i class='glyphicon glyphicon-question-sign'></i>".html_safe, {:controller => '/help'}, :style => "padding-left: 0px; padding-right: 0px;" %></li>
+        <% end %><%# !popup? %>
+      </ul>
     </div>
   </div>
 </nav>
@@ -144,14 +169,14 @@
     </div>
     <div id="collapse_mm" class="panel-collapse collapse">
       <ul class="list-group">
-          <li class="list-group-item"><%= link_to "詳細画面に移動", {:controller => :delivery_mails, :action => :show, :id => @delivery_mail}, :class => "btn btn-info btn-medium" %></li>
-          <% @delivery_mail.delivery_mail_matches.each do |dmm| %>
-            <li class="list-group-item"><span class="label label-warning">候補</span> <%= link_to dmm.import_mail.mail_subject, :controller => :import_mail, :action => :show, :id => dmm.import_mail %><%= dmm.memo.blank? ? "" : " メモ: #{dmm.memo}" %></li>
-          <% end %>
-          <li class="list-group-item"><%= @delivery_mail.formated_mail_from%> <%= _time_long(@delivery_mail.planned_setting_at) %></li>
-          <li class="list-group-item"><pre><%= @delivery_mail.content %></pre></li>
+        <li class="list-group-item"><%= link_to "詳細画面に移動", {:controller => :delivery_mails, :action => :show, :id => @delivery_mail}, :class => "btn btn-info btn-medium" %></li>
+        <% @delivery_mail.delivery_mail_matches.each do |dmm| %>
+          <li class="list-group-item"><span class="label label-warning">候補</span> <%= link_to dmm.import_mail.mail_subject, :controller => :import_mail, :action => :show, :id => dmm.import_mail %><%= dmm.memo.blank? ? "" : " メモ: #{dmm.memo}" %></li>
+        <% end %>
+        <li class="list-group-item"><%= @delivery_mail.formated_mail_from%> <%= _time_long(@delivery_mail.planned_setting_at) %></li>
+        <li class="list-group-item"><pre><%= @delivery_mail.content %></pre></li>
       </ul>
-</div>
+    </div>
   </div>
 <script type="text/javascript">
 <!--
@@ -175,7 +200,15 @@
   </div>
 </div>
 
-<div class="modal-footer">c <%=Date.today.year%> GoldRush Project. All Rights Reserved.<%= envname ? envname + '環境' : '' %></div>
+<div class="modal-footer">
+    <div class="footer_centered">
+      <ul>
+        <li><%= link_to '利用規約', {:controller => '/help', :action => 'terms'} %></li>
+        <li><%= link_to 'プライバシーポリシー', {:controller => '/help', :action => 'privacy'} %></li>
+      </ul>
+      <p>c <%=Date.today.year%> GoldRush Project. All Rights Reserved.<%= envname ? envname + '環境' : '' %></p>
+    </div>
+</div>
   <script type="text/javascript">
 // <![CDATA[
   (function () {
