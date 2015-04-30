@@ -120,6 +120,9 @@ class OutflowMailController < ApplicationController
       mail_name = '流出メール解析' + " [#{now.strftime("%Y/%m/%d/ %H:%M:%S")}] "
       import_mail.mail_subject = mail_name + '解析中'
       import_mail.outflow_mail_flg = '1'
+      import_mail.matching_way_type = 'other'
+      import_mail.foreign_type = 'unknown'
+      import_mail.sex_type = 'unknown'
 
       import_mail.save!
 
