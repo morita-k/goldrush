@@ -6,7 +6,7 @@
   <meta http-equiv="Content-Style-Type" content="text/css">
   <% envname = ActiveRecord::Base.configurations[Rails.env]['envname'] %>
   <title>The GoldRush Project <%=envname.blank? ? '' : " #{envname}環境"%></title>
-  <link rel="icon" href="<%=image_path 'favicon.png'%>" type="image/vnd.microsoft.icon">
+  <link rel="icon" href="<%=image_path 'favicon.ico'%>" type="image/vnd.microsoft.icon">
   <%= stylesheet_link_tag 'application', :media => 'screen,aural' %>
   <%#= stylesheet_link_tag 'print', :media => 'print' %>
   <%= javascript_include_tag "application" %>
