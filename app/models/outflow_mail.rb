@@ -117,10 +117,11 @@ class OutflowMail < ActiveRecord::Base
   def self.search_active_url(email_address)
     if email_address =~ /.*?@(.*)/
       OutflowMail.common_url_table($1).map{|domain| OutflowMail.check_active_url(domain)}.each do |result|
-        if ["200","301"].include?(result.first)
+        if ["200","301","302"].include?(result.first)
           return "http://" + result.second
         end
       end
+      return nil
     end
   end
 
