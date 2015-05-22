@@ -75,6 +75,15 @@ class DeliveryMail < ActiveRecord::Base
     self.mail_from = $2
   end
 
+  def mail_pic
+    if content =~ /（株）(.*)です。/
+      $1
+    else
+      "不明"
+    end
+  end
+
+
   def unsend?
     ['editing','unsend'].include?(mail_status_type)
   end
