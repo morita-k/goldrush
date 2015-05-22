@@ -1,4 +1,5 @@
 
+<% if false %>
 <% if @import_mail.auto_match_biz_offer_mails.exists? %>
 <% @import_mails = @import_mail.auto_match_biz_offer_mails.map{|x| matched_import_mail(x, x.biz_offer_mail)} %>
 <%= accordion_around_h2("自動マッチング候補案件メール一覧", "biz", @import_mails.empty?) do %>
@@ -17,6 +18,7 @@
   <%= render :partial => 'delivery_mails/list' %>
 <% end %>
 <% end %>
+<% end %><%# if false %>
 <% if !@biz_offers.blank? %>
   <%= accordion_around_h2(getLongName('table_name','biz_offers')+"一覧", "biz", @biz_offers.empty?) do %>
     <%= render :partial => 'biz_offer/list', :locals => {:biz_offers => @biz_offers} %>
