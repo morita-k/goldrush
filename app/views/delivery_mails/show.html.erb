@@ -1,8 +1,10 @@
 
+<% if false %>
 <% if @delivery_mail.delivery_mail_matches.exists? %>
   <% @import_mails = @delivery_mail.filtered_matches.take(10) %>
 <h2>マッチング候補</h2>
 <%= render :partial => 'import_mail/list' %>
+<% end %>
 <% end %>
 
 <%= accordion_around(getLongName('table_name','delivery_mails'), "") do %>
