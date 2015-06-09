@@ -3,7 +3,7 @@ class BpPicGroupsController < ApplicationController
   # GET /bp_pic_groups
   # GET /bp_pic_groups.json
   def index
-    @bp_pic_groups = BpPicGroup.page(params[:page]).per(50)
+    @bp_pic_groups = BpPicGroup.order("bp_pic_group_name").page(params[:page]).per(50)
 
     respond_to do |format|
       format.html # index.html.erb
