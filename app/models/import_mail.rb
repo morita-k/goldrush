@@ -92,6 +92,21 @@ EOS
     StringUtil.detect_regex(body, /.*GR-BIZ-ID:\d+-\d+/).first
   end
 
+  def detect_low_skill
+    if self.biz_offer_flg == 1 && self.payment && self.payment <= 40
+      SystemNotifier.send_info_mail("[GoldRush] ロースキル案件 ID:#{delivery_mail.id}", <<EOS).deliver
+
+#{SysConfig.get_system_notifier_url_prefix}/delivery_mails/#{delivery_mail.id}
+
+件名: #{mail_subject}
+From: #{mail_sender_name}
+
+#{mail_body}
+
+EOS
+    end
+  end
+
   # TODO : reply_mode is unnecessary?
   def detect_delivery_mail(reply_mode)
     if dmt = self.in_reply_to && DeliveryMailTarget.where(message_id: self.in_reply_to).first
@@ -132,8 +147,7 @@ EOS
       end
 
       # プロセス間で同期をとるために何でもいいから存在するレコードをロック(users#1 => systemユーザー)
-      User.find(1, :lock => true)
-
+      User.find(1, :lock => true) 
       if ImportMail.where(message_id: import_mail.message_id, deleted: 0).first
         puts "mail duplicated: see system_logs"
         SystemLog.warn('import mail', 'mail id duplicated', import_mail.inspect , 'import mail')
@@ -243,6 +257,9 @@ EOS
       if import_mail.outflow_mail?
         OutflowMail.create_outflow_mails(import_mail)
       end
+
+      # ロースキルを探してメールする
+      import_mail.detect_low_skill
 
     end # transaction
 
