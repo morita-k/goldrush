@@ -102,7 +102,7 @@ class OutflowMailController < ApplicationController
     outflow_mail_list_raw.gsub!(/(\r\n|\r|\n)/, ',')
 
     unless outflow_mail_list_raw.nil? || outflow_mail_list_raw.size == 0
-      outflow_mail_list = outflow_mail_list_raw.split(',').map{|x| x.strip}
+      outflow_mail_list = outflow_mail_list_raw.split(',').map{|x| x.strip}.select{|x|!x.blank?}
 
       outflow_mail_list.each do |outflow_mail|
         if outflow_mail.reverse =~ /^\>(.*?)\</
