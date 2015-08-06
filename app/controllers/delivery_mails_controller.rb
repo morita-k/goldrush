@@ -246,6 +246,10 @@ EOS
 
 #{SysConfig.get_system_notifier_url_prefix}/delivery_mails/#{delivery_mail.id}
 
+メールグループ: #{delivery_mail.bp_pic_group && delivery_mail.bp_pic_group.bp_pic_group_name}
+
+送信予定: #{delivery_mail.planned_setting_at.localtime}
+
 件名: #{delivery_mail.subject}
 
 #{delivery_mail.content}
