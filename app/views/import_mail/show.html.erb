@@ -1,24 +1,4 @@
 
-<% if false %>
-<% if @import_mail.auto_match_biz_offer_mails.exists? %>
-<% @import_mails = @import_mail.auto_match_biz_offer_mails.map{|x| matched_import_mail(x, x.biz_offer_mail)} %>
-<%= accordion_around_h2("自動マッチング候補案件メール一覧", "biz", @import_mails.empty?) do %>
-  <%= render :partial => 'import_mail/list' %>
-<% end %>
-<% end %>
-<% if @import_mail.auto_match_bp_member_mails.exists? %>
-<% @import_mails = @import_mail.auto_match_bp_member_mails.map{|x| matched_import_mail(x, x.bp_member_mail)} %>
-<%= accordion_around_h2("自動マッチング候補人材メール一覧", "bp", @import_mails.empty?) do %>
-  <%= render :partial => 'import_mail/list' %>
-<% end %>
-<% end %>
-<% if @import_mail.delivery_mail_matches.exists? %>
-<% @delivery_mails = @import_mail.delivery_mail_matches.map{|x| x.delivery_mail} %>
-<%= accordion_around_h2("マッチング候補メール一覧", "mm", @delivery_mails.empty?) do %>
-  <%= render :partial => 'delivery_mails/list' %>
-<% end %>
-<% end %>
-<% end %><%# if false %>
 <% if !@biz_offers.blank? %>
   <%= accordion_around_h2(getLongName('table_name','biz_offers')+"一覧", "biz", @biz_offers.empty?) do %>
     <%= render :partial => 'biz_offer/list', :locals => {:biz_offers => @biz_offers} %>
@@ -138,6 +118,25 @@
   <p></p>
   <h2>添付ファイル一覧</h2>
   <%= render :partial => 'attachment_file/list' %>
+<% end %>
+
+<% if @import_mail.auto_match_biz_offer_mails.exists? %>
+<% @import_mails = @import_mail.auto_match_biz_offer_mails.map{|x| matched_import_mail(x, x.biz_offer_mail)} %>
+<%= accordion_around_h2("自動マッチング候補案件メール一覧", "biz", @import_mails.empty?) do %>
+  <%= render :partial => 'import_mail/list' %>
+<% end %>
+<% end %>
+<% if @import_mail.auto_match_bp_member_mails.exists? %>
+<% @import_mails = @import_mail.auto_match_bp_member_mails.map{|x| matched_import_mail(x, x.bp_member_mail)} %>
+<%= accordion_around_h2("自動マッチング候補人材メール一覧", "bp", @import_mails.empty?) do %>
+  <%= render :partial => 'import_mail/list' %>
+<% end %>
+<% end %>
+<% if @import_mail.delivery_mail_matches.exists? %>
+<% @delivery_mails = @import_mail.delivery_mail_matches.map{|x| x.delivery_mail} %>
+<%= accordion_around_h2("マッチング候補メール一覧", "mm", @delivery_mails.empty?) do %>
+  <%= render :partial => 'delivery_mails/list' %>
+<% end %>
 <% end %>
 
 <div class="submit_box">
