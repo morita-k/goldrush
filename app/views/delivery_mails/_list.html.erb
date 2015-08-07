@@ -1,4 +1,4 @@
-<%= paginate(@delivery_mails) %>
+<%= paginate(@delivery_mails) if @delivery_mails.respond_to? :current_page %>
 <table id="delivery_mail_detail_table" class="list_table table-bordered table-hover">
   <tr>
     <th>ステータス</th>
@@ -50,4 +50,5 @@
   </tr>
 <% end %>
 </table>
-<%= paginate(@delivery_mails) %>
+<%= paginate(@delivery_mails) if @delivery_mails.respond_to? :current_page %>
+
