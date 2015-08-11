@@ -322,13 +322,7 @@ EOS
   end
 
   def paginate_far(scope, options = {}, &block)
-    # 件数が多いので、総ページ数は高々現在ページ+1とする
-    total_pages = 1
-    if scope.num_pages > 1
-      total_pages = scope.current_page + (scope.current_page < scope.num_pages ? 1 : 0)
-    end
-    paginator = Kaminari::Helpers::Paginator.new self, options.reverse_merge(:current_page => scope.current_page, :total_pages => total_pages, :per_page => scope.limit_value, :param_name => Kaminari.config.param_name, :remote => false)
-    paginator.to_s
+    paginator = Kaminari::Helpers::Paginator.new self, options.reverse_merge(:current_page => scope.current_page, :total_pages => scope.current_page + 1, :per_page => scope.limit_value, :param_name => Kaminari.config.param_name, :remote => false)
   end
 
   # put_paginatesで使う関数
