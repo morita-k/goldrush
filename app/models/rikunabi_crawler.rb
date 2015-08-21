@@ -6,10 +6,10 @@ class RikunabiCrawler < Crawler
 
   def crawl(url)
 
-    client = HTTPClient.new
-    client.get("http://next.rikunabi.com/rnc/docs/cp_s00700.jsp?__m=1439884887679-2910509222066381550")
+    @client = HTTPClient.new
+    @client.get(url)
 
-    res = client.post("http://next.rikunabi.com/rnc/docs/cp_s00700.jsp?__m=1439884939667-4373695622116622265", {
+    res = @client.post("http://next.rikunabi.com/rnc/docs/cp_s00700.jsp?__m=1439884939667-4373695622116622265", {
       :wrk_plc_long_cd => "0313100000",
       :indus_long_cd => "010101",
       :employ_frm_cd => "",
@@ -24,27 +24,27 @@ class RikunabiCrawler < Crawler
       :ov_wrt_aprvl_f => 0
     })
     
-    doc = Nokogiri.parse(res.body)
+    @doc = Nokogiri.parse(res.body)
     
   end
 
-  def Variable
+  def variable
     @company = {}
     @num = 0
     @suuji = 0
     @path1 = "http://next.rikunabi.com/area_wp0313100000/il010101/crn"
     @path2 = 1
     @path3 = ".html"
-    @nextpage = doc
+    @nextpage = @doc
     @nextpage_url = @path1 + @path2.to_s + @path3
   end
 
   def data_acquisition
 
-    links = doc.xpath('//div[@class="list_box"]/div[@class="n_list_footer"]/div[@class="inner_footer"]/div[@class="company_info_btn"]/a/@href').map{|x|x.value}
+    links = @doc.xpath('//div[@class="list_box"]/div[@class="n_list_footer"]/div[@class="inner_footer"]/div[@class="company_info_btn"]/a/@href').map{|x|x.value}
 
     companies = links.map do |link|
-      res = client.get "http://next.rikunabi.com" + link
+      res = @client.get "http://next.rikunabi.com" + link
       doc = Nokogiri.parse(res.body)
       arr = Array.new(7,"")
       doc.xpath('//div[@id="kaishagaiyou_inner"]/dl[@class="clr"]').each{|x|
@@ -85,12 +85,12 @@ class RikunabiCrawler < Crawler
     while @nextpage.xpath('//div[@class="n_ichiran_950_pager"]/div[@class="multicol clr"]/div[@class="rightcol"]/div[@class="spr_paging"]/div[@class="spr_next"]/span').empty? or @num == 0 do
 
       @path2 = @path2.to_i + 50
-      nextpageres = client.get(@path1 + @path2.to_s + @path3)
+      nextpageres = @client.get(@path1 + @path2.to_s + @path3)
       @nextpage = Nokogiri.parse(nextpageres.body)
       #puts @nextpage.xpath('//div[@class="n_ichiran_950_pager"]/div[@class="multicol clr"]/div[@class="rightcol"]/div[@class="spr_paging"]/div[@class="spr_next"]/span')
       links = @nextpage.xpath('//div[@class="list_box"]/div[@class="n_list_footer"]/div[@class="inner_footer"]/div[@class="company_info_btn"]/a/@href').map{|x|x.value}
       companies = links.map do |link|
-        res = client.get "http://next.rikunabi.com" + link
+        res = @client.get "http://next.rikunabi.com" + link
         doc = Nokogiri.parse(res.body)
         arr = Array.new(7,"")
         doc.xpath('//div[@id="kaishagaiyou_inner"]/dl[@class="clr"]').each{|x|

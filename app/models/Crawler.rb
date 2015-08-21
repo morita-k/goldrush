@@ -1,2 +1,2 @@
-Class Crawler
+class Crawler
 end

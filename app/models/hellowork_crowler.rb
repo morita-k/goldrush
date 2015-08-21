@@ -6,10 +6,10 @@ class HelloworkCrawler < Crawler
 
   def crawl(url)
    
-    client = HTTPClient.new
-    client.get(url)
+    @client = HTTPClient.new
+    @client.get(url)
 
-    res = client.post("https://www.hellowork.go.jp/servicef/130020.do", {
+    res = @client.post("https://www.hellowork.go.jp/servicef/130020.do", {
       :kyushokuNumber1 => "",
       :kyushokuNumber2 => "",
       :kyushokuUmu => 2,
@@ -44,7 +44,7 @@ class HelloworkCrawler < Crawler
   end
 
   def next_craw
-    res2 = client.post("https://www.hellowork.go.jp/servicef/130030.do", {
+    res2 = @client.post("https://www.hellowork.go.jp/servicef/130030.do", {
       :kiboShokushuDetail => 10,
       :freeWordType => 0,
       :freeWord => "",
@@ -76,22 +76,22 @@ class HelloworkCrawler < Crawler
       :codeAssistDivide => "",
       :xab_vrbs => "commonNextScreen,commonSearch,commonDelete"
     })
-    doc = Nokogiri.parse(res2.body)
+    @doc = Nokogiri.parse(res2.body)
   end
 
-  def Variable
-    doc2 = doc.xpath('//input[@name="fwListNaviBtnNext"]')
-    links = doc.xpath('//table//a[@name="link"]/@href').map{|x|x.value}
+  def variable
+    @doc2 = @doc.xpath('//input[@name="fwListNaviBtnNext"]')
+    @links = @doc.xpath('//table//a[@name="link"]/@href').map{|x|x.value}
     @company = {}
     @nume = 0
     @num = 0
-    @nextpage = doc
+    @nextpage = @doc
   end
 
   def data_acquisition
-    companies = links.map do |link|
+    companies = @links.map do |link|
 	    puts @nume = @nume + 1
-      res = client.get "https://www.hellowork.go.jp/servicef/" + link
+      res = @client.get "https://www.hellowork.go.jp/servicef/" + link
       doc = Nokogiri.parse(res.body)
       arr = Array.new(4,"")
       doc.xpath("//table/tr").each{|x|
@@ -117,10 +117,10 @@ class HelloworkCrawler < Crawler
   end
 
   def next_data_acquisition
-    if doc2 != nil then
+    if @doc2 != nil then
       while @nextpage.xpath('//input[@name="fwListNaviBtnNext"]').empty? != true or @num == 0 do
         begin
-	        nextpageres = client.post("https://www.hellowork.go.jp/servicef/130050.do", {
+	        nextpageres = @client.post("https://www.hellowork.go.jp/servicef/130050.do", {
             :fwListNaviBtnNext => "ŽŸ‚Ö>>",
             :fwListNowPage => @num + 1,
             :fwListLeftPage => 1,
@@ -149,7 +149,7 @@ class HelloworkCrawler < Crawler
 	        links = @nextpage.xpath('//table//a[@name="link"]/@href').map{|x|x.value}
 	        companies = links.map do |link|
 	          puts @nume = @nume + 1
-    	      nextpage = client.get "https://www.hellowork.go.jp/servicef/" + link
+    	      nextpage = @client.get "https://www.hellowork.go.jp/servicef/" + link
 	          doc = Nokogiri.parse(nextpage.body)
     	      arr = Array.new(4,"")
     	      doc.xpath("//table/tr").each{|x|
