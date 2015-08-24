@@ -12,7 +12,7 @@ Net::HTTP.start('www.hellowork.go.jp', 80) {|http|
 
 class HelloworkCrawler < Crawler
 
-  def crawl(client, url)
+  def self.crawl(client, url)
 
     client.get(url)
 
@@ -49,7 +49,7 @@ class HelloworkCrawler < Crawler
     })
   end
 
-  def next_craw(client,doc)
+  def self.next_craw(client,doc)
     res2 = client.post("https://www.hellowork.go.jp/servicef/130030.do", {
       :kiboShokushuDetail => 10,
       :freeWordType => 0,
@@ -85,14 +85,14 @@ class HelloworkCrawler < Crawler
     Nokogiri.parse(res2.body)
   end
   
-  def initialize2(doc,links,nextpage,doc2)
+  def self.initialize2(doc,links,nextpage,doc2)
     links = doc.xpath('//table//a[@name="link"]/@href').map{|x|x.value}
     nextpage = doc
     doc2 = doc.xpath('//input[@name="fwListNaviBtnNext"]')
     return links,nextpage,doc2
   end
 
-  def data_acquisition(client,links,company,nume)
+  def self.data_acquisition(client,links,company,nume)
     companies = links.map do |link|
       puts nume = nume + 1
       res = client.get "https://www.hellowork.go.jp/servicef/" + link
@@ -118,7 +118,7 @@ class HelloworkCrawler < Crawler
     return nume
   end
 
-  def next_data_acquisition(client,nextpage,num,doc2,company,nume)
+  def self.next_data_acquisition(client,nextpage,num,doc2,company,nume)
     if doc2 != nil then
       while nextpage.xpath('//input[@name="fwListNaviBtnNext"]').empty? != true do
         begin
@@ -180,7 +180,7 @@ class HelloworkCrawler < Crawler
     end
   end
 
-  def csv_output(output_pass,company)
+  def self.csv_output(output_pass,company)
     res = company.map{
       |key,val| 
       CSV.open(output_pass,'a') do |file|
@@ -189,7 +189,7 @@ class HelloworkCrawler < Crawler
     }
   end
 
-  def main(url,pass)
+  def self.main(url,pass)
     client = HTTPClient.new
     company = {}
     doc = []
@@ -205,10 +205,4 @@ class HelloworkCrawler < Crawler
     next_data_acquisition(client,nextpage,num,doc2,company,nume)
     csv_output(pass,company)
   end
-
 end
-
-hw = HelloworkCrawler.new
-
-hw.main("https://www.hellowork.go.jp/servicef/130020.do?action=initDisp&screenId=130020","/home/morita/デスクトップ/hellowork.csv")
-

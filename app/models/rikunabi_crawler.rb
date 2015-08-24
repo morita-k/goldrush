@@ -4,7 +4,7 @@ require 'csv'
 
 class RikunabiCrawler < Crawler
 
-  def crawl(client,url,doc)
+  def self.crawl(client,url,doc)
     client.get(url)
     res = client.post("http://next.rikunabi.com/rnc/docs/cp_s00700.jsp?__m=1439884939667-4373695622116622265", {
       :wrk_plc_long_cd => "0313100000",
@@ -23,12 +23,12 @@ class RikunabiCrawler < Crawler
     doc = Nokogiri.parse(res.body)
   end
 
-  def assignment(doc)
+  def self.assignment(doc)
     nextpage = doc
     return nextpage
   end
 
-  def data_acquisition(client,doc,company,num)
+  def self.data_acquisition(client,doc,company,num)
     links = doc.xpath('//div[@class="list_box"]/div[@class="n_list_footer"]/div[@class="inner_footer"]/div[@class="company_info_btn"]/a/@href').map{|x|x.value}
     companies = links.map do |link|
       res = client.get "http://next.rikunabi.com" + link
@@ -64,7 +64,7 @@ class RikunabiCrawler < Crawler
     return num
   end
 
-  def next_data_acquisition(client,nextpage,num,company,path1,path2,path3)
+  def self.next_data_acquisition(client,nextpage,num,company,path1,path2,path3)
     while nextpage.xpath('//div[@class="n_ichiran_950_pager"]/div[@class="multicol clr"]/div[@class="rightcol"]/div[@class="spr_paging"]/div[@class="spr_next"]/span').empty? or num == 0 do
       begin
         path2 = path2.to_i + 50
@@ -107,7 +107,7 @@ class RikunabiCrawler < Crawler
     end
   end
 
-  def csv_output(output_pass,company)
+  def self.csv_output(output_pass,company)
     res = company.map{
       |key,val| 
       CSV.open(output_pass,'a') do |file|
@@ -116,7 +116,7 @@ class RikunabiCrawler < Crawler
     }
   end
 
-  def main(url,pass)
+  def self.main(url,pass)
     client = HTTPClient.new
     company = {}
     doc = []
@@ -134,8 +134,6 @@ class RikunabiCrawler < Crawler
     next_data_acquisition(client,nextpage,num,company,path1,path2,path3)
     csv_output(pass,company)
   end
+
 end
 
-rc = RikunabiCrawler.new
-
-rc.main("http://next.rikunabi.com/rnc/docs/cp_s00700.jsp?__m=1439884887679-2910509222066381550","/home/morita/デスクトップ/rikunabi.csv")
