@@ -1,15 +1,22 @@
+# -*- encoding: utf-8 -*-
+
 require "httpclient"
 require "nokogiri"
 require 'csv'
+require 'net/http'
+
+Net::HTTP.version_1_2
+Net::HTTP.start('www.hellowork.go.jp', 80) {|http|
+  response = http.get('/ja/')
+}
 
 class HelloworkCrawler < Crawler
 
-  def crawl(url)
-   
-    @client = HTTPClient.new
-    @client.get(url)
+  def crawl(client, url)
 
-    res = @client.post("https://www.hellowork.go.jp/servicef/130020.do", {
+    client.get(url)
+
+    res = client.post("https://www.hellowork.go.jp/servicef/130020.do", {
       :kyushokuNumber1 => "",
       :kyushokuNumber2 => "",
       :kyushokuUmu => 2,
@@ -40,11 +47,10 @@ class HelloworkCrawler < Crawler
       :codeAssistDivide => "",
       :xab_vrbs => "commonNextScreen,commonSearch,detailSearchButton,commonDelete"
     })
-    doc1 = Nokogiri.parse(res.body)
   end
 
-  def next_craw
-    res2 = @client.post("https://www.hellowork.go.jp/servicef/130030.do", {
+  def next_craw(client,doc)
+    res2 = client.post("https://www.hellowork.go.jp/servicef/130030.do", {
       :kiboShokushuDetail => 10,
       :freeWordType => 0,
       :freeWord => "",
@@ -76,22 +82,20 @@ class HelloworkCrawler < Crawler
       :codeAssistDivide => "",
       :xab_vrbs => "commonNextScreen,commonSearch,commonDelete"
     })
-    @doc = Nokogiri.parse(res2.body)
+    Nokogiri.parse(res2.body)
+  end
+  
+  def initialize2(doc,links,nextpage,doc2)
+    links = doc.xpath('//table//a[@name="link"]/@href').map{|x|x.value}
+    nextpage = doc
+    doc2 = doc.xpath('//input[@name="fwListNaviBtnNext"]')
+    return links,nextpage,doc2
   end
 
-  def variable
-    @doc2 = @doc.xpath('//input[@name="fwListNaviBtnNext"]')
-    @links = @doc.xpath('//table//a[@name="link"]/@href').map{|x|x.value}
-    @company = {}
-    @nume = 0
-    @num = 0
-    @nextpage = @doc
-  end
-
-  def data_acquisition
-    companies = @links.map do |link|
-	    puts @nume = @nume + 1
-      res = @client.get "https://www.hellowork.go.jp/servicef/" + link
+  def data_acquisition(client,links,company,nume)
+    companies = links.map do |link|
+      puts nume = nume + 1
+      res = client.get "https://www.hellowork.go.jp/servicef/" + link
       doc = Nokogiri.parse(res.body)
       arr = Array.new(4,"")
       doc.xpath("//table/tr").each{|x|
@@ -107,22 +111,20 @@ class HelloworkCrawler < Crawler
         if "事業内容" == x.xpath("th")[0].text
           arr[3] = x.xpath("td")[0].text.strip
         end
-        @company[arr[0]] = [arr[0],arr[1],arr[2],arr[3]]
+        company[arr[0]] = [arr[0],arr[1],arr[2],arr[3]]
       }
-#  CSV.open("/home/morita/デスクトップ/hellowork.csv",'a') do |file|
-#    file << [arr[0],arr[1],arr[2],arr[3]]
-#  end
       arr[0]
     end
+    return nume
   end
 
-  def next_data_acquisition
-    if @doc2 != nil then
-      while @nextpage.xpath('//input[@name="fwListNaviBtnNext"]').empty? != true or @num == 0 do
+  def next_data_acquisition(client,nextpage,num,doc2,company,nume)
+    if doc2 != nil then
+      while nextpage.xpath('//input[@name="fwListNaviBtnNext"]').empty? != true do
         begin
-	        nextpageres = @client.post("https://www.hellowork.go.jp/servicef/130050.do", {
+          nextpageres = client.post("https://www.hellowork.go.jp/servicef/130050.do", {
             :fwListNaviBtnNext => "次へ>>",
-            :fwListNowPage => @num + 1,
+            :fwListNowPage => num + 1,
             :fwListLeftPage => 1,
             :fwListNaviCount => 11,
             :kyushokuUmuHidden => 2,
@@ -144,33 +146,33 @@ class HelloworkCrawler < Crawler
             :codeAssistItemName => "",
             :codeAssistDivide => "",
             :xab_vrbs => "detailJokenDispButton,commonNextScreen,detailJokenChangeButton,commonDetailInf"
-	        })
-	        @nextpage = Nokogiri.parse(nextpageres.body)
-	        links = @nextpage.xpath('//table//a[@name="link"]/@href').map{|x|x.value}
-	        companies = links.map do |link|
-	          puts @nume = @nume + 1
-    	      nextpage = @client.get "https://www.hellowork.go.jp/servicef/" + link
-	          doc = Nokogiri.parse(nextpage.body)
-    	      arr = Array.new(4,"")
-    	      doc.xpath("//table/tr").each{|x|
-	            if "事業所名" == x.xpath("th")[0].text
-	              arr[0] = x.xpath("td")[0].text.strip
-    	        end
-    	        if "所在地" == x.xpath("th")[0].text
-    	          arr[1] = x.xpath("td")[0].text.strip
-    	        end
-	            if "電話番号" == x.xpath("th")[0].text
-	              arr[2] = x.xpath("td")[0].text.strip
-	            end
-    	        if "事業内容" == x.xpath("th")[0].text
-	              arr[3] = x.xpath("td")[0].text.strip
-    	        end
-                @company[arr[0]] = [arr[0],arr[1],arr[2],arr[3]]
-	          }
-	          puts arr[0]
-	          puts @nextpage.xpath('//input[@name="fwListNaviBtnNext"]')
-    	    end
-	        @num = @num + 1
+          })
+          nextpage = Nokogiri.parse(nextpageres.body)
+          links = nextpage.xpath('//table//a[@name="link"]/@href').map{|x|x.value}
+          companies = links.map do |link|
+            puts nume = nume + 1
+            nextpage2 = client.get "https://www.hellowork.go.jp/servicef/" + link
+            doc = Nokogiri.parse(nextpage2.body)
+            arr = Array.new(4,"")
+            doc.xpath("//table/tr").each{|x|
+              if "事業所名" == x.xpath("th")[0].text
+                arr[0] = x.xpath("td")[0].text.strip
+              end
+   	          if "所在地" == x.xpath("th")[0].text
+                arr[1] = x.xpath("td")[0].text.strip
+              end
+              if "電話番号" == x.xpath("th")[0].text
+                arr[2] = x.xpath("td")[0].text.strip
+              end
+              if "事業内容" == x.xpath("th")[0].text
+                arr[3] = x.xpath("td")[0].text.strip
+              end
+              company[arr[0]] = [arr[0],arr[1],arr[2],arr[3]]
+            }
+          puts arr[0]
+          puts nextpage.xpath('//input[@name="fwListNaviBtnNext"]')
+          end
+          num = num + 1
         rescue SocketError => e
           retry
         end
@@ -178,8 +180,8 @@ class HelloworkCrawler < Crawler
     end
   end
 
-  def csv_output(output_pass)
-    res = @company.map{
+  def csv_output(output_pass,company)
+    res = company.map{
       |key,val| 
       CSV.open(output_pass,'a') do |file|
         file << val
@@ -187,4 +189,26 @@ class HelloworkCrawler < Crawler
     }
   end
 
+  def main(url,pass)
+    client = HTTPClient.new
+    company = {}
+    doc = []
+    links = ""
+    nextpage = ""
+    doc2 = ""
+    num = 0
+    nume = 0
+    crawl(client,url)
+    doc = next_craw(client,doc)
+    links,nextpage,doc2 = initialize2(doc,links,nextpage,doc2)
+    nume = data_acquisition(client,links,company,nume)
+    next_data_acquisition(client,nextpage,num,doc2,company,nume)
+    csv_output(pass,company)
+  end
+
 end
+
+hw = HelloworkCrawler.new
+
+hw.main("https://www.hellowork.go.jp/servicef/130020.do?action=initDisp&screenId=130020","/home/morita/デスクトップ/hellowork.csv")
+
