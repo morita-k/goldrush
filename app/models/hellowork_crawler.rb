@@ -50,7 +50,7 @@ class HelloworkCrawler < Crawler
   end
 
   def next_craw(client,doc)
-    res2 = client.post("https://www.hellowork.go.jp/servicef/130030.do", {
+    res = client.post("https://www.hellowork.go.jp/servicef/130030.do", {
       :kiboShokushuDetail => 10,
       :freeWordType => 0,
       :freeWord => "",
@@ -82,19 +82,18 @@ class HelloworkCrawler < Crawler
       :codeAssistDivide => "",
       :xab_vrbs => "commonNextScreen,commonSearch,commonDelete"
     })
-    Nokogiri.parse(res2.body)
+    Nokogiri.parse(res.body)
   end
   
-  def initialize2(doc,links,nextpage,doc2)
+  def get_link(doc,links,next_confirmation)
     links = doc.xpath('//table//a[@name="link"]/@href').map{|x|x.value}
-    nextpage = doc
-    doc2 = doc.xpath('//input[@name="fwListNaviBtnNext"]')
-    return links,nextpage,doc2
+    next_confirmation = doc.xpath('//input[@name="fwListNaviBtnNext"]')
+    return links,next_confirmation
   end
 
-  def data_acquisition(client,links,company,nume)
+  def data_acquisition(client,links,company,total_num)
     companies = links.map do |link|
-      puts nume = nume + 1
+      puts total_num = total_num + 1
       res = client.get "https://www.hellowork.go.jp/servicef/" + link
       doc = Nokogiri.parse(res.body)
       arr = Array.new(4,"")
@@ -115,14 +114,14 @@ class HelloworkCrawler < Crawler
       }
       arr[0]
     end
-    return nume
+    return total_num
   end
 
-  def next_data_acquisition(client,nextpage,num,doc2,company,nume)
-    if doc2 != nil then
-      while nextpage.xpath('//input[@name="fwListNaviBtnNext"]').empty? != true do
+  def next_data_acquisition(client,doc,num,next_confirmation,company,total_num)
+    if next_confirmation != nil then
+      while doc.xpath('//input[@name="fwListNaviBtnNext"]').empty? != true do
         begin
-          nextpageres = client.post("https://www.hellowork.go.jp/servicef/130050.do", {
+          nextpage_res = client.post("https://www.hellowork.go.jp/servicef/130050.do", {
             :fwListNaviBtnNext => "éüÇ÷>>",
             :fwListNowPage => num + 1,
             :fwListLeftPage => 1,
@@ -147,14 +146,14 @@ class HelloworkCrawler < Crawler
             :codeAssistDivide => "",
             :xab_vrbs => "detailJokenDispButton,commonNextScreen,detailJokenChangeButton,commonDetailInf"
           })
-          nextpage = Nokogiri.parse(nextpageres.body)
-          links = nextpage.xpath('//table//a[@name="link"]/@href').map{|x|x.value}
+          doc = Nokogiri.parse(nextpage_res.body)
+          links = doc.xpath('//table//a[@name="link"]/@href').map{|x|x.value}
           companies = links.map do |link|
-            puts nume = nume + 1
-            nextpage2 = client.get "https://www.hellowork.go.jp/servicef/" + link
-            doc = Nokogiri.parse(nextpage2.body)
+            puts total_num = total_num + 1
+            sequel_nextpage_res = client.get "https://www.hellowork.go.jp/servicef/" + link
+            sequel_doc = Nokogiri.parse(sequel_nextpage_res.body)
             arr = Array.new(4,"")
-            doc.xpath("//table/tr").each{|x|
+            sequel_doc.xpath("//table/tr").each{|x|
               if "éñã∆èäñº" == x.xpath("th")[0].text
                 arr[0] = x.xpath("td")[0].text.strip
               end
@@ -170,7 +169,7 @@ class HelloworkCrawler < Crawler
               company[arr[0]] = [arr[0],arr[1],arr[2],arr[3]]
             }
           puts arr[0]
-          puts nextpage.xpath('//input[@name="fwListNaviBtnNext"]')
+          puts doc.xpath('//input[@name="fwListNaviBtnNext"]')
           end
           num = num + 1
         rescue SocketError => e
@@ -194,16 +193,15 @@ class HelloworkCrawler < Crawler
     company = {}
     doc = []
     links = ""
-    nextpage = ""
-    doc2 = ""
+    next_confirmation = ""
     num = 0
-    nume = 0
+    total_num = 0
     hw = HelloworkCrawler.new
     hw.crawl(client,url)
     doc = hw.next_craw(client,doc)
-    links,nextpage,doc2 = hw.initialize2(doc,links,nextpage,doc2)
-    nume = hw.data_acquisition(client,links,company,nume)
-    hw.next_data_acquisition(client,nextpage,num,doc2,company,nume)
+    links,next_confirmation = hw.get_link(doc,links,next_confirmation)
+    total_num = hw.data_acquisition(client,links,company,total_num)
+    hw.next_data_acquisition(client,doc,num,next_confirmation,company,total_num)
     hw.csv_output(pass,company)
   end
 

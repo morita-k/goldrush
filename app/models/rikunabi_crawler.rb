@@ -2,9 +2,9 @@ require "httpclient"
 require "nokogiri"
 require 'csv'
 
-class RikunabiCrawler < Crawler
+class RikunabiCrawler
 
-  def crawl(client,url,doc)
+  def crawl(client,url)
     client.get(url)
     res = client.post("http://next.rikunabi.com/rnc/docs/cp_s00700.jsp?__m=1439884939667-4373695622116622265", {
       :wrk_plc_long_cd => "0313100000",
@@ -20,12 +20,7 @@ class RikunabiCrawler < Crawler
       :disp_cd => "cp_s01990",
       :ov_wrt_aprvl_f => 0
     })
-    doc = Nokogiri.parse(res.body)
-  end
-
-  def assignment(doc)
-    nextpage = doc
-    return nextpage
+    Nokogiri.parse(res.body)
   end
 
   def data_acquisition(client,doc,company,num)
@@ -64,18 +59,18 @@ class RikunabiCrawler < Crawler
     return num
   end
 
-  def next_data_acquisition(client,nextpage,num,company,path1,path2,path3)
-    while nextpage.xpath('//div[@class="n_ichiran_950_pager"]/div[@class="multicol clr"]/div[@class="rightcol"]/div[@class="spr_paging"]/div[@class="spr_next"]/span').empty? or num == 0 do
+  def next_data_acquisition(client,doc,num,company,path1,path2,path3)
+    while doc.xpath('//div[@class="n_ichiran_950_pager"]/div[@class="multicol clr"]/div[@class="rightcol"]/div[@class="spr_paging"]/div[@class="spr_next"]/span').empty? or num == 0 do
       begin
         path2 = path2.to_i + 50
-        nextpageres = client.get(path1 + path2.to_s + path3)
-        nextpage = Nokogiri.parse(nextpageres.body)
-        links = nextpage.xpath('//div[@class="list_box"]/div[@class="n_list_footer"]/div[@class="inner_footer"]/div[@class="company_info_btn"]/a/@href').map{|x|x.value}
+        nextpage_res = client.get(path1 + path2.to_s + path3)
+        doc = Nokogiri.parse(nextpage_res.body)
+        links = doc.xpath('//div[@class="list_box"]/div[@class="n_list_footer"]/div[@class="inner_footer"]/div[@class="company_info_btn"]/a/@href').map{|x|x.value}
         companies = links.map do |link|
-          res = client.get "http://next.rikunabi.com" + link
-          doc = Nokogiri.parse(res.body)
+          sequel_nextpage_res = client.get "http://next.rikunabi.com" + link
+          sequel_doc = Nokogiri.parse(sequel_nextpage_res.body)
           arr = Array.new(7,"")
-          doc.xpath('//div[@id="kaishagaiyou_inner"]/dl[@class="clr"]').each{|x|
+          sequel_doc.xpath('//div[@id="kaishagaiyou_inner"]/dl[@class="clr"]').each{|x|
           arr[0] = x.xpath("//h1")[0].text.strip
             if "Ž–‹Æ“à—e" == x.xpath("dt")[0].text
               arr[1] = x.xpath("dd")[0].text.strip
@@ -121,18 +116,14 @@ class RikunabiCrawler < Crawler
     company = {}
     doc = []
     links = ""
-    nextpage = ""
-    doc2 = ""
     num = 0
-    nume = 0
     path1 = "http://next.rikunabi.com/area_wp0313100000/il010101/crn"
     path2 = 1
     path3 = ".html"
     rc = RikunabiCrawler.new
-    doc = rc.crawl(client,url,doc)
+    doc = rc.crawl(client,url)
     num = rc.data_acquisition(client,doc,company,num)
-    nextpage = rc.assignment(doc)
-    rc.next_data_acquisition(client,nextpage,num,company,path1,path2,path3)
+    rc.next_data_acquisition(client,doc,num,company,path1,path2,path3)
     rc.csv_output(pass,company)
   end
 
