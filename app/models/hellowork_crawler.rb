@@ -12,7 +12,7 @@ Net::HTTP.start('www.hellowork.go.jp', 80) {|http|
 
 class HelloworkCrawler < Crawler
 
-  def self.crawl(client, url)
+  def crawl(client, url)
 
     client.get(url)
 
@@ -49,7 +49,7 @@ class HelloworkCrawler < Crawler
     })
   end
 
-  def self.next_craw(client,doc)
+  def next_craw(client,doc)
     res2 = client.post("https://www.hellowork.go.jp/servicef/130030.do", {
       :kiboShokushuDetail => 10,
       :freeWordType => 0,
@@ -85,14 +85,14 @@ class HelloworkCrawler < Crawler
     Nokogiri.parse(res2.body)
   end
   
-  def self.initialize2(doc,links,nextpage,doc2)
+  def initialize2(doc,links,nextpage,doc2)
     links = doc.xpath('//table//a[@name="link"]/@href').map{|x|x.value}
     nextpage = doc
     doc2 = doc.xpath('//input[@name="fwListNaviBtnNext"]')
     return links,nextpage,doc2
   end
 
-  def self.data_acquisition(client,links,company,nume)
+  def data_acquisition(client,links,company,nume)
     companies = links.map do |link|
       puts nume = nume + 1
       res = client.get "https://www.hellowork.go.jp/servicef/" + link
@@ -118,7 +118,7 @@ class HelloworkCrawler < Crawler
     return nume
   end
 
-  def self.next_data_acquisition(client,nextpage,num,doc2,company,nume)
+  def next_data_acquisition(client,nextpage,num,doc2,company,nume)
     if doc2 != nil then
       while nextpage.xpath('//input[@name="fwListNaviBtnNext"]').empty? != true do
         begin
@@ -180,7 +180,7 @@ class HelloworkCrawler < Crawler
     end
   end
 
-  def self.csv_output(output_pass,company)
+  def csv_output(output_pass,company)
     res = company.map{
       |key,val| 
       CSV.open(output_pass,'a') do |file|
@@ -189,7 +189,7 @@ class HelloworkCrawler < Crawler
     }
   end
 
-  def self.main(url,pass)
+  def HelloworkCrawler.main(url,pass)
     client = HTTPClient.new
     company = {}
     doc = []
@@ -198,11 +198,13 @@ class HelloworkCrawler < Crawler
     doc2 = ""
     num = 0
     nume = 0
-    crawl(client,url)
-    doc = next_craw(client,doc)
-    links,nextpage,doc2 = initialize2(doc,links,nextpage,doc2)
-    nume = data_acquisition(client,links,company,nume)
-    next_data_acquisition(client,nextpage,num,doc2,company,nume)
-    csv_output(pass,company)
+    hw = HelloworkCrawler.new
+    hw.crawl(client,url)
+    doc = hw.next_craw(client,doc)
+    links,nextpage,doc2 = hw.initialize2(doc,links,nextpage,doc2)
+    nume = hw.data_acquisition(client,links,company,nume)
+    hw.next_data_acquisition(client,nextpage,num,doc2,company,nume)
+    hw.csv_output(pass,company)
   end
+
 end
