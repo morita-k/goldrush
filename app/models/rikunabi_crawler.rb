@@ -2,7 +2,7 @@ require "httpclient"
 require "nokogiri"
 require 'csv'
 
-class RikunabiCrawler
+class RikunabiCrawler < Crawler
 
   def crawl(client,url,doc)
     client.get(url)
