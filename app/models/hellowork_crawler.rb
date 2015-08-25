@@ -49,7 +49,7 @@ class HelloworkCrawler < Crawler
     })
   end
 
-  def next_craw(client,doc)
+  def next_crawl(client,doc)
     res = client.post("https://www.hellowork.go.jp/servicef/130030.do", {
       :kiboShokushuDetail => 10,
       :freeWordType => 0,
@@ -85,7 +85,7 @@ class HelloworkCrawler < Crawler
     Nokogiri.parse(res.body)
   end
   
-  def get_link(doc,links,next_confirmation)
+  def get_links(doc,links,next_confirmation)
     links = doc.xpath('//table//a[@name="link"]/@href').map{|x|x.value}
     next_confirmation = doc.xpath('//input[@name="fwListNaviBtnNext"]')
     return links,next_confirmation
@@ -198,8 +198,8 @@ class HelloworkCrawler < Crawler
     total_num = 0
     hw = HelloworkCrawler.new
     hw.crawl(client,url)
-    doc = hw.next_craw(client,doc)
-    links,next_confirmation = hw.get_link(doc,links,next_confirmation)
+    doc = hw.next_crawl(client,doc)
+    links,next_confirmation = hw.get_links(doc,links,next_confirmation)
     total_num = hw.data_acquisition(client,links,company,total_num)
     hw.next_data_acquisition(client,doc,num,next_confirmation,company,total_num)
     hw.csv_output(pass,company)
