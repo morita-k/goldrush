@@ -174,6 +174,8 @@ class HelloworkCrawler < Crawler
           num = num + 1
         rescue SocketError => e
           retry
+        rescue NoMethodError => e
+          retry
         end
       end
     end
