@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 require "httpclient"
 require "nokogiri"
 require 'csv'
@@ -29,9 +30,8 @@ class RikunabiCrawler < Crawler
       res = client.get "http://next.rikunabi.com" + link
       doc = Nokogiri.parse(res.body)
       arr = Array.new(7,"")
+      arr[0] = (doc.xpath("//h3/span")[0].text.strip).delete("の求人一覧")
       doc.xpath('//div[@id="kaishagaiyou_inner"]/dl[@class="clr"]').each{|x|
-        arr[0] = x.xpath("//h1")[0].text.strip
-
         if "事業内容" == x.xpath("dt")[0].text
           arr[1] = x.xpath("dd")[0].text.strip
         end
@@ -70,8 +70,9 @@ class RikunabiCrawler < Crawler
           sequel_nextpage_res = client.get "http://next.rikunabi.com" + link
           sequel_doc = Nokogiri.parse(sequel_nextpage_res.body)
           arr = Array.new(7,"")
+          arr[0] = (sequel_doc.xpath("//h3/span")[0].text.strip).delete("の求人一覧")
           sequel_doc.xpath('//div[@id="kaishagaiyou_inner"]/dl[@class="clr"]').each{|x|
-          arr[0] = x.xpath("//h1")[0].text.strip
+          
             if "事業内容" == x.xpath("dt")[0].text
               arr[1] = x.xpath("dd")[0].text.strip
             end
